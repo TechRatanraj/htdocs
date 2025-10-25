@@ -1,0 +1,8 @@
+# Ignore logs, temp, and cache
+*.log
+tmp/
+cache/
+
+# Ignore system files
+*.swp
+*.DS_Store
