@@ -23781,72 +23781,38 @@ $zi=2;
 </span>
 		
 
+<!-- ZZZZZZZZZZZZ  header -->
 
-<!-- Header Section -->
-<span id="Header">
-    <!-- Hidden Form Fields -->
-    <input type="hidden" name="extension" id="extension" />
-    <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
-    <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <input type="hidden" name="extension" id="extension"/>
+            <input type="hidden" name="custom_field_values" id="custom_field_values" value=""/>
+            <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0"/>
 
-    <div class="header-container">
-        <!-- Left Section: Agent Info -->
-        <div class="header-left">
-            <div class="header-item">
-                <span>👤</span>
-                <span class="queue_text">
-                    <?php
-                    if ($logged_in_refresh_link > 0) {
-                        echo "<a href=\"#\" onclick=\"start_all_refresh();return false;\">"._QXZ("Logged in as User").": ".$VD_login."</a>";
-                    } else {
-                        echo _QXZ("Logged in as User").": ".$VD_login;
-                    }
-                    ?>
-                </span>
-            </div>
+                        <div style="color: #FFFFFF"><?php echo _QXZ("User Login :"); ?></font></a><?php
+                echo _QXZ(" %1s en Phone : %2s", 0, '', $VD_login, $SIP_user);
+                if ($on_hook_agent == 'Y') {
+                    echo "(<a href=\"#\" onclick=\"NoneInSessionCalL();return false;\">" . _QXZ("ring") . "</a>)";
+                }
+                echo "&nbsp; " . _QXZ("a la Campaign") . " $VD_campaign&nbsp; ";
+                ?> &nbsp; &nbsp; <span id="agentchannelSPAN"></span></div>
 
-            <div class="header-item">
-                <span>📞</span>
-                <span class="queue_text">
-                    <?php echo $SIP_user; ?>
-                    <?php
-                    if ($on_hook_agent == 'Y') {
-                        echo " (<a href=\"#\" onclick=\"NoneInSessionCalL();return false;\">"._QXZ("ring")."</a>)";
-                    }
-                    ?>
-                </span>
-            </div>
-
-            <div class="header-item">
-                <span>📋</span>
-                <span class="queue_text">
-                    <?php echo $VD_campaign; ?>
-                </span>
-            </div>
-
-            <span id="agentchannelSPAN"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto pull-right">
+                <div >
+                <li class="nav-item active">
+                    <a class="nav-link">
+                        <?php echo "<a href=\"#\" onclick=\"NormalLogout();return false;needToConfirmExit = false;\"> <button type=\"button\" class=\"btn btn-default btn-sm\"><span class=\"glyphicon glyphicon-log-out\"></span> LOGOUT</button> </a>\n"; ?>
+                    </a>
+                </li>
+				</div>
+            </ul>
         </div>
-
-        <!-- Right Section: Actions -->
-        <div class="header-right">
-            <?php if ($territoryCT > 0) { ?>
-                <a href="#" onclick="OpeNTerritorYSelectioN();return false;" class="header-link">
-                    <?php echo _QXZ("TERRITORIES"); ?>
-                </a>
-            <?php } ?>
-
-            <?php if ($INgrpCT > 0) { ?>
-                <a href="#" onclick="OpeNGrouPSelectioN();return false;" class="header-link">
-                    <?php echo _QXZ("GROUPS"); ?>
-                </a>
-            <?php } ?>
-
-            <a href="#" onclick="NormalLogout();needToConfirmExit = false;return false;" class="logout-btn">
-                <?php echo _QXZ("LOGOUT"); ?>
-            </a>
         </div>
-    </div>
-</span>
+    </nav>
+
+
 
 
  <!-- ZZZZZZZZZZZZ  tabs -->
