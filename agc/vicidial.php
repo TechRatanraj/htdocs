@@ -1072,7 +1072,7 @@ $webphone_pad			= 0;	# set the table cellpadding for the webphone
 $webphone_location		= 'right';	# set the location on the agent screen 'right' or 'bar'
 $banner_height			= 15;	# state description banner
 $MAIN_COLOR				= "#FFFFFF";	# old default is E0C2D6
-$SCRIPT_COLOR			= '#E6E6E6';	# old default is FFE7D0
+$SCRIPT_COLOR			= '"#FFFFFF"';	# old default is FFE7D0
 $FORM_COLOR				= '#EFEFEF';
 $SIDEBAR_COLOR			= '#F6F6F6';
 
@@ -25571,7 +25571,7 @@ if ($agent_display_dialable_leads > 0)
 <tr><td bgcolor="#f0f0f0" align="left">
 <font face="arial,helvetica" size="2"><b> &nbsp; <?php echo _QXZ("Agent Alert!"); ?></b></font>
 </td></tr>
-<tr><td bgcolor="#E6E6E6">
+<tr><td bgcolor="#FFFFFF">
 <table border="0" bgcolor="#E3E3E3" width="400">
 <tr>
 <td align="center" valign="top" width="50"> &nbsp; 
