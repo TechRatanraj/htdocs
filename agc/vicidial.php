@@ -1071,7 +1071,7 @@ $webphone_height		= 500;	# set the webphone frame height
 $webphone_pad			= 0;	# set the table cellpadding for the webphone
 $webphone_location		= 'right';	# set the location on the agent screen 'right' or 'bar'
 $banner_height			= 15;	# state description banner
-$MAIN_COLOR				= '#CCCCCC';	# old default is E0C2D6
+$MAIN_COLOR				= "#FFFFFF";	# old default is E0C2D6
 $SCRIPT_COLOR			= '#E6E6E6';	# old default is FFE7D0
 $FORM_COLOR				= '#EFEFEF';
 $SIDEBAR_COLOR			= '#F6F6F6';
@@ -8862,7 +8862,7 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 									if (loop_s.match(/1$|3$|5$|7$|9$/)) 
 										{var row_color = '#DDDDFF';}
 									else
-										{var row_color = '#CCCCFF';}
+										{var row_color = "#FFFFFF";}
 									var conv_ct = (loop_ct + conv_start);
 									var channelfieldA = conf_chan_array[conv_ct];
 									var regXFcred = new RegExp(flag_string,"g");
@@ -10323,7 +10323,7 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 							if (loop_s.match(/1$|3$|5$|7$|9$/)) 
 								{var row_color = '#DDDDFF';}
 							else
-								{var row_color = '#CCCCFF';}
+								{var row_color = "#FFFFFF";}
 							var conv_ct = (loop_ct + conv_start);
 							var call_array = all_CBs_array[conv_ct].split("-!T-");
 							var CB_name = call_array[0] + " " + call_array[1];
