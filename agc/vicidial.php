@@ -23857,16 +23857,44 @@ $INgrpCT = ($INgrpCT ?? 0);
 <!-- Inline CSS fallback tweaks (ensures consistent layout) -->
 <style>
   /* ensure header content doesn't shrink */
-  #Header { box-sizing: border-box; }
-  #Header .vc-container { box-sizing: border-box; }
-  /* small-screen adjustments: header can grow vertically, JS will update body padding */
-  @media (max-width:520px){
-    #Header { position:fixed; height:auto; padding-top:8px; padding-bottom:8px; }
-    #Header .vc-container { flex-direction:column; align-items:flex-start; gap:8px; padding:6px 12px; }
+  #Header {
+    box-sizing: border-box;
+    z-index: 1200;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.08); /* subtle divider */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);     /* soft separation shadow */
   }
-  /* keep header above everything */
-  #Header { z-index:1200; }
+
+  #Header .vc-container {
+    box-sizing: border-box;
+  }
+
+  /* give breathing space below header (content won’t touch it) */
+  body {
+    padding-top: calc(90px + 1vh); /* adjust this if your header height changes */
+    transition: padding-top 0.2s ease;
+  }
+
+  /* small-screen adjustments: header can grow vertically, JS will update body padding */
+  @media (max-width: 520px) {
+    #Header {
+      position: fixed;
+      height: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    #Header .vc-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 12px;
+    }
+    /* slightly more padding on mobile for space */
+    body {
+      padding-top: calc(110px + 1vh);
+    }
+  }
 </style>
+
 
 <!-- Inline script: measure header height, set body padding-top, attach handlers safely, observe changes -->
 <script>
