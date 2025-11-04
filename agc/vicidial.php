@@ -23781,90 +23781,188 @@ $zi=2;
 </span>
 		
 
+<?php
+// Modernized inline header — replace your old <span id="Header"> block with this.
+// Escaped outputs for safety.
+$vd_login_safe      = htmlspecialchars($VD_login ?? '', ENT_QUOTES, 'UTF-8');
+$sip_user_safe      = htmlspecialchars($SIP_user ?? '', ENT_QUOTES, 'UTF-8');
+$vd_campaign_safe   = htmlspecialchars($VD_campaign ?? '', ENT_QUOTES, 'UTF-8');
+$on_hook_agent      = ($on_hook_agent ?? 'N');
+$logged_in_refresh_link = ($logged_in_refresh_link ?? 0);
+$territoryCT = ($territoryCT ?? 0);
+$INgrpCT = ($INgrpCT ?? 0);
+?>
+<!-- START: modern fixed header (inline, self-contained) -->
+<header id="Header" class="vc-header" role="banner" aria-label="Agent header"
+        style="position:fixed;top:0;left:0;right:0;height:64px;display:block;z-index:1200;box-sizing:border-box;background:linear-gradient(90deg,#6c5ce7,#7b61ff);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.12);">
+  <div class="vc-container" style="max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 12px;gap:12px;">
 
-<!-- Header Section -->
-<span id="Header">
-    <!-- Hidden Form Fields -->
-    <input type="hidden" name="extension" id="extension" />
-    <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
-    <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
-
-    <div class="header-container">
-        <!-- Left Section: Agent Info -->
-        <div class="header-left">
-            <div class="header-item">
-                <span>👤</span>
-                <span class="queue_text">
-                    <?php
-                    if ($logged_in_refresh_link > 0) {
-                        echo "<a href=\"#\" onclick=\"start_all_refresh();return false;\">"._QXZ("Logged in as User").": ".$VD_login."</a>";
-                    } else {
-                        echo _QXZ("Logged in as User").": ".$VD_login;
-                    }
-                    ?>
-                </span>
-            </div>
-
-            <div class="header-item">
-                <span>📞</span>
-                <span class="queue_text">
-                    <?php echo $SIP_user; ?>
-                    <?php
-                    if ($on_hook_agent == 'Y') {
-                        echo " (<a href=\"#\" onclick=\"NoneInSessionCalL();return false;\">"._QXZ("ring")."</a>)";
-                    }
-                    ?>
-                </span>
-            </div>
-
-            <div class="header-item">
-                <span>📋</span>
-                <span class="queue_text">
-                    <?php echo $VD_campaign; ?>
-                </span>
-            </div>
-
-            <span id="agentchannelSPAN"></span>
-        </div>
-
-        <!-- Right Section: Actions -->
-        <div class="header-right">
-            <?php if ($territoryCT > 0) { ?>
-                <a href="#" onclick="OpeNTerritorYSelectioN();return false;" class="header-link">
-                    <?php echo _QXZ("TERRITORIES"); ?>
-                </a>
-            <?php } ?>
-
-            <?php if ($INgrpCT > 0) { ?>
-                <a href="#" onclick="OpeNGrouPSelectioN();return false;" class="header-link">
-                    <?php echo _QXZ("GROUPS"); ?>
-                </a>
-            <?php } ?>
-
-            <a href="#" onclick="NormalLogout();needToConfirmExit = false;return false;" class="logout-btn">
-                <?php echo _QXZ("LOGOUT"); ?>
-            </a>
-        </div>
+    <!-- Hidden fields (kept) -->
+    <div style="display:none;">
+      <input type="hidden" name="extension" id="extension" />
+      <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
+      <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
     </div>
-</span>
+
+    <!-- Left: brand + user info -->
+    <div class="vc-left" style="display:flex;align-items:center;gap:14px;min-width:250px;">
+      <div class="vc-brand" style="display:flex;align-items:center;gap:10px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="8" r="3" fill="#fff"></circle>
+          <path d="M4 20a8 8 0 0116 0" stroke="#fff" stroke-opacity="0.5" stroke-width="1.2" stroke-linecap="round"></path>
+        </svg>
+        <strong style="font-size:15px;letter-spacing:0.2px">Campaign Console</strong>
+      </div>
+
+      <div class="vc-user" style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.95);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+        <?php if (!empty($logged_in_refresh_link) && $logged_in_refresh_link > 0): ?>
+          <a id="vc-refresh-login" href="#" style="color:inherit;text-decoration:underline;font-weight:600;">
+            <?= htmlspecialchars(_QXZ("Logged in as User") . ": $vd_login_safe", ENT_QUOTES, 'UTF-8') ?>
+          </a>
+        <?php else: ?>
+          <span style="font-weight:600;"><?= htmlspecialchars(_QXZ("Logged in as User") . ": $vd_login_safe", ENT_QUOTES, 'UTF-8') ?></span>
+        <?php endif; ?>
+
+        <span style="color:rgba(255,255,255,0.6)">•</span>
+        <span title="SIP user"><?= $sip_user_safe ?></span>
+
+        <?php if ($on_hook_agent === 'Y'): ?>
+          <span style="color:rgba(255,255,255,0.6)">•</span>
+          <a id="vc-ring" href="#" style="color:inherit;text-decoration:underline;font-size:0.95em;"><?= htmlspecialchars(_QXZ("ring"), ENT_QUOTES, 'UTF-8') ?></a>
+        <?php endif; ?>
+
+        <span style="color:rgba(255,255,255,0.6)">•</span>
+        <span style="font-weight:500;"><?= htmlspecialchars(_QXZ("Campaign") . ': ' . $vd_campaign_safe, ENT_QUOTES, 'UTF-8') ?></span>
+
+        <span id="agentchannelSPAN" aria-live="polite" style="margin-left:8px;color:#f7f7f7;font-weight:500;"></span>
+      </div>
+    </div>
+
+    <!-- Right: actions -->
+    <div class="vc-actions" style="display:flex;align-items:center;gap:8px;">
+      <?php if (!empty($territoryCT) && $territoryCT > 0): ?>
+        <button id="territories-link" type="button" class="vc-btn" style="padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">TERRITORIES</button>
+      <?php endif; ?>
+
+      <?php if (!empty($INgrpCT) && $INgrpCT > 0): ?>
+        <button id="groups-link" type="button" class="vc-btn" style="padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">GROUPS</button>
+      <?php endif; ?>
+
+      <button id="logout-link" type="button" class="vc-btn-logout" style="padding:6px 12px;border-radius:8px;border:0;background:#ff6b6b;color:#fff;">LOGOUT</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- Inline CSS fallback tweaks (ensures consistent layout) -->
+<style>
+  /* ensure header content doesn't shrink */
+  #Header { box-sizing: border-box; }
+  #Header .vc-container { box-sizing: border-box; }
+  /* small-screen adjustments: header can grow vertically, JS will update body padding */
+  @media (max-width:520px){
+    #Header { position:fixed; height:auto; padding-top:8px; padding-bottom:8px; }
+    #Header .vc-container { flex-direction:column; align-items:flex-start; gap:8px; padding:6px 12px; }
+  }
+  /* keep header above everything */
+  #Header { z-index:1200; }
+</style>
+
+<!-- Inline script: measure header height, set body padding-top, attach handlers safely, observe changes -->
 <script>
-(function(){
-  function nav(){ return document.getElementById('Header') || document.querySelector('.navbar.fixed-top') || document.getElementById('vc-header'); }
-  function applyPadding(){
-    var n = nav();
-    if(!n) return;
-    var h = Math.ceil(n.getBoundingClientRect().height) || 64;
-    var extra = 10;
-    var desired = h + extra;
-    if (parseInt(getComputedStyle(document.body).paddingTop,10) !== desired) {
-      document.body.style.paddingTop = desired + 'px';
-      console.log('[Header] body padding-top set to', desired);
+(function () {
+  'use strict';
+  var log = function () { if (window.console) console.log.apply(console, arguments); };
+
+  function byId(id) { return document.getElementById(id); }
+  function safeCall(fnName) {
+    if (typeof window[fnName] === 'function') {
+      try { window[fnName](); }
+      catch (err) { log('[Header] error calling', fnName, err); }
+    } else {
+      log('[Header] not found:', fnName);
     }
   }
-  function init(){ applyPadding(); /* attach to resize & orientation */ window.addEventListener('resize', function(){ clearTimeout(window._hdrT); window._hdrT=setTimeout(applyPadding,120); }); window.addEventListener('orientationchange', function(){ setTimeout(applyPadding,200); }); }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+  // set body padding to header height + gap
+  function updateBodyPadding() {
+    var header = byId('Header');
+    if (!header) return;
+    // compute height (use offsetHeight to include padding/border)
+    var height = header.getBoundingClientRect().height || header.offsetHeight || 64;
+    var gap = 10;
+    var desired = Math.ceil(height) + gap;
+    var current = parseInt(window.getComputedStyle(document.body).paddingTop, 10) || 0;
+    if (current !== desired) {
+      document.body.style.paddingTop = desired + 'px';
+      log('[Header] body padding-top set to', desired);
+    }
+  }
+
+  // attach click handlers (calls legacy functions if present)
+  function attachHandlers() {
+    var map = [
+      { id: 'vc-refresh-login', fn: function (e) { if (e) e.preventDefault(); safeCall('start_all_refresh'); } },
+      { id: 'vc-ring', fn: function (e) { if (e) e.preventDefault(); safeCall('NoneInSessionCalL'); } },
+      { id: 'territories-link', fn: function (e) { if (e) e.preventDefault(); safeCall('OpeNTerritorYSelectioN'); } },
+      { id: 'groups-link', fn: function (e) { if (e) e.preventDefault(); safeCall('OpeNGrouPSelectioN'); } },
+      { id: 'logout-link', fn: function (e) { if (e) e.preventDefault(); window.needToConfirmExit = false; safeCall('NormalLogout'); } }
+    ];
+    map.forEach(function (m) {
+      var el = byId(m.id);
+      if (el && !el._vc_attached) {
+        el.addEventListener('click', m.fn, false);
+        el._vc_attached = true;
+        log('[Header] attached', m.id);
+      }
+    });
+  }
+
+  // expose helper to update agent channel text
+  window.updateAgentChannel = function (txt) {
+    var s = byId('agentchannelSPAN');
+    if (s) s.textContent = txt || '';
+  };
+
+  // Observe header size changes (best) and fallback to resize events
+  function observeHeader() {
+    var header = byId('Header');
+    if (!header) return;
+    // ResizeObserver if available
+    if (typeof ResizeObserver !== 'undefined') {
+      try {
+        var ro = new ResizeObserver(function () { updateBodyPadding(); });
+        ro.observe(header);
+        log('[Header] ResizeObserver attached');
+        return;
+      } catch (e) {
+        log('[Header] ResizeObserver failed, will fallback to resize event', e);
+      }
+    }
+    // Fallback: debounce resize
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(updateBodyPadding, 120); });
+    window.addEventListener('orientationchange', function () { setTimeout(updateBodyPadding, 180); });
+  }
+
+  // Initialize after DOM and small delay (allow fonts to load / CSS to apply)
+  function init() {
+    attachHandlers();
+    updateBodyPadding();
+    observeHeader();
+    // extra safety: update after window load (images/fonts might change layout)
+    window.addEventListener('load', function () { setTimeout(updateBodyPadding, 120); });
+    // also call once more in case DOM was already loaded
+    setTimeout(updateBodyPadding, 80);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
 })();
 </script>
+<!-- END: modern fixed header -->
+
 
 
  <!-- ZZZZZZZZZZZZ  tabs -->
