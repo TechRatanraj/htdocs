@@ -23781,111 +23781,115 @@ $zi=2;
 </span>
 		
 
-<!-- Modern Header -->
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="Header">
-    <header style="
-        width:<?php echo $MNwidth ?>px;
-        background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        box-shadow:0 2px 10px rgba(0,0,0,0.1);
-        padding:15px 25px;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
-        border-radius:0 0 8px 8px;">
-        
-        <!-- Hidden Form Fields -->
-        <input type="hidden" name="extension" id="extension" />
-        <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
-        <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
-        
-        <!-- Left Section: User Info -->
-        <div style="display:flex;flex-direction:column;gap:5px;">
-            <div style="color:#fff;font-size:14px;font-weight:600;">
-                <?php
-                if ($logged_in_refresh_link > 0) {
-                    echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:5px;\">
-                        <span style=\"display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;\"></span>"
-                        ._QXZ("Logged in as User")."</a>";
-                } else {
-                    echo "<span style=\"display:inline-flex;align-items:center;gap:5px;\">
-                        <span style=\"display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;\"></span>"
-                        ._QXZ("Logged in as User")."</span>";
-                }
-                echo _QXZ(": %1s on Phone: %2s",0,'',$VD_login,$SIP_user);
-                if ($on_hook_agent == 'Y') {
-                    echo " <a href=\"#\" onclick=\"NoneInSessionCalL();return false;\" style=\"color:#fbbf24;text-decoration:none;font-size:12px;padding:2px 8px;background:rgba(251,191,36,0.2);border-radius:12px;margin-left:5px;\">
-                        "._QXZ("ring")."</a>";
-                }
-                ?>
-            </div>
-            <div style="color:rgba(255,255,255,0.85);font-size:12px;">
-                <?php echo _QXZ("Campaign").": <strong style=\"color:#fff;\">$VD_campaign</strong>"; ?>
-                <span id="agentchannelSPAN" style="margin-left:10px;padding:3px 8px;background:rgba(255,255,255,0.15);border-radius:4px;font-size:11px;"></span>
-            </div>
+<!-- Modern Header - Fixed Overlap Issue -->
+<div id="Header" style="
+    width:<?php echo $MNwidth ?>px;
+    background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+    border-radius:8px;
+    margin-bottom:15px;
+    position:relative;
+    z-index:<?php $zi++; echo $zi ?>;">
+    
+    <!-- Hidden Form Fields -->
+    <input type="hidden" name="extension" id="extension" />
+    <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
+    <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
+    
+    <!-- Left Section: User Info -->
+    <div style="display:flex;flex-direction:column;gap:5px;flex:1;">
+        <div style="color:#fff;font-size:14px;font-weight:600;white-space:nowrap;">
+            <?php
+            if ($logged_in_refresh_link > 0) {
+                echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:5px;\">
+                    <span style=\"display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;\"></span>"
+                    ._QXZ("Logged in as User")."</a>";
+            } else {
+                echo "<span style=\"display:inline-flex;align-items:center;gap:5px;\">
+                    <span style=\"display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;\"></span>"
+                    ._QXZ("Logged in as User")."</span>";
+            }
+            echo _QXZ(": %1s on Phone: %2s",0,'',$VD_login,$SIP_user);
+            if ($on_hook_agent == 'Y') {
+                echo " <a href=\"#\" onclick=\"NoneInSessionCalL();return false;\" style=\"color:#fbbf24;text-decoration:none;font-size:12px;padding:2px 8px;background:rgba(251,191,36,0.2);border-radius:12px;margin-left:5px;\">
+                    "._QXZ("ring")."</a>";
+            }
+            ?>
         </div>
-        
-        <!-- Right Section: Navigation Links -->
-        <nav style="display:flex;gap:20px;align-items:center;">
-            <?php if ($territoryCT > 0) { ?>
-                <a href="#" onclick="OpeNTerritorYSelectioN();return false;" style="
-                    color:#fff;
-                    text-decoration:none;
-                    font-size:13px;
-                    font-weight:500;
-                    padding:8px 16px;
-                    background:rgba(255,255,255,0.15);
-                    border-radius:6px;
-                    transition:all 0.3s ease;
-                    border:1px solid rgba(255,255,255,0.2);"
-                    onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-2px)';"
-                    onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform='translateY(0)';">
-                    <?php echo _QXZ("TERRITORIES"); ?>
-                </a>
-            <?php } ?>
-            
-            <?php if ($INgrpCT > 0) { ?>
-                <a href="#" onclick="OpeNGrouPSelectioN();return false;" style="
-                    color:#fff;
-                    text-decoration:none;
-                    font-size:13px;
-                    font-weight:500;
-                    padding:8px 16px;
-                    background:rgba(255,255,255,0.15);
-                    border-radius:6px;
-                    transition:all 0.3s ease;
-                    border:1px solid rgba(255,255,255,0.2);"
-                    onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-2px)';"
-                    onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform='translateY(0)';">
-                    <?php echo _QXZ("GROUPS"); ?>
-                </a>
-            <?php } ?>
-            
-            <a href="#" onclick="NormalLogout();return false;needToConfirmExit = false;" style="
+        <div style="color:rgba(255,255,255,0.85);font-size:12px;">
+            <?php echo _QXZ("Campaign").": <strong style=\"color:#fff;\">$VD_campaign</strong>"; ?>
+            <span id="agentchannelSPAN" style="margin-left:10px;padding:3px 8px;background:rgba(255,255,255,0.15);border-radius:4px;font-size:11px;"></span>
+        </div>
+    </div>
+    
+    <!-- Right Section: Navigation Links -->
+    <nav style="display:flex;gap:15px;align-items:center;flex-shrink:0;">
+        <?php if ($territoryCT > 0) { ?>
+            <a href="#" onclick="OpeNTerritorYSelectioN();return false;" style="
                 color:#fff;
                 text-decoration:none;
                 font-size:13px;
-                font-weight:600;
-                padding:8px 20px;
-                background:#ef4444;
+                font-weight:500;
+                padding:8px 16px;
+                background:rgba(255,255,255,0.15);
                 border-radius:6px;
                 transition:all 0.3s ease;
-                box-shadow:0 2px 8px rgba(239,68,68,0.3);"
-                onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';this.style.transform='translateY(-2px)';"
-                onmouseout="this.style.background='#ef4444';this.style.boxShadow='0 2px 8px rgba(239,68,68,0.3)';this.style.transform='translateY(0)';">
-                <?php echo _QXZ("LOGOUT"); ?>
+                border:1px solid rgba(255,255,255,0.2);
+                white-space:nowrap;"
+                onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-2px)';"
+                onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform='translateY(0)';">
+                <?php echo _QXZ("TERRITORIES"); ?>
             </a>
-        </nav>
-    </header>
-    
-    <!-- CSS Animation for Pulse Effect -->
-    <style>
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-    </style>
-</span>
+        <?php } ?>
+        
+        <?php if ($INgrpCT > 0) { ?>
+            <a href="#" onclick="OpeNGrouPSelectioN();return false;" style="
+                color:#fff;
+                text-decoration:none;
+                font-size:13px;
+                font-weight:500;
+                padding:8px 16px;
+                background:rgba(255,255,255,0.15);
+                border-radius:6px;
+                transition:all 0.3s ease;
+                border:1px solid rgba(255,255,255,0.2);
+                white-space:nowrap;"
+                onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-2px)';"
+                onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform='translateY(0)';">
+                <?php echo _QXZ("GROUPS"); ?>
+            </a>
+        <?php } ?>
+        
+        <a href="#" onclick="NormalLogout();return false;needToConfirmExit = false;" style="
+            color:#fff;
+            text-decoration:none;
+            font-size:13px;
+            font-weight:600;
+            padding:8px 20px;
+            background:#ef4444;
+            border-radius:6px;
+            transition:all 0.3s ease;
+            box-shadow:0 2px 8px rgba(239,68,68,0.3);
+            white-space:nowrap;"
+            onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';this.style.transform='translateY(-2px)';"
+            onmouseout="this.style.background='#ef4444';this.style.boxShadow='0 2px 8px rgba(239,68,68,0.3)';this.style.transform='translateY(0)';">
+            <?php echo _QXZ("LOGOUT"); ?>
+        </a>
+    </nav>
+</div>
+
+<!-- CSS Animation for Pulse Effect -->
+<style>
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+</style>
 
 
 
