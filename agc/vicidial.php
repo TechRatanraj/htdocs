@@ -1220,7 +1220,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <script language="JavaScript" src="calendar_db.js"></script>
 <script language="JavaScript" src="confetti.php"></script>
 <link rel="stylesheet" href="calendar.css" />
-<link rel="stylesheet" type="text/css" href="css/cxzotel.css">
+
 </head>
 ';
 echo "<!-- VERSION: $version     "._QXZ("BUILD:")." $build -->\n";
