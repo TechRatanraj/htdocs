@@ -23782,35 +23782,192 @@ $zi=2;
 		
 
 <!-- ZZZZZZZZZZZZ  header -->
+<?php
+// Inline modernized header — drop this in place of your old <nav> block.
+// Escapes outputs, preserves legacy function calls, prevents overlap by setting body padding.
+// Assumes Bootstrap CSS is available; otherwise the internal CSS will still provide sensible layout.
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <input type="hidden" name="extension" id="extension"/>
-            <input type="hidden" name="custom_field_values" id="custom_field_values" value=""/>
-            <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0"/>
+$vd_login_safe      = htmlspecialchars($VD_login ?? '', ENT_QUOTES, 'UTF-8');
+$sip_user_safe      = htmlspecialchars($SIP_user ?? '', ENT_QUOTES, 'UTF-8');
+$vd_campaign_safe   = htmlspecialchars($VD_campaign ?? '', ENT_QUOTES, 'UTF-8');
+$on_hook_agent      = ($on_hook_agent ?? 'N');
+$logged_in_refresh_link = ($logged_in_refresh_link ?? 0);
+$territoryCT = ($territoryCT ?? 0);
+$INgrpCT = ($INgrpCT ?? 0);
+?>
+<!-- ZZZZZZZZZZZZ modern inline header -->
+<nav id="vc-header" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation" aria-label="Main header"
+     style="height:64px;min-height:64px;box-shadow:0 6px 18px rgba(0,0,0,0.15);">
+  <div class="container d-flex align-items-center" style="height:100%;gap:12px;">
 
-                        <div style="color: #FFFFFF"><?php echo _QXZ("User Login :"); ?></font></a><?php
-                echo _QXZ(" %1s en Phone : %2s", 0, '', $VD_login, $SIP_user);
-                if ($on_hook_agent == 'Y') {
-                    echo "(<a href=\"#\" onclick=\"NoneInSessionCalL();return false;\">" . _QXZ("ring") . "</a>)";
-                }
-                echo "&nbsp; " . _QXZ("a la Campaign") . " $VD_campaign&nbsp; ";
-                ?> &nbsp; &nbsp; <span id="agentchannelSPAN"></span></div>
+    <!-- Hidden form fields (preserve for backend) -->
+    <input type="hidden" name="extension" id="extension" />
+    <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
+    <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
 
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto pull-right">
-                <div >
-                <li class="nav-item active">
-                    <a class="nav-link">
-                        <?php echo "<a href=\"#\" onclick=\"NormalLogout();return false;needToConfirmExit = false;\"> <button type=\"button\" class=\"btn btn-default btn-sm\"><span class=\"glyphicon glyphicon-log-out\"></span> LOGOUT</button> </a>\n"; ?>
-                    </a>
-                </li>
-				</div>
-            </ul>
-        </div>
-        </div>
-    </nav>
+    <!-- Brand / optional icon -->
+    <div class="d-flex align-items-center" style="min-width:140px;gap:10px;">
+      <a class="navbar-brand d-flex align-items-center" href="#" style="display:inline-flex;gap:8px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="8" r="3" fill="#fff"></circle>
+          <path d="M4 20a8 8 0 0116 0" stroke="#fff" stroke-opacity="0.6" stroke-width="1.2" stroke-linecap="round"></path>
+        </svg>
+        <span style="font-weight:600;color:#fff;white-space:nowrap;font-size:15px;">Campaign Console</span>
+      </a>
+    </div>
+
+    <!-- Toggler (visible on small screens) -->
+    <button class="navbar-toggler ml-auto ml-lg-0" type="button" data-toggle="collapse" data-target="#vc-navbar" aria-controls="vc-navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Info area + actions -->
+    <div class="collapse navbar-collapse" id="vc-navbar" style="align-items:center;">
+      <div class="navbar-text d-flex align-items-center flex-grow-1" id="vc-user-info"
+           style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;gap:10px;padding-left:8px;">
+
+        <?php
+          // Refresh-login clickable label (if desired)
+          if (!empty($logged_in_refresh_link) && $logged_in_refresh_link > 0) {
+            echo '<span id="vc-refresh-login" style="cursor:pointer;text-decoration:underline;color:inherit;font-weight:600;">'
+                 . htmlspecialchars(_QXZ("Logged in as User") . ": $vd_login_safe", ENT_QUOTES, 'UTF-8')
+                 . '</span>';
+          } else {
+            echo htmlspecialchars(_QXZ("Logged in as User") . ": $vd_login_safe", ENT_QUOTES, 'UTF-8');
+          }
+
+          echo ' <span style="color:rgba(255,255,255,0.75)">•</span> ';
+          echo '<span title="SIP user" style="color:rgba(255,255,255,0.95)">' . $sip_user_safe . '</span>';
+
+          if ($on_hook_agent === 'Y') {
+            // render ring link without inline onclick
+            echo ' (<a href="#" id="vc-ring" style="color:inherit;text-decoration:underline;font-size:0.95em;">' . htmlspecialchars(_QXZ("ring"), ENT_QUOTES, 'UTF-8') . '</a>)';
+          }
+
+          echo ' <span style="color:rgba(255,255,255,0.75)">•</span> ';
+          echo '<span style="font-weight:500;color:#ffffff;">' . htmlspecialchars(_QXZ("Campaign") . ': ' . $vd_campaign_safe, ENT_QUOTES, 'UTF-8') . '</span>';
+        ?>
+
+        <!-- dynamic agent channel area -->
+        <span id="agentchannelSPAN" aria-live="polite" style="margin-left:8px;color:#f0f0f0;font-weight:500;"></span>
+      </div>
+
+      <!-- right actions -->
+      <ul class="navbar-nav ml-auto d-flex align-items-center" style="gap:8px;">
+        <?php if (!empty($territoryCT) && $territoryCT > 0): ?>
+          <li class="nav-item">
+            <button id="territories-link" type="button" class="btn btn-sm btn-outline-light">TERRITORIES</button>
+          </li>
+        <?php endif; ?>
+
+        <?php if (!empty($INgrpCT) && $INgrpCT > 0): ?>
+          <li class="nav-item">
+            <button id="groups-link" type="button" class="btn btn-sm btn-outline-light">GROUPS</button>
+          </li>
+        <?php endif; ?>
+
+        <li class="nav-item">
+          <button id="logout-link" type="button" class="btn btn-sm btn-danger" aria-label="Logout">LOGOUT</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Inline styles to ensure header visuals are consistent even without full Bootstrap -->
+  <style>
+    /* Ensure navbar content vertically centered and prevents very small height */
+    #vc-header .container { height:64px; max-width:100%; padding-left:12px; padding-right:12px; }
+    #vc-header .navbar-text { font-size:14px; }
+    #vc-header .btn { padding:6px 10px; border-radius:8px; }
+    @media (max-width:576px){
+      /* slightly taller header on small screens to accommodate wrapped content */
+      #vc-header { height:auto; padding-top:8px; padding-bottom:8px; }
+      body { transition: padding-top .08s ease; }
+    }
+  </style>
+
+  <!-- Inline script: sets body padding to avoid overlap and attaches handlers safely -->
+  <script>
+  (function () {
+    'use strict';
+    var log = function () { if (window.console) console.log.apply(console, arguments); };
+
+    function byId(id) { return document.getElementById(id); }
+    function safeCall(fnName) {
+      if (typeof window[fnName] === 'function') {
+        try { window[fnName](); }
+        catch (err) { log('[vc-header] error calling', fnName, err); }
+      } else {
+        log('[vc-header] not found:', fnName);
+      }
+    }
+
+    function attachHandlers() {
+      var map = [
+        { id: 'vc-refresh-login', handler: function (e) { if (e) e.preventDefault(); safeCall('start_all_refresh'); } },
+        { id: 'vc-ring', handler: function (e) { if (e) e.preventDefault(); safeCall('NoneInSessionCalL'); } },
+        { id: 'territories-link', handler: function (e) { if (e) e.preventDefault(); safeCall('OpeNTerritorYSelectioN'); } },
+        { id: 'groups-link', handler: function (e) { if (e) e.preventDefault(); safeCall('OpeNGrouPSelectioN'); } },
+        { id: 'logout-link', handler: function (e) { if (e) e.preventDefault(); window.needToConfirmExit = false; safeCall('NormalLogout'); } }
+      ];
+
+      map.forEach(function (m) {
+        var el = byId(m.id);
+        if (el && !el._vc_attached) {
+          el.addEventListener('click', m.handler, false);
+          el._vc_attached = true;
+          log('[vc-header] attached:', m.id);
+        } else if (!el) {
+          log('[vc-header] missing element:', m.id);
+        }
+      });
+    }
+
+    function adjustBodyPadding() {
+      var nav = byId('vc-header');
+      if (!nav) return;
+      // Use the visible height (it may expand on small screens)
+      var rect = nav.getBoundingClientRect();
+      var height = Math.ceil(rect.height) || 64;
+      var extra = 10; // breathing room
+      var desired = height + extra;
+      var current = parseInt(window.getComputedStyle(document.body).paddingTop, 10) || 0;
+      if (current < desired) {
+        document.body.style.paddingTop = desired + 'px';
+        log('[vc-header] set body padding-top to', desired);
+      }
+    }
+
+    // Expose updateAgentChannel helper
+    window.updateAgentChannel = function (txt) {
+      var s = byId('agentchannelSPAN');
+      if (s) s.textContent = txt || '';
+    };
+
+    function init() {
+      attachHandlers();
+      adjustBodyPadding();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    // Recalculate when window changes (debounced)
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(adjustBodyPadding, 120);
+    });
+    // On orientation change allow slight delay then recompute
+    window.addEventListener('orientationchange', function () { setTimeout(adjustBodyPadding, 220); });
+
+  })();
+  </script>
+</nav>
+
 
 
 
