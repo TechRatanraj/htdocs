@@ -23847,6 +23847,24 @@ $zi=2;
         </div>
     </div>
 </span>
+<script>
+(function(){
+  function nav(){ return document.getElementById('Header') || document.querySelector('.navbar.fixed-top') || document.getElementById('vc-header'); }
+  function applyPadding(){
+    var n = nav();
+    if(!n) return;
+    var h = Math.ceil(n.getBoundingClientRect().height) || 64;
+    var extra = 10;
+    var desired = h + extra;
+    if (parseInt(getComputedStyle(document.body).paddingTop,10) !== desired) {
+      document.body.style.paddingTop = desired + 'px';
+      console.log('[Header] body padding-top set to', desired);
+    }
+  }
+  function init(){ applyPadding(); /* attach to resize & orientation */ window.addEventListener('resize', function(){ clearTimeout(window._hdrT); window._hdrT=setTimeout(applyPadding,120); }); window.addEventListener('orientationchange', function(){ setTimeout(applyPadding,200); }); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
 
 
  <!-- ZZZZZZZZZZZZ  tabs -->
