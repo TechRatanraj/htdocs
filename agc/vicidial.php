@@ -23845,43 +23845,63 @@ $zi=2;
 <!-- Minimal JS to attach events (place this near the end of the page) -->
 <script>
 (function () {
-    // helper to safely get element by id
-    function el(id) { return document.getElementById(id); }
+  function log(...args) { console.log('[Header]','\n', ...args); }
 
-    // Map UI ids to existing functions (keeps your backend JS functions intact)
+  function safeEl(id) { return document.getElementById(id); }
+
+  function attachHandlers() {
+    log('Attaching header handlers...');
+
     var mapping = [
-        {id: 'refresh-login-link', fn: function(e){ e.preventDefault(); if (typeof start_all_refresh === 'function') start_all_refresh(); }},
-        {id: 'ring-link', fn: function(e){ e.preventDefault(); if (typeof NoneInSessionCalL === 'function') NoneInSessionCalL(); }},
-        {id: 'territories-link', fn: function(e){ e.preventDefault(); if (typeof OpeNTerritorYSelectioN === 'function') OpeNTerritorYSelectioN(); }},
-        {id: 'groups-link', fn: function(e){ e.preventDefault(); if (typeof OpeNGrouPSelectioN === 'function') OpeNGrouPSelectioN(); }},
-        {id: 'logout-link', fn: function(e){ e.preventDefault(); if (typeof NormalLogout === 'function') { needToConfirmExit = false; NormalLogout(); } }}
+      {id: 'refresh-login-link', fn: function(e){ e.preventDefault(); if (typeof start_all_refresh === 'function') start_all_refresh(); else log('start_all_refresh not found'); }},
+      {id: 'ring-link',          fn: function(e){ e.preventDefault(); if (typeof NoneInSessionCalL === 'function') NoneInSessionCalL(); else log('NoneInSessionCalL not found'); }},
+      {id: 'territories-link',   fn: function(e){ e.preventDefault(); if (typeof OpeNTerritorYSelectioN === 'function') OpeNTerritorYSelectioN(); else log('OpeNTerritorYSelectioN not found'); }},
+      {id: 'groups-link',        fn: function(e){ e.preventDefault(); if (typeof OpeNGrouPSelectioN === 'function') OpeNGrouPSelectioN(); else log('OpeNGrouPSelectioN not found'); }},
+      {id: 'logout-link',        fn: function(e){ e.preventDefault(); if (typeof NormalLogout === 'function') { needToConfirmExit = false; NormalLogout(); } else log('NormalLogout not found'); }}
     ];
 
+    var foundAny = false;
     mapping.forEach(function(m){
-        var node = el(m.id);
-        if (node) node.addEventListener('click', m.fn, false);
+      var node = safeEl(m.id);
+      if (node) {
+        node.addEventListener('click', m.fn, false);
+        log('handler attached for', m.id);
+        foundAny = true;
+      } else {
+        log('element missing:', m.id);
+      }
     });
 
-    // Example nice-to-have: update agent channel text safely
-    // you can call updateAgentChannel('Channel info') from other scripts
-    window.updateAgentChannel = function (txt) {
-        var span = el('agentchannelSPAN');
-        if (!span) return;
-        // avoid injecting HTML
-        span.textContent = txt || '';
-    };
+    // sanity helper for agentchannelSPAN
+    if (!safeEl('agentchannelSPAN')) {
+      log('missing agentchannelSPAN element');
+    } else {
+      log('agentchannelSPAN OK');
+    }
+
+    if (!foundAny) log('No handlers attached — check that element IDs match the markup and the script runs after DOM is ready.');
+  }
+
+  // Run on DOMContentLoaded. If DOMContentLoaded already fired, run immediately.
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    attachHandlers();
+  } else {
+    document.addEventListener('DOMContentLoaded', attachHandlers, { once: true });
+    // also fallback in case something odd blocks DOMContentLoaded
+    setTimeout(function(){ if (!window._headerHandlersAttached) { attachHandlers(); window._headerHandlersAttached = true; } }, 1500);
+  }
+
+  // Expose a safe update helper
+  window.updateAgentChannel = function (txt) {
+    var span = safeEl('agentchannelSPAN');
+    if (!span) return;
+    span.textContent = txt || '';
+  };
 })();
 </script>
 
-<!-- Optional small CSS (move to your stylesheet) -->
-<style>
-.vc-hidden{display:none}
-.header-container{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px}
-.header-left{display:flex;gap:10px;align-items:center}
-.header-item{display:flex;align-items:center;gap:6px}
-.header-right{display:flex;gap:12px;align-items:center}
-.header-link, .logout-btn{cursor:pointer;text-decoration:none}
-</style>
+
+
 
 
 
