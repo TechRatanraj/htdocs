@@ -23891,46 +23891,247 @@ $zi=2;
     }
 </style>
 
+<!-- Modern Tabs Navigation -->
+<div id="Tabs" style="
+    width:<?php echo $MNwidth ?>px;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    overflow:hidden;
+    margin-bottom:15px;
+    position:relative;
+    z-index:<?php $zi++; echo $zi ?>;">
+    
+    <div style="display:flex;align-items:stretch;height:50px;">
+        <!-- Main Logo Tab -->
+        <a href="#" onclick="MainPanelToFront('NO','YES');" style="
+            background:#<?php echo $SSstd_row5_background ?>;
+            width:115px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;"
+            onmouseover="this.style.opacity='0.85';this.style.transform='scale(1.02)';"
+            onmouseout="this.style.opacity='1';this.style.transform='scale(1)';">
+            <img src="<?php echo $selected_logo ?>" alt="MAIN" width="100px" height="auto" style="max-height:40px;" />
+        </a>
+        
+        <!-- Script Tab -->
+        <a href="#" onclick="ScriptPanelToFront('YES');" style="
+            width:80px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-decoration:none;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            font-size:11px;
+            font-weight:600;
+            color:#4b5563;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;
+            background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+            Script
+        </a>
+        
+        <!-- Script 2 Tab (Conditional) -->
+        <?php if ($SSenable_second_script > 0) { ?>
+            <a href="#" onclick="ScriptPanel2ToFront('YES');" style="
+                width:80px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-decoration:none;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+                font-size:11px;
+                font-weight:600;
+                color:#4b5563;
+                text-transform:uppercase;
+                letter-spacing:0.5px;
+                border-right:1px solid rgba(0,0,0,0.08);
+                transition:all 0.3s ease;
+                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
+                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
+                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+                Script 2
+            </a>
+        <?php } ?>
+        
+        <!-- Form Tab (Conditional) -->
+        <?php if ($custom_fields_enabled > 0) { ?>
+            <a href="#" onclick="FormPanelToFront('YES');" style="
+                width:80px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-decoration:none;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+                font-size:11px;
+                font-weight:600;
+                color:#4b5563;
+                text-transform:uppercase;
+                letter-spacing:0.5px;
+                border-right:1px solid rgba(0,0,0,0.08);
+                transition:all 0.3s ease;
+                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
+                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
+                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+                Form
+            </a>
+        <?php } ?>
+        
+        <!-- Email Tab (Conditional) -->
+        <?php if ($email_enabled > 0) { ?>
+            <a href="#" onclick="EmailPanelToFront('YES');" style="
+                width:80px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-decoration:none;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+                font-size:11px;
+                font-weight:600;
+                color:#4b5563;
+                text-transform:uppercase;
+                letter-spacing:0.5px;
+                border-right:1px solid rgba(0,0,0,0.08);
+                transition:all 0.3s ease;
+                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
+                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
+                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+                Email
+            </a>
+        <?php } ?>
+        
+        <!-- Chat Tabs (Conditional) -->
+        <?php if ($chat_enabled > 0) { ?>
+            <!-- Internal Chat -->
+            <a href="#" onclick="InternalChatContentsLoad('YES');" style="
+                width:90px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-decoration:none;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+                font-size:11px;
+                font-weight:600;
+                color:#4b5563;
+                text-transform:uppercase;
+                letter-spacing:0.5px;
+                border-right:1px solid rgba(0,0,0,0.08);
+                transition:all 0.3s ease;
+                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
+                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
+                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+                <img src="./images/<?php echo _QXZ("vdc_tab_chat_internal.gif"); ?>" name='InternalChatImg' alt="Internal Chat" style="height:24px;width:auto;" />
+            </a>
+            
+            <!-- Customer Chat (Conditional) -->
+            <?php if ($campaign_chat_enabled=='Y') { ?>
+                <a href="#" onclick="CustomerChatPanelToFront('1', 'YES');" style="
+                    width:90px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    text-decoration:none;
+                    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+                    font-size:11px;
+                    font-weight:600;
+                    color:#4b5563;
+                    text-transform:uppercase;
+                    letter-spacing:0.5px;
+                    border-right:1px solid rgba(0,0,0,0.08);
+                    transition:all 0.3s ease;
+                    background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
+                    onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
+                    onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+                    <img src="./images/<?php echo _QXZ("vdc_tab_chat_customer.gif"); ?>" name='CustomerChatImg' alt="Customer Chat" style="height:24px;width:auto;" />
+                </a>
+            <?php } ?>
+        <?php } ?>
+        
+        <!-- Status Section (Flex Grow) -->
+        <div style="
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            padding:0 15px;
+            background:linear-gradient(to right, #f9fafb, #ffffff);
+            border-right:1px solid rgba(0,0,0,0.08);">
+            <div style="font-size:10px;color:#6b7280;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+                <span id="status" style="
+                    display:inline-block;
+                    padding:2px 8px;
+                    background:#10b981;
+                    color:#fff;
+                    border-radius:12px;
+                    font-weight:600;
+                    font-size:10px;
+                    text-transform:uppercase;
+                    letter-spacing:0.5px;"><?php echo _QXZ("LIVE"); ?></span>
+                <span style="margin:0 5px;color:#d1d5db;">|</span>
+                <?php echo _QXZ("session ID:"); ?> <span id="sessionIDspan" style="font-weight:600;color:#374151;"></span>
+            </div>
+            <div style="font-size:11px;color:#374151;margin-top:3px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+                <span id="AgentStatusCalls" style="margin-right:10px;"></span>
+                <span id="AgentStatusEmails"></span>
+            </div>
+        </div>
+        
+        <!-- Live Call Indicator -->
+        <div style="
+            width:120px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:linear-gradient(135deg, #f3f4f6, #e5e7eb);">
+            <img src="./images/<?php echo _QXZ("agc_live_call_OFF.gif"); ?>" name="livecall" alt="Live Call" style="height:30px;width:auto;" />
+        </div>
+    </div>
+</div>
+
+<!-- Welcome Box (Modern Card Style) -->
+<div id="WelcomeBoxA" style="
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $HKwidth ?>px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    z-index:<?php $zi++; echo $zi ?>;
+    margin-bottom:20px;
+    border:1px solid rgba(0,0,0,0.05);">
+    <div style="text-align:center;padding:30px;">
+        <div id="WelcomeBoxAt" style="
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            font-size:24px;
+            font-weight:600;
+            color:#1f2937;
+            background:linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            background-clip:text;">
+            <?php echo _QXZ("Agent Screen"); ?>
+        </div>
+        <div style="
+            width:60px;
+            height:4px;
+            background:linear-gradient(135deg, #667eea, #764ba2);
+            margin:15px auto;
+            border-radius:2px;"></div>
+    </div>
+</div>
 
 
-<!-- ZZZZZZZZZZZZ  tabs -->
-<span style="position:absolute;left:0px;top:13px;z-index:<?php $zi++; echo $zi ?>;" id="Tabs">
-    <table border="0" bgcolor="#FFFFFF" width="<?php echo $MNwidth ?>px" height="30px">
-    <tr valign="top" align="left">
-    <td align="left" width="115px" bgcolor="#<?php echo $SSstd_row5_background ?>"><a href="#" onclick="MainPanelToFront('NO','YES');"><img src="<?php echo $selected_logo ?>" alt="MAIN" width="115px" height="30px" border="0" /></a></td>
-    <td align="left" width="67px"><a href="#" onclick="ScriptPanelToFront('YES');"><img src="./images/<?php echo _QXZ("vdc_tab_script.gif"); ?>" alt="SCRIPT" width="67px" height="30px" border="0" /></a></td>
-	<?php if ($SSenable_second_script > 0)
-    {echo "<td align=\"left\" width=\"67px\"><a href=\"#\" onclick=\"ScriptPanel2ToFront('YES');\"><img src=\"./images/"._QXZ("vdc_tab_script2.gif")."\" alt=\"SCRIPT 2\" width=\"67px\" height=\"30px\" border=\"0\" /></a></td>\n";}
-	?>
-	<?php if ($custom_fields_enabled > 0)
-    {echo "<td align=\"left\" width=\"67px\"><a href=\"#\" onclick=\"FormPanelToFront('YES');\"><img src=\"./images/"._QXZ("vdc_tab_form.gif")."\" alt=\"FORM\" width=\"67px\" height=\"30px\" border=\"0\" /></a></td>\n";}
-	?>
-	<?php if ($email_enabled > 0)
-    {echo "<td align=\"left\" width=\"67px\"><a href=\"#\" onclick=\"EmailPanelToFront('YES');\"><img src=\"./images/"._QXZ("vdc_tab_email.gif")."\" alt=\"EMAIL\" width=\"67px\" height=\"30px\" border=\"0\" /></a></td>\n";}
-	?>
-	<?php if ($chat_enabled > 0)
-		{
-		# INTERNAL CHAT
-		# Always show if chat is enabled for the system
-		echo "<td align=\"left\" width=\"67px\"><a href=\"#\" onclick=\"InternalChatContentsLoad('YES');\"><img src=\"./images/"._QXZ("vdc_tab_chat_internal.gif")."\" name='InternalChatImg' alt=\"CHAT\" width=\"67px\" height=\"30px\" border=\"0\"/></a></td>\n";
-
-		if ($campaign_chat_enabled=='Y')
-			{
-			# CUSTOMER CHAT
-			# Only show if chat is enabled for the system AND the campaign the agent is using.
-			echo "<td align=\"left\" width=\"67px\"><a href=\"#\" onclick=\"CustomerChatPanelToFront('1', 'YES');\"><img src=\"./images/"._QXZ("vdc_tab_chat_customer.gif")."\" name='CustomerChatImg' alt=\"CHAT\" width=\"67px\" height=\"30px\" border=\"0\"/></a></td>\n";
-			}
-		}
-	?>
-    <td width="<?php echo $HSwidth ?>px" valign="middle" align="center"><font class="body_tiny">&nbsp; <span id="status"><?php echo _QXZ("LIVE"); ?></span>&nbsp; &nbsp; <?php echo _QXZ("session ID:"); ?> <span id="sessionIDspan"></span></font><br><font class="body_text">&nbsp; &nbsp;<span id="AgentStatusCalls"></span>&nbsp; &nbsp;<span id="AgentStatusEmails"></span></font></td>
-    <td width="109px"><img src="./images/<?php echo _QXZ("agc_live_call_OFF.gif"); ?>" name="livecall" alt="Live Call" width="109px" height="30px" border="0" /></td>
-    </tr>
- </table>
-</span>
-
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="WelcomeBoxA">
-    <table border="0" bgcolor="#FFFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $HKwidth ?>px"><tr><td align="center"><br /><span id="WelcomeBoxAt"><?php echo _QXZ("Agent Screen"); ?></span></td></tr></table>
-</span>
 
 
  <!-- BEGIN *********   Here is the main VICIDIAL display panel -->
