@@ -23781,72 +23781,108 @@ $zi=2;
 </span>
 		
 
-
 <!-- Header Section -->
-<span id="Header">
+<header id="Header" class="vc-header" role="banner" aria-label="Agent header">
     <!-- Hidden Form Fields -->
-    <input type="hidden" name="extension" id="extension" />
-    <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
-    <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
+    <form id="headerForm" aria-hidden="true" class="vc-hidden">
+        <input type="hidden" name="extension" id="extension" />
+        <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
+        <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
+    </form>
 
     <div class="header-container">
-        <!-- Left Section: Agent Info -->
-        <div class="header-left">
+        <!-- Left: Agent Info -->
+        <div class="header-left" role="region" aria-label="Agent information">
             <div class="header-item">
-                <span>👤</span>
+                <span aria-hidden="true">👤</span>
                 <span class="queue_text">
                     <?php
-                    if ($logged_in_refresh_link > 0) {
-                        echo "<a href=\"#\" onclick=\"start_all_refresh();return false;\">"._QXZ("Logged in as User").": ".$VD_login."</a>";
-                    } else {
-                        echo _QXZ("Logged in as User").": ".$VD_login;
-                    }
-                    ?>
+                    // escape output to reduce XSS risk
+                    $safeLogin = htmlspecialchars($VD_login ?? '', ENT_QUOTES, 'UTF-8');
+                    if (!empty($logged_in_refresh_link) && $logged_in_refresh_link > 0) : ?>
+                        <a href="#" id="refresh-login-link"><?= htmlspecialchars(_QXZ("Logged in as User"), ENT_QUOTES, 'UTF-8') . ": $safeLogin" ?></a>
+                    <?php else : ?>
+                        <?= htmlspecialchars(_QXZ("Logged in as User"), ENT_QUOTES, 'UTF-8') . ": $safeLogin" ?>
+                    <?php endif; ?>
                 </span>
             </div>
 
             <div class="header-item">
-                <span>📞</span>
+                <span aria-hidden="true">📞</span>
                 <span class="queue_text">
-                    <?php echo $SIP_user; ?>
-                    <?php
-                    if ($on_hook_agent == 'Y') {
-                        echo " (<a href=\"#\" onclick=\"NoneInSessionCalL();return false;\">"._QXZ("ring")."</a>)";
-                    }
-                    ?>
+                    <?= htmlspecialchars($SIP_user ?? '', ENT_QUOTES, 'UTF-8') ?>
+                    <?php if (($on_hook_agent ?? '') === 'Y') : ?>
+                        <span class="on-hook">
+                            (<a href="#" id="ring-link"><?= htmlspecialchars(_QXZ("ring"), ENT_QUOTES, 'UTF-8') ?></a>)
+                        </span>
+                    <?php endif; ?>
                 </span>
             </div>
 
             <div class="header-item">
-                <span>📋</span>
-                <span class="queue_text">
-                    <?php echo $VD_campaign; ?>
-                </span>
+                <span aria-hidden="true">📋</span>
+                <span class="queue_text"><?= htmlspecialchars($VD_campaign ?? '', ENT_QUOTES, 'UTF-8') ?></span>
             </div>
 
-            <span id="agentchannelSPAN"></span>
+            <span id="agentchannelSPAN" aria-live="polite"></span>
         </div>
 
-        <!-- Right Section: Actions -->
-        <div class="header-right">
-            <?php if ($territoryCT > 0) { ?>
-                <a href="#" onclick="OpeNTerritorYSelectioN();return false;" class="header-link">
-                    <?php echo _QXZ("TERRITORIES"); ?>
-                </a>
-            <?php } ?>
+        <!-- Right: Actions -->
+        <nav class="header-right" role="navigation" aria-label="Agent actions">
+            <?php if (!empty($territoryCT) && $territoryCT > 0) : ?>
+                <a href="#" id="territories-link" class="header-link"><?= htmlspecialchars(_QXZ("TERRITORIES"), ENT_QUOTES, 'UTF-8') ?></a>
+            <?php endif; ?>
 
-            <?php if ($INgrpCT > 0) { ?>
-                <a href="#" onclick="OpeNGrouPSelectioN();return false;" class="header-link">
-                    <?php echo _QXZ("GROUPS"); ?>
-                </a>
-            <?php } ?>
+            <?php if (!empty($INgrpCT) && $INgrpCT > 0) : ?>
+                <a href="#" id="groups-link" class="header-link"><?= htmlspecialchars(_QXZ("GROUPS"), ENT_QUOTES, 'UTF-8') ?></a>
+            <?php endif; ?>
 
-            <a href="#" onclick="NormalLogout();needToConfirmExit = false;return false;" class="logout-btn">
-                <?php echo _QXZ("LOGOUT"); ?>
-            </a>
-        </div>
+            <a href="#" id="logout-link" class="logout-btn"><?= htmlspecialchars(_QXZ("LOGOUT"), ENT_QUOTES, 'UTF-8') ?></a>
+        </nav>
     </div>
-</span>
+</header>
+
+<!-- Minimal JS to attach events (place this near the end of the page) -->
+<script>
+(function () {
+    // helper to safely get element by id
+    function el(id) { return document.getElementById(id); }
+
+    // Map UI ids to existing functions (keeps your backend JS functions intact)
+    var mapping = [
+        {id: 'refresh-login-link', fn: function(e){ e.preventDefault(); if (typeof start_all_refresh === 'function') start_all_refresh(); }},
+        {id: 'ring-link', fn: function(e){ e.preventDefault(); if (typeof NoneInSessionCalL === 'function') NoneInSessionCalL(); }},
+        {id: 'territories-link', fn: function(e){ e.preventDefault(); if (typeof OpeNTerritorYSelectioN === 'function') OpeNTerritorYSelectioN(); }},
+        {id: 'groups-link', fn: function(e){ e.preventDefault(); if (typeof OpeNGrouPSelectioN === 'function') OpeNGrouPSelectioN(); }},
+        {id: 'logout-link', fn: function(e){ e.preventDefault(); if (typeof NormalLogout === 'function') { needToConfirmExit = false; NormalLogout(); } }}
+    ];
+
+    mapping.forEach(function(m){
+        var node = el(m.id);
+        if (node) node.addEventListener('click', m.fn, false);
+    });
+
+    // Example nice-to-have: update agent channel text safely
+    // you can call updateAgentChannel('Channel info') from other scripts
+    window.updateAgentChannel = function (txt) {
+        var span = el('agentchannelSPAN');
+        if (!span) return;
+        // avoid injecting HTML
+        span.textContent = txt || '';
+    };
+})();
+</script>
+
+<!-- Optional small CSS (move to your stylesheet) -->
+<style>
+.vc-hidden{display:none}
+.header-container{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px}
+.header-left{display:flex;gap:10px;align-items:center}
+.header-item{display:flex;align-items:center;gap:6px}
+.header-right{display:flex;gap:12px;align-items:center}
+.header-link, .logout-btn{cursor:pointer;text-decoration:none}
+</style>
+
 
 
  <!-- ZZZZZZZZZZZZ  tabs -->
