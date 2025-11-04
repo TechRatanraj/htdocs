@@ -1072,7 +1072,7 @@ $webphone_pad			= 0;	# set the table cellpadding for the webphone
 $webphone_location		= 'right';	# set the location on the agent screen 'right' or 'bar'
 $banner_height			= 15;	# state description banner
 $MAIN_COLOR				= "#FFFFFF";	# old default is E0C2D6
-$SCRIPT_COLOR			= '"#FFFFFF"';	# old default is FFE7D0
+$SCRIPT_COLOR			= "#FFFFFF";	# old default is FFE7D0
 $FORM_COLOR				= '#EFEFEF';
 $SIDEBAR_COLOR			= '#F6F6F6';
 
