@@ -23781,128 +23781,72 @@ $zi=2;
 </span>
 		
 
+
 <!-- Header Section -->
-<header id="Header" class="vc-header" role="banner" aria-label="Agent header">
+<span id="Header">
     <!-- Hidden Form Fields -->
-    <form id="headerForm" aria-hidden="true" class="vc-hidden">
-        <input type="hidden" name="extension" id="extension" />
-        <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
-        <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
-    </form>
+    <input type="hidden" name="extension" id="extension" />
+    <input type="hidden" name="custom_field_values" id="custom_field_values" value="" />
+    <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
 
     <div class="header-container">
-        <!-- Left: Agent Info -->
-        <div class="header-left" role="region" aria-label="Agent information">
+        <!-- Left Section: Agent Info -->
+        <div class="header-left">
             <div class="header-item">
-                <span aria-hidden="true">👤</span>
+                <span>👤</span>
                 <span class="queue_text">
                     <?php
-                    // escape output to reduce XSS risk
-                    $safeLogin = htmlspecialchars($VD_login ?? '', ENT_QUOTES, 'UTF-8');
-                    if (!empty($logged_in_refresh_link) && $logged_in_refresh_link > 0) : ?>
-                        <a href="#" id="refresh-login-link"><?= htmlspecialchars(_QXZ("Logged in as User"), ENT_QUOTES, 'UTF-8') . ": $safeLogin" ?></a>
-                    <?php else : ?>
-                        <?= htmlspecialchars(_QXZ("Logged in as User"), ENT_QUOTES, 'UTF-8') . ": $safeLogin" ?>
-                    <?php endif; ?>
+                    if ($logged_in_refresh_link > 0) {
+                        echo "<a href=\"#\" onclick=\"start_all_refresh();return false;\">"._QXZ("Logged in as User").": ".$VD_login."</a>";
+                    } else {
+                        echo _QXZ("Logged in as User").": ".$VD_login;
+                    }
+                    ?>
                 </span>
             </div>
 
             <div class="header-item">
-                <span aria-hidden="true">📞</span>
+                <span>📞</span>
                 <span class="queue_text">
-                    <?= htmlspecialchars($SIP_user ?? '', ENT_QUOTES, 'UTF-8') ?>
-                    <?php if (($on_hook_agent ?? '') === 'Y') : ?>
-                        <span class="on-hook">
-                            (<a href="#" id="ring-link"><?= htmlspecialchars(_QXZ("ring"), ENT_QUOTES, 'UTF-8') ?></a>)
-                        </span>
-                    <?php endif; ?>
+                    <?php echo $SIP_user; ?>
+                    <?php
+                    if ($on_hook_agent == 'Y') {
+                        echo " (<a href=\"#\" onclick=\"NoneInSessionCalL();return false;\">"._QXZ("ring")."</a>)";
+                    }
+                    ?>
                 </span>
             </div>
 
             <div class="header-item">
-                <span aria-hidden="true">📋</span>
-                <span class="queue_text"><?= htmlspecialchars($VD_campaign ?? '', ENT_QUOTES, 'UTF-8') ?></span>
+                <span>📋</span>
+                <span class="queue_text">
+                    <?php echo $VD_campaign; ?>
+                </span>
             </div>
 
-            <span id="agentchannelSPAN" aria-live="polite"></span>
+            <span id="agentchannelSPAN"></span>
         </div>
 
-        <!-- Right: Actions -->
-        <nav class="header-right" role="navigation" aria-label="Agent actions">
-            <?php if (!empty($territoryCT) && $territoryCT > 0) : ?>
-                <a href="#" id="territories-link" class="header-link"><?= htmlspecialchars(_QXZ("TERRITORIES"), ENT_QUOTES, 'UTF-8') ?></a>
-            <?php endif; ?>
+        <!-- Right Section: Actions -->
+        <div class="header-right">
+            <?php if ($territoryCT > 0) { ?>
+                <a href="#" onclick="OpeNTerritorYSelectioN();return false;" class="header-link">
+                    <?php echo _QXZ("TERRITORIES"); ?>
+                </a>
+            <?php } ?>
 
-            <?php if (!empty($INgrpCT) && $INgrpCT > 0) : ?>
-                <a href="#" id="groups-link" class="header-link"><?= htmlspecialchars(_QXZ("GROUPS"), ENT_QUOTES, 'UTF-8') ?></a>
-            <?php endif; ?>
+            <?php if ($INgrpCT > 0) { ?>
+                <a href="#" onclick="OpeNGrouPSelectioN();return false;" class="header-link">
+                    <?php echo _QXZ("GROUPS"); ?>
+                </a>
+            <?php } ?>
 
-            <a href="#" id="logout-link" class="logout-btn"><?= htmlspecialchars(_QXZ("LOGOUT"), ENT_QUOTES, 'UTF-8') ?></a>
-        </nav>
+            <a href="#" onclick="NormalLogout();needToConfirmExit = false;return false;" class="logout-btn">
+                <?php echo _QXZ("LOGOUT"); ?>
+            </a>
+        </div>
     </div>
-</header>
-
-<!-- Minimal JS to attach events (place this near the end of the page) -->
-<script>
-(function () {
-  function log(...args) { console.log('[Header]','\n', ...args); }
-
-  function safeEl(id) { return document.getElementById(id); }
-
-  function attachHandlers() {
-    log('Attaching header handlers...');
-
-    var mapping = [
-      {id: 'refresh-login-link', fn: function(e){ e.preventDefault(); if (typeof start_all_refresh === 'function') start_all_refresh(); else log('start_all_refresh not found'); }},
-      {id: 'ring-link',          fn: function(e){ e.preventDefault(); if (typeof NoneInSessionCalL === 'function') NoneInSessionCalL(); else log('NoneInSessionCalL not found'); }},
-      {id: 'territories-link',   fn: function(e){ e.preventDefault(); if (typeof OpeNTerritorYSelectioN === 'function') OpeNTerritorYSelectioN(); else log('OpeNTerritorYSelectioN not found'); }},
-      {id: 'groups-link',        fn: function(e){ e.preventDefault(); if (typeof OpeNGrouPSelectioN === 'function') OpeNGrouPSelectioN(); else log('OpeNGrouPSelectioN not found'); }},
-      {id: 'logout-link',        fn: function(e){ e.preventDefault(); if (typeof NormalLogout === 'function') { needToConfirmExit = false; NormalLogout(); } else log('NormalLogout not found'); }}
-    ];
-
-    var foundAny = false;
-    mapping.forEach(function(m){
-      var node = safeEl(m.id);
-      if (node) {
-        node.addEventListener('click', m.fn, false);
-        log('handler attached for', m.id);
-        foundAny = true;
-      } else {
-        log('element missing:', m.id);
-      }
-    });
-
-    // sanity helper for agentchannelSPAN
-    if (!safeEl('agentchannelSPAN')) {
-      log('missing agentchannelSPAN element');
-    } else {
-      log('agentchannelSPAN OK');
-    }
-
-    if (!foundAny) log('No handlers attached — check that element IDs match the markup and the script runs after DOM is ready.');
-  }
-
-  // Run on DOMContentLoaded. If DOMContentLoaded already fired, run immediately.
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    attachHandlers();
-  } else {
-    document.addEventListener('DOMContentLoaded', attachHandlers, { once: true });
-    // also fallback in case something odd blocks DOMContentLoaded
-    setTimeout(function(){ if (!window._headerHandlersAttached) { attachHandlers(); window._headerHandlersAttached = true; } }, 1500);
-  }
-
-  // Expose a safe update helper
-  window.updateAgentChannel = function (txt) {
-    var span = safeEl('agentchannelSPAN');
-    if (!span) return;
-    span.textContent = txt || '';
-  };
-})();
-</script>
-
-
-
-
+</span>
 
 
  <!-- ZZZZZZZZZZZZ  tabs -->
