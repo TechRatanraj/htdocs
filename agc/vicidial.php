@@ -24711,6 +24711,911 @@ $zi=2;
 </span>
 <!-- ========= /Modern Customer Info ========= -->
 
+<!-- Modern Customer Information Component -->
+<div class="customer-info-container" id="MainPanelCustInfo">
+  <header class="customer-header">
+    <div class="customer-meta">
+      <div class="meta-item">
+        <span class="meta-label"><?php echo _QXZ("Customer Time:"); ?></span>
+        <span name="custdatetime" id="custdatetime" class="meta-value"></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label"><?php echo _QXZ("Channel:"); ?></span>
+        <span name="callchannel" id="callchannel" class="meta-value"></span>
+      </div>
+    </div>
+    <div class="customer-title">
+      <h2><?php echo _QXZ("Customer Information:"); ?></h2>
+      <span id="CusTInfOSpaN"></span>
+      <?php
+      if ( ($agent_lead_search == 'ENABLED') or ($agent_lead_search == 'LIVE_CALL_INBOUND') or ($agent_lead_search == 'LIVE_CALL_INBOUND_AND_MANUAL') )
+          {echo "<a href=\"#\" class=\"lead-search-btn\" onclick=\"OpeNSearcHForMDisplaYBox();return false;\">"._QXZ("LEAD SEARCH")."</a>";}
+      ?>
+    </div>
+  </header>
+
+  <main class="customer-form">
+    <form class="customer-details-form">
+      <?php
+      $required_fields = '|';
+      
+      // Personal Information Section
+      echo "<section class=\"form-section personal-info\">";
+      echo "<h3 class=\"section-title\">Personal Information</h3>";
+      echo "<div class=\"form-row\">";
+      
+      // Title Field
+      if ($label_title == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"title\" id=\"title\" value=\"\" />";
+      } else {
+          $title_readonly = '';
+          $title_required = '';
+          if (preg_match("/---READONLY---/",$label_title)) {
+              $title_readonly='readonly="readonly"';   
+              $label_title = preg_replace("/---READONLY---/","",$label_title);
+          } else if (preg_match("/---REQUIRED---/",$label_title)) {
+              $required_fields .= "title|";   
+              $label_title = preg_replace("/---REQUIRED---/","",$label_title);
+              $title_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"title\">$label_title</label>";
+          echo "<input type=\"text\" name=\"title\" id=\"title\" maxlength=\"$MAXtitle\" class=\"form-control\" value=\"\" $title_readonly $title_required />";
+          echo "</div>";
+      }
+      
+      // First Name Field
+      if ($label_first_name == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"first_name\" id=\"first_name\" value=\"\" />";
+      } else {
+          $first_name_readonly = '';
+          $first_name_required = '';
+          if (preg_match("/---READONLY---/",$label_first_name)) {
+              $first_name_readonly='readonly="readonly"';   
+              $label_first_name = preg_replace("/---READONLY---/","",$label_first_name);
+          } else if (preg_match("/---REQUIRED---/",$label_first_name)) {
+              $required_fields .= "first_name|";   
+              $label_first_name = preg_replace("/---REQUIRED---/","",$label_first_name);
+              $first_name_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"first_name\">$label_first_name</label>";
+          echo "<input type=\"text\" name=\"first_name\" id=\"first_name\" maxlength=\"$MAXfirst_name\" class=\"form-control\" value=\"\" $first_name_readonly $first_name_required />";
+          echo "</div>";
+      }
+      
+      // Middle Initial Field
+      if ($label_middle_initial == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"middle_initial\" id=\"middle_initial\" value=\"\" />";
+      } else {
+          $middle_initial_readonly = '';
+          $middle_initial_required = '';
+          if (preg_match("/---READONLY---/",$label_middle_initial)) {
+              $middle_initial_readonly='readonly="readonly"';   
+              $label_middle_initial = preg_replace("/---READONLY---/","",$label_middle_initial);
+          } else if (preg_match("/---REQUIRED---/",$label_middle_initial)) {
+              $required_fields .= "middle_initial|";   
+              $label_middle_initial = preg_replace("/---REQUIRED---/","",$label_middle_initial);
+              $middle_initial_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"middle_initial\">$label_middle_initial</label>";
+          echo "<input type=\"text\" name=\"middle_initial\" id=\"middle_initial\" maxlength=\"$MAXmiddle_initial\" class=\"form-control\" value=\"\" $middle_initial_readonly $middle_initial_required />";
+          echo "</div>";
+      }
+      
+      // Last Name Field
+      if ($label_last_name == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"last_name\" id=\"last_name\" value=\"\" />";
+      } else {
+          $last_name_readonly = '';
+          $last_name_required = '';
+          if (preg_match("/---READONLY---/",$label_last_name)) {
+              $last_name_readonly='readonly="readonly"';   
+              $label_last_name = preg_replace("/---READONLY---/","",$label_last_name);
+          } else if (preg_match("/---REQUIRED---/",$label_last_name)) {
+              $required_fields .= "last_name|";   
+              $label_last_name = preg_replace("/---REQUIRED---/","",$label_last_name);
+              $last_name_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"last_name\">$label_last_name</label>";
+          echo "<input type=\"text\" name=\"last_name\" id=\"last_name\" maxlength=\"$MAXlast_name\" class=\"form-control\" value=\"\" $last_name_readonly $last_name_required />";
+          echo "</div>";
+      }
+      
+      echo "</div>"; // End form-row
+      echo "</section>"; // End personal-info section
+      
+      // Address Information Section
+      echo "<section class=\"form-section address-info\">";
+      echo "<h3 class=\"section-title\">Address Information</h3>";
+      
+      // Address1 Field
+      if ($label_address1 == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"address1\" id=\"address1\" value=\"\" />";
+      } else {
+          $address1_readonly = '';
+          $address1_required = '';
+          if (preg_match("/---READONLY---/",$label_address1)) {
+              $address1_readonly='readonly="readonly"';   
+              $label_address1 = preg_replace("/---READONLY---/","",$label_address1);
+          } else if (preg_match("/---REQUIRED---/",$label_address1)) {
+              $required_fields .= "address1|";   
+              $label_address1 = preg_replace("/---REQUIRED---/","",$label_address1);
+              $address1_required = 'required';
+          }
+          echo "<div class=\"form-row\">";
+          echo "<div class=\"form-group full-width\">";
+          echo "<label for=\"address1\">$label_address1</label>";
+          echo "<input type=\"text\" name=\"address1\" id=\"address1\" maxlength=\"$MAXaddress1\" class=\"form-control\" value=\"\" $address1_readonly $address1_required />";
+          echo "</div>";
+          echo "</div>";
+      }
+      
+      // Address2 and Address3 Fields
+      echo "<div class=\"form-row\">";
+      
+      if ($label_address2 == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"address2\" id=\"address2\" value=\"\" />";
+      } else {
+          $address2_readonly = '';
+          $address2_required = '';
+          if (preg_match("/---READONLY---/",$label_address2)) {
+              $address2_readonly='readonly="readonly"';   
+              $label_address2 = preg_replace("/---READONLY---/","",$label_address2);
+          } else if (preg_match("/---REQUIRED---/",$label_address2)) {
+              $required_fields .= "address2|";   
+              $label_address2 = preg_replace("/---REQUIRED---/","",$label_address2);
+              $address2_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"address2\">$label_address2</label>";
+          echo "<input type=\"text\" name=\"address2\" id=\"address2\" maxlength=\"$MAXaddress2\" class=\"form-control\" value=\"\" $address2_readonly $address2_required />";
+          echo "</div>";
+      }
+      
+      if ($label_address3 == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"address3\" id=\"address3\" value=\"\" />";
+      } else {
+          $address3_readonly = '';
+          $address3_required = '';
+          if (preg_match("/---READONLY---/",$label_address3)) {
+              $address3_readonly='readonly="readonly"';   
+              $label_address3 = preg_replace("/---READONLY---/","",$label_address3);
+          } else if (preg_match("/---REQUIRED---/",$label_address3)) {
+              $required_fields .= "address3|";   
+              $label_address3 = preg_replace("/---REQUIRED---/","",$label_address3);
+              $address3_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"address3\">$label_address3</label>";
+          echo "<input type=\"text\" name=\"address3\" id=\"address3\" maxlength=\"$MAXaddress3\" class=\"form-control\" value=\"\" $address3_readonly $address3_required />";
+          echo "</div>";
+      }
+      
+      echo "</div>"; // End form-row
+      
+      // City, State, Postal Code Fields
+      echo "<div class=\"form-row\">";
+      
+      if ($label_city == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"city\" id=\"city\" value=\"\" />";
+      } else {
+          $city_readonly = '';
+          $city_required = '';
+          if (preg_match("/---READONLY---/",$label_city)) {
+              $city_readonly='readonly="readonly"';   
+              $label_city = preg_replace("/---READONLY---/","",$label_city);
+          } else if (preg_match("/---REQUIRED---/",$label_city)) {
+              $required_fields .= "city|";   
+              $label_city = preg_replace("/---REQUIRED---/","",$label_city);
+              $city_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"city\">$label_city</label>";
+          echo "<input type=\"text\" name=\"city\" id=\"city\" maxlength=\"$MAXcity\" class=\"form-control\" value=\"\" $city_readonly $city_required />";
+          echo "</div>";
+      }
+      
+      if ($label_state == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"state\" id=\"state\" value=\"\" />";
+      } else {
+          $state_readonly = '';
+          $state_required = '';
+          if (preg_match("/---READONLY---/",$label_state)) {
+              $state_readonly='readonly="readonly"';   
+              $label_state = preg_replace("/---READONLY---/","",$label_state);
+          } else if (preg_match("/---REQUIRED---/",$label_state)) {
+              $required_fields .= "state|";   
+              $label_state = preg_replace("/---REQUIRED---/","",$label_state);
+              $state_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"state\">$label_state</label>";
+          echo "<input type=\"text\" name=\"state\" id=\"state\" maxlength=\"$MAXstate\" class=\"form-control\" value=\"\" $state_readonly $state_required />";
+          echo "</div>";
+      }
+      
+      if ($label_postal_code == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"postal_code\" id=\"postal_code\" value=\"\" />";
+      } else {
+          $postal_code_readonly = '';
+          $postal_code_required = '';
+          if (preg_match("/---READONLY---/",$label_postal_code)) {
+              $postal_code_readonly='readonly="readonly"';   
+              $label_postal_code = preg_replace("/---READONLY---/","",$label_postal_code);
+          } else if (preg_match("/---REQUIRED---/",$label_postal_code)) {
+              $required_fields .= "postal_code|";   
+              $label_postal_code = preg_replace("/---REQUIRED---/","",$label_postal_code);
+              $postal_code_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"postal_code\">$label_postal_code</label>";
+          echo "<input type=\"text\" name=\"postal_code\" id=\"postal_code\" maxlength=\"$MAXpostal_code\" class=\"form-control\" value=\"\" $postal_code_readonly $postal_code_required />";
+          echo "</div>";
+      }
+      
+      echo "</div>"; // End form-row
+      
+      // Province and Vendor Lead Code Fields
+      echo "<div class=\"form-row\">";
+      
+      if ($label_province == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"province\" id=\"province\" value=\"\" />";
+      } else {
+          $province_readonly = '';
+          $province_required = '';
+          if (preg_match("/---READONLY---/",$label_province)) {
+              $province_readonly='readonly="readonly"';   
+              $label_province = preg_replace("/---READONLY---/","",$label_province);
+          } else if (preg_match("/---REQUIRED---/",$label_province)) {
+              $required_fields .= "province|";   
+              $label_province = preg_replace("/---REQUIRED---/","",$label_province);
+              $province_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"province\">$label_province</label>";
+          echo "<input type=\"text\" name=\"province\" id=\"province\" maxlength=\"$MAXprovince\" class=\"form-control\" value=\"\" $province_readonly $province_required />";
+          echo "</div>";
+      }
+      
+      if ($label_vendor_lead_code == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"vendor_lead_code\" id=\"vendor_lead_code\" value=\"\" />";
+      } else {
+          $vendor_lead_code_readonly = '';
+          $vendor_lead_code_required = '';
+          if (preg_match("/---READONLY---/",$label_vendor_lead_code)) {
+              $vendor_lead_code_readonly='readonly="readonly"';   
+              $label_vendor_lead_code = preg_replace("/---READONLY---/","",$label_vendor_lead_code);
+          } else if (preg_match("/---REQUIRED---/",$label_vendor_lead_code)) {
+              $required_fields .= "vendor_lead_code|";   
+              $label_vendor_lead_code = preg_replace("/---REQUIRED---/","",$label_vendor_lead_code);
+              $vendor_lead_code_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"vendor_lead_code\">$label_vendor_lead_code</label>";
+          echo "<input type=\"text\" name=\"vendor_lead_code\" id=\"vendor_lead_code\" maxlength=\"$MAXvendor_lead_code\" class=\"form-control\" value=\"\" $vendor_lead_code_readonly $vendor_lead_code_required />";
+          echo "</div>";
+      }
+      
+      // Gender Field
+      if ($label_gender == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"gender_list\" id=\"gender_list\" value=\"\" />";
+      } else {
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"gender_list\">$label_gender</label>";
+          echo "<select name=\"gender_list\" id=\"gender_list\" class=\"form-control\">";
+          echo "<option value=\"U\">"._QXZ("U - Undefined")."</option>";
+          echo "<option value=\"M\">"._QXZ("M - Male")."</option>";
+          echo "<option value=\"F\">"._QXZ("F - Female")."</option>";
+          echo "</select>";
+          echo "</div>";
+      }
+      
+      echo "</div>"; // End form-row
+      echo "</section>"; // End address-info section
+      
+      // Contact Information Section
+      echo "<section class=\"form-section contact-info\">";
+      echo "<h3 class=\"section-title\">Contact Information</h3>";
+      echo "<div class=\"form-row\">";
+      
+      // Phone Number Field
+      if ($label_phone_number == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />";
+          echo "<span id=\"phone_numberDISP\"></span>";
+      } else {
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"phone_number\">$label_phone_number</label>";
+          if ( (preg_match('/Y/',$disable_alter_custphone)) or (preg_match('/HIDE/',$disable_alter_custphone)) ) {
+              echo "<span id=\"phone_numberDISP\" class=\"display-value\"></span>";
+              echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />";
+          } else {
+              echo "<input type=\"tel\" name=\"phone_number\" id=\"phone_number\" maxlength=\"$MAXphone_number\" class=\"form-control\" value=\"\" />";
+          }
+          echo "</div>";
+      }
+      
+      // Phone Code Field
+      if ($label_phone_code == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"phone_code\" id=\"phone_code\" value=\"\" />";
+      } else {
+          $phone_code_readonly = '';
+          $phone_code_required = '';
+          if (preg_match("/---READONLY---/",$label_phone_code)) {
+              $phone_code_readonly='readonly="readonly"';   
+              $label_phone_code = preg_replace("/---READONLY---/","",$label_phone_code);
+          } else if (preg_match("/---REQUIRED---/",$label_phone_code)) {
+              $required_fields .= "phone_code|";   
+              $label_phone_code = preg_replace("/---REQUIRED---/","",$label_phone_code);
+              $phone_code_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"phone_code\">$label_phone_code</label>";
+          echo "<input type=\"text\" name=\"phone_code\" id=\"phone_code\" maxlength=\"$MAXphone_code\" class=\"form-control\" value=\"\" $phone_code_readonly $phone_code_required />";
+          echo "</div>";
+      }
+      
+      // Alt Phone Field
+      if ($label_alt_phone == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"alt_phone\" id=\"alt_phone\" value=\"\" />";
+      } else {
+          $alt_phone_readonly = '';
+          $alt_phone_required = '';
+          if (preg_match("/---READONLY---/",$label_alt_phone)) {
+              $alt_phone_readonly='readonly="readonly"';   
+              $label_alt_phone = preg_replace("/---READONLY---/","",$label_alt_phone);
+          } else if (preg_match("/---REQUIRED---/",$label_alt_phone)) {
+              $required_fields .= "alt_phone|";   
+              $label_alt_phone = preg_replace("/---REQUIRED---/","",$label_alt_phone);
+              $alt_phone_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"alt_phone\">$label_alt_phone</label>";
+          echo "<input type=\"tel\" name=\"alt_phone\" id=\"alt_phone\" maxlength=\"$MAXalt_phone\" class=\"form-control\" value=\"\" $alt_phone_readonly $alt_phone_required />";
+          echo "</div>";
+      }
+      
+      echo "</div>"; // End form-row
+      
+      // Security Phrase and Email Fields
+      echo "<div class=\"form-row\">";
+      
+      if ($label_security_phrase == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"security_phrase\" id=\"security_phrase\" value=\"\" />";
+      } else {
+          $security_phrase_readonly = '';
+          $security_phrase_required = '';
+          if (preg_match("/---READONLY---/",$label_security_phrase)) {
+              $security_phrase_readonly='readonly="readonly"';   
+              $label_security_phrase = preg_replace("/---READONLY---/","",$label_security_phrase);
+          } else if (preg_match("/---REQUIRED---/",$label_security_phrase)) {
+              $required_fields .= "security_phrase|";   
+              $label_security_phrase = preg_replace("/---REQUIRED---/","",$label_security_phrase);
+              $security_phrase_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"security_phrase\">$label_security_phrase</label>";
+          echo "<input type=\"text\" name=\"security_phrase\" id=\"security_phrase\" maxlength=\"$MAXsecurity_phrase\" class=\"form-control\" value=\"\" $security_phrase_readonly $security_phrase_required />";
+          echo "</div>";
+      }
+      
+      if ($label_email == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"email\" id=\"email\" value=\"\" />";
+      } else {
+          $email_readonly = '';
+          $email_required = '';
+          if (preg_match("/---READONLY---/",$label_email)) {
+              $email_readonly='readonly="readonly"';   
+              $label_email = preg_replace("/---READONLY---/","",$label_email);
+          } else if (preg_match("/---REQUIRED---/",$label_email)) {
+              $required_fields .= "email|";   
+              $label_email = preg_replace("/---REQUIRED---/","",$label_email);
+              $email_required = 'required';
+          }
+          echo "<div class=\"form-group\">";
+          echo "<label for=\"email\">$label_email</label>";
+          echo "<input type=\"email\" name=\"email\" id=\"email\" maxlength=\"$MAXemail\" class=\"form-control\" value=\"\" $email_readonly $email_required />";
+          echo "</div>";
+      }
+      
+      echo "</div>"; // End form-row
+      echo "</section>"; // End contact-info section
+      
+      // Additional Information Section
+      if (strlen($agent_display_fields) > 3) {
+          echo "<section class=\"form-section additional-info\">";
+          echo "<h3 class=\"section-title\">Additional Information</h3>";
+          echo "<div class=\"form-row\">";
+          
+          if (preg_match("/entry_date/",$agent_display_fields)) {
+              echo "<div class=\"form-group\">";
+              echo "<label>$label_entry_date</label>";
+              echo "<span id=\"entry_dateDISP\" class=\"display-value\"></span>";
+              echo "</div>";
+          }
+          
+          if (preg_match("/source_id/",$agent_display_fields)) {
+              echo "<div class=\"form-group\">";
+              echo "<label>$label_source_id</label>";
+              echo "<span id=\"source_idDISP\" class=\"display-value\"></span>";
+              echo "</div>";
+          }
+          
+          if (preg_match("/date_of_birth/",$agent_display_fields)) {
+              echo "<div class=\"form-group\">";
+              echo "<label>$label_date_of_birth</label>";
+              echo "<span id=\"date_of_birthDISP\" class=\"display-value\"></span>";
+              echo "</div>";
+          }
+          
+          if (preg_match("/rank/",$agent_display_fields)) {
+              echo "<div class=\"form-group\">";
+              echo "<label>$label_rank</label>";
+              echo "<span id=\"rankDISP\" class=\"display-value\"></span>";
+              echo "</div>";
+          }
+          
+          if (preg_match("/owner/",$agent_display_fields)) {
+              echo "<div class=\"form-group\">";
+              echo "<label>$label_owner</label>";
+              echo "<span id=\"ownerDISP\" class=\"display-value\"></span>";
+              echo "</div>";
+          }
+          
+          if (preg_match("/last_local_call_time/",$agent_display_fields)) {
+              echo "<div class=\"form-group\">";
+              echo "<label>$label_last_local_call_time</label>";
+              echo "<span id=\"last_local_call_timeDISP\" class=\"display-value\"></span>";
+              echo "</div>";
+          }
+          
+          echo "</div>"; // End form-row
+          echo "</section>"; // End additional-info section
+      }
+      
+      // Comments Section
+      echo "<section class=\"form-section comments-section\">";
+      echo "<h3 class=\"section-title\">Comments</h3>";
+      
+      if ($label_comments == '---HIDE---') {
+          echo "<input type=\"hidden\" name=\"comments\" id=\"comments\" value=\"\" />\n";
+          echo "<input type=\"hidden\" name=\"other_tab_comments\" id=\"other_tab_comments\" value=\"\" />\n";
+          echo "<input type=\"hidden\" name=\"dispo_comments\" id=\"dispo_comments\" value=\"\" />\n";
+          echo "<input type=\"hidden\" name=\"callback_comments\" id=\"callback_comments\" value=\"\" />\n";
+          echo "<div class=\"form-actions\">";
+          echo "<span id='viewcommentsdisplay'><button type='button' id='ViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" class='btn btn-secondary'>"._QXZ("History")."</button></span>\n";
+          echo "<span id='otherviewcommentsdisplay'><button type='button' id='OtherViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" class='btn btn-secondary'>"._QXZ("History")."</button></span>\n";
+          echo "</div>";
+      } else {
+          echo "<div class=\"form-row\">";
+          echo "<div class=\"form-group full-width\">";
+          echo "<label for=\"comments\">$label_comments</label>";
+          echo "<div class=\"input-with-button\">";
+          if ($multi_line_comments) {
+              echo "<textarea name=\"comments\" id=\"comments\" rows=\"2\" class=\"form-control\" value=\"\"></textarea>\n";
+          } else {
+              echo "<input type=\"text\" name=\"comments\" id=\"comments\" maxlength=\"255\" class=\"form-control\" value=\"\" />\n";
+          }
+          echo "<span id='viewcommentsdisplay'><button type='button' id='ViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" class='btn btn-secondary'>"._QXZ("History")."</button></span>";
+          echo "</div>";
+          echo "</div>";
+          echo "</div>";
+      }
+      echo "</section>"; // End comments-section
+      
+      // Call Notes Section
+      echo "<section class=\"form-section call-notes-section\">";
+      echo "<h3 class=\"section-title\">Call Notes</h3>";
+      
+      if ($per_call_notes == 'ENABLED') {
+          echo "<div class=\"form-row\">";
+          echo "<div class=\"form-group full-width\">";
+          echo "<label for=\"call_notes\">"._QXZ("Call Notes")."</label>";
+          echo "<div class=\"input-with-button\">";
+          echo "<textarea name=\"call_notes\" id=\"call_notes\" rows=\"2\" class=\"form-control\" value=\"\"></textarea>\n";
+          if ($agent_call_log_view == '1') {
+              echo "<div id=\"CallNotesButtons\"><a href=\"#\" onclick=\"VieWNotesLoG();return false;\" class=\"view-notes-link\">"._QXZ("view notes")."</a></div>";
+          }
+          echo "</div>";
+          echo "</div>";
+          echo "</div>";
+      } else {
+          echo "<input type=\"hidden\" name=\"call_notes\" id=\"call_notes\" value=\"\" /><span id=\"CallNotesButtons\"></span>\n";
+      }
+      echo "</section>"; // End call-notes-section
+      
+      // Hidden required fields input
+      echo "<input type=\"hidden\" name=\"required_fields\" id=\"required_fields\" value=\"$required_fields\" />\n";
+      ?>
+    </form>
+  </main>
+</div>
+
+<style>
+/* Modern Customer Information Component Styles */
+.customer-info-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.customer-header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.customer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.meta-label {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #495057;
+}
+
+.meta-value {
+  padding: 4px 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.customer-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.customer-title h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #212529;
+}
+
+.lead-search-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.lead-search-btn:hover {
+  background-color: #0069d9;
+}
+
+.customer-form {
+  padding: 20px;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  color: #495057;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-group.full-width {
+  flex: 1 1 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-control[readonly] {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+.form-control:required {
+  border-left: 3px solid #dc3545;
+}
+
+.display-value {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  min-height: 38px;
+  width: 100%;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.input-with-button .form-control,
+.input-with-button textarea {
+  flex: 1;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 8px 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 4px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.view-notes-link {
+  color: #007bff;
+  text-decoration: none;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.view-notes-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-group {
+    min-width: 100%;
+  }
+  
+  .customer-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .input-with-button {
+    flex-direction: column;
+  }
+  
+  .input-with-button .btn {
+    align-self: flex-start;
+  }
+}
+
+/* Animation for form sections */
+.form-section {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<script>
+// Modern Customer Information Component JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+  // Add interactive functionality to the form
+  const form = document.querySelector('.customer-details-form');
+  if (!form) return;
+  
+  // Auto-format phone numbers
+  const phoneInputs = form.querySelectorAll('input[type="tel"]');
+  phoneInputs.forEach(input => {
+    input.addEventListener('input', function(e) {
+      // Simple phone number formatting (XXX) XXX-XXXX
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 0) {
+        if (value.length <= 3) {
+          value = `(${value}`;
+        } else if (value.length <= 6) {
+          value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+        } else {
+          value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        }
+      }
+      e.target.value = value;
+    });
+  });
+  
+  // Email validation
+  const emailInput = document.getElementById('email');
+  if (emailInput) {
+    emailInput.addEventListener('blur', function() {
+      const email = this.value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (email && !emailRegex.test(email)) {
+        this.setCustomValidity('Please enter a valid email address');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
+  }
+  
+  // Postal code formatting based on country
+  const postalCodeInput = document.getElementById('postal_code');
+  const stateInput = document.getElementById('state');
+  
+  if (postalCodeInput && stateInput) {
+    stateInput.addEventListener('change', function() {
+      // Simple detection of US vs Canada based on state code
+      const isUS = /^[A-Z]{2}$/.test(this.value) && 
+                  ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'].includes(this.value);
+      
+      if (isUS) {
+        postalCodeInput.setAttribute('pattern', '[0-9]{5}(-[0-9]{4})?');
+        postalCodeInput.setAttribute('placeholder', '12345 or 12345-6789');
+      } else {
+        postalCodeInput.setAttribute('pattern', '[A-Z][0-9][A-Z] [0-9][A-Z][0-9]');
+        postalCodeInput.setAttribute('placeholder', 'A1A 1A1');
+      }
+    });
+  }
+  
+  // Form validation before submission
+  form.addEventListener('submit', function(e) {
+    const requiredFields = document.getElementById('required_fields').value.split('|').filter(field => field);
+    let isValid = true;
+    
+    requiredFields.forEach(fieldName => {
+      const field = document.getElementById(fieldName);
+      if (field && !field.value.trim()) {
+        field.classList.add('is-invalid');
+        isValid = false;
+      } else if (field) {
+        field.classList.remove('is-invalid');
+      }
+    });
+    
+    if (!isValid) {
+      e.preventDefault();
+      // Show a notification instead of alert
+      showNotification('Please fill in all required fields', 'error');
+    }
+  });
+  
+  // Helper function to show notifications
+  function showNotification(message, type = 'info') {
+    // Create notification element if it doesn't exist
+    let notification = document.getElementById('form-notification');
+    if (!notification) {
+      notification = document.createElement('div');
+      notification.id = 'form-notification';
+      notification.className = 'notification';
+      document.body.appendChild(notification);
+    }
+    
+    notification.textContent = message;
+    notification.className = `notification notification-${type}`;
+    notification.style.display = 'block';
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 5000);
+  }
+  
+  // Add CSS for notifications
+  const style = document.createElement('style');
+  style.textContent = `
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 4px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    
+    .notification-error {
+      background-color: #dc3545;
+    }
+    
+    .notification-info {
+      background-color: #17a2b8;
+    }
+    
+    .notification-success {
+      background-color: #28a745;
+    }
+    
+    .notification[style*="block"] {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .is-invalid {
+      border-color: #dc3545 !important;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+  `;
+  document.head.appendChild(style);
+});
+</script>
 
 
 
