@@ -24398,7 +24398,7 @@ $zi=2;
                         placeholder="Enter digits" />
                 </span>
             </div>
-            </center>
+            </right>
         </td>
         
         <!-- Main Content Column -->
