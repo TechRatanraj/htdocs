@@ -23780,19 +23780,11 @@ $zi=2;
     </td></tr></table>
 </span>
 		
-<!-- Modern Header - Full Width with Consistent Margin -->
-<div id="Header" style="
-    width:100%;
-    background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    padding:12px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
-    margin:0;
-    position:relative;
-    z-index:<?php $zi++; echo $zi ?>;">
+<!-- Moder Header Section --->
+
+
+<!-- FIXED HEADER - INLINE CSS, LOGOUT PROPERLY POSITIONED -->
+<div id="Header" style="width:100%;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;margin:0;position:relative;z-index:<?php $zi++; echo $zi ?>;min-height:50px;">
     
     <!-- Hidden Form Fields -->
     <input type="hidden" name="extension" id="extension" />
@@ -23800,90 +23792,42 @@ $zi=2;
     <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
     
     <!-- Left Section: User Info -->
-    <div style="display:flex;align-items:center;gap:20px;flex:1;">
-        <div style="display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:500;">
-            <span style="display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;"></span>
-            <?php
-            if ($logged_in_refresh_link > 0) {
-                echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;\">"._QXZ("testing")."</a>";
-            } else {
-                echo _QXZ("testing");
-            }
-            ?>
+    <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:500;white-space:nowrap;">
+            <span style="display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;flex-shrink:0;"></span>
+            <?php if ($logged_in_refresh_link > 0) { echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;\">"._QXZ("testing")."</a>"; } else { echo _QXZ("testing"); } ?>
         </div>
         
-        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.9);font-size:13px;">
-            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            <?php echo "SIP/".$SIP_user; ?>
+        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.9);font-size:13px;white-space:nowrap;">
+            <svg style="width:14px;height:14px;fill:#fff;flex-shrink:0;" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            SIP/<?php echo $SIP_user; ?>
         </div>
         
-        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.9);font-size:13px;">
-            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.9);font-size:13px;white-space:nowrap;">
+            <svg style="width:14px;height:14px;fill:#fff;flex-shrink:0;" viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
             <?php echo $VD_campaign; ?>
         </div>
         
-        <span id="agentchannelSPAN" style="padding:3px 10px;background:rgba(255,255,255,0.15);border-radius:4px;font-size:11px;color:#fff;"></span>
+        <span id="agentchannelSPAN" style="padding:3px 10px;background:rgba(255,255,255,0.15);border-radius:4px;font-size:11px;color:#fff;white-space:nowrap;"></span>
     </div>
     
     <!-- Right Section: Navigation Links -->
-    <nav style="display:flex;gap:12px;align-items:center;flex-shrink:0;">
+    <nav style="display:flex;gap:8px;align-items:center;flex-shrink:0;margin-left:12px;padding-left:12px;border-left:1px solid rgba(255,255,255,0.2);">
         <?php if ($territoryCT > 0) { ?>
-            <a href="#" onclick="OpeNTerritorYSelectioN();return false;" style="
-                color:#fff;
-                text-decoration:none;
-                font-size:13px;
-                font-weight:500;
-                padding:6px 14px;
-                background:rgba(255,255,255,0.15);
-                border-radius:6px;
-                transition:all 0.3s ease;
-                border:1px solid rgba(255,255,255,0.2);
-                white-space:nowrap;"
-                onmouseover="this.style.background='rgba(255,255,255,0.25)';"
-                onmouseout="this.style.background='rgba(255,255,255,0.15)';">
-                TERRITORIES
-            </a>
+        <a href="#" onclick="OpeNTerritorYSelectioN();return false;" style="color:#fff;text-decoration:none;font-size:13px;font-weight:500;padding:6px 12px;background:rgba(255,255,255,0.15);border-radius:6px;transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.2);white-space:nowrap;display:inline-block;" onmouseover="this.style.background='rgba(255,255,255,0.25)';" onmouseout="this.style.background='rgba(255,255,255,0.15)';">TERRITORIES</a>
         <?php } ?>
         
         <?php if ($INgrpCT > 0) { ?>
-            <a href="#" onclick="OpeNGrouPSelectioN();return false;" style="
-                color:#fff;
-                text-decoration:none;
-                font-size:13px;
-                font-weight:500;
-                padding:6px 14px;
-                background:rgba(255,255,255,0.15);
-                border-radius:6px;
-                transition:all 0.3s ease;
-                border:1px solid rgba(255,255,255,0.2);
-                white-space:nowrap;"
-                onmouseover="this.style.background='rgba(255,255,255,0.25)';"
-                onmouseout="this.style.background='rgba(255,255,255,0.15)';">
-                GROUPS
-            </a>
+        <a href="#" onclick="OpeNGrouPSelectioN();return false;" style="color:#fff;text-decoration:none;font-size:13px;font-weight:500;padding:6px 12px;background:rgba(255,255,255,0.15);border-radius:6px;transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.2);white-space:nowrap;display:inline-block;" onmouseover="this.style.background='rgba(255,255,255,0.25)';" onmouseout="this.style.background='rgba(255,255,255,0.15)';">GROUPS</a>
         <?php } ?>
         
-        <a href="#" onclick="NormalLogout();return false;needToConfirmExit = false;" style="
-            color:#fff;
-            text-decoration:none;
-            font-size:13px;
-            font-weight:600;
-            padding:8px 20px;
-            background:#ef4444;
-            border-radius:6px;
-            transition:all 0.3s ease;
-            box-shadow:0 2px 8px rgba(239,68,68,0.3);
-            white-space:nowrap;
-            display:flex;
-            align-items:center;
-            gap:6px;"
-            onmouseover="this.style.background='#dc2626';"
-            onmouseout="this.style.background='#ef4444';">
+        <a href="#" onclick="NormalLogout();return false;needToConfirmExit=false;" style="color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:8px 16px;background:#ef4444;border-radius:6px;transition:all 0.3s ease;box-shadow:0 2px 8px rgba(239,68,68,0.3);white-space:nowrap;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;" onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';" onmouseout="this.style.background='#ef4444';this.style.boxShadow='0 2px 8px rgba(239,68,68,0.3)';">
             <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
             LOGOUT
         </a>
     </nav>
 </div>
+
 
 <!-- Modern Tabs Navigation - Full Width with Same Margin -->
 <div id="Tabs" style="
@@ -24806,13 +24750,6 @@ function ViewComments(state, type, id, refresh) {
     }
 }
 </script>
-
-
-
-
-
-
-			
 
 
 <!-- END *********   Here is the main VICIDIAL display panel -->
