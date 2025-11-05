@@ -26675,53 +26675,64 @@ function webphoneOpen(spanId, action) {
 <!-- Disposition Codes --->
 
 <!-- ============================================ -->
-<!-- DISPOSITION BUTTON HIDE BOXES - MODERN VERSION -->
-<!-- ============================================ -->
-
-<!-- Hide Box A - Top Bar -->
-<span style="position:absolute;left:0px;top:70px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideA">
-    <table border="0" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:1px solid #10b981;width:165px;height:22px;border-radius:6px;"><tr><td align="center" valign="top"></td></tr></table>
-</span>
-
-<!-- Hide Box B - Middle Area -->
-<span style="position:absolute;left:0px;top:138px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideB">
-    <table border="0" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:1px solid #10b981;width:165px;height:250px;border-radius:6px;"><tr><td align="center" valign="top">&nbsp;</td></tr></table>
-</span>
-
-<!-- Hide Box C - Warning Message -->
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideC">
-    <table border="0" style="background:linear-gradient(135deg,#fef3c7,#fde047);border:2px solid #fbbf24;border-radius:8px;width:<?php echo $CAwidth ?>px;height:auto;overflow:hidden;" cellpadding="0" cellspacing="0">
-    <tr><td style="padding:12px;background:linear-gradient(135deg,#fbbf24,#f59e0b);text-align:center;"><div style="font-size:11px;font-weight:700;color:#92400e;">⚠️ <?php echo _QXZ("Customer Information Changes"); ?></div></td></tr>
-    <tr><td style="padding:12px;text-align:center;"><div style="font-size:10px;color:#92400e;line-height:1.6;"><strong><?php echo _QXZ("Any changes made to customer information will NOT be saved."); ?></strong><br /><?php echo _QXZ("You must update customer info BEFORE hanging up."); ?></div></td></tr>
-    </table>
-</span>
-
-<!-- ============================================ -->
-<!-- MODERN DISPOSITION BOX - COMPLETE VERSION -->
+<!-- MODERN DISPOSITION BOX - COMPACT CENTERED -->
 <!-- ============================================ -->
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="DispoSelectBox">
-    <table border="0" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #10b981;border-radius:12px;width:<?php echo $CAwidth ?>px;height:auto;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.15);" cellpadding="0" cellspacing="0">
+    <table border="0" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #10b981;border-radius:12px;width:700px;height:auto;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.15);position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);" cellpadding="0" cellspacing="0">
     
     <!-- Header -->
-    <tr><td style="padding:15px;background:linear-gradient(135deg,#10b981,#059669);border-bottom:2px solid #047857;"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:12px;font-weight:700;color:#fff;">📋 DISPOSITION: <span id="DispoSelectPhonE"></span></div><span id="DispoSelectMaxMin"><a href="#" onclick="DispoMinimize();" style="font-size:10px;text-decoration:none;color:#fff;font-weight:700;">[−]</a></span></span></div></td></tr>
+    <tr><td style="padding:12px 15px;background:linear-gradient(135deg,#10b981,#059669);border-bottom:2px solid #047857;"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:11px;font-weight:700;color:#fff;">📋 DISPOSITION: <span id="DispoSelectPhonE"></span></div><span id="DispoSelectMaxMin"><a href="#" onclick="DispoMinimize();" style="font-size:10px;text-decoration:none;color:#fff;font-weight:700;">[−]</a></span></div></td></tr>
     
     <!-- Content -->
-    <tr><td style="padding:15px;"><div style="margin-bottom:12px;"><span id="Dispo3wayMessage" style="font-size:10px;color:#047857;display:block;margin-bottom:6px;"></span><span id="DispoManualQueueMessage" style="font-size:10px;color:#047857;display:block;margin-bottom:6px;"></span></div>
+    <tr><td style="padding:15px;max-height:60vh;overflow-y:auto;">
     
-    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:8px;padding:12px;margin-bottom:12px;"><span id="DispoSelectContent" style="font-size:11px;font-weight:700;color:#047857;display:block;margin-bottom:8px;"><?php echo _QXZ("End-of-call Disposition"); ?></span><div style="text-align:center;"><span id="DispoSelectHAspan"><a href="#" onclick="DispoHanguPAgaiN();return false;" style="display:inline-block;padding:8px 14px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;margin:2px;">Hangup Again</a></span></div></div>
+    <!-- Disposition Buttons Grid -->
+    <div id="DispoSelectContent" style="margin-bottom:15px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
     
-    <div style="margin-bottom:12px;"><label style="display:flex;align-items:center;gap:8px;font-size:10px;color:#047857;font-weight:600;cursor:pointer;margin-bottom:8px;"><input type="checkbox" name="DispoSelectStop" id="DispoSelectStop" size="1" value="0" style="width:14px;height:14px;" /><strong><?php echo _QXZ("PAUSE AGENT DIALING"); ?></strong></label></div>
+    <!-- Messages -->
+    <div style="margin-bottom:12px;"><span id="Dispo3wayMessage" style="font-size:9px;color:#047857;display:block;margin-bottom:6px;"></span><span id="DispoManualQueueMessage" style="font-size:9px;color:#047857;display:block;"></span></div>
     
-    <div style="background:#fff;border:2px solid #86efac;border-radius:8px;padding:12px;margin-bottom:12px;"><div style="text-align:center;"><a href="#" onclick="DispoSelectContent_create('','ReSET','YES');return false;" style="display:inline-block;padding:8px 14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;margin:2px;">Clear Form</a> <a href="#" onclick="DispoSelect_submit('','','YES');return false;" style="display:inline-block;padding:8px 14px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;margin:2px;">Submit</a> <a href="#" onclick="WeBForMDispoSelect_submit();return false;" style="display:inline-block;padding:8px 14px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;margin:2px;">Web Form</a></div></div>
+    <!-- Hangup Again Link -->
+    <div style="text-align:center;margin-bottom:12px;"><span id="DispoSelectHAspan"><a href="#" onclick="DispoHanguPAgaiN();return false;" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;">Hangup Again</a></span></div>
+    
+    <!-- Pause Checkbox -->
+    <div style="padding:10px;background:#f0fdf4;border:2px solid #86efac;border-radius:8px;margin-bottom:12px;"><label style="display:flex;align-items:center;gap:8px;font-size:10px;color:#047857;font-weight:600;cursor:pointer;"><input type="checkbox" name="DispoSelectStop" id="DispoSelectStop" size="1" value="0" style="width:14px;height:14px;" /><strong><?php echo _QXZ("PAUSE AGENT DIALING"); ?></strong></label></div>
+    
+    <!-- Buttons -->
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-top:10px;border-top:2px solid #86efac;"><a href="#" onclick="DispoSelectContent_create('','ReSET','YES');return false;" style="display:inline-block;padding:10px 18px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 6px rgba(245,158,11,0.3);">Clear Form</a><a href="#" onclick="DispoSelect_submit('','','YES');return false;" style="display:inline-block;padding:10px 18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 6px rgba(16,185,129,0.3);">Submit</a><a href="#" onclick="WeBForMDispoSelect_submit();return false;" style="display:inline-block;padding:10px 18px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 6px rgba(59,130,246,0.3);">Web Form</a></div>
     
     <input type="hidden" name="DispoSelection" id="DispoSelection" />
     <input type="hidden" name="call_notes_dispo" id="call_notes_dispo" value="" />
     <span id="PerCallNotesContent"></span>
     <input type="hidden" name="dispo_comments" id="dispo_comments" value="" />
     <span id="DispoCommentsContent"></span>
+    
     </td></tr>
     </table>
 </span>
+
+<!-- ============================================ -->
+<!-- DISPOSITION BUTTON HIDE BOXES - COMPACT -->
+<!-- ============================================ -->
+
+<!-- Hide Box A - Top Bar -->
+<span style="position:absolute;left:0px;top:70px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideA">
+    <table border="0" style="background:#dcfce7;border:1px solid #10b981;width:165px;height:22px;border-radius:6px;"><tr><td align="center" valign="top"></td></tr></table>
+</span>
+
+<!-- Hide Box B - Middle Area -->
+<span style="position:absolute;left:0px;top:138px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideB">
+    <table border="0" style="background:#dcfce7;border:1px solid #10b981;width:165px;height:250px;border-radius:6px;"><tr><td align="center" valign="top">&nbsp;</td></tr></table>
+</span>
+
+<!-- Hide Box C - Warning Message -->
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideC">
+    <table border="0" style="background:linear-gradient(135deg,#fef3c7,#fde047);border:2px solid #fbbf24;border-radius:8px;width:<?php echo $CAwidth ?>px;height:auto;overflow:hidden;" cellpadding="0" cellspacing="0">
+    <tr><td style="padding:12px;background:linear-gradient(135deg,#fbbf24,#f59e0b);text-align:center;"><div style="font-size:11px;font-weight:700;color:#92400e;">⚠️ <?php echo _QXZ("Changes Not Saved"); ?></div></td></tr>
+    <tr><td style="padding:12px;text-align:center;"><div style="font-size:10px;color:#92400e;line-height:1.5;"><strong><?php echo _QXZ("Customer information changes will NOT be saved."); ?></strong><br /><?php echo _QXZ("Update info BEFORE hanging up."); ?></div></td></tr>
+    </table>
+</span>
+
 
 
 
