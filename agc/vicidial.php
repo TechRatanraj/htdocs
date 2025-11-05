@@ -24371,16 +24371,16 @@ $zi=2;
             <input type="hidden" name="chat_id" id="chat_id" value="" />
             <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
 
-
 <?php
-// Function to generate form fields with consistent logic
-function generateFormField($field_name, $label, $max_length, $size = null, $is_select = false, $options = []) {
+// Configuration and helper functions
+function generateFormField($field_name, $label, $max_length, $size = null, $is_select = false, $options = [], $field_type = 'text') {
     global $required_fields;
     
     $field_id = $field_name;
     $field_value = '';
     $readonly = '';
     $hidden = false;
+    $required = '';
     
     // Check if field should be hidden
     if ($label === '---HIDE---') {
@@ -24388,12 +24388,13 @@ function generateFormField($field_name, $label, $max_length, $size = null, $is_s
     } else {
         // Check if field is readonly
         if (preg_match("/---READONLY---/", $label)) {
-            $readonly = 'readonly="readonly"';
+            $readonly = 'readonly';
             $label = preg_replace("/---READONLY---/", "", $label);
         } else {
             // Check if field is required
             if (preg_match("/---REQUIRED---/", $label)) {
                 $required_fields .= "{$field_name}|";
+                $required = 'required';
                 $label = preg_replace("/---REQUIRED---/", "", $label);
             }
         }
@@ -24402,16 +24403,25 @@ function generateFormField($field_name, $label, $max_length, $size = null, $is_s
     if ($hidden) {
         return "<input type=\"hidden\" name=\"{$field_id}\" id=\"{$field_id}\" value=\"{$field_value}\" />";
     } else {
+        $label_class = $required ? 'required' : '';
+        $required_indicator = $required ? '<span class="required-indicator">*</span>' : '';
+        
+        $html = "<div class=\"form-group\">";
+        $html .= "<label for=\"{$field_id}\" class=\"form-label {$label_class}\">{$label}{$required_indicator}</label>";
+        
         if ($is_select) {
-            $html = "{$label}: </td><td align=\"left\"><font class=\"body_text\"><span id=\"GENDERhideFORie\"><select size=\"1\" name=\"{$field_id}\" class=\"cust_form\" id=\"{$field_id}\">";
+            $html .= "<select name=\"{$field_id}\" id=\"{$field_id}\" class=\"form-select\" {$required}>";
             foreach ($options as $value => $text) {
-                $html .= "<option value=\"{$value}\">" . _QXZ($text) . "</option>";
+                $selected = ($value === $field_value) ? 'selected' : '';
+                $html .= "<option value=\"{$value}\" {$selected}>" . _QXZ($text) . "</option>";
             }
-            $html .= "</select></span>";
+            $html .= "</select>";
         } else {
             $size_attr = $size ? "size=\"{$size}\"" : "";
-            $html = "{$label}: </td><td align=\"left\"><font class=\"body_text\"><input type=\"text\" {$size_attr} name=\"{$field_id}\" id=\"{$field_id}\" maxlength=\"{$max_length}\" class=\"cust_form\" value=\"{$field_value}\" {$readonly} />";
+            $html .= "<input type=\"{$field_type}\" name=\"{$field_id}\" id=\"{$field_id}\" maxlength=\"{$max_length}\" class=\"form-control\" value=\"{$field_value}\" {$readonly} {$required} />";
         }
+        
+        $html .= "</div>";
         return $html;
     }
 }
@@ -24421,229 +24431,580 @@ function generateFormField($field_name, $label, $max_length, $size = null, $is_s
 ?>
 
 <!-- Customer Information Section -->
-<span class="text_input" id="MainPanelCustInfo">
-    <table>
-        <tr>
-            <td align="right"></td>
-            <td align="left">
-                <font class="body_text">
-                    &nbsp; <?php echo _QXZ("Customer Time:"); ?> 
-                    <span name="custdatetime" id="custdatetime" class="log_title"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span> 
-                    &nbsp; &nbsp; <?php echo _QXZ("Channel:"); ?> 
-                    <span name="callchannel" id="callchannel" class="cust_form"> </span>
-                </font>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <font class="body_text"><?php echo _QXZ("Customer Information:"); ?></font> 
-                <span id="CusTInfOSpaN"></span> &nbsp; &nbsp; &nbsp; &nbsp; 
-                <?php
-                if ( ($agent_lead_search == 'ENABLED') or 
-                     ($agent_lead_search == 'LIVE_CALL_INBOUND') or 
-                     ($agent_lead_search == 'LIVE_CALL_INBOUND_AND_MANUAL') ) {
-                    echo "<font class=\"body_text\"><a href=\"#\" onclick=\"OpeNSearcHForMDisplaYBox();return false;\">"._QXZ("LEAD SEARCH")."</a></font>";
+<section class="customer-info-section" id="MainPanelCustInfo">
+    <header class="section-header">
+        <div class="header-info">
+            <div class="info-item">
+                <span class="info-label"><?php echo _QXZ("Customer Time:"); ?></span>
+                <span name="custdatetime" id="custdatetime" class="info-value">--:--:--</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label"><?php echo _QXZ("Channel:"); ?></span>
+                <span name="callchannel" id="callchannel" class="info-value">--</span>
+            </div>
+        </div>
+        
+        <h2 class="section-title">
+            <?php echo _QXZ("Customer Information:"); ?>
+            <span id="CusTInfOSpaN"></span>
+        </h2>
+        
+        <?php if (in_array($agent_lead_search, ['ENABLED', 'LIVE_CALL_INBOUND', 'LIVE_CALL_INBOUND_AND_MANUAL'])): ?>
+        <div class="action-buttons">
+            <button type="button" class="btn btn-secondary" onclick="OpeNSearcHForMDisplaYBox()">
+                <?php echo _QXZ("LEAD SEARCH"); ?>
+            </button>
+        </div>
+        <?php endif; ?>
+    </header>
+
+    <main class="form-container">
+        <form class="customer-form" novalidate>
+            <!-- Personal Information Section -->
+            <fieldset class="form-section">
+                <legend class="section-legend"><?php echo _QXZ("Personal Information"); ?></legend>
+                
+                <div class="form-row">
+                    <?php 
+                    echo generateFormField('title', $label_title, $MAXtitle, 4);
+                    echo generateFormField('first_name', $label_first_name, $MAXfirst_name, 17);
+                    echo generateFormField('middle_initial', $label_middle_initial, $MAXmiddle_initial, 1);
+                    echo generateFormField('last_name', $label_last_name, $MAXlast_name, 23);
+                    ?>
+                </div>
+                
+                <div class="form-row">
+                    <?php 
+                    $gender_options = [
+                        'U' => "U - Undefined",
+                        'M' => "M - Male",
+                        'F' => "F - Female"
+                    ];
+                    echo generateFormField('gender_list', $label_gender, 0, null, true, $gender_options);
+                    echo generateFormField('date_of_birth', $label_date_of_birth, $MAXdate_of_birth, 10, false, [], 'date');
+                    ?>
+                </div>
+            </fieldset>
+
+            <!-- Address Information Section -->
+            <fieldset class="form-section">
+                <legend class="section-legend"><?php echo _QXZ("Address Information"); ?></legend>
+                
+                <div class="form-row">
+                    <?php echo generateFormField('address1', $label_address1, $MAXaddress1, 50); ?>
+                </div>
+                
+                <div class="form-row">
+                    <?php 
+                    echo generateFormField('address2', $label_address2, $MAXaddress2, 30);
+                    echo generateFormField('address3', $label_address3, $MAXaddress3, 30);
+                    ?>
+                </div>
+                
+                <div class="form-row">
+                    <?php 
+                    echo generateFormField('city', $label_city, $MAXcity, 20);
+                    echo generateFormField('state', $label_state, $MAXstate, 4);
+                    echo generateFormField('postal_code', $label_postal_code, $MAXpostal_code, 10);
+                    ?>
+                </div>
+                
+                <div class="form-row">
+                    <?php 
+                    echo generateFormField('province', $label_province, $MAXprovince, 20);
+                    echo generateFormField('country', $label_country, $MAXcountry, 20);
+                    ?>
+                </div>
+            </fieldset>
+
+            <!-- Contact Information Section -->
+            <fieldset class="form-section">
+                <legend class="section-legend"><?php echo _QXZ("Contact Information"); ?></legend>
+                
+                <div class="form-row">
+                    <?php 
+                    if ($label_phone_number === '---HIDE---') {
+                        echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />";
+                        echo "<div class=\"form-group\"><span id=\"phone_numberDISP\" class=\"info-value\">--</span></div>";
+                    } else {
+                        if (preg_match('/Y|HIDE/', $disable_alter_custphone)) {
+                            echo "<div class=\"form-group\"><label class=\"form-label\">{$label_phone_number}</label><span id=\"phone_numberDISP\" class=\"info-value\">--</span></div>";
+                            echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />";
+                        } else {
+                            echo generateFormField('phone_number', $label_phone_number, $MAXphone_number, 20, false, [], 'tel');
+                        }
+                    }
+                    
+                    echo generateFormField('phone_code', $label_phone_code, $MAXphone_code, 4);
+                    echo generateFormField('alt_phone', $label_alt_phone, $MAXalt_phone, 20, false, [], 'tel');
+                    ?>
+                </div>
+                
+                <div class="form-row">
+                    <?php 
+                    echo generateFormField('email', $label_email, $MAXemail, 50, false, [], 'email');
+                    echo generateFormField('security_phrase', $label_security_phrase, $MAXsecurity_phrase, 30);
+                    ?>
+                </div>
+            </fieldset>
+
+            <!-- Additional Information Section -->
+            <fieldset class="form-section">
+                <legend class="section-legend"><?php echo _QXZ("Additional Information"); ?></legend>
+                
+                <div class="form-row">
+                    <?php 
+                    echo generateFormField('vendor_lead_code', $label_vendor_lead_code, $MAXvendor_lead_code, 20);
+                    echo generateFormField('source_id', $label_source_id, $MAXsource_id, 20);
+                    ?>
+                </div>
+                
+                <?php if (strlen($agent_display_fields) > 3): ?>
+                <div class="display-fields">
+                    <?php
+                    $display_fields = [
+                        'entry_date' => $label_entry_date,
+                        'source_id' => $label_source_id,
+                        'date_of_birth' => $label_date_of_birth,
+                        'rank' => $label_rank,
+                        'owner' => $label_owner,
+                        'last_local_call_time' => $label_last_local_call_time
+                    ];
+                    
+                    foreach ($display_fields as $field => $label) {
+                        if (preg_match("/$field/", $agent_display_fields)) {
+                            echo "<div class=\"display-field\">";
+                            echo "<span class=\"field-label\">{$label}:</span>";
+                            echo "<span id=\"{$field}DISP\" class=\"field-value\">--</span>";
+                            echo "</div>";
+                        }
+                    }
+                    ?>
+                </div>
+                <?php endif; ?>
+            </fieldset>
+
+            <!-- Comments Section -->
+            <fieldset class="form-section">
+                <legend class="section-legend"><?php echo _QXZ("Comments"); ?></legend>
+                
+                <?php if ($label_comments === '---HIDE---'): ?>
+                    <input type="hidden" name="comments" id="comments" value="" />
+                    <input type="hidden" name="other_tab_comments" id="other_tab_comments" value="" />
+                    <input type="hidden" name="dispo_comments" id="dispo_comments" value="" />
+                    <input type="hidden" name="callback_comments" id="callback_comments" value="" />
+                    
+                    <div class="form-actions">
+                        <button type="button" id="ViewCommentButton" class="btn btn-outline" onclick="ViewComments('ON','','','YES')">
+                            <?php echo _QXZ("History"); ?>
+                        </button>
+                    </div>
+                <?php else: ?>
+                    <div class="form-group">
+                        <label for="comments" class="form-label"><?php echo $label_comments; ?></label>
+                        <?php if ($multi_line_comments): ?>
+                            <textarea name="comments" id="comments" rows="3" class="form-control" maxlength="255"></textarea>
+                        <?php else: ?>
+                            <input type="text" name="comments" id="comments" maxlength="255" class="form-control" />
+                        <?php endif; ?>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="ViewCommentButton" class="btn btn-outline" onclick="ViewComments('ON','','','YES')">
+                            <?php echo _QXZ("History"); ?>
+                        </button>
+                    </div>
+                <?php endif; ?>
+            </fieldset>
+
+            <!-- Call Notes Section -->
+            <?php if ($per_call_notes === 'ENABLED'): ?>
+            <fieldset class="form-section">
+                <legend class="section-legend"><?php echo _QXZ("Call Notes"); ?></legend>
+                
+                <div class="form-group">
+                    <label for="call_notes" class="form-label"><?php echo _QXZ("Call Notes"); ?></label>
+                    <textarea name="call_notes" id="call_notes" rows="3" class="form-control"></textarea>
+                </div>
+                
+                <?php if ($agent_call_log_view == '1'): ?>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="VieWNotesLoG()">
+                        <?php echo _QXZ("View Notes"); ?>
+                    </button>
+                </div>
+                <?php endif; ?>
+            </fieldset>
+            <?php else: ?>
+            <input type="hidden" name="call_notes" id="call_notes" value="" />
+            <?php endif; ?>
+
+            <!-- Hidden Fields -->
+            <input type="hidden" name="required_fields" id="required_fields" value="<?php echo $required_fields ?>" />
+        </form>
+    </main>
+</section>
+
+<style>
+/* Modern CSS for Customer Information Form */
+.customer-info-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.header-info {
+    display: flex;
+    gap: 30px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #212529;
+    font-weight: 600;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #212529;
+    margin: 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+}
+
+.section-legend {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-label.required {
+    font-weight: 600;
+}
+
+.required-indicator {
+    color: #dc3545;
+    margin-left: 4px;
+}
+
+.form-control {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.form-control:invalid {
+    border-color: #dc3545;
+}
+
+.form-select {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    background-color: white;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.display-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.display-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.field-value {
+    font-size: 0.875rem;
+    color: #212529;
+    font-weight: 600;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.btn-outline:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .header-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .display-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .form-control,
+    .form-select,
+    .btn {
+        transition: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .form-control,
+    .form-select {
+        border-width: 2px;
+    }
+    
+    .btn {
+        border-width: 2px;
+    }
+}
+</style>
+
+<script>
+// Modern JavaScript for form interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Form validation
+    const form = document.querySelector('.customer-form');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    }
+    
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone_number');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = `(${value}`;
+                } else if (value.length <= 6) {
+                    value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                } else {
+                    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
                 }
-                ?>
-            </td>
-        </tr>
-        <tr>
-            <td align="left" colspan="2">
-                <table width="550px">
-                    <!-- Name Fields Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('title', $label_title, $MAXtitle, 4);
-                            echo "&nbsp; " . generateFormField('first_name', $label_first_name, $MAXfirst_name, 17);
-                            echo "&nbsp; " . generateFormField('middle_initial', $label_middle_initial, $MAXmiddle_initial, 1);
-                            echo "&nbsp; " . generateFormField('last_name', $label_last_name, $MAXlast_name, 23);
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Address Fields Row 1 -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php echo generateFormField('address1', $label_address1, $MAXaddress1, 85); ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Address Fields Row 2 -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('address2', $label_address2, $MAXaddress2, 20);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('address3', $label_address3, $MAXaddress3, 45);
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Location Fields Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('city', $label_city, $MAXcity, 20);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('state', $label_state, $MAXstate, 4);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('postal_code', $label_postal_code, $MAXpostal_code, 14);
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Additional Fields Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('province', $label_province, $MAXprovince, 20);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('vendor_lead_code', $label_vendor_lead_code, $MAXvendor_lead_code, 15);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            $gender_options = [
-                                'U' => "U - Undefined",
-                                'M' => "M - Male",
-                                'F' => "F - Female"
-                            ];
-                            echo generateFormField('gender_list', $label_gender, 0, null, true, $gender_options);
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Phone Fields Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            if ($label_phone_number === '---HIDE---') {
-                                echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />";
-                                echo "<font class=\"body_text\"><span id=\"phone_numberDISP\"> &nbsp; </span></font>";
-                            } else {
-                                echo "$label_phone_number: </td><td align=\"left\"><font class=\"body_text\">";
-                                if ( (preg_match('/Y/',$disable_alter_custphone)) or (preg_match('/HIDE/',$disable_alter_custphone)) ) {
-                                    echo "<font class=\"body_text\"><span id=\"phone_numberDISP\"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></font>";
-                                    echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />";
-                                } else {
-                                    echo "<input type=\"text\" size=\"20\" name=\"phone_number\" id=\"phone_number\" maxlength=\"$MAXphone_number\" class=\"cust_form\" value=\"\" />";
-                                }
-                            }
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('phone_code', $label_phone_code, $MAXphone_code, 4);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('alt_phone', $label_alt_phone, $MAXalt_phone, 14);
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Additional Info Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('security_phrase', $label_security_phrase, $MAXsecurity_phrase, 20);
-                            ?>
-                        </td>
-                        <td align="right"><font class="body_text">
-                            <?php 
-                            echo generateFormField('email', $label_email, $MAXemail, 45);
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Display Fields Row -->
-                    <?php if (strlen($agent_display_fields) > 3): ?>
-                    <tr>
-                        <td align="left" colspan="5">
-                            <font class="body_text">
-                                <?php
-                                $display_fields = [
-                                    'entry_date' => $label_entry_date,
-                                    'source_id' => $label_source_id,
-                                    'date_of_birth' => $label_date_of_birth,
-                                    'rank' => $label_rank,
-                                    'owner' => $label_owner,
-                                    'last_local_call_time' => $label_last_local_call_time
-                                ];
-                                
-                                foreach ($display_fields as $field => $label) {
-                                    if (preg_match("/$field/", $agent_display_fields)) {
-                                        echo "$label: &nbsp; <font class=\"body_text\"><span id=\"{$field}DISP\"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span> &nbsp; </font>";
-                                    }
-                                }
-                                ?>
-                            </font>
-                        </td>
-                    </tr>
-                    <?php endif; ?>
-                    
-                    <!-- Comments Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php
-                            if ($label_comments === '---HIDE---') {
-                                echo " </td><td align=\"left\" colspan=5>";
-                                echo "<input type=\"hidden\" name=\"comments\" id=\"comments\" value=\"\" />\n";
-                                echo "<input type=\"hidden\" name=\"other_tab_comments\" id=\"other_tab_comments\" value=\"\" />\n";
-                                echo "<input type=\"hidden\" name=\"dispo_comments\" id=\"dispo_comments\" value=\"\" />\n";
-                                echo "<input type=\"hidden\" name=\"callback_comments\" id=\"callback_comments\" value=\"\" />\n";
-                                echo "<span id='viewcommentsdisplay'><input type='button' id='ViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" value='-"._QXZ("History")."-'/></span>\n";
-                                echo "<span id='otherviewcommentsdisplay'><input type='button' id='OtherViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" value='-"._QXZ("History")."-'/></span>\n";
-                            } else {
-                                echo "$label_comments: <br><span id='viewcommentsdisplay'><input type='button' id='ViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" value='-"._QXZ("History")."-'/></span>
-                                </td><td align=\"left\" colspan=\"5\"><font class=\"body_text\">";
-                                if ($multi_line_comments) {
-                                    echo "<textarea name=\"comments\" id=\"comments\" rows=\"2\" cols=\"85\" class=\"cust_form_text\" value=\"\"></textarea>\n";
-                                } else {
-                                    echo "<input type=\"text\" size=\"65\" name=\"comments\" id=\"comments\" maxlength=\"255\" class=\"cust_form\" value=\"\" />\n";
-                                }
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                    
-                    <!-- Call Notes Row -->
-                    <tr>
-                        <td align="right"><font class="body_text">
-                            <?php
-                            if ($per_call_notes === 'ENABLED') {
-                                echo _QXZ("Call Notes: ");
-                                if ($agent_call_log_view == '1') {
-                                    echo "<br /><span id=\"CallNotesButtons\"><a href=\"#\" onclick=\"VieWNotesLoG();return false;\">"._QXZ("view notes")."</a></span> ";
-                                }
-                                echo "</td><td align=\"left\" colspan=\"5\"><font class=\"body_text\">";
-                                echo "<textarea name=\"call_notes\" id=\"call_notes\" rows=\"2\" cols=\"85\" class=\"cust_form_text\" value=\"\"></textarea>\n";
-                            } else {
-                                echo " </td><td align=\"left\" colspan=5><input type=\"hidden\" name=\"call_notes\" id=\"call_notes\" value=\"\" /><span id=\"CallNotesButtons\"></span>\n";
-                            }
-                            ?>
-                            <input type="hidden" name="required_fields" id="required_fields" value="<?php echo $required_fields ?>" />
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</span>
+            }
+            e.target.value = value;
+        });
+    }
+    
+    // Postal code formatting
+    const postalInput = document.getElementById('postal_code');
+    if (postalInput) {
+        postalInput.addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (value.length > 3) {
+                value = value.slice(0, 3) + ' ' + value.slice(3, 6);
+            }
+            e.target.value = value;
+        });
+    }
+    
+    // Auto-save functionality
+    let autoSaveTimer;
+    const inputs = form.querySelectorAll('input, textarea, select');
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(function() {
+                // Implement auto-save logic here
+                console.log('Auto-saving form data...');
+            }, 2000);
+        });
+    });
+    
+    // Field validation feedback
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (input.hasAttribute('required') && !input.value.trim()) {
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+    });
+});
+
+// Modern view comments function
+function ViewComments(state, type, id, refresh) {
+    // Implement modern modal or sidebar for comments
+    console.log('Viewing comments with state:', state);
+    
+    // Example implementation with modern modal
+    const modal = document.createElement('div');
+    modal.className = 'comments-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><?php echo _QXZ("Comment History"); ?></h3>
+                <button class="close-btn" onclick="this.closest('.comments-modal').remove()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Comments would be loaded here -->
+                <p>Loading comments...</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Load comments via AJAX
+    // fetch('/api/comments', { method: 'GET' })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         modal.querySelector('.modal-body').innerHTML = renderComments(data);
+    //     });
+}
+</script>
+
+
+
+
+
 
 
 <!-- END *********   Here is the main VICIDIAL display panel -->
