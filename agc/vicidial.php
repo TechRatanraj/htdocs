@@ -23781,9 +23781,12 @@ $zi=2;
 </span>
 		
 
-<!-- Modern Header - Fixed Overlap Issue -->
+<!-- Wrapper for proper layout -->
+<div style="position:relative;width:<?php echo $MNwidth ?>px;padding:10px;">
+
+<!-- Modern Header - FIXED positioning -->
 <div id="Header" style="
-    width:<?php echo $MNwidth ?>px;
+    width:100%;
     background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     box-shadow:0 2px 10px rgba(0,0,0,0.1);
     padding:15px 25px;
@@ -23792,9 +23795,9 @@ $zi=2;
     align-items:center;
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
     border-radius:8px;
-    margin-bottom:35px; 
+    margin-bottom:20px;
     position:relative;
-    z-index:<?php $zi++; echo $zi ?>;">
+    z-index:100;">
     
     <!-- Hidden Form Fields -->
     <input type="hidden" name="extension" id="extension" />
@@ -23803,7 +23806,7 @@ $zi=2;
     
     <!-- Left Section: User Info -->
     <div style="display:flex;flex-direction:column;gap:5px;flex:1;">
-        <div style="color:#fff;font-size:14px;font-weight:600;white-space:nowrap;">
+        <div style="color:#fff;font-size:14px;font-weight:600;">
             <?php
             if ($logged_in_refresh_link > 0) {
                 echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:5px;\">
@@ -23841,8 +23844,8 @@ $zi=2;
                 transition:all 0.3s ease;
                 border:1px solid rgba(255,255,255,0.2);
                 white-space:nowrap;"
-                onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-2px)';"
-                onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform='translateY(0)';">
+                onmouseover="this.style.background='rgba(255,255,255,0.25)';"
+                onmouseout="this.style.background='rgba(255,255,255,0.15)';">
                 <?php echo _QXZ("TERRITORIES"); ?>
             </a>
         <?php } ?>
@@ -23859,8 +23862,8 @@ $zi=2;
                 transition:all 0.3s ease;
                 border:1px solid rgba(255,255,255,0.2);
                 white-space:nowrap;"
-                onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-2px)';"
-                onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform='translateY(0)';">
+                onmouseover="this.style.background='rgba(255,255,255,0.25)';"
+                onmouseout="this.style.background='rgba(255,255,255,0.15)';">
                 <?php echo _QXZ("GROUPS"); ?>
             </a>
         <?php } ?>
@@ -23876,50 +23879,42 @@ $zi=2;
             transition:all 0.3s ease;
             box-shadow:0 2px 8px rgba(239,68,68,0.3);
             white-space:nowrap;"
-            onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';this.style.transform='translateY(-2px)';"
-            onmouseout="this.style.background='#ef4444';this.style.boxShadow='0 2px 8px rgba(239,68,68,0.3)';this.style.transform='translateY(0)';">
+            onmouseover="this.style.background='#dc2626';"
+            onmouseout="this.style.background='#ef4444';">
             <?php echo _QXZ("LOGOUT"); ?>
         </a>
     </nav>
 </div>
 
-<!-- CSS Animation for Pulse Effect -->
-<style>
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-</style>
-
 <!-- Modern Tabs Navigation -->
 <div id="Tabs" style="
-    width:<?php echo $MNwidth ?>px;
+    width:100%;
     background:#fff;
     border-radius:8px;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
     overflow:hidden;
-    margin-bottom:15px;
+    margin-bottom:20px;
     position:relative;
-    z-index:<?php $zi++; echo $zi ?>;">
+    z-index:90;">
     
-    <div style="display:flex;align-items:stretch;height:50px;">
+    <div style="display:flex;align-items:stretch;min-height:50px;flex-wrap:nowrap;">
         <!-- Main Logo Tab -->
         <a href="#" onclick="MainPanelToFront('NO','YES');" style="
             background:#<?php echo $SSstd_row5_background ?>;
             width:115px;
+            min-width:115px;
             display:flex;
             align-items:center;
             justify-content:center;
             border-right:1px solid rgba(0,0,0,0.08);
-            transition:all 0.3s ease;"
-            onmouseover="this.style.opacity='0.85';this.style.transform='scale(1.02)';"
-            onmouseout="this.style.opacity='1';this.style.transform='scale(1)';">
-            <img src="<?php echo $selected_logo ?>" alt="MAIN" width="100px" height="auto" style="max-height:40px;" />
+            transition:opacity 0.3s ease;">
+            <img src="<?php echo $selected_logo ?>" alt="MAIN" style="max-width:100px;max-height:40px;height:auto;" />
         </a>
         
         <!-- Script Tab -->
         <a href="#" onclick="ScriptPanelToFront('YES');" style="
-            width:80px;
+            min-width:80px;
+            padding:0 15px;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -23932,153 +23927,137 @@ $zi=2;
             letter-spacing:0.5px;
             border-right:1px solid rgba(0,0,0,0.08);
             transition:all 0.3s ease;
-            background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
-            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
-            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
+            background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
             Script
         </a>
         
-        <!-- Script 2 Tab (Conditional) -->
         <?php if ($SSenable_second_script > 0) { ?>
-            <a href="#" onclick="ScriptPanel2ToFront('YES');" style="
-                width:80px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                text-decoration:none;
-                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-                font-size:11px;
-                font-weight:600;
-                color:#4b5563;
-                text-transform:uppercase;
-                letter-spacing:0.5px;
-                border-right:1px solid rgba(0,0,0,0.08);
-                transition:all 0.3s ease;
-                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
-                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
-                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
-                Script 2
-            </a>
+        <a href="#" onclick="ScriptPanel2ToFront('YES');" style="
+            min-width:80px;
+            padding:0 15px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-decoration:none;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            font-size:11px;
+            font-weight:600;
+            color:#4b5563;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;
+            background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
+            Script 2
+        </a>
         <?php } ?>
         
-        <!-- Form Tab (Conditional) -->
         <?php if ($custom_fields_enabled > 0) { ?>
-            <a href="#" onclick="FormPanelToFront('YES');" style="
-                width:80px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                text-decoration:none;
-                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-                font-size:11px;
-                font-weight:600;
-                color:#4b5563;
-                text-transform:uppercase;
-                letter-spacing:0.5px;
-                border-right:1px solid rgba(0,0,0,0.08);
-                transition:all 0.3s ease;
-                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
-                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
-                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
-                Form
-            </a>
+        <a href="#" onclick="FormPanelToFront('YES');" style="
+            min-width:80px;
+            padding:0 15px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-decoration:none;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            font-size:11px;
+            font-weight:600;
+            color:#4b5563;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;
+            background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
+            Form
+        </a>
         <?php } ?>
         
-        <!-- Email Tab (Conditional) -->
         <?php if ($email_enabled > 0) { ?>
-            <a href="#" onclick="EmailPanelToFront('YES');" style="
-                width:80px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                text-decoration:none;
-                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-                font-size:11px;
-                font-weight:600;
-                color:#4b5563;
-                text-transform:uppercase;
-                letter-spacing:0.5px;
-                border-right:1px solid rgba(0,0,0,0.08);
-                transition:all 0.3s ease;
-                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
-                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
-                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
-                Email
-            </a>
+        <a href="#" onclick="EmailPanelToFront('YES');" style="
+            min-width:80px;
+            padding:0 15px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-decoration:none;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            font-size:11px;
+            font-weight:600;
+            color:#4b5563;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;
+            background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
+            Email
+        </a>
         <?php } ?>
         
-        <!-- Chat Tabs (Conditional) -->
         <?php if ($chat_enabled > 0) { ?>
-            <!-- Internal Chat -->
-            <a href="#" onclick="InternalChatContentsLoad('YES');" style="
-                width:90px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                text-decoration:none;
-                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-                font-size:11px;
-                font-weight:600;
-                color:#4b5563;
-                text-transform:uppercase;
-                letter-spacing:0.5px;
-                border-right:1px solid rgba(0,0,0,0.08);
-                transition:all 0.3s ease;
-                background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
-                onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
-                onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
-                <img src="./images/<?php echo _QXZ("vdc_tab_chat_internal.gif"); ?>" name='InternalChatImg' alt="Internal Chat" style="height:24px;width:auto;" />
-            </a>
-            
-            <!-- Customer Chat (Conditional) -->
-            <?php if ($campaign_chat_enabled=='Y') { ?>
-                <a href="#" onclick="CustomerChatPanelToFront('1', 'YES');" style="
-                    width:90px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    text-decoration:none;
-                    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-                    font-size:11px;
-                    font-weight:600;
-                    color:#4b5563;
-                    text-transform:uppercase;
-                    letter-spacing:0.5px;
-                    border-right:1px solid rgba(0,0,0,0.08);
-                    transition:all 0.3s ease;
-                    background:linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%);"
-                    onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 95%, #667eea 95%, #667eea 100%)';this.style.color='#111827';"
-                    onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 95%, #667eea 95%, #667eea 100%)';this.style.color='#4b5563';">
-                    <img src="./images/<?php echo _QXZ("vdc_tab_chat_customer.gif"); ?>" name='CustomerChatImg' alt="Customer Chat" style="height:24px;width:auto;" />
-                </a>
-            <?php } ?>
+        <a href="#" onclick="InternalChatContentsLoad('YES');" style="
+            min-width:70px;
+            padding:0 10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;
+            background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
+            <img src="./images/<?php echo _QXZ("vdc_tab_chat_internal.gif"); ?>" name='InternalChatImg' alt="Chat" style="height:24px;width:auto;" />
+        </a>
+        
+        <?php if ($campaign_chat_enabled=='Y') { ?>
+        <a href="#" onclick="CustomerChatPanelToFront('1', 'YES');" style="
+            min-width:70px;
+            padding:0 10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-right:1px solid rgba(0,0,0,0.08);
+            transition:all 0.3s ease;
+            background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
+            <img src="./images/<?php echo _QXZ("vdc_tab_chat_customer.gif"); ?>" name='CustomerChatImg' alt="Customer Chat" style="height:24px;width:auto;" />
+        </a>
+        <?php } ?>
         <?php } ?>
         
-        <!-- Status Section (Flex Grow) -->
+        <!-- Status Section -->
         <div style="
             flex:1;
+            min-width:200px;
             display:flex;
             flex-direction:column;
             justify-content:center;
             align-items:center;
-            padding:0 15px;
+            padding:5px 15px;
             background:linear-gradient(to right, #f9fafb, #ffffff);
             border-right:1px solid rgba(0,0,0,0.08);">
-            <div style="font-size:10px;color:#6b7280;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+            <div style="font-size:10px;color:#6b7280;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;white-space:nowrap;">
                 <span id="status" style="
-                    display:inline-block;
                     padding:2px 8px;
                     background:#10b981;
                     color:#fff;
                     border-radius:12px;
                     font-weight:600;
-                    font-size:10px;
-                    text-transform:uppercase;
-                    letter-spacing:0.5px;"><?php echo _QXZ("LIVE"); ?></span>
+                    font-size:9px;
+                    text-transform:uppercase;"><?php echo _QXZ("LIVE"); ?></span>
                 <span style="margin:0 5px;color:#d1d5db;">|</span>
                 <?php echo _QXZ("session ID:"); ?> <span id="sessionIDspan" style="font-weight:600;color:#374151;"></span>
             </div>
-            <div style="font-size:11px;color:#374151;margin-top:3px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+            <div style="font-size:11px;color:#374151;margin-top:3px;">
                 <span id="AgentStatusCalls" style="margin-right:10px;"></span>
                 <span id="AgentStatusEmails"></span>
             </div>
@@ -24086,50 +24065,49 @@ $zi=2;
         
         <!-- Live Call Indicator -->
         <div style="
-            width:120px;
+            min-width:100px;
             display:flex;
             align-items:center;
             justify-content:center;
-            background:linear-gradient(135deg, #f3f4f6, #e5e7eb);">
-            <img src="./images/<?php echo _QXZ("agc_live_call_OFF.gif"); ?>" name="livecall" alt="Live Call" style="height:30px;width:auto;" />
+            background:#f3f4f6;
+            padding:0 10px;">
+            <img src="./images/<?php echo _QXZ("agc_live_call_OFF.gif"); ?>" name="livecall" alt="Live Call" style="height:28px;width:auto;" />
         </div>
     </div>
 </div>
 
-<!-- Welcome Box (Modern Card Style) -->
+<!-- Welcome Box or Main Content Area -->
 <div id="WelcomeBoxA" style="
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $HKwidth ?>px;
+    width:100%;
+    min-height:300px;
     background:#fff;
     border-radius:12px;
-    box-shadow:0 4px 16px rgba(0,0,0,0.08);
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+    padding:30px;
     position:relative;
-    z-index:<?php $zi++; echo $zi ?>;
-    margin-bottom:20px;
+    z-index:1;
     border:1px solid rgba(0,0,0,0.05);">
-    <div style="text-align:center;padding:30px;">
-        <div id="WelcomeBoxAt" style="
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            font-size:24px;
-            font-weight:600;
-            color:#1f2937;
-            background:linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;">
-            <?php echo _QXZ("Agent Screen"); ?>
-        </div>
-        <div style="
-            width:60px;
-            height:4px;
-            background:linear-gradient(135deg, #667eea, #764ba2);
-            margin:15px auto;
-            border-radius:2px;"></div>
+    <div id="WelcomeBoxAt" style="
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+        font-size:24px;
+        font-weight:600;
+        color:#1f2937;
+        text-align:center;">
+        <?php echo _QXZ("Agent Screen"); ?>
     </div>
 </div>
+
+<!-- Close wrapper -->
+</div>
+
+<!-- CSS Animation -->
+<style>
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+</style>
+
 
 
 
