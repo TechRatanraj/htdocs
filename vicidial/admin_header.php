@@ -159,117 +159,137 @@ $SS_row1_hex = '#' . $SSstd_row1_background;
 $SS_row2_hex = '#' . $SSstd_row2_background;
 $SS_button_hex = '#' . $SSbutton_color;
 
-##### BEGIN populate dynamic header content #####
-if ($hh=='users') 
-	{
-	$users_hh="CLASS=\"head_style_selected\""; $users_fc="$users_font"; $users_bold="$header_selected_bold";
-	$users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$users_hh="CLASS=\"head_style\""; $users_fc='WHITE'; $users_bold="$header_nonselected_bold";
-	$users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='campaigns') 
-	{
-	$campaigns_hh="CLASS=\"head_style_selected\""; $campaigns_fc="$campaigns_font"; $campaigns_bold="$header_selected_bold";
-	$campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$campaigns_hh="CLASS=\"head_style\""; $campaigns_fc='WHITE'; $campaigns_bold="$header_nonselected_bold";
-	$campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='lists') 
-	{
-	$lists_hh="CLASS=\"head_style_selected\""; $lists_fc="$lists_font"; $lists_bold="$header_selected_bold";
-	$lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$lists_hh="CLASS=\"head_style\""; $lists_fc='WHITE'; $lists_bold="$header_nonselected_bold";
-	$lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='ingroups') 
-	{
-	$ingroups_hh="CLASS=\"head_style_selected\""; $ingroups_fc="$ingroups_font"; $ingroups_bold="$header_selected_bold";
-	$inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$ingroups_hh="CLASS=\"head_style\""; $ingroups_fc='WHITE'; $ingroups_bold="$header_nonselected_bold";
-	$inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='remoteagent') 
-	{
-	$remoteagent_hh="CLASS=\"head_style_selected\""; $remoteagent_fc="$remoteagent_font"; $remoteagent_bold="$header_selected_bold";
-	$remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$remoteagent_hh="CLASS=\"head_style\""; $remoteagent_fc='WHITE'; $remoteagent_bold="$header_nonselected_bold";
-	$remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='usergroups') 
-	{
-	$usergroups_hh="CLASS=\"head_style_selected\""; $usergroups_fc="$usergroups_font"; $usergroups_bold="$header_selected_bold";
-	$usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$usergroups_hh="CLASS=\"head_style\""; $usergroups_fc='WHITE'; $usergroups_bold="$header_nonselected_bold";
-	$usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='scripts') 
-	{
-	$scripts_hh="CLASS=\"head_style_selected\""; $scripts_fc="$scripts_font"; $scripts_bold="$header_selected_bold";
-	$scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$scripts_hh="CLASS=\"head_style\""; $scripts_fc='WHITE'; $scripts_bold="$header_nonselected_bold";
-	$scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='filters') 
-	{
-	$filters_hh="CLASS=\"head_style_selected\""; $filters_fc="$filters_font"; $filters_bold="$header_selected_bold";
-	$filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$filters_hh="CLASS=\"head_style\""; $filters_fc='WHITE'; $filters_bold="$header_nonselected_bold";
-	$filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='admin') 
-	{
-	$admin_hh="CLASS=\"head_style_selected\""; $admin_fc="$admin_font"; $admin_bold="$header_selected_bold";
-	$admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$admin_hh="CLASS=\"head_style\""; $admin_fc='WHITE'; $admin_bold="$header_nonselected_bold";
-	$admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='reports') 
-	{
-	$reports_hh="CLASS=\"head_style_selected\""; $reports_fc="$reports_font"; $reports_bold="$header_selected_bold";
-	$reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$reports_hh="CLASS=\"head_style\""; $reports_fc='WHITE'; $reports_bold="$header_nonselected_bold";
-	$reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='qc')
-	{
-	$qc_hh="CLASS=\"head_style_selected\""; $qc_fc="$qc_font"; $qc_bold="$header_selected_bold";
-	$qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$qc_hh="CLASS=\"head_style\""; $qc_fc='WHITE'; $qc_bold="$header_nonselected_bold";
-	$qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
-	}
+// ============================================
+// POPULATE DYNAMIC HEADER CONTENT - MODERNIZED
+// Purple Gradient Theme + Clean Navigation
+// ============================================
+
+// Define header menu items
+$header_items = array(
+    'users' => array(
+        'label' => 'Users',
+        'icon_selected' => 'images/icon_black_users.png',
+        'icon_default' => 'images/icon_users.png',
+        'alt' => 'Users'
+    ),
+    'campaigns' => array(
+        'label' => 'Campaigns',
+        'icon_selected' => 'images/icon_black_campaigns.png',
+        'icon_default' => 'images/icon_campaigns.png',
+        'alt' => 'Campaigns'
+    ),
+    'lists' => array(
+        'label' => 'Lists',
+        'icon_selected' => 'images/icon_black_lists.png',
+        'icon_default' => 'images/icon_lists.png',
+        'alt' => 'Lists'
+    ),
+    'ingroups' => array(
+        'label' => 'Inbound',
+        'icon_selected' => 'images/icon_black_inbound.png',
+        'icon_default' => 'images/icon_inbound.png',
+        'alt' => 'Inbound'
+    ),
+    'remoteagent' => array(
+        'label' => 'Remote Agents',
+        'icon_selected' => 'images/icon_black_remoteagents.png',
+        'icon_default' => 'images/icon_remoteagents.png',
+        'alt' => 'Remote Agents'
+    ),
+    'usergroups' => array(
+        'label' => 'User Groups',
+        'icon_selected' => 'images/icon_black_usergroups.png',
+        'icon_default' => 'images/icon_usergroups.png',
+        'alt' => 'User Groups'
+    ),
+    'scripts' => array(
+        'label' => 'Scripts',
+        'icon_selected' => 'images/icon_black_scripts.png',
+        'icon_default' => 'images/icon_scripts.png',
+        'alt' => 'Scripts'
+    ),
+    'filters' => array(
+        'label' => 'Filters',
+        'icon_selected' => 'images/icon_black_filters.png',
+        'icon_default' => 'images/icon_filters.png',
+        'alt' => 'Filters'
+    ),
+    'admin' => array(
+        'label' => 'Admin',
+        'icon_selected' => 'images/icon_black_admin.png',
+        'icon_default' => 'images/icon_admin.png',
+        'alt' => 'Admin'
+    ),
+    'reports' => array(
+        'label' => 'Reports',
+        'icon_selected' => 'images/icon_black_reports.png',
+        'icon_default' => 'images/icon_reports.png',
+        'alt' => 'Reports'
+    ),
+    'qc' => array(
+        'label' => 'Quality Control',
+        'icon_selected' => 'images/icon_black_qc.png',
+        'icon_default' => 'images/icon_qc.png',
+        'alt' => 'Quality Control'
+    )
+);
+
+// Initialize header variables - DRY Pattern
+foreach ($header_items as $key => $item) {
+    $var_name = $key . '_hh';
+    $icon_var = $key . '_icon';
+    $color_var = $key . '_fc';
+    $bold_var = $key . '_bold';
+    
+    if ($hh == $key) {
+        // Selected state
+        $$var_name = 'style="background:linear-gradient(135deg,#667eea,#764ba2);padding:8px 12px;border-radius:4px;font-weight:600;"';
+        $$color_var = '#fff';
+        $$bold_var = $header_selected_bold;
+        $$icon_var = "<img src=\"{$item['icon_selected']}\" border=\"0\" alt=\"{$item['alt']}\" width=\"16\" height=\"16\" valign=\"middle\" style=\"margin-right:6px;\" />";
+    } else {
+        // Default state
+        $$var_name = 'style="color:#fff;padding:8px 12px;border-radius:4px;transition:all 0.2s;cursor:pointer;"';
+        $$color_var = '#fff';
+        $$bold_var = $header_nonselected_bold;
+        $$icon_var = "<img src=\"{$item['icon_default']}\" border=\"0\" alt=\"{$item['alt']}\" width=\"16\" height=\"16\" valign=\"middle\" style=\"margin-right:6px;opacity:0.7;\" />";
+    }
+}
+
+// ============================================
+// MODERN NAVIGATION HTML HELPER FUNCTION
+// ============================================
+function render_nav_item($key, $hh) {
+    global $header_items;
+    
+    if (!isset($header_items[$key])) return '';
+    
+    $item = $header_items[$key];
+    $is_active = ($hh == $key);
+    
+    $style = $is_active ? 
+        'background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;' :
+        'background:rgba(255,255,255,0.1);color:#fff;transition:all 0.2s;';
+    
+    $icon = $is_active ? $item['icon_selected'] : $item['icon_default'];
+    $opacity = $is_active ? '1' : '0.7';
+    
+    return "<a href=\"#\" style=\"display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:4px;{$style}text-decoration:none;font-weight:600;font-size:13px;\" onmouseover=\"this.style.opacity='1'\" onmouseout=\"this.style.opacity='{$opacity}'\">" .
+           "<img src=\"{$icon}\" border=\"0\" alt=\"{$item['alt']}\" width=\"16\" height=\"16\" style=\"opacity:{$opacity};\" />" .
+           "{$item['label']}" .
+           "</a>";
+}
+
+// ============================================
+// RENDER NAVIGATION BAR
+// ============================================
+echo "<div style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-radius:6px;margin-bottom:20px;\">\n";
+
+foreach (array('users', 'campaigns', 'lists', 'ingroups', 'remoteagent', 'usergroups', 'scripts', 'filters', 'admin', 'reports', 'qc') as $menu_item) {
+    echo render_nav_item($menu_item, $hh);
+}
+
+echo "</div>\n";
 ##### END populate dynamic header content #####
 
 ######################### SMALL HTML HEADER BEGIN #######################################
