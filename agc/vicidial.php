@@ -23792,7 +23792,7 @@ $zi=2;
     align-items:center;
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
     border-radius:8px;
-    margin-bottom:20px; 
+    margin-bottom:35px; 
     position:relative;
     z-index:<?php $zi++; echo $zi ?>;">
     
