@@ -25132,31 +25132,200 @@ $zi=2;
 
 <!-- END *********   Here is the main VICIDIAL display panel -->
 
-	
 
+<!-- Modern Banner Panel -->
+<span style="position:absolute;left:0px;top:66px;z-index:<?php $zi++; echo $zi ?>;" id="BannerPanel">
+    <font class="skb_text">&nbsp;</font>
+</span>
 
-<span style="position:absolute;left:0px;top:66px;z-index:<?php $zi++; echo $zi ?>;" id="BannerPanel"><font class="skb_text">&nbsp;</font> </span>
-
-<!-- ZZZZZZZZZZZZ  action links -->
-
+<!-- Debug Bottom Span -->
 <span style="position:absolute;left:0px;top:<?php echo $DBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="debugbottomspan"></span>
 
-<span style="position:absolute;left:300px;top:<?php echo $MBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="DiaLlOgButtonspan">
-<span id="ManuaLDiaLButtons"><font class="body_text"><span id="MDstatusSpan"><a href="#" onclick="NeWManuaLDiaLCalL('NO','','','','','YES','YES');return false;"><?php echo _QXZ("MANUAL DIAL"); ?></a></span>&nbsp; &nbsp; 
-<?php if ( ($agentcall_manual == '1') and (!preg_match("/ONLY/",$manual_dial_lead_id)) ) { ?>
-<a href="#" onclick="NeWManuaLDiaLCalL('FAST','','','','','YES','YES');return false;"><?php echo _QXZ("FAST DIAL"); ?></a>
-<?php } ?>
-</span>&nbsp; &nbsp; </font>
-<span id="CallLogButtons"><font class="body_text"><span id="CallLogLinkSpan"><a href="#" onclick="VieWCalLLoG();return false;"><?php echo _QXZ("VIEW CALL LOG"); ?></a></span><br /></font></span>
+<!-- Modern Manual Dial & Fast Dial Buttons - Left Side Bottom -->
+<div style="
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    z-index:<?php $zi++; echo $zi ?>;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+    
+    <span id="ManuaLDiaLButtons">
+        <span id="MDstatusSpan">
+            <a href="#" onclick="NeWManuaLDiaLCalL('NO','','','','','YES','YES');return false;" style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                padding:12px 20px;
+                background:linear-gradient(135deg, #667eea, #764ba2);
+                color:#fff;
+                text-decoration:none;
+                border-radius:10px;
+                font-size:13px;
+                font-weight:700;
+                text-transform:uppercase;
+                letter-spacing:0.5px;
+                box-shadow:0 4px 12px rgba(102,126,234,0.4);
+                transition:all 0.3s ease;
+                min-width:180px;"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(102,126,234,0.5)';"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';">
+                <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <?php echo _QXZ("MANUAL DIAL"); ?>
+            </a>
+        </span>
+        
+        <?php if ( ($agentcall_manual == '1') and (!preg_match("/ONLY/",$manual_dial_lead_id)) ) { ?>
+        <a href="#" onclick="NeWManuaLDiaLCalL('FAST','','','','','YES','YES');return false;" style="
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            padding:12px 20px;
+            background:linear-gradient(135deg, #10b981, #059669);
+            color:#fff;
+            text-decoration:none;
+            border-radius:10px;
+            font-size:13px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+            box-shadow:0 4px 12px rgba(16,185,129,0.4);
+            transition:all 0.3s ease;
+            min-width:180px;
+            margin-top:10px;"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.5)';"
+            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';">
+            <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
+                <path d="M13 3l3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z"/>
+                <path d="M19 19H5V5h7l-2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5l-2-2v7z"/>
+            </svg>
+            <?php echo _QXZ("FAST DIAL"); ?>
+        </a>
+        <?php } ?>
+    </span>
+</div>
+
+<!-- Modern Web Phone Button - Right Side Vertical Tab -->
+<div style="
+    position:fixed;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:<?php $zi++; echo $zi ?>;">
+    
+    <a href="#" onclick="launch_webphone();return false;" style="
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        writing-mode:vertical-rl;
+        padding:20px 12px;
+        background:linear-gradient(180deg, #8b5cf6, #667eea);
+        color:#fff;
+        text-decoration:none;
+        border-radius:10px 0 0 10px;
+        font-size:14px;
+        font-weight:700;
+        text-transform:uppercase;
+        letter-spacing:1px;
+        box-shadow:-4px 0 12px rgba(139,92,246,0.4);
+        transition:all 0.3s ease;
+        gap:10px;"
+        onmouseover="this.style.right='0';this.style.boxShadow='-6px 0 16px rgba(139,92,246,0.5)';"
+        onmouseout="this.style.right='0';this.style.boxShadow='-4px 0 12px rgba(139,92,246,0.4)';">
+        <svg style="width:20px;height:20px;fill:#fff;transform:rotate(90deg);" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        Web Phone
+    </a>
+</div>
+
+<!-- Modern Call Log Button - Center Bottom -->
+<div style="
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    z-index:<?php $zi++; echo $zi ?>;">
+    
+    <span id="CallLogButtons">
+        <span id="CallLogLinkSpan">
+            <a href="#" onclick="VieWCalLLoG();return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                padding:10px 20px;
+                background:#fff;
+                color:#0ea5e9;
+                text-decoration:none;
+                border:2px solid #0ea5e9;
+                border-radius:10px;
+                font-size:12px;
+                font-weight:700;
+                text-transform:uppercase;
+                box-shadow:0 4px 12px rgba(14,165,233,0.2);
+                transition:all 0.3s ease;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+                onmouseover="this.style.background='#0ea5e9';this.style.color='#fff';this.style.transform='translateY(-2px)';"
+                onmouseout="this.style.background='#fff';this.style.color='#0ea5e9';this.style.transform='translateY(0)';">
+                <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24">
+                    <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 16H5V5h2v3h10V5h2v14z"/>
+                </svg>
+                <?php echo _QXZ("VIEW CALL LOG"); ?>
+            </a>
+        </span>
+    </span>
+</div>
+
+<!-- Modern Agent Time Button - Bottom Right -->
+<div style="
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:<?php $zi++; echo $zi ?>;">
+    
+    <span id="AgentTimeSpan">
+        <a href="#" onclick="AgentTimeReport('open');return false;" style="
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:10px 20px;
+            background:linear-gradient(135deg, #f59e0b, #d97706);
+            color:#fff;
+            text-decoration:none;
+            border-radius:10px;
+            font-size:12px;
+            font-weight:700;
+            text-transform:uppercase;
+            box-shadow:0 4px 12px rgba(245,158,11,0.4);
+            transition:all 0.3s ease;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(245,158,11,0.5)';"
+            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(245,158,11,0.4)';">
+            <svg style="width:16px;height:16px;fill:#fff;" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+            <?php echo _QXZ("AGENT TIME"); ?>
+        </a>
+    </span>
+</div>
+
+<!-- Pause Code Buttons -->
+<span style="position:absolute;left:550px;top:<?php echo $CBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="PauseCodeButtons">
+    <font class="body_text">
+        <span id="PauseCodeLinkSpan"></span>
+    </font>
 </span>
 
-<span style="position:absolute;left:165px;top:<?php echo $CBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="AgentTimeSpan">
-<font class="body_text"><a href="#" onclick="AgentTimeReport('open');return false;"><?php echo _QXZ("AGENT TIME"); ?></a></font>
-</span>
+<!-- Hidden Original Dial Log Button Span for JS Compatibility -->
+<span style="display:none;" id="DiaLlOgButtonspan"></span>
 
-<span style="position:absolute;left:550px;top:<?php echo $CBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="PauseCodeButtons"><font class="body_text">
-<span id="PauseCodeLinkSpan"></span> <br />
-</font></span>
 
 <span style="position:absolute;left:0px;top:<?php echo $PBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="MaiNfooterspan">
 <span id="blind_monitor_notice_span"><b><font color="red"> &nbsp; &nbsp; <span id="blind_monitor_notice_span_contents"></span></font></b></span>
