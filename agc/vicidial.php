@@ -25632,44 +25632,194 @@ $zi=2;
 
 
 
-<span style="position:absolute;left:0px;top:<?php echo $CQheight ?>px;width:<?php echo $MNwidth ?>px;overflow:scroll;z-index:<?php $zi++; echo $zi ?>;background-color:<?php echo $SIDEBAR_COLOR ?>;" id="callsinqueuedisplay"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="5px" rowspan="2">&nbsp;</td><td align="center"><font class="body_text"><?php echo _QXZ("Calls In Queue:"); ?> &nbsp; </font></td></tr><tr><td align="center"><span id="callsinqueuelist">&nbsp;</span></td></tr></table></span>
+<!-- Modern Calls In Queue Display - Top Bar -->
+<div style="
+    position:fixed;
+    left:0;
+    top:<?php echo $CQheight ?>px;
+    right:0;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-bottom:2px solid #0ea5e9;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    padding:8px 20px;
+    overflow-x:auto;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="callsinqueuedisplay">
+    
+    <div style="display:flex;align-items:center;gap:15px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#0284c7;" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#0369a1;">
+                <?php echo _QXZ("Calls In Queue:"); ?>
+            </span>
+        </div>
+        <div id="callsinqueuelist" style="
+            padding:4px 12px;
+            background:#fff;
+            border-radius:6px;
+            font-size:14px;
+            font-weight:800;
+            color:#0c4a6e;
+            min-width:50px;
+            text-align:center;
+            border:1px solid #bae6fd;">
+        </div>
+    </div>
+</div>
 
-<font class="body_small"><span style="position:absolute;left:<?php echo $CLwidth ?>px;top:<?php echo $QLheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="callsinqueuelink">
-<?php 
-if ($view_calls_in_queue > 0)
-	{ 
-	if ($view_calls_in_queue_launch > 0) 
-		{echo "<a href=\"#\" onclick=\"show_calls_in_queue('HIDE');\">"._QXZ("Hide Calls In Queue")."</a>\n";}
-	else 
-		{echo "<a href=\"#\" onclick=\"show_calls_in_queue('SHOW');\">"._QXZ("Show Calls In Queue")."</a>\n";}
-	}
-?>
-</span></font>
-
-<span style="position:absolute;left:300px;top:<?php echo $CBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="CallbacksButtons"><font class="body_text">
-<span id="CBstatusSpan"><?php echo _QXZ("X ACTIVE CALLBACKS"); ?></span> <br />
-</font></span>
-
-<span style="position:absolute;left:500px;top:<?php echo $AMheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="OtherTabCommentsSpan">
-<?php 
-	if ( ($comments_all_tabs == 'ENABLED') and ($label_comments != '---HIDE---') )
-		{
-		$zi++;
-		echo "<table cellspacing=4 cellpadding=0><tr><td align=\"right\"><font class=\"body_text\">\n";
-		echo "$label_comments: <br><span id='otherviewcommentsdisplay'><input type='button' id='OtherViewCommentButton' onClick=\"ViewComments('ON','','','YES')\" value='-"._QXZ("History")."-'/></span>
-		</font></td><td align=\"left\"><font class=\"body_text\">";
-		if ( ($multi_line_comments) )
-			{echo "<textarea name=\"other_tab_comments\" id=\"other_tab_comments\" rows=\"2\" cols=\"65\" class=\"cust_form_text\" value=\"\"></textarea>\n";}
-		else
-			{echo "<input type=\"text\" size=\"65\" name=\"other_tab_comments\" id=\"other_tab_comments\" maxlength=\"255\" class=\"cust_form\" value=\"\" />\n";}
-		echo "</td></tr></table>\n";
-		}
-	else
-		{
-        echo "<input type=\"hidden\" name=\"other_tab_comments\" id=\"other_tab_comments\" value=\"\" />\n";
-		}
-?>
+<!-- Modern Show/Hide Calls In Queue Link -->
+<span style="position:absolute;left:<?php echo $CLwidth ?>px;top:<?php echo $QLheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="callsinqueuelink">
+    <?php 
+    if ($view_calls_in_queue > 0) { 
+        if ($view_calls_in_queue_launch > 0) {
+            echo "<a href=\"#\" onclick=\"show_calls_in_queue('HIDE');return false;\" style=\"
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:6px 12px;
+                background:linear-gradient(135deg, #ef4444, #dc2626);
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                box-shadow:0 3px 10px rgba(239,68,68,0.3);
+                transition:all 0.3s ease;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;\"
+                onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(239,68,68,0.4)';\"
+                onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(239,68,68,0.3)';\">
+                <svg style=\"width:14px;height:14px;fill:#fff;\" viewBox=\"0 0 24 24\">
+                    <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>
+                </svg>
+                "._QXZ("Hide Calls In Queue")."
+            </a>\n";
+        } else {
+            echo "<a href=\"#\" onclick=\"show_calls_in_queue('SHOW');return false;\" style=\"
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:6px 12px;
+                background:linear-gradient(135deg, #10b981, #059669);
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                box-shadow:0 3px 10px rgba(16,185,129,0.3);
+                transition:all 0.3s ease;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;\"
+                onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(16,185,129,0.4)';\"
+                onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(16,185,129,0.3)';\">
+                <svg style=\"width:14px;height:14px;fill:#fff;\" viewBox=\"0 0 24 24\">
+                    <path d=\"M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z\"/>
+                </svg>
+                "._QXZ("Show Calls In Queue")."
+            </a>\n";
+        }
+    }
+    ?>
 </span>
+
+<!-- Modern Active Callbacks Display -->
+<div style="
+    position:fixed;
+    left:300px;
+    top:<?php echo $CBheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    padding:8px 15px;
+    background:linear-gradient(135deg, #fef3c7, #fde68a);
+    border:2px solid #f59e0b;
+    border-radius:8px;
+    box-shadow:0 3px 10px rgba(245,158,11,0.3);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="CallbacksButtons">
+    
+    <div style="display:flex;align-items:center;gap:8px;">
+        <svg style="width:16px;height:16px;fill:#d97706;" viewBox="0 0 24 24">
+            <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM19 12h2c0-4.97-4.03-9-9-9v2c3.87 0 7 3.13 7 7zm-4 0h2c0-2.76-2.24-5-5-5v2c1.66 0 3 1.34 3 3z"/>
+        </svg>
+        <span id="CBstatusSpan" style="
+            font-size:11px;
+            font-weight:700;
+            color:#92400e;
+            text-transform:uppercase;
+            letter-spacing:0.5px;">
+            <?php echo _QXZ("X ACTIVE CALLBACKS"); ?>
+        </span>
+    </div>
+</div>
+
+<!-- Modern Other Tab Comments Section -->
+<div style="
+    position:absolute;
+    left:500px;
+    top:<?php echo $AMheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;"
+    id="OtherTabCommentsSpan">
+    <?php 
+    if ( ($comments_all_tabs == 'ENABLED') and ($label_comments != '---HIDE---') ) {
+        $zi++;
+        echo "<div style=\"
+            padding:12px;
+            background:#fff;
+            border-radius:10px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.1);
+            border-left:3px solid #8b5cf6;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;\">
+            
+            <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
+                <label style=\"font-size:11px;font-weight:600;color:#64748b;\">$label_comments</label>
+                <span id='otherviewcommentsdisplay'>
+                    <button type='button' id='OtherViewCommentButton' onclick=\"ViewComments('ON','','','YES')\" style=\"
+                        padding:4px 12px;
+                        background:#8b5cf6;
+                        color:#fff;
+                        border:none;
+                        border-radius:6px;
+                        font-size:10px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.3s ease;\"
+                        onmouseover=\"this.style.background='#7c3aed';\"
+                        onmouseout=\"this.style.background='#8b5cf6';\">
+                        📋 "._QXZ("History")."
+                    </button>
+                </span>
+            </div>";
+        
+        if ($multi_line_comments) {
+            echo "<textarea name=\"other_tab_comments\" id=\"other_tab_comments\" rows=\"2\" style=\"
+                width:100%;
+                padding:8px 10px;
+                border:2px solid #cbd5e1;
+                border-radius:6px;
+                font-size:13px;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+                resize:vertical;
+                transition:all 0.2s ease;\"
+                onfocus=\"this.style.borderColor='#8b5cf6';this.style.boxShadow='0 0 0 3px rgba(139,92,246,0.1)';\"
+                onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\"></textarea>";
+        } else {
+            echo "<input type=\"text\" name=\"other_tab_comments\" id=\"other_tab_comments\" maxlength=\"255\" style=\"
+                width:100%;
+                padding:8px 10px;
+                border:2px solid #cbd5e1;
+                border-radius:6px;
+                font-size:13px;
+                transition:all 0.2s ease;\"
+                onfocus=\"this.style.borderColor='#8b5cf6';this.style.boxShadow='0 0 0 3px rgba(139,92,246,0.1)';\"
+                onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />";
+        }
+        echo "</div>";
+    } else {
+        echo "<input type=\"hidden\" name=\"other_tab_comments\" id=\"other_tab_comments\" value=\"\" />";
+    }
+    ?>
+</div>
+
 
 <span style="position:absolute;left:<?php echo $SBwidth ?>px;top:<?php echo $AVTheight ?>px;height:500px;overflow:scroll;z-index:<?php $zi++; echo $zi ?>;background-color:<?php echo $SIDEBAR_COLOR ?>;" id="AgentViewSpan"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="5px" rowspan="2">&nbsp;</td><td align="center"><font class="body_text">
 <?php echo _QXZ("Other Agents Status:"); ?> &nbsp; </font></td></tr><tr><td align="center"><span id="AgentViewStatus">&nbsp;</span></td></tr></table></span>
