@@ -19317,7 +19317,12 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 						}
 					else
 						{
-						document.getElementById("LogouTBoxLink").innerHTML = logout_content + "<font class=\"loading_text\"><a href=\"" + agcPAGE + "\"><?php echo _QXZ("CLICK HERE TO LOG IN AGAIN"); ?></a></font>\n";
+document.getElementById("LogouTBoxLink").innerHTML = logout_content + `
+<div style="text-align:center;margin-top:20px;">
+    <a href="${agcPAGE}" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(14,165,233,0.3);transition:all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg,#0284c7,#0369a1)';this.style.boxShadow='0 4px 12px rgba(14,165,233,0.4)';" onmouseout="this.style.background='linear-gradient(135deg,#0ea5e9,#0284c7)';this.style.boxShadow='0 2px 8px rgba(14,165,233,0.3)';">
+        <?php echo _QXZ("CLICK HERE TO LOG IN AGAIN"); ?>
+    </a>
+</div>`;
 						}
 
 					logout_stop_timeouts = 1;
