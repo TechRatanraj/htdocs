@@ -25980,100 +25980,478 @@ function webphoneOpen(spanId, action) {
 }
 </script>
 
+<!-- Done till Webphone -->
 
-<span style="position:absolute;left:<?php echo $MUwidth ?>px;top:<?php echo $SLheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="AgentMuteSpan"></span>
+<!-- Modern Agent Mute Span -->
+<span style="
+    position:fixed;
+    left:<?php echo $MUwidth ?>px;
+    top:<?php echo $SLheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    display:flex;
+    gap:8px;"
+    id="AgentMuteSpan"></span>
 
-<span style="position:absolute;left:<?php echo $AMwidth ?>px;top:<?php echo $SRheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="MainCommit">
-<a href="#" onclick="CustomerData_update('YES')"><font class="body_small"><?php echo _QXZ("commit"); ?></font></a>
-</span>
+<!-- Modern Commit Button -->
+<div style="
+    position:fixed;
+    left:<?php echo $AMwidth ?>px;
+    top:<?php echo $SRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;"
+    id="MainCommit">
+    <a href="#" onclick="CustomerData_update('YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #10b981, #059669);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        text-transform:uppercase;
+        box-shadow:0 3px 10px rgba(16,185,129,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(16,185,129,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(16,185,129,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+        <?php echo _QXZ("Commit"); ?>
+    </a>
+</div>
 
-<span style="position:absolute;left:<?php if ($script_tab_frame_size == 'LEFT_EDGE') {echo "0";} else {echo "154";} ?>px;top:<?php echo $SFheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="ScriptPanel">
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	if ($state_descriptions_banner > 0)
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$banner_height."px\" /><br />\n";}
-	?>
-    <table border="0" bgcolor="<?php echo $SCRIPT_COLOR ?>" width="<?php echo $SPwidth ?>px" height="<?php echo $SSheight ?>px"><tr><td align="left" valign="top"><font class="sb_text"><div class="noscroll_script" id="ScriptContents"><?php echo _QXZ("AGENT SCRIPT"); ?></div></font></td></tr></table>
-</span>
+<!-- Modern Agent Script Panel -->
+<div style="
+    position:fixed;
+    left:<?php if ($script_tab_frame_size == 'LEFT_EDGE') {echo "0";} else {echo "154";} ?>px;
+    top:<?php echo $SFheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="ScriptPanel">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #f0f9ff, #e0f2fe);border-bottom:2px solid #0ea5e9;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#0284c7;" viewBox="0 0 24 24">
+                <path d="M4 6h16V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v4h8v-4h4c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#0369a1;"><?php echo _QXZ("AGENT SCRIPT"); ?></span>
+        </div>
+    </div>
+    
+    <div style="
+        width:<?php echo $SPwidth ?>px;
+        height:<?php echo $SSheight ?>px;
+        overflow:auto;
+        padding:12px;">
+        <div class="noscroll_script" id="ScriptContents" style="
+            font-size:13px;
+            color:#334155;
+            line-height:1.6;">
+            <?php echo _QXZ("AGENT SCRIPT"); ?>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:<?php echo $AMwidth ?>px;top:<?php echo $SRheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="ScriptRefresH">
-<a href="#" onclick="RefresHScript('','YES')"><font class="body_small"><?php echo _QXZ("refresh"); ?></font></a>
-</span>
+<!-- Modern Script Refresh Button -->
+<div style="
+    position:fixed;
+    left:<?php echo $AMwidth ?>px;
+    top:<?php echo $SRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;"
+    id="ScriptRefresH">
+    <a href="#" onclick="RefresHScript('','YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #3b82f6, #2563eb);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        text-transform:uppercase;
+        box-shadow:0 3px 10px rgba(59,130,246,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(59,130,246,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(59,130,246,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M1 4v6h6M23 20v-6h-6M20.3 13.5c.8-1.6 1.2-3.3 1.2-5.2 0-5.5-4.5-10-10-10S1.5 2.7 1.5 8.2 6 18.2 11.5 18.2c1.9 0 3.6-.4 5.2-1.2l3.6 3.6 1.6-1.6-3.5-3.4z"/>
+        </svg>
+        <?php echo _QXZ("Refresh"); ?>
+    </a>
+</div>
 
-<span style="position:absolute;left:<?php if ($script_tab_frame_size == 'LEFT_EDGE') {echo "0";} else {echo "154";} ?>px;top:<?php echo $SFheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="Script2Panel">
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	if ($state_descriptions_banner > 0)
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$banner_height."px\" /><br />\n";}
-	?>
-    <table border="0" bgcolor="<?php echo $SCRIPT_COLOR ?>" width="<?php echo $SPwidth ?>px" height="<?php echo $SSheight ?>px"><tr><td align="left" valign="top"><font class="sb_text"><div class="noscroll_script" id="Script2Contents"><?php echo _QXZ("AGENT SCRIPT 2"); ?></div></font></td></tr></table>
-</span>
+<!-- Modern Agent Script 2 Panel -->
+<div style="
+    position:fixed;
+    left:<?php if ($script_tab_frame_size == 'LEFT_EDGE') {echo "0";} else {echo "154";} ?>px;
+    top:<?php echo $SFheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    display:none;"
+    id="Script2Panel">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #fef3c7, #fde68a);border-bottom:2px solid #f59e0b;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#d97706;" viewBox="0 0 24 24">
+                <path d="M4 6h16V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v4h8v-4h4c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#92400e;"><?php echo _QXZ("AGENT SCRIPT 2"); ?></span>
+        </div>
+    </div>
+    
+    <div style="
+        width:<?php echo $SPwidth ?>px;
+        height:<?php echo $SSheight ?>px;
+        overflow:auto;
+        padding:12px;">
+        <div class="noscroll_script" id="Script2Contents" style="
+            font-size:13px;
+            color:#334155;
+            line-height:1.6;">
+            <?php echo _QXZ("AGENT SCRIPT 2"); ?>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:<?php echo $AMwidth ?>px;top:<?php echo $SRheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="Script2RefresH">
-<a href="#" onclick="RefresHScript2('','YES')"><font class="body_small"><?php echo _QXZ("refresh"); ?></font></a>
-</span>
+<!-- Modern Script 2 Refresh Button -->
+<div style="
+    position:fixed;
+    left:<?php echo $AMwidth ?>px;
+    top:<?php echo $SRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    display:none;"
+    id="Script2RefresH">
+    <a href="#" onclick="RefresHScript2('','YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #f59e0b, #d97706);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        text-transform:uppercase;
+        box-shadow:0 3px 10px rgba(245,158,11,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(245,158,11,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(245,158,11,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M1 4v6h6M23 20v-6h-6M20.3 13.5c.8-1.6 1.2-3.3 1.2-5.2 0-5.5-4.5-10-10-10S1.5 2.7 1.5 8.2 6 18.2 11.5 18.2c1.9 0 3.6-.4 5.2-1.2l3.6 3.6 1.6-1.6-3.5-3.4z"/>
+        </svg>
+        <?php echo _QXZ("Refresh"); ?>
+    </a>
+</div>
 
-<span style="position:absolute;left:154px;top:<?php echo $SFheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="FormPanel">
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	if ($state_descriptions_banner > 0)
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$banner_height."px\" /><br />\n";}
-	?>
-    <table border="0" bgcolor="<?php echo $SCRIPT_COLOR ?>" width="<?php echo $SSwidth ?>px" height="<?php echo $SSheight ?>px"><tr><td align="left" valign="top"><font class="sb_text"><div class="noscroll_form" id="FormContents"><iframe src="./vdc_form_display.php?lead_id=&list_id=&stage=WELCOME" style="background-color:transparent;" scrolling="auto" frameborder="0" allowtransparency="true" id="vcFormIFrame" name="vcFormIFrame" width="<?php echo $SDwidth ?>px" height="<?php echo $SSheight ?>px" STYLE="z-index:<?php $zi++; echo $zi ?>"> </iframe></div></font></td></tr></table>
-</span>
+<!-- Modern Form Panel -->
+<div style="
+    position:fixed;
+    left:154px;
+    top:<?php echo $SFheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="FormPanel">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #f0fdf4, #dcfce7);border-bottom:2px solid #10b981;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#059669;" viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#047857;">FORM</span>
+        </div>
+    </div>
+    
+    <div style="
+        width:<?php echo $SSwidth ?>px;
+        height:<?php echo $SSheight ?>px;
+        overflow:auto;
+        padding:0;">
+        <div class="noscroll_form" id="FormContents" style="width:100%;height:100%;">
+            <iframe 
+                src="./vdc_form_display.php?lead_id=&list_id=&stage=WELCOME" 
+                style="
+                    background-color:transparent;
+                    width:<?php echo $SDwidth ?>px;
+                    height:<?php echo $SSheight ?>px;
+                    border:none;"
+                scrolling="auto" 
+                frameborder="0" 
+                allowtransparency="true" 
+                id="vcFormIFrame" 
+                name="vcFormIFrame"
+                STYLE="z-index:<?php $zi++; echo $zi ?>">
+            </iframe>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:154px;top:<?php echo $SFheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="EmailPanel">
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	if ($state_descriptions_banner > 0)
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$banner_height."px\" /><br />\n";}
-	?>
-    <table border="0" bgcolor="<?php echo $SCRIPT_COLOR ?>" width="<?php echo $SSwidth ?>px" height="<?php echo $SSheight ?>px"><tr><td align="left" valign="top"><font class="sb_text"><div class="noscroll_form" id="EmailContents"><iframe src="./vdc_email_display.php?lead_id=&list_id=&stage=WELCOME" style="background-color:transparent;" scrolling="auto" frameborder="0" allowtransparency="true" id="vcEmailIFrame" name="vcEmailIFrame" width="<?php echo $SDwidth ?>px" height="<?php echo $SSheight ?>px" STYLE="z-index:<?php $zi++; echo $zi ?>"> </iframe></div></font></td></tr></table>
-</span>
+<!-- Modern Email Panel -->
+<div style="
+    position:fixed;
+    left:154px;
+    top:<?php echo $SFheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    display:none;"
+    id="EmailPanel">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #fef2f2, #fee2e2);border-bottom:2px solid #ef4444;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#dc2626;" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#991b1b;">EMAIL</span>
+        </div>
+    </div>
+    
+    <div style="
+        width:<?php echo $SSwidth ?>px;
+        height:<?php echo $SSheight ?>px;
+        overflow:auto;
+        padding:0;">
+        <div class="noscroll_form" id="EmailContents" style="width:100%;height:100%;">
+            <iframe 
+                src="./vdc_email_display.php?lead_id=&list_id=&stage=WELCOME" 
+                style="
+                    background-color:transparent;
+                    width:<?php echo $SDwidth ?>px;
+                    height:<?php echo $SSheight ?>px;
+                    border:none;"
+                scrolling="auto" 
+                frameborder="0" 
+                allowtransparency="true" 
+                id="vcEmailIFrame" 
+                name="vcEmailIFrame"
+                STYLE="z-index:<?php $zi++; echo $zi ?>">
+            </iframe>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:154px;top:<?php echo $SFheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="CustomerChatPanel">
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	if ($state_descriptions_banner > 0)
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$banner_height."px\" /><br />\n";}
-	?>
-    <table border="0" bgcolor="<?php echo $SCRIPT_COLOR ?>" width="<?php echo $SSwidth ?>px" height="<?php echo $SSheight ?>px"><tr><td align="left" valign="top"><font class="sb_text"><div class="noscroll_form" id="ChatContents"><iframe src="./vdc_chat_display.php?lead_id=&list_id=&dial_method=<?php echo $dial_method; ?>&stage=WELCOME&server_ip=<?php echo $server_ip; ?>&user=<?php echo $VD_login.$VARchatgroupsURL ?>" style="background-color:transparent;" scrolling="auto" frameborder="0" allowtransparency="true" id="CustomerChatIFrame" name="CustomerChatIFrame" width="<?php echo $SDwidth ?>px" height="<?php echo $SSheight ?>px" STYLE="z-index:<?php $zi++; echo $zi ?>"> </iframe></div></font></td></tr></table>
-</span>
+<!-- Modern Customer Chat Panel -->
+<div style="
+    position:fixed;
+    left:154px;
+    top:<?php echo $SFheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    display:none;"
+    id="CustomerChatPanel">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #fce7f3, #fbcfe8);border-bottom:2px solid #ec4899;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#be185d;" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12h-8v-2h8v2zm0-3h-8V9h8v2zm0-3H4V6h14v2z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#9f1239;">CUSTOMER CHAT</span>
+        </div>
+    </div>
+    
+    <div style="
+        width:<?php echo $SSwidth ?>px;
+        height:<?php echo $SSheight ?>px;
+        overflow:auto;
+        padding:0;">
+        <div class="noscroll_form" id="ChatContents" style="width:100%;height:100%;">
+            <iframe 
+                src="./vdc_chat_display.php?lead_id=&list_id=&dial_method=<?php echo $dial_method; ?>&stage=WELCOME&server_ip=<?php echo $server_ip; ?>&user=<?php echo $VD_login.$VARchatgroupsURL ?>" 
+                style="
+                    background-color:transparent;
+                    width:<?php echo $SDwidth ?>px;
+                    height:<?php echo $SSheight ?>px;
+                    border:none;"
+                scrolling="auto" 
+                frameborder="0" 
+                allowtransparency="true" 
+                id="CustomerChatIFrame" 
+                name="CustomerChatIFrame"
+                STYLE="z-index:<?php $zi++; echo $zi ?>">
+            </iframe>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:154px;top:<?php echo $SFheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="InternalChatPanel">
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	if ($state_descriptions_banner > 0)
-        {echo "<img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$banner_height."px\" /><br />\n";}
-	?>
-    <table border="0" bgcolor="<?php echo $SCRIPT_COLOR ?>" width="<?php echo $SSwidth ?>px" height="<?php echo $SSheight ?>px"><tr><td align="left" valign="top"><font class="sb_text"><div class="noscroll_form" id="InternalChatContents"><iframe src="./agc_agent_manager_chat_interface.php?action=BLANK" style="background-color:transparent;" scrolling="auto" frameborder="0" allowtransparency="true" id="InternalChatIFrame" name="InternalChatIFrame" width="<?php echo $SDwidth ?>px" height="<?php echo $SSheight ?>px" STYLE="z-index:<?php $zi++; echo $zi ?>"> </iframe></div></font></td></tr></table>
-</span>
+<!-- Modern Internal Chat Panel -->
+<div style="
+    position:fixed;
+    left:154px;
+    top:<?php echo $SFheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    display:none;"
+    id="InternalChatPanel">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #e0e7ff, #dbeafe);border-bottom:2px solid #6366f1;">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <svg style="width:16px;height:16px;fill:#4338ca;" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12h-8v-2h8v2zm0-3h-8V9h8v2zm0-3H4V6h14v2z"/>
+            </svg>
+            <span style="font-size:12px;font-weight:700;color:#1e1b4b;">INTERNAL CHAT</span>
+        </div>
+    </div>
+    
+    <div style="
+        width:<?php echo $SSwidth ?>px;
+        height:<?php echo $SSheight ?>px;
+        overflow:auto;
+        padding:0;">
+        <div class="noscroll_form" id="InternalChatContents" style="width:100%;height:100%;">
+            <iframe 
+                src="./agc_agent_manager_chat_interface.php?action=BLANK" 
+                style="
+                    background-color:transparent;
+                    width:<?php echo $SDwidth ?>px;
+                    height:<?php echo $SSheight ?>px;
+                    border:none;"
+                scrolling="auto" 
+                frameborder="0" 
+                allowtransparency="true" 
+                id="InternalChatIFrame" 
+                name="InternalChatIFrame"
+                STYLE="z-index:<?php $zi++; echo $zi ?>">
+            </iframe>
+        </div>
+    </div>
+</div>
 
+<!-- Modern Form Reset Button -->
+<div style="
+    position:fixed;
+    left:<?php $tempAMwidth = ($AMwidth - 15); echo $tempAMwidth ?>px;
+    top:<?php echo $SRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;"
+    id="FormRefresH">
+    <a href="#" onclick="FormContentsLoad('YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #f97316, #ea580c);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        text-transform:uppercase;
+        box-shadow:0 3px 10px rgba(249,115,22,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(249,115,22,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(249,115,22,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v4l5-5-5-5v4z"/>
+        </svg>
+        <?php echo _QXZ("Reset Form"); ?>
+    </a>
+</div>
 
-<span style="position:absolute;left:<?php $tempAMwidth = ($AMwidth - 15); echo $tempAMwidth ?>px;top:<?php echo $SRheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="FormRefresH">
-<a href="#" onclick="FormContentsLoad('YES')"><font class="body_small"><?php echo _QXZ("reset form"); ?></font></a>
-</span>
+<!-- Modern Email Refresh Button -->
+<div style="
+    position:fixed;
+    left:<?php echo $AMwidth ?>px;
+    top:<?php echo $SRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;"
+    id="EmailRefresH">
+    <a href="#" onclick="EmailContentsLoad('YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #ef4444, #dc2626);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        text-transform:uppercase;
+        box-shadow:0 3px 10px rgba(239,68,68,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(239,68,68,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(239,68,68,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M1 4v6h6M23 20v-6h-6M20.3 13.5c.8-1.6 1.2-3.3 1.2-5.2 0-5.5-4.5-10-10-10S1.5 2.7 1.5 8.2 6 18.2 11.5 18.2c1.9 0 3.6-.4 5.2-1.2l3.6 3.6 1.6-1.6-3.5-3.4z"/>
+        </svg>
+        <?php echo _QXZ("Refresh"); ?>
+    </a>
+</div>
 
-<span style="position:absolute;left:<?php echo $AMwidth ?>px;top:<?php echo $SRheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="EmailRefresH">
-<a href="#" onclick="EmailContentsLoad('YES')"><font class="body_small"><?php echo _QXZ("refresh"); ?></font></a>
-</span>
+<!-- Modern HotKey Disposition Box -->
+<div style="
+    position:fixed;
+    left:5px;
+    top:<?php echo $HTheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    width:<?php echo $HCwidth ?>px;
+    background:linear-gradient(135deg, #fef3c7, #fde68a);
+    border:2px solid #f59e0b;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(245,158,11,0.3);
+    overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="HotKeyActionBox">
+    
+    <div style="padding:12px;background:linear-gradient(135deg, #fde68a, #fcd34d);border-bottom:2px solid #f59e0b;">
+        <span style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;">
+            <?php echo _QXZ("Lead Dispositioned As:"); ?>
+        </span>
+    </div>
+    
+    <div style="padding:12px;text-align:center;">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
+            <span id="HotKeyDispo" style="
+                font-size:16px;
+                font-weight:800;
+                color:#92400e;">
+                -
+            </span>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;">
+                <span id="HKWrapupTimer"></span>
+                <span id="HKWrapupBypass"></span>
+                <span id="HKWrapupMessage"></span>
+            </div>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:5px;top:<?php echo $HTheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="HotKeyActionBox">
-    <table border="0" bgcolor="#FFDD99" width="<?php echo $HCwidth ?>px" height="70px">
-    <tr bgcolor="#FFEEBB"><td height="70px"><font class="sh_text"> <?php echo _QXZ("Lead Dispositioned As:"); ?> </font><br /><br /><center>
-    <font class="sd_text"><span id="HotKeyDispo"> - </span></font>
-	<span id="HKWrapupTimer"></span><span id="HKWrapupBypass"></span>
-	<span id="HKWrapupMessage"></span>
-	</center>
-</td>
-    </tr></table>
-</span>
 
 <span style="position:absolute;left:5px;top:<?php echo $HTheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="HotKeyEntriesBox">
     <table border="0" bgcolor="#FFDD99" width="<?php echo $HCwidth ?>px" height="70px">
