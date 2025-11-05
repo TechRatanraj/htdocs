@@ -513,155 +513,206 @@ if ($TCedit_javascript > 0)
 
 	<?php
 	}
-######################
-# ADD=31 or 34 and SUB=29 for list mixes
-######################
-if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-	{
+// ============================================
+// LIST MIX STATUS MANAGEMENT - MODERNIZED
+// ADD=31 or 34 and SUB=29 for list mixes
+// ============================================
 
-	?>
-	// List Mix status add and remove
-	function mod_mix_status(stage,vcl_id,entry) 
-		{
-		if (stage=="ALL")
-			{
-			var count=0;
-			var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
+if ((($ADD == 34) || ($ADD == 31) || ($ADD == 49)) && ($SUB == 29) && ($LOGmodify_campaigns == 1) && 
+    ((preg_match("/$campaign_id/i", $LOGallowed_campaigns)) || (preg_match("/ALL-CAMPAIGNS/i", $LOGallowed_campaigns)))) {
+    ?>
 
-			while (count < entry)
-				{
-				var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
-				var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
+<script type="text/javascript">
+// ============================================
+// LIST MIX STATUS MODIFICATION
+// ============================================
+/**
+ * Modify mix status by adding or removing statuses
+ * @param {string} stage - Operation type: 'ALL', 'EMPTY', 'ADD', 'REMOVE'
+ * @param {string} vcl_id - Campaign mix list ID
+ * @param {number} entry - Entry index
+ */
+function mod_mix_status(stage, vcl_id, entry) {
+    'use strict';
+    
+    const getElement = (id) => document.getElementById(id);
+    const ROstatus_X = getElement('ROstatus_X_' + vcl_id);
+    
+    if (!ROstatus_X) {
+        console.error('ROstatus_X element not found:', vcl_id);
+        return;
+    }
+    
+    switch(stage) {
+        case 'ALL':
+            // Apply status to all entries
+            for (let count = 0; count < entry; count++) {
+                const oldStatus = getElement('status_' + count + '_' + vcl_id);
+                const ROoldStatus = getElement('ROstatus_' + count + '_' + vcl_id);
+                
+                if (oldStatus && ROoldStatus) {
+                    oldStatus.value = ROstatus_X.value;
+                    ROoldStatus.value = ROstatus_X.value;
+                }
+            }
+            break;
+            
+        case 'EMPTY':
+            // Apply status only to empty entries
+            for (let count = 0; count < entry; count++) {
+                const oldStatus = getElement('status_' + count + '_' + vcl_id);
+                const ROoldStatus = getElement('ROstatus_' + count + '_' + vcl_id);
+                
+                if (oldStatus && ROoldStatus && ROoldStatus.value.length < 3) {
+                    oldStatus.value = ROstatus_X.value;
+                    ROoldStatus.value = ROstatus_X.value;
+                }
+            }
+            break;
+            
+        default:
+            // Single status modification (ADD/REMOVE)
+            const modStatus = getElement('dial_status_' + entry + '_' + vcl_id);
+            
+            if (!modStatus || modStatus.value.length < 1) {
+                alert('You must select a status first');
+                return;
+            }
+            
+            const oldStatus = getElement('status_' + entry + '_' + vcl_id);
+            const ROoldStatus = getElement('ROstatus_' + entry + '_' + vcl_id);
+            
+            if (!oldStatus || !ROoldStatus) {
+                console.error('Status elements not found');
+                return;
+            }
+            
+            const statusRegex = new RegExp(' ' + modStatus.value + ' ', 'g');
+            
+            if (stage === 'ADD') {
+                if (oldStatus.value.match(statusRegex)) {
+                    alert('The status ' + modStatus.value + ' is already present');
+                } else {
+                    const newStatuses = ' ' + modStatus.value + oldStatus.value;
+                    oldStatus.value = newStatuses;
+                    ROoldStatus.value = newStatuses;
+                    modStatus.value = '';
+                }
+            } 
+            else if (stage === 'REMOVE') {
+                oldStatus.value = oldStatus.value.replace(statusRegex, ' ');
+                ROoldStatus.value = ROoldStatus.value.replace(statusRegex, ' ');
+            }
+    }
+}
 
-				old_statuses.value = ROnew_statuses.value;
-				ROold_statuses.value = ROnew_statuses.value;
-				count++;
-				}
-			}
-		else
-			{
-			if (stage=="EMPTY")
-				{
-				var count=0;
-				var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
+// ============================================
+// LIST MIX PERCENT CALCULATION & VALIDATION
+// ============================================
+/**
+ * Calculate percentage difference and validate total equals 100%
+ * @param {string} vcl_id - Campaign mix list ID
+ * @param {number} entries - Number of list entries
+ */
+function mod_mix_percent(vcl_id, entries) {
+    'use strict';
+    
+    let totalPercent = 0;
+    const getElement = (id) => document.getElementById(id);
+    
+    // Calculate total percentage
+    for (let i = 0; i < entries; i++) {
+        const percentField = getElement('percentage_' + i + '_' + vcl_id);
+        if (percentField) {
+            totalPercent += parseFloat(percentField.value) || 0;
+        }
+    }
+    
+    // Calculate difference from 100%
+    let percentDiff = totalPercent - 100;
+    const formattedDiff = percentDiff > 0 ? '+' + percentDiff : percentDiff;
+    
+    // Update UI elements
+    const submitBtn = getElement('submit_' + vcl_id);
+    const diffField = getElement('PCT_DIFF_' + vcl_id);
+    const errorDiv = getElement('ERROR_' + vcl_id);
+    
+    if (diffField) {
+        diffField.value = formattedDiff;
+    }
+    
+    // Disable submit if percentage doesn't equal 100%
+    if (submitBtn) {
+        submitBtn.disabled = (percentDiff !== 0);
+        
+        if (errorDiv) {
+            if (percentDiff !== 0) {
+                errorDiv.innerHTML = '<span style="color:#dc2626;font-weight:600;">The Difference % must be 0</span>';
+            } else {
+                errorDiv.innerHTML = '';
+            }
+        }
+    }
+}
 
-				while (count < entry)
-					{
-					var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
-					var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
-					
-					if (ROold_statuses.value.length < 3)
-						{
-						old_statuses.value = ROnew_statuses.value;
-						ROold_statuses.value = ROnew_statuses.value;
-						}
-					count++;
-					}
-				}
+// ============================================
+// SUBMIT LIST MIX FORM
+// ============================================
+/**
+ * Build and submit list mix container data
+ * @param {string} vcl_id - Campaign mix list ID
+ * @param {number} entries - Number of list entries
+ */
+function submit_mix(vcl_id, entries) {
+    'use strict';
+    
+    let listMixContainer = '';
+    const mixData = [];
+    
+    const getElement = (id) => document.getElementById(id);
+    
+    // Collect priority-sorted mix data
+    for (let priority = 1; priority < 41; priority++) {
+        for (let i = 0; i < entries; i++) {
+            const priorityField = getElement('priority_' + i + '_' + vcl_id);
+            
+            if (priorityField && parseInt(priorityField.value) === priority) {
+                const listIdField = getElement('list_id_' + i + '_' + vcl_id);
+                const percentField = getElement('percentage_' + i + '_' + vcl_id);
+                const statusField = getElement('status_' + i + '_' + vcl_id);
+                
+                if (listIdField && percentField && statusField) {
+                    mixData.push({
+                        listId: listIdField.value,
+                        priority: (mixData.length + 1),
+                        percent: percentField.value,
+                        statuses: statusField.value
+                    });
+                }
+            }
+        }
+    }
+    
+    // Build container string
+    listMixContainer = mixData.map(item => 
+        item.listId + '|' + item.priority + '|' + item.percent + '|' + item.statuses + '|:'
+    ).join('');
+    
+    // Update hidden field and submit
+    const containerField = getElement('list_mix_container_' + vcl_id);
+    const form = getElement(vcl_id);
+    
+    if (containerField && form) {
+        containerField.value = listMixContainer;
+        form.submit();
+    } else {
+        console.error('Form or container field not found');
+    }
+}
+</script>
 
-			else
-				{
-				var mod_status = document.getElementById("dial_status_" + entry + "_" + vcl_id);
-				if (mod_status.value.length < 1)
-					{
-					alert("You must select a status first");
-					}
-				else
-					{
-					var old_statuses = document.getElementById("status_" + entry + "_" + vcl_id);
-					var ROold_statuses = document.getElementById("ROstatus_" + entry + "_" + vcl_id);
-					var MODstatus = new RegExp(" " + mod_status.value + " ","g");
-					if (stage=="ADD")
-						{
-						if (old_statuses.value.match(MODstatus))
-							{
-							alert("The status " + mod_status.value + " is already present");
-							}
-						else
-							{
-							var new_statuses = " " + mod_status.value + "" + old_statuses.value;
-							old_statuses.value = new_statuses;
-							ROold_statuses.value = new_statuses;
-							mod_status.value = "";
-							}
-						}
-					if (stage=="REMOVE")
-						{
-						var MODstatus = new RegExp(" " + mod_status.value + " ","g");
-						old_statuses.value = old_statuses.value.replace(MODstatus, " ");
-						ROold_statuses.value = ROold_statuses.value.replace(MODstatus, " ");
-						}
-					}
-				}
-			}
-		}
-
-	// List Mix percent difference calculation and warning message
-	function mod_mix_percent(vcl_id,entries) 
-		{
-		var i=0;
-		var total_percent=0;
-		var percent_diff='';
-		while(i < entries)
-			{
-			var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
-			temp_percent = mod_percent_field.value * 1;
-			total_percent = (total_percent + temp_percent);
-			i++;
-			}
-
-		var mod_diff_percent = document.getElementById("PCT_DIFF_" + vcl_id);
-		percent_diff = (total_percent - 100);
-		if (percent_diff > 0)
-			{
-			percent_diff = '+' + percent_diff;
-			}
-		var mix_list_submit = document.getElementById("submit_" + vcl_id);
-		if ( (percent_diff > 0) || (percent_diff < 0) )
-			{
-			mix_list_submit.disabled = true;
-			document.getElementById("ERROR_" + vcl_id).innerHTML = "<font color=red><B>The Difference % must be 0</B></font>";
-			}
-		else
-			{
-			mix_list_submit.disabled = false;
-			document.getElementById("ERROR_" + vcl_id).innerHTML = "";
-			}
-
-		mod_diff_percent.value = percent_diff;
-		}
-
-	function submit_mix(vcl_id,entries) 
-		{
-		var h=1;
-		var j=1;
-		var list_mix_container='';
-		var mod_list_mix_container_field = document.getElementById("list_mix_container_" + vcl_id);
-		while(h < 41)
-			{
-			var i=0;
-			while(i < entries)
-				{
-				var mod_list_id_field = document.getElementById("list_id_" + i + "_" + vcl_id);
-				var mod_priority_field = document.getElementById("priority_" + i + "_" + vcl_id);
-				var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
-				var mod_statuses_field = document.getElementById("status_" + i + "_" + vcl_id);
-				if (mod_priority_field.value==h)
-					{
-					list_mix_container = list_mix_container + mod_list_id_field.value + "|" + j + "|" + mod_percent_field.value + "|" + mod_statuses_field.value + "|:";
-					j++;
-					}
-				i++;
-				}
-			h++;
-			}
-		mod_list_mix_container_field.value = list_mix_container;
-		var form_to_submit = document.getElementById("" + vcl_id);
-		form_to_submit.submit();
-		}
-	<?php
-	}
-	?>
+<?php
+}
 
 	<?php
 	if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
