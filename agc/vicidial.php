@@ -24251,23 +24251,7 @@ $zi=2;
             </div>
             </center>
             
-            <!-- Recording Control -->
-            <center>
-            <span style="
-                background:#ef4444;
-                border-radius:8px;
-                display:block;
-                margin-bottom:10px;
-                box-shadow:0 2px 8px rgba(239,68,68,0.3);
-                transition:all 0.3s ease;" 
-                id="RecorDControl"
-                onmouseover="this.style.background='#dc2626';this.style.transform='scale(1.02)';"
-                onmouseout="this.style.background='#ef4444';this.style.transform='scale(1)';">
-                <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;">
-                    <img src="./images/<?php echo _QXZ("$start_recording_GIF"); ?>" border="0" alt="Start Recording" style="display:block;border-radius:8px;width:100%;" />
-                </a>
-            </span>
-            
+    
             <span id="RecorDMute" style="display:block;margin-bottom:8px;"></span>
             
             <?php
@@ -24289,15 +24273,6 @@ $zi=2;
                 {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanThree\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" style=\"display:block;width:100%;\" /></span>\n";}
             ?>
             
-            <div id="ParkCounterSpan" style="
-                text-align:center;
-                font-size:13px;
-                font-weight:700;
-                color:#0ea5e9;
-                margin-bottom:8px;
-                padding:6px;
-                background:#e0f2fe;
-                border-radius:6px;"></div>
             
             <!-- Action Buttons -->
             <span style="
