@@ -1,345 +1,314 @@
 <?php
 # admin_header.php - VICIDIAL administration header
+#
+# Copyright (C) 2023  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# 
 
-// ============================================
-// ADMIN COLOR CONFIGURATION - MODERNIZED
-// Purple Gradient Theme + Modern UI
-// ============================================
 
-// Modern Color Palette - Extended with Purple Gradient
-$HTMLcolors = 'Purple,667eea|DeepPurple,764ba2|RoyalPurple,6A0DAD|Indigo,4B0082|Slate,708090|CharcoalGray,36454F|DarkGray,A9A9A9|LightGray,D3D3D3|WhiteSmoke,F5F5F5|IndianRed,CD5C5C|LightCoral,F08080|Salmon,FA8072|DarkSalmon,E9967A|LightSalmon,FFA07A|Crimson,DC143C|Red,FF0000|FireBrick,B22222|DarkRed,8B0000|Pink,FFC0CB|LightPink,FFB6C1|HotPink,FF69B4|DeepPink,FF1493|MediumVioletRed,C71585|PaleVioletRed,DB7093|Coral,FF7F50|Tomato,FF6347|OrangeRed,FF4500|DarkOrange,FF8C00|Orange,FFA500|Gold,FFD700|Yellow,FFFF00|LightYellow,FFFFE0|LemonChiffon,FFFACD|Lavender,E6E6FA|Thistle,D8BFD8|Plum,DDA0DD|Violet,EE82EE|Orchid,DA70D6|Fuchsia,FF00FF|Magenta,FF00FF|BlueViolet,8A2BE2|DarkViolet,9400D3|DarkOrchid,9932CC|GreenYellow,ADFF2F|Chartreuse,7FFF00|LawnGreen,7CFC00|Lime,00FF00|LimeGreen,32CD32|PaleGreen,98FB98|LightGreen,90EE90|SpringGreen,00FF7F|SeaGreen,2E8B57|ForestGreen,228B22|Green,008000|DarkGreen,006400|Teal,008080|Aqua,00FFFF|Cyan,00FFFF|LightCyan,E0FFFF|Turquoise,40E0D0|SteelBlue,4682B4|SkyBlue,87CEEB|DodgerBlue,1E90FF|CornflowerBlue,6495ED|RoyalBlue,4169E1|Blue,0000FF|MediumBlue,0000CD|DarkBlue,00008B|Navy,000080|White,FFFFFF|Snow,FFFAFA|Ivory,FFFFF0|Black,000000';
+#
 
-// System Settings Query
-$stmt="SELECT admin_home_url,enable_tts_integration,callcard_enabled,custom_fields_enabled,allow_emails,level_8_disable_add,allow_chats,enable_languages,admin_row_click,admin_screen_colors,user_new_lead_limit,user_territories_active,qc_features_active,agent_soundboards,enable_drop_lists,allow_ip_lists,admin_web_directory FROM system_settings;";
-$rslt = mysql_to_mysqli($stmt, $link);
-if ($mel > 0) {mysql_error_logging($NOW_TIME, $link, $mel, $stmt, '00XXX', $VD_login, $server_ip, $session_name, $one_mysql_log);}
+$HTMLcolors = 'IndianRed,CD5C5C|LightCoral,F08080|Salmon,FA8072|DarkSalmon,E9967A|LightSalmon,FFA07A|Crimson,DC143C|Red,FF0000|FireBrick,B22222|DarkRed,8B0000|Pink,FFC0CB|LightPink,FFB6C1|HotPink,FF69B4|DeepPink,FF1493|MediumVioletRed,C71585|PaleVioletRed,DB7093|LightSalmon,FFA07A|Coral,FF7F50|Tomato,FF6347|OrangeRed,FF4500|DarkOrange,FF8C00|Orange,FFA500|Gold,FFD700|Yellow,FFFF00|LightYellow,FFFFE0|LemonChiffon,FFFACD|LightGoldenrodYellow,FAFAD2|PapayaWhip,FFEFD5|Moccasin,FFE4B5|PeachPuff,FFDAB9|PaleGoldenrod,EEE8AA|Khaki,F0E68C|DarkKhaki,BDB76B|Lavender,E6E6FA|Thistle,D8BFD8|Plum,DDA0DD|Violet,EE82EE|Orchid,DA70D6|Fuchsia,FF00FF|Magenta,FF00FF|MediumOrchid,BA55D3|MediumPurple,9370DB|RebeccaPurple,663399|BlueViolet,8A2BE2|DarkViolet,9400D3|DarkOrchid,9932CC|DarkMagenta,8B008B|Purple,800080|Indigo,4B0082|SlateBlue,6A5ACD|DarkSlateBlue,483D8B|MediumSlateBlue,7B68EE|GreenYellow,ADFF2F|Chartreuse,7FFF00|LawnGreen,7CFC00|Lime,00FF00|LimeGreen,32CD32|PaleGreen,98FB98|LightGreen,90EE90|MediumSpringGreen,00FA9A|SpringGreen,00FF7F|MediumSeaGreen,3CB371|SeaGreen,2E8B57|ForestGreen,228B22|Green,008000|DarkGreen,006400|YellowGreen,9ACD32|OliveDrab,6B8E23|Olive,808000|DarkOliveGreen,556B2F|MediumAquamarine,66CDAA|DarkSeaGreen,8FBC8B|LightSeaGreen,20B2AA|DarkCyan,008B8B|Teal,008080|Aqua,00FFFF|Cyan,00FFFF|LightCyan,E0FFFF|PaleTurquoise,AFEEEE|Aquamarine,7FFFD4|Turquoise,40E0D0|MediumTurquoise,48D1CC|DarkTurquoise,00CED1|CadetBlue,5F9EA0|SteelBlue,4682B4|LightSteelBlue,B0C4DE|PowderBlue,B0E0E6|LightBlue,ADD8E6|SkyBlue,87CEEB|LightSkyBlue,87CEFA|DeepSkyBlue,00BFFF|DodgerBlue,1E90FF|CornflowerBlue,6495ED|MediumSlateBlue,7B68EE|RoyalBlue,4169E1|Blue,0000FF|MediumBlue,0000CD|DarkBlue,00008B|Navy,000080|MidnightBlue,191970|Cornsilk,FFF8DC|BlanchedAlmond,FFEBCD|Bisque,FFE4C4|NavajoWhite,FFDEAD|Wheat,F5DEB3|BurlyWood,DEB887|Tan,D2B48C|RosyBrown,BC8F8F|SandyBrown,F4A460|Goldenrod,DAA520|DarkGoldenrod,B8860B|Peru,CD853F|Chocolate,D2691E|SaddleBrown,8B4513|Sienna,A0522D|Brown,A52A2A|Maroon,800000|White,FFFFFF|Snow,FFFAFA|HoneyDew,F0FFF0|MintCream,F5FFFA|Azure,F0FFFF|AliceBlue,F0F8FF|GhostWhite,F8F8FF|WhiteSmoke,F5F5F5|SeaShell,FFF5EE|Beige,F5F5DC|OldLace,FDF5E6|FloralWhite,FFFAF0|Ivory,FFFFF0|AntiqueWhite,FAEBD7|Linen,FAF0E6|LavenderBlush,FFF0F5|MistyRose,FFE4E1|Gainsboro,DCDCDC|LightGray,D3D3D3|Silver,C0C0C0|DarkGray,A9A9A9|Gray,808080|DimGray,696969|LightSlateGray,778899|SlateGray,708090|DarkSlateGray,2F4F4F|Black,000000';
 
-// Initialize System Settings
-$admin_home_url_LU = '';
-$SSenable_tts_integration = 0;
-$SScallcard_enabled = 0;
-$SScustom_fields_enabled = 0;
-$SSemail_enabled = 0;
-$SSlevel_8_disable_add = 0;
-$SSchat_enabled = 0;
-$SSenable_languages = 0;
-$SSadmin_row_click = 0;
-$SSadmin_screen_colors = 'default';
-$SSuser_new_lead_limit = 0;
-$SSuser_territories_active = 0;
-$SSqc_features_active = 0;
-$SSagent_soundboards = 0;
-$SSenable_drop_lists = 0;
-$SSallow_ip_lists = 0;
-$SSadmin_web_directory = 'admin';
+$stmt="SELECT admin_home_url,enable_tts_integration,callcard_enabled,custom_fields_enabled,allow_emails,level_8_disable_add,allow_chats,enable_languages,admin_row_click,admin_screen_colors,user_new_lead_limit,user_territories_active,qc_features_active,agent_soundboards,enable_drop_lists,allow_ip_lists,admin_web_directory from system_settings;";
+$rslt=mysql_to_mysqli($stmt, $link);
+$row=mysqli_fetch_row($rslt);
+$admin_home_url_LU =		$row[0];
+$SSenable_tts_integration = $row[1];
+$SScallcard_enabled =		$row[2];
+$SScustom_fields_enabled =	$row[3];
+$SSemail_enabled =			$row[4];
+$SSlevel_8_disable_add =	$row[5];
+$SSchat_enabled =			$row[6];
+$SSenable_languages =		$row[7];
+$SSadmin_row_click =		$row[8];
+$SSadmin_screen_colors =	$row[9];
+$SSuser_new_lead_limit =	$row[10];
+$SSuser_territories_active = $row[11];
+$SSqc_features_active =		$row[12];
+$SSagent_soundboards =		$row[13];
+$SSenable_drop_lists =		$row[14];
+$SSallow_ip_lists =			$row[15];
+$SSadmin_web_directory =	$row[16];
 
-$row = mysqli_fetch_row($rslt);
-if ($row) {
-    $admin_home_url_LU =        $row[0];
-    $SSenable_tts_integration = $row[1];
-    $SScallcard_enabled =       $row[2];
-    $SScustom_fields_enabled =  $row[3];
-    $SSemail_enabled =          $row[4];
-    $SSlevel_8_disable_add =    $row[5];
-    $SSchat_enabled =           $row[6];
-    $SSenable_languages =       $row[7];
-    $SSadmin_row_click =        $row[8];
-    $SSadmin_screen_colors =    $row[9];
-    $SSuser_new_lead_limit =    $row[10];
-    $SSuser_territories_active = $row[11];
-    $SSqc_features_active =     $row[12];
-    $SSagent_soundboards =      $row[13];
-    $SSenable_drop_lists =      $row[14];
-    $SSallow_ip_lists =         $row[15];
-    $SSadmin_web_directory =    $row[16];
-}
+if (strlen($SSadmin_home_url) > 5) {$admin_home_url_LU = $SSadmin_home_url;}
+if(!isset($ADMIN)){$ADMIN = "../$SSadmin_web_directory/admin.php";}
 
-// Override admin URL if set in system settings
-if (strlen($admin_home_url_LU) > 5) {
-    $admin_home_url = $admin_home_url_LU;
-}
-if (!isset($ADMIN)) {
-    $ADMIN = "../$SSadmin_web_directory/admin.php";
-}
+$SSmenu_background='015B91';
+$SSframe_background='D9E6FE';
+$SSstd_row1_background='9BB9FB';
+$SSstd_row2_background='B9CBFD';
+$SSstd_row3_background='8EBCFD';
+$SSstd_row4_background='B6D3FC';
+$SSstd_row5_background='A3C3D6';
+$SSalt_row1_background='BDFFBD';
+$SSalt_row2_background='99FF99';
+$SSalt_row3_background='CCFFCC';
+$SSbutton_color='EFEFEF';
 
-// ============================================
-// DEFAULT COLOR SCHEME - MODERN PURPLE THEME
-// ============================================
-$SSmenu_background = '667eea';       // Purple header
-$SSframe_background = 'f0f4ff';      // Light blue background
-$SSstd_row1_background = 'e8e6fa';   // Light purple
-$SSstd_row2_background = 'f5f3ff';   // Lighter purple
-$SSstd_row3_background = 'e6e4f8';   // Medium light purple
-$SSstd_row4_background = 'f0ebfd';   // Very light purple
-$SSstd_row5_background = 'ddd8e8';   // Medium purple
-$SSalt_row1_background = 'c8e6c9';   // Light green
-$SSalt_row2_background = 'a5d6a7';   // Medium green
-$SSalt_row3_background = 'e8f5e9';   // Very light green
-$SSbutton_color = 'efefef';          // Light gray buttons
-
-// ============================================
-// LOAD CUSTOM COLOR SCHEME IF CONFIGURED
-// ============================================
-if ($SSadmin_screen_colors != 'default') {
-    $stmt = "SELECT menu_background, frame_background, std_row1_background, std_row2_background, std_row3_background, std_row4_background, std_row5_background, alt_row1_background, alt_row2_background, alt_row3_background, web_logo, button_color FROM vicidial_screen_colors WHERE colors_id='$SSadmin_screen_colors';";
-    
-    $rslt = mysql_to_mysqli($stmt, $link);
-    if ($mel > 0) {mysql_error_logging($NOW_TIME, $link, $mel, $stmt, '01XXX', $VD_login, $server_ip, $session_name, $one_mysql_log);}
-    if ($DB) {echo "$stmt\n";}
-    
-    $colors_ct = mysqli_num_rows($rslt);
-    if ($colors_ct > 0) {
-        $row = mysqli_fetch_row($rslt);
-        $SSmenu_background =        $row[0];
-        $SSframe_background =       $row[1];
-        $SSstd_row1_background =    $row[2];
-        $SSstd_row2_background =    $row[3];
-        $SSstd_row3_background =    $row[4];
-        $SSstd_row4_background =    $row[5];
-        $SSstd_row5_background =    $row[6];
-        $SSalt_row1_background =    $row[7];
-        $SSalt_row2_background =    $row[8];
-        $SSalt_row3_background =    $row[9];
-        $SSweb_logo =               $row[10];
-        $SSbutton_color =           $row[11];
-    }
-}
-
-// ============================================
-// SET MAIN COLOR VARIABLES
-// ============================================
-$Mhead_color = $SSstd_row5_background;
+if ($SSadmin_screen_colors != 'default')
+	{
+	$stmt = "SELECT menu_background,frame_background,std_row1_background,std_row2_background,std_row3_background,std_row4_background,std_row5_background,alt_row1_background,alt_row2_background,alt_row3_background,web_logo,button_color FROM vicidial_screen_colors where colors_id='$SSadmin_screen_colors';";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	if ($DB) {echo "$stmt\n";}
+	$colors_ct = mysqli_num_rows($rslt);
+	if ($colors_ct > 0)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$SSmenu_background =		$row[0];
+		$SSframe_background =		$row[1];
+		$SSstd_row1_background =	$row[2];
+		$SSstd_row2_background =	$row[3];
+		$SSstd_row3_background =	$row[4];
+		$SSstd_row4_background =	$row[5];
+		$SSstd_row5_background =	$row[6];
+		$SSalt_row1_background =	$row[7];
+		$SSalt_row2_background =	$row[8];
+		$SSalt_row3_background =	$row[9];
+		$SSweb_logo =			$row[10];
+		$SSbutton_color = 		$row[11];
+		}
+	}
+$Mhead_color =	$SSstd_row5_background;
 $Mmain_bgcolor = $SSmenu_background;
+$Mhead_color =	$SSstd_row5_background;
 
-// ============================================
-// LOGO CONFIGURATION - WITH FALLBACKS
-// ============================================
 $selected_logo = "./images/vicidial_admin_web_logo.png";
 $selected_small_logo = "./images/vicidial_admin_web_logo.png";
+$logo_new=0;
+$logo_old=0;
+$logo_small_old=0;
+if (file_exists('./images/vicidial_admin_web_logo.png')) {$logo_new++;}
+if (file_exists('vicidial_admin_web_logo_small.gif')) {$logo_small_old++;}
+if (file_exists('vicidial_admin_web_logo.gif')) {$logo_old++;}
+if ($SSweb_logo=='default_new')
+	{
+	$selected_logo = "./images/vicidial_admin_web_logo.png";
+	$selected_small_logo = "./images/vicidial_admin_web_logo.png";
+	}
+if ( ($SSweb_logo=='default_old') and ($logo_old > 0) )
+	{
+	$selected_logo = "./vicidial_admin_web_logo.gif";
+	$selected_small_logo = "./vicidial_admin_web_logo_small.gif";
+	}
+if ( ($SSweb_logo!='default_new') and ($SSweb_logo!='default_old') )
+	{
+	if (file_exists("./images/vicidial_admin_web_logo$SSweb_logo")) 
+		{
+		$selected_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
+		$selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
+		}
+	}
 
-// Logo availability flags
-$logo_new = 0;
-$logo_old = 0;
-$logo_small_old = 0;
 
-// Check logo availability
-if (file_exists('./images/vicidial_admin_web_logo.png')) {
-    $logo_new++;
-}
-if (file_exists('vicidial_admin_web_logo_small.gif')) {
-    $logo_small_old++;
-}
-if (file_exists('vicidial_admin_web_logo.gif')) {
-    $logo_old++;
-}
-
-// Select appropriate logo based on configuration
-if ($SSweb_logo == 'default_new') {
-    $selected_logo = "./images/vicidial_admin_web_logo.png";
-    $selected_small_logo = "./images/vicidial_admin_web_logo.png";
-}
-elseif (($SSweb_logo == 'default_old') && ($logo_old > 0)) {
-    $selected_logo = "./vicidial_admin_web_logo.gif";
-    $selected_small_logo = "./vicidial_admin_web_logo_small.gif";
-}
-elseif (($SSweb_logo != 'default_new') && ($SSweb_logo != 'default_old')) {
-    if (file_exists("./images/vicidial_admin_web_logo$SSweb_logo")) {
-        $selected_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
-        $selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
-    }
-}
-
-// ============================================
-// CSS COLOR VARIABLES FOR UI
-// ============================================
-$SS_menu_hex = '#' . $SSmenu_background;
-$SS_frame_hex = '#' . $SSframe_background;
-$SS_row1_hex = '#' . $SSstd_row1_background;
-$SS_row2_hex = '#' . $SSstd_row2_background;
-$SS_button_hex = '#' . $SSbutton_color;
-
-// ============================================
-// RENDER NAVBAR - LOGO ONLY (MENUS IN SIDEBAR)
-// ============================================
-?>
-
-<style>
-    .navbar-container {
-        background: linear-gradient(135deg,#667eea,#764ba2);
-        padding: 12px 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 12px rgba(102,126,234,0.2);
-        display: flex;
-        align-items: center;
-    }
-    
-    .navbar-logo {
-        display: flex;
-        align-items: center;
-        padding: 0;
-    }
-    
-    .navbar-logo a {
-        display: inline-block;
-        transition: all 0.2s;
-        opacity: 0.9;
-    }
-    
-    .navbar-logo a:hover {
-        opacity: 1;
-    }
-    
-    .navbar-logo img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-    }
-</style>
-
-<div class="navbar-container">
-    <!-- Logo Only -->
-    <div class="navbar-logo">
-        <a href="<?php echo htmlspecialchars($ADMIN); ?>" title="Go to Admin Home">
-            <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" />
-        </a>
-    </div>
-</div>
-<?php
+##### BEGIN populate dynamic header content #####
+if ($hh=='users') 
+	{
+	$users_hh="CLASS=\"head_style_selected\""; $users_fc="$users_font"; $users_bold="$header_selected_bold";
+	$users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$users_hh="CLASS=\"head_style\""; $users_fc='WHITE'; $users_bold="$header_nonselected_bold";
+	$users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='campaigns') 
+	{
+	$campaigns_hh="CLASS=\"head_style_selected\""; $campaigns_fc="$campaigns_font"; $campaigns_bold="$header_selected_bold";
+	$campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$campaigns_hh="CLASS=\"head_style\""; $campaigns_fc='WHITE'; $campaigns_bold="$header_nonselected_bold";
+	$campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='lists') 
+	{
+	$lists_hh="CLASS=\"head_style_selected\""; $lists_fc="$lists_font"; $lists_bold="$header_selected_bold";
+	$lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$lists_hh="CLASS=\"head_style\""; $lists_fc='WHITE'; $lists_bold="$header_nonselected_bold";
+	$lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='ingroups') 
+	{
+	$ingroups_hh="CLASS=\"head_style_selected\""; $ingroups_fc="$ingroups_font"; $ingroups_bold="$header_selected_bold";
+	$inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$ingroups_hh="CLASS=\"head_style\""; $ingroups_fc='WHITE'; $ingroups_bold="$header_nonselected_bold";
+	$inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='remoteagent') 
+	{
+	$remoteagent_hh="CLASS=\"head_style_selected\""; $remoteagent_fc="$remoteagent_font"; $remoteagent_bold="$header_selected_bold";
+	$remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$remoteagent_hh="CLASS=\"head_style\""; $remoteagent_fc='WHITE'; $remoteagent_bold="$header_nonselected_bold";
+	$remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='usergroups') 
+	{
+	$usergroups_hh="CLASS=\"head_style_selected\""; $usergroups_fc="$usergroups_font"; $usergroups_bold="$header_selected_bold";
+	$usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$usergroups_hh="CLASS=\"head_style\""; $usergroups_fc='WHITE'; $usergroups_bold="$header_nonselected_bold";
+	$usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='scripts') 
+	{
+	$scripts_hh="CLASS=\"head_style_selected\""; $scripts_fc="$scripts_font"; $scripts_bold="$header_selected_bold";
+	$scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$scripts_hh="CLASS=\"head_style\""; $scripts_fc='WHITE'; $scripts_bold="$header_nonselected_bold";
+	$scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='filters') 
+	{
+	$filters_hh="CLASS=\"head_style_selected\""; $filters_fc="$filters_font"; $filters_bold="$header_selected_bold";
+	$filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$filters_hh="CLASS=\"head_style\""; $filters_fc='WHITE'; $filters_bold="$header_nonselected_bold";
+	$filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='admin') 
+	{
+	$admin_hh="CLASS=\"head_style_selected\""; $admin_fc="$admin_font"; $admin_bold="$header_selected_bold";
+	$admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$admin_hh="CLASS=\"head_style\""; $admin_fc='WHITE'; $admin_bold="$header_nonselected_bold";
+	$admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='reports') 
+	{
+	$reports_hh="CLASS=\"head_style_selected\""; $reports_fc="$reports_font"; $reports_bold="$header_selected_bold";
+	$reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$reports_hh="CLASS=\"head_style\""; $reports_fc='WHITE'; $reports_bold="$header_nonselected_bold";
+	$reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='qc')
+	{
+	$qc_hh="CLASS=\"head_style_selected\""; $qc_fc="$qc_font"; $qc_bold="$header_selected_bold";
+	$qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$qc_hh="CLASS=\"head_style\""; $qc_fc='WHITE'; $qc_bold="$header_nonselected_bold";
+	$qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
+	}
 ##### END populate dynamic header content #####
 
 ######################### SMALL HTML HEADER BEGIN #######################################
-// ============================================
-// SHORT HEADER SECTION - MODERNIZED
-// Purple Gradient + Modern UI + Responsive
-// ============================================
+if($short_header)
+	{
+	if($no_header)
+		{
+		# display nothing
+		}
+	else
+		{
+		if ( ($LOGreports_header_override == 'LOGO_ONLY_SMALL') or ($LOGreports_header_override == 'LOGO_ONLY_LARGE') )
+			{
+			$temp_logo = $selected_logo;
+			$temp_logo_size = 'WIDTH=170 HEIGHT=45 BORDER=0';
+			if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') 
+				{
+				$temp_logo = $selected_small_logo;
+				$temp_logo_size = 'WIDTH=71 HEIGHT=22';
+				}
+			# echo "$SSmenu_background"
+			?>
+			<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=white><TR>
+			<TD><A HREF="<?php echo $admin_home_url_LU ?>"><IMG SRC="<?php echo $temp_logo; ?>" <?php echo $temp_logo_size ?> BORDER=0 ALT="System logo"></A> &nbsp; </TD>
+			<TD> &nbsp; </TD>
+			<?php 
+			}
+		else
+			{
+			?>
+			<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?>><TR>
+			<TD><A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_small_logo; ?>" WIDTH=71 HEIGHT=22 BORDER=0 ALT="System logo"></A> &nbsp; </TD>
+			<?php 
+			if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
+				{
+			?>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=999999" ALT="Reports" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Reports"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=0A" ALT="Users" STYLE="text-decoration:none;"><?php echo $users_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Users"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=10" ALT="Campaigns" STYLE="text-decoration:none;"><?php echo $campaigns_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Campaigns"); ?></B></FONT></A> &nbsp; </TD>
+			<?php
+			if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
+				{
+				?>
+				<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100000000000000" ALT="Quality Control" STYLE="text-decoration:none;"><?php echo $qc_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Quality Control"); ?></B></FONT></A> &nbsp; </TD>
+				<?php
+				}
+			?>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100" ALT="Lists" STYLE="text-decoration:none;"><?php echo $lists_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Lists"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=1000000" ALT="Scripts" STYLE="text-decoration:none;"><?php echo $scripts_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Scripts"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=10000000" ALT="Filters" STYLE="text-decoration:none;"><?php echo $filters_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Filters"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=1001" ALT="Inbound" STYLE="text-decoration:none;"><?php echo $inbound_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Inbound"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100000" ALT="User Groups" STYLE="text-decoration:none;"><?php echo $usergroups_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("User Groups"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=10000" ALT="Remote Agents" STYLE="text-decoration:none;"><?php echo $remoteagents_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Remote Agents"); ?></B></FONT></A> &nbsp; </TD>
+			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=999998" ALT="Admin" STYLE="text-decoration:none;"><?php echo $admin_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Admin"); ?></B></FONT></A> &nbsp; </TD>
+			<?php 
+				}
+			else 
+				{ 
+				?>
+				<TD width=600> &nbsp; &nbsp; </TD>
+				<?php
+				if ($reports_only_user > 0)
+					{
+					?>
+					<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=999999" ALT="Reports"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Reports"); ?></B></A> &nbsp; </TD>
+					<?php
+					}
+				else
+					{
+					if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
+						{
+						?>
+						<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100000000000000" ALT="Quality Control"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Quality Control"); ?></B></FONT></A> &nbsp; </TD>
+						<?php
+						}
+					}
+				}
+			}
+		?>
+		</TR>
+		</TABLE>
+		<?php
+		}
+	}
+######################### SMALL HTML HEADER END #######################################
 
-if ($short_header) {
-    if (!$no_header) {
-        
-        // Determine logo display
-        $logo_display = $selected_logo;
-        $logo_size = 'width="170" height="45"';
-        $logo_link = $admin_home_url_LU;
-        
-        if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') {
-            $logo_display = $selected_small_logo;
-            $logo_size = 'width="71" height="22"';
-        } elseif ($LOGreports_header_override == 'LOGO_ONLY_LARGE') {
-            $logo_display = $selected_logo;
-            $logo_size = 'width="170" height="45"';
-        }
-        
-        // Logo only mode
-        if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
-            ?>
-            <div style="background:#fff;padding:12px;border-radius:6px;margin-bottom:20px;">
-                <a href="<?php echo htmlspecialchars($logo_link); ?>" style="display:inline-block;transition:all 0.2s;">
-                    <img src="<?php echo htmlspecialchars($logo_display); ?>" <?php echo $logo_size; ?> border="0" alt="System logo" style="max-width:100%;height:auto;" />
-                </a>
-            </div>
-            <?php
-        } 
-        // Full header mode
-        else {
-            ?>
-            <nav style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:8px;padding:0;margin-bottom:20px;box-shadow:0 4px 12px rgba(102,126,234,0.2);">
-                <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0;">
-                    <!-- Logo -->
-                    <div style="padding:8px 16px;border-right:1px solid rgba(255,255,255,0.1);">
-                        <a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
-                            <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;" />
-                        </a>
-                    </div>
-                    
-                    <?php
-                    // Full access menu
-                    if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-                        
-                        $nav_items = array(
-                            array('url' => '?ADD=999999', 'icon' => $reports_icon, 'label' => _QXZ("Reports")),
-                            array('url' => '?ADD=0A', 'icon' => $users_icon, 'label' => _QXZ("Users")),
-                            array('url' => '?ADD=10', 'icon' => $campaigns_icon, 'label' => _QXZ("Campaigns")),
-                            array('url' => '?ADD=100', 'icon' => $lists_icon, 'label' => _QXZ("Lists")),
-                            array('url' => '?ADD=1000000', 'icon' => $scripts_icon, 'label' => _QXZ("Scripts")),
-                            array('url' => '?ADD=10000000', 'icon' => $filters_icon, 'label' => _QXZ("Filters")),
-                            array('url' => '?ADD=1001', 'icon' => $inbound_icon, 'label' => _QXZ("Inbound")),
-                            array('url' => '?ADD=100000', 'icon' => $usergroups_icon, 'label' => _QXZ("User Groups")),
-                            array('url' => '?ADD=10000', 'icon' => $remoteagents_icon, 'label' => _QXZ("Remote Agents")),
-                            array('url' => '?ADD=999998', 'icon' => $admin_icon, 'label' => _QXZ("Admin"))
-                        );
-                        
-                        // Add QC if authorized
-                        if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                            array_splice($nav_items, 3, 0, array(
-                                array('url' => '?ADD=100000000000000', 'icon' => $qc_icon, 'label' => _QXZ("Quality Control"))
-                            ));
-                        }
-                        
-                        // Render nav items
-                        foreach ($nav_items as $item) {
-                            ?>
-                            <a href="<?php echo htmlspecialchars($ADMIN . $item['url']); ?>" style="display:flex;align-items:center;gap:6px;padding:12px 14px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;border-right:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
-                                <?php echo $item['icon']; ?>
-                                <span style="display:none;" class="nav-label"><?php echo htmlspecialchars($item['label']); ?></span>
-                            </a>
-                            <?php
-                        }
-                    } 
-                    // Limited access menu
-                    else {
-                        ?>
-                        <div style="flex:1;padding:12px 16px;"></div>
-                        <?php
-                        
-                        if ($reports_only_user > 0) {
-                            ?>
-                            <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" style="display:flex;align-items:center;gap:6px;padding:12px 14px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;border-right:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
-                                <?php echo $reports_icon; ?>
-                                <span><?php echo _QXZ("Reports"); ?></span>
-                            </a>
-                            <?php
-                        } else {
-                            if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                                ?>
-                                <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" style="display:flex;align-items:center;gap:6px;padding:12px 14px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;border-right:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
-                                    <?php echo $qc_icon; ?>
-                                    <span><?php echo _QXZ("Quality Control"); ?></span>
-                                </a>
-                                <?php
-                            }
-                        }
-                    }
-                    ?>
-                </div>
-            </nav>
-            <?php
-        }
-    }
-}
 
-// ============================================
-// MOBILE HEADER SECTION - MODERNIZED
-// Purple Gradient + Responsive Design
-// ============================================
-else if ($android_header) {
-    ?>
-    <nav style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:8px;padding:0;margin-bottom:20px;box-shadow:0 4px 12px rgba(102,126,234,0.2);width:100%;">
-        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
-            <!-- Logo -->
-            <a href="./admin_mobile.php" style="padding:8px 16px;display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
-                <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;" />
-            </a>
-            
-            <!-- Mobile Admin Link -->
-            <a href="admin_mobile.php?ADD=999990" style="display:flex;align-items:center;gap:6px;padding:12px 16px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
-                <?php echo $admin_icon; ?>
-                <span><?php echo _QXZ("Admin"); ?></span>
-            </a>
-        </div>
-    </nav>
-    <?php
-}
+######################### MOBILE HTML HEADER BEGIN ####################################
+else if ($android_header)
+	{
+	?>
+	<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> width='100%'><TR>
+	<TD><A HREF="./admin_mobile.php"><IMG SRC="<?php echo $selected_small_logo; ?>" WIDTH=71 HEIGHT=22 BORDER=0 ALT="System logo"></A> &nbsp; </TD>
+	<TD align='left'> &nbsp; <A HREF="admin_mobile.php?ADD=999990" ALT="Admin" STYLE="text-decoration:none;"><?php echo $admin_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Admin"); ?></B></FONT></A> &nbsp; </TD>
+	</TR>
+	</TABLE>
+<?php
+	}
 ######################### ANDROID HTML HEADER END ######################################
 
 
