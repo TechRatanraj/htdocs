@@ -23780,24 +23780,19 @@ $zi=2;
     </td></tr></table>
 </span>
 		
-
-<!-- Wrapper for proper layout -->
-<div style="position:relative;width:<?php echo $MNwidth ?>px;padding:10px;">
-
-<!-- Modern Header - FIXED positioning -->
+<!-- Modern Header - Full Width with Consistent Margin -->
 <div id="Header" style="
     width:100%;
     background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    padding:15px 25px;
+    padding:12px 20px;
     display:flex;
     justify-content:space-between;
     align-items:center;
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
-    border-radius:8px;
-    margin-bottom:20px;
+    margin:0;
     position:relative;
-    z-index:100;">
+    z-index:<?php $zi++; echo $zi ?>;">
     
     <!-- Hidden Form Fields -->
     <input type="hidden" name="extension" id="extension" />
@@ -23805,40 +23800,40 @@ $zi=2;
     <input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />
     
     <!-- Left Section: User Info -->
-    <div style="display:flex;flex-direction:column;gap:5px;flex:1;">
-        <div style="color:#fff;font-size:14px;font-weight:600;">
+    <div style="display:flex;align-items:center;gap:20px;flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:500;">
+            <span style="display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;"></span>
             <?php
             if ($logged_in_refresh_link > 0) {
-                echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:5px;\">
-                    <span style=\"display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;\"></span>"
-                    ._QXZ("Logged in as User")."</a>";
+                echo "<a href=\"#\" onclick=\"start_all_refresh();\" style=\"color:#fff;text-decoration:none;\">"._QXZ("testing")."</a>";
             } else {
-                echo "<span style=\"display:inline-flex;align-items:center;gap:5px;\">
-                    <span style=\"display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;\"></span>"
-                    ._QXZ("Logged in as User")."</span>";
-            }
-            echo _QXZ(": %1s on Phone: %2s",0,'',$VD_login,$SIP_user);
-            if ($on_hook_agent == 'Y') {
-                echo " <a href=\"#\" onclick=\"NoneInSessionCalL();return false;\" style=\"color:#fbbf24;text-decoration:none;font-size:12px;padding:2px 8px;background:rgba(251,191,36,0.2);border-radius:12px;margin-left:5px;\">
-                    "._QXZ("ring")."</a>";
+                echo _QXZ("testing");
             }
             ?>
         </div>
-        <div style="color:rgba(255,255,255,0.85);font-size:12px;">
-            <?php echo _QXZ("Campaign").": <strong style=\"color:#fff;\">$VD_campaign</strong>"; ?>
-            <span id="agentchannelSPAN" style="margin-left:10px;padding:3px 8px;background:rgba(255,255,255,0.15);border-radius:4px;font-size:11px;"></span>
+        
+        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.9);font-size:13px;">
+            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <?php echo "SIP/".$SIP_user; ?>
         </div>
+        
+        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.9);font-size:13px;">
+            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+            <?php echo $VD_campaign; ?>
+        </div>
+        
+        <span id="agentchannelSPAN" style="padding:3px 10px;background:rgba(255,255,255,0.15);border-radius:4px;font-size:11px;color:#fff;"></span>
     </div>
     
     <!-- Right Section: Navigation Links -->
-    <nav style="display:flex;gap:15px;align-items:center;flex-shrink:0;">
+    <nav style="display:flex;gap:12px;align-items:center;flex-shrink:0;">
         <?php if ($territoryCT > 0) { ?>
             <a href="#" onclick="OpeNTerritorYSelectioN();return false;" style="
                 color:#fff;
                 text-decoration:none;
                 font-size:13px;
                 font-weight:500;
-                padding:8px 16px;
+                padding:6px 14px;
                 background:rgba(255,255,255,0.15);
                 border-radius:6px;
                 transition:all 0.3s ease;
@@ -23846,7 +23841,7 @@ $zi=2;
                 white-space:nowrap;"
                 onmouseover="this.style.background='rgba(255,255,255,0.25)';"
                 onmouseout="this.style.background='rgba(255,255,255,0.15)';">
-                <?php echo _QXZ("TERRITORIES"); ?>
+                TERRITORIES
             </a>
         <?php } ?>
         
@@ -23856,7 +23851,7 @@ $zi=2;
                 text-decoration:none;
                 font-size:13px;
                 font-weight:500;
-                padding:8px 16px;
+                padding:6px 14px;
                 background:rgba(255,255,255,0.15);
                 border-radius:6px;
                 transition:all 0.3s ease;
@@ -23864,7 +23859,7 @@ $zi=2;
                 white-space:nowrap;"
                 onmouseover="this.style.background='rgba(255,255,255,0.25)';"
                 onmouseout="this.style.background='rgba(255,255,255,0.15)';">
-                <?php echo _QXZ("GROUPS"); ?>
+                GROUPS
             </a>
         <?php } ?>
         
@@ -23878,43 +23873,46 @@ $zi=2;
             border-radius:6px;
             transition:all 0.3s ease;
             box-shadow:0 2px 8px rgba(239,68,68,0.3);
-            white-space:nowrap;"
+            white-space:nowrap;
+            display:flex;
+            align-items:center;
+            gap:6px;"
             onmouseover="this.style.background='#dc2626';"
             onmouseout="this.style.background='#ef4444';">
-            <?php echo _QXZ("LOGOUT"); ?>
+            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            LOGOUT
         </a>
     </nav>
 </div>
 
-<!-- Modern Tabs Navigation -->
+<!-- Modern Tabs Navigation - Full Width with Same Margin -->
 <div id="Tabs" style="
     width:100%;
     background:#fff;
-    border-radius:8px;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
     overflow:hidden;
-    margin-bottom:20px;
+    margin:0;
     position:relative;
-    z-index:90;">
+    z-index:<?php $zi++; echo $zi ?>;">
     
-    <div style="display:flex;align-items:stretch;min-height:50px;flex-wrap:nowrap;">
+    <div style="display:flex;align-items:stretch;height:50px;">
         <!-- Main Logo Tab -->
         <a href="#" onclick="MainPanelToFront('NO','YES');" style="
             background:#<?php echo $SSstd_row5_background ?>;
-            width:115px;
-            min-width:115px;
+            width:90px;
+            min-width:90px;
             display:flex;
             align-items:center;
             justify-content:center;
             border-right:1px solid rgba(0,0,0,0.08);
             transition:opacity 0.3s ease;">
-            <img src="<?php echo $selected_logo ?>" alt="MAIN" style="max-width:100px;max-height:40px;height:auto;" />
+            <img src="<?php echo $selected_logo ?>" alt="MAIN" style="max-width:80px;max-height:35px;height:auto;" />
         </a>
         
         <!-- Script Tab -->
         <a href="#" onclick="ScriptPanelToFront('YES');" style="
-            min-width:80px;
-            padding:0 15px;
+            min-width:70px;
+            padding:0 12px;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -23928,15 +23926,16 @@ $zi=2;
             border-right:1px solid rgba(0,0,0,0.08);
             transition:all 0.3s ease;
             background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
-            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
-            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
-            Script
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';this.style.color='#111827';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';this.style.color='#4b5563';">
+            <svg style="width:14px;height:14px;margin-right:4px;fill:currentColor;" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            SCRIPT
         </a>
         
         <?php if ($SSenable_second_script > 0) { ?>
         <a href="#" onclick="ScriptPanel2ToFront('YES');" style="
             min-width:80px;
-            padding:0 15px;
+            padding:0 12px;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -23950,16 +23949,16 @@ $zi=2;
             border-right:1px solid rgba(0,0,0,0.08);
             transition:all 0.3s ease;
             background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
-            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
-            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
-            Script 2
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';this.style.color='#111827';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';this.style.color='#4b5563';">
+            SCRIPT 2
         </a>
         <?php } ?>
         
         <?php if ($custom_fields_enabled > 0) { ?>
         <a href="#" onclick="FormPanelToFront('YES');" style="
-            min-width:80px;
-            padding:0 15px;
+            min-width:70px;
+            padding:0 12px;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -23973,16 +23972,16 @@ $zi=2;
             border-right:1px solid rgba(0,0,0,0.08);
             transition:all 0.3s ease;
             background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
-            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
-            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
-            Form
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';this.style.color='#111827';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';this.style.color='#4b5563';">
+            FORM
         </a>
         <?php } ?>
         
         <?php if ($email_enabled > 0) { ?>
         <a href="#" onclick="EmailPanelToFront('YES');" style="
-            min-width:80px;
-            padding:0 15px;
+            min-width:70px;
+            padding:0 12px;
             display:flex;
             align-items:center;
             justify-content:center;
@@ -23996,15 +23995,15 @@ $zi=2;
             border-right:1px solid rgba(0,0,0,0.08);
             transition:all 0.3s ease;
             background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
-            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
-            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
-            Email
+            onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';this.style.color='#111827';"
+            onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';this.style.color='#4b5563';">
+            EMAIL
         </a>
         <?php } ?>
         
         <?php if ($chat_enabled > 0) { ?>
         <a href="#" onclick="InternalChatContentsLoad('YES');" style="
-            min-width:70px;
+            min-width:60px;
             padding:0 10px;
             display:flex;
             align-items:center;
@@ -24014,12 +24013,12 @@ $zi=2;
             background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
             onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
             onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
-            <img src="./images/<?php echo _QXZ("vdc_tab_chat_internal.gif"); ?>" name='InternalChatImg' alt="Chat" style="height:24px;width:auto;" />
+            <img src="./images/<?php echo _QXZ("vdc_tab_chat_internal.gif"); ?>" name='InternalChatImg' alt="Chat" style="height:22px;width:auto;" />
         </a>
         
         <?php if ($campaign_chat_enabled=='Y') { ?>
         <a href="#" onclick="CustomerChatPanelToFront('1', 'YES');" style="
-            min-width:70px;
+            min-width:60px;
             padding:0 10px;
             display:flex;
             align-items:center;
@@ -24029,75 +24028,69 @@ $zi=2;
             background:linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%);"
             onmouseover="this.style.background='linear-gradient(to bottom, #f3f4f6 0%, #f3f4f6 92%, #667eea 92%, #667eea 100%)';"
             onmouseout="this.style.background='linear-gradient(to bottom, transparent 0%, transparent 92%, #667eea 92%, #667eea 100%)';">
-            <img src="./images/<?php echo _QXZ("vdc_tab_chat_customer.gif"); ?>" name='CustomerChatImg' alt="Customer Chat" style="height:24px;width:auto;" />
+            <img src="./images/<?php echo _QXZ("vdc_tab_chat_customer.gif"); ?>" name='CustomerChatImg' alt="Customer" style="height:22px;width:auto;" />
         </a>
         <?php } ?>
         <?php } ?>
         
-        <!-- Status Section -->
+        <!-- Status Section - Flex Grow -->
         <div style="
             flex:1;
-            min-width:200px;
+            min-width:250px;
             display:flex;
-            flex-direction:column;
             justify-content:center;
             align-items:center;
-            padding:5px 15px;
+            gap:15px;
+            padding:0 15px;
             background:linear-gradient(to right, #f9fafb, #ffffff);
             border-right:1px solid rgba(0,0,0,0.08);">
-            <div style="font-size:10px;color:#6b7280;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;white-space:nowrap;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#6b7280;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <span id="status" style="
-                    padding:2px 8px;
+                    padding:3px 10px;
                     background:#10b981;
                     color:#fff;
                     border-radius:12px;
                     font-weight:600;
                     font-size:9px;
-                    text-transform:uppercase;"><?php echo _QXZ("LIVE"); ?></span>
-                <span style="margin:0 5px;color:#d1d5db;">|</span>
-                <?php echo _QXZ("session ID:"); ?> <span id="sessionIDspan" style="font-weight:600;color:#374151;"></span>
+                    text-transform:uppercase;
+                    letter-spacing:0.5px;">LIVE</span>
+                <span style="color:#d1d5db;">●</span>
+                <span style="font-size:10px;">Session: <span id="sessionIDspan" style="font-weight:600;color:#374151;"></span></span>
             </div>
-            <div style="font-size:11px;color:#374151;margin-top:3px;">
-                <span id="AgentStatusCalls" style="margin-right:10px;"></span>
+            <div style="font-size:11px;color:#374151;display:flex;gap:10px;">
+                <span id="AgentStatusCalls"></span>
                 <span id="AgentStatusEmails"></span>
             </div>
         </div>
         
-        <!-- Live Call Indicator -->
+        <!-- Live Call Indicator & Commit Button -->
         <div style="
-            min-width:100px;
             display:flex;
             align-items:center;
-            justify-content:center;
-            background:#f3f4f6;
-            padding:0 10px;">
-            <img src="./images/<?php echo _QXZ("agc_live_call_OFF.gif"); ?>" name="livecall" alt="Live Call" style="height:28px;width:auto;" />
+            gap:10px;
+            padding:0 15px;
+            background:#f8f9fa;">
+            <div style="font-size:11px;color:#6b7280;font-weight:500;">NO LIVE CALL</div>
+            <button onclick="document.getElementById('FORM_LOADED').value='1';" style="
+                padding:6px 16px;
+                background:#10b981;
+                color:#fff;
+                border:none;
+                border-radius:6px;
+                font-size:12px;
+                font-weight:600;
+                cursor:pointer;
+                transition:all 0.3s ease;
+                display:flex;
+                align-items:center;
+                gap:6px;"
+                onmouseover="this.style.background='#059669';"
+                onmouseout="this.style.background='#10b981';">
+                <svg style="width:12px;height:12px;fill:#fff;" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                COMMIT
+            </button>
         </div>
     </div>
-</div>
-
-<!-- Welcome Box or Main Content Area -->
-<div id="WelcomeBoxA" style="
-    width:100%;
-    min-height:300px;
-    background:#fff;
-    border-radius:12px;
-    box-shadow:0 2px 12px rgba(0,0,0,0.06);
-    padding:30px;
-    position:relative;
-    z-index:1;
-    border:1px solid rgba(0,0,0,0.05);">
-    <div id="WelcomeBoxAt" style="
-        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-        font-size:24px;
-        font-weight:600;
-        color:#1f2937;
-        text-align:center;">
-        <?php echo _QXZ("Agent Screen"); ?>
-    </div>
-</div>
-
-<!-- Close wrapper -->
 </div>
 
 <!-- CSS Animation -->
@@ -24107,6 +24100,7 @@ $zi=2;
         50% { opacity: 0.5; }
     }
 </style>
+
 
 
 
