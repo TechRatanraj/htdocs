@@ -293,101 +293,137 @@ echo "</div>\n";
 ##### END populate dynamic header content #####
 
 ######################### SMALL HTML HEADER BEGIN #######################################
-if($short_header)
-	{
-	if($no_header)
-		{
-		# display nothing
-		}
-	else
-		{
-		if ( ($LOGreports_header_override == 'LOGO_ONLY_SMALL') or ($LOGreports_header_override == 'LOGO_ONLY_LARGE') )
-			{
-			$temp_logo = $selected_logo;
-			$temp_logo_size = 'WIDTH=170 HEIGHT=45 BORDER=0';
-			if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') 
-				{
-				$temp_logo = $selected_small_logo;
-				$temp_logo_size = 'WIDTH=71 HEIGHT=22';
-				}
-			# echo "$SSmenu_background"
-			?>
-			<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=white><TR>
-			<TD><A HREF="<?php echo $admin_home_url_LU ?>"><IMG SRC="<?php echo $temp_logo; ?>" <?php echo $temp_logo_size ?> BORDER=0 ALT="System logo"></A> &nbsp; </TD>
-			<TD> &nbsp; </TD>
-			<?php 
-			}
-		else
-			{
-			?>
-			<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?>><TR>
-			<TD><A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_small_logo; ?>" WIDTH=71 HEIGHT=22 BORDER=0 ALT="System logo"></A> &nbsp; </TD>
-			<?php 
-			if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
-				{
-			?>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=999999" ALT="Reports" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Reports"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=0A" ALT="Users" STYLE="text-decoration:none;"><?php echo $users_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Users"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=10" ALT="Campaigns" STYLE="text-decoration:none;"><?php echo $campaigns_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Campaigns"); ?></B></FONT></A> &nbsp; </TD>
-			<?php
-			if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
-				{
-				?>
-				<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100000000000000" ALT="Quality Control" STYLE="text-decoration:none;"><?php echo $qc_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Quality Control"); ?></B></FONT></A> &nbsp; </TD>
-				<?php
-				}
-			?>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100" ALT="Lists" STYLE="text-decoration:none;"><?php echo $lists_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Lists"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=1000000" ALT="Scripts" STYLE="text-decoration:none;"><?php echo $scripts_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Scripts"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=10000000" ALT="Filters" STYLE="text-decoration:none;"><?php echo $filters_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Filters"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=1001" ALT="Inbound" STYLE="text-decoration:none;"><?php echo $inbound_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Inbound"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100000" ALT="User Groups" STYLE="text-decoration:none;"><?php echo $usergroups_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("User Groups"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=10000" ALT="Remote Agents" STYLE="text-decoration:none;"><?php echo $remoteagents_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Remote Agents"); ?></B></FONT></A> &nbsp; </TD>
-			<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=999998" ALT="Admin" STYLE="text-decoration:none;"><?php echo $admin_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Admin"); ?></B></FONT></A> &nbsp; </TD>
-			<?php 
-				}
-			else 
-				{ 
-				?>
-				<TD width=600> &nbsp; &nbsp; </TD>
-				<?php
-				if ($reports_only_user > 0)
-					{
-					?>
-					<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=999999" ALT="Reports"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Reports"); ?></B></A> &nbsp; </TD>
-					<?php
-					}
-				else
-					{
-					if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
-						{
-						?>
-						<TD> &nbsp; <A HREF="<?php echo $ADMIN ?>?ADD=100000000000000" ALT="Quality Control"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Quality Control"); ?></B></FONT></A> &nbsp; </TD>
-						<?php
-						}
-					}
-				}
-			}
-		?>
-		</TR>
-		</TABLE>
-		<?php
-		}
-	}
-######################### SMALL HTML HEADER END #######################################
+// ============================================
+// SHORT HEADER SECTION - MODERNIZED
+// Purple Gradient + Modern UI + Responsive
+// ============================================
 
+if ($short_header) {
+    if (!$no_header) {
+        
+        // Determine logo display
+        $logo_display = $selected_logo;
+        $logo_size = 'width="170" height="45"';
+        $logo_link = $admin_home_url_LU;
+        
+        if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') {
+            $logo_display = $selected_small_logo;
+            $logo_size = 'width="71" height="22"';
+        } elseif ($LOGreports_header_override == 'LOGO_ONLY_LARGE') {
+            $logo_display = $selected_logo;
+            $logo_size = 'width="170" height="45"';
+        }
+        
+        // Logo only mode
+        if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
+            ?>
+            <div style="background:#fff;padding:12px;border-radius:6px;margin-bottom:20px;">
+                <a href="<?php echo htmlspecialchars($logo_link); ?>" style="display:inline-block;transition:all 0.2s;">
+                    <img src="<?php echo htmlspecialchars($logo_display); ?>" <?php echo $logo_size; ?> border="0" alt="System logo" style="max-width:100%;height:auto;" />
+                </a>
+            </div>
+            <?php
+        } 
+        // Full header mode
+        else {
+            ?>
+            <nav style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:8px;padding:0;margin-bottom:20px;box-shadow:0 4px 12px rgba(102,126,234,0.2);">
+                <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0;">
+                    <!-- Logo -->
+                    <div style="padding:8px 16px;border-right:1px solid rgba(255,255,255,0.1);">
+                        <a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+                            <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;" />
+                        </a>
+                    </div>
+                    
+                    <?php
+                    // Full access menu
+                    if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+                        
+                        $nav_items = array(
+                            array('url' => '?ADD=999999', 'icon' => $reports_icon, 'label' => _QXZ("Reports")),
+                            array('url' => '?ADD=0A', 'icon' => $users_icon, 'label' => _QXZ("Users")),
+                            array('url' => '?ADD=10', 'icon' => $campaigns_icon, 'label' => _QXZ("Campaigns")),
+                            array('url' => '?ADD=100', 'icon' => $lists_icon, 'label' => _QXZ("Lists")),
+                            array('url' => '?ADD=1000000', 'icon' => $scripts_icon, 'label' => _QXZ("Scripts")),
+                            array('url' => '?ADD=10000000', 'icon' => $filters_icon, 'label' => _QXZ("Filters")),
+                            array('url' => '?ADD=1001', 'icon' => $inbound_icon, 'label' => _QXZ("Inbound")),
+                            array('url' => '?ADD=100000', 'icon' => $usergroups_icon, 'label' => _QXZ("User Groups")),
+                            array('url' => '?ADD=10000', 'icon' => $remoteagents_icon, 'label' => _QXZ("Remote Agents")),
+                            array('url' => '?ADD=999998', 'icon' => $admin_icon, 'label' => _QXZ("Admin"))
+                        );
+                        
+                        // Add QC if authorized
+                        if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                            array_splice($nav_items, 3, 0, array(
+                                array('url' => '?ADD=100000000000000', 'icon' => $qc_icon, 'label' => _QXZ("Quality Control"))
+                            ));
+                        }
+                        
+                        // Render nav items
+                        foreach ($nav_items as $item) {
+                            ?>
+                            <a href="<?php echo htmlspecialchars($ADMIN . $item['url']); ?>" style="display:flex;align-items:center;gap:6px;padding:12px 14px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;border-right:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+                                <?php echo $item['icon']; ?>
+                                <span style="display:none;" class="nav-label"><?php echo htmlspecialchars($item['label']); ?></span>
+                            </a>
+                            <?php
+                        }
+                    } 
+                    // Limited access menu
+                    else {
+                        ?>
+                        <div style="flex:1;padding:12px 16px;"></div>
+                        <?php
+                        
+                        if ($reports_only_user > 0) {
+                            ?>
+                            <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" style="display:flex;align-items:center;gap:6px;padding:12px 14px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;border-right:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+                                <?php echo $reports_icon; ?>
+                                <span><?php echo _QXZ("Reports"); ?></span>
+                            </a>
+                            <?php
+                        } else {
+                            if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                                ?>
+                                <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" style="display:flex;align-items:center;gap:6px;padding:12px 14px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;border-right:1px solid rgba(255,255,255,0.1);" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+                                    <?php echo $qc_icon; ?>
+                                    <span><?php echo _QXZ("Quality Control"); ?></span>
+                                </a>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </nav>
+            <?php
+        }
+    }
+}
 
-######################### MOBILE HTML HEADER BEGIN ####################################
-else if ($android_header)
-	{
-	?>
-	<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> width='100%'><TR>
-	<TD><A HREF="./admin_mobile.php"><IMG SRC="<?php echo $selected_small_logo; ?>" WIDTH=71 HEIGHT=22 BORDER=0 ALT="System logo"></A> &nbsp; </TD>
-	<TD align='left'> &nbsp; <A HREF="admin_mobile.php?ADD=999990" ALT="Admin" STYLE="text-decoration:none;"><?php echo $admin_icon ?> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo _QXZ("Admin"); ?></B></FONT></A> &nbsp; </TD>
-	</TR>
-	</TABLE>
-<?php
-	}
+// ============================================
+// MOBILE HEADER SECTION - MODERNIZED
+// Purple Gradient + Responsive Design
+// ============================================
+else if ($android_header) {
+    ?>
+    <nav style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:8px;padding:0;margin-bottom:20px;box-shadow:0 4px 12px rgba(102,126,234,0.2);width:100%;">
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+            <!-- Logo -->
+            <a href="./admin_mobile.php" style="padding:8px 16px;display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+                <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;" />
+            </a>
+            
+            <!-- Mobile Admin Link -->
+            <a href="admin_mobile.php?ADD=999990" style="display:flex;align-items:center;gap:6px;padding:12px 16px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+                <?php echo $admin_icon; ?>
+                <span><?php echo _QXZ("Admin"); ?></span>
+            </a>
+        </div>
+    </nav>
+    <?php
+}
 ######################### ANDROID HTML HEADER END ######################################
 
 
