@@ -24371,153 +24371,74 @@ $zi=2;
             <input type="hidden" name="chat_id" id="chat_id" value="" />
             <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
 
+
 <!-- ============================================ -->
-<!-- MODERNIZED CUSTOMER INFORMATION SECTION -->
+<!-- LIGHTWEIGHT CUSTOMER INFO - FIXED VERSION -->
 <!-- ============================================ -->
-<span class="text_input" id="MainPanelCustInfo" style="display:block;position:fixed;top:10px;right:10px;width:calc(100% - 420px);max-width:1400px;z-index:100;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-    
-    <!-- Header Section -->
-    <div style="padding:10px 15px;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:8px 8px 0 0;border-left:4px solid #0ea5e9;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
-            <div style="display:flex;align-items:center;gap:8px;font-size:10px;flex:1;min-width:0;">
-                <span style="color:#64748b;font-weight:600;white-space:nowrap;">⏰ <?php echo _QXZ("Time:"); ?></span>
-                <span name="custdatetime" id="custdatetime" style="padding:2px 8px;background:#fff;border-radius:4px;font-weight:600;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;border:1px solid #cbd5e1;">&nbsp;</span>
-                <span style="color:#64748b;font-weight:600;white-space:nowrap;">📞 <?php echo _QXZ("Channel:"); ?></span>
-                <span name="callchannel" id="callchannel" style="padding:2px 8px;background:#fff;border-radius:4px;font-weight:600;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;border:1px solid #cbd5e1;"></span>
+<span class="text_input" id="MainPanelCustInfo" style="display:block;position:fixed;top:10px;right:10px;width:calc(100% - 420px);max-width:1400px;z-index:100;font-family:Arial,sans-serif;">
+    <div style="padding:8px 12px;background:#f0f9ff;border:1px solid #0ea5e9;border-radius:6px 6px 0 0;border-left:4px solid #0ea5e9;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:9px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <span style="color:#0369a1;font-weight:600;">⏰ <?php echo _QXZ("Time:"); ?></span>
+                <span name="custdatetime" id="custdatetime" style="padding:2px 6px;background:#fff;border-radius:3px;font-size:9px;border:1px solid #cbd5e1;">&nbsp;</span>
+                <span style="color:#0369a1;font-weight:600;margin-left:6px;">📞 <?php echo _QXZ("Channel:"); ?></span>
+                <span name="callchannel" id="callchannel" style="padding:2px 6px;background:#fff;border-radius:3px;font-size:9px;border:1px solid #cbd5e1;"></span>
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
-                <span style="font-size:11px;font-weight:700;color:#0369a1;white-space:nowrap;">👤 Customer:</span>
-                <span id="CusTInfOSpaN" style="font-size:10px;color:#0369a1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px;"></span>
-                <?php if ( ($agent_lead_search == 'ENABLED') or ($agent_lead_search == 'LIVE_CALL_INBOUND') or ($agent_lead_search == 'LIVE_CALL_INBOUND_AND_MANUAL') ) { echo "<a href=\"#\" onclick=\"OpeNSearcHForMDisplaYBox();return false;\" style=\"display:inline-block;padding:4px 10px;background:#0ea5e9;color:#fff;text-decoration:none;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;cursor:pointer;white-space:nowrap;\" title=\"Search Lead\">SEARCH</a>"; } ?>
+                <span style="font-size:10px;font-weight:700;color:#0369a1;">👤 <?php echo _QXZ("Customer:"); ?></span>
+                <span id="CusTInfOSpaN" style="font-size:9px;color:#0369a1;max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+                <?php if (($agent_lead_search == 'ENABLED') or ($agent_lead_search == 'LIVE_CALL_INBOUND') or ($agent_lead_search == 'LIVE_CALL_INBOUND_AND_MANUAL')) { echo "<a href=\"#\" onclick=\"OpeNSearcHForMDisplaYBox();return false;\" style=\"padding:2px 8px;background:#0ea5e9;color:#fff;text-decoration:none;border-radius:3px;font-size:8px;font-weight:700;white-space:nowrap;cursor:pointer;\">SEARCH</a>"; } ?>
             </div>
         </div>
     </div>
-    
-    <!-- Customer Form Card - Scrollable -->
-    <div style="background:#fff;border-radius:0 0 8px 8px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border:1px solid #e2e8f0;border-top:none;max-height:220px;overflow-y:auto;">
-        
+    <div style="background:#fff;border:1px solid #0ea5e9;border-radius:0 0 6px 6px;border-top:none;padding:8px;max-height:180px;overflow-y:auto;">
         <?php $required_fields = '|'; ?>
-        
-        <!-- Row 1: Title, First Name, Middle Initial, Last Name -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
-            <?php if ($label_title != '---HIDE---') { $title_ro = preg_match("/---READONLY---/",$label_title) ? 'readonly' : ''; $label_title = preg_replace("/---READONLY---|---REQUIRED---/","",$label_title); if (preg_match("/---REQUIRED---/",$label_title)) { $required_fields .= "title|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_title; ?></label><input type="text" size="4" name="title" id="title" maxlength="<?php echo $MAXtitle; ?>" class="cust_form" value="" <?php echo $title_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"title\" id=\"title\" value=\"\" />"; } ?>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px;margin-bottom:6px;">
+            <?php if ($label_title != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_title) ? 'readonly' : ''; $label_title = preg_replace("/---READONLY---|---REQUIRED---/","",$label_title); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_title; ?></label><input type="text" name="title" id="title" maxlength="<?php echo $MAXtitle; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"title\" id=\"title\" value=\"\" />"; } ?>
             
-            <?php if ($label_first_name != '---HIDE---') { $fname_ro = preg_match("/---READONLY---/",$label_first_name) ? 'readonly' : ''; $label_first_name = preg_replace("/---READONLY---|---REQUIRED---/","",$label_first_name); if (preg_match("/---REQUIRED---/",$label_first_name)) { $required_fields .= "first_name|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_first_name; ?></label><input type="text" size="17" name="first_name" id="first_name" maxlength="<?php echo $MAXfirst_name; ?>" class="cust_form" value="" <?php echo $fname_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"first_name\" id=\"first_name\" value=\"\" />"; } ?>
+            <?php if ($label_first_name != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_first_name) ? 'readonly' : ''; $label_first_name = preg_replace("/---READONLY---|---REQUIRED---/","",$label_first_name); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_first_name; ?></label><input type="text" name="first_name" id="first_name" maxlength="<?php echo $MAXfirst_name; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"first_name\" id=\"first_name\" value=\"\" />"; } ?>
             
-            <?php if ($label_middle_initial != '---HIDE---') { $mi_ro = preg_match("/---READONLY---/",$label_middle_initial) ? 'readonly' : ''; $label_middle_initial = preg_replace("/---READONLY---|---REQUIRED---/","",$label_middle_initial); if (preg_match("/---REQUIRED---/",$label_middle_initial)) { $required_fields .= "middle_initial|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_middle_initial; ?></label><input type="text" size="1" name="middle_initial" id="middle_initial" maxlength="<?php echo $MAXmiddle_initial; ?>" class="cust_form" value="" <?php echo $mi_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"middle_initial\" id=\"middle_initial\" value=\"\" />"; } ?>
+            <?php if ($label_middle_initial != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_middle_initial) ? 'readonly' : ''; $label_middle_initial = preg_replace("/---READONLY---|---REQUIRED---/","",$label_middle_initial); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_middle_initial; ?></label><input type="text" name="middle_initial" id="middle_initial" maxlength="<?php echo $MAXmiddle_initial; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"middle_initial\" id=\"middle_initial\" value=\"\" />"; } ?>
             
-            <?php if ($label_last_name != '---HIDE---') { $lname_ro = preg_match("/---READONLY---/",$label_last_name) ? 'readonly' : ''; $label_last_name = preg_replace("/---READONLY---|---REQUIRED---/","",$label_last_name); if (preg_match("/---REQUIRED---/",$label_last_name)) { $required_fields .= "last_name|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_last_name; ?></label><input type="text" size="23" name="last_name" id="last_name" maxlength="<?php echo $MAXlast_name; ?>" class="cust_form" value="" <?php echo $lname_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"last_name\" id=\"last_name\" value=\"\" />"; } ?>
+            <?php if ($label_last_name != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_last_name) ? 'readonly' : ''; $label_last_name = preg_replace("/---READONLY---|---REQUIRED---/","",$label_last_name); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_last_name; ?></label><input type="text" name="last_name" id="last_name" maxlength="<?php echo $MAXlast_name; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"last_name\" id=\"last_name\" value=\"\" />"; } ?>
+            
+            <?php if ($label_phone_number != '---HIDE---') { if (!preg_match('/Y/',$disable_alter_custphone)) { echo "<div><label style=\"font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;\">Phone</label><input type=\"text\" name=\"phone_number\" id=\"phone_number\" maxlength=\"$MAXphone_number\" value=\"\" style=\"width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;\" />"; } else { echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />"; } } else { echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />"; } ?>
         </div>
-        
-        <!-- Row 2: Address1 (Full Width) -->
-        <div style="margin-bottom:10px;">
-            <?php if ($label_address1 != '---HIDE---') { $addr1_ro = preg_match("/---READONLY---/",$label_address1) ? 'readonly' : ''; $label_address1 = preg_replace("/---READONLY---|---REQUIRED---/","",$label_address1); if (preg_match("/---REQUIRED---/",$label_address1)) { $required_fields .= "address1|"; } ?>
-            <label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;"><?php echo $label_address1; ?></label><input type="text" size="85" name="address1" id="address1" maxlength="<?php echo $MAXaddress1; ?>" class="cust_form" value="" <?php echo $addr1_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;box-sizing:border-box;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" />
-            <?php } else { echo "<input type=\"hidden\" name=\"address1\" id=\"address1\" value=\"\" />"; } ?>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+            <?php if ($label_address1 != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_address1) ? 'readonly' : ''; $label_address1 = preg_replace("/---READONLY---|---REQUIRED---/","",$label_address1); ?><div colspan="2"><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_address1; ?></label><input type="text" name="address1" id="address1" maxlength="<?php echo $MAXaddress1; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"address1\" id=\"address1\" value=\"\" />"; } ?>
         </div>
-        
-        <!-- Row 3: Address2, Address3 -->
-        <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:8px;margin-bottom:10px;">
-            <?php if ($label_address2 != '---HIDE---') { $addr2_ro = preg_match("/---READONLY---/",$label_address2) ? 'readonly' : ''; $label_address2 = preg_replace("/---READONLY---|---REQUIRED---/","",$label_address2); if (preg_match("/---REQUIRED---/",$label_address2)) { $required_fields .= "address2|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_address2; ?></label><input type="text" size="20" name="address2" id="address2" maxlength="<?php echo $MAXaddress2; ?>" class="cust_form" value="" <?php echo $addr2_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"address2\" id=\"address2\" value=\"\" />"; } ?>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+            <?php if ($label_city != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_city) ? 'readonly' : ''; $label_city = preg_replace("/---READONLY---|---REQUIRED---/","",$label_city); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_city; ?></label><input type="text" name="city" id="city" maxlength="<?php echo $MAXcity; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"city\" id=\"city\" value=\"\" />"; } ?>
             
-            <?php if ($label_address3 != '---HIDE---') { $addr3_ro = preg_match("/---READONLY---/",$label_address3) ? 'readonly' : ''; $label_address3 = preg_replace("/---READONLY---|---REQUIRED---/","",$label_address3); if (preg_match("/---REQUIRED---/",$label_address3)) { $required_fields .= "address3|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_address3; ?></label><input type="text" size="45" name="address3" id="address3" maxlength="<?php echo $MAXaddress3; ?>" class="cust_form" value="" <?php echo $addr3_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"address3\" id=\"address3\" value=\"\" />"; } ?>
+            <?php if ($label_state != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_state) ? 'readonly' : ''; $label_state = preg_replace("/---READONLY---|---REQUIRED---/","",$label_state); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_state; ?></label><input type="text" name="state" id="state" maxlength="<?php echo $MAXstate; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"state\" id=\"state\" value=\"\" />"; } ?>
+            
+            <?php if ($label_postal_code != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_postal_code) ? 'readonly' : ''; $label_postal_code = preg_replace("/---READONLY---|---REQUIRED---/","",$label_postal_code); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_postal_code; ?></label><input type="text" name="postal_code" id="postal_code" maxlength="<?php echo $MAXpostal_code; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"postal_code\" id=\"postal_code\" value=\"\" />"; } ?>
         </div>
-        
-        <!-- Row 4: City, State, Postal Code -->
-        <div style="display:grid;grid-template-columns:1fr 0.8fr 1fr;gap:8px;margin-bottom:10px;">
-            <?php if ($label_city != '---HIDE---') { $city_ro = preg_match("/---READONLY---/",$label_city) ? 'readonly' : ''; $label_city = preg_replace("/---READONLY---|---REQUIRED---/","",$label_city); if (preg_match("/---REQUIRED---/",$label_city)) { $required_fields .= "city|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_city; ?></label><input type="text" size="20" name="city" id="city" maxlength="<?php echo $MAXcity; ?>" class="cust_form" value="" <?php echo $city_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"city\" id=\"city\" value=\"\" />"; } ?>
+
+        <div style="display:grid;grid-template-columns:1fr 0.8fr;gap:6px;margin-top:6px;">
+            <?php if ($label_email != '---HIDE---') { $ro = preg_match("/---READONLY---/",$label_email) ? 'readonly' : ''; $label_email = preg_replace("/---READONLY---|---REQUIRED---/","",$label_email); ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_email; ?></label><input type="text" name="email" id="email" maxlength="<?php echo $MAXemail; ?>" value="" <?php echo $ro; ?> style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;box-sizing:border-box;" /><?php } else { echo "<input type=\"hidden\" name=\"email\" id=\"email\" value=\"\" />"; } ?>
             
-            <?php if ($label_state != '---HIDE---') { $state_ro = preg_match("/---READONLY---/",$label_state) ? 'readonly' : ''; $label_state = preg_replace("/---READONLY---|---REQUIRED---/","",$label_state); if (preg_match("/---REQUIRED---/",$label_state)) { $required_fields .= "state|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_state; ?></label><input type="text" size="4" name="state" id="state" maxlength="<?php echo $MAXstate; ?>" class="cust_form" value="" <?php echo $state_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"state\" id=\"state\" value=\"\" />"; } ?>
-            
-            <?php if ($label_postal_code != '---HIDE---') { $pc_ro = preg_match("/---READONLY---/",$label_postal_code) ? 'readonly' : ''; $label_postal_code = preg_replace("/---READONLY---|---REQUIRED---/","",$label_postal_code); if (preg_match("/---REQUIRED---/",$label_postal_code)) { $required_fields .= "postal_code|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_postal_code; ?></label><input type="text" size="14" name="postal_code" id="postal_code" maxlength="<?php echo $MAXpostal_code; ?>" class="cust_form" value="" <?php echo $pc_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"postal_code\" id=\"postal_code\" value=\"\" />"; } ?>
+            <?php if ($label_gender != '---HIDE---') { ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;"><?php echo $label_gender; ?></label><select name="gender_list" id="gender_list" style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:9px;cursor:pointer;box-sizing:border-box;"><option value="U">U</option><option value="M">M</option><option value="F">F</option></select></div><?php } else { echo "<input type=\"hidden\" name=\"gender_list\" id=\"gender_list\" value=\"\" />"; } ?>
         </div>
-        
-        <!-- Row 5: Province, Vendor Lead Code, Gender -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 0.8fr;gap:8px;margin-bottom:10px;">
-            <?php if ($label_province != '---HIDE---') { $prov_ro = preg_match("/---READONLY---/",$label_province) ? 'readonly' : ''; $label_province = preg_replace("/---READONLY---|---REQUIRED---/","",$label_province); if (preg_match("/---REQUIRED---/",$label_province)) { $required_fields .= "province|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_province; ?></label><input type="text" size="20" name="province" id="province" maxlength="<?php echo $MAXprovince; ?>" class="cust_form" value="" <?php echo $prov_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"province\" id=\"province\" value=\"\" />"; } ?>
+
+        <div style="margin-top:6px;padding-top:6px;border-top:1px solid #e2e8f0;font-size:8px;">
+            <?php if ($label_comments != '---HIDE---') { ?><div style="margin-bottom:4px;"><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:1px;"><?php echo $label_comments; ?></label><?php if ($multi_line_comments) { echo "<textarea name=\"comments\" id=\"comments\" rows=\"1\" style=\"width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:8px;resize:none;box-sizing:border-box;\" value=\"\"></textarea>"; } else { echo "<input type=\"text\" name=\"comments\" id=\"comments\" maxlength=\"255\" style=\"width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:8px;box-sizing:border-box;\" value=\"\" />"; } ?></div><?php } else { echo "<input type=\"hidden\" name=\"comments\" id=\"comments\" value=\"\" /><input type=\"hidden\" name=\"other_tab_comments\" id=\"other_tab_comments\" value=\"\" /><input type=\"hidden\" name=\"dispo_comments\" id=\"dispo_comments\" value=\"\" /><input type=\"hidden\" name=\"callback_comments\" id=\"callback_comments\" value=\"\" />"; } ?>
             
-            <?php if ($label_vendor_lead_code != '---HIDE---') { $vlc_ro = preg_match("/---READONLY---/",$label_vendor_lead_code) ? 'readonly' : ''; $label_vendor_lead_code = preg_replace("/---READONLY---|---REQUIRED---/","",$label_vendor_lead_code); if (preg_match("/---REQUIRED---/",$label_vendor_lead_code)) { $required_fields .= "vendor_lead_code|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_vendor_lead_code; ?></label><input type="text" size="15" name="vendor_lead_code" id="vendor_lead_code" maxlength="<?php echo $MAXvendor_lead_code; ?>" class="cust_form" value="" <?php echo $vlc_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"vendor_lead_code\" id=\"vendor_lead_code\" value=\"\" />"; } ?>
-            
-            <?php if ($label_gender != '---HIDE---') { ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_gender; ?></label><select size="1" name="gender_list" id="gender_list" style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;cursor:pointer;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';"><option value="U"><?php echo _QXZ("U - Undef"); ?></option><option value="M"><?php echo _QXZ("M - Male"); ?></option><option value="F"><?php echo _QXZ("F - Fem"); ?></option></select></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"gender_list\" id=\"gender_list\" value=\"\" />"; } ?>
+            <?php if ($per_call_notes == 'ENABLED') { ?><div><label style="font-size:7px;font-weight:600;color:#64748b;text-transform:uppercase;display:block;margin-bottom:1px;"><?php echo _QXZ("Call Notes:"); ?></label><textarea name="call_notes" id="call_notes" rows="1" style="width:100%;padding:3px;border:1px solid #cbd5e1;border-radius:3px;font-size:8px;resize:none;box-sizing:border-box;" value=""></textarea></div><?php } else { echo "<input type=\"hidden\" name=\"call_notes\" id=\"call_notes\" value=\"\" />"; } ?>
         </div>
-        
-        <!-- Row 6: Phone Number, Phone Code, Alt Phone -->
-        <div style="display:grid;grid-template-columns:1.2fr 0.8fr 1fr;gap:8px;margin-bottom:10px;">
-            <?php if ($label_phone_number != '---HIDE---') { ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_phone_number; ?></label><?php if ( (preg_match('/Y/',$disable_alter_custphone)) or (preg_match('/HIDE/',$disable_alter_custphone)) ) { echo "<span id=\"phone_numberDISP\" style=\"padding:5px;background:#f3f4f6;border-radius:4px;display:block;font-size:10px;color:#64748b;\">&nbsp;</span><input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />"; } else { echo "<input type=\"text\" size=\"20\" name=\"phone_number\" id=\"phone_number\" maxlength=\"$MAXphone_number\" class=\"cust_form\" value=\"\" style=\"width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;\" onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';\" onblur=\"this.style.borderColor='#e2e8f0';this.style.boxShadow='none';\" />"; } ?></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"phone_number\" id=\"phone_number\" value=\"\" />"; } ?>
-            
-            <?php if ($label_phone_code != '---HIDE---') { $pc_ro = preg_match("/---READONLY---/",$label_phone_code) ? 'readonly' : ''; $label_phone_code = preg_replace("/---READONLY---|---REQUIRED---/","",$label_phone_code); if (preg_match("/---REQUIRED---/",$label_phone_code)) { $required_fields .= "phone_code|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_phone_code; ?></label><input type="text" size="4" name="phone_code" id="phone_code" maxlength="<?php echo $MAXphone_code; ?>" class="cust_form" value="" <?php echo $pc_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"phone_code\" id=\"phone_code\" value=\"\" />"; } ?>
-            
-            <?php if ($label_alt_phone != '---HIDE---') { $ap_ro = preg_match("/---READONLY---/",$label_alt_phone) ? 'readonly' : ''; $label_alt_phone = preg_replace("/---READONLY---|---REQUIRED---/","",$label_alt_phone); if (preg_match("/---REQUIRED---/",$label_alt_phone)) { $required_fields .= "alt_phone|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_alt_phone; ?></label><input type="text" size="14" name="alt_phone" id="alt_phone" maxlength="<?php echo $MAXalt_phone; ?>" class="cust_form" value="" <?php echo $ap_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"alt_phone\" id=\"alt_phone\" value=\"\" />"; } ?>
-        </div>
-        
-        <!-- Row 7: Security Phrase, Email -->
-        <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:8px;margin-bottom:10px;">
-            <?php if ($label_security_phrase != '---HIDE---') { $sp_ro = preg_match("/---READONLY---/",$label_security_phrase) ? 'readonly' : ''; $label_security_phrase = preg_replace("/---READONLY---|---REQUIRED---/","",$label_security_phrase); if (preg_match("/---REQUIRED---/",$label_security_phrase)) { $required_fields .= "security_phrase|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_security_phrase; ?></label><input type="text" size="20" name="security_phrase" id="security_phrase" maxlength="<?php echo $MAXsecurity_phrase; ?>" class="cust_form" value="" <?php echo $sp_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"security_phrase\" id=\"security_phrase\" value=\"\" />"; } ?>
-            
-            <?php if ($label_email != '---HIDE---') { $email_ro = preg_match("/---READONLY---/",$label_email) ? 'readonly' : ''; $label_email = preg_replace("/---READONLY---|---REQUIRED---/","",$label_email); if (preg_match("/---REQUIRED---/",$label_email)) { $required_fields .= "email|"; } ?>
-            <div><label style="display:block;font-size:8px;font-weight:600;color:#64748b;margin-bottom:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo $label_email; ?></label><input type="text" size="45" name="email" id="email" maxlength="<?php echo $MAXemail; ?>" class="cust_form" value="" <?php echo $email_ro; ?> style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;transition:all 0.2s ease;" onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 2px rgba(14,165,233,0.1)';" onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none';" /></div>
-            <?php } else { echo "<input type=\"hidden\" name=\"email\" id=\"email\" value=\"\" />"; } ?>
-        </div>
-        
-        <!-- Row 8: Comments & Call Notes -->
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e2e8f0;">
-            <?php if ($label_comments != '---HIDE---') { ?>
-            <div style="margin-bottom:8px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
-                    <label style="font-size:8px;font-weight:600;color:#64748b;text-transform:uppercase;"><?php echo $label_comments; ?></label>
-                    <span id="viewcommentsdisplay"><input type="button" id="ViewCommentButton" onclick="ViewComments('ON','','','YES')" value="<?php echo _QXZ("History"); ?>" style="padding:2px 6px;background:#0ea5e9;color:#fff;border:none;border-radius:3px;font-size:8px;font-weight:700;cursor:pointer;" /></span>
-                </div>
-                <?php if ( ($multi_line_comments) ) { echo "<textarea name=\"comments\" id=\"comments\" rows=\"2\" cols=\"85\" class=\"cust_form_text\" style=\"width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:9px;font-family:monospace;resize:vertical;\" value=\"\"></textarea>"; } else { echo "<input type=\"text\" size=\"65\" name=\"comments\" id=\"comments\" maxlength=\"255\" class=\"cust_form\" style=\"width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;\" value=\"\" />"; } ?>
-            </div>
-            <?php } else { echo "<input type=\"hidden\" name=\"comments\" id=\"comments\" value=\"\" /><input type=\"hidden\" name=\"other_tab_comments\" id=\"other_tab_comments\" value=\"\" /><input type=\"hidden\" name=\"dispo_comments\" id=\"dispo_comments\" value=\"\" /><input type=\"hidden\" name=\"callback_comments\" id=\"callback_comments\" value=\"\" />"; } ?>
-            
-            <?php if ($per_call_notes == 'ENABLED') { ?>
-            <div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
-                    <label style="font-size:8px;font-weight:600;color:#64748b;text-transform:uppercase;"><?php echo _QXZ("Call Notes:"); ?></label>
-                    <?php if ($agent_call_log_view == '1') { ?><span id="CallNotesButtons"><a href="#" onclick="VieWNotesLoG();return false;" style="font-size:8px;text-decoration:none;color:#0ea5e9;font-weight:700;">VIEW NOTES</a></span><?php } ?>
-                </div>
-                <textarea name="call_notes" id="call_notes" rows="2" cols="85" class="cust_form_text" style="width:100%;padding:5px;border:1px solid #e2e8f0;border-radius:4px;font-size:9px;font-family:monospace;resize:vertical;" value=""></textarea>
-            </div>
-            <?php } else { echo "<input type=\"hidden\" name=\"call_notes\" id=\"call_notes\" value=\"\" /><span id=\"CallNotesButtons\"></span>"; } ?>
-        </div>
-        
+
         <input type="hidden" name="required_fields" id="required_fields" value="<?php echo $required_fields; ?>" />
+        <input type="hidden" name="address2" id="address2" value="" />
+        <input type="hidden" name="address3" id="address3" value="" />
+        <input type="hidden" name="province" id="province" value="" />
+        <input type="hidden" name="vendor_lead_code" id="vendor_lead_code" value="" />
+        <input type="hidden" name="phone_code" id="phone_code" value="" />
+        <input type="hidden" name="alt_phone" id="alt_phone" value="" />
+        <input type="hidden" name="security_phrase" id="security_phrase" value="" />
     </div>
 </span>
-
 
 
 <!-- END *********   Here is the main VICIDIAL display panel -->
