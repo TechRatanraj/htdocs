@@ -439,8 +439,21 @@ echo"            <img src=\"$selected_logo\" class=\"logo\" alt=\"cxoTel Logo\" 
 echo"        </div>\n";
 echo"        <h1 class=\"welcome-title\">"._QXZ("Welcome")."</h1>\n";
 echo"        <p class=\"access-prompt\">"._QXZ("Please select your access type")."</p>\n";
+$dynamic_url = "../agc/vicidial.php?" . http_build_query([
+    'relogin' => 'YES',
+    'session_epoch' => time(),
+    'session_id' => session_id(),
+    'session_name' => $session_name,
+    'VD_login' => $VD_login,
+    'VD_campaign' => $VD_campaign,
+    'phone_login' => $phone_login,
+    'phone_pass' => $phone_pass,
+    'VD_pass' => $VD_pass,
+    'hide_relogin_fields' => ''
+]);
+
 echo"        <div class=\"access-options\">\n";
-echo"            <a href=\"https://cxotel.call.1bill.in/agc/vicidial.php?relogin=YES&session_epoch=1762343261&session_id=8600051&session_name=1762343254_100214236676&VD_login=testing&VD_campaign=001&phone_login=1002&phone_pass=test&VD_pass=testing&LOGINvarONE=&LOGINvarTWO=&LOGINvarTHREE=&LOGINvarFOUR=&LOGINvarFIVE=&hide_relogin_fields=\" class=\"access-button\" id=\"agentLoginLink\">\n";
+echo"            <a href=\"$dynamic_url\" class=\"access-button\" id=\"agentLoginLink\">\n";
 echo"                <i class=\"fas fa-sign-in-alt\"></i>\n";
 echo"                "._QXZ("Agent Login")."\n";
 echo"            </a>\n";
