@@ -152,7 +152,6 @@ elseif (($SSweb_logo != 'default_new') && ($SSweb_logo != 'default_old')) {
 // ============================================
 // CSS COLOR VARIABLES FOR UI
 // ============================================
-// Create CSS-friendly color variables
 $SS_menu_hex = '#' . $SSmenu_background;
 $SS_frame_hex = '#' . $SSframe_background;
 $SS_row1_hex = '#' . $SSstd_row1_background;
@@ -160,136 +159,53 @@ $SS_row2_hex = '#' . $SSstd_row2_background;
 $SS_button_hex = '#' . $SSbutton_color;
 
 // ============================================
-// POPULATE DYNAMIC HEADER CONTENT - MODERNIZED
-// Purple Gradient Theme + Clean Navigation
+// RENDER NAVBAR - LOGO ONLY (MENUS IN SIDEBAR)
 // ============================================
+?>
 
-// Define header menu items
-$header_items = array(
-    'users' => array(
-        'label' => 'Users',
-        'icon_selected' => 'images/icon_black_users.png',
-        'icon_default' => 'images/icon_users.png',
-        'alt' => 'Users'
-    ),
-    'campaigns' => array(
-        'label' => 'Campaigns',
-        'icon_selected' => 'images/icon_black_campaigns.png',
-        'icon_default' => 'images/icon_campaigns.png',
-        'alt' => 'Campaigns'
-    ),
-    'lists' => array(
-        'label' => 'Lists',
-        'icon_selected' => 'images/icon_black_lists.png',
-        'icon_default' => 'images/icon_lists.png',
-        'alt' => 'Lists'
-    ),
-    'ingroups' => array(
-        'label' => 'Inbound',
-        'icon_selected' => 'images/icon_black_inbound.png',
-        'icon_default' => 'images/icon_inbound.png',
-        'alt' => 'Inbound'
-    ),
-    'remoteagent' => array(
-        'label' => 'Remote Agents',
-        'icon_selected' => 'images/icon_black_remoteagents.png',
-        'icon_default' => 'images/icon_remoteagents.png',
-        'alt' => 'Remote Agents'
-    ),
-    'usergroups' => array(
-        'label' => 'User Groups',
-        'icon_selected' => 'images/icon_black_usergroups.png',
-        'icon_default' => 'images/icon_usergroups.png',
-        'alt' => 'User Groups'
-    ),
-    'scripts' => array(
-        'label' => 'Scripts',
-        'icon_selected' => 'images/icon_black_scripts.png',
-        'icon_default' => 'images/icon_scripts.png',
-        'alt' => 'Scripts'
-    ),
-    'filters' => array(
-        'label' => 'Filters',
-        'icon_selected' => 'images/icon_black_filters.png',
-        'icon_default' => 'images/icon_filters.png',
-        'alt' => 'Filters'
-    ),
-    'admin' => array(
-        'label' => 'Admin',
-        'icon_selected' => 'images/icon_black_admin.png',
-        'icon_default' => 'images/icon_admin.png',
-        'alt' => 'Admin'
-    ),
-    'reports' => array(
-        'label' => 'Reports',
-        'icon_selected' => 'images/icon_black_reports.png',
-        'icon_default' => 'images/icon_reports.png',
-        'alt' => 'Reports'
-    ),
-    'qc' => array(
-        'label' => 'Quality Control',
-        'icon_selected' => 'images/icon_black_qc.png',
-        'icon_default' => 'images/icon_qc.png',
-        'alt' => 'Quality Control'
-    )
-);
-
-// Initialize header variables - DRY Pattern
-foreach ($header_items as $key => $item) {
-    $var_name = $key . '_hh';
-    $icon_var = $key . '_icon';
-    $color_var = $key . '_fc';
-    $bold_var = $key . '_bold';
-    
-    if ($hh == $key) {
-        // Selected state
-        $$var_name = 'style="background:linear-gradient(135deg,#667eea,#764ba2);padding:8px 12px;border-radius:4px;font-weight:600;"';
-        $$color_var = '#fff';
-        $$bold_var = $header_selected_bold;
-        $$icon_var = "<img src=\"{$item['icon_selected']}\" border=\"0\" alt=\"{$item['alt']}\" width=\"16\" height=\"16\" valign=\"middle\" style=\"margin-right:6px;\" />";
-    } else {
-        // Default state
-        $$var_name = 'style="color:#fff;padding:8px 12px;border-radius:4px;transition:all 0.2s;cursor:pointer;"';
-        $$color_var = '#fff';
-        $$bold_var = $header_nonselected_bold;
-        $$icon_var = "<img src=\"{$item['icon_default']}\" border=\"0\" alt=\"{$item['alt']}\" width=\"16\" height=\"16\" valign=\"middle\" style=\"margin-right:6px;opacity:0.7;\" />";
+<style>
+    .navbar-container {
+        background: linear-gradient(135deg,#667eea,#764ba2);
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+        display: flex;
+        align-items: center;
     }
-}
+    
+    .navbar-logo {
+        display: flex;
+        align-items: center;
+        padding: 0;
+    }
+    
+    .navbar-logo a {
+        display: inline-block;
+        transition: all 0.2s;
+        opacity: 0.9;
+    }
+    
+    .navbar-logo a:hover {
+        opacity: 1;
+    }
+    
+    .navbar-logo img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 
-// ============================================
-// MODERN NAVIGATION HTML HELPER FUNCTION
-// ============================================
-function render_nav_item($key, $hh) {
-    global $header_items;
-    
-    if (!isset($header_items[$key])) return '';
-    
-    $item = $header_items[$key];
-    $is_active = ($hh == $key);
-    
-    $style = $is_active ? 
-        'background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;' :
-        'background:rgba(255,255,255,0.1);color:#fff;transition:all 0.2s;';
-    
-    $icon = $is_active ? $item['icon_selected'] : $item['icon_default'];
-    $opacity = $is_active ? '1' : '0.7';
-    
-    return "<a href=\"#\" style=\"display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:4px;{$style}text-decoration:none;font-weight:600;font-size:13px;\" onmouseover=\"this.style.opacity='1'\" onmouseout=\"this.style.opacity='{$opacity}'\">" .
-           "<img src=\"{$icon}\" border=\"0\" alt=\"{$item['alt']}\" width=\"16\" height=\"16\" style=\"opacity:{$opacity};\" />" .
-           "{$item['label']}" .
-           "</a>";
-}
-
-// ============================================
-// RENDER NAVIGATION BAR
-// ============================================
-echo "<div style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-radius:6px;margin-bottom:20px;\">\n";
-
-foreach (array('users', 'campaigns', 'lists', 'ingroups', 'remoteagent', 'usergroups', 'scripts', 'filters', 'admin', 'reports', 'qc') as $menu_item) {
-    echo render_nav_item($menu_item, $hh);
-}
-
-echo "</div>\n";
+<div class="navbar-container">
+    <!-- Logo Only -->
+    <div class="navbar-logo">
+        <a href="<?php echo htmlspecialchars($ADMIN); ?>" title="Go to Admin Home">
+            <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" />
+        </a>
+    </div>
+</div>
+<?php
 ##### END populate dynamic header content #####
 
 ######################### SMALL HTML HEADER BEGIN #######################################
