@@ -25145,7 +25145,7 @@ $zi=2;
 <div style="
     position:fixed;
     right:0;
-    top:40%;
+    top:70%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
     
@@ -25156,7 +25156,7 @@ $zi=2;
                 align-items:center;
                 justify-content:center;
                 writing-mode:vertical-rl;
-                padding:20px 10px;
+                padding:10px 10px;
                 background:linear-gradient(180deg, #667eea, #764ba2);
                 color:#fff;
                 text-decoration:none;
