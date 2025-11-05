@@ -25141,16 +25141,13 @@ $zi=2;
 <!-- Debug Bottom Span -->
 <span style="position:absolute;left:0px;top:<?php echo $DBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="debugbottomspan"></span>
 
-<!-- Modern Manual Dial & Fast Dial Buttons - Left Side Bottom -->
+<!-- Modern Manual Dial Button - Left Side Vertical Tab (Top) -->
 <div style="
     position:fixed;
-    left:20px;
-    bottom:20px;
-    z-index:<?php $zi++; echo $zi ?>;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+    left:0;
+    top:30%;
+    transform:translateY(-50%);
+    z-index:<?php $zi++; echo $zi ?>;">
     
     <span id="ManuaLDiaLButtons">
         <span id="MDstatusSpan">
@@ -25158,92 +25155,68 @@ $zi=2;
                 display:flex;
                 align-items:center;
                 justify-content:center;
-                gap:8px;
-                padding:12px 20px;
-                background:linear-gradient(135deg, #667eea, #764ba2);
+                writing-mode:vertical-rl;
+                padding:30px 12px;
+                background:linear-gradient(180deg, #667eea, #764ba2);
                 color:#fff;
                 text-decoration:none;
-                border-radius:10px;
-                font-size:13px;
+                border-radius:0 10px 10px 0;
+                font-size:14px;
                 font-weight:700;
                 text-transform:uppercase;
-                letter-spacing:0.5px;
-                box-shadow:0 4px 12px rgba(102,126,234,0.4);
+                letter-spacing:1.5px;
+                box-shadow:4px 0 12px rgba(102,126,234,0.4);
                 transition:all 0.3s ease;
-                min-width:180px;"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(102,126,234,0.5)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';">
-                <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
+                gap:12px;
+                font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+                onmouseover="this.style.left='0';this.style.boxShadow='4px 0 16px rgba(102,126,234,0.6)';"
+                onmouseout="this.style.left='0';this.style.boxShadow='4px 0 12px rgba(102,126,234,0.4)';">
+                <svg style="width:22px;height:22px;fill:#fff;transform:rotate(90deg);" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
                 <?php echo _QXZ("MANUAL DIAL"); ?>
             </a>
         </span>
-        
-        <?php if ( ($agentcall_manual == '1') and (!preg_match("/ONLY/",$manual_dial_lead_id)) ) { ?>
-        <a href="#" onclick="NeWManuaLDiaLCalL('FAST','','','','','YES','YES');return false;" style="
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:8px;
-            padding:12px 20px;
-            background:linear-gradient(135deg, #10b981, #059669);
-            color:#fff;
-            text-decoration:none;
-            border-radius:10px;
-            font-size:13px;
-            font-weight:700;
-            text-transform:uppercase;
-            letter-spacing:0.5px;
-            box-shadow:0 4px 12px rgba(16,185,129,0.4);
-            transition:all 0.3s ease;
-            min-width:180px;
-            margin-top:10px;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.5)';"
-            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';">
-            <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
-                <path d="M13 3l3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z"/>
-                <path d="M19 19H5V5h7l-2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5l-2-2v7z"/>
-            </svg>
-            <?php echo _QXZ("FAST DIAL"); ?>
-        </a>
-        <?php } ?>
     </span>
 </div>
 
-<!-- Modern Web Phone Button - Right Side Vertical Tab -->
+<!-- Modern Fast Dial Button - Left Side Vertical Tab (Bottom) -->
+<?php if ( ($agentcall_manual == '1') and (!preg_match("/ONLY/",$manual_dial_lead_id)) ) { ?>
 <div style="
     position:fixed;
-    right:0;
+    left:0;
     top:50%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
     
-    <a href="#" onclick="launch_webphone();return false;" style="
+    <a href="#" onclick="NeWManuaLDiaLCalL('FAST','','','','','YES','YES');return false;" style="
         display:flex;
         align-items:center;
         justify-content:center;
         writing-mode:vertical-rl;
-        padding:20px 12px;
-        background:linear-gradient(180deg, #8b5cf6, #667eea);
+        padding:30px 12px;
+        background:linear-gradient(180deg, #10b981, #059669);
         color:#fff;
         text-decoration:none;
-        border-radius:10px 0 0 10px;
+        border-radius:0 10px 10px 0;
         font-size:14px;
         font-weight:700;
         text-transform:uppercase;
-        letter-spacing:1px;
-        box-shadow:-4px 0 12px rgba(139,92,246,0.4);
+        letter-spacing:1.5px;
+        box-shadow:4px 0 12px rgba(16,185,129,0.4);
         transition:all 0.3s ease;
-        gap:10px;"
-        onmouseover="this.style.right='0';this.style.boxShadow='-6px 0 16px rgba(139,92,246,0.5)';"
-        onmouseout="this.style.right='0';this.style.boxShadow='-4px 0 12px rgba(139,92,246,0.4)';">
-        <svg style="width:20px;height:20px;fill:#fff;transform:rotate(90deg);" viewBox="0 0 24 24">
-            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        gap:12px;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.left='0';this.style.boxShadow='4px 0 16px rgba(16,185,129,0.6)';"
+        onmouseout="this.style.left='0';this.style.boxShadow='4px 0 12px rgba(16,185,129,0.4)';">
+        <svg style="width:22px;height:22px;fill:#fff;transform:rotate(90deg);" viewBox="0 0 24 24">
+            <path d="M13 3l3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z"/>
+            <path d="M19 19H5V5h7l-2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5l-2-2v7z"/>
         </svg>
-        Web Phone
+        <?php echo _QXZ("FAST DIAL"); ?>
     </a>
 </div>
+<?php } ?>
 
 <!-- Modern Call Log Button - Center Bottom -->
 <div style="
