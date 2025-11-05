@@ -1,4 +1,4 @@
-<?php
+]<?php
 # welcome.php - VICIDIAL welcome page
 # 
 # Copyright (C) 2023  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
@@ -8,7 +8,7 @@
 # 161106-1920 - Changed to use newer design and dynamic links
 # 220228-1109 - Added allow_web_debug system setting
 # 231119-1540 - Added HCI Screen link if hopper_hold_inserts are allowed on the system
-# 240615-1200 - Modernized UI with responsive design and improved UX
+# 240615-1200 - Modernized UI with cxoTel design and improved UX
 
 header ("Content-type: text/html; charset=utf-8");
 
@@ -119,11 +119,11 @@ echo"<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font
 echo"<style>\n";
 echo"
 :root {
-    --primary-color: #$SSmenu_background;
-    --secondary-color: #$SSframe_background;
-    --accent-color: #$SSstd_row1_background;
-    --text-color: #333;
-    --light-text: #fff;
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --accent-color: #ffffff;
+    --text-color: #333333;
+    --light-text: #ffffff;
     --border-radius: 8px;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
@@ -137,140 +137,193 @@ echo"
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     color: var(--text-color);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.container {
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.left-panel {
     flex: 1;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-}
-
-.welcome-card {
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    width: 100%;
-    max-width: 500px;
-    overflow: hidden;
-    transition: var(--transition);
-}
-
-.welcome-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-    background-color: var(--primary-color);
     color: var(--light-text);
-    padding: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.left-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"none\"/><circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"rgba(255,255,255,0.1)\" stroke-width=\"0.5\" fill=\"none\"/></svg>');
+    background-size: 100px 100px;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.left-content {
+    text-align: center;
+    z-index: 2;
+}
+
+.headphones-icon {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.tagline {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5px;
+}
+
+.loading-dots {
     display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--light-text);
+    margin: 0 5px;
+    animation: loading 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loading {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.right-panel {
+    flex: 1;
+    background-color: var(--accent-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
+    padding: 2rem;
+}
+
+.logo-container {
+    margin-bottom: 2rem;
 }
 
 .logo {
-    height: 45px;
+    height: 50px;
     width: auto;
-    max-width: 170px;
 }
 
 .welcome-title {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     font-weight: 600;
-    margin: 0;
+    margin-bottom: 1rem;
+    color: var(--text-color);
 }
 
-.card-body {
-    padding: 30px 20px;
+.access-prompt {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    color: #666;
 }
 
-.menu-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.access-options {
+    width: 100%;
+    max-width: 400px;
 }
 
-.menu-item {
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    transition: var(--transition);
-}
-
-.menu-link {
-    display: flex;
-    align-items: center;
+.access-button {
+    display: block;
+    width: 100%;
     padding: 15px 20px;
-    background-color: var(--secondary-color);
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     font-size: 1.1rem;
+    text-align: center;
     transition: var(--transition);
-    border-left: 4px solid transparent;
+    cursor: pointer;
 }
 
-.menu-link:hover {
-    background-color: var(--accent-color);
-    border-left: 4px solid var(--primary-color);
-    transform: translateX(5px);
+.access-button:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
 }
 
-.menu-link i {
-    margin-right: 15px;
-    font-size: 1.2rem;
+.access-button i {
+    margin-right: 10px;
     color: var(--primary-color);
 }
 
 .footer {
+    position: absolute;
+    bottom: 20px;
     text-align: center;
-    padding: 20px;
-    color: var(--text-color);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    color: #666;
 }
 
-@media (max-width: 600px) {
-    .welcome-card {
-        max-width: 100%;
-    }
-    
-    .card-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-    
-    .welcome-title {
-        font-size: 1.5rem;
-    }
-    
-    .menu-link {
-        padding: 12px 15px;
-        font-size: 1rem;
-    }
-    
-    .menu-link i {
-        margin-right: 10px;
-    }
+.social-icons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
-/* Loading animation */
+.social-icon {
+    color: #666;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-icon:hover {
+    color: var(--primary-color);
+}
+
+/* Loading overlay */
 .loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -298,6 +351,64 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .left-panel {
+        flex: 0 0 40%;
+        min-height: 40vh;
+    }
+    
+    .right-panel {
+        flex: 1;
+        min-height: 60vh;
+    }
+    
+    .headphones-icon {
+        font-size: 3rem;
+    }
+    
+    .tagline {
+        font-size: 1.4rem;
+    }
+    
+    .welcome-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-panel {
+        flex: 0 0 30%;
+        min-height: 30vh;
+    }
+    
+    .right-panel {
+        flex: 1;
+        min-height: 70vh;
+    }
+    
+    .headphones-icon {
+        font-size: 2.5rem;
+    }
+    
+    .tagline {
+        font-size: 1.2rem;
+    }
+    
+    .welcome-title {
+        font-size: 1.8rem;
+    }
+    
+    .access-button {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+}
 ";
 echo"</style>\n";
 echo"</head>\n";
@@ -308,59 +419,68 @@ echo"<div class=\"loading-overlay\" id=\"loadingOverlay\">\n";
 echo"    <div class=\"loading-spinner\"></div>\n";
 echo"</div>\n";
 
-echo"<div class=\"container\">\n";
-echo"    <div class=\"welcome-card\">\n";
-echo"        <div class=\"card-header\">\n";
-echo"            <img src=\"$selected_logo\" class=\"logo\" alt=\"VICIDIAL Logo\" />\n";
-echo"            <h1 class=\"welcome-title\">"._QXZ("Welcome")."</h1>\n";
+echo"<div class=\"login-container\">\n";
+echo"    <div class=\"left-panel\">\n";
+echo"        <div class=\"left-content\">\n";
+echo"            <div class=\"headphones-icon\">\n";
+echo"                <i class=\"fas fa-headset\"></i>\n";
+echo"            </div>\n";
+echo"            <h2 class=\"tagline\">Keeping you always connected</h2>\n";
+echo"            <div class=\"loading-dots\">\n";
+echo"                <div class=\"dot\"></div>\n";
+echo"                <div class=\"dot\"></div>\n";
+echo"                <div class=\"dot\"></div>\n";
+echo"            </div>\n";
 echo"        </div>\n";
-echo"        <div class=\"card-body\">\n";
-echo"            <ul class=\"menu-list\">\n";
-echo"                <li class=\"menu-item\">\n";
-echo"                    <a href=\"../agc/$SSagent_script\" class=\"menu-link\" id=\"agentLoginLink\">\n";
-echo"                        <i class=\"fas fa-sign-in-alt\"></i>\n";
-echo"                        "._QXZ("Agent Login")."\n";
-echo"                    </a>\n";
-echo"                </li>\n";
+echo"    </div>\n";
+echo"    <div class=\"right-panel\">\n";
+echo"        <div class=\"logo-container\">\n";
+echo"            <img src=\"$selected_logo\" class=\"logo\" alt=\"cxoTel Logo\" />\n";
+echo"        </div>\n";
+echo"        <h1 class=\"welcome-title\">"._QXZ("Welcome")."</h1>\n";
+echo"        <p class=\"access-prompt\">"._QXZ("Please select your access type")."</p>\n";
+echo"        <div class=\"access-options\">\n";
+echo"            <a href=\"../agc/$SSagent_script\" class=\"access-button\" id=\"agentLoginLink\">\n";
+echo"                <i class=\"fas fa-sign-in-alt\"></i>\n";
+echo"                "._QXZ("Agent Login")."\n";
+echo"            </a>\n";
 
 if ($hide_timeclock_link < 1) {
-echo"                <li class=\"menu-item\">\n";
-echo"                    <a href=\"../agc/timeclock.php?referrer=welcome\" class=\"menu-link\" id=\"timeclockLink\">\n";
-echo"                        <i class=\"fas fa-clock\"></i>\n";
-echo"                        "._QXZ("Timeclock")."\n";
-echo"                    </a>\n";
-echo"                </li>\n";
+echo"            <a href=\"../agc/timeclock.php?referrer=welcome\" class=\"access-button\" id=\"timeclockLink\">\n";
+echo"                <i class=\"fas fa-clock\"></i>\n";
+echo"                "._QXZ("Timeclock")."\n";
+echo"            </a>\n";
 }
 
 if ($SShopper_hold_inserts > 0) {
-echo"                <li class=\"menu-item\">\n";
-echo"                    <a href=\"../$admin_web_directory/hci_screen.php\" class=\"menu-link\" id=\"hciScreenLink\">\n";
-echo"                        <i class=\"fas fa-users\"></i>\n";
-echo"                        "._QXZ("HCI Screen")."\n";
-echo"                    </a>\n";
-echo"                </li>\n";
+echo"            <a href=\"../$admin_web_directory/hci_screen.php\" class=\"access-button\" id=\"hciScreenLink\">\n";
+echo"                <i class=\"fas fa-users\"></i>\n";
+echo"                "._QXZ("HCI Screen")."\n";
+echo"            </a>\n";
 }
 
-echo"                <li class=\"menu-item\">\n";
-echo"                    <a href=\"../$admin_web_directory/admin.php\" class=\"menu-link\" id=\"adminLink\">\n";
-echo"                        <i class=\"fas fa-cogs\"></i>\n";
-echo"                        "._QXZ("Administration")."\n";
-echo"                    </a>\n";
-echo"                </li>\n";
-echo"            </ul>\n";
+echo"            <a href=\"../$admin_web_directory/admin.php\" class=\"access-button\" id=\"adminLink\">\n";
+echo"                <i class=\"fas fa-cogs\"></i>\n";
+echo"                "._QXZ("Administration")."\n";
+echo"            </a>\n";
+echo"        </div>\n";
+echo"        <div class=\"footer\">\n";
+echo"            <p>&copy; " . date("Y") . " cxoTel - "._QXZ("Open Source Contact Center Suite")."</p>\n";
+echo"            <div class=\"social-icons\">\n";
+echo"                <a href=\"#\" class=\"social-icon\"><i class=\"fab fa-facebook-f\"></i></a>\n";
+echo"                <a href=\"#\" class=\"social-icon\"><i class=\"fab fa-twitter\"></i></a>\n";
+echo"                <a href=\"#\" class=\"social-icon\"><i class=\"fab fa-linkedin-in\"></i></a>\n";
+echo"                <a href=\"#\" class=\"social-icon\"><i class=\"fab fa-instagram\"></i></a>\n";
+echo"            </div>\n";
 echo"        </div>\n";
 echo"    </div>\n";
-echo"</div>\n";
-
-echo"<div class=\"footer\">\n";
-echo"    <p>&copy; " . date("Y") . " VICIDIAL - "._QXZ("Open Source Contact Center Suite")."</p>\n";
 echo"</div>\n";
 
 echo"<script>\n";
 echo"
 // Add loading functionality to all links
 document.addEventListener('DOMContentLoaded', function() {
-    const links = document.querySelectorAll('.menu-link');
+    const links = document.querySelectorAll('.access-button');
     const loadingOverlay = document.getElementById('loadingOverlay');
     
     links.forEach(link => {
@@ -373,28 +493,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add some interactive effects
-    const menuItems = document.querySelectorAll('.menu-item');
-    
-    menuItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(5px)';
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0)';
-        });
-    });
-    
     // Add keyboard navigation
     document.addEventListener('keydown', function(e) {
-        if (e.key >= '1' && e.key <= '4') {
-            const index = parseInt(e.key) - 1;
-            const links = document.querySelectorAll('.menu-link');
-            if (links[index]) {
-                links[index].click();
-            }
+        const links = document.querySelectorAll('.access-button');
+        let targetIndex = -1;
+        
+        switch(e.key) {
+            case '1':
+                targetIndex = 0; // Agent Login
+                break;
+            case '2':
+                targetIndex = 1; // Timeclock or HCI Screen
+                break;
+            case '3':
+                targetIndex = links.length - 1; // Administration
+                break;
         }
+        
+        if (targetIndex >= 0 && links[targetIndex]) {
+            links[targetIndex].click();
+        }
+    });
+    
+    // Add interactive effects to social icons
+    const socialIcons = document.querySelectorAll('.social-icon');
+    
+    socialIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Placeholder for social media links
+            console.log('Social media link clicked');
+        });
     });
 });
 ";
