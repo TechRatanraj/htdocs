@@ -26882,9 +26882,8 @@ function webphoneOpen(spanId, action) {
     </td></tr></table>
 </span>
 
-
 <!-- ============================================ -->
-<!-- MODERN NEW MANUAL DIAL BOX - FIXED LAYOUT -->
+<!-- MODERN NEW MANUAL DIAL BOX - SIMPLE VERSION -->
 <!-- ============================================ -->
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;display:none;" id="NeWManuaLDiaLBox">
     <div style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:650px;max-height:95vh;background:#fff;border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,0.3);overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;z-index:9999;">
@@ -26984,9 +26983,20 @@ function webphoneOpen(spanId, action) {
         <!-- Content -->
         <div style="padding:20px;text-align:center;">
             <!-- Title -->
-            <div style="margin-bottom:16px;"><span style="font-size:12px;font-weight:700;color:#047857;display:block;margin-bottom:12px;"><?php echo _QXZ("Closer Inbound Group Selection"); ?></span><input type="hidden" name="CloserSelectList" id="CloserSelectList" /></div>
+            <div style="margin-bottom:16px;">
+                <span style="font-size:12px;font-weight:700;color:#047857;display:block;margin-bottom:12px;"><?php echo _QXZ("Closer Inbound Group Selection"); ?></span>
+                <input type="hidden" name="CloserSelectList" id="CloserSelectList" />
+                <span id="CloserSelectContent"></span>
+            </div>
             <!-- Blended Checkbox -->
-            <?php if (($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0)) { ?><div style="margin-bottom:16px;padding:10px;background:#fff;border:2px solid #86efac;border-radius:8px;"><label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;"><input type="checkbox" name="CloserSelectBlended" id="CloserSelectBlended" size="1" value="0" style="cursor:pointer;width:16px;height:16px;" /><strong><?php echo _QXZ("BLENDED CALLING(outbound activated)"); ?></strong></label></div><?php } ?>
+            <?php if (($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0)) { ?>
+            <div style="margin-bottom:16px;padding:10px;background:#fff;border:2px solid #86efac;border-radius:8px;">
+                <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;">
+                    <input type="checkbox" name="CloserSelectBlended" id="CloserSelectBlended" size="1" value="0" style="cursor:pointer;width:16px;height:16px;" />
+                    <strong><?php echo _QXZ("BLENDED CALLING(outbound activated)"); ?></strong>
+                </label>
+            </div>
+            <?php } ?>
             <!-- Buttons -->
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                 <a href="#" onclick="CloserSelectContent_create('YES');return false;" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);transition:all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(245,158,11,0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(245,158,11,0.3)';"><?php echo _QXZ("RESET"); ?></a>
@@ -26996,58 +27006,6 @@ function webphoneOpen(spanId, action) {
     </div>
 </span>
 
-<!-- ================================================== -->
-<!-- MODAL OVERLAY (Dark Background) -->
-<!-- ================================================== -->
-<div style="position:fixed;left:0;top:0;width:100%;height:100%;z-index:9998;background:rgba(0,0,0,0.5);display:none;backdrop-filter:blur(4px);" id="ModalOverlay"></div>
-
-<!-- ================================================== -->
-<!-- JAVASCRIPT FOR MODAL CONTROL -->
-<!-- ================================================== -->
-<script>
-// Extended showDiv function to support modal overlay
-var originalShowDiv = window.showDiv;
-window.showDiv = function(elemId) {
-    var elem = document.getElementById(elemId);
-    if (elem) {
-        elem.style.display = 'block';
-        if (elemId === 'NeWManuaLDiaLBox' || elemId === 'CloserSelectBox') {
-            var overlay = document.getElementById('ModalOverlay');
-            if (overlay) {
-                overlay.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-        }
-    }
-};
-
-// Extended hideDiv function to support modal overlay
-var originalHideDiv = window.hideDiv;
-window.hideDiv = function(elemId) {
-    var elem = document.getElementById(elemId);
-    if (elem) {
-        elem.style.display = 'none';
-        if (elemId === 'NeWManuaLDiaLBox' || elemId === 'CloserSelectBox') {
-            var overlay = document.getElementById('ModalOverlay');
-            if (overlay) {
-                overlay.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        }
-    }
-};
-
-// Close modal when clicking on overlay
-document.addEventListener('DOMContentLoaded', function() {
-    var overlay = document.getElementById('ModalOverlay');
-    if (overlay) {
-        overlay.addEventListener('click', function() {
-            hideDiv('NeWManuaLDiaLBox');
-            hideDiv('CloserSelectBox');
-        });
-    }
-});
-</script>
 
 
 
