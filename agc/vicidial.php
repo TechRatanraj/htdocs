@@ -24273,27 +24273,7 @@ $zi=2;
                 {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanThree\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" style=\"display:block;width:100%;\" /></span>\n";}
             ?>
             
-            
-            <!-- Action Buttons -->
-            <span style="
-                display:block;
-                margin-bottom:8px;
-                border-radius:8px;
-                overflow:hidden;
-                box-shadow:0 2px 6px rgba(251,191,36,0.3);
-                transition:all 0.3s ease;" 
-                id="ParkControl"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 10px rgba(251,191,36,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 6px rgba(251,191,36,0.3)';">
-                <img src="./images/<?php echo _QXZ("vdc_LB_parkcall_OFF.gif"); ?>" border="0" alt="Park Call" style="display:block;width:100%;" />
-            </span>
-            
-            <?php
-            if ( ($ivr_park_call=='ENABLED') or ($ivr_park_call=='ENABLED_PARK_ONLY') )
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:all 0.3s ease;\" id=\"ivrParkControl\" onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\"><img src=\"./images/"._QXZ("vdc_LB_ivrparkcall_OFF.gif")."\" border=\"0\" alt=\"IVR Park Call\" style=\"display:block;width:100%;\" /></span>\n";}
-            else
-                {echo "<span id=\"ivrParkControl\"></span>\n";}
-            ?>
+     
             
             <span style="
                 display:block;
