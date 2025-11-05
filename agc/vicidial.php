@@ -24126,9 +24126,10 @@ $zi=2;
 		{$alt_phone_selected='CHECKED';}
 	?>
 	    </td></tr>
+    </td></tr>
     <tr><td colspan="3"><span id="busycallsdebug"></span></td></tr>
     <tr>
-        <!-- Modern Sidebar Column -->
+        <!-- Modern Sidebar with CSS Buttons -->
         <td width="180px" align="left" valign="top" style="
             padding:15px 10px;
             background:#f8fafc;
@@ -24136,19 +24137,32 @@ $zi=2;
             font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
             
             <center>
-            <!-- Dial Control Button -->
-            <span style="
-                background:linear-gradient(135deg, #10b981, #059669);
-                border-radius:8px;
-                display:block;
-                margin-bottom:12px;
-                box-shadow:0 2px 8px rgba(16,185,129,0.3);
-                transition:all 0.3s ease;" 
-                id="DiaLControl"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16,185,129,0.3)';">
-                <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');">
-                    <img src="./images/<?php echo _QXZ("vdc_LB_dialnextnumber_OFF.gif"); ?>" border="0" alt="Dial Next Number" style="display:block;border-radius:8px;width:100%;" />
+            <!-- Dial Next Number Button -->
+            <span id="DiaLControl">
+                <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');" style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
+                    width:100%;
+                    padding:12px 16px;
+                    background:linear-gradient(135deg, #10b981, #059669);
+                    color:#fff;
+                    text-decoration:none;
+                    border-radius:10px;
+                    font-size:13px;
+                    font-weight:700;
+                    text-transform:uppercase;
+                    letter-spacing:0.5px;
+                    box-shadow:0 4px 12px rgba(16,185,129,0.4);
+                    transition:all 0.3s ease;
+                    margin-bottom:12px;"
+                    onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.5)';"
+                    onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';">
+                    <svg style="width:20px;height:20px;fill:#fff;" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    Dial Next Number
                 </a>
             </span>
             
@@ -24160,9 +24174,9 @@ $zi=2;
                 text-align:left;
                 padding:12px;
                 background:#fff;
-                border-radius:8px;
+                border-radius:10px;
                 margin-bottom:12px;
-                box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+                box-shadow:0 2px 6px rgba(0,0,0,0.08);">
                 <span id="DiaLLeaDPrevieW">
                     <label style="
                         display:flex;
@@ -24171,13 +24185,13 @@ $zi=2;
                         cursor:pointer;
                         font-size:11px;
                         color:#475569;
-                        font-weight:500;
-                        margin-bottom:8px;">
+                        font-weight:600;
+                        margin-bottom:10px;">
                         <input type="checkbox" name="LeadPreview" size="1" value="0" style="
                             cursor:pointer;
-                            width:16px;
-                            height:16px;
-                            accent-color:#667eea;" />
+                            width:18px;
+                            height:18px;
+                            accent-color:#10b981;" />
                         <span><?php echo _QXZ("LEAD PREVIEW"); ?></span>
                     </label>
                 </span>
@@ -24189,216 +24203,470 @@ $zi=2;
                         cursor:pointer;
                         font-size:11px;
                         color:#475569;
-                        font-weight:500;">
+                        font-weight:600;">
                         <input type="checkbox" name="DiaLAltPhonE" size="1" value="0" <?php echo $alt_phone_selected ?> style="
                             cursor:pointer;
-                            width:16px;
-                            height:16px;
-                            accent-color:#667eea;" />
+                            width:18px;
+                            height:18px;
+                            accent-color:#10b981;" />
                         <span><?php echo _QXZ("ALT PHONE DIAL"); ?></span>
                     </label>
                 </span>
             </div>
             
-            <!-- Next Call Pause -->
+            <!-- Next Call Pause Button -->
             <span id="NexTCalLPausE">
                 <a href="#" onclick="next_call_pause_click();return false;" style="
-                    display:inline-block;
-                    padding:8px 16px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:6px;
+                    width:100%;
+                    padding:10px 16px;
                     background:#fff;
                     color:#667eea;
                     text-decoration:none;
                     border:2px solid #667eea;
-                    border-radius:8px;
-                    font-size:11px;
-                    font-weight:600;
+                    border-radius:10px;
+                    font-size:12px;
+                    font-weight:700;
                     margin-bottom:15px;
                     transition:all 0.3s ease;"
                     onmouseover="this.style.background='#667eea';this.style.color='#fff';"
                     onmouseout="this.style.background='#fff';this.style.color='#667eea';">
-                    ⏸ <?php echo _QXZ("Next Call Pause"); ?>
+                    <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                    <?php echo _QXZ("Next Call Pause"); ?>
                 </a>
             </span>
-            <br />
             
-            <!-- Recording Section -->
+            <!-- Recording Information Card -->
             <div style="
-                padding:12px;
+                padding:14px;
                 background:linear-gradient(135deg, #fef3c7, #fde68a);
-                border-radius:8px;
+                border-radius:10px;
                 margin-bottom:12px;
                 text-align:left;
                 border-left:4px solid #f59e0b;
-                box-shadow:0 2px 6px rgba(245,158,11,0.2);">
+                box-shadow:0 3px 10px rgba(245,158,11,0.3);">
                 <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:6px;
                     font-size:10px;
                     color:#92400e;
-                    font-weight:600;
+                    font-weight:700;
                     text-transform:uppercase;
                     letter-spacing:0.5px;
-                    margin-bottom:6px;">
+                    margin-bottom:8px;">
+                    <svg style="width:14px;height:14px;fill:#f59e0b;" viewBox="0 0 24 24">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
                     <?php echo _QXZ("RECORDING FILE:"); ?>
                 </div>
-                <div style="font-size:10px;color:#78350f;word-break:break-all;margin-bottom:8px;">
+                <div style="font-size:10px;color:#78350f;word-break:break-all;margin-bottom:10px;font-weight:600;">
                     <span id="RecorDingFilename"></span>
                 </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:10px;color:#92400e;font-weight:600;">
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    padding:6px 10px;
+                    background:rgba(255,255,255,0.6);
+                    border-radius:6px;">
+                    <span style="font-size:10px;color:#92400e;font-weight:700;">
                         <?php echo _QXZ("RECORD ID:"); ?>
                     </span>
-                    <span id="RecorDID" style="font-size:11px;color:#78350f;font-weight:700;"></span>
+                    <span id="RecorDID" style="font-size:11px;color:#78350f;font-weight:800;"></span>
                 </div>
             </div>
-            </center>
             
-            <!-- Recording Control -->
-            <center>
-            <span style="
-                background:#ef4444;
-                border-radius:8px;
-                display:block;
-                margin-bottom:10px;
-                box-shadow:0 2px 8px rgba(239,68,68,0.3);
-                transition:all 0.3s ease;" 
-                id="RecorDControl"
-                onmouseover="this.style.background='#dc2626';this.style.transform='scale(1.02)';"
-                onmouseout="this.style.background='#ef4444';this.style.transform='scale(1)';">
-                <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;">
-                    <img src="./images/<?php echo _QXZ("$start_recording_GIF"); ?>" border="0" alt="Start Recording" style="display:block;border-radius:8px;width:100%;" />
+            <!-- Start Recording Button -->
+            <span id="RecorDControl">
+                <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;" style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
+                    width:100%;
+                    padding:12px 16px;
+                    background:linear-gradient(135deg, #ef4444, #dc2626);
+                    color:#fff;
+                    text-decoration:none;
+                    border-radius:10px;
+                    font-size:12px;
+                    font-weight:700;
+                    text-transform:uppercase;
+                    box-shadow:0 4px 12px rgba(239,68,68,0.4);
+                    transition:all 0.3s ease;
+                    margin-bottom:10px;"
+                    onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.5)';"
+                    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';">
+                    <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="8"/>
+                    </svg>
+                    Start Recording
                 </a>
             </span>
             
             <span id="RecorDMute" style="display:block;margin-bottom:8px;"></span>
             
             <?php
-            if ($SSstereo_recording > 0)
-                {echo "<span style=\"display:block;margin-bottom:10px;border-radius:8px;overflow:hidden;\" id=\"StRecorDControl\"><img src=\"./images/"._QXZ("$STstart_recording_GIF_off")."\" border=\"0\" alt=\"Start Stereo Recording\" style=\"display:block;width:100%;\" /></span>";}
-            else
-                {echo "<span id=\"StRecorDControl\"></span>";}
+            if ($SSstereo_recording > 0) {
+                echo "<span id=\"StRecorDControl\">
+                    <a href=\"#\" style=\"
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        gap:8px;
+                        width:100%;
+                        padding:10px 16px;
+                        background:#f97316;
+                        color:#fff;
+                        text-decoration:none;
+                        border-radius:10px;
+                        font-size:11px;
+                        font-weight:700;
+                        box-shadow:0 2px 8px rgba(249,115,22,0.3);
+                        transition:all 0.3s ease;
+                        margin-bottom:10px;\"
+                        onmouseover=\"this.style.background='#ea580c';\"
+                        onmouseout=\"this.style.background='#f97316';\">
+                        <svg style=\"width:16px;height:16px;fill:#fff;\" viewBox=\"0 0 24 24\">
+                            <circle cx=\"9\" cy=\"12\" r=\"8\"/>
+                            <circle cx=\"15\" cy=\"12\" r=\"8\"/>
+                        </svg>
+                        Stereo Recording
+                    </a>
+                </span>";
+            } else {
+                echo "<span id=\"StRecorDControl\"></span>";
+            }
             
             if (!preg_match("/NOGAP/",$SSrecording_buttons))
                 {echo "<span id=\"SpacerSpanA\"><div style=\"height:12px;\"></div></span>\n";}
             
-            if ($SSenable_first_webform > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpan\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_OFF.gif")."\" border=\"0\" alt=\"Web Form\" style=\"display:block;width:100%;\" /></span>\n";}
+            // Web Form Buttons
+            if ($SSenable_first_webform > 0) {
+                echo "<span id=\"WebFormSpan\">
+                    <button style=\"
+                        width:100%;
+                        padding:11px 16px;
+                        background:#fff;
+                        color:#475569;
+                        border:2px solid #cbd5e1;
+                        border-radius:10px;
+                        font-size:12px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.3s ease;
+                        margin-bottom:8px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        gap:8px;\"
+                        onmouseover=\"this.style.background='#f1f5f9';this.style.borderColor='#94a3b8';\"
+                        onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">
+                        <svg style=\"width:16px;height:16px;fill:currentColor;\" viewBox=\"0 0 24 24\">
+                            <path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\"/>
+                        </svg>
+                        Web Form
+                    </button>
+                </span>\n";
+            }
             
-            if ($enable_second_webform > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanTwo\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_two_OFF.gif")."\" border=\"0\" alt=\"Web Form 2\" style=\"display:block;width:100%;\" /></span>\n";}
+            if ($enable_second_webform > 0) {
+                echo "<span id=\"WebFormSpanTwo\">
+                    <button style=\"
+                        width:100%;
+                        padding:11px 16px;
+                        background:#fff;
+                        color:#475569;
+                        border:2px solid #cbd5e1;
+                        border-radius:10px;
+                        font-size:12px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.3s ease;
+                        margin-bottom:8px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        gap:8px;\"
+                        onmouseover=\"this.style.background='#f1f5f9';this.style.borderColor='#94a3b8';\"
+                        onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">
+                        <svg style=\"width:16px;height:16px;fill:currentColor;\" viewBox=\"0 0 24 24\">
+                            <path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\"/>
+                        </svg>
+                        Web Form 2
+                    </button>
+                </span>\n";
+            }
             
-            if ($enable_third_webform > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanThree\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" style=\"display:block;width:100%;\" /></span>\n";}
+            if ($enable_third_webform > 0) {
+                echo "<span id=\"WebFormSpanThree\">
+                    <button style=\"
+                        width:100%;
+                        padding:11px 16px;
+                        background:#fff;
+                        color:#475569;
+                        border:2px solid #cbd5e1;
+                        border-radius:10px;
+                        font-size:12px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.3s ease;
+                        margin-bottom:8px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        gap:8px;\"
+                        onmouseover=\"this.style.background='#f1f5f9';this.style.borderColor='#94a3b8';\"
+                        onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">
+                        <svg style=\"width:16px;height:16px;fill:currentColor;\" viewBox=\"0 0 24 24\">
+                            <path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\"/>
+                        </svg>
+                        Web Form 3
+                    </button>
+                </span>\n";
+            }
             ?>
             
+            <!-- Park Counter Display -->
             <div id="ParkCounterSpan" style="
                 text-align:center;
                 font-size:13px;
-                font-weight:700;
+                font-weight:800;
                 color:#0ea5e9;
-                margin-bottom:8px;
-                padding:6px;
-                background:#e0f2fe;
-                border-radius:6px;"></div>
-            
-            <!-- Action Buttons -->
-            <span style="
-                display:block;
-                margin-bottom:8px;
+                margin-bottom:10px;
+                padding:8px;
+                background:linear-gradient(135deg, #e0f2fe, #bae6fd);
                 border-radius:8px;
-                overflow:hidden;
-                box-shadow:0 2px 6px rgba(251,191,36,0.3);
-                transition:all 0.3s ease;" 
-                id="ParkControl"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 10px rgba(251,191,36,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 6px rgba(251,191,36,0.3)';">
-                <img src="./images/<?php echo _QXZ("vdc_LB_parkcall_OFF.gif"); ?>" border="0" alt="Park Call" style="display:block;width:100%;" />
+                border:2px solid #0ea5e9;"></div>
+            
+            <!-- Park Call Button -->
+            <span id="ParkControl">
+                <button style="
+                    width:100%;
+                    padding:12px 16px;
+                    background:linear-gradient(135deg, #fbbf24, #f59e0b);
+                    color:#fff;
+                    border:none;
+                    border-radius:10px;
+                    font-size:12px;
+                    font-weight:700;
+                    text-transform:uppercase;
+                    cursor:pointer;
+                    box-shadow:0 4px 12px rgba(251,191,36,0.4);
+                    transition:all 0.3s ease;
+                    margin-bottom:8px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;"
+                    onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(251,191,36,0.5)';"
+                    onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(251,191,36,0.4)';">
+                    <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
+                        <path d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"/>
+                    </svg>
+                    Park Call
+                </button>
             </span>
             
             <?php
-            if ( ($ivr_park_call=='ENABLED') or ($ivr_park_call=='ENABLED_PARK_ONLY') )
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:all 0.3s ease;\" id=\"ivrParkControl\" onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\"><img src=\"./images/"._QXZ("vdc_LB_ivrparkcall_OFF.gif")."\" border=\"0\" alt=\"IVR Park Call\" style=\"display:block;width:100%;\" /></span>\n";}
-            else
-                {echo "<span id=\"ivrParkControl\"></span>\n";}
+            if (($ivr_park_call=='ENABLED') or ($ivr_park_call=='ENABLED_PARK_ONLY')) {
+                echo "<span id=\"ivrParkControl\">
+                    <button style=\"
+                        width:100%;
+                        padding:12px 16px;
+                        background:linear-gradient(135deg, #06b6d4, #0891b2);
+                        color:#fff;
+                        border:none;
+                        border-radius:10px;
+                        font-size:12px;
+                        font-weight:700;
+                        text-transform:uppercase;
+                        cursor:pointer;
+                        box-shadow:0 4px 12px rgba(6,182,212,0.4);
+                        transition:all 0.3s ease;
+                        margin-bottom:8px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        gap:8px;\"
+                        onmouseover=\"this.style.transform='translateY(-2px)';\"
+                        onmouseout=\"this.style.transform='translateY(0)';\">
+                        <svg style=\"width:18px;height:18px;fill:#fff;\" viewBox=\"0 0 24 24\">
+                            <path d=\"M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z\"/>
+                        </svg>
+                        IVR Park Call
+                    </button>
+                </span>\n";
+            } else {
+                echo "<span id=\"ivrParkControl\"></span>\n";
+            }
             ?>
             
-            <span style="
-                display:block;
-                margin-bottom:8px;
-                border-radius:8px;
-                overflow:hidden;
-                box-shadow:0 2px 6px rgba(139,92,246,0.3);
-                transition:all 0.3s ease;" 
-                id="XferControl"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 10px rgba(139,92,246,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 6px rgba(139,92,246,0.3)';">
-                <img src="./images/<?php echo _QXZ("vdc_LB_transferconf_OFF.gif"); ?>" border="0" alt="Transfer - Conference" style="display:block;width:100%;" />
+            <!-- Transfer/Conference Button -->
+            <span id="XferControl">
+                <button style="
+                    width:100%;
+                    padding:12px 16px;
+                    background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+                    color:#fff;
+                    border:none;
+                    border-radius:10px;
+                    font-size:12px;
+                    font-weight:700;
+                    text-transform:uppercase;
+                    cursor:pointer;
+                    box-shadow:0 4px 12px rgba(139,92,246,0.4);
+                    transition:all 0.3s ease;
+                    margin-bottom:8px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;"
+                    onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(139,92,246,0.5)';"
+                    onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(139,92,246,0.4)';">
+                    <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
+                        <path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+                    </svg>
+                    Transfer/Conference
+                </button>
             </span>
             
             <?php
-            if ($quick_transfer_button_enabled > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:all 0.3s ease;\" id=\"QuickXfer\" onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\"><img src=\"./images/"._QXZ("vdc_LB_quickxfer_OFF.gif")."\" border=\"0\" alt=\"Quick Transfer\" style=\"display:block;width:100%;\" /></span>\n";}
+            if ($quick_transfer_button_enabled > 0) {
+                echo "<span id=\"QuickXfer\">
+                    <button style=\"
+                        width:100%;
+                        padding:10px 16px;
+                        background:#6366f1;
+                        color:#fff;
+                        border:none;
+                        border-radius:10px;
+                        font-size:11px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.3s ease;
+                        margin-bottom:8px;\"
+                        onmouseover=\"this.style.background='#4f46e5';\"
+                        onmouseout=\"this.style.background='#6366f1';\">
+                        Quick Transfer
+                    </button>
+                </span>\n";
+            }
             
-            if ($custom_3way_button_transfer_enabled > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:all 0.3s ease;\" id=\"CustomXfer\" onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\"><img src=\"./images/"._QXZ("vdc_LB_customxfer_OFF.gif")."\" border=\"0\" alt=\"Custom Transfer\" style=\"display:block;width:100%;\" /></span>\n";}
+            if ($custom_3way_button_transfer_enabled > 0) {
+                echo "<span id=\"CustomXfer\">
+                    <button style=\"
+                        width:100%;
+                        padding:10px 16px;
+                        background:#8b5cf6;
+                        color:#fff;
+                        border:none;
+                        border-radius:10px;
+                        font-size:11px;
+                        font-weight:700;
+                        cursor:pointer;
+                        transition:all 0.3s ease;
+                        margin-bottom:8px;\"
+                        onmouseover=\"this.style.background='#7c3aed';\"
+                        onmouseout=\"this.style.background='#8b5cf6';\">
+                        Custom Transfer
+                    </button>
+                </span>\n";
+            }
             ?>
             
             <span id="ReQueueCall"></span>
-            
             <?php if ($call_requeue_button > 0) {echo "<div style=\"height:8px;\"></div>\n";} ?>
             
             <span id="SpacerSpanC"><div style="height:12px;"></div></span>
             
-            <!-- Hangup Control -->
-            <span style="
-                display:block;
-                margin-bottom:12px;
-                border-radius:8px;
-                overflow:hidden;
-                background:#fecaca;
-                box-shadow:0 4px 12px rgba(239,68,68,0.4);
-                transition:all 0.3s ease;<?php echo $agent_hide_hangup_ACTIVE_style ?>" 
-                id="HangupControl"
-                onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.5)';"
-                onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';">
-                <img src="./images/<?php echo _QXZ("vdc_LB_hangupcustomer_OFF.gif"); ?>" border="0" alt="Hangup Customer" style="display:block;width:100%;" />
+            <!-- Hangup Customer Button -->
+            <span id="HangupControl">
+                <button style="
+                    width:100%;
+                    padding:14px 16px;
+                    background:linear-gradient(135deg, #ef4444, #b91c1c);
+                    color:#fff;
+                    border:none;
+                    border-radius:10px;
+                    font-size:13px;
+                    font-weight:800;
+                    text-transform:uppercase;
+                    cursor:pointer;
+                    box-shadow:0 6px 16px rgba(239,68,68,0.5);
+                    transition:all 0.3s ease;
+                    margin-bottom:12px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;<?php echo $agent_hide_hangup_ACTIVE_style ?>"
+                    onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 20px rgba(239,68,68,0.6)';"
+                    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.5)';">
+                    <svg style="width:20px;height:20px;fill:#fff;" viewBox="0 0 24 24">
+                        <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/>
+                    </svg>
+                    Hangup Customer
+                </button>
             </span>
             
             <span id="SpacerSpanD"><div style="height:12px;"></div></span>
             
             <!-- DTMF Control -->
             <div class="text_input" id="SendDTMFdiv" style="
-                padding:12px;
+                padding:14px;
                 background:#fff;
-                border-radius:8px;
+                border-radius:10px;
                 border:2px solid #e2e8f0;
-                box-shadow:0 2px 6px rgba(0,0,0,0.06);">
-                <span id="SendDTMF" style="display:flex;flex-direction:column;gap:8px;">
+                box-shadow:0 3px 10px rgba(0,0,0,0.08);">
+                <span id="SendDTMF" style="display:flex;flex-direction:column;gap:10px;">
+                    <label style="
+                        font-size:10px;
+                        color:#64748b;
+                        font-weight:700;
+                        text-transform:uppercase;
+                        letter-spacing:0.5px;">
+                        Send DTMF Tones
+                    </label>
+                    <input type="text" size="5" name="conf_dtmf" class="cust_form" value="" maxlength="50" style="
+                        width:100%;
+                        padding:10px;
+                        border:2px solid #cbd5e1;
+                        border-radius:8px;
+                        font-size:14px;
+                        text-align:center;
+                        font-weight:600;"
+                        placeholder="Enter digits" />
                     <a href="#" onclick="SendConfDTMF(session_id,'YES');return false;" style="
                         display:flex;
                         align-items:center;
                         justify-content:center;
-                        padding:8px;
-                        background:#0ea5e9;
+                        gap:8px;
+                        padding:10px;
+                        background:linear-gradient(135deg, #0ea5e9, #0284c7);
                         color:#fff;
                         text-decoration:none;
-                        border-radius:6px;
-                        font-size:11px;
-                        font-weight:600;
+                        border-radius:8px;
+                        font-size:12px;
+                        font-weight:700;
+                        text-transform:uppercase;
                         transition:all 0.3s ease;"
-                        onmouseover="this.style.background='#0284c7';"
-                        onmouseout="this.style.background='#0ea5e9';">
-                        📞 Send DTMF
+                        onmouseover="this.style.background='linear-gradient(135deg, #0284c7, #0369a1)';"
+                        onmouseout="this.style.background='linear-gradient(135deg, #0ea5e9, #0284c7)';">
+                        <svg style="width:16px;height:16px;fill:#fff;" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        Send DTMF
                     </a>
-                    <input type="text" size="5" name="conf_dtmf" class="cust_form" value="" maxlength="50" style="
-                        width:100%;
-                        padding:8px;
-                        border:1px solid #cbd5e1;
-                        border-radius:6px;
-                        font-size:13px;
-                        text-align:center;"
-                        placeholder="Enter digits" />
                 </span>
             </div>
-            </right>
+            </center>
         </td>
         
         <!-- Main Content Column -->
@@ -24421,6 +24689,7 @@ $zi=2;
             <input type="hidden" name="email_row_id" id="email_row_id" value="" />
             <input type="hidden" name="chat_id" id="chat_id" value="" />
             <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
+
 
 
 <!-- ZZZZZZZZZZZZ  customer info -->
