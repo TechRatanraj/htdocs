@@ -24103,25 +24103,168 @@ $zi=2;
 
 
 
-
-
-
-<!-- Modern Left Sidebar Panel -->
-<div id="MainPanel" style="
-    position:fixed;
-    left:0;
-    top:120px;
-    width:200px;
-    height:calc(100vh - 120px);
-    background:#fff;
-    box-shadow:2px 0 12px rgba(0,0,0,0.08);
-    overflow-y:auto;
-    overflow-x:hidden;
-    z-index:<?php $zi++; echo $zi ?>;
-    padding:20px 15px;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+<!-- Modern Left Sidebar Panel - Compatible Version -->
+<span style="position:absolute;left:0px;top:46px;z-index:<?php $zi++; echo $zi ?>;" id="MainPanel">
+    <div style="
+        width:180px;
+        background:#fff;
+        box-shadow:2px 0 8px rgba(0,0,0,0.08);
+        padding:15px 10px;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+        border-radius:0 8px 8px 0;">
+        
+        <!-- Status Section -->
+        <div style="
+            margin-bottom:15px;
+            padding:10px;
+            background:#f0f9ff;
+            border-radius:6px;
+            border-left:3px solid #0ea5e9;">
+            <font class="body_text" style="font-size:10px;color:#64748b;font-weight:600;display:block;margin-bottom:5px;">STATUS:</font>
+            <span id="MainStatuSSpan" style="font-size:12px;font-weight:600;color:#0f172a;"></span>
+            <span id="post_phone_time_diff_span"><b><font color="red"><span id="post_phone_time_diff_span_contents"></span></font></b></span>
+            <span id="timer_alt_display"></span>
+            <span id="manual_auto_next_display"></span>
+        </div>
+        
+        <!-- Dial Control -->
+        <center>
+        <span style="background-color: #CCFFCC;border-radius:8px;display:block;margin-bottom:12px;" id="DiaLControl">
+            <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');">
+                <img src="./images/<?php echo _QXZ("vdc_LB_dialnextnumber_OFF.gif"); ?>" border="0" alt="Dial Next Number" style="display:block;border-radius:6px;" />
+            </a>
+        </span>
+        
+        <span id="ManualQueueNotice"></span>
+        <span id="ManualQueueChoice"></span>
+        
+        <!-- Checkboxes with modern styling -->
+        <div style="text-align:left;padding:10px;background:#f8fafc;border-radius:6px;margin-bottom:12px;">
+            <span id="DiaLLeaDPrevieW">
+                <font class="preview_text" style="font-size:11px;">
+                    <input type="checkbox" name="LeadPreview" size="1" value="0" style="margin-right:5px;" />
+                    <?php echo _QXZ("LEAD PREVIEW"); ?>
+                </font><br />
+            </span>
+            <span id="DiaLDiaLAltPhonE">
+                <font class="preview_text" style="font-size:11px;">
+                    <input type="checkbox" name="DiaLAltPhonE" size="1" value="0" <?php echo $alt_phone_selected ?> style="margin-right:5px;" />
+                    <?php echo _QXZ("ALT PHONE DIAL"); ?>
+                </font><br />
+            </span>
+        </div>
+        
+        <font class="skb_text">
+            <span id="NexTCalLPausE">
+                <a href="#" onclick="next_call_pause_click();return false;" style="
+                    display:inline-block;
+                    padding:6px 12px;
+                    background:#667eea;
+                    color:#fff;
+                    text-decoration:none;
+                    border-radius:6px;
+                    font-size:11px;
+                    margin-bottom:12px;">
+                    <?php echo _QXZ("Next Call Pause"); ?>
+                </a>
+            </span>
+        </font>
+        <br />
+        
+        <!-- Recording Section -->
+        <div style="padding:10px;background:#fef3c7;border-radius:6px;margin-bottom:12px;border-left:3px solid #f59e0b;">
+            <font class="body_text" style="font-size:10px;color:#92400e;font-weight:600;">
+                <?php echo _QXZ("RECORDING FILE:"); ?>
+            </font><br />
+            <font class="body_tiny"><span id="RecorDingFilename"></span></font><br />
+            <font class="body_text" style="font-size:10px;color:#92400e;">
+                <?php echo _QXZ("RECORD ID:"); ?>
+            </font>
+            <font class="body_small"><span id="RecorDID"></span></font>
+        </div>
+        
+        <!-- Recording Control -->
+        <span style="background-color: <?php echo $MAIN_COLOR ?>;display:block;margin-bottom:10px;border-radius:6px;" id="RecorDControl">
+            <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;">
+                <img src="./images/<?php echo _QXZ("$start_recording_GIF"); ?>" border="0" alt="Start Recording" style="border-radius:6px;" />
+            </a>
+        </span>
+        
+        <span style="background-color: <?php echo $MAIN_COLOR ?>" id="RecorDMute"></span>
+        
+        <?php
+        if ($SSstereo_recording > 0)
+            {echo "<span style=\"background-color:$MAIN_COLOR;display:block;margin-bottom:10px;\" id=\"StRecorDControl\"><img src=\"./images/"._QXZ("$STstart_recording_GIF_off")."\" border=\"0\" alt=\"Start Stereo Recording\" style=\"border-radius:6px;\" /></span>";}
+        else
+            {echo "<span style=\"background-color:$MAIN_COLOR\" id=\"StRecorDControl\"></span>";}
+        
+        if (!preg_match("/NOGAP/",$SSrecording_buttons))
+            {echo "<span id=\"SpacerSpanA\"><div style=\"height:10px;\"></div></span>\n";}
+        
+        if ($SSenable_first_webform > 0)
+            {echo "<span style=\"background-color: #FFFFFF;display:block;margin-bottom:8px;border-radius:6px;\" id=\"WebFormSpan\"><img src=\"./images/"._QXZ("vdc_LB_webform_OFF.gif")."\" border=\"0\" alt=\"Web Form\" style=\"border-radius:6px;\" /></span>\n";}
+        
+        if ($enable_second_webform > 0)
+            {echo "<span style=\"background-color: #FFFFFF;display:block;margin-bottom:8px;border-radius:6px;\" id=\"WebFormSpanTwo\"><img src=\"./images/"._QXZ("vdc_LB_webform_two_OFF.gif")."\" border=\"0\" alt=\"Web Form 2\" style=\"border-radius:6px;\" /></span>\n";}
+        
+        if ($enable_third_webform > 0)
+            {echo "<span style=\"background-color: #FFFFFF;display:block;margin-bottom:8px;border-radius:6px;\" id=\"WebFormSpanThree\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" style=\"border-radius:6px;\" /></span>\n";}
+        ?>
+        
+        <font class="body_small_bold"><span id="ParkCounterSpan"> &nbsp; </span></font><br />
+        
+        <!-- Action Buttons -->
+        <span style="background-color: <?php echo $MAIN_COLOR ?>;display:block;margin-bottom:8px;border-radius:6px;" id="ParkControl">
+            <img src="./images/<?php echo _QXZ("vdc_LB_parkcall_OFF.gif"); ?>" border="0" alt="Park Call" style="border-radius:6px;" />
+        </span>
+        
+        <?php
+        if ( ($ivr_park_call=='ENABLED') or ($ivr_park_call=='ENABLED_PARK_ONLY') )
+            {echo "<span style=\"background-color: $MAIN_COLOR;display:block;margin-bottom:8px;border-radius:6px;\" id=\"ivrParkControl\"><img src=\"./images/"._QXZ("vdc_LB_ivrparkcall_OFF.gif")."\" border=\"0\" alt=\"IVR Park Call\" style=\"border-radius:6px;\" /></span>\n";}
+        else
+            {echo "<span style=\"background-color: $MAIN_COLOR\" id=\"ivrParkControl\"></span>\n";}
+        ?>
+        
+        <span style="background-color: <?php echo $MAIN_COLOR ?>;display:block;margin-bottom:8px;border-radius:6px;" id="XferControl">
+            <img src="./images/<?php echo _QXZ("vdc_LB_transferconf_OFF.gif"); ?>" border="0" alt="Transfer - Conference" style="border-radius:6px;" />
+        </span>
+        
+        <?php
+        if ($quick_transfer_button_enabled > 0)
+            {echo "<span style=\"background-color: $MAIN_COLOR;display:block;margin-bottom:8px;border-radius:6px;\" id=\"QuickXfer\"><img src=\"./images/"._QXZ("vdc_LB_quickxfer_OFF.gif")."\" border=\"0\" alt=\"Quick Transfer\" style=\"border-radius:6px;\" /></span>\n";}
+        
+        if ($custom_3way_button_transfer_enabled > 0)
+            {echo "<span style=\"background-color: $MAIN_COLOR;display:block;margin-bottom:8px;border-radius:6px;\" id=\"CustomXfer\"><img src=\"./images/"._QXZ("vdc_LB_customxfer_OFF.gif")."\" border=\"0\" alt=\"Custom Transfer\" style=\"border-radius:6px;\" /></span>\n";}
+        ?>
+        
+        <span id="ReQueueCall"></span>
+        
+        <?php if ($call_requeue_button > 0) {echo "<br />\n";} ?>
+        
+        <span id="SpacerSpanC"><div style="height:12px;"></div></span>
+        
+        <!-- Hangup Button -->
+        <span style="background-color: #FFCCFF<?php echo $agent_hide_hangup_ACTIVE_style ?>;display:block;margin-bottom:10px;border-radius:6px;box-shadow:0 2px 6px rgba(239,68,68,0.2);" id="HangupControl">
+            <img src="./images/<?php echo _QXZ("vdc_LB_hangupcustomer_OFF.gif"); ?>" border="0" alt="Hangup Customer" style="border-radius:6px;" />
+        </span>
+        
+        <span id="SpacerSpanD"><div style="height:10px;"></div></span>
+        
+        <!-- DTMF Control -->
+        <div class="text_input" id="SendDTMFdiv" style="padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">
+            <span style="background-color: <?php echo $MAIN_COLOR ?>" id="SendDTMF">
+                <a href="#" onclick="SendConfDTMF(session_id,'YES');return false;">
+                    <img src="./images/<?php echo _QXZ("vdc_LB_senddtmf.gif"); ?>" border="0" alt="Send DTMF" align="bottom" style="vertical-align:middle;" />
+                </a>
+                <input type="text" size="5" name="conf_dtmf" class="cust_form" value="" maxlength="50" style="padding:4px;border:1px solid #cbd5e1;border-radius:4px;margin-left:5px;" />
+            </span>
+        </div>
+        
+        </center>
+        <span id="busycallsdebug"></span>
+    </div>
     
-    <!-- Hidden Inputs -->
+    <!-- Hidden inputs moved to the main section where they belong -->
     <input type="hidden" name="lead_id" id="lead_id" value="" />
     <input type="hidden" name="list_id" id="list_id" value="" />
     <input type="hidden" name="entry_list_id" id="entry_list_id" value="" />
@@ -24140,339 +24283,10 @@ $zi=2;
     <input type="hidden" name="email_row_id" id="email_row_id" value="" />
     <input type="hidden" name="chat_id" id="chat_id" value="" />
     <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
-    
-    <!-- Status Section -->
-    <div style="
-        margin-bottom:20px;
-        padding:12px;
-        background:linear-gradient(135deg, #f0f9ff, #e0f2fe);
-        border-radius:8px;
-        border-left:4px solid #0ea5e9;">
-        <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
-            Status
-        </div>
-        <div id="MainStatuSSpan" style="font-size:13px;font-weight:600;color:#0f172a;"></div>
-        <span id="post_phone_time_diff_span"><span id="post_phone_time_diff_span_contents" style="color:#ef4444;font-weight:600;"></span></span>
-        <div id="timer_alt_display" style="font-size:12px;color:#475569;margin-top:5px;"></div>
-        <div id="manual_auto_next_display" style="font-size:12px;color:#475569;"></div>
-    </div>
-    
-    <!-- Dial Control Button -->
-    <div style="margin-bottom:15px;">
-        <span id="DiaLControl">
-            <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');" style="
-                display:block;
-                padding:12px;
-                background:linear-gradient(135deg, #10b981, #059669);
-                color:#fff;
-                text-align:center;
-                border-radius:8px;
-                text-decoration:none;
-                font-size:13px;
-                font-weight:600;
-                box-shadow:0 2px 8px rgba(16,185,129,0.3);
-                transition:all 0.3s ease;"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16,185,129,0.3)';">
-                📞 Dial Next Number
-            </a>
-        </span>
-    </div>
-    
-    <!-- Manual Queue Section -->
-    <div id="ManualQueueNotice" style="margin-bottom:10px;font-size:12px;color:#475569;"></div>
-    <div id="ManualQueueChoice" style="margin-bottom:15px;"></div>
-    
-    <!-- Options Checkboxes -->
-    <div style="margin-bottom:15px;padding:12px;background:#f8fafc;border-radius:6px;">
-        <div id="DiaLLeaDPrevieW" style="margin-bottom:8px;">
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#475569;">
-                <input type="checkbox" name="LeadPreview" value="0" style="cursor:pointer;width:16px;height:16px;" />
-                <span style="font-weight:500;">Lead Preview</span>
-            </label>
-        </div>
-        <div id="DiaLDiaLAltPhonE">
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#475569;">
-                <input type="checkbox" name="DiaLAltPhonE" value="0" <?php echo $alt_phone_selected ?> style="cursor:pointer;width:16px;height:16px;" />
-                <span style="font-weight:500;">Alt Phone Dial</span>
-            </label>
-        </div>
-    </div>
-    
-    <!-- Next Call Pause Link -->
-    <div id="NexTCalLPausE" style="margin-bottom:15px;text-align:center;">
-        <a href="#" onclick="next_call_pause_click();return false;" style="
-            color:#667eea;
-            text-decoration:none;
-            font-size:12px;
-            font-weight:600;
-            padding:6px 12px;
-            border:1px solid #667eea;
-            border-radius:6px;
-            display:inline-block;
-            transition:all 0.3s ease;"
-            onmouseover="this.style.background='#667eea';this.style.color='#fff';"
-            onmouseout="this.style.background='transparent';this.style.color='#667eea';">
-            ⏸ Next Call Pause
-        </a>
-    </div>
-    
-    <!-- Recording Information -->
-    <div style="
-        margin-bottom:15px;
-        padding:12px;
-        background:#fef3c7;
-        border-radius:8px;
-        border-left:4px solid #f59e0b;">
-        <div style="font-size:11px;color:#92400e;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">
-            Recording File
-        </div>
-        <div id="RecorDingFilename" style="font-size:11px;color:#78350f;word-break:break-all;margin-bottom:8px;"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:11px;color:#92400e;font-weight:600;">Record ID:</span>
-            <span id="RecorDID" style="font-size:12px;color:#78350f;font-weight:600;"></span>
-        </div>
-    </div>
-    
-    <!-- Recording Controls -->
-    <div style="margin-bottom:15px;">
-        <span id="RecorDControl">
-            <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;" style="
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                gap:8px;
-                padding:10px;
-                background:#ef4444;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:12px;
-                font-weight:600;
-                transition:all 0.3s ease;"
-                onmouseover="this.style.background='#dc2626';"
-                onmouseout="this.style.background='#ef4444';">
-                ⏺ Start Recording
-            </a>
-        </span>
-    </div>
-    
-    <div id="RecorDMute" style="margin-bottom:10px;"></div>
-    <div id="StRecorDControl" style="margin-bottom:10px;"></div>
-    <div id="SpacerSpanA" style="height:10px;"></div>
-    
-    <!-- Web Form Buttons -->
-    <?php if ($SSenable_first_webform > 0) { ?>
-    <div id="WebFormSpan" style="margin-bottom:10px;">
-        <button style="
-            width:100%;
-            padding:10px;
-            background:#f3f4f6;
-            border:1px solid #d1d5db;
-            border-radius:6px;
-            font-size:12px;
-            font-weight:600;
-            color:#374151;
-            cursor:pointer;
-            transition:all 0.3s ease;"
-            onmouseover="this.style.background='#e5e7eb';"
-            onmouseout="this.style.background='#f3f4f6';">
-            📝 Web Form
-        </button>
-    </div>
-    <?php } ?>
-    
-    <?php if ($enable_second_webform > 0) { ?>
-    <div id="WebFormSpanTwo" style="margin-bottom:10px;">
-        <button style="
-            width:100%;
-            padding:10px;
-            background:#f3f4f6;
-            border:1px solid #d1d5db;
-            border-radius:6px;
-            font-size:12px;
-            font-weight:600;
-            color:#374151;
-            cursor:pointer;
-            transition:all 0.3s ease;"
-            onmouseover="this.style.background='#e5e7eb';"
-            onmouseout="this.style.background='#f3f4f6';">
-            📝 Web Form 2
-        </button>
-    </div>
-    <?php } ?>
-    
-    <?php if ($enable_third_webform > 0) { ?>
-    <div id="WebFormSpanThree" style="margin-bottom:10px;">
-        <button style="
-            width:100%;
-            padding:10px;
-            background:#f3f4f6;
-            border:1px solid #d1d5db;
-            border-radius:6px;
-            font-size:12px;
-            font-weight:600;
-            color:#374151;
-            cursor:pointer;
-            transition:all 0.3s ease;"
-            onmouseover="this.style.background='#e5e7eb';"
-            onmouseout="this.style.background='#f3f4f6';">
-            📝 Web Form 3
-        </button>
-    </div>
-    <?php } ?>
-    
-    <!-- Park Counter -->
-    <div id="ParkCounterSpan" style="text-align:center;font-size:13px;font-weight:600;color:#0ea5e9;margin-bottom:10px;"></div>
-    
-    <!-- Action Buttons -->
-    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:15px;">
-        <span id="ParkControl">
-            <button style="
-                width:100%;
-                padding:10px;
-                background:#fbbf24;
-                color:#fff;
-                border:none;
-                border-radius:6px;
-                font-size:12px;
-                font-weight:600;
-                cursor:pointer;
-                transition:all 0.3s ease;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                gap:6px;"
-                onmouseover="this.style.background='#f59e0b';"
-                onmouseout="this.style.background='#fbbf24';">
-                🅿️ Park Call
-            </button>
-        </span>
-        
-        <span id="ivrParkControl"></span>
-        
-        <span id="XferControl">
-            <button style="
-                width:100%;
-                padding:10px;
-                background:#8b5cf6;
-                color:#fff;
-                border:none;
-                border-radius:6px;
-                font-size:12px;
-                font-weight:600;
-                cursor:pointer;
-                transition:all 0.3s ease;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                gap:6px;"
-                onmouseover="this.style.background='#7c3aed';"
-                onmouseout="this.style.background='#8b5cf6';">
-                🔄 Transfer/Conference
-            </button>
-        </span>
-        
-        <span id="QuickXfer"></span>
-        <span id="CustomXfer"></span>
-        <span id="ReQueueCall"></span>
-    </div>
-    
-    <div id="SpacerSpanC" style="height:15px;"></div>
-    
-    <!-- Hangup Control -->
-    <div style="margin-bottom:15px;">
-        <span id="HangupControl">
-            <button style="
-                width:100%;
-                padding:12px;
-                background:#ef4444;
-                color:#fff;
-                border:none;
-                border-radius:6px;
-                font-size:13px;
-                font-weight:600;
-                cursor:pointer;
-                transition:all 0.3s ease;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                gap:6px;
-                box-shadow:0 2px 8px rgba(239,68,68,0.3);"
-                onmouseover="this.style.background='#dc2626';this.style.transform='scale(1.02)';"
-                onmouseout="this.style.background='#ef4444';this.style.transform='scale(1)';">
-                📞 Hangup Customer
-            </button>
-        </span>
-    </div>
-    
-    <div id="SpacerSpanD" style="height:15px;"></div>
-    
-    <!-- DTMF Control -->
-    <div id="SendDTMFdiv" style="
-        padding:12px;
-        background:#f8fafc;
-        border-radius:6px;
-        border:1px solid #e2e8f0;">
-        <label style="font-size:11px;color:#64748b;font-weight:600;display:block;margin-bottom:8px;">
-            Send DTMF
-        </label>
-        <div style="display:flex;gap:8px;">
-            <input type="text" name="conf_dtmf" maxlength="50" style="
-                flex:1;
-                padding:8px;
-                border:1px solid #cbd5e1;
-                border-radius:4px;
-                font-size:13px;"
-                placeholder="Enter digits" />
-            <span id="SendDTMF">
-                <a href="#" onclick="SendConfDTMF(session_id,'YES');return false;" style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    padding:8px 12px;
-                    background:#0ea5e9;
-                    color:#fff;
-                    text-decoration:none;
-                    border-radius:4px;
-                    font-size:12px;
-                    font-weight:600;
-                    white-space:nowrap;
-                    transition:all 0.3s ease;"
-                    onmouseover="this.style.background='#0284c7';"
-                    onmouseout="this.style.background='#0ea5e9';">
-                    Send
-                </a>
-            </span>
-        </div>
-    </div>
-    
-    <div id="busycallsdebug" style="margin-top:15px;font-size:11px;color:#64748b;"></div>
-</div>
+</span>
 
-<!-- Adjust main content to account for sidebar -->
-<style>
-    body {
-        margin-left: 200px;
-    }
-    
-    #MainPanel::-webkit-scrollbar {
-        width: 6px;
-    }
-    
-    #MainPanel::-webkit-scrollbar-track {
-        background: #f1f5f9;
-    }
-    
-    #MainPanel::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 3px;
-    }
-    
-    #MainPanel::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-    }
-</style>
+
+
 
 
 <!-- ZZZZZZZZZZZZ  customer info -->
