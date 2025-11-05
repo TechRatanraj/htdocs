@@ -25300,51 +25300,335 @@ $zi=2;
 <span style="display:none;" id="DiaLlOgButtonspan"></span>
 
 
-<span style="position:absolute;left:0px;top:<?php echo $PBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="MaiNfooterspan">
-<span id="blind_monitor_notice_span"><b><font color="red"> &nbsp; &nbsp; <span id="blind_monitor_notice_span_contents"></span></font></b></span>
-    <table bgcolor="<?php echo $MAIN_COLOR ?>" id="MaiNfooter" width="<?php echo $MNwidth ?>px"><tr height="32px"><td height="32px"><font face="Arial,Helvetica" size="1"><?php echo _QXZ("VERSION:"); ?> <?php echo $version ?> &nbsp; <?php echo _QXZ("BUILD:"); ?> <?php echo $build ?> &nbsp; &nbsp; <?php echo _QXZ("Server:"); ?> <?php echo $server_ip ?>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</font><br />
-	<font class="body_small">
-	<span id="busycallsdisplay"><a href="#"  onclick="conf_channels_detail('SHOW');"><?php echo _QXZ("Show conference call channel information"); ?></a>
-    <br /><br />&nbsp;</span></font></td><td align="right" height="32px">
-	</td></tr>
-    <tr><td colspan="3"><span id="outboundcallsspan"></span></td></tr>
-    <tr><td colspan="3"><font class="body_small"><span id="AgentAlertSpan">
-	<?php
-	if ( (preg_match('/ON/',$VU_alert_enabled)) and ($AgentAlert_allowed > 0) )
-		{echo "<a href=\"#\" onclick=\"alert_control('OFF');return false;\">"._QXZ("Alert is ON")."</a>";}
-	else
-		{echo "<a href=\"#\" onclick=\"alert_control('ON');return false;\">"._QXZ("Alert is OFF")."</a>";}
-	?>
-	</span></font></td></tr>
-    <tr><td colspan="3">
-	<font class="body_small">
-	</font>
-    </td></tr></table>
-</span>
+<!-- Modern Footer Section -->
+<div style="
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:linear-gradient(135deg, #1e293b, #334155);
+    border-top:3px solid #667eea;
+    box-shadow:0 -4px 12px rgba(0,0,0,0.15);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="MaiNfooterspan">
+    
+    <!-- Blind Monitor Notice -->
+    <span id="blind_monitor_notice_span">
+        <div id="blind_monitor_notice_span_contents" style="
+            padding:8px 20px;
+            background:#fee2e2;
+            border-left:4px solid #ef4444;
+            color:#991b1b;
+            font-weight:700;
+            font-size:12px;
+            display:none;">
+        </div>
+    </span>
+    
+    <div id="MaiNfooter" style="padding:12px 20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;">
+            
+            <!-- Left Section: Version Info -->
+            <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+                <div style="
+                    padding:6px 12px;
+                    background:rgba(255,255,255,0.1);
+                    border-radius:6px;
+                    font-size:11px;
+                    color:#e2e8f0;">
+                    <span style="color:#94a3b8;font-weight:600;"><?php echo _QXZ("VERSION:"); ?></span>
+                    <span style="color:#fff;font-weight:700;margin-left:4px;"><?php echo $version ?></span>
+                </div>
+                
+                <div style="
+                    padding:6px 12px;
+                    background:rgba(255,255,255,0.1);
+                    border-radius:6px;
+                    font-size:11px;
+                    color:#e2e8f0;">
+                    <span style="color:#94a3b8;font-weight:600;"><?php echo _QXZ("BUILD:"); ?></span>
+                    <span style="color:#fff;font-weight:700;margin-left:4px;"><?php echo $build ?></span>
+                </div>
+                
+                <div style="
+                    padding:6px 12px;
+                    background:rgba(255,255,255,0.1);
+                    border-radius:6px;
+                    font-size:11px;
+                    color:#e2e8f0;">
+                    <span style="color:#94a3b8;font-weight:600;"><?php echo _QXZ("Server:"); ?></span>
+                    <span style="color:#fff;font-weight:700;margin-left:4px;"><?php echo $server_ip ?></span>
+                </div>
+            </div>
+            
+            <!-- Right Section: Conference Info & Alert -->
+            <div style="display:flex;gap:15px;align-items:center;flex-wrap:wrap;">
+                <span id="busycallsdisplay">
+                    <a href="#" onclick="conf_channels_detail('SHOW');return false;" style="
+                        display:inline-flex;
+                        align-items:center;
+                        gap:6px;
+                        padding:6px 12px;
+                        background:rgba(14,165,233,0.2);
+                        color:#7dd3fc;
+                        text-decoration:none;
+                        border-radius:6px;
+                        font-size:11px;
+                        font-weight:600;
+                        transition:all 0.3s ease;"
+                        onmouseover="this.style.background='rgba(14,165,233,0.3)';"
+                        onmouseout="this.style.background='rgba(14,165,233,0.2)';">
+                        <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <?php echo _QXZ("Show conference call channel information"); ?>
+                    </a>
+                </span>
+                
+                <span id="AgentAlertSpan">
+                    <?php
+                    if ( (preg_match('/ON/',$VU_alert_enabled)) and ($AgentAlert_allowed > 0) ) {
+                        echo "<a href=\"#\" onclick=\"alert_control('OFF');return false;\" style=\"
+                            display:inline-flex;
+                            align-items:center;
+                            gap:6px;
+                            padding:6px 12px;
+                            background:rgba(16,185,129,0.2);
+                            color:#6ee7b7;
+                            text-decoration:none;
+                            border-radius:6px;
+                            font-size:11px;
+                            font-weight:700;
+                            transition:all 0.3s ease;\"
+                            onmouseover=\"this.style.background='rgba(16,185,129,0.3)';\"
+                            onmouseout=\"this.style.background='rgba(16,185,129,0.2)';\">
+                            <svg style=\"width:14px;height:14px;fill:currentColor;\" viewBox=\"0 0 24 24\">
+                                <path d=\"M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z\"/>
+                            </svg>
+                            "._QXZ("Alert is ON")."
+                        </a>";
+                    } else {
+                        echo "<a href=\"#\" onclick=\"alert_control('ON');return false;\" style=\"
+                            display:inline-flex;
+                            align-items:center;
+                            gap:6px;
+                            padding:6px 12px;
+                            background:rgba(148,163,184,0.2);
+                            color:#cbd5e1;
+                            text-decoration:none;
+                            border-radius:6px;
+                            font-size:11px;
+                            font-weight:700;
+                            transition:all 0.3s ease;\"
+                            onmouseover=\"this.style.background='rgba(148,163,184,0.3)';\"
+                            onmouseout=\"this.style.background='rgba(148,163,184,0.2)';\">
+                            <svg style=\"width:14px;height:14px;fill:currentColor;\" viewBox=\"0 0 24 24\">
+                                <path d=\"M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-11c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2v-5zm-2 6H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6zM4 2L2.28 3.72l2.81 2.81C3.77 8.07 3 9.96 3 12v5l-2 2v1h14.24l1.74 1.74L18.73 20 4 2z\"/>
+                            </svg>
+                            "._QXZ("Alert is OFF")."
+                        </a>";
+                    }
+                    ?>
+                </span>
+            </div>
+        </div>
+        
+        <!-- Outbound Calls Span -->
+        <div id="outboundcallsspan" style="margin-top:8px;color:#94a3b8;font-size:11px;"></div>
+    </div>
+</div>
 
-<span style="position:absolute;left:<?php echo $SCwidth ?>px;top:<?php echo $SCheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="SecondSspan"><font class="body_text"> <?php echo _QXZ("seconds:"); ?> 
-<span id="SecondSDISP"> &nbsp; &nbsp; </span></font>
-</font></span>
+<!-- Modern Seconds Display - Top Right -->
+<div style="
+    position:fixed;
+    right:20px;
+    top:<?php echo $SCheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    padding:8px 15px;
+    background:linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border:2px solid #0ea5e9;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(14,165,233,0.2);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="SecondSspan">
+    <div style="display:flex;align-items:center;gap:8px;">
+        <svg style="width:16px;height:16px;fill:#0ea5e9;" viewBox="0 0 24 24">
+            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+            <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+        <span style="font-size:11px;color:#0369a1;font-weight:600;"><?php echo _QXZ("seconds:"); ?></span>
+        <span id="SecondSDISP" style="
+            font-size:14px;
+            font-weight:800;
+            color:#0c4a6e;
+            min-width:50px;
+            text-align:center;
+            padding:2px 8px;
+            background:#fff;
+            border-radius:6px;">
+        </span>
+    </div>
+</div>
 
-<span style="position:absolute;left:5px;top:<?php echo $CBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="VolumeControlSpan"><span id="VolumeUpSpan"><img src="./images/<?php echo _QXZ("vdc_volume_up_off.gif"); ?>" border="0" /></span><br /><span id="VolumeDownSpan"><img src="./images/<?php echo _QXZ("vdc_volume_down_off.gif"); ?>" border="0" /></span>
-</font></span>
+<!-- Modern Volume Controls - Left Bottom (Above Footer) -->
+<div style="
+    position:fixed;
+    left:20px;
+    bottom:80px;
+    z-index:<?php $zi++; echo $zi ?>;
+    display:flex;
+    flex-direction:column;
+    gap:8px;"
+    id="VolumeControlSpan">
+    
+    <span id="VolumeUpSpan">
+        <button onclick="volume_control('UP');return false;" style="
+            width:45px;
+            height:45px;
+            background:linear-gradient(135deg, #10b981, #059669);
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            box-shadow:0 4px 12px rgba(16,185,129,0.3);
+            transition:all 0.3s ease;
+            display:flex;
+            align-items:center;
+            justify-content:center;"
+            onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';"
+            onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';">
+            <svg style="width:24px;height:24px;fill:#fff;" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+        </button>
+    </span>
+    
+    <span id="VolumeDownSpan">
+        <button onclick="volume_control('DOWN');return false;" style="
+            width:45px;
+            height:45px;
+            background:linear-gradient(135deg, #ef4444, #dc2626);
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            box-shadow:0 4px 12px rgba(239,68,68,0.3);
+            transition:all 0.3s ease;
+            display:flex;
+            align-items:center;
+            justify-content:center;"
+            onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.4)';"
+            onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.3)';">
+            <svg style="width:24px;height:24px;fill:#fff;" viewBox="0 0 24 24">
+                <path d="M7 9v6h4l5 5V4l-5 5H7z"/>
+            </svg>
+        </button>
+    </span>
+</div>
 
-<span style="position:absolute;left:35px;top:<?php echo $CBheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="AgentStatusSpan"><font class="body_text">
-<?php echo _QXZ("Your Status:"); ?> <span id="AgentStatusStatus"></span> <br /><?php echo _QXZ("Calls Dialing:"); ?> <span id="AgentStatusDiaLs"></span>
-</font></span>
+<!-- Modern Agent Status Display - Top Left -->
+<div style="
+    position:fixed;
+    left:20px;
+    top:<?php echo $CBheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    padding:12px 16px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    border-left:4px solid #667eea;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="AgentStatusSpan">
+    
+    <div style="margin-bottom:8px;">
+        <span style="font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;"><?php echo _QXZ("Your Status:"); ?></span>
+        <div id="AgentStatusStatus" style="
+            margin-top:4px;
+            padding:6px 12px;
+            background:linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius:6px;
+            font-size:12px;
+            font-weight:700;
+            color:#0369a1;
+            display:inline-block;">
+        </div>
+    </div>
+    
+    <div>
+        <span style="font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;"><?php echo _QXZ("Calls Dialing:"); ?></span>
+        <div id="AgentStatusDiaLs" style="
+            margin-top:4px;
+            padding:6px 12px;
+            background:linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius:6px;
+            font-size:14px;
+            font-weight:800;
+            color:#92400e;
+            display:inline-block;
+            min-width:40px;
+            text-align:center;">
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:<?php echo $PDwidth ?>px;top:<?php echo $AMheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="AgentMuteANDPreseTDiaL"><font class="body_text">
-	<?php
-	if ($PreseT_DiaL_LinKs)
-		{
-		echo "<a href=\"#\" onclick=\"DtMf_PreSet_a_DiaL('NO','YES');return false;\"><font class=\"body_tiny\">"._QXZ("D1 - DIAL")."</font></a>\n";
-        echo " &nbsp; \n";
-		echo "<a href=\"#\" onclick=\"DtMf_PreSet_b_DiaL('NO','YES');return false;\"><font class=\"body_tiny\">"._QXZ("D2 - DIAL")."</font></a>\n";
-		}
-    else {echo "<br />\n";}
-	?>
-    <br /><br /> &nbsp; <br />
-</font></span>
+<!-- Modern Preset Dial Buttons - Top Center -->
+<?php if ($PreseT_DiaL_LinKs) { ?>
+<div style="
+    position:fixed;
+    left:<?php echo $PDwidth ?>px;
+    top:<?php echo $AMheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    display:flex;
+    gap:10px;"
+    id="AgentMuteANDPreseTDiaL">
+    
+    <a href="#" onclick="DtMf_PreSet_a_DiaL('NO','YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        box-shadow:0 4px 12px rgba(139,92,246,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(139,92,246,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(139,92,246,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <?php echo _QXZ("D1 - DIAL"); ?>
+    </a>
+    
+    <a href="#" onclick="DtMf_PreSet_b_DiaL('NO','YES');return false;" style="
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:8px 16px;
+        background:linear-gradient(135deg, #06b6d4, #0891b2);
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-size:11px;
+        font-weight:700;
+        box-shadow:0 4px 12px rgba(6,182,212,0.3);
+        transition:all 0.3s ease;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(6,182,212,0.4)';"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(6,182,212,0.3)';">
+        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <?php echo _QXZ("D2 - DIAL"); ?>
+    </a>
+</div>
+<?php } else { ?>
+<span id="AgentMuteANDPreseTDiaL" style="display:none;"></span>
+<?php } ?>
+
 
 <span style="position:absolute;left:0px;top:<?php echo $CQheight ?>px;width:<?php echo $MNwidth ?>px;overflow:scroll;z-index:<?php $zi++; echo $zi ?>;background-color:<?php echo $SIDEBAR_COLOR ?>;" id="callsinqueuedisplay"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="5px" rowspan="2">&nbsp;</td><td align="center"><font class="body_text"><?php echo _QXZ("Calls In Queue:"); ?> &nbsp; </font></td></tr><tr><td align="center"><span id="callsinqueuelist">&nbsp;</span></td></tr></table></span>
 
