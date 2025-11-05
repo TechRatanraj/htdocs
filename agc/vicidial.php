@@ -24222,9 +24222,7 @@ $zi=2;
             <br />
             
             <!-- Recording Section -->
-            </center>
-            
-    
+
             <span id="RecorDMute" style="display:block;margin-bottom:8px;"></span>
             
             <?php
@@ -24245,9 +24243,7 @@ $zi=2;
             if ($enable_third_webform > 0)
                 {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanThree\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" style=\"display:block;width:100%;\" /></span>\n";}
             ?>
-            
-     
-            
+        
             <span style="
                 display:block;
                 margin-bottom:8px;
