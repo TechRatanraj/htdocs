@@ -25821,17 +25821,169 @@ $zi=2;
 </div>
 
 
-<!-- Modern WebPhone Trigger Tab - Right Side (Toggles visibility) -->
+<!-- Modern Agent View - Footer Section (Always Visible) -->
+<div style="
+    position:fixed;
+    bottom:50px;
+    right:20px;
+    z-index:<?php $zi++; echo $zi ?>;
+    padding:8px 15px;
+    background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(139,92,246,0.4);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="AgentViewLinkSpan">
+    
+    <span id="AgentViewLink">
+        <a href="#" onclick="AgentsViewOpen('AgentViewSpan','toggle');return false;" style="
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            color:#fff;
+            text-decoration:none;
+            font-size:11px;
+            font-weight:700;
+            transition:all 0.3s ease;">
+            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            <span id="agentViewButtonText"><?php echo _QXZ("Agents View +"); ?></span>
+        </a>
+    </span>
+</div>
+
+<!-- Modern Agent View Panel - Popup from Footer -->
+<div style="
+    position:fixed;
+    bottom:90px;
+    right:20px;
+    width:350px;
+    max-height:400px;
+    overflow-y:auto;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 -4px 20px rgba(0,0,0,0.2);
+    transform:translateY(100%) scale(0.95);
+    opacity:0;
+    pointer-events:none;
+    transition:all 0.3s ease;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="AgentViewSpan">
+    
+    <div style="padding:15px;border-bottom:2px solid #e2e8f0;background:linear-gradient(135deg, #f0f9ff, #e0f2fe);border-radius:10px 10px 0 0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <svg style="width:18px;height:18px;fill:#8b5cf6;" viewBox="0 0 24 24">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+                <span style="font-size:13px;font-weight:700;color:#1e293b;">
+                    <?php echo _QXZ("Other Agents Status:"); ?>
+                </span>
+            </div>
+            <button onclick="AgentsViewOpen('AgentViewSpan','close');return false;" style="
+                background:none;
+                border:none;
+                cursor:pointer;
+                padding:4px;
+                color:#64748b;
+                transition:all 0.3s ease;"
+                onmouseover="this.style.color='#ef4444';"
+                onmouseout="this.style.color='#64748b';">
+                <svg style="width:20px;height:20px;fill:currentColor;" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <div id="AgentViewStatus" style="padding:15px;">
+        <!-- Agent status content will be populated here -->
+    </div>
+</div>
+
+<!-- Modern WebPhone - Right Side Vertical Tab (Always Hidden by Default) -->
+<?php
+$zi++;
+if ($is_webphone=='Y') {
+    if ($webphone_location == 'bar') {
+        // Bar location - top bar style
+        echo "<div style=\"
+            position:fixed;
+            left:0;
+            top:46px;
+            width:" . $webphone_width . "px;
+            height:" . $webphone_height . "px;
+            overflow:hidden;
+            z-index:$zi;
+            background:#fff;
+            border-radius:0 10px 10px 0;
+            box-shadow:4px 0 15px rgba(0,0,0,0.1);
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;\"
+            id=\"webphoneSpan\">
+            <div id=\"webphonecontent\" style=\"overflow:hidden;padding:10px;\">$webphone_content</div>
+        </div>\n";
+    } else {
+        // Right side panel - hidden by default
+        echo "<div style=\"
+            position:fixed;
+            right:-450px;
+            top:50%;
+            transform:translateY(-50%);
+            width:420px;
+            max-height:650px;
+            overflow-y:auto;
+            z-index:$zi;
+            background:#fff;
+            border-radius:10px 0 0 10px;
+            box-shadow:-4px 0 20px rgba(0,0,0,0.2);
+            transition:all 0.4s ease;
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;\"
+            id=\"webphoneSpan\">
+            
+            <div style=\"padding:15px;border-bottom:2px solid #e2e8f0;background:linear-gradient(135deg, #f0f9ff, #e0f2fe);border-radius:10px 0 0 0;\">
+                <div style=\"display:flex;align-items:center;justify-content:space-between;\">
+                    <div style=\"display:flex;align-items:center;gap:8px;\">
+                        <svg style=\"width:18px;height:18px;fill:#8b5cf6;\" viewBox=\"0 0 24 24\">
+                            <path d=\"M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z\"/>
+                        </svg>
+                        <span style=\"font-size:13px;font-weight:700;color:#1e293b;\">
+                            " . _QXZ("Web Phone") . "
+                        </span>
+                    </div>
+                    <button onclick=\"webphoneOpen('webphoneSpan','close');return false;\" style=\"
+                        background:none;
+                        border:none;
+                        cursor:pointer;
+                        padding:4px;
+                        color:#64748b;
+                        transition:all 0.3s ease;\"
+                        onmouseover=\"this.style.color='#ef4444';\"
+                        onmouseout=\"this.style.color='#64748b';\">
+                        <svg style=\"width:20px;height:20px;fill:currentColor;\" viewBox=\"0 0 24 24\">
+                            <path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div id=\"webphonecontent\" style=\"padding:15px;\">$webphone_content</div>
+        </div>\n";
+    }
+}
+?>
+
+<!-- Modern WebPhone Trigger Tab - Right Side Vertical (Always Visible) -->
 <?php if ($is_webphone=='Y') { ?>
 <div style="
     position:fixed;
     right:0;
-    top:40%;
+    top:30%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;"
     id="webphoneLinkSpan">
     
-    <a href="#" onclick="webphoneOpen('webphoneSpan','open');return false;" 
+    <a href="#" onclick="webphoneOpen('webphoneSpan','toggle');return false;" 
        id="webphoneLink"
        style="
         display:flex;
@@ -25851,8 +26003,8 @@ $zi=2;
         transition:all 0.3s ease;
         gap:10px;
         font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-        onmouseover="this.style.right='0';this.style.boxShadow='-6px 0 16px rgba(139,92,246,0.5)';"
-        onmouseout="this.style.right='0';this.style.boxShadow='-4px 0 12px rgba(139,92,246,0.4)';">
+        onmouseover="this.style.boxShadow='-6px 0 16px rgba(139,92,246,0.5)';"
+        onmouseout="this.style.boxShadow='-4px 0 12px rgba(139,92,246,0.4)';">
         <svg style="width:20px;height:20px;fill:#fff;transform:rotate(90deg);" viewBox="0 0 24 24">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
         </svg>
@@ -25861,111 +26013,84 @@ $zi=2;
 </div>
 <?php } ?>
 
-<!-- Modern Agents View Trigger Link - Top Right -->
+<!-- Modern Dialable Leads Display -->
 <div style="
     position:fixed;
-    right:15px;
-    top:<?php echo $SLheight ?>px;
+    left:165px;
+    top:<?php echo $SDLheight ?>px;
     z-index:<?php $zi++; echo $zi ?>;
-    transition:all 0.3s ease;"
-    id="AgentViewLinkSpan">
-    
-    <span id="AgentViewLink">
-        <a href="#" onclick="AgentsViewOpen('AgentViewSpan','open');return false;" style="
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            padding:6px 12px;
-            background:linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color:#fff;
-            text-decoration:none;
-            border-radius:6px;
-            font-size:11px;
-            font-weight:700;
-            box-shadow:0 3px 10px rgba(139,92,246,0.3);
-            transition:all 0.3s ease;
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 14px rgba(139,92,246,0.4)';"
-            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 3px 10px rgba(139,92,246,0.3)';">
-            <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
-                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+    padding:6px 12px;
+    background:linear-gradient(135deg, #dbeafe, #bfdbfe);
+    border:2px solid #3b82f6;
+    border-radius:6px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="dialableleadsspan">
+    <?php 
+    if ($agent_display_dialable_leads > 0) {
+        echo "<div style=\"display:flex;align-items:center;gap:6px;\">
+            <svg style=\"width:14px;height:14px;fill:#1e40af;\" viewBox=\"0 0 24 24\">
+                <path d=\"M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 16H5V5h2v3h10V5h2v14z\"/>
             </svg>
-            <?php echo _QXZ("Agents View +"); ?>
-        </a>
-    </span>
+            <span style=\"font-size:11px;font-weight:700;color:#1e40af;\">"._QXZ("Dialable Leads:")."</span>
+        </div>";
+    }
+    ?>
 </div>
 
-<!-- Updated JavaScript for smooth slide-in animations with button hide/show -->
+<!-- JavaScript for Toggle Animations -->
 <script>
+// WebPhone toggle function
 function webphoneOpen(spanId, action) {
     var span = document.getElementById(spanId);
-    var webphoneTab = document.getElementById('webphoneLinkSpan');
-    var agentsViewButton = document.getElementById('AgentViewLinkSpan');
+    var isOpen = span.style.right === '0px';
     
-    if (action === 'open') {
-        // Slide in the webphone panel
+    if (action === 'toggle') {
+        if (isOpen) {
+            span.style.right = '-450px';
+        } else {
+            span.style.right = '0';
+        }
+    } else if (action === 'open') {
         span.style.right = '0';
-        
-        // Hide the webphone trigger tab
-        if (webphoneTab) {
-            webphoneTab.style.opacity = '0';
-            webphoneTab.style.pointerEvents = 'none';
-        }
-        
-        // Hide the Agents View button
-        if (agentsViewButton) {
-            agentsViewButton.style.opacity = '0';
-            agentsViewButton.style.pointerEvents = 'none';
-        }
-    } else {
-        // Slide out the webphone panel
-        span.style.right = '-400px';
-        
-        // Show the webphone trigger tab after a delay
-        setTimeout(function() {
-            if (webphoneTab) {
-                webphoneTab.style.opacity = '1';
-                webphoneTab.style.pointerEvents = 'auto';
-            }
-            
-            // Show the Agents View button
-            if (agentsViewButton) {
-                agentsViewButton.style.opacity = '1';
-                agentsViewButton.style.pointerEvents = 'auto';
-            }
-        }, 300);
+    } else if (action === 'close') {
+        span.style.right = '-450px';
     }
 }
 
+// Agents View toggle function
 function AgentsViewOpen(spanId, action) {
     var span = document.getElementById(spanId);
-    var agentsViewButton = document.getElementById('AgentViewLinkSpan');
+    var buttonText = document.getElementById('agentViewButtonText');
+    var isOpen = span.style.opacity === '1';
     
-    if (action === 'open') {
-        // Slide in the agents view panel
-        span.style.transform = 'translateX(0)';
-        
-        // Hide the Agents View button
-        if (agentsViewButton) {
-            agentsViewButton.style.opacity = '0';
-            agentsViewButton.style.pointerEvents = 'none';
+    if (action === 'toggle') {
+        if (isOpen) {
+            // Close
+            span.style.transform = 'translateY(100%) scale(0.95)';
+            span.style.opacity = '0';
+            span.style.pointerEvents = 'none';
+            if (buttonText) buttonText.textContent = '<?php echo _QXZ("Agents View +"); ?>';
+        } else {
+            // Open
+            span.style.transform = 'translateY(0) scale(1)';
+            span.style.opacity = '1';
+            span.style.pointerEvents = 'auto';
+            if (buttonText) buttonText.textContent = '<?php echo _QXZ("Agents View -"); ?>';
         }
-    } else {
-        // Slide out the agents view panel
-        span.style.transform = 'translateX(100%)';
-        
-        // Show the Agents View button after a delay
-        setTimeout(function() {
-            if (agentsViewButton) {
-                agentsViewButton.style.opacity = '1';
-                agentsViewButton.style.pointerEvents = 'auto';
-            }
-        }, 300);
+    } else if (action === 'open') {
+        span.style.transform = 'translateY(0) scale(1)';
+        span.style.opacity = '1';
+        span.style.pointerEvents = 'auto';
+        if (buttonText) buttonText.textContent = '<?php echo _QXZ("Agents View -"); ?>';
+    } else if (action === 'close') {
+        span.style.transform = 'translateY(100%) scale(0.95)';
+        span.style.opacity = '0';
+        span.style.pointerEvents = 'none';
+        if (buttonText) buttonText.textContent = '<?php echo _QXZ("Agents View +"); ?>';
     }
 }
 </script>
 
-<!--- Done --->
 
 <span style="position:absolute;left:<?php echo $MUwidth ?>px;top:<?php echo $SLheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="AgentMuteSpan"></span>
 
