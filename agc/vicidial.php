@@ -25060,38 +25060,17 @@ function ViewComments(state, type, id, refresh) {
         <div id="outboundcallsspan" style="margin-top:4px;color:#94a3b8;font-size:10px;"></div>
     </div>
 </div>
-
-<!-- Compact Seconds Display - Top Right -->
-<div style="
-    position:fixed;
-    right:15px;
-    top:<?php echo $SCheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    padding:6px 12px;
-    background:linear-gradient(135deg, #f0f9ff, #e0f2fe);
-    border:2px solid #0ea5e9;
-    border-radius:8px;
-    box-shadow:0 3px 10px rgba(14,165,233,0.2);
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="SecondSspan">
+<!-- Compact Seconds Display - Top Right (HIDDEN) -->
+<div style="display:none;position:fixed;right:15px;top:<?php echo $SCheight ?>px;z-index:<?php $zi++; echo $zi ?>;padding:6px 12px;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:2px solid #0ea5e9;border-radius:8px;box-shadow:0 3px 10px rgba(14,165,233,0.2);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" id="SecondSspan">
     <div style="display:flex;align-items:center;gap:6px;">
-        <svg style="width:14px;height:14px;fill:#0ea5e9;" viewBox="0 0 24 24">
-            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-            <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-        </svg>
+        <svg style="width:14px;height:14px;fill:#0ea5e9;" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
         <span style="font-size:10px;color:#0369a1;font-weight:600;"><?php echo _QXZ("seconds:"); ?></span>
-        <span id="SecondSDISP" style="
-            font-size:13px;
-            font-weight:800;
-            color:#0c4a6e;
-            min-width:45px;
-            text-align:center;
-            padding:2px 6px;
-            background:#fff;
-            border-radius:4px;">
-        </span>
+        <span id="SecondSDISP" style="font-size:13px;font-weight:800;color:#0c4a6e;min-width:45px;text-align:center;padding:2px 6px;background:#fff;border-radius:4px;"></span>
     </div>
 </div>
+
+
+
 
 <!-- Compact Volume Controls - Left Bottom -->
 <div style="
