@@ -26882,13 +26882,17 @@ function webphoneOpen(spanId, action) {
     </td></tr></table>
 </span>
 
-<!-- Modern New Manual Dial Box - Table-based with Modern Styling -->
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;display:none;" id="NeWManuaLDiaLBox">
+<!-- Modern New Manual Dial Box - WORKING VERSION with showDiv/hideDiv -->
+<span style="
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    z-index:9999;
+    display:none;"
+    id="NeWManuaLDiaLBox">
+    
     <table border="0" style="
-        position:fixed;
-        left:50%;
-        top:50%;
-        transform:translate(-50%, -50%);
         width:650px;
         max-height:95vh;
         background:#fff;
@@ -26896,8 +26900,8 @@ function webphoneOpen(spanId, action) {
         box-shadow:0 25px 50px rgba(0,0,0,0.3);
         overflow:hidden;
         font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-        z-index:9999;" 
-        cellpadding="0" cellspacing="0" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px">
+        border-collapse:collapse;" 
+        cellpadding="0" cellspacing="0">
         
         <!-- Modern Header -->
         <tr>
@@ -26946,14 +26950,14 @@ function webphoneOpen(spanId, action) {
                 </div>
                 
                 <!-- Form Fields Table -->
-                <table cellpadding="8" cellspacing="0" border="0" style="width:100%;">
+                <table cellpadding="8" cellspacing="0" border="0" style="width:100%;max-width:600px;margin:0 auto;">
                     
                     <?php 
                     if (!preg_match("/ONLY/",$manual_dial_lead_id)) {
                         ?>
                         <!-- Dial Code Row -->
                         <tr>
-                            <td align="right" style="width:35%;padding:8px;">
+                            <td align="right" style="width:40%;padding:8px;">
                                 <label style="font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;">
                                     <?php echo _QXZ("Dial Code:"); ?>
                                 </label>
@@ -26964,11 +26968,13 @@ function webphoneOpen(spanId, action) {
                                     border:2px solid #cbd5e1;
                                     border-radius:6px;
                                     font-size:13px;
-                                    width:120px;
-                                    transition:all 0.2s ease;"
+                                    width:100%;
+                                    max-width:120px;
+                                    transition:all 0.2s ease;
+                                    box-sizing:border-box;"
                                     onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';"
                                     onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none';" />
-                                <span style="font-size:9px;color:#64748b;margin-left:8px;"><?php echo _QXZ("(This is usually a 1 in the USA-Canada)"); ?></span>
+                                <span style="font-size:9px;color:#64748b;margin-left:8px;display:block;margin-top:4px;"><?php echo _QXZ("(This is usually a 1 in the USA-Canada)"); ?></span>
                             </td>
                         </tr>
                         
@@ -26985,11 +26991,12 @@ function webphoneOpen(spanId, action) {
                                     border:2px solid #cbd5e1;
                                     border-radius:6px;
                                     font-size:13px;
-                                    width:200px;
-                                    transition:all 0.2s ease;"
+                                    width:100%;
+                                    transition:all 0.2s ease;
+                                    box-sizing:border-box;"
                                     onfocus="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';"
                                     onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none';" />
-                                <span style="font-size:9px;color:#64748b;margin-left:8px;"><?php echo _QXZ("(digits only)"); ?></span>
+                                <span style="font-size:9px;color:#64748b;margin-left:8px;display:block;margin-top:4px;"><?php echo _QXZ("(digits only)"); ?></span>
                             </td>
                         </tr>
                         <?php
@@ -27020,11 +27027,13 @@ function webphoneOpen(spanId, action) {
                                     border:2px solid #cbd5e1;
                                     border-radius:6px;
                                     font-size:13px;
-                                    width:150px;
-                                    transition:all 0.2s ease;\"
+                                    width:100%;
+                                    max-width:150px;
+                                    transition:all 0.2s ease;
+                                    box-sizing:border-box;\"
                                     onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';\"
                                     onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />
-                                <span style=\"font-size:9px;color:#64748b;margin-left:8px;\">"._QXZ("(digits only)")."</span>
+                                <span style=\"font-size:9px;color:#64748b;margin-left:8px;display:block;margin-top:4px;\">"._QXZ("(digits only)")."</span>
                             </td>
                         </tr>
                         ";
@@ -27039,16 +27048,11 @@ function webphoneOpen(spanId, action) {
                     
                     <!-- Search Existing Leads -->
                     <tr>
-                        <td align="right" style="padding:8px;vertical-align:top;">
-                            <label style="font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;">
-                                <?php echo _QXZ("Search Existing Leads:"); ?>
-                            </label>
-                        </td>
-                        <td align="left" style="padding:8px;">
+                        <td colspan="2" style="padding:12px;">
                             <div style="padding:10px;background:#f0fdf4;border:2px solid #86efac;border-radius:6px;">
                                 <label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;">
                                     <input type="checkbox" name="LeadLookuP" id="LeadLookuP" size="1" value="0" <?php echo $LeadLookuPXtra ?> style="cursor:pointer;width:16px;height:16px;" />
-                                    <strong>Enable Search</strong>
+                                    <strong><?php echo _QXZ("Search Existing Leads"); ?></strong>
                                 </label>
                                 <div style="font-size:9px;color:#059669;margin-top:4px;margin-left:24px;">
                                     <?php echo _QXZ("(This option if checked will attempt to find the phone number in the system before inserting it as a new lead)"); ?>
@@ -27059,21 +27063,25 @@ function webphoneOpen(spanId, action) {
                     
                     <!-- Group Selection -->
                     <tr>
-                        <td align="left" colspan="2" style="padding:12px;">
+                        <td colspan="2" style="padding:12px;">
                             <div style="background:#f9fafb;border:2px solid #e5e7eb;border-radius:8px;padding:12px;font-size:11px;color:#475569;text-align:center;">
                                 <div style="font-weight:700;color:#1e293b;margin-bottom:10px;">📋 Group & List Selection</div>
-                                <span id="ManuaLDiaLGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLGrouP"></span>
-                                <br /><br />
-                                <span id="ManuaLDiaLInGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLInGrouP"></span>
-                                <br /><br />
-                                <span id="NoDiaLSelecteD"></span>
+                                <div style="margin-bottom:8px;">
+                                    <span id="ManuaLDiaLGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLGrouP"></span>
+                                </div>
+                                <div style="margin-bottom:8px;">
+                                    <span id="ManuaLDiaLInGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLInGrouP"></span>
+                                </div>
+                                <div>
+                                    <span id="NoDiaLSelecteD"></span>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     
                     <!-- Warning Banner -->
                     <tr>
-                        <td align="left" colspan="2" style="padding:12px;">
+                        <td colspan="2" style="padding:12px;">
                             <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:8px;padding:12px;font-size:10px;color:#92400e;line-height:1.6;text-align:left;">
                                 <strong>⚠️ Dial Override Information:</strong><br />
                                 <?php echo _QXZ("If you want to dial a number and have it NOT be added as a new lead, enter in the exact dialstring that you want to call in the Dial Override field below. To hangup this call you will have to open the CALLS IN THIS SESSION link at the bottom of the screen and hang it up by clicking on its channel link there."); ?>
@@ -27083,7 +27091,7 @@ function webphoneOpen(spanId, action) {
                     
                     <!-- Dial Override -->
                     <tr>
-                        <td align="right" style="padding:8px;vertical-align:top;">
+                        <td align="right" style="padding:8px;">
                             <label style="font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;">
                                 <?php echo _QXZ("Dial Override:"); ?>
                             </label>
@@ -27097,11 +27105,12 @@ function webphoneOpen(spanId, action) {
                                     border:2px solid #cbd5e1;
                                     border-radius:6px;
                                     font-size:13px;
-                                    width:250px;
-                                    transition:all 0.2s ease;\"
+                                    width:100%;
+                                    transition:all 0.2s ease;
+                                    box-sizing:border-box;\"
                                     onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';\"
                                     onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />
-                                <span style=\"font-size:9px;color:#64748b;margin-left:8px;\">"._QXZ("(digits only please)")."</span>
+                                <span style=\"font-size:9px;color:#64748b;margin-left:8px;display:block;margin-top:4px;\">"._QXZ("(digits only please)")."</span>
                                 ";
                             } else {
                                 echo "
@@ -27192,6 +27201,8 @@ function webphoneOpen(spanId, action) {
         </tr>
     </table>
 </span>
+
+
 
 
 
