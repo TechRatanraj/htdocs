@@ -27358,8 +27358,7 @@ function webphoneOpen(spanId, action) {
     </tr></table>
 </span>
 
-
-<!-- Modern New Manual Dial Box - FULLY UPDATED -->
+<!-- Modern New Manual Dial Box - COMPLETE WORKING VERSION -->
 <div style="
     position:fixed;
     left:50%;
@@ -27367,7 +27366,7 @@ function webphoneOpen(spanId, action) {
     transform:translate(-50%, -50%);
     width:650px;
     max-height:95vh;
-    z-index:<?php $zi++; echo $zi ?>;
+    z-index:9999;
     background:#fff;
     border-radius:12px;
     box-shadow:0 25px 50px rgba(0,0,0,0.3);
@@ -27375,7 +27374,8 @@ function webphoneOpen(spanId, action) {
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     visibility:hidden;
     opacity:0;
-    transition:all 0.3s ease;"
+    transition:all 0.3s ease;
+    display:none;"
     id="NeWManuaLDiaLBox">
     
     <!-- Header with Close Button -->
@@ -27642,60 +27642,94 @@ function webphoneOpen(spanId, action) {
     </div>
 </div>
 
-<!-- Dark Overlay for Modal -->
+<!-- Dark Overlay for Modal - FIXED -->
 <div style="
     position:fixed;
     left:0;
     top:0;
     width:100%;
     height:100%;
-    z-index:<?php $zi++; echo $zi ?>;
+    z-index:9998;
     background:rgba(0,0,0,0.5);
     visibility:hidden;
     opacity:0;
     transition:all 0.3s ease;
-    backdrop-filter:blur(4px);"
-    id="NeWManuaLDiaLBox_Overlay"
-    onclick="ManualDialHide();return false;"></div>
+    backdrop-filter:blur(4px);
+    pointer-events:none;"
+    id="NeWManuaLDiaLBox_Overlay"></div>
 
-<!-- JavaScript Functions -->
+<!-- FIXED JAVASCRIPT FUNCTIONS - Place at END of page -->
 <script>
-function ManualDialShow() {
+// Global functions for Manual Dial Modal
+window.ManualDialShow = function() {
     var modal = document.getElementById('NeWManuaLDiaLBox');
     var overlay = document.getElementById('NeWManuaLDiaLBox_Overlay');
     
     if (modal && overlay) {
-        modal.style.visibility = 'visible';
-        modal.style.opacity = '1';
-        overlay.style.visibility = 'visible';
-        overlay.style.opacity = '1';
+        // Show modal
+        modal.style.display = 'block';
+        setTimeout(function() {
+            modal.style.visibility = 'visible';
+            modal.style.opacity = '1';
+            overlay.style.visibility = 'visible';
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
+        }, 10);
+        
         document.body.style.overflow = 'hidden';
+        console.log('✓ Manual Dial Modal Opened');
+    } else {
+        console.error('✗ Modal elements not found');
+        console.error('Modal:', modal);
+        console.error('Overlay:', overlay);
     }
-}
+};
 
-function ManualDialHide() {
+window.ManualDialHide = function() {
     var modal = document.getElementById('NeWManuaLDiaLBox');
     var overlay = document.getElementById('NeWManuaLDiaLBox_Overlay');
     
     if (modal && overlay) {
+        // Hide modal
         modal.style.visibility = 'hidden';
         modal.style.opacity = '0';
         overlay.style.visibility = 'hidden';
         overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        
+        setTimeout(function() {
+            modal.style.display = 'none';
+        }, 300);
+        
         document.body.style.overflow = 'auto';
+        console.log('✓ Manual Dial Modal Closed');
     }
-}
+};
 
 // Prevent modal from closing when clicking inside
 document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('NeWManuaLDiaLBox');
+    var overlay = document.getElementById('NeWManuaLDiaLBox_Overlay');
+    
     if (modal) {
         modal.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     }
+    
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            ManualDialHide();
+        });
+    }
+    
+    console.log('✓ Manual Dial functions initialized');
 });
 </script>
+
+
+
+
 
 
 
