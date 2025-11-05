@@ -1542,7 +1542,7 @@ if ($relogin == 'YES') {
     echo "<div style=\"background:#fff;border-radius:12px;padding:40px;box-shadow:0 8px 32px rgba(0,0,0,0.2);\">\n";
     echo "<div style=\"display:flex;align-items:center;gap:20px;margin-bottom:30px;padding-bottom:30px;border-bottom:2px solid #f0f0f0;\">\n";
     echo "<img src=\"$selected_logo\" border=\"0\" height=\"50\" width=\"180\" alt=\"Agent Screen\" style=\"flex-shrink:0;\" />\n";
-    echo "<h1 style=\"margin:0;font-size:28px;color:#667eea;font-weight:700;\">"._QXZ("Re-Login")."</h1>\n";
+    echo "<h1 style=\"margin:0;font-size:28px;color:#667eea;font-weight:700;\">"._QXZ("Login")."</h1>\n";
     echo "</div>\n";
     
     if (preg_match("/^READONLY_PHONE$/",$hide_relogin_fields)) {
