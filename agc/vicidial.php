@@ -26883,24 +26883,20 @@ function webphoneOpen(spanId, action) {
 </span>
 
 
-
-
-
-
 <!-- ============================================ -->
-<!-- MODERN NEW MANUAL DIAL BOX - SIMPLE FIX -->
+<!-- MODERN NEW MANUAL DIAL BOX - MOBILE SIZE -->
 <!-- ============================================ -->
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NeWManuaLDiaLBox">
     <table border="0" bgcolor="#fff" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px" style="border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,0.3);overflow:hidden;">
         <tr><td style="padding:15px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-bottom:2px solid #0ea5e9;" colspan="2"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:13px;font-weight:700;color:#0c4a6e;">📞 <?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?></div><button onclick="hideDiv('NeWManuaLDiaLBox');return false;" style="background:none;border:none;cursor:pointer;font-size:24px;color:#ef4444;padding:0;font-weight:700;">×</button></div></td></tr>
-        <tr><td align="center" valign="top" style="padding:20px;">
+        <tr><td align="center" valign="top" style="padding:15px;overflow-y:auto;height:calc(<?php echo $WRheight ?>px - 60px);">
             
-            <div style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:2px solid #0ea5e9;border-radius:8px;padding:12px;margin-bottom:16px;font-size:11px;color:#0369a1;line-height:1.6;text-align:left;">
+            <div style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:2px solid #0ea5e9;border-radius:8px;padding:12px;margin-bottom:12px;font-size:11px;color:#0369a1;line-height:1.6;text-align:left;">
                 <strong><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?></strong><br /><br />
                 <?php if (!preg_match("/X/i",$manual_dial_prefix)) { echo "✓ " . _QXZ("Note: a dial prefix of %1s will be added to the beginning of this number",0,'',$manual_dial_prefix)."<br />"; } echo "✓ " . _QXZ("Note: all new manual dial leads will go into list %1s",0,'',$manual_dial_list_id); ?>
             </div>
 
-            <table style="width:100%;margin-bottom:16px;">
+            <table style="width:100%;margin-bottom:12px;">
                 <tr>
                 <?php if (!preg_match("/ONLY/",$manual_dial_lead_id)) { ?>
                     <td align="right" style="padding:8px;width:40%;"><label style="font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;"><?php echo _QXZ("Dial Code:"); ?></label></td>
@@ -26920,18 +26916,23 @@ function webphoneOpen(spanId, action) {
             <?php if (($manual_dial_lead_id=='Y') or ($manual_dial_lead_id=='ONLY')) { echo "<div style=\"margin-bottom:12px;\"><label style=\"font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;display:block;margin-bottom:6px;\">"._QXZ("Dial Lead ID:")."</label><input type=\"text\" size=\"10\" maxlength=\"10\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" value=\"\" style=\"padding:10px;border:2px solid #cbd5e1;border-radius:6px;font-size:13px;width:100%;box-sizing:border-box;\" onfocus=\"this.style.borderColor='#0ea5e9';\" onblur=\"this.style.borderColor='#cbd5e1';\" /><div style=\"font-size:9px;color:#64748b;margin-top:4px;\">"._QXZ("(digits only)")."</div></div>"; } else { echo "<input type=\"hidden\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" value=\"\" />"; } ?>
 
             <?php $LeadLookuPXtra=''; if ($manual_dial_search_checkbox == 'SELECTED_LOCK') { $LeadLookuPXtra = 'CHECKED DISABLED '; } if ($manual_dial_search_checkbox == 'UNSELECTED_LOCK') { $LeadLookuPXtra = 'DISABLED '; } ?>
-            <div style="padding:10px;background:#f0fdf4;border:2px solid #86efac;border-radius:6px;margin-bottom:12px;"><label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;"><input type="checkbox" name="LeadLookuP" id="LeadLookuP" size="1" value="0" <?php echo $LeadLookuPXtra ?> style="cursor:pointer;" /><strong><?php echo _QXZ("Search Existing Leads"); ?></strong></label><div style="font-size:9px;color:#059669;margin-top:6px;margin-left:24px;"><?php echo _QXZ("(This option if checked will attempt to find the phone number in the system before inserting it as a new lead)"); ?></div></div>
+            <div style="padding:10px;background:#f0fdf4;border:2px solid #86efac;border-radius:6px;margin-bottom:12px;"><label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;margin-bottom:4px;"><input type="checkbox" name="LeadLookuP" id="LeadLookuP" size="1" value="0" <?php echo $LeadLookuPXtra ?> style="cursor:pointer;" /><strong><?php echo _QXZ("Search Existing Leads"); ?></strong></label><div style="font-size:9px;color:#059669;margin-left:24px;"><?php echo _QXZ("(This option if checked will attempt to find the phone number in the system before inserting it as a new lead)"); ?></div></div>
 
             <div style="background:#f9fafb;border:2px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:12px;font-size:11px;color:#475569;text-align:center;"><div style="font-weight:700;color:#1e293b;margin-bottom:10px;">📋 Group & List Selection</div><span id="ManuaLDiaLGrouPSelecteD"></span> &nbsp; <span id="ManuaLDiaLGrouP"></span><br /><br /><span id="ManuaLDiaLInGrouPSelecteD"></span> &nbsp; <span id="ManuaLDiaLInGrouP"></span><br /><br /><span id="NoDiaLSelecteD"></span></div>
 
             <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:8px;padding:12px;margin-bottom:12px;font-size:10px;color:#92400e;line-height:1.6;"><strong>⚠️ Dial Override Information:</strong><br /><?php echo _QXZ("If you want to dial a number and have it NOT be added as a new lead, enter in the exact dialstring that you want to call in the Dial Override field below. To hangup this call you will have to open the CALLS IN THIS SESSION link at the bottom of the screen and hang it up by clicking on its channel link there."); ?></div>
 
-            <div style="margin-bottom:16px;"><label style="font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;display:block;margin-bottom:6px;"><?php echo _QXZ("Dial Override:"); ?></label><?php if ($manual_dial_override_field == 'ENABLED') { echo "<input type=\"text\" size=\"24\" maxlength=\"20\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" value=\"\" style=\"padding:10px;border:2px solid #cbd5e1;border-radius:6px;font-size:13px;width:100%;box-sizing:border-box;\" onfocus=\"this.style.borderColor='#0ea5e9';\" onblur=\"this.style.borderColor='#cbd5e1';\" /><div style=\"font-size:9px;color:#64748b;margin-top:4px;\">"._QXZ("(digits only please)")."</div>"; } else { echo "<input type=\"hidden\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" value=\"\" /><div style=\"padding:10px;background:#fee2e2;border:2px solid #ef4444;border-radius:6px;font-size:11px;color:#991b1b;font-weight:700;text-align:center;\">🔒 "._QXZ("DISABLED")."</div>"; } ?></div>
+            <table style="width:100%;margin-bottom:12px;">
+                <tr>
+                    <td align="right" style="padding:8px;width:40%;"><label style="font-size:11px;font-weight:700;color:#1e293b;text-transform:uppercase;"><?php echo _QXZ("Dial Override:"); ?></label></td>
+                    <td align="left" style="padding:8px;"><?php if ($manual_dial_override_field == 'ENABLED') { echo "<input type=\"text\" size=\"24\" maxlength=\"20\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" value=\"\" style=\"padding:10px;border:2px solid #cbd5e1;border-radius:6px;font-size:13px;width:100%;box-sizing:border-box;\" onfocus=\"this.style.borderColor='#0ea5e9';\" onblur=\"this.style.borderColor='#cbd5e1';\" /><div style=\"font-size:9px;color:#64748b;margin-top:4px;\">"._QXZ("(digits only please)")."</div>"; } else { echo "<input type=\"hidden\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" value=\"\" /><div style=\"padding:10px;background:#fee2e2;border:2px solid #ef4444;border-radius:6px;font-size:11px;color:#991b1b;font-weight:700;text-align:center;\">🔒 "._QXZ("DISABLED")."</div>"; } ?></td>
+                </tr>
+            </table>
 
-            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);">📞 <?php echo _QXZ("Dial Now"); ?></a>
-                <?php if ($manual_dial_preview > 0) { echo "<a href=\"#\" onclick=\"NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;\" style=\"display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);\">👁️ "._QXZ("Preview Call")."</a>"; } ?>
-                <a href="#" onclick="hideDiv('NeWManuaLDiaLBox');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#6b7280,#4b5563);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(107,114,128,0.3);">🚪 <?php echo _QXZ("Go Back"); ?></a>
+            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+                <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);">📞 <?php echo _QXZ("Dial Now"); ?></a>
+                <?php if ($manual_dial_preview > 0) { echo "<a href=\"#\" onclick=\"NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;\" style=\"display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);\">👁️ "._QXZ("Preview Call")."</a>"; } ?>
+                <a href="#" onclick="hideDiv('NeWManuaLDiaLBox');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:linear-gradient(135deg,#6b7280,#4b5563);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(107,114,128,0.3);">🚪 <?php echo _QXZ("Go Back"); ?></a>
             </div>
 
         </td></tr>
@@ -26939,19 +26940,25 @@ function webphoneOpen(spanId, action) {
 </span>
 
 <!-- ================================================== -->
-<!-- MODERN CLOSER INBOUND GROUP SELECTION BOX -->
+<!-- MODERN CLOSER INBOUND GROUP SELECTION BOX - MOBILE -->
 <!-- ================================================== -->
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CloserSelectBox">
     <table border="0" bgcolor="#fff" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #10b981;border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,0.3);overflow:hidden;">
         <tr><td style="padding:15px;background:linear-gradient(135deg,#10b981,#059669);border-bottom:2px solid #047857;" colspan="2"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:13px;font-weight:700;color:#fff;">✅ <?php echo _QXZ("CLOSER INBOUND GROUP SELECTION"); ?></div><button onclick="hideDiv('CloserSelectBox');return false;" style="background:none;border:none;cursor:pointer;font-size:24px;color:#fff;padding:0;font-weight:700;">×</button></div></td></tr>
-        <tr><td align="center" valign="top" style="padding:20px;text-align:center;">
+        <tr><td align="center" valign="top" style="padding:15px;text-align:center;overflow-y:auto;height:calc(<?php echo $WRheight ?>px - 60px);">
             <span id="CloserSelectContent" style="font-size:12px;font-weight:700;color:#047857;display:block;margin-bottom:12px;"><?php echo _QXZ("Closer Inbound Group Selection"); ?></span>
             <input type="hidden" name="CloserSelectList" id="CloserSelectList" />
-            <?php if (($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0)) { ?><div style="margin-bottom:16px;padding:10px;background:#fff;border:2px solid #86efac;border-radius:8px;"><label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;"><input type="checkbox" name="CloserSelectBlended" id="CloserSelectBlended" size="1" value="0" /><strong><?php echo _QXZ("BLENDED CALLING(outbound activated)"); ?></strong></label></div><?php } ?>
-            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><a href="#" onclick="CloserSelectContent_create('YES');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);"><?php echo _QXZ("RESET"); ?></a><a href="#" onclick="CloserSelect_submit('YES');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);"><?php echo _QXZ("SUBMIT"); ?></a></div>
+            <?php if (($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0)) { ?><div style="margin-bottom:12px;padding:10px;background:#fff;border:2px solid #86efac;border-radius:8px;"><label style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;"><input type="checkbox" name="CloserSelectBlended" id="CloserSelectBlended" size="1" value="0" /><strong><?php echo _QXZ("BLENDED CALLING(outbound activated)"); ?></strong></label></div><?php } ?>
+            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;"><a href="#" onclick="CloserSelectContent_create('YES');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);"><?php echo _QXZ("RESET"); ?></a><a href="#" onclick="CloserSelect_submit('YES');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);"><?php echo _QXZ("SUBMIT"); ?></a></div>
         </td></tr>
     </table>
 </span>
+
+
+
+
+
+
 
 
 
