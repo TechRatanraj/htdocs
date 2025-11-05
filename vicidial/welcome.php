@@ -6,7 +6,7 @@
 # CHANGELOG:
 # 141007-2140 - Finalized adding QXZ translation to all admin files
 # 161106-1920 - Changed to use newer design and dynamic links
-# 220228-1100 - Added allow_web_debug system setting
+# 220228-1109 - Added allow_web_debug system setting
 # 231119-1540 - Added HCI Screen link if hopper_hold_inserts are allowed on the system
 # 240615-1200 - Modernized UI with cxoTel design and improved UX
 
@@ -129,7 +129,11 @@ echo"
     --transition: all 0.3s ease;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -138,81 +142,279 @@ body {
     overflow: hidden;
 }
 
-.login-container { display: flex; height: 100vh; }
+.login-container {
+    display: flex;
+    height: 100vh;
+}
 
 .left-panel {
     flex: 1;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    color: var(--light-text); padding: 2rem; position: relative; overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--light-text);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
 }
+
 .left-panel::before {
-    content: ''; position: absolute; inset: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"none\"/><circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"rgba(255,255,255,0.1)\" stroke-width=\"0.5\" fill=\"none\"/></svg>') 0 0/100px 100px;
-    opacity: .3; z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"none\"/><circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"rgba(255,255,255,0.1)\" stroke-width=\"0.5\" fill=\"none\"/></svg>');
+    background-size: 100px 100px;
+    opacity: 0.3;
+    z-index: 1;
 }
-.left-content { text-align: center; z-index: 2; }
-.headphones-icon { font-size: 5rem; margin-bottom: 2rem; animation: pulse 2s infinite; }
-@keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
-.tagline { font-size: 1.8rem; font-weight: 300; margin-bottom: 2rem; letter-spacing: .5px; }
 
-.loading-dots { display:flex; justify-content:center; margin-top:2rem; }
-.dot { width:10px; height:10px; border-radius:50%; background:var(--light-text); margin:0 5px; animation:loading 1.5s infinite ease-in-out; }
-.dot:nth-child(1){animation-delay:-.32s} .dot:nth-child(2){animation-delay:-.16s}
-@keyframes loading { 0%,80%,100%{transform:scale(0);opacity:.5} 40%{transform:scale(1);opacity:1} }
+.left-content {
+    text-align: center;
+    z-index: 2;
+}
 
-.right-panel { flex:1; background:var(--accent-color); display:flex; flex-direction:column; justify-content:center; align-items:center; padding:2rem; }
-.logo-container { margin-bottom:2rem; }
-.logo { height:50px; width:auto; }
-.welcome-title { font-size:2.5rem; font-weight:600; margin-bottom:1rem; color:var(--text-color); }
-.access-prompt { font-size:1.1rem; margin-bottom:2.5rem; color:#666; }
+.headphones-icon {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
 
-.access-options { width:100%; max-width:400px; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.tagline {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5px;
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--light-text);
+    margin: 0 5px;
+    animation: loading 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loading {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.right-panel {
+    flex: 1;
+    background-color: var(--accent-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.logo-container {
+    margin-bottom: 2rem;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.access-prompt {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    color: #666;
+}
+
+.access-options {
+    width: 100%;
+    max-width: 400px;
+}
+
 .access-button {
-    display:block; width:100%; padding:15px 20px; margin-bottom:1rem;
-    background:#f8f9fa; border:1px solid #e9ecef; border-radius:var(--border-radius);
-    color:var(--text-color); text-decoration:none; font-weight:500; font-size:1.1rem;
-    text-align:center; transition:var(--transition); cursor:pointer;
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
 }
-.access-button:hover { background:#e9ecef; transform:translateY(-2px); box-shadow:var(--box-shadow); }
-.access-button i { margin-right:10px; color:var(--primary-color); }
 
-.footer { position:absolute; bottom:20px; text-align:center; font-size:.8rem; color:#666; }
-.social-icons { margin-top:1rem; display:flex; justify-content:center; gap:15px; }
-.social-icon { color:#666; font-size:1.2rem; transition:var(--transition); }
-.social-icon:hover { color:var(--primary-color); }
+.access-button:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+}
 
+.access-button i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.social-icons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icon {
+    color: #666;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-icon:hover {
+    color: var(--primary-color);
+}
+
+/* Loading overlay */
 .loading-overlay {
-    position:fixed; inset:0; background:rgba(255,255,255,.9);
-    display:flex; justify-content:center; align-items:center; z-index:1000;
-    opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
 }
-.loading-overlay.active { opacity:1; visibility:visible; }
-.loading-spinner { width:50px; height:50px; border:5px solid #f3f3f3; border-top:5px solid var(--primary-color); border-radius:50%; animation:spin 1s linear infinite; }
-@keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
 
-@media (max-width: 768px){
-  .login-container{flex-direction:column}
-  .left-panel{flex:0 0 40%; min-height:40vh}
-  .right-panel{flex:1; min-height:60vh}
-  .headphones-icon{font-size:3rem}
-  .tagline{font-size:1.4rem}
-  .welcome-title{font-size:2rem}
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
-@media (max-width: 480px){
-  .left-panel{flex:0 0 30%; min-height:30vh}
-  .right-panel{flex:1; min-height:70vh}
-  .headphones-icon{font-size:2.5rem}
-  .tagline{font-size:1.2rem}
-  .welcome-title{font-size:1.8rem}
-  .access-button{padding:12px 15px; font-size:1rem}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .left-panel {
+        flex: 0 0 40%;
+        min-height: 40vh;
+    }
+    
+    .right-panel {
+        flex: 1;
+        min-height: 60vh;
+    }
+    
+    .headphones-icon {
+        font-size: 3rem;
+    }
+    
+    .tagline {
+        font-size: 1.4rem;
+    }
+    
+    .welcome-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-panel {
+        flex: 0 0 30%;
+        min-height: 30vh;
+    }
+    
+    .right-panel {
+        flex: 1;
+        min-height: 70vh;
+    }
+    
+    .headphones-icon {
+        font-size: 2.5rem;
+    }
+    
+    .tagline {
+        font-size: 1.2rem;
+    }
+    
+    .welcome-title {
+        font-size: 1.8rem;
+    }
+    
+    .access-button {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
 }
 ";
 echo"</style>\n";
 echo"</head>\n";
 echo"<body>\n";
 
-# Loading overlay
+// Loading overlay
 echo"<div class=\"loading-overlay\" id=\"loadingOverlay\">\n";
 echo"    <div class=\"loading-spinner\"></div>\n";
 echo"</div>\n";
@@ -238,22 +440,11 @@ echo"        </div>\n";
 echo"        <h1 class=\"welcome-title\">"._QXZ("Welcome")."</h1>\n";
 echo"        <p class=\"access-prompt\">"._QXZ("Please select your access type")."</p>\n";
 echo"        <div class=\"access-options\">\n";
-
-# ---------- Agent Login (existing) ----------
-echo"            <a href=\"../agc/$SSagent_script\" class=\"access-button\" id=\"agentLoginLink\">\n";
+echo"            <a href=\"https://cxotel.call.1bill.in/agc/vicidial.php?relogin=YES&session_epoch=1762343261&session_id=8600051&session_name=1762343254_100214236676&VD_login=testing&VD_campaign=001&phone_login=1002&phone_pass=test&VD_pass=testing&LOGINvarONE=&LOGINvarTWO=&LOGINvarTHREE=&LOGINvarFOUR=&LOGINvarFIVE=&hide_relogin_fields=\" class=\"access-button\" id=\"agentLoginLink\">\n";
 echo"                <i class=\"fas fa-sign-in-alt\"></i>\n";
 echo"                "._QXZ("Agent Login")."\n";
 echo"            </a>\n";
 
-# ---------- NEW: Agent Direct Deep Link (your requested hyperlink) ----------
-$agent_deeplink = 'https://cxotel.call.1bill.in/agc/vicidial.php?relogin=YES&session_epoch=1762343261&session_id=8600051&session_name=1762343254_100214236676&VD_login=testing&VD_campaign=001&phone_login=1002&phone_pass=test&VD_pass=testing&LOGINvarONE=&LOGINvarTWO=&LOGINvarTHREE=&LOGINvarFOUR=&LOGINvarFIVE=&hide_relogin_fields=';
-$agent_deeplink_html = htmlspecialchars($agent_deeplink, ENT_QUOTES, 'UTF-8');
-
-echo"            <a href=\"{$agent_deeplink_html}\" class=\"access-button\" id=\"agentDeepLink\">\n";
-echo"                <i class=\"fas fa-link\"></i>\n";
-echo"                "._QXZ("Direct Agent Login (auto-fill)")."\n";
-echo"            </a>\n";
-# ---------- /NEW ----------
 
 if ($hide_timeclock_link < 1) {
 echo"            <a href=\"../agc/timeclock.php?referrer=welcome\" class=\"access-button\" id=\"timeclockLink\">\n";
@@ -288,39 +479,95 @@ echo"</div>\n";
 
 echo"<script>\n";
 echo"
-// Add loading functionality to all links
-document.addEventListener('DOMContentLoaded', function() {
-    const links = document.querySelectorAll('.access-button');
+// Function to hide loading overlay
+function hideLoadingOverlay() {
     const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.classList.remove('active');
+    }
+}
+
+// Function to show loading overlay
+function showLoadingOverlay() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.classList.add('active');
+    }
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    // Hide loading overlay on page load (in case it's visible from browser cache)
+    hideLoadingOverlay();
+    
+    const links = document.querySelectorAll('.access-button');
     
     links.forEach(link => {
-        link.addEventListener('click', function() {
-            loadingOverlay.classList.add('active');
+        link.addEventListener('click', function(e) {
+            // Show loading overlay
+            showLoadingOverlay();
+            
+            // Set a timeout to hide the overlay after 10 seconds as a fallback
+            setTimeout(hideLoadingOverlay, 10000);
         });
     });
     
-    // Keyboard shortcuts: 1=Agent Login, 2=Next option, 3=Admin
+    // Add keyboard navigation
     document.addEventListener('keydown', function(e) {
         const links = document.querySelectorAll('.access-button');
         let targetIndex = -1;
+        
         switch(e.key) {
-            case '1': targetIndex = 0; break;
-            case '2': targetIndex = 1; break;
-            case '3': targetIndex = links.length - 1; break;
+            case '1':
+                targetIndex = 0; // Agent Login
+                break;
+            case '2':
+                targetIndex = 1; // Timeclock or HCI Screen
+                break;
+            case '3':
+                targetIndex = links.length - 1; // Administration
+                break;
         }
+        
         if (targetIndex >= 0 && links[targetIndex]) {
             links[targetIndex].click();
         }
     });
-
-    // Social icon placeholders
+    
+    // Add interactive effects to social icons
     const socialIcons = document.querySelectorAll('.social-icon');
+    
     socialIcons.forEach(icon => {
         icon.addEventListener('click', function(e) {
             e.preventDefault();
+            // Placeholder for social media links
             console.log('Social media link clicked');
         });
     });
+});
+
+// Handle page visibility changes (when user navigates back)
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        // Page is visible again, hide loading overlay
+        hideLoadingOverlay();
+    }
+});
+
+// Handle pageshow event (fires when page is shown from cache)
+window.addEventListener('pageshow', function(event) {
+    // If the page is being shown from cache (bfcache), hide the loading overlay
+    if (event.persisted) {
+        hideLoadingOverlay();
+    }
+});
+
+// Handle beforeunload to clean up
+window.addEventListener('beforeunload', function() {
+    // Clear any pending timeouts
+    if (window.loadingTimeout) {
+        clearTimeout(window.loadingTimeout);
+    }
 });
 ";
 echo"</script>\n";
