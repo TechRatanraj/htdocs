@@ -894,7 +894,7 @@ if ($user_login_first == 1) {
         echo "<div style=\"background:#fff;border-radius:12px;padding:40px;box-shadow:0 8px 32px rgba(0,0,0,0.2);\">\n";
         echo "<div style=\"display:flex;align-items:center;gap:20px;margin-bottom:30px;padding-bottom:30px;border-bottom:2px solid #f0f0f0;\">\n";
         echo "<img src=\"$selected_logo\" border=\"0\" height=\"50\" width=\"180\" alt=\"Agent Screen\" style=\"flex-shrink:0;\" />\n";
-        echo "<h1 style=\"margin:0;font-size:28px;color:#667eea;font-weight:700;\">"._QXZ("Campaign")."</h1>\n";
+        echo "<h1 style=\"margin:0;font-size:28px;color:#667eea;font-weight:700;\">"._QXZ("Campaign Login")."</h1>\n";
         echo "</div>\n";
         
         echo "<div style=\"display:grid;grid-template-columns:140px 1fr;gap:12px;margin-bottom:16px;\">\n";
@@ -3604,7 +3604,7 @@ if ((!preg_match("/\s$VD_campaign\s/i", $LOGallowed_campaigns)) and (!preg_match
 		echo "<center><br /><b>$VDdisplayMESSAGE</b><br /><br />";
 		echo "<table width=\"460px\" cellpadding=\"3\" cellspacing=\"0\" bgcolor=\"#$SSframe_background\"><tr bgcolor=\"white\">";
 		echo "<td align=\"left\" valign=\"bottom\" bgcolor=\"#$SSmenu_background\" width=\"170\"><img src=\"$selected_logo\" border=\"0\" height=\"45\" width=\"170\" alt=\"Agent Screen\" /></td>";
-		echo "<td align=\"center\" valign=\"middle\" bgcolor=\"#$SSmenu_background\"> <font class=\"sh_text_white\">"._QXZ("Campaign Login")."</font> </td>";
+		echo "<td align=\"center\" valign=\"middle\" bgcolor=\"#$SSmenu_background\"> <font class=\"sh_text_white\">"._QXZ("Campaign")."</font> </td>";
 		echo "</tr>\n";
 		echo "<tr><td align=\"left\" colspan=\"2\"><font size=\"1\"> &nbsp; </font></td></tr>\n";
 		echo "<tr><td align=\"right\"><font class=\"skb_text\">"._QXZ("User Login").":</font>  </td>";
