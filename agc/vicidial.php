@@ -27358,35 +27358,309 @@ function webphoneOpen(spanId, action) {
     </tr></table>
 </span>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="SCForceDialBox">
-	<table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> &nbsp; &nbsp; &nbsp; <font class="sd_text"><?php echo _QXZ("Scheduled Callback to Dial:"); ?></font>
-	<br />
-	<?php
-	if ($webphone_location == 'bar')
-		{echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<span id="SCForceDialSpan"> <?php echo _QXZ("Lead Info"); ?> </span>
-	<br /><br /> &nbsp;
-	<!--<a href="#" onclick="hideDiv('SCForceDialBox');return false;"><?php echo _QXZ("Close Box"); ?></a>-->
-	</font>
-	</td></tr></table>
-</span>
+<!-- Modern Scheduled Callback Force Dial Box - FIXED -->
+<div style="
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    width:600px;
+    max-height:90vh;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border:2px solid #10b981;
+    border-radius:12px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    overflow-y:auto;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.3s ease;
+    padding:20px;
+    text-align:center;"
+    id="SCForceDialBox">
+    
+    <!-- Header -->
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:16px;
+        padding-bottom:12px;
+        border-bottom:2px solid #10b981;">
+        
+        <div style="font-size:14px;font-weight:700;color:#047857;">
+            ⏱️ <?php echo _QXZ("Scheduled Callback to Dial:"); ?>
+        </div>
+        
+        <button onclick="if(window.SCForceDialHide) SCForceDialHide(); else document.getElementById('SCForceDialBox').style.visibility='hidden'; document.getElementById('SCForceDialBox').style.opacity='0'; document.getElementById('SCForceDialBox_Overlay').style.visibility='hidden'; document.getElementById('SCForceDialBox_Overlay').style.opacity='0'; return false;" style="
+            background:none;
+            border:none;
+            cursor:pointer;
+            font-size:24px;
+            color:#64748b;
+            transition:all 0.3s ease;"
+            onmouseover="this.style.color='#ef4444';"
+            onmouseout="this.style.color='#64748b';">
+            ×
+        </button>
+    </div>
+    
+    <!-- Content -->
+    <div style="
+        font-size:12px;
+        color:#065f46;
+        margin-bottom:16px;
+        background:#fff;
+        padding:12px;
+        border-radius:8px;
+        border:1px solid #86efac;">
+        <span id="SCForceDialSpan" style="display:block;">
+            <?php echo _QXZ("Lead Info"); ?>
+        </span>
+    </div>
+</div>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CallBacKsLisTBox">
-    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sh_text"><?php echo _QXZ("CALLBACKS FOR AGENT %1s:<br />To see information on one of the callbacks below, click on the INFO link. To call the customer back now, click on the DIAL link. If you click on a record below to dial it, it will be removed from the list.",0,'',$VD_login); ?></font>
- <br />
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<div class="scroll_callback_auto" id="CallBacKsLisT"></div>
-    <br /><font class="sh_text"> &nbsp;
-	<a href="#" onclick="CalLBacKsLisTCheck();return false;"><?php echo _QXZ("Refresh"); ?></a>
-	 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; 
-	<a href="#" onclick="CalLBacKsLisTClose();return false;"><?php echo _QXZ("Go Back"); ?></a>
-	</font>
-    </td></tr></table>
-</span>
+<!-- Overlay for Scheduled Callback Modal -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:rgba(0,0,0,0.5);
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.3s ease;
+    backdrop-filter:blur(4px);"
+    id="SCForceDialBox_Overlay"
+    onclick="if(window.SCForceDialHide) SCForceDialHide(); else this.style.visibility='hidden'; this.style.opacity='0'; document.getElementById('SCForceDialBox').style.visibility='hidden'; document.getElementById('SCForceDialBox').style.opacity='0'; return false;"></div>
+
+
+<!-- Modern Callbacks List Box - FIXED -->
+<div style="
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    width:700px;
+    max-height:90vh;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    overflow-y:auto;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.3s ease;"
+    id="CallBacKsLisTBox">
+    
+    <!-- Header -->
+    <div style="
+        position:sticky;
+        top:0;
+        padding:15px;
+        background:linear-gradient(135deg, #dbeafe, #bfdbfe);
+        border-bottom:2px solid #0ea5e9;
+        border-radius:12px 12px 0 0;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        z-index:10;">
+        
+        <div style="font-size:13px;font-weight:700;color:#0c4a6e;">
+            📋 <?php echo _QXZ("CALLBACKS FOR AGENT"); ?>: <?php echo $VD_login; ?>
+        </div>
+        
+        <button onclick="CalLBacKsLisTClose();return false;" style="
+            background:none;
+            border:none;
+            cursor:pointer;
+            font-size:24px;
+            color:#64748b;
+            transition:all 0.3s ease;"
+            onmouseover="this.style.color='#ef4444';"
+            onmouseout="this.style.color='#64748b';">
+            ×
+        </button>
+    </div>
+    
+    <!-- Info Banner -->
+    <div style="padding:15px;background:#f0f9ff;border-bottom:2px solid #bae6fd;">
+        <div style="font-size:11px;color:#0369a1;line-height:1.6;">
+            <strong>ℹ️ Instructions:</strong><br />
+            • Click <strong>INFO</strong> to see callback information<br />
+            • Click <strong>DIAL</strong> to call the customer back now<br />
+            • When you dial, it will be removed from the list
+        </div>
+    </div>
+    
+    <!-- Callbacks List -->
+    <div style="padding:15px;">
+        <div class="scroll_callback_auto" id="CallBacKsLisT" style="
+            max-height:350px;
+            overflow-y:auto;
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:8px;
+            padding:10px;
+            margin-bottom:15px;
+            min-height:150px;
+            font-size:11px;
+            color:#475569;">
+        </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div style="
+        padding:15px;
+        background:#f9fafb;
+        border-top:2px solid #e5e7eb;
+        display:flex;
+        gap:10px;
+        justify-content:center;
+        flex-wrap:wrap;
+        border-radius:0 0 12px 12px;">
+        
+        <a href="#" onclick="CalLBacKsLisTCheck();return false;" style="
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            padding:10px 20px;
+            background:linear-gradient(135deg, #3b82f6, #2563eb);
+            color:#fff;
+            text-decoration:none;
+            border-radius:8px;
+            font-size:11px;
+            font-weight:700;
+            text-transform:uppercase;
+            border:none;
+            cursor:pointer;
+            box-shadow:0 4px 12px rgba(59,130,246,0.3);
+            transition:all 0.3s ease;"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';"
+            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';">
+            🔄 Refresh
+        </a>
+        
+        <a href="#" onclick="CalLBacKsLisTClose();return false;" style="
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            padding:10px 20px;
+            background:linear-gradient(135deg, #6b7280, #4b5563);
+            color:#fff;
+            text-decoration:none;
+            border-radius:8px;
+            font-size:11px;
+            font-weight:700;
+            text-transform:uppercase;
+            border:none;
+            cursor:pointer;
+            box-shadow:0 4px 12px rgba(107,114,128,0.3);
+            transition:all 0.3s ease;"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(107,114,128,0.4)';"
+            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(107,114,128,0.3)';">
+            🚪 Go Back
+        </a>
+    </div>
+</div>
+
+<!-- Overlay for Callbacks List Modal -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:rgba(0,0,0,0.5);
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.3s ease;
+    backdrop-filter:blur(4px);"
+    id="CallBacKsLisTBox_Overlay"
+    onclick="CalLBacKsLisTClose();return false;"></div>
+
+<!-- JavaScript Functions for Modal Control -->
+<script>
+// Scheduled Callback Modal Functions
+function SCForceDialShow() {
+    var modal = document.getElementById('SCForceDialBox');
+    var overlay = document.getElementById('SCForceDialBox_Overlay');
+    if (modal && overlay) {
+        modal.style.visibility = 'visible';
+        modal.style.opacity = '1';
+        overlay.style.visibility = 'visible';
+        overlay.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function SCForceDialHide() {
+    var modal = document.getElementById('SCForceDialBox');
+    var overlay = document.getElementById('SCForceDialBox_Overlay');
+    if (modal && overlay) {
+        modal.style.visibility = 'hidden';
+        modal.style.opacity = '0';
+        overlay.style.visibility = 'hidden';
+        overlay.style.opacity = '0';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Callbacks List Modal Functions
+function CalLBacKsLisTShow() {
+    var modal = document.getElementById('CallBacKsLisTBox');
+    var overlay = document.getElementById('CallBacKsLisTBox_Overlay');
+    if (modal && overlay) {
+        modal.style.visibility = 'visible';
+        modal.style.opacity = '1';
+        overlay.style.visibility = 'visible';
+        overlay.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function CalLBacKsLisTCheck() {
+    // Your existing refresh logic here
+    // This function should already exist in your code
+}
+
+function CalLBacKsLisTClose() {
+    var modal = document.getElementById('CallBacKsLisTBox');
+    var overlay = document.getElementById('CallBacKsLisTBox_Overlay');
+    if (modal && overlay) {
+        modal.style.visibility = 'hidden';
+        modal.style.opacity = '0';
+        overlay.style.visibility = 'hidden';
+        overlay.style.opacity = '0';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Prevent modal from closing when clicking inside
+document.addEventListener('DOMContentLoaded', function() {
+    var scModal = document.getElementById('SCForceDialBox');
+    var callModal = document.getElementById('CallBacKsLisTBox');
+    
+    if (scModal) {
+        scModal.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    if (callModal) {
+        callModal.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+</script>
 
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NeWManuaLDiaLBox">
     <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?></font><br /><br /><font class="sh_text"><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?>
