@@ -27358,106 +27358,27 @@ function webphoneOpen(spanId, action) {
     </tr></table>
 </span>
 
-<!-- Modern Scheduled Callback Force Dial Box - FIXED -->
+
+<!-- Modern New Manual Dial Box - FULLY UPDATED -->
 <div style="
     position:fixed;
     left:50%;
     top:50%;
     transform:translate(-50%, -50%);
-    width:600px;
-    max-height:90vh;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #dcfce7, #bbf7d0);
-    border:2px solid #10b981;
-    border-radius:12px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.3);
-    overflow-y:auto;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-    visibility:hidden;
-    opacity:0;
-    transition:all 0.3s ease;
-    padding:20px;
-    text-align:center;"
-    id="SCForceDialBox">
-    
-    <!-- Header -->
-    <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:16px;
-        padding-bottom:12px;
-        border-bottom:2px solid #10b981;">
-        
-        <div style="font-size:14px;font-weight:700;color:#047857;">
-            ⏱️ <?php echo _QXZ("Scheduled Callback to Dial:"); ?>
-        </div>
-        
-        <button onclick="if(window.SCForceDialHide) SCForceDialHide(); else document.getElementById('SCForceDialBox').style.visibility='hidden'; document.getElementById('SCForceDialBox').style.opacity='0'; document.getElementById('SCForceDialBox_Overlay').style.visibility='hidden'; document.getElementById('SCForceDialBox_Overlay').style.opacity='0'; return false;" style="
-            background:none;
-            border:none;
-            cursor:pointer;
-            font-size:24px;
-            color:#64748b;
-            transition:all 0.3s ease;"
-            onmouseover="this.style.color='#ef4444';"
-            onmouseout="this.style.color='#64748b';">
-            ×
-        </button>
-    </div>
-    
-    <!-- Content -->
-    <div style="
-        font-size:12px;
-        color:#065f46;
-        margin-bottom:16px;
-        background:#fff;
-        padding:12px;
-        border-radius:8px;
-        border:1px solid #86efac;">
-        <span id="SCForceDialSpan" style="display:block;">
-            <?php echo _QXZ("Lead Info"); ?>
-        </span>
-    </div>
-</div>
-
-<!-- Overlay for Scheduled Callback Modal -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:rgba(0,0,0,0.5);
-    visibility:hidden;
-    opacity:0;
-    transition:all 0.3s ease;
-    backdrop-filter:blur(4px);"
-    id="SCForceDialBox_Overlay"
-    onclick="if(window.SCForceDialHide) SCForceDialHide(); else this.style.visibility='hidden'; this.style.opacity='0'; document.getElementById('SCForceDialBox').style.visibility='hidden'; document.getElementById('SCForceDialBox').style.opacity='0'; return false;"></div>
-
-
-<!-- Modern Callbacks List Box - FIXED -->
-<div style="
-    position:fixed;
-    left:50%;
-    top:50%;
-    transform:translate(-50%, -50%);
-    width:700px;
-    max-height:90vh;
+    width:650px;
+    max-height:95vh;
     z-index:<?php $zi++; echo $zi ?>;
     background:#fff;
     border-radius:12px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    box-shadow:0 25px 50px rgba(0,0,0,0.3);
     overflow-y:auto;
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     visibility:hidden;
     opacity:0;
     transition:all 0.3s ease;"
-    id="CallBacKsLisTBox">
+    id="NeWManuaLDiaLBox">
     
-    <!-- Header -->
+    <!-- Header with Close Button -->
     <div style="
         position:sticky;
         top:0;
@@ -27471,106 +27392,257 @@ function webphoneOpen(spanId, action) {
         z-index:10;">
         
         <div style="font-size:13px;font-weight:700;color:#0c4a6e;">
-            📋 <?php echo _QXZ("CALLBACKS FOR AGENT"); ?>: <?php echo $VD_login; ?>
+            📞 <?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?>
         </div>
         
-        <button onclick="CalLBacKsLisTClose();return false;" style="
+        <button onclick="ManualDialHide();return false;" style="
             background:none;
             border:none;
             cursor:pointer;
-            font-size:24px;
+            font-size:28px;
             color:#64748b;
+            padding:0;
+            width:30px;
+            height:30px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
             transition:all 0.3s ease;"
-            onmouseover="this.style.color='#ef4444';"
-            onmouseout="this.style.color='#64748b';">
+            onmouseover="this.style.color='#ef4444';this.style.transform='scale(1.2)';"
+            onmouseout="this.style.color='#64748b';this.style.transform='scale(1)';">
             ×
         </button>
     </div>
     
-    <!-- Info Banner -->
-    <div style="padding:15px;background:#f0f9ff;border-bottom:2px solid #bae6fd;">
-        <div style="font-size:11px;color:#0369a1;line-height:1.6;">
-            <strong>ℹ️ Instructions:</strong><br />
-            • Click <strong>INFO</strong> to see callback information<br />
-            • Click <strong>DIAL</strong> to call the customer back now<br />
-            • When you dial, it will be removed from the list
-        </div>
-    </div>
-    
-    <!-- Callbacks List -->
-    <div style="padding:15px;">
-        <div class="scroll_callback_auto" id="CallBacKsLisT" style="
-            max-height:350px;
-            overflow-y:auto;
-            background:#f8fafc;
-            border:1px solid #e2e8f0;
-            border-radius:8px;
-            padding:10px;
-            margin-bottom:15px;
-            min-height:150px;
-            font-size:11px;
-            color:#475569;">
-        </div>
-    </div>
-    
-    <!-- Action Buttons -->
-    <div style="
-        padding:15px;
-        background:#f9fafb;
-        border-top:2px solid #e5e7eb;
-        display:flex;
-        gap:10px;
-        justify-content:center;
-        flex-wrap:wrap;
-        border-radius:0 0 12px 12px;">
+    <!-- Content -->
+    <div style="padding:20px;">
         
-        <a href="#" onclick="CalLBacKsLisTCheck();return false;" style="
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            gap:6px;
-            padding:10px 20px;
-            background:linear-gradient(135deg, #3b82f6, #2563eb);
-            color:#fff;
-            text-decoration:none;
-            border-radius:8px;
-            font-size:11px;
-            font-weight:700;
-            text-transform:uppercase;
-            border:none;
-            cursor:pointer;
-            box-shadow:0 4px 12px rgba(59,130,246,0.3);
-            transition:all 0.3s ease;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';"
-            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';">
-            🔄 Refresh
-        </a>
+        <!-- Info Banner -->
+        <div style="background:linear-gradient(135deg, #f0f9ff, #e0f2fe);border:2px solid #0ea5e9;border-radius:8px;padding:12px;margin-bottom:16px;font-size:11px;color:#0369a1;line-height:1.6;">
+            <strong><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?></strong><br /><br />
+            <?php 
+            if (!preg_match("/X/i",$manual_dial_prefix)) {
+                echo "✓ " . _QXZ("Note: a dial prefix of %1s will be added to the beginning of this number",0,'',$manual_dial_prefix)."<br />";
+            }
+            echo "✓ " . _QXZ("Note: all new manual dial leads will go into list %1s",0,'',$manual_dial_list_id);
+            ?>
+        </div>
         
-        <a href="#" onclick="CalLBacKsLisTClose();return false;" style="
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            gap:6px;
-            padding:10px 20px;
-            background:linear-gradient(135deg, #6b7280, #4b5563);
-            color:#fff;
-            text-decoration:none;
-            border-radius:8px;
-            font-size:11px;
-            font-weight:700;
-            text-transform:uppercase;
-            border:none;
-            cursor:pointer;
-            box-shadow:0 4px 12px rgba(107,114,128,0.3);
-            transition:all 0.3s ease;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(107,114,128,0.4)';"
-            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(107,114,128,0.3)';">
-            🚪 Go Back
-        </a>
+        <!-- Form Fields Section -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+            
+            <?php 
+            if (!preg_match("/ONLY/",$manual_dial_lead_id)) {
+                echo "
+                <!-- Dial Code -->
+                <div>
+                    <label style=\"display:block;font-size:10px;font-weight:700;color:#1e293b;margin-bottom:6px;text-transform:uppercase;\">Dial Code</label>
+                    <input type=\"text\" size=\"7\" maxlength=\"10\" name=\"MDDiaLCodE\" id=\"MDDiaLCodE\" value=\"<?php echo $default_phone_code ?>\" style=\"
+                        width:100%;
+                        padding:10px;
+                        border:2px solid #cbd5e1;
+                        border-radius:6px;
+                        font-size:13px;
+                        background:#fff;
+                        transition:all 0.2s ease;\"
+                        onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';\"
+                        onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />
+                    <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Usually 1 in USA-Canada)</div>
+                </div>
+                
+                <!-- Phone Number -->
+                <div>
+                    <label style=\"display:block;font-size:10px;font-weight:700;color:#1e293b;margin-bottom:6px;text-transform:uppercase;\">Phone Number</label>
+                    <input type=\"text\" size=\"14\" maxlength=\"18\" name=\"MDPhonENumbeR\" id=\"MDPhonENumbeR\" style=\"
+                        width:100%;
+                        padding:10px;
+                        border:2px solid #cbd5e1;
+                        border-radius:6px;
+                        font-size:13px;
+                        background:#fff;
+                        transition:all 0.2s ease;\"
+                        onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';\"
+                        onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />
+                    <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Digits only)</div>
+                </div>
+                ";
+            } else {
+                echo "<input type=\"hidden\" name=\"MDDiaLCodE\" id=\"MDDiaLCodE\" value=\"$default_phone_code\" />";
+                echo "<input type=\"hidden\" name=\"MDPhonENumbeR\" id=\"MDPhonENumbeR\" />";
+            }
+            ?>
+        </div>
+        
+        <!-- Hidden Fields -->
+        <input type="hidden" name="MDPhonENumbeRHiddeN" id="MDPhonENumbeRHiddeN" />
+        <input type="hidden" name="MDLeadID" id="MDLeadID" />
+        <input type="hidden" name="MDType" id="MDType" />
+        
+        <!-- Dial Lead ID (if applicable) -->
+        <?php 
+        if ( ($manual_dial_lead_id=='Y') or ($manual_dial_lead_id=='ONLY') ) {
+            echo "
+            <div style=\"margin-bottom:16px;\">
+                <label style=\"display:block;font-size:10px;font-weight:700;color:#1e293b;margin-bottom:6px;text-transform:uppercase;\">Dial Lead ID</label>
+                <input type=\"text\" size=\"10\" maxlength=\"10\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" style=\"
+                    width:100%;
+                    padding:10px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:13px;
+                    background:#fff;
+                    transition:all 0.2s ease;\"
+                    onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';\"
+                    onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />
+                <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Digits only)</div>
+            </div>
+            ";
+        } else {
+            echo "<input type=\"hidden\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" />";
+        }
+        
+        $LeadLookuPXtra='';
+        if ($manual_dial_search_checkbox == 'SELECTED_LOCK') { $LeadLookuPXtra = 'CHECKED DISABLED '; }
+        if ($manual_dial_search_checkbox == 'UNSELECTED_LOCK') { $LeadLookuPXtra = 'DISABLED '; }
+        ?>
+        
+        <!-- Search Existing Leads -->
+        <div style="margin-bottom:16px;padding:12px;background:#f0fdf4;border:2px solid #86efac;border-radius:8px;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#065f46;font-weight:600;cursor:pointer;">
+                <input type="checkbox" name="LeadLookuP" id="LeadLookuP" value="0" <?php echo $LeadLookuPXtra ?> style="cursor:pointer;width:16px;height:16px;" />
+                <strong>Search Existing Leads</strong>
+            </label>
+            <div style="font-size:9px;color:#059669;margin-top:6px;margin-left:24px;">
+                ℹ️ Attempt to find the phone number in system before inserting as new lead
+            </div>
+        </div>
+        
+        <!-- Group & List Selection -->
+        <div style="background:#f9fafb;border:2px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:16px;font-size:11px;color:#475569;">
+            <div style="font-weight:700;color:#1e293b;margin-bottom:10px;">📋 Group & List Selection:</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                <div>
+                    <span id="ManuaLDiaLGrouPSelecteD" style="display:block;margin-bottom:6px;font-size:10px;color:#64748b;"></span>
+                    <span id="ManuaLDiaLGrouP"></span>
+                </div>
+                <div>
+                    <span id="ManuaLDiaLInGrouPSelecteD" style="display:block;margin-bottom:6px;font-size:10px;color:#64748b;"></span>
+                    <span id="ManuaLDiaLInGrouP"></span>
+                </div>
+            </div>
+            <span id="NoDiaLSelecteD" style="display:block;margin-top:8px;"></span>
+        </div>
+        
+        <!-- Dial Override Warning -->
+        <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:8px;padding:12px;margin-bottom:16px;font-size:10px;color:#92400e;line-height:1.6;">
+            <strong>⚠️ Dial Override Information:</strong><br />
+            If you want to dial a number and have it NOT be added as a new lead, enter in the exact dialstring that you want to call in the Dial Override field below. To hangup this call you will have to open the CALLS IN THIS SESSION link at the bottom of the screen and hang it up by clicking on its channel link there.
+        </div>
+        
+        <!-- Dial Override Input -->
+        <div style="margin-bottom:20px;">
+            <label style="display:block;font-size:10px;font-weight:700;color:#1e293b;margin-bottom:6px;text-transform:uppercase;">Dial Override</label>
+            <?php
+            if ($manual_dial_override_field == 'ENABLED') {
+                echo "
+                <input type=\"text\" size=\"24\" maxlength=\"20\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" style=\"
+                    width:100%;
+                    padding:10px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:13px;
+                    background:#fff;
+                    transition:all 0.2s ease;\"
+                    onfocus=\"this.style.borderColor='#0ea5e9';this.style.boxShadow='0 0 0 3px rgba(14,165,233,0.1)';\"
+                    onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />
+                <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Digits only please)</div>
+                ";
+            } else {
+                echo "
+                <input type=\"hidden\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" />
+                <div style=\"padding:10px;background:#fee2e2;border:2px solid #ef4444;border-radius:6px;font-size:11px;color:#991b1b;font-weight:700;text-align:center;\">
+                    🔒 DIAL OVERRIDE DISABLED
+                </div>
+                ";
+            }
+            ?>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding-top:12px;border-top:2px solid #e5e7eb;">
+            
+            <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                padding:12px 24px;
+                background:linear-gradient(135deg, #10b981, #059669);
+                color:#fff;
+                text-decoration:none;
+                border:none;
+                border-radius:8px;
+                font-size:12px;
+                font-weight:700;
+                text-transform:uppercase;
+                cursor:pointer;
+                box-shadow:0 4px 12px rgba(16,185,129,0.3);
+                transition:all 0.3s ease;"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';">
+                📞 Dial Now
+            </a>
+            
+            <?php if ($manual_dial_preview > 0) { ?>
+            <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                padding:12px 24px;
+                background:linear-gradient(135deg, #f59e0b, #d97706);
+                color:#fff;
+                text-decoration:none;
+                border:none;
+                border-radius:8px;
+                font-size:12px;
+                font-weight:700;
+                text-transform:uppercase;
+                cursor:pointer;
+                box-shadow:0 4px 12px rgba(245,158,11,0.3);
+                transition:all 0.3s ease;"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(245,158,11,0.4)';"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(245,158,11,0.3)';">
+                👁️ Preview Call
+            </a>
+            <?php } ?>
+            
+            <a href="#" onclick="ManualDialHide();return false;" style="
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                padding:12px 24px;
+                background:linear-gradient(135deg, #6b7280, #4b5563);
+                color:#fff;
+                text-decoration:none;
+                border:none;
+                border-radius:8px;
+                font-size:12px;
+                font-weight:700;
+                text-transform:uppercase;
+                cursor:pointer;
+                box-shadow:0 4px 12px rgba(107,114,128,0.3);
+                transition:all 0.3s ease;"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(107,114,128,0.4)';"
+                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(107,114,128,0.3)';">
+                🚪 Go Back
+            </a>
+        </div>
     </div>
 </div>
 
-<!-- Overlay for Callbacks List Modal -->
+<!-- Dark Overlay for Modal -->
 <div style="
     position:fixed;
     left:0;
@@ -27583,15 +27655,15 @@ function webphoneOpen(spanId, action) {
     opacity:0;
     transition:all 0.3s ease;
     backdrop-filter:blur(4px);"
-    id="CallBacKsLisTBox_Overlay"
-    onclick="CalLBacKsLisTClose();return false;"></div>
+    id="NeWManuaLDiaLBox_Overlay"
+    onclick="ManualDialHide();return false;"></div>
 
-<!-- JavaScript Functions for Modal Control -->
+<!-- JavaScript Functions -->
 <script>
-// Scheduled Callback Modal Functions
-function SCForceDialShow() {
-    var modal = document.getElementById('SCForceDialBox');
-    var overlay = document.getElementById('SCForceDialBox_Overlay');
+function ManualDialShow() {
+    var modal = document.getElementById('NeWManuaLDiaLBox');
+    var overlay = document.getElementById('NeWManuaLDiaLBox_Overlay');
+    
     if (modal && overlay) {
         modal.style.visibility = 'visible';
         modal.style.opacity = '1';
@@ -27601,39 +27673,10 @@ function SCForceDialShow() {
     }
 }
 
-function SCForceDialHide() {
-    var modal = document.getElementById('SCForceDialBox');
-    var overlay = document.getElementById('SCForceDialBox_Overlay');
-    if (modal && overlay) {
-        modal.style.visibility = 'hidden';
-        modal.style.opacity = '0';
-        overlay.style.visibility = 'hidden';
-        overlay.style.opacity = '0';
-        document.body.style.overflow = 'auto';
-    }
-}
-
-// Callbacks List Modal Functions
-function CalLBacKsLisTShow() {
-    var modal = document.getElementById('CallBacKsLisTBox');
-    var overlay = document.getElementById('CallBacKsLisTBox_Overlay');
-    if (modal && overlay) {
-        modal.style.visibility = 'visible';
-        modal.style.opacity = '1';
-        overlay.style.visibility = 'visible';
-        overlay.style.opacity = '1';
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function CalLBacKsLisTCheck() {
-    // Your existing refresh logic here
-    // This function should already exist in your code
-}
-
-function CalLBacKsLisTClose() {
-    var modal = document.getElementById('CallBacKsLisTBox');
-    var overlay = document.getElementById('CallBacKsLisTBox_Overlay');
+function ManualDialHide() {
+    var modal = document.getElementById('NeWManuaLDiaLBox');
+    var overlay = document.getElementById('NeWManuaLDiaLBox_Overlay');
+    
     if (modal && overlay) {
         modal.style.visibility = 'hidden';
         modal.style.opacity = '0';
@@ -27645,125 +27688,16 @@ function CalLBacKsLisTClose() {
 
 // Prevent modal from closing when clicking inside
 document.addEventListener('DOMContentLoaded', function() {
-    var scModal = document.getElementById('SCForceDialBox');
-    var callModal = document.getElementById('CallBacKsLisTBox');
-    
-    if (scModal) {
-        scModal.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-    
-    if (callModal) {
-        callModal.addEventListener('click', function(e) {
+    var modal = document.getElementById('NeWManuaLDiaLBox');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     }
 });
 </script>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NeWManuaLDiaLBox">
-    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?></font><br /><br /><font class="sh_text"><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?>
- <br />
-	<?php 
-	if (!preg_match("/X/i",$manual_dial_prefix))
-		{
-        echo _QXZ("Note: a dial prefix of %1s will be added to the beginning of this number",0,'',$manual_dial_prefix)."<br />\n";
-		}
-	?>
-    <?php echo _QXZ("Note: all new manual dial leads will go into list %1s",0,'',$manual_dial_list_id); ?><br /><br />
-    <table><tr>
-	<?php 
-	if (!preg_match("/ONLY/",$manual_dial_lead_id))
-		{
-		?>
-		<td align="right"><font class="body_text"> <?php echo _QXZ("Dial Code:"); ?> </font></td>
-		<td align="left"><font class="body_text"><input type="text" size="7" maxlength="10" name="MDDiaLCodE" id="MDDiaLCodE" class="cust_form" value="<?php echo $default_phone_code ?>" />&nbsp; <?php echo _QXZ("(This is usually a 1 in the USA-Canada)"); ?></font></td>
-		</tr><tr>
-		<td align="right"><font class="body_text"> <?php echo _QXZ("Phone Number:"); ?> </font></td>
-		<td align="left"><font class="body_text">
-		<input type="text" size="14" maxlength="18" name="MDPhonENumbeR" id="MDPhonENumbeR" class="cust_form" value="" />&nbsp; <?php echo _QXZ("(digits only)"); ?></font>
-		<?php
-		}
-	else
-		{
-		echo "<input type=\"hidden\" name=\"MDDiaLCodE\" id=\"MDDiaLCodE\" value=\"$default_phone_code\" />\n";
-		echo "<input type=\"hidden\" name=\"MDPhonENumbeR\" id=\"MDPhonENumbeR\" value=\"\" />\n";
-		}
-	?>
-	<input type="hidden" name="MDPhonENumbeRHiddeN" id="MDPhonENumbeRHiddeN" value="" />
-	<input type="hidden" name="MDLeadID" id="MDLeadID" value="" />
-	<input type="hidden" name="MDType" id="MDType" value="" />
-	<?php 
-	if ( ($manual_dial_lead_id=='Y') or ($manual_dial_lead_id=='ONLY') )
-		{
-        echo "	</td>";
-        echo "	</tr><tr>\n";
-        echo "	<td align=\"right\"><font class=\"body_text\"> "._QXZ("Dial Lead ID:")." </font></td>\n";
-        echo "	<td align=\"left\"><font class=\"body_text\">\n";
-        echo "	<input type=\"text\" size=\"10\" maxlength=\"10\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" class=\"cust_form\" value=\"\" />&nbsp; "._QXZ("(digits only)")."</font>\n";
-		}
-	else
-		{
-		echo "<input type=\"hidden\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" value=\"\" />\n";
-		}
 
-	$LeadLookuPXtra='';
-	if ($manual_dial_search_checkbox == 'SELECTED_LOCK')
-		{$LeadLookuPXtra = 'CHECKED DISABLED ';}
-	if ($manual_dial_search_checkbox == 'UNSELECTED_LOCK')
-		{$LeadLookuPXtra = 'DISABLED ';}
-	?>
-	</td>
-	</tr><tr>
-    <td align="right"><font class="body_text"> <?php echo _QXZ("Search Existing Leads:"); ?> </font></td>
-    <td align="left"><font class="body_text"><input type="checkbox" name="LeadLookuP" id="LeadLookuP" size="1" value="0" <?php echo $LeadLookuPXtra ?>/>&nbsp; <?php echo _QXZ("(This option if checked will attempt to find the phone number in the system before inserting it as a new lead)"); ?></font></td>
-	</tr><tr>
-
-    <td align="left" colspan="2">
-	<font class="sh_text">
-    <br /><br /><CENTER>
-	<span id="ManuaLDiaLGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLGrouP"></span>
-	<br><br>
-	<span id="ManuaLDiaLInGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLInGrouP"></span>
-	<br><br>
-	<span id="NoDiaLSelecteD"></span>
-	</CENTER>
-    <br /><br /><?php echo _QXZ("If you want to dial a number and have it NOT be added as a new lead, enter in the exact dialstring that you want to call in the Dial Override field below. To hangup this call you will have to open the CALLS IN THIS SESSION link at the bottom of the screen and hang it up by clicking on its channel link there."); ?><br /> &nbsp; </font></td>
-	</tr><tr>
-    <td align="right"><font class="body_text"> <?php echo _QXZ("Dial Override:"); ?> </font></td>
-    <td align="left"><font class="body_text">
-	<?php
-	if ($manual_dial_override_field == 'ENABLED')
-		{
-		?>
-		<input type="text" size="24" maxlength="20" name="MDDiaLOverridE" id="MDDiaLOverridE" class="cust_form" value="" />&nbsp; 
-		<?php
-		echo _QXZ("(digits only please)");
-		}
-	else
-		{
-		?>
-		<input type="hidden" name="MDDiaLOverridE" id="MDDiaLOverridE" value="" />&nbsp; 
-		<?php
-		echo _QXZ("DISABLED");
-		}
-	 ?>
-	</font>
-	</td>
-    </tr></table>
- <br />
-	<a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;"><?php echo _QXZ("Dial Now"); ?></a>
-	 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; 
-	 <?php if ($manual_dial_preview > 0)
-		 {
-		 echo "<a href=\"#\" onclick=\"NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;\">"._QXZ("Preview Call")."</a>
-		 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; \n";
-		 }
-	 ?>
-	<a href="#" onclick="ManualDialHide();return false;"><?php echo _QXZ("Go Back"); ?></a></font>
-    </td></tr></table>
-</span>
 
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CloserSelectBox">
     <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("CLOSER INBOUND GROUP SELECTION"); ?></font> <br />
