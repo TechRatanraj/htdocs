@@ -24107,7 +24107,7 @@ $zi=2;
 
 
  <!-- BEGIN *********   Here is the main VICIDIAL display panel -->
-<span style="position:absolute;left:0px;top:120px;z-index:<?php $zi++; echo $zi ?>;" id="MainPanel">
+<span style="position:absolute;left:0px;top:125px;z-index:<?php $zi++; echo $zi ?>;" id="MainPanel">
     <table border="0" bgcolor="<?php echo $MAIN_COLOR ?>" width="<?php echo $MNwidth ?>px" id="MainTable">
     <tr><td colspan="3">
 	<?php
