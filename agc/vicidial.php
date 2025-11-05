@@ -26452,770 +26452,259 @@ function webphoneOpen(spanId, action) {
     </div>
 </div>
 
-<!-- Modern HotKey Entries Box -->
-<div style="
-    position:fixed;
-    left:5px;
-    top:<?php echo $HTheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    width:<?php echo $HCwidth ?>px;
-    background:linear-gradient(135deg, #fef3c7, #fde68a);
-    border:2px solid #f59e0b;
-    border-radius:8px;
-    box-shadow:0 4px 12px rgba(245,158,11,0.3);
-    overflow:hidden;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="HotKeyEntriesBox">
-    
-    <div style="padding:10px;background:linear-gradient(135deg, #fde68a, #fcd34d);border-bottom:2px solid #f59e0b;">
-        <span style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;">
-            <?php echo _QXZ("Disposition Hot Keys:"); ?>
-        </span>
-    </div>
-    
-    <div style="padding:10px;background:#fffbeb;font-size:10px;color:#78350f;line-height:1.5;border-bottom:1px solid #fcd34d;">
-        <strong><?php echo _QXZ("When active, simply press the keyboard key for the desired disposition for this call. The call will then be hungup and dispositioned automatically:"); ?></strong>
-    </div>
-    
-    <div style="padding:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-        <div style="padding:8px;background:#fff;border-radius:6px;border:1px solid #fcd34d;text-align:center;">
-            <span id="HotKeyBoxA" style="font-size:12px;font-weight:700;color:#b45309;">
-                <?php echo $HKboxA ?>
-            </span>
-        </div>
-        <div style="padding:8px;background:#fff;border-radius:6px;border:1px solid #fcd34d;text-align:center;">
-            <span id="HotKeyBoxB" style="font-size:12px;font-weight:700;color:#b45309;">
-                <?php echo $HKboxB ?>
-            </span>
-        </div>
-        <div style="padding:8px;background:#fff;border-radius:6px;border:1px solid #fcd34d;text-align:center;">
-            <span id="HotKeyBoxC" style="font-size:12px;font-weight:700;color:#b45309;">
-                <?php echo $HKboxC ?>
-            </span>
-        </div>
-    </div>
-</div>
 
-<!-- Modern HotKeys Active Display -->
+<span style="position:absolute;left:5px;top:<?php echo $HTheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="HotKeyEntriesBox">
+    <table border="0" bgcolor="#FFDD99" width="<?php echo $HCwidth ?>px" height="70px">
+    <tr bgcolor="#FFEEBB"><td width="200px"><font class="sh_text"> <?php echo _QXZ("Disposition Hot Keys:"); ?> </font></td><td colspan="2">
+	<font class="body_small"><?php echo _QXZ("When active, simply press the keyboard key for the desired disposition for this call. The call will then be hungup and dispositioned automatically:"); ?></font></td></tr><tr>
+    <td width="200px"><font class="sk_text">
+	<span id="HotKeyBoxA"><?php echo $HKboxA ?></span>
+    </font></td>
+    <td width="200px"><font class="sk_text">
+	<span id="HotKeyBoxB"><?php echo $HKboxB ?></span>
+    </font></td>
+    <td><font class="sk_text">
+	<span id="HotKeyBoxC"><?php echo $HKboxC ?></span>
+    </font></td>
+    </tr></table>
+</span>
+
 <?php if ( ($HK_statuses_camp > 0) && ($user_level>=$HKuser_level) && ($VU_hotkeys_active > 0) ) { ?>
-<div style="
-    position:fixed;
-    left:<?php echo $HKwidth ?>px;
-    top:<?php echo $HKheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    padding:8px 12px;
-    background:linear-gradient(135deg, #86efac, #4ade80);
-    border:2px solid #22c55e;
-    border-radius:8px;
-    box-shadow:0 3px 10px rgba(34,197,94,0.3);
-    cursor:pointer;
-    transition:all 0.3s ease;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="hotkeysdisplay"
-    onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 5px 14px rgba(34,197,94,0.4)';"
-    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 3px 10px rgba(34,197,94,0.3)';">
-    
-    <a href="#" onmouseover="HotKeys('ON');return false;" style="
-        display:flex;
-        align-items:center;
-        gap:6px;
-        color:#fff;
-        text-decoration:none;
-        font-size:11px;
-        font-weight:700;
-        text-transform:uppercase;">
-        <svg style="width:14px;height:14px;fill:#fff;" viewBox="0 0 24 24">
-            <path d="M20 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14l4 4v-4h2V7c0-1.1-.9-2-2-2zm-2 12H4V7h14v10z"/>
-        </svg>
-        Hot Keys Active
-    </a>
-</div>
+<span style="position:absolute;left:<?php echo $HKwidth ?>px;top:<?php echo $HKheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="hotkeysdisplay"><a href="#" onMouseOver="HotKeys('ON')"><img src="./images/<?php echo _QXZ("vdc_XB_hotkeysactive_OFF.gif"); ?>" border="0" alt="HOT KEYS INACTIVE" /></a></span>
 <?php } ?>
 
-<!-- Modern Transfer/Conference Panel -->
-<div style="
-    position:fixed;
-    left:157px;
-    top:<?php echo $HTheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    width:<?php echo $SDwidth ?>px;
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.15);
-    border:1px solid #e2e8f0;
-    overflow:hidden;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="TransferMain">
-    
-    <div style="padding:12px;background:linear-gradient(135deg, #dbeafe, #bfdbfe);border-bottom:2px solid #3b82f6;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <svg style="width:18px;height:18px;fill:#1e40af;" viewBox="0 0 24 24">
-                <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
-            </svg>
-            <span style="font-size:12px;font-weight:700;color:#0c4a6e;">Transfer/Conference</span>
-        </div>
-        <div style="font-size:11px;color:#0369a1;">
-            <span id="XfeRDiaLGrouPSelecteD"></span> <span id="XfeRCID"></span>
-        </div>
-    </div>
-    
-    <div style="padding:12px;max-height:500px;overflow-y:auto;">
-        <!-- Transfer Group Selection -->
-        <div style="margin-bottom:12px;">
-            <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Transfer Group</label>
-            <span id="XfeRGrouPLisT">
-                <select size="1" name="XfeRGrouP" id="XfeRGrouP" onchange="XferAgentSelectLink();return false;" style="
-                    width:100%;
-                    padding:8px;
-                    border:2px solid #cbd5e1;
-                    border-radius:6px;
-                    font-size:12px;
-                    background:#fff;
-                    cursor:pointer;">
-                    <option>-- <?php echo _QXZ("SELECT A GROUP TO SEND YOUR CALL TO"); ?> --</option>
-                </select>
-            </span>
-        </div>
-        
-        <!-- Seconds and Channel -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-            <div>
-                <label style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;display:block;">Seconds</label>
-                <input type="text" size="2" name="xferlength" id="xferlength" maxlength="4" readonly style="
-                    width:100%;
-                    padding:6px;
-                    border:1px solid #cbd5e1;
-                    border-radius:6px;
-                    font-size:12px;
-                    background:#f1f5f9;" />
-            </div>
-            <div>
-                <label style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;display:block;">Channel</label>
-                <input type="text" size="12" name="xferchannel" id="xferchannel" maxlength="200" readonly style="
-                    width:100%;
-                    padding:6px;
-                    border:1px solid #cbd5e1;
-                    border-radius:6px;
-                    font-size:12px;
-                    background:#f1f5f9;" />
-            </div>
-        </div>
-        
-        <!-- Checkboxes -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-            <span id="consultative_checkbox">
-                <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#475569;">
-                    <input type="checkbox" name="consultativexfer" id="consultativexfer" value="0" <?php if ($default_consultative > 0) {echo "checked";} ?> />
-                    <strong>Consultative</strong>
-                </label>
-            </span>
-            <span id="dialoverride_checkbox">
-                <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#475569;">
-                    <input type="checkbox" name="xferoverride" id="xferoverride" value="0" />
-                    <strong>Dial Override</strong>
-                </label>
-            </span>
-        </div>
-        
-        <!-- Number to Call -->
-        <div style="margin-bottom:12px;">
-            <label style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;display:block;">Number to Call</label>
-            <?php
-            if ($hide_xfer_number_to_dial=='ENABLED') {
-                echo "<input type=\"hidden\" name=\"xfernumber\" id=\"xfernumber\" value=\"<?php echo $preset_populate ?>\" />";
-            } else {
-                echo "<input type=\"text\" size=\"20\" name=\"xfernumber\" id=\"xfernumber\" maxlength=\"25\" style=\"
-                    width:100%;
-                    padding:8px;
-                    border:2px solid #cbd5e1;
-                    border-radius:6px;
-                    font-size:12px;
-                    value='<?php echo $preset_populate ?>'\"
-                    onfocus=\"this.style.borderColor='#3b82f6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)';\"
-                    onblur=\"this.style.borderColor='#cbd5e1';this.style.boxShadow='none';\" />";
-            }
-            ?>
-            <input type="hidden" name="xferuniqueid" id="xferuniqueid" />
-            <input type="hidden" name="xfername" id="xfername" />
-            <input type="hidden" name="xfernumhidden" id="xfernumhidden" />
-        </div>
-        
-        <!-- Action Buttons -->
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <a href="#" onclick="XferAgentSelectLaunch();return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:4px;
-                padding:6px 12px;
-                background:linear-gradient(135deg, #3b82f6, #2563eb);
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:10px;
-                font-weight:700;
-                transition:all 0.3s ease;"
-                onmouseover="this.style.transform='translateY(-1px)';"
-                onmouseout="this.style.transform='translateY(0)';">
-                👥 Agents
-            </a>
-            <span id="LocalCloser"></span>
-            <span id="HangupXferLine"></span>
-            <span id="ParkXferLine"></span>
-            <span id="HangupBothLines"></span>
-            <span id="Leave3WayCall"></span>
-            <span id="DialBlindTransfer"></span>
-            <span id="DialWithCustomer"></span>
-            <span id="ParkCustomerDial"></span>
-            <span id="PresetPullDown"></span>
-            <span id="ContactPullDown"></span>
-            <span id="DialBlindVMail"></span>
-        </div>
-    </div>
-</div>
 
-<!-- Modern Agent Transfer View Span -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:<?php echo $JS_browser_width ?>px;
-    height:<?php echo $JS_browser_height ?>px;
-    overflow:auto;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:rgba(0,0,0,0.7);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="AgentXferViewSpan">
-    
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 20px 25px rgba(0,0,0,0.3);max-width:600px;width:90%;">
-        <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:16px;">
-            <?php echo _QXZ("Available Agents Transfer:"); ?>
-        </div>
-        <span id="AgentXferViewSelect"></span>
-        <div style="margin-top:16px;text-align:center;">
-            <a href="#" onclick="AgentsXferSelect('0','AgentXferViewSelect');return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#ef4444;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Close
-            </a>
-        </div>
-    </div>
-</div>
+<span style="position:absolute;left:157px;top:<?php echo $HTheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="TransferMain">
+    <table bgcolor="#CCCCFF" width="<?php echo $SDwidth ?>px">
+    <tr valign="top">
+    <td align="left" height="30px">
+	<span class="text_input" id="TransferMaindiv">
+	<font class="body_text">
+    <img src="./images/<?php echo _QXZ("vdc_XB_header.gif"); ?>" border="0" alt="Transfer - Conference" style="vertical-align:middle" /> &nbsp; &nbsp; &nbsp; &nbsp; <span id="XfeRDiaLGrouPSelecteD"></span> &nbsp; &nbsp; <span id="XfeRCID"></span><br />
 
-<!-- Modern Extended Alt Phone Information Box -->
-<div style="
-    position:fixed;
-    left:5px;
-    top:<?php echo $HTheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    width:<?php echo $HCwidth ?>px;
-    background:linear-gradient(135deg, #fffacd, #ffed4e);
-    border:2px solid #fbbf24;
-    border-radius:8px;
-    box-shadow:0 4px 12px rgba(251,191,36,0.3);
-    overflow:hidden;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="EAcommentsBox">
-    
-    <div style="padding:10px;background:linear-gradient(135deg, #ffed4e, #fcd34d);border-bottom:2px solid #fbbf24;display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:11px;font-weight:700;color:#92400e;">
-            <?php echo _QXZ("Extended Alt Phone Information:"); ?>
-        </span>
-        <a href="#" onclick="EAcommentsBoxhide('YES');return false;" style="
-            color:#92400e;
-            text-decoration:none;
-            font-size:10px;
-            font-weight:700;">
-            Minimize ×
-        </a>
-    </div>
-    
-    <div style="padding:10px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px;color:#78350f;">
-            <div>
-                <span id="EAcommentsBoxC"></span><br />
-                <span id="EAcommentsBoxB"></span>
-            </div>
-            <div>
-                <span id="EAcommentsBoxA"></span><br />
-                <span id="EAcommentsBoxD"></span>
-            </div>
-        </div>
-    </div>
-</div>
+    <table cellpadding="0" cellspacing="1" border="0">
+    <tr>
+    <td align="left" colspan="3">
+    <span id="XfeRGrouPLisT"><select size="1" name="XfeRGrouP" id="XfeRGrouP" class="cust_form" onChange="XferAgentSelectLink();return false;"><option>-- <?php echo _QXZ("SELECT A GROUP TO SEND YOUR CALL TO"); ?> --</option></select></span>
+	 
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="LocalCloser"><img src="./images/<?php echo _QXZ("vdc_XB_localcloser_OFF.gif"); ?>" border="0" alt="LOCAL CLOSER" style="vertical-align:middle" /></span> &nbsp; &nbsp;
+ </td>
+    <td align="left">
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="HangupXferLine"><img src="./images/<?php echo _QXZ("vdc_XB_hangupxferline_OFF.gif"); ?>" border="0" alt="Hangup Xfer Line" style="vertical-align:middle" /></span>
+	&nbsp; 
+	<span style="background-color: <?php echo $MAIN_COLOR ?>" id="ParkXferLine"><img src="./images/<?php echo _QXZ("vdc_XB_parkxferline_OFF.gif"); ?>" border="0" alt="Park Xfer Line" style="vertical-align:middle" /></span>
+ </td>
+ </tr>
 
-<!-- Modern Extended Alt Phone Minimize Box -->
-<div style="
-    position:fixed;
-    left:695px;
-    top:<?php echo $HTheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    padding:6px 10px;
-    background:linear-gradient(135deg, #fffacd, #ffed4e);
-    border:2px solid #fbbf24;
-    border-radius:8px;
-    box-shadow:0 3px 10px rgba(251,191,36,0.3);
-    display:none;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="EAcommentsMinBox">
-    
-    <a href="#" onclick="EAcommentsBoxshow();return false;" style="
-        color:#92400e;
-        text-decoration:none;
-        font-size:10px;
-        font-weight:700;
-        line-height:1.4;">
-        Maximize ⊞<br/>Alt Phone Info
-    </a>
-</div>
+    <tr>
+    <td align="left" colspan="2">
+    <img src="./images/<?php echo _QXZ("vdc_XB_seconds.gif"); ?>" border="0" alt="seconds" style="vertical-align:middle" /><input type="text" size="2" name="xferlength" id="xferlength" maxlength="4" class="cust_form" readonly="readonly" />
+	&nbsp; 
+    <img src="./images/<?php echo _QXZ("vdc_XB_channel.gif"); ?>" border="0" alt="channel" style="vertical-align:middle" /><input type="text" size="12" name="xferchannel" id="xferchannel" maxlength="200" class="cust_form" readonly="readonly" />
+ </td>
+    <td align="left">
+    <span id="consultative_checkbox"><input type="checkbox" name="consultativexfer" id="consultativexfer" size="1" value="0"<?php if ($default_consultative > 0) {echo " checked";} ?>><font class="body_tiny"> <?php echo _QXZ("CONSULTATIVE"); ?> &nbsp;</font></span>
+ </td>
+    <td align="left">
+    <span style="background-color: <?php echo $MAIN_COLOR ?><?php echo $agent_hide_hangup_ACTIVE_style ?>" id="HangupBothLines"><a href="#" onclick="bothcall_send_hangup('YES');return false;"><img src="./images/<?php echo _QXZ("vdc_XB_hangupbothlines.gif"); ?>" border="0" alt="Hangup Both Lines" style="vertical-align:middle" /></a></span>
+ </td>
+ </tr>
 
-<!-- Modern Modal Boxes (None In Session, Customer Gone, Wrapup, etc.) -->
-<!-- These will be styled consistently with your modern theme -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $WRheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #e0f2fe, #bae6fd);
-    border:2px solid #0284c7;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(2,132,199,0.3);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="NoneInSessionBox">
-    
-    <div style="text-align:center;padding:20px;">
-        <div style="font-size:14px;font-weight:700;color:#0c4a6e;margin-bottom:16px;">
-            <?php echo _QXZ("No one is in your session:"); ?> <span id="NoneInSessionID"></span>
-        </div>
-        <div style="display:flex;gap:10px;justify-content:center;">
-            <a href="#" onclick="NoneInSessionOK();return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#0284c7;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Go Back
-            </a>
-            <span id="NoneInSessionLink">
-                <a href="#" onclick="NoneInSessionCalL();return false;" style="
-                    display:inline-flex;
-                    align-items:center;
-                    gap:6px;
-                    padding:8px 16px;
-                    background:#10b981;
-                    color:#fff;
-                    text-decoration:none;
-                    border-radius:6px;
-                    font-size:11px;
-                    font-weight:700;
-                    text-transform:uppercase;">
-                    Call Agent Again
-                </a>
-            </span>
-        </div>
-    </div>
-</div>
+    <tr>
+    <td align="left" colspan="2">
+    <img src="./images/<?php echo _QXZ("vdc_XB_number.gif"); ?>" border="0" alt="Number to call" style="vertical-align:middle" />
+	&nbsp; 
+	<?php
+	if ($hide_xfer_number_to_dial=='ENABLED')
+		{
+		?>
+        <input type="hidden" name="xfernumber" id="xfernumber" value="<?php echo $preset_populate ?>" /> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+		<?php
+		}
+	else
+		{
+		?>
+        <input type="text" size="20" name="xfernumber" id="xfernumber" maxlength="25" class="cust_form" value="<?php echo $preset_populate ?>" /> &nbsp;
+		<?php
+		}
+	?>
+    <span id="agentdirectlink"><font class="body_small_bold"><a href="#" onclick="XferAgentSelectLaunch();return false;"><?php echo _QXZ("AGENTS"); ?></a></font></span>
+    <input type="hidden" name="xferuniqueid" id="xferuniqueid" />
+    <input type="hidden" name="xfername" id="xfername" />
+    <input type="hidden" name="xfernumhidden" id="xfernumhidden" />
+ </td>
+    <td align="left">
+    <span id="dialoverride_checkbox"><input type="checkbox" name="xferoverride" id="xferoverride" size="1" value="0"><font class="body_tiny" /> <?php echo _QXZ("DIAL OVERRIDE"); ?>	<?php if ($manual_dial_override_field == 'DISABLED'){echo " "._QXZ("DISABLED");}?></font></span>
+ </td>
+    <td align="left">
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="Leave3WayCall"><a href="#" onclick="leave_3way_call('FIRST','YES');return false;"><img src="./images/<?php echo _QXZ("vdc_XB_leave3waycall.gif"); ?>" border="0" alt="LEAVE 3-WAY CALL" style="vertical-align:middle" /></a></span>
+ </td>
+ </tr>
 
-<!-- Modern Customer Gone Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:30px;
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $WRheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #e0f2fe, #bae6fd);
-    border:2px solid #0284c7;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(2,132,199,0.3);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="CustomerGoneBox">
-    
-    <div style="text-align:center;padding:20px;">
-        <div style="font-size:14px;font-weight:700;color:#0c4a6e;margin-bottom:16px;">
-            <?php echo _QXZ("Customer has hung up:"); ?> <span id="CustomerGoneChanneL"></span>
-        </div>
-        <div style="display:flex;gap:10px;justify-content:center;">
-            <a href="#" onclick="CustomerGoneOK();return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#0284c7;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Go Back
-            </a>
-            <a href="#" onclick="CustomerGoneHangup();return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#10b981;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Finish and Disposition
-            </a>
-        </div>
-    </div>
-</div>
+    <tr>
+    <td align="left" COLSPAN="4">
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="DialBlindTransfer"><img src="./images/<?php echo _QXZ("vdc_XB_blindtransfer_OFF.gif"); ?>" border="0" alt="Dial Blind Transfer" style="vertical-align:middle" /></span>
+	&nbsp;
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="DialWithCustomer"><a href="#" onclick="SendManualDial('YES','YES');return false;"><img src="./images/<?php echo _QXZ("vdc_XB_dialwithcustomer.gif"); ?>" border="0" alt="Dial With Customer" style="vertical-align:middle" /></a></span>
+	&nbsp;
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="ParkCustomerDial"><a href="#" onclick="xfer_park_dial('YES');return false;"><img src="./images/<?php echo _QXZ("vdc_XB_parkcustomerdial.gif"); ?>" border="0" alt="Park Customer Dial" style="vertical-align:middle" /></a></span>
+	&nbsp;
+	<?php
+	if ($enable_xfer_presets=='ENABLED')
+		{
+		?>
+        <span style="background-color: <?php echo $MAIN_COLOR ?>" id="PresetPullDown"><a href="#" onclick="generate_presets_pulldown('YES');return false;"><img src="./images/<?php echo _QXZ("vdc_XB_presetsbutton.gif"); ?>" border="0" alt="Presets Button" style="vertical-align:middle" /></a></span>
+		<?php
+		}
+	else
+		{
+		if ( ($enable_xfer_presets=='CONTACTS') and ($VU_preset_contact_search != 'DISABLED') )
+			{
+			?>
+			<span style="background-color: <?php echo $MAIN_COLOR ?>" id="ContactPullDown"><a href="#" onclick="generate_contacts_search('YES');return false;"><img src="./images/<?php echo _QXZ("vdc_XB_contactsbutton.gif"); ?>" border="0" alt="Contacts Button" style="vertical-align:middle" /></a></span>
+			<?php
+			}
+		else
+			{
+			?>
+			<font class="body_tiny">
+			<a href="#" onclick="DtMf_PreSet_a();return false;">D1</a> 
+			<a href="#" onclick="DtMf_PreSet_b();return false;">D2</a>
+			<a href="#" onclick="DtMf_PreSet_c();return false;">D3</a>
+			<a href="#" onclick="DtMf_PreSet_d();return false;">D4</a>
+			<a href="#" onclick="DtMf_PreSet_e();return false;">D5</a>
+			</font>
+			<?php
+			}
+		}
+	?>
+	&nbsp;
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="DialBlindVMail"><img src="./images/<?php echo _QXZ("vdc_XB_ammessage_OFF.gif"); ?>" border="0" alt="Blind Transfer VMail Message" style="vertical-align:middle" /></span>
+ </td>
+ </tr>
 
-<!-- Modern Wrapup Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $WRheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #dcfce7, #bbf7d0);
-    border:2px solid #10b981;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(16,185,129,0.3);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="WrapupBox">
-    
-    <div style="text-align:center;padding:20px;">
-        <div style="font-size:14px;font-weight:700;color:#047857;margin-bottom:16px;">
-            <?php echo _QXZ("Call Wrapup:"); ?> <span id="WrapupTimer"></span> <?php echo _QXZ("seconds remaining in wrapup"); ?>
-        </div>
-        <span id="WrapupMessage" style="display:block;margin-bottom:16px;color:#065f46;font-size:12px;">
-            <?php echo $wrapup_message ?>
-        </span>
-        <span id="WrapupBypass">
-            <a href="#" onclick="WrapupFinish();return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#10b981;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Finish Wrapup and Move On
-            </a>
-        </span>
-    </div>
-</div>
+ </table>
 
-<!-- Modern FullScreen Wrapup Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:#fff;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="FSCREENWrapupBox">
-    
-    <span id="FSCREENWrapupMessage" style="font-size:16px;color:#1e293b;font-weight:700;">
-        <?php echo $wrapup_message ?>
-    </span>
-</div>
+	</font>
+	</span>
+	</td>
+    </tr></table>
+</span>
 
-<!-- Modern Timer Span -->
-<div style="
-    position:fixed;
-    left:200px;
-    top:150px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-    padding:20px;
-    display:none;
-    text-align:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="TimerSpan">
-    
-    <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:16px;">
-        <span id="TimerContentSpan"></span>
-    </div>
-    <a href="#" onclick="hideDiv('TimerSpan');return false;" style="
-        display:inline-flex;
-        align-items:center;
-        gap:6px;
-        padding:8px 16px;
-        background:#3b82f6;
-        color:#fff;
-        text-decoration:none;
-        border-radius:6px;
-        font-size:11px;
-        font-weight:700;
-        text-transform:uppercase;">
-        Close
-    </a>
-</div>
+<span style="position:absolute;left:0px;top:0px;width:<?php echo $JS_browser_width ?>px;height:<?php echo $JS_browser_height ?>px;overflow:scroll;z-index:<?php $zi++; echo $zi ?>;background-color:<?php echo $SIDEBAR_COLOR ?>;" id="AgentXferViewSpan"><center><font class="body_text">
+<?php echo _QXZ("Available Agents Transfer:"); ?> <span id="AgentXferViewSelect"></span></font><br><a href="#" onclick="AgentsXferSelect('0','AgentXferViewSelect');return false;"><?php echo _QXZ("close"); ?></a></center></span>
 
-<!-- Modern Agent Disabled Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $WRheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #fee2e2, #fecaca);
-    border:2px solid #ef4444;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(239,68,68,0.3);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="AgenTDisablEBoX">
-    
-    <div style="text-align:center;padding:20px;">
-        <div style="font-size:14px;font-weight:700;color:#991b1b;margin-bottom:16px;">
-            <?php echo _QXZ("Your session has been disabled"); ?>
-        </div>
-        <a href="#" onclick="LogouT('DISABLED','','');return false;" style="
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            padding:10px 16px;
-            background:#ef4444;
-            color:#fff;
-            text-decoration:none;
-            border-radius:6px;
-            font-size:11px;
-            font-weight:700;
-            text-transform:uppercase;">
-            Click Here to Reset Your Session
-        </a>
-    </div>
-</div>
+<span style="position:absolute;left:5px;top:<?php echo $HTheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="EAcommentsBox">
+    <table border="0" bgcolor="#FFFFCC" width="<?php echo $HCwidth ?>px" height="70px">
+    <tr bgcolor="#FFFF66">
+    <td align="left"><font class="sh_text"> <?php echo _QXZ("Extended Alt Phone Information:"); ?> </font></td>
+    <td align="right"><font class="sk_text"> <a href="#" onclick="EAcommentsBoxhide('YES');return false;"> <?php echo _QXZ("minimize"); ?> </a> </font></td>
+	</tr><tr>
+    <td valign="top"><font class="sk_text">
+    <span id="EAcommentsBoxC"></span><br />
+    <span id="EAcommentsBoxB"></span><br />
+    </font></td>
+    <td width="320px" valign="top"><font class="sk_text">
+    <span id="EAcommentsBoxA"></span><br />
+	<span id="EAcommentsBoxD"></span>
+    </font></td>
+    </tr></table>
+</span>
 
-<!-- Modern System Disabled Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $WRheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #fee2e2, #fecaca);
-    border:2px solid #ef4444;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(239,68,68,0.3);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="SysteMDisablEBoX">
-    
-    <div style="text-align:center;padding:20px;">
-        <div style="font-size:14px;font-weight:700;color:#991b1b;margin-bottom:16px;">
-            <?php echo _QXZ("There is a time synchronization problem with your system, please tell your system administrator"); ?>
-        </div>
-        <a href="#" onclick="hideDiv('SysteMDisablEBoX');return false;" style="
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            padding:8px 16px;
-            background:#ef4444;
-            color:#fff;
-            text-decoration:none;
-            border-radius:6px;
-            font-size:11px;
-            font-weight:700;
-            text-transform:uppercase;">
-            Go Back
-        </a>
-    </div>
-</div>
+<span style="position:absolute;left:695px;top:<?php echo $HTheight ?>px;z-index:<?php $zi++; echo $zi ?>;" id="EAcommentsMinBox">
+    <table border="0" bgcolor="#FFFFCC" width="40px" height="20px">
+    <tr bgcolor="#FFFF66">
+    <td align="left"><font class="sk_text"><a href="#" onclick="EAcommentsBoxshow();return false;"> <?php echo _QXZ("maximize"); ?> </a> <br /><?php echo _QXZ("Alt Phone Info"); ?></font></td>
+    </tr></table>
+</span>
 
-<!-- Modern Logout Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:rgba(0,0,0,0.9);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="LogouTBox">
-    
-    <div style="text-align:center;">
-        <span id="LogouTProcess" style="display:block;margin-bottom:20px;">
-            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:16px;">
-                <?php echo _QXZ("LOGOUT PROCESSING..."); ?>
-            </div>
-            <img src="./images/<?php echo _QXZ("agent_loading_animation.gif"); ?>" height="206px" width="206px" alt="<?php echo _QXZ("LOGOUT PROCESSING..."); ?>" />
-        </span>
-        <span id="LogouTBoxLink" style="display:none;font-size:14px;font-weight:700;color:#fff;">
-            <?php echo _QXZ("LOGOUT"); ?>
-        </span>
-    </div>
-</div>
+<span style="position:absolute;left:0px;top:12px;z-index:<?php $zi++; echo $zi ?>;" id="NoneInSessionBox">
+    <table border="0" bgcolor="#CCFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center"> <font class="sd_text"><?php echo _QXZ("No one is in your session:"); ?> <span id="NoneInSessionID"></span><br />
+	<a href="#" onclick="NoneInSessionOK();return false;"><?php echo _QXZ("Go Back"); ?></a>
+    <br /><br />
+	<span id="NoneInSessionLink"><a href="#" onclick="NoneInSessionCalL();return false;"><?php echo _QXZ("Call Agent Again"); ?></a></font></span>
+    </td></tr></table>
+</span>
 
-<!-- Modern Disposition Button Hide Boxes -->
-<div style="display:none;" id="DispoButtonHideA"></div>
-<div style="display:none;" id="DispoButtonHideB"></div>
+<span style="position:absolute;left:0px;top:30px;z-index:<?php $zi++; echo $zi ?>;" id="CustomerGoneBox">
+    <table border="0" bgcolor="#CCFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center"> <font class="sd_text"><?php echo _QXZ("Customer has hung up:"); ?> <span id="CustomerGoneChanneL"></span><br />
+	<a href="#" onclick="CustomerGoneOK();return false;"><?php echo _QXZ("Go Back"); ?></a>
+    <br /><br />
+	<a href="#" onclick="CustomerGoneHangup();return false;"><?php echo _QXZ("Finish and Disposition Call"); ?></a></font>
+    </td></tr></table>
+</span>
 
-<!-- Modern Disposition Warning Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    z-index:<?php $zi++; echo $zi ?>;
-    width:<?php echo $CAwidth ?>px;
-    background:linear-gradient(135deg, #fef3c7, #fde68a);
-    border:2px solid #f59e0b;
-    border-radius:8px;
-    padding:16px;
-    display:none;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
-    id="DispoButtonHideC">
-    
-    <div style="font-size:11px;color:#92400e;font-weight:600;">
-        <?php echo _QXZ("Any changes made to the customer information below at this time will not be comitted, You must change customer information before you Hangup the call."); ?>
-    </div>
-</div>
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="WrapupBox">
+    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center"> <font class="sd_text"><?php echo _QXZ("Call Wrapup:"); ?> <span id="WrapupTimer"></span> <?php echo _QXZ("seconds remaining in wrapup"); ?></font><br /><br />
+	<span id="WrapupMessage"><?php echo $wrapup_message ?></span>
+    <br /><br />
+	<span id="WrapupBypass"><font class="sh_text"><a href="#" onclick="WrapupFinish();return false;"><?php echo _QXZ("Finish Wrapup and Move On"); ?></a></font></span>
+    </td></tr></table>
+</span>
 
-<!-- Modern Disposition Select Box -->
-<div style="
-    position:fixed;
-    left:0;
-    top:0;
-    width:<?php echo $CAwidth ?>px;
-    height:<?php echo $WRheight ?>px;
-    z-index:<?php $zi++; echo $zi ?>;
-    background:linear-gradient(135deg, #dcfce7, #bbf7d0);
-    border:2px solid #10b981;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(16,185,129,0.3);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-    padding:20px;"
-    id="DispoSelectBox">
-    
-    <div style="width:100%;text-align:center;">
-        <div style="font-size:13px;font-weight:700;color:#047857;margin-bottom:12px;">
-            <?php echo _QXZ("DISPOSITION CALL :"); ?> <span id="DispoSelectPhonE"></span>
-        </div>
-        
-        <div style="margin-bottom:12px;">
-            <span id="Dispo3wayMessage"></span>
-            <span id="DispoManualQueueMessage"></span>
-        </div>
-        
-        <div style="margin-bottom:12px;">
-            <span id="DispoSelectContent" style="display:block;font-size:12px;color:#065f46;margin-bottom:8px;">
-                <?php echo _QXZ("End-of-call Disposition Selection"); ?>
-            </span>
-        </div>
-        
-        <div style="margin-bottom:12px;">
-            <label style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:#065f46;">
-                <input type="checkbox" name="DispoSelectStop" id="DispoSelectStop" value="0" />
-                <?php echo _QXZ("PAUSE AGENT DIALING"); ?>
-            </label>
-        </div>
-        
-        <input type="hidden" name="DispoSelection" id="DispoSelection" />
-        <input type="hidden" name="call_notes_dispo" id="call_notes_dispo" value="" />
-        <input type="hidden" name="dispo_comments" id="dispo_comments" value="" />
-        
-        <div style="display:flex;gap:10px;justify-content:center;">
-            <a href="#" onclick="DispoSelectContent_create('','ReSET','YES');return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#f59e0b;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:10px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Clear Form
-            </a>
-            <a href="#" onclick="DispoSelect_submit('','','YES');return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#10b981;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:10px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Submit
-            </a>
-            <a href="#" onclick="WeBForMDispoSelect_submit();return false;" style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                padding:8px 16px;
-                background:#3b82f6;
-                color:#fff;
-                text-decoration:none;
-                border-radius:6px;
-                font-size:10px;
-                font-weight:700;
-                text-transform:uppercase;">
-                Web Form Submit
-            </a>
-        </div>
-    </div>
-</div>
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="FSCREENWrapupBox"><table border="0" bgcolor="#FFFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px" cellpadding="0" cellspacing="0"><tr><td><span id="FSCREENWrapupMessage"><?php echo $wrapup_message ?></span></td></tr></table></span>
 
+<span style="position:absolute;left:200px;top:150px;z-index:<?php $zi++; echo $zi ?>;" id="TimerSpan">
+    <table border="0" bgcolor="#CCFFCC" width="400px" height="200px"><tr><td align="center">
+    <br /><font class="sh_text"><span id="TimerContentSpan"></span></font><br /><br />
+	<font class="sh_text"><a href="#" onclick="hideDiv('TimerSpan');return false;"><?php echo _QXZ("Close Message"); ?></a></font>
+    </td></tr></table>
+</span>
 
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="AgenTDisablEBoX">
+    <table border="0" bgcolor="#FFFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center"><font class="sd_text"><?php echo _QXZ("Your session has been disabled"); ?><br /><a href="#" onclick="LogouT('DISABLED','','');return false;"><?php echo _QXZ("CLICK HERE TO RESET YOUR SESSION"); ?></a></font><br /><br /><!--<a href="#" onclick="hideDiv('AgenTDisablEBoX');return false;">Go Back</a>-->
+    </td></tr></table>
+</span>
 
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="SysteMDisablEBoX">
+    <table border="0" bgcolor="#FFFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center"><font class="sh_text"><?php echo _QXZ("There is a time synchronization problem with your system, please tell your system administrator"); ?><br /><br /><br /><a href="#" onclick="hideDiv('SysteMDisablEBoX');return false;"><?php echo _QXZ("Go Back"); ?></a></font>
+    </td></tr></table>
+</span>
+
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="LogouTBox">
+    <table border="0" bgcolor="#FFFFFF" width="<?php echo $JS_browser_width ?>px" height="<?php echo $JS_browser_height ?>px"><tr><td align="center"><br /><span id="LogouTProcess">
+	<br />
+	<br />
+	<font class="loading_text"><?php echo _QXZ("LOGOUT PROCESSING..."); ?></font>
+	<br />
+	<br />
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="./images/<?php echo _QXZ("agent_loading_animation.gif"); ?>" height="206px" width="206px" alt="<?php echo _QXZ("LOGOUT PROCESSING..."); ?>" />
+	</span><br /><br /><span id="LogouTBoxLink"><font class="loading_text"><?php echo _QXZ("LOGOUT"); ?></font></span></td></tr></table>
+</span>
+
+<span style="position:absolute;left:0px;top:70px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideA">
+    <table border="0" bgcolor="#CCFFCC" width="165px" height="22px"><tr><td align="center" valign="top"></td></tr></table>
+</span>
+
+<span style="position:absolute;left:0px;top:138px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideB">
+    <table border="0" bgcolor="#CCFFCC" width="165px" height="250px"><tr><td align="center" valign="top">&nbsp;</td></tr></table>
+</span>
+
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="DispoButtonHideC">
+    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="47px"><tr><td align="center" valign="top"><font class="sh_text"><?php echo _QXZ("Any changes made to the customer information below at this time will not be comitted, You must change customer information before you Hangup the call."); ?></font> </td></tr></table>
+</span>
+
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="DispoSelectBox">
+    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("DISPOSITION CALL :"); ?></font><font class="sh_text"> <span id="DispoSelectPhonE"></span> &nbsp; &nbsp; &nbsp; <span id="DispoSelectHAspan"><a href="#" onclick="DispoHanguPAgaiN()"><?php echo _QXZ("Hangup Again"); ?></a></span> &nbsp; &nbsp; &nbsp; <span id="DispoSelectMaxMin"><a href="#" onclick="DispoMinimize()"> <?php echo _QXZ("minimize"); ?> </a></span></font><br />
+	<?php
+	if ($webphone_location == 'bar')
+        {echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
+	?>
+	<font class="sh_text">
+	<span id="Dispo3wayMessage"></span>
+	<span id="DispoManualQueueMessage"></span>
+	<span id="PerCallNotesContent"><input type="hidden" name="call_notes_dispo" id="call_notes_dispo" value="" /></span>
+	<span id="DispoCommentsContent"><input type="hidden" name="dispo_comments" id="dispo_comments" value="" /></span>
+	<span id="DispoSelectContent"> <?php echo _QXZ("End-of-call Disposition Selection"); ?> </span>
+    <input type="hidden" name="DispoSelection" id="DispoSelection" /><br />
+    <input type="checkbox" name="DispoSelectStop" id="DispoSelectStop" size="1" value="0" /> <?php echo _QXZ("PAUSE AGENT DIALING"); ?> <br />
+	<a href="#" onclick="DispoSelectContent_create('','ReSET','YES');return false;"><?php echo _QXZ("CLEAR FORM"); ?></a> | 
+	<a href="#" onclick="DispoSelect_submit('','','YES');return false;"><?php echo _QXZ("SUBMIT"); ?></a>
+    <br /><br />
+	<a href="#" onclick="WeBForMDispoSelect_submit();return false;"><?php echo _QXZ("WEB FORM SUBMIT"); ?></a>
+    <br /><br /> &nbsp;</font>
+    </td></tr></table>
+</span>
 
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CallBackSelectBox">
     <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("Select a CallBack Date :"); ?></font><span id="CallBackDatE"></span><br />
@@ -27358,7 +26847,35 @@ function webphoneOpen(spanId, action) {
     </tr></table>
 </span>
 
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="SCForceDialBox">
+	<table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> &nbsp; &nbsp; &nbsp; <font class="sd_text"><?php echo _QXZ("Scheduled Callback to Dial:"); ?></font>
+	<br />
+	<?php
+	if ($webphone_location == 'bar')
+		{echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
+	?>
+	<span id="SCForceDialSpan"> <?php echo _QXZ("Lead Info"); ?> </span>
+	<br /><br /> &nbsp;
+	<!--<a href="#" onclick="hideDiv('SCForceDialBox');return false;"><?php echo _QXZ("Close Box"); ?></a>-->
+	</font>
+	</td></tr></table>
+</span>
 
+<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CallBacKsLisTBox">
+    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sh_text"><?php echo _QXZ("CALLBACKS FOR AGENT %1s:<br />To see information on one of the callbacks below, click on the INFO link. To call the customer back now, click on the DIAL link. If you click on a record below to dial it, it will be removed from the list.",0,'',$VD_login); ?></font>
+ <br />
+	<?php
+	if ($webphone_location == 'bar')
+        {echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
+	?>
+	<div class="scroll_callback_auto" id="CallBacKsLisT"></div>
+    <br /><font class="sh_text"> &nbsp;
+	<a href="#" onclick="CalLBacKsLisTCheck();return false;"><?php echo _QXZ("Refresh"); ?></a>
+	 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; 
+	<a href="#" onclick="CalLBacKsLisTClose();return false;"><?php echo _QXZ("Go Back"); ?></a>
+	</font>
+    </td></tr></table>
+</span>
 
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NeWManuaLDiaLBox">
     <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?></font><br /><br /><font class="sh_text"><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?>
