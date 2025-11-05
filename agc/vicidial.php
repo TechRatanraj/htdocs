@@ -27215,6 +27215,8 @@ function webphoneOpen(spanId, action) {
 </div>
 
 
+
+
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CallBackSelectBox">
     <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("Select a CallBack Date :"); ?></font><span id="CallBackDatE"></span><br />
 	<?php
@@ -27356,276 +27358,752 @@ function webphoneOpen(spanId, action) {
     </tr></table>
 </span>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="SCForceDialBox">
-	<table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> &nbsp; &nbsp; &nbsp; <font class="sd_text"><?php echo _QXZ("Scheduled Callback to Dial:"); ?></font>
-	<br />
-	<?php
-	if ($webphone_location == 'bar')
-		{echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<span id="SCForceDialSpan"> <?php echo _QXZ("Lead Info"); ?> </span>
-	<br /><br /> &nbsp;
-	<!--<a href="#" onclick="hideDiv('SCForceDialBox');return false;"><?php echo _QXZ("Close Box"); ?></a>-->
-	</font>
-	</td></tr></table>
+<!-- Modern Scheduled Callback Force Dial Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border:2px solid #10b981;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(16,185,129,0.3);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"
+    id="SCForceDialBox">
+    
+    <div style="text-align:center;padding:20px;">
+        <div style="font-size:14px;font-weight:700;color:#047857;margin-bottom:16px;">
+            <?php echo _QXZ("Scheduled Callback to Dial:"); ?>
+        </div>
+        <span id="SCForceDialSpan" style="display:block;font-size:12px;color:#065f46;margin-bottom:16px;">
+            <?php echo _QXZ("Lead Info"); ?>
+        </span>
+    </div>
+</div>
+
+<!-- Modern Callbacks List Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;"
+    id="CallBacKsLisTBox">
+    
+    <div style="width:100%;">
+        <div style="text-align:center;font-size:13px;font-weight:700;color:#1e293b;margin-bottom:12px;max-height:60px;overflow-y:auto;">
+            <?php echo _QXZ("CALLBACKS FOR AGENT %1s:<br />To see information on one of the callbacks below, click on the INFO link. To call the customer back now, click on the DIAL link. If you click on a record below to dial it, it will be removed from the list.",0,'',$VD_login); ?>
+        </div>
+        
+        <div class="scroll_callback_auto" id="CallBacKsLisT" style="
+            max-height:300px;
+            overflow-y:auto;
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:6px;
+            padding:10px;
+            margin-bottom:12px;">
+        </div>
+        
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <a href="#" onclick="CalLBacKsLisTCheck();return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:linear-gradient(135deg, #3b82f6, #2563eb);
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                🔄 Refresh
+            </a>
+            <a href="#" onclick="CalLBacKsLisTClose();return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#ef4444;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Go Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modern New Manual Dial Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;
+    overflow-y:auto;"
+    id="NeWManuaLDiaLBox">
+    
+    <div style="width:100%;max-width:600px;">
+        <div style="text-align:center;font-size:13px;font-weight:700;color:#1e293b;margin-bottom:12px;">
+            <?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?>
+        </div>
+        
+        <div style="background:#f0f9ff;border:2px solid #0ea5e9;border-radius:8px;padding:12px;margin-bottom:12px;font-size:11px;color:#0369a1;line-height:1.6;">
+            <strong><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?></strong><br />
+            <?php 
+            if (!preg_match("/X/i",$manual_dial_prefix)) {
+                echo _QXZ("Note: a dial prefix of %1s will be added to the beginning of this number",0,'',$manual_dial_prefix)."<br />";
+            }
+            echo _QXZ("Note: all new manual dial leads will go into list %1s",0,'',$manual_dial_list_id);
+            ?>
+        </div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <?php 
+            if (!preg_match("/ONLY/",$manual_dial_lead_id)) {
+                echo "
+                <div>
+                    <label style=\"display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;\">Dial Code</label>
+                    <input type=\"text\" size=\"7\" maxlength=\"10\" name=\"MDDiaLCodE\" id=\"MDDiaLCodE\" value=\"<?php echo $default_phone_code ?>\" style=\"
+                        width:100%;
+                        padding:8px;
+                        border:2px solid #cbd5e1;
+                        border-radius:6px;
+                        font-size:12px;\"
+                        onfocus=\"this.style.borderColor='#3b82f6';\"
+                        onblur=\"this.style.borderColor='#cbd5e1';\" />
+                    <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Usually a 1 in the USA-Canada)</div>
+                </div>
+                
+                <div>
+                    <label style=\"display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;\">Phone Number</label>
+                    <input type=\"text\" size=\"14\" maxlength=\"18\" name=\"MDPhonENumbeR\" id=\"MDPhonENumbeR\" style=\"
+                        width:100%;
+                        padding:8px;
+                        border:2px solid #cbd5e1;
+                        border-radius:6px;
+                        font-size:12px;\"
+                        onfocus=\"this.style.borderColor='#3b82f6';\"
+                        onblur=\"this.style.borderColor='#cbd5e1';\" />
+                    <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Digits only)</div>
+                </div>
+                ";
+            } else {
+                echo "<input type=\"hidden\" name=\"MDDiaLCodE\" id=\"MDDiaLCodE\" value=\"$default_phone_code\" />";
+                echo "<input type=\"hidden\" name=\"MDPhonENumbeR\" id=\"MDPhonENumbeR\" />";
+            }
+            ?>
+        </div>
+        
+        <input type="hidden" name="MDPhonENumbeRHiddeN" id="MDPhonENumbeRHiddeN" />
+        <input type="hidden" name="MDLeadID" id="MDLeadID" />
+        <input type="hidden" name="MDType" id="MDType" />
+        
+        <?php 
+        if ( ($manual_dial_lead_id=='Y') or ($manual_dial_lead_id=='ONLY') ) {
+            echo "
+            <div style=\"margin-bottom:12px;\">
+                <label style=\"display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;\">Dial Lead ID</label>
+                <input type=\"text\" size=\"10\" maxlength=\"10\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" style=\"
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:12px;\"
+                    onfocus=\"this.style.borderColor='#3b82f6';\"
+                    onblur=\"this.style.borderColor='#cbd5e1';\" />
+                <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Digits only)</div>
+            </div>
+            ";
+        } else {
+            echo "<input type=\"hidden\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" />";
+        }
+        
+        $LeadLookuPXtra='';
+        if ($manual_dial_search_checkbox == 'SELECTED_LOCK') { $LeadLookuPXtra = 'CHECKED DISABLED '; }
+        if ($manual_dial_search_checkbox == 'UNSELECTED_LOCK') { $LeadLookuPXtra = 'DISABLED '; }
+        ?>
+        
+        <div style="margin-bottom:12px;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:11px;color:#475569;">
+                <input type="checkbox" name="LeadLookuP" id="LeadLookuP" value="0" <?php echo $LeadLookuPXtra ?> />
+                <strong>Search Existing Leads</strong>
+                <span style="font-size:9px;color:#64748b;">(Attempt to find the phone number in system before inserting as new lead)</span>
+            </label>
+        </div>
+        
+        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:12px;margin-bottom:12px;font-size:10px;color:#475569;line-height:1.5;">
+            <div style="margin-bottom:8px;">
+                <span id="ManuaLDiaLGrouPSelecteD"></span>
+                <span id="ManuaLDiaLGrouP"></span>
+            </div>
+            <div style="margin-bottom:8px;">
+                <span id="ManuaLDiaLInGrouPSelecteD"></span>
+                <span id="ManuaLDiaLInGrouP"></span>
+            </div>
+            <div>
+                <span id="NoDiaLSelecteD"></span>
+            </div>
+        </div>
+        
+        <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:8px;padding:12px;margin-bottom:12px;font-size:10px;color:#92400e;line-height:1.5;">
+            If you want to dial a number and have it NOT be added as a new lead, enter in the exact dialstring that you want to call in the Dial Override field below. To hangup this call you will have to open the CALLS IN THIS SESSION link at the bottom of the screen and hang it up by clicking on its channel link there.
+        </div>
+        
+        <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Dial Override</label>
+            <?php
+            if ($manual_dial_override_field == 'ENABLED') {
+                echo "<input type=\"text\" size=\"24\" maxlength=\"20\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" style=\"
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:12px;\"
+                    onfocus=\"this.style.borderColor='#3b82f6';\"
+                    onblur=\"this.style.borderColor='#cbd5e1';\" />
+                <div style=\"font-size:9px;color:#64748b;margin-top:4px;\">(Digits only please)</div>";
+            } else {
+                echo "<input type=\"hidden\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" />";
+                echo "<div style=\"font-size:11px;color:#ef4444;font-weight:700;\">DISABLED</div>";
+            }
+            ?>
+        </div>
+        
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+            <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:linear-gradient(135deg, #10b981, #059669);
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                📞 Dial Now
+            </a>
+            <?php if ($manual_dial_preview > 0) { ?>
+            <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:linear-gradient(135deg, #f59e0b, #d97706);
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                👁️ Preview Call
+            </a>
+            <?php } ?>
+            <a href="#" onclick="ManualDialHide();return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#6b7280;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Go Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modern Closer Inbound Group Selection Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border:2px solid #10b981;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(16,185,129,0.3);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;"
+    id="CloserSelectBox">
+    
+    <div style="text-align:center;width:100%;">
+        <div style="font-size:14px;font-weight:700;color:#047857;margin-bottom:16px;">
+            <?php echo _QXZ("CLOSER INBOUND GROUP SELECTION"); ?>
+        </div>
+        
+        <span id="CloserSelectContent" style="display:block;font-size:12px;color:#065f46;margin-bottom:12px;">
+            <?php echo _QXZ("Closer Inbound Group Selection"); ?>
+        </span>
+        <input type="hidden" name="CloserSelectList" id="CloserSelectList" />
+        
+        <?php
+        if ( ($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0) ) {
+            echo "
+            <label style=\"display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:#065f46;margin-bottom:12px;\">
+                <input type=\"checkbox\" name=\"CloserSelectBlended\" id=\"CloserSelectBlended\" value=\"0\" />
+                <strong>BLENDED CALLING (outbound activated)</strong>
+            </label>
+            ";
+        }
+        ?>
+        
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <a href="#" onclick="CloserSelectContent_create('YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#f59e0b;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Reset
+            </a>
+            <a href="#" onclick="CloserSelect_submit('YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#10b981;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Submit
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modern Territory Selection Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:linear-gradient(135deg, #e0e7ff, #dbeafe);
+    border:2px solid #6366f1;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(99,102,241,0.3);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;"
+    id="TerritorySelectBox">
+    
+    <div style="text-align:center;width:100%;">
+        <div style="font-size:14px;font-weight:700;color:#1e1b4b;margin-bottom:16px;">
+            <?php echo _QXZ("TERRITORY SELECTION"); ?>
+        </div>
+        
+        <span id="TerritorySelectContent" style="display:block;font-size:12px;color:#3730a3;margin-bottom:12px;">
+            <?php echo _QXZ("Territory Selection"); ?>
+        </span>
+        <input type="hidden" name="TerritorySelectList" id="TerritorySelectList" />
+        
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <a href="#" onclick="TerritorySelectContent_create('YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#f59e0b;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Reset
+            </a>
+            <a href="#" onclick="TerritorySelect_submit('YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#6366f1;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Submit
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Nothing Box (for form elements) -->
+<span style="display:none;" id="NothingBox">
+    <span id="DiaLLeaDPrevieWHide"><?php echo _QXZ("Channel"); ?></span>
+    <span id="DiaLDiaLAltPhonEHide"><?php echo _QXZ("Channel"); ?></span>
+    <?php
+    if (!$agentonly_callbacks) {
+        echo "<input type=\"checkbox\" name=\"CallBackOnlyMe\" id=\"CallBackOnlyMe\" value=\"0\" /> "._QXZ("MY CALLBACK ONLY")." <br />";
+    }
+    if ( ($outbound_autodial_active < 1) or ($disable_blended_checkbox > 0) or ($dial_method == 'INBOUND_MAN') or ($VU_agent_choose_blended < 1) ) {
+        echo "<input type=\"checkbox\" name=\"CloserSelectBlended\" id=\"CloserSelectBlended\" value=\"0\" /> "._QXZ("BLENDED CALLING")."<br />";
+    }
+    ?>
 </span>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CallBacKsLisTBox">
-    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sh_text"><?php echo _QXZ("CALLBACKS FOR AGENT %1s:<br />To see information on one of the callbacks below, click on the INFO link. To call the customer back now, click on the DIAL link. If you click on a record below to dial it, it will be removed from the list.",0,'',$VD_login); ?></font>
- <br />
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<div class="scroll_callback_auto" id="CallBacKsLisT"></div>
-    <br /><font class="sh_text"> &nbsp;
-	<a href="#" onclick="CalLBacKsLisTCheck();return false;"><?php echo _QXZ("Refresh"); ?></a>
-	 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; 
-	<a href="#" onclick="CalLBacKsLisTClose();return false;"><?php echo _QXZ("Go Back"); ?></a>
-	</font>
-    </td></tr></table>
-</span>
+<!-- Modern Call Log Display Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;"
+    id="CalLLoGDisplaYBox">
+    
+    <div style="width:100%;">
+        <div style="text-align:center;font-size:13px;font-weight:700;color:#1e293b;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+            <span>📞 AGENT CALL LOG</span>
+            <a href="#" onclick="CalLLoGVieWClose();return false;" style="
+                color:#ef4444;
+                text-decoration:none;
+                font-size:12px;
+                font-weight:700;">
+                Close [×]
+            </a>
+        </div>
+        
+        <div class="scroll_calllog" id="CallLogSpan" style="
+            max-height:400px;
+            overflow-y:auto;
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:6px;
+            padding:10px;
+            margin-bottom:12px;
+            font-size:11px;
+            color:#475569;">
+            <?php echo _QXZ("Call log List"); ?>
+        </div>
+    </div>
+</div>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NeWManuaLDiaLBox">
-    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("NEW MANUAL DIAL LEAD FOR %1s in campaign %2s:",0,'',$VD_login,$VD_campaign); ?></font><br /><br /><font class="sh_text"><?php echo _QXZ("Enter information below for the new lead you wish to call."); ?>
- <br />
-	<?php 
-	if (!preg_match("/X/i",$manual_dial_prefix))
-		{
-        echo _QXZ("Note: a dial prefix of %1s will be added to the beginning of this number",0,'',$manual_dial_prefix)."<br />\n";
-		}
-	?>
-    <?php echo _QXZ("Note: all new manual dial leads will go into list %1s",0,'',$manual_dial_list_id); ?><br /><br />
-    <table><tr>
-	<?php 
-	if (!preg_match("/ONLY/",$manual_dial_lead_id))
-		{
-		?>
-		<td align="right"><font class="body_text"> <?php echo _QXZ("Dial Code:"); ?> </font></td>
-		<td align="left"><font class="body_text"><input type="text" size="7" maxlength="10" name="MDDiaLCodE" id="MDDiaLCodE" class="cust_form" value="<?php echo $default_phone_code ?>" />&nbsp; <?php echo _QXZ("(This is usually a 1 in the USA-Canada)"); ?></font></td>
-		</tr><tr>
-		<td align="right"><font class="body_text"> <?php echo _QXZ("Phone Number:"); ?> </font></td>
-		<td align="left"><font class="body_text">
-		<input type="text" size="14" maxlength="18" name="MDPhonENumbeR" id="MDPhonENumbeR" class="cust_form" value="" />&nbsp; <?php echo _QXZ("(digits only)"); ?></font>
-		<?php
-		}
-	else
-		{
-		echo "<input type=\"hidden\" name=\"MDDiaLCodE\" id=\"MDDiaLCodE\" value=\"$default_phone_code\" />\n";
-		echo "<input type=\"hidden\" name=\"MDPhonENumbeR\" id=\"MDPhonENumbeR\" value=\"\" />\n";
-		}
-	?>
-	<input type="hidden" name="MDPhonENumbeRHiddeN" id="MDPhonENumbeRHiddeN" value="" />
-	<input type="hidden" name="MDLeadID" id="MDLeadID" value="" />
-	<input type="hidden" name="MDType" id="MDType" value="" />
-	<?php 
-	if ( ($manual_dial_lead_id=='Y') or ($manual_dial_lead_id=='ONLY') )
-		{
-        echo "	</td>";
-        echo "	</tr><tr>\n";
-        echo "	<td align=\"right\"><font class=\"body_text\"> "._QXZ("Dial Lead ID:")." </font></td>\n";
-        echo "	<td align=\"left\"><font class=\"body_text\">\n";
-        echo "	<input type=\"text\" size=\"10\" maxlength=\"10\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" class=\"cust_form\" value=\"\" />&nbsp; "._QXZ("(digits only)")."</font>\n";
-		}
-	else
-		{
-		echo "<input type=\"hidden\" name=\"MDLeadIDEntry\" id=\"MDLeadIDEntry\" value=\"\" />\n";
-		}
+<!-- Modern Agent Time Display Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;
+    overflow-y:auto;"
+    id="AgentTimeDisplayBox">
+    
+    <div style="width:100%;">
+        <div style="text-align:center;font-size:13px;font-weight:700;color:#1e293b;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+            <span>⏱️ AGENT TIME REPORT</span>
+            <a href="#" onclick="AgentTimeReport('close');return false;" style="
+                color:#ef4444;
+                text-decoration:none;
+                font-size:12px;
+                font-weight:700;">
+                Close [×]
+            </a>
+        </div>
+        
+        <?php
+        if (preg_match("/RANGE/",$agent_screen_time_display)) {
+            echo "
+            <div style=\"background:#f0f9ff;border:2px solid #0ea5e9;border-radius:8px;padding:12px;margin-bottom:12px;\">
+                <div style=\"display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;\">
+                    <div>
+                        <label style=\"display:block;font-size:10px;font-weight:600;color:#0369a1;margin-bottom:4px;\">Start Date</label>
+                        <input type=\"text\" name=\"ATstart_date\" id=\"ATstart_date\" value=\"$NOW_DATE\" size=\"12\" maxlength=\"10\" style=\"
+                            width:100%;
+                            padding:6px;
+                            border:2px solid #0ea5e9;
+                            border-radius:6px;
+                            font-size:11px;\" />
+                    </div>
+                    <div>
+                        <label style=\"display:block;font-size:10px;font-weight:600;color:#0369a1;margin-bottom:4px;\">End Date</label>
+                        <input type=\"text\" name=\"ATend_date\" id=\"ATend_date\" value=\"$NOW_DATE\" size=\"12\" maxlength=\"10\" style=\"
+                            width:100%;
+                            padding:6px;
+                            border:2px solid #0ea5e9;
+                            border-radius:6px;
+                            font-size:11px;\" />
+                    </div>
+                    <div>
+                        <label style=\"display:block;font-size:10px;font-weight:600;color:#0369a1;margin-bottom:4px;\">&nbsp;</label>
+                        <a href=\"#\" onclick=\"LaunchAgentTimeReport('');return false;\" style=\"
+                            display:inline-flex;
+                            align-items:center;
+                            justify-content:center;
+                            width:100%;
+                            padding:6px;
+                            background:#0ea5e9;
+                            color:#fff;
+                            text-decoration:none;
+                            border-radius:6px;
+                            font-size:11px;
+                            font-weight:700;\"
+                            onmouseover=\"this.style.background='#0284c7';\"
+                            onmouseout=\"this.style.background='#0ea5e9';\">
+                            GO
+                        </a>
+                    </div>
+                </div>
+            </div>
+            ";
+        } else {
+            echo "<input type=\"hidden\" name=\"ATstart_date\" id=\"ATstart_date\" value=\"$NOW_DATE\" />";
+            echo "<input type=\"hidden\" name=\"ATend_date\" id=\"ATend_date\" value=\"$NOW_DATE\" />";
+        }
+        ?>
+        
+        <div class="scroll_calllog" id="AgentTimeDisplaySpan" style="
+            max-height:300px;
+            overflow-y:auto;
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:6px;
+            padding:10px;
+            font-size:11px;
+            color:#475569;">
+            <?php echo _QXZ("Agent Time Report"); ?>
+        </div>
+    </div>
+</div>
 
-	$LeadLookuPXtra='';
-	if ($manual_dial_search_checkbox == 'SELECTED_LOCK')
-		{$LeadLookuPXtra = 'CHECKED DISABLED ';}
-	if ($manual_dial_search_checkbox == 'UNSELECTED_LOCK')
-		{$LeadLookuPXtra = 'DISABLED ';}
-	?>
-	</td>
-	</tr><tr>
-    <td align="right"><font class="body_text"> <?php echo _QXZ("Search Existing Leads:"); ?> </font></td>
-    <td align="left"><font class="body_text"><input type="checkbox" name="LeadLookuP" id="LeadLookuP" size="1" value="0" <?php echo $LeadLookuPXtra ?>/>&nbsp; <?php echo _QXZ("(This option if checked will attempt to find the phone number in the system before inserting it as a new lead)"); ?></font></td>
-	</tr><tr>
+<!-- Modern Search Contacts Display Box -->
+<div style="
+    position:fixed;
+    left:0;
+    top:0;
+    width:<?php echo $CAwidth ?>px;
+    height:<?php echo $WRheight ?>px;
+    z-index:<?php $zi++; echo $zi ?>;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    padding:20px;
+    overflow-y:auto;"
+    id="SearcHContactsDisplaYBox">
+    
+    <div style="width:100%;max-width:650px;">
+        <div style="text-align:center;font-size:13px;font-weight:700;color:#1e293b;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+            <span>🔍 SEARCH FOR A CONTACT</span>
+            <a href="#" onclick="ContactSearcHVieWClose();return false;" style="
+                color:#ef4444;
+                text-decoration:none;
+                font-size:12px;
+                font-weight:700;">
+                Close [×]
+            </a>
+        </div>
+        
+        <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:8px;padding:12px;margin-bottom:12px;font-size:10px;color:#92400e;line-height:1.5;">
+            <strong>Notes:</strong> When doing a search for a contact, wildcard or partial search terms are not allowed. Contact search requests are all logged in the system.
+        </div>
+        
+        <form style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Office Number</label>
+                <input type="text" size="18" maxlength="20" name="contacts_phone_number" id="contacts_phone_number" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">First Name</label>
+                <input type="text" size="18" maxlength="20" name="contacts_first_name" id="contacts_first_name" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Last Name</label>
+                <input type="text" size="18" maxlength="20" name="contacts_last_name" id="contacts_last_name" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">BU Name</label>
+                <input type="text" size="18" maxlength="20" name="contacts_bu_name" id="contacts_bu_name" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Department</label>
+                <input type="text" size="18" maxlength="20" name="contacts_department" id="contacts_department" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Group Name</label>
+                <input type="text" size="18" maxlength="20" name="contacts_group_name" id="contacts_group_name" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Job Title</label>
+                <input type="text" size="18" maxlength="20" name="contacts_job_title" id="contacts_job_title" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+            
+            <div>
+                <label style="display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;">Location</label>
+                <input type="text" size="18" maxlength="20" name="contacts_location" id="contacts_location" style="
+                    width:100%;
+                    padding:8px;
+                    border:2px solid #cbd5e1;
+                    border-radius:6px;
+                    font-size:11px;"
+                    onfocus="this.style.borderColor='#3b82f6';"
+                    onblur="this.style.borderColor='#cbd5e1';" />
+            </div>
+        </form>
+        
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <a href="#" onclick="ContactSearchSubmit();return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:linear-gradient(135deg, #3b82f6, #2563eb);
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                🔍 Submit Search
+            </a>
+            <a href="#" onclick="ContactSearchReset('YES');return false;" style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:8px 16px;
+                background:#f59e0b;
+                color:#fff;
+                text-decoration:none;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:700;
+                text-transform:uppercase;">
+                Reset Form
+            </a>
+        </div>
+    </div>
+</div>
 
-    <td align="left" colspan="2">
-	<font class="sh_text">
-    <br /><br /><CENTER>
-	<span id="ManuaLDiaLGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLGrouP"></span>
-	<br><br>
-	<span id="ManuaLDiaLInGrouPSelecteD"></span> &nbsp; &nbsp; <span id="ManuaLDiaLInGrouP"></span>
-	<br><br>
-	<span id="NoDiaLSelecteD"></span>
-	</CENTER>
-    <br /><br /><?php echo _QXZ("If you want to dial a number and have it NOT be added as a new lead, enter in the exact dialstring that you want to call in the Dial Override field below. To hangup this call you will have to open the CALLS IN THIS SESSION link at the bottom of the screen and hang it up by clicking on its channel link there."); ?><br /> &nbsp; </font></td>
-	</tr><tr>
-    <td align="right"><font class="body_text"> <?php echo _QXZ("Dial Override:"); ?> </font></td>
-    <td align="left"><font class="body_text">
-	<?php
-	if ($manual_dial_override_field == 'ENABLED')
-		{
-		?>
-		<input type="text" size="24" maxlength="20" name="MDDiaLOverridE" id="MDDiaLOverridE" class="cust_form" value="" />&nbsp; 
-		<?php
-		echo _QXZ("(digits only please)");
-		}
-	else
-		{
-		?>
-		<input type="hidden" name="MDDiaLOverridE" id="MDDiaLOverridE" value="" />&nbsp; 
-		<?php
-		echo _QXZ("DISABLED");
-		}
-	 ?>
-	</font>
-	</td>
-    </tr></table>
- <br />
-	<a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;"><?php echo _QXZ("Dial Now"); ?></a>
-	 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; 
-	 <?php if ($manual_dial_preview > 0)
-		 {
-		 echo "<a href=\"#\" onclick=\"NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;\">"._QXZ("Preview Call")."</a>
-		 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; \n";
-		 }
-	 ?>
-	<a href="#" onclick="ManualDialHide();return false;"><?php echo _QXZ("Go Back"); ?></a></font>
-    </td></tr></table>
-</span>
 
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CloserSelectBox">
-    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("CLOSER INBOUND GROUP SELECTION"); ?></font> <br />
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<font class="sh_text">
-	<span id="CloserSelectContent"> <?php echo _QXZ("Closer Inbound Group Selection"); ?> </span>
-    <input type="hidden" name="CloserSelectList" id="CloserSelectList" /><br />
-	<?php
-	if ( ($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0) )
-		{
-		?>
-        <input type="checkbox" name="CloserSelectBlended" id="CloserSelectBlended" size="1" value="0" /> <?php echo _QXZ("BLENDED CALLING(outbound activated)"); ?> <br />
-		<?php
-		}
-	?>
-	<a href="#" onclick="CloserSelectContent_create('YES');return false;"> <?php echo _QXZ("RESET"); ?> </a> | 
-	<a href="#" onclick="CloserSelect_submit('YES');return false;"><?php echo _QXZ("SUBMIT"); ?></a>
-    <br /><br /><br /><br /> &nbsp;</font>
-    </td></tr></table>
-</span>
-
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="TerritorySelectBox">
-    <table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> <font class="sd_text"><?php echo _QXZ("TERRITORY SELECTION"); ?></font> <br />
-	<?php
-	if ($webphone_location == 'bar')
-        {echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<font class='sh_text'>
-	<span id="TerritorySelectContent"> <?php echo _QXZ("Territory Selection"); ?> </span>
-    <input type="hidden" name="TerritorySelectList" id="TerritorySelectList" /><br />
-	<a href="#" onclick="TerritorySelectContent_create('YES');return false;"> <?php echo _QXZ("RESET"); ?> </a> | 
-	<a href="#" onclick="TerritorySelect_submit('YES');return false;"><?php echo _QXZ("SUBMIT"); ?></a>
-    <br /><br /><br /><br /> &nbsp;</font>
-    </td></tr></table>
-</span>
-
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NothingBox">
-	<span id="DiaLLeaDPrevieWHide"> <?php echo _QXZ("Channel"); ?></span>
-	<span id="DiaLDiaLAltPhonEHide"> <?php echo _QXZ("Channel"); ?></span>
-	<?php
-	if (!$agentonly_callbacks)
-        {echo "<input type=\"checkbox\" name=\"CallBackOnlyMe\" id=\"CallBackOnlyMe\" size=\"1\" value=\"0\" /> "._QXZ("MY CALLBACK ONLY")." <br />";}
-	if ( ($outbound_autodial_active < 1) or ($disable_blended_checkbox > 0) or ($dial_method == 'INBOUND_MAN') or ($VU_agent_choose_blended < 1) )
-        {echo "<input type=\"checkbox\" name=\"CloserSelectBlended\" id=\"CloserSelectBlended\" size=\"1\" value=\"0\" /> "._QXZ("BLENDED CALLING")."<br />";}
-	?>
-</span>
-
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CalLLoGDisplaYBox">
-	<table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> &nbsp; &nbsp; &nbsp; <font class="sd_text"><?php echo _QXZ("AGENT CALL LOG:"); ?></font> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <font class="sh_text"><a href="#" onclick="CalLLoGVieWClose();return false;"><?php echo _QXZ("close"); ?> [X]</a><br />
-	<?php
-	if ($webphone_location == 'bar')
-		{echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<div class="scroll_calllog" id="CallLogSpan"> <?php echo _QXZ("Call log List"); ?> </div>
-	<br /><br /> &nbsp;</font>
-	</td></tr></table>
-</span>
-
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="AgentTimeDisplayBox">
-	<table border="0" bgcolor="#CCFFCC" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top">
-	<?php
-	if (preg_match("/RANGE/",$agent_screen_time_display))
-		{
-		echo " &nbsp; &nbsp; &nbsp; <font class=\"sd_text\">"._QXZ("AGENT TIME REPORT")." : &nbsp; <br />";
-		echo " <input type=text name=ATstart_date id=ATstart_date value=\"$NOW_DATE\" size=12 maxlength=10>";
-		echo "<script language=\"JavaScript\">\n";
-		echo "var o_cal = new tcal ({\n";
-		echo "	'formname': 'vicidial_form',\n";
-		echo "	'controlname': 'ATstart_date'});\n";
-		echo "o_cal.a_tpl.yearscroll = false;\n";
-		echo "</script>\n";
-		echo " &nbsp; "._QXZ("to");
-		echo " &nbsp; <input type=text name=ATend_date id=ATend_date value=\"$NOW_DATE\" size=12 maxlength=10>";
-		echo "<script language=\"JavaScript\">\n";
-		echo "var o_cal = new tcal ({\n";
-		echo "	'formname': 'vicidial_form',\n";
-		echo "	'controlname': 'ATend_date'});\n";
-		echo "o_cal.a_tpl.yearscroll = false;\n";
-		echo "</script>\n";
-		echo " &nbsp; <a href=\"#\" onclick=\"LaunchAgentTimeReport('');return false;\">"._QXZ("GO")."</a></font> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ";
-		echo "<font class=\"sh_text\"><a href=\"#\" onclick=\"AgentTimeReport('close');return false;\">"._QXZ("close")." [X]</a><br />";
-		}
-	else
-		{
-		echo "<input type=hidden name=ATstart_date id=ATstart_date value=\"$NOW_DATE\">\n";
-		echo "<input type=hidden name=ATend_date id=ATend_date value=\"$NOW_DATE\">\n";
-		}
-	?>
-	<div class="scroll_calllog" id="AgentTimeDisplaySpan"> <?php echo _QXZ("Agent Time Report"); ?> </div>
-	<br /><br /> &nbsp;</font>
-	</td></tr></table>
-</span>
-
-<span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="SearcHContactsDisplaYBox">
-	<table border="0" bgcolor="#CCFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> &nbsp; &nbsp; &nbsp; <font class="sd_text"><?php echo _QXZ("SEARCH FOR A CONTACT:"); ?></font> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <font class="sh_text"><a href="#" onclick="ContactSearcHVieWClose();return false;">close [X]</a><br />
-	<?php
-	if ($webphone_location == 'bar')
-		{echo "<br /><img src=\"./images/"._QXZ("pixel.gif")."\" width=\"1px\" height=\"".$webphone_height."px\" /><br />\n";}
-	?>
-	<br /><br />
-	<?php echo _QXZ("Notes: when doing a search for a contact, wildcard or partial search terms are not allowed. <br />Contact search requests are all logged in the system."); ?>
-	<br /><br />
-	<center>
-	<table border="0">
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("Office Number:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_phone_number" id="contacts_phone_number"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("First Name:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_first_name" id="contacts_first_name"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("Last Name:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_last_name" id="contacts_last_name"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("BU Name:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_bu_name" id="contacts_bu_name"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("Department:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_department" id="contacts_department"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("Group Name:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_group_name" id="contacts_group_name"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("Job Title:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_job_title" id="contacts_job_title"></font></td>
-	</tr>
-	<tr>
-	<td align="right"><font class="sh_text"> <?php echo _QXZ("Location:"); ?> </td><td align="left"><input type="text" size="18" maxlength="20" name="contacts_location" id="contacts_location"></font></td>
-	</tr>
-	<tr>
-	<td align="center" colspan="2"><font class="sh_text"><br /> <a href="#" onclick="ContactSearchSubmit();return false;"><?php echo _QXZ("SUBMIT SEARCH"); ?></a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="#" onclick="ContactSearchReset('YES');return false;"><?php echo _QXZ("reset form"); ?></a></font></td>
-	</tr>
-	</table>
-	<br /><br /> &nbsp;</font>
-	</td></tr></table>
-</span>
 
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="SearcHResultSContactsBox">
 	<table border="0" bgcolor="#CCFFFF" width="<?php echo $CAwidth ?>px" height="<?php echo $WRheight ?>px"><tr><td align="center" valign="top"> &nbsp; &nbsp; &nbsp; <font class="sd_text"><?php echo _QXZ("CONTACTS SEARCH RESULTS:"); ?></font> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <font class="sh_text"><a href="#" onclick="hideDiv('SearcHResultSContactsBox');return false;"><?php echo _QXZ("close"); ?> [X]</a><br />
