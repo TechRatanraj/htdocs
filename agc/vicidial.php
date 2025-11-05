@@ -24222,33 +24222,6 @@ $zi=2;
             <br />
             
             <!-- Recording Section -->
-            <div style="
-                padding:12px;
-                background:linear-gradient(135deg, #fef3c7, #fde68a);
-                border-radius:8px;
-                margin-bottom:12px;
-                text-align:left;
-                border-left:4px solid #f59e0b;
-                box-shadow:0 2px 6px rgba(245,158,11,0.2);">
-                <div style="
-                    font-size:10px;
-                    color:#92400e;
-                    font-weight:600;
-                    text-transform:uppercase;
-                    letter-spacing:0.5px;
-                    margin-bottom:6px;">
-                    <?php echo _QXZ("RECORDING FILE:"); ?>
-                </div>
-                <div style="font-size:10px;color:#78350f;word-break:break-all;margin-bottom:8px;">
-                    <span id="RecorDingFilename"></span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:10px;color:#92400e;font-weight:600;">
-                        <?php echo _QXZ("RECORD ID:"); ?>
-                    </span>
-                    <span id="RecorDID" style="font-size:11px;color:#78350f;font-weight:700;"></span>
-                </div>
-            </div>
             </center>
             
     
