@@ -24125,227 +24125,96 @@ $zi=2;
 	if ( ($alt_number_dialing=='SELECTED') or ($alt_number_dialing=='SELECTED_TIMER_ALT') or ($alt_number_dialing=='SELECTED_TIMER_ADDR3') )
 		{$alt_phone_selected='CHECKED';}
 	?>
-	    </td></tr>
+	</td></tr>
     <tr><td colspan="3"><span id="busycallsdebug"></span></td></tr>
-    <tr>
-        <!-- Modern Sidebar Column -->
-        <td width="180px" align="left" valign="top" style="
-            padding:15px 10px;
-            background:#f8fafc;
-            border-right:2px solid #e2e8f0;
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-            
-            <center>
-            <!-- Dial Control Button -->
-            <span style="
-                background:linear-gradient(135deg, #10b981, #059669);
-                border-radius:8px;
-                display:block;
-                margin-bottom:12px;
-                box-shadow:0 2px 8px rgba(16,185,129,0.3);
-                transition:all 0.3s ease;" 
-                id="DiaLControl"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(16,185,129,0.3)';">
-                <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');">
-                    <img src="./images/<?php echo _QXZ("vdc_LB_dialnextnumber_OFF.gif"); ?>" border="0" alt="Dial Next Number" style="display:block;border-radius:8px;width:100%;" />
-                </a>
-            </span>
-            
-            <span id="ManualQueueNotice" style="display:block;font-size:11px;color:#475569;margin-bottom:8px;"></span>
-            <span id="ManualQueueChoice" style="display:block;margin-bottom:12px;"></span>
-            
-            <!-- Options Section -->
-            <div style="
-                text-align:left;
-                padding:12px;
-                background:#fff;
-                border-radius:8px;
-                margin-bottom:12px;
-                box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-                <span id="DiaLLeaDPrevieW">
-                    <label style="
-                        display:flex;
-                        align-items:center;
-                        gap:8px;
-                        cursor:pointer;
-                        font-size:11px;
-                        color:#475569;
-                        font-weight:500;
-                        margin-bottom:8px;">
-                        <input type="checkbox" name="LeadPreview" size="1" value="0" style="
-                            cursor:pointer;
-                            width:16px;
-                            height:16px;
-                            accent-color:#667eea;" />
-                        <span><?php echo _QXZ("LEAD PREVIEW"); ?></span>
-                    </label>
-                </span>
-                <span id="DiaLDiaLAltPhonE">
-                    <label style="
-                        display:flex;
-                        align-items:center;
-                        gap:8px;
-                        cursor:pointer;
-                        font-size:11px;
-                        color:#475569;
-                        font-weight:500;">
-                        <input type="checkbox" name="DiaLAltPhonE" size="1" value="0" <?php echo $alt_phone_selected ?> style="
-                            cursor:pointer;
-                            width:16px;
-                            height:16px;
-                            accent-color:#667eea;" />
-                        <span><?php echo _QXZ("ALT PHONE DIAL"); ?></span>
-                    </label>
-                </span>
-            </div>
-            
-            <!-- Next Call Pause -->
-            <span id="NexTCalLPausE">
-                <a href="#" onclick="next_call_pause_click();return false;" style="
-                    display:inline-block;
-                    padding:8px 16px;
-                    background:#fff;
-                    color:#667eea;
-                    text-decoration:none;
-                    border:2px solid #667eea;
-                    border-radius:8px;
-                    font-size:11px;
-                    font-weight:600;
-                    margin-bottom:15px;
-                    transition:all 0.3s ease;"
-                    onmouseover="this.style.background='#667eea';this.style.color='#fff';"
-                    onmouseout="this.style.background='#fff';this.style.color='#667eea';">
-                    ⏸ <?php echo _QXZ("Next Call Pause"); ?>
-                </a>
-            </span>
-            <br />
-            
-            <!-- Recording Section -->
+    <tr><td width="150px" align="left" valign="top">
+	<font class="body_text"><center>
+    <span style="background-color: #CCFFCC" id="DiaLControl"><a href="#" onclick="ManualDialNext('','','','','','0','','','YES');"><img src="./images/<?php echo _QXZ("vdc_LB_dialnextnumber_OFF.gif"); ?>" border="0" alt="Dial Next Number" /></a></span><br />
+	<span id="ManualQueueNotice"></span>
+	<span id="ManualQueueChoice"></span>
+    <span id="DiaLLeaDPrevieW"><font class="preview_text"> <input type="checkbox" name="LeadPreview" size="1" value="0" /> <?php echo _QXZ("LEAD PREVIEW"); ?><br /></font></span>
+    <span id="DiaLDiaLAltPhonE"><font class="preview_text"> <input type="checkbox" name="DiaLAltPhonE" size="1" value="0" <?php echo $alt_phone_selected ?>/><?php echo _QXZ(" ALT PHONE DIAL"); ?><br /></font></span>
+    <font class="skb_text"><span id="NexTCalLPausE"> <a href="#" onclick="next_call_pause_click();return false;"><?php echo _QXZ("Next Call Pause"); ?></a> <br /></span></font>
 
-            <span id="RecorDMute" style="display:block;margin-bottom:8px;"></span>
-            
-            <?php
-            if ($SSstereo_recording > 0)
-                {echo "<span style=\"display:block;margin-bottom:10px;border-radius:8px;overflow:hidden;\" id=\"StRecorDControl\"><img src=\"./images/"._QXZ("$STstart_recording_GIF_off")."\" border=\"0\" alt=\"Start Stereo Recording\" style=\"display:block;width:100%;\" /></span>";}
-            else
-                {echo "<span id=\"StRecorDControl\"></span>";}
-            
-            if (!preg_match("/NOGAP/",$SSrecording_buttons))
-                {echo "<span id=\"SpacerSpanA\"><div style=\"height:12px;\"></div></span>\n";}
-            
-            if ($SSenable_first_webform > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpan\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_OFF.gif")."\" border=\"0\" alt=\"Web Form\" style=\"display:block;width:100%;\" /></span>\n";}
-            
-            if ($enable_second_webform > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanTwo\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_two_OFF.gif")."\" border=\"0\" alt=\"Web Form 2\" style=\"display:block;width:100%;\" /></span>\n";}
-            
-            if ($enable_third_webform > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;background:#f3f4f6;transition:all 0.3s ease;\" id=\"WebFormSpanThree\" onmouseover=\"this.style.background='#e5e7eb';\" onmouseout=\"this.style.background='#f3f4f6';\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" style=\"display:block;width:100%;\" /></span>\n";}
-            ?>
-        
-            <span style="
-                display:block;
-                margin-bottom:8px;
-                border-radius:8px;
-                overflow:hidden;
-                box-shadow:0 2px 6px rgba(139,92,246,0.3);
-                transition:all 0.3s ease;" 
-                id="XferControl"
-                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 10px rgba(139,92,246,0.4)';"
-                onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 6px rgba(139,92,246,0.3)';">
-                <img src="./images/<?php echo _QXZ("vdc_LB_transferconf_OFF.gif"); ?>" border="0" alt="Transfer - Conference" style="display:block;width:100%;" />
-            </span>
-            
-            <?php
-            if ($quick_transfer_button_enabled > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:all 0.3s ease;\" id=\"QuickXfer\" onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\"><img src=\"./images/"._QXZ("vdc_LB_quickxfer_OFF.gif")."\" border=\"0\" alt=\"Quick Transfer\" style=\"display:block;width:100%;\" /></span>\n";}
-            
-            if ($custom_3way_button_transfer_enabled > 0)
-                {echo "<span style=\"display:block;margin-bottom:8px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:all 0.3s ease;\" id=\"CustomXfer\" onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\"><img src=\"./images/"._QXZ("vdc_LB_customxfer_OFF.gif")."\" border=\"0\" alt=\"Custom Transfer\" style=\"display:block;width:100%;\" /></span>\n";}
-            ?>
-            
-            <span id="ReQueueCall"></span>
-            
-            <?php if ($call_requeue_button > 0) {echo "<div style=\"height:8px;\"></div>\n";} ?>
-            
-            <span id="SpacerSpanC"><div style="height:12px;"></div></span>
-            
-            <!-- Hangup Control -->
-            <span style="
-                display:block;
-                margin-bottom:12px;
-                border-radius:8px;
-                overflow:hidden;
-                background:#fecaca;
-                box-shadow:0 4px 12px rgba(239,68,68,0.4);
-                transition:all 0.3s ease;<?php echo $agent_hide_hangup_ACTIVE_style ?>" 
-                id="HangupControl"
-                onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.5)';"
-                onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';">
-                <img src="./images/<?php echo _QXZ("vdc_LB_hangupcustomer_OFF.gif"); ?>" border="0" alt="Hangup Customer" style="display:block;width:100%;" />
-            </span>
-            
-            <span id="SpacerSpanD"><div style="height:12px;"></div></span>
-            
-            <!-- DTMF Control -->
-            <div class="text_input" id="SendDTMFdiv" style="
-                padding:12px;
-                background:#fff;
-                border-radius:8px;
-                border:2px solid #e2e8f0;
-                box-shadow:0 2px 6px rgba(0,0,0,0.06);">
-                <span id="SendDTMF" style="display:flex;flex-direction:column;gap:8px;">
-                    <a href="#" onclick="SendConfDTMF(session_id,'YES');return false;" style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        padding:8px;
-                        background:#0ea5e9;
-                        color:#fff;
-                        text-decoration:none;
-                        border-radius:6px;
-                        font-size:11px;
-                        font-weight:600;
-                        transition:all 0.3s ease;"
-                        onmouseover="this.style.background='#0284c7';"
-                        onmouseout="this.style.background='#0ea5e9';">
-                        📞 Send DTMF
-                    </a>
-                    <input type="text" size="5" name="conf_dtmf" class="cust_form" value="" maxlength="50" style="
-                        width:100%;
-                        padding:8px;
-                        border:1px solid #cbd5e1;
-                        border-radius:6px;
-                        font-size:13px;
-                        text-align:center;"
-                        placeholder="Enter digits" />
-                </span>
-            </div>
-            </right>
-        </td>
-        
-        <!-- Main Content Column -->
-        <td width="<?php echo $SDwidth ?>px" align="left" valign="top" style="padding:20px;background:#fff;">
-            <input type="hidden" name="lead_id" id="lead_id" value="" />
-            <input type="hidden" name="list_id" id="list_id" value="" />
-            <input type="hidden" name="entry_list_id" id="entry_list_id" value="" />
-            <input type="hidden" name="list_name" id="list_name" value="" />
-            <input type="hidden" name="list_description" id="list_description" value="" />
-            <input type="hidden" name="called_count" id="called_count" value="" />
-            <input type="hidden" name="rank" id="rank" value="" />
-            <input type="hidden" name="owner" id="owner" value="" />
-            <input type="hidden" name="gmt_offset_now" id="gmt_offset_now" value="" />
-            <input type="hidden" name="gender" id="gender" value="" />
-            <input type="hidden" name="date_of_birth" id="date_of_birth" value="" />
-            <input type="hidden" name="country_code" id="country_code" value="" />
-            <input type="hidden" name="uniqueid" id="uniqueid" value="" />
-            <input type="hidden" name="callserverip" id="callserverip" value="" />
-            <input type="hidden" name="SecondS" id="SecondS" value="" />
-            <input type="hidden" name="email_row_id" id="email_row_id" value="" />
-            <input type="hidden" name="chat_id" id="chat_id" value="" />
-            <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
+	<!--
+	<?php
+	if ( ($manual_dial_preview) and ($auto_dial_level==0) )
+        {echo "<font class=\"preview_text\"> <input type=\"checkbox\" name=\"LeadPreview\" size=\"1\" value=\"0\" /> LEAD PREVIEW<br /></font>";}
+	if ( ($alt_phone_dialing) and ($auto_dial_level==0) )
+        {echo "<font class=\"preview_text\"> <input type=\"checkbox\" name=\"DiaLAltPhonE\" size=\"1\" value=\"0\" /> ALT PHONE DIAL<br /></font>";}
+	?> -->
+    <?php echo _QXZ("RECORDING FILE:"); ?><br />
+	</center>
+    <font class="body_tiny"><span id="RecorDingFilename"></span></font><br />
+    <?php echo _QXZ("RECORD ID:"); ?> <font class="body_small"><span id="RecorDID"></span></font><br />
+	<center>
+	<!-- <a href=\"#\" onclick=\"conf_send_recording('MonitorConf','" + head_conf + "','','','');return false;\">Record</a> -->
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="RecorDControl"><a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;"><img src="./images/<?php echo _QXZ("$start_recording_GIF"); ?>" border="0" alt="Start Recording" /></a></span><br />
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="RecorDMute"></span>
+	<?php
+	if ($SSstereo_recording > 0)
+		{echo "<span style=\"background-color:$MAIN_COLOR\" id=\"StRecorDControl\"><img src=\"./images/"._QXZ("$STstart_recording_GIF_off")."\" border=\"0\" alt=\"Start Stereo Recording\" /></span><br />";}
+	else
+		{echo "<span style=\"background-color:$MAIN_COLOR\" id=\"StRecorDControl\"></span>";}
+	if (!preg_match("/NOGAP/",$SSrecording_buttons))
+        {echo "<span id=\"SpacerSpanA\"><img src=\"./images/"._QXZ("blank.gif")."\" width=\"145px\" height=\"16px\" border=\"0\" /></span><br />\n";}
+	if ($SSenable_first_webform > 0)
+        {echo "<span style=\"background-color: #FFFFFF\" id=\"WebFormSpan\"><img src=\"./images/"._QXZ("vdc_LB_webform_OFF.gif")."\" border=\"0\" alt=\"Web Form\" /></span><br />\n";}
+	if ($enable_second_webform > 0)
+        {echo "<span style=\"background-color: #FFFFFF\" id=\"WebFormSpanTwo\"><img src=\"./images/"._QXZ("vdc_LB_webform_two_OFF.gif")."\" border=\"0\" alt=\"Web Form 2\" /></span><br />\n";}
+	if ($enable_third_webform > 0)
+        {echo "<span style=\"background-color: #FFFFFF\" id=\"WebFormSpanThree\"><img src=\"./images/"._QXZ("vdc_LB_webform_three_OFF.gif")."\" border=\"0\" alt=\"Web Form 3\" /></span><br />\n";}
+	?>
+    <font class="body_small_bold"><span id="ParkCounterSpan"> &nbsp; </span></font><br />
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="ParkControl"><img src="./images/<?php echo _QXZ("vdc_LB_parkcall_OFF.gif"); ?>" border="0" alt="Park Call" /></span><br />
+	<?php
+	if ( ($ivr_park_call=='ENABLED') or ($ivr_park_call=='ENABLED_PARK_ONLY') )
+        {echo "<span style=\"background-color: $MAIN_COLOR\" id=\"ivrParkControl\"><img src=\"./images/"._QXZ("vdc_LB_ivrparkcall_OFF.gif")."\" border=\"0\" alt=\"IVR Park Call\" /></span><br />\n";}
+	else
+		{echo "<span style=\"background-color: $MAIN_COLOR\" id=\"ivrParkControl\"></span>\n";}
+	?>
+    <span style="background-color: <?php echo $MAIN_COLOR ?>" id="XferControl"><img src="./images/<?php echo _QXZ("vdc_LB_transferconf_OFF.gif"); ?>" border="0" alt="Transfer - Conference" /></span><br />
 
+	<?php
+	if ($quick_transfer_button_enabled > 0)
+        {echo "<span style=\"background-color: $MAIN_COLOR\" id=\"QuickXfer\"><img src=\"./images/"._QXZ("vdc_LB_quickxfer_OFF.gif")."\" border=\"0\" alt=\"Quick Transfer\" /></span><br />\n";}
+	if ($custom_3way_button_transfer_enabled > 0)
+        {echo "<span style=\"background-color: $MAIN_COLOR\" id=\"CustomXfer\"><img src=\"./images/"._QXZ("vdc_LB_customxfer_OFF.gif")."\" border=\"0\" alt=\"Custom Transfer\" /></span><br />\n";}
+	?>
+
+	<span id="ReQueueCall"></span>
+
+	<?php
+	if ($call_requeue_button > 0)
+        {echo "<br />\n";}
+	?>
+
+    <span id="SpacerSpanC"><img src="./images/<?php echo _QXZ("blank.gif"); ?>" width="145px" height="16px" border="0" /></span><br />
+    <span style="background-color: #FFCCFF<?php echo $agent_hide_hangup_ACTIVE_style ?>" id="HangupControl"><img src="./images/<?php echo _QXZ("vdc_LB_hangupcustomer_OFF.gif"); ?>" border="0" alt="Hangup Customer" /></span><br />
+    <span id="SpacerSpanD"><img src="./images/<?php echo _QXZ("blank.gif"); ?>" width="145px" height="16px" border="0" /></span><br />
+    <div class="text_input" id="SendDTMFdiv"><span style="background-color: <?php echo $MAIN_COLOR ?>" id="SendDTMF"><a href="#" onclick="SendConfDTMF(session_id,'YES');return false;"><img src="./images/<?php echo _QXZ("vdc_LB_senddtmf.gif"); ?>" border="0" alt="Send DTMF" align="bottom" /></a>  <input type="text" size="5" name="conf_dtmf" class="cust_form" value="" maxlength="50" /></div></span><br />
+	</center>
+	</font>
+	</td>
+    <td width="<?php echo $SDwidth ?>px" align="left" valign="top">
+    <input type="hidden" name="lead_id" id="lead_id" value="" />
+    <input type="hidden" name="list_id" id="list_id" value="" />
+    <input type="hidden" name="entry_list_id" id="entry_list_id" value="" />
+    <input type="hidden" name="list_name" id="list_name" value="" />
+    <input type="hidden" name="list_description" id="list_description" value="" />
+    <input type="hidden" name="called_count" id="called_count" value="" />
+    <input type="hidden" name="rank" id="rank" value="" />
+    <input type="hidden" name="owner" id="owner" value="" />
+    <input type="hidden" name="gmt_offset_now" id="gmt_offset_now" value="" />
+    <input type="hidden" name="gender" id="gender" value="" />
+    <input type="hidden" name="date_of_birth" id="date_of_birth" value="" />
+    <input type="hidden" name="country_code" id="country_code" value="" />
+    <input type="hidden" name="uniqueid" id="uniqueid" value="" />
+    <input type="hidden" name="callserverip" id="callserverip" value="" />
+    <input type="hidden" name="SecondS" id="SecondS" value="" />
+    <input type="hidden" name="email_row_id" id="email_row_id" value="" />
+    <input type="hidden" name="chat_id" id="chat_id" value="" />
+    <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
 
 <!-- ZZZZZZZZZZZZ  customer info -->
 
