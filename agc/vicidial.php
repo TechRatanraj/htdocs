@@ -26884,10 +26884,8 @@ function webphoneOpen(spanId, action) {
 
 
 
-
-
 <!-- ============================================ -->
-<!-- MODERN NEW MANUAL DIAL BOX - MINI RIGHT SIDE -->
+<!-- MODERN NEW MANUAL DIAL BOX - MINI RIGHT SIDE (LARGER BUTTONS) -->
 <!-- ============================================ -->
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="NeWManuaLDiaLBox">
     <table border="0" bgcolor="#fff" width="350px" height="500px" style="border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,0.3);overflow:hidden;position:fixed;right:20px;top:50%;transform:translateY(-50%);">
@@ -26925,17 +26923,17 @@ function webphoneOpen(spanId, action) {
 
             <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:4px;padding:8px;margin-bottom:8px;font-size:8px;color:#92400e;line-height:1.4;"><strong>⚠️ Override:</strong><br /><?php echo _QXZ("Enter dialstring to dial without adding lead."); ?></div>
 
-            <table style="width:100%;margin-bottom:8px;">
+            <table style="width:100%;margin-bottom:12px;">
                 <tr>
                     <td align="right" style="padding:4px;width:40%;"><label style="font-size:9px;font-weight:700;color:#1e293b;text-transform:uppercase;"><?php echo _QXZ("Override:"); ?></label></td>
                     <td align="left" style="padding:4px;"><?php if ($manual_dial_override_field == 'ENABLED') { echo "<input type=\"text\" size=\"12\" maxlength=\"20\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" value=\"\" style=\"padding:6px;border:2px solid #cbd5e1;border-radius:4px;font-size:11px;width:100%;box-sizing:border-box;\" onfocus=\"this.style.borderColor='#0ea5e9';\" onblur=\"this.style.borderColor='#cbd5e1';\" />"; } else { echo "<input type=\"hidden\" name=\"MDDiaLOverridE\" id=\"MDDiaLOverridE\" value=\"\" /><div style=\"padding:6px;background:#fee2e2;border:2px solid #ef4444;border-radius:4px;font-size:9px;color:#991b1b;font-weight:700;text-align:center;\">🔒 OFF</div>"; } ?></td>
                 </tr>
             </table>
 
-            <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
-                <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;" style="display:inline-flex;align-items:center;gap:3px;padding:8px 12px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 8px rgba(16,185,129,0.3);white-space:nowrap;">📞 Dial</a>
-                <?php if ($manual_dial_preview > 0) { echo "<a href=\"#\" onclick=\"NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;\" style=\"display:inline-flex;align-items:center;gap:3px;padding:8px 12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 8px rgba(245,158,11,0.3);white-space:nowrap;\">👁️ View</a>"; } ?>
-                <a href="#" onclick="hideDiv('NeWManuaLDiaLBox');return false;" style="display:inline-flex;align-items:center;gap:3px;padding:8px 12px;background:linear-gradient(135deg,#6b7280,#4b5563);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 8px rgba(107,114,128,0.3);white-space:nowrap;">Back</a>
+            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
+                <a href="#" onclick="NeWManuaLDiaLCalLSubmiT('NOW','YES');return false;" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:11px 18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 10px rgba(16,185,129,0.4);white-space:nowrap;min-width:70px;">📞 Dial</a>
+                <?php if ($manual_dial_preview > 0) { echo "<a href=\"#\" onclick=\"NeWManuaLDiaLCalLSubmiT('PREVIEW','YES');return false;\" style=\"display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:11px 18px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 10px rgba(245,158,11,0.4);white-space:nowrap;min-width:70px;\">👁️ View</a>"; } ?>
+                <a href="#" onclick="hideDiv('NeWManuaLDiaLBox');return false;" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:11px 18px;background:linear-gradient(135deg,#6b7280,#4b5563);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 10px rgba(107,114,128,0.4);white-space:nowrap;min-width:70px;">Back</a>
             </div>
 
         </td></tr>
@@ -26943,7 +26941,7 @@ function webphoneOpen(spanId, action) {
 </span>
 
 <!-- ================================================== -->
-<!-- MODERN CLOSER INBOUND - MINI RIGHT SIDE -->
+<!-- MODERN CLOSER INBOUND - MINI RIGHT SIDE (LARGER BUTTONS) -->
 <!-- ================================================== -->
 <span style="position:absolute;left:0px;top:0px;z-index:<?php $zi++; echo $zi ?>;" id="CloserSelectBox">
     <table border="0" bgcolor="#fff" width="350px" height="450px" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #10b981;border-radius:12px;box-shadow:0 25px 50px rgba(0,0,0,0.3);overflow:hidden;position:fixed;right:20px;top:50%;transform:translateY(-50%);">
@@ -26952,13 +26950,10 @@ function webphoneOpen(spanId, action) {
             <span id="CloserSelectContent" style="font-size:10px;font-weight:700;color:#047857;display:block;margin-bottom:10px;"><?php echo _QXZ("Closer Group Selection"); ?></span>
             <input type="hidden" name="CloserSelectList" id="CloserSelectList" />
             <?php if (($outbound_autodial_active > 0) and ($disable_blended_checkbox < 1) and ($dial_method != 'INBOUND_MAN') and ($VU_agent_choose_blended > 0)) { ?><div style="margin-bottom:10px;padding:8px;background:#fff;border:2px solid #86efac;border-radius:6px;"><label style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:9px;color:#065f46;font-weight:600;cursor:pointer;"><input type="checkbox" name="CloserSelectBlended" id="CloserSelectBlended" size="1" value="0" style="width:14px;height:14px;cursor:pointer;" /><strong><?php echo _QXZ("Blended"); ?></strong></label></div><?php } ?>
-            <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;"><a href="#" onclick="CloserSelectContent_create('YES');return false;" style="display:inline-flex;align-items:center;gap:3px;padding:8px 12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 8px rgba(245,158,11,0.3);white-space:nowrap;"><?php echo _QXZ("RESET"); ?></a><a href="#" onclick="CloserSelect_submit('YES');return false;" style="display:inline-flex;align-items:center;gap:3px;padding:8px 12px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 8px rgba(16,185,129,0.3);white-space:nowrap;"><?php echo _QXZ("SUBMIT"); ?></a></div>
+            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;"><a href="#" onclick="CloserSelectContent_create('YES');return false;" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:11px 18px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 10px rgba(245,158,11,0.4);white-space:nowrap;min-width:70px;"><?php echo _QXZ("RESET"); ?></a><a href="#" onclick="CloserSelect_submit('YES');return false;" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:11px 18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;text-decoration:none;border:none;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 10px rgba(16,185,129,0.4);white-space:nowrap;min-width:70px;"><?php echo _QXZ("SUBMIT"); ?></a></div>
         </td></tr>
     </table>
 </span>
-
-
-
 
 
 
