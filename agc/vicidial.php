@@ -873,7 +873,7 @@ if ($relogin == 'YES') {
 // 3. CAMPAIGN LOGIN SECTION
 if ($user_login_first == 1) {
     if ((strlen($VD_login)<1) or (strlen($VD_pass)<1) or (strlen($VD_campaign)<1)) {
-        echo "<title>"._QXZ("Agent web client: Campaign Login")."</title>\n";
+        echo "<title>"._QXZ("Agent web client: Campaign")."</title>\n";
         echo "</head>\n";
         echo "<body onresize=\"browser_dimensions();\" onload=\"browser_dimensions();\" style=\"background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0;padding:40px 20px;min-height:100vh;\">\n";
         if ($hide_timeclock_link < 1) {
