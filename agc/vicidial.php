@@ -3724,53 +3724,93 @@ if ((!preg_match("/\s$VD_campaign\s/i", $LOGallowed_campaigns)) and (!preg_match
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01020',$VD_login,$server_ip,$session_name,$one_mysql_log);}
 	$row=mysqli_fetch_row($rslt);
 	$authphone=$row[0];
-	if (!$authphone)
-		{
-		echo "<title>"._QXZ("Agent web client: Phone Login Error")."</title>\n";
-		echo "</head>\n";
-		echo "<body onresize=\"browser_dimensions();\"  onload=\"browser_dimensions();\">\n";
-		if ($hide_timeclock_link < 1)
-			{echo "<a href=\"./timeclock.php?referrer=agent&amp;pl=$phone_login&amp;pp=$phone_pass&amp;VD_login=$VD_login&amp;VD_pass=$VD_pass\"> <font class=\"sb_text\">"._QXZ("Timeclock")."</font></a>$grey_link<br />\n";}
-		echo "<table width=\"100%\"><tr><td></td>\n";
-		echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
-		echo "</tr></table>\n";
-		echo "<form name=\"vicidial_form\" id=\"vicidial_form\" action=\"$agcPAGE\" method=\"post\" $LOGINformSUBtrigger>\n";
-		echo "<input type=\"hidden\" name=\"DB\" value=\"$DB\">\n";
-		echo "<input type=\"hidden\" name=\"JS_browser_height\" value=\"\" />\n";
-		echo "<input type=\"hidden\" name=\"JS_browser_width\" value=\"\" />\n";
-		echo "<input type=\"hidden\" name=\"VD_login\" value=\"$VD_login\" />\n";
-		echo "<input type=\"hidden\" name=\"VD_pass\" value=\"$VD_pass\" />\n";
-		echo "<input type=\"hidden\" name=\"VD_campaign\" value=\"$VD_campaign\" />\n";
-		echo "<input type=\"hidden\" name=\"LOGINvarONE\" id=\"LOGINvarONE\" value=\"$LOGINvarONE\" />\n";
-		echo "<input type=\"hidden\" name=\"LOGINvarTWO\" id=\"LOGINvarTWO\" value=\"$LOGINvarTWO\" />\n";
-		echo "<input type=\"hidden\" name=\"LOGINvarTHREE\" id=\"LOGINvarTHREE\" value=\"$LOGINvarTHREE\" />\n";
-		echo "<input type=\"hidden\" name=\"LOGINvarFOUR\" id=\"LOGINvarFOUR\" value=\"$LOGINvarFOUR\" />\n";
-		echo "<input type=\"hidden\" name=\"LOGINvarFIVE\" id=\"LOGINvarFIVE\" value=\"$LOGINvarFIVE\" />\n";
-		echo "<input type=\"hidden\" name=\"hide_relogin_fields\" id=\"hide_relogin_fields\" value=\"$hide_relogin_fields\" />\n";
-		echo "<br /><br /><br /><center><table width=\"460px\" cellpadding=\"3\" cellspacing=\"0\" bgcolor=\"#$SSframe_background\"><tr bgcolor=\"white\">";
-		echo "<td align=\"left\" valign=\"bottom\" bgcolor=\"#$SSmenu_background\" width=\"170\"><img src=\"$selected_logo\" border=\"0\" height=\"45\" width=\"170\" alt=\"Agent Screen\" /></td>";
-		echo "<td align=\"center\" valign=\"middle\" bgcolor=\"#$SSmenu_background\"> <font class=\"sh_text_white\">"._QXZ("Login Error")."</font></td>";
-		echo "</tr>\n";
-		echo "<tr><td align=\"center\" colspan=\"2\"><font size=\"1\"> &nbsp; <br /><font size=\"3\">"._QXZ("Sorry, your phone login and password are not active in this system, please try again:")." <br /> &nbsp;</font></td></tr>\n";
-		echo "<tr><td align=\"right\"><font class=\"skb_text\">"._QXZ("Phone Login:")."</font> </td>";
-		echo "<td align=\"left\"><input type=\"text\" name=\"phone_login\" size=\"20\" maxlength=\"20\" value=\"$phone_login\"></td></tr>\n";
-		echo "<tr><td align=\"right\"><font class=\"skb_text\">"._QXZ("Phone Password:")."</font>  </td>";
-		echo "<td align=\"left\"><input type=\"password\" name=\"phone_pass\" size=20 maxlength=100 value=\"$phone_pass\"></td></tr>\n";
-		if ($login_submit_once > 0)
-			{echo "<tr><td align=\"center\" colspan=\"2\"><input type=\"submit\" id=\"login_sub\" name=\"login_sub\" value=\""._QXZ("SUBMIT")."\" onclick=\"login_click()\"> &nbsp; \n";}
-		else
-			{echo "<tr><td align=\"center\" colspan=\"2\"><input type=\"submit\" name=\"SUBMIT\" value=\""._QXZ("SUBMIT")."\" /></td></tr>\n";}
-		echo "<tr><td align=\"left\" colspan=\"2\"><font class=\"body_tiny\"><br />"._QXZ("VERSION:")." $version &nbsp; &nbsp; &nbsp; "._QXZ("BUILD:")." $build</font></td></tr>\n";
-		echo "</table>\n";
-		echo "</form>\n\n";
-		echo "\n\n";
-		echo "$LoginLoadingBox";
-		echo "</center>\n";
-		echo "$INSERT_before_body_close";
-		echo "</body>\n\n";
-		echo "</html>\n\n";
-		exit;
-		}
+	// ============================================
+// PHONE LOGIN ERROR - MODERNIZED
+// Purple Gradient + All Auth Logic Preserved
+// ============================================
+
+if (!$authphone) {
+    echo "<title>"._QXZ("Agent web client: Phone Login Error")."</title>\n";
+    echo "</head>\n";
+    echo "<body onresize=\"browser_dimensions();\" onload=\"browser_dimensions();\" style=\"background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0;padding:40px 20px;min-height:100vh;\">\n";
+    
+    if ($hide_timeclock_link < 1) {
+        echo "<div style=\"max-width:500px;margin:0 auto;margin-bottom:20px;text-align:center;font-size:13px;\">";
+        echo "<a href=\"./timeclock.php?referrer=agent&pl=$phone_login&pp=$phone_pass&VD_login=$VD_login&VD_pass=$VD_pass\" style=\"color:#fff;text-decoration:none;font-weight:500;\">"._QXZ("Timeclock")."</a>";
+        echo $grey_link;
+        echo "</div>\n";
+    }
+    
+    echo "<table width=\"100%\"><tr><td></td>\n";
+    echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
+    echo "</tr></table>\n";
+    
+    echo "<form name=\"vicidial_form\" id=\"vicidial_form\" action=\"$agcPAGE\" method=\"post\" $LOGINformSUBtrigger style=\"max-width:500px;margin:0 auto;\">\n";
+    echo "<input type=\"hidden\" name=\"DB\" value=\"$DB\" />\n";
+    echo "<input type=\"hidden\" name=\"JS_browser_height\" id=\"JS_browser_height\" value=\"\" />\n";
+    echo "<input type=\"hidden\" name=\"JS_browser_width\" id=\"JS_browser_width\" value=\"\" />\n";
+    echo "<input type=\"hidden\" name=\"VD_login\" value=\"$VD_login\" />\n";
+    echo "<input type=\"hidden\" name=\"VD_pass\" value=\"$VD_pass\" />\n";
+    echo "<input type=\"hidden\" name=\"VD_campaign\" value=\"$VD_campaign\" />\n";
+    echo "<input type=\"hidden\" name=\"LOGINvarONE\" id=\"LOGINvarONE\" value=\"$LOGINvarONE\" />\n";
+    echo "<input type=\"hidden\" name=\"LOGINvarTWO\" id=\"LOGINvarTWO\" value=\"$LOGINvarTWO\" />\n";
+    echo "<input type=\"hidden\" name=\"LOGINvarTHREE\" id=\"LOGINvarTHREE\" value=\"$LOGINvarTHREE\" />\n";
+    echo "<input type=\"hidden\" name=\"LOGINvarFOUR\" id=\"LOGINvarFOUR\" value=\"$LOGINvarFOUR\" />\n";
+    echo "<input type=\"hidden\" name=\"LOGINvarFIVE\" id=\"LOGINvarFIVE\" value=\"$LOGINvarFIVE\" />\n";
+    echo "<input type=\"hidden\" name=\"hide_relogin_fields\" id=\"hide_relogin_fields\" value=\"$hide_relogin_fields\" />\n";
+    
+    echo "<div style=\"background:#fff;border-radius:12px;padding:40px;box-shadow:0 8px 32px rgba(0,0,0,0.2);\">\n";
+    
+    // Error Alert Box
+    echo "<div style=\"background:#ffebee;border:2px solid #f44336;border-radius:8px;padding:20px;margin-bottom:30px;\">\n";
+    echo "<div style=\"display:flex;gap:12px;align-items:flex-start;\">\n";
+    echo "<svg style=\"width:28px;height:28px;fill:#c62828;flex-shrink:0;\" viewBox=\"0 0 24 24\"><path d=\"M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z\"/></svg>\n";
+    echo "<div>\n";
+    echo "<div style=\"font-size:14px;color:#c62828;font-weight:600;margin-bottom:6px;\">"._QXZ("Login Error")."</div>\n";
+    echo "<div style=\"font-size:13px;color:#d32f2f;\">"._QXZ("Sorry, your phone login and password are not active in this system, please try again:")."</div>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    
+    // Header
+    echo "<div style=\"margin-bottom:30px;padding-bottom:20px;border-bottom:2px solid #f0f0f0;\">\n";
+    echo "<h1 style=\"margin:0;font-size:24px;color:#667eea;font-weight:700;\">"._QXZ("Phone Login")."</h1>\n";
+    echo "</div>\n";
+    
+    // Phone Login Field
+    echo "<div style=\"display:grid;grid-template-columns:140px 1fr;gap:12px;margin-bottom:16px;\">\n";
+    echo "<label style=\"text-align:right;font-size:14px;font-weight:600;color:#333;\">"._QXZ("Phone Login:")."</label>\n";
+    echo "<input type=\"text\" name=\"phone_login\" id=\"phone_login\" size=\"20\" maxlength=\"20\" value=\"$phone_login\" style=\"padding:12px;border:2px solid #ddd;border-radius:6px;font-size:14px;width:100%;box-sizing:border-box;transition:border 0.2s;\" onfocus=\"this.style.borderColor='#667eea'\" onblur=\"this.style.borderColor='#ddd'\" />\n";
+    echo "</div>\n";
+    
+    // Phone Password Field
+    echo "<div style=\"display:grid;grid-template-columns:140px 1fr;gap:12px;margin-bottom:30px;\">\n";
+    echo "<label style=\"text-align:right;font-size:14px;font-weight:600;color:#333;\">"._QXZ("Phone Password:")."</label>\n";
+    echo "<input type=\"password\" name=\"phone_pass\" id=\"phone_pass\" size=\"20\" maxlength=\"100\" value=\"$phone_pass\" style=\"padding:12px;border:2px solid #ddd;border-radius:6px;font-size:14px;width:100%;box-sizing:border-box;transition:border 0.2s;\" onfocus=\"this.style.borderColor='#667eea'\" onblur=\"this.style.borderColor='#ddd'\" />\n";
+    echo "</div>\n";
+    
+    // Submit Button
+    echo "<div style=\"display:flex;gap:12px;\">\n";
+    if ($login_submit_once > 0) {
+        echo "<input type=\"submit\" id=\"login_sub\" name=\"login_sub\" value=\""._QXZ("SUBMIT")."\" onclick=\"login_click()\" style=\"flex:1;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:15px;transition:all 0.2s;box-shadow:0 4px 12px rgba(102,126,234,0.3);\" onmouseover=\"this.style.boxShadow='0 6px 16px rgba(102,126,234,0.4)'\" onmouseout=\"this.style.boxShadow='0 4px 12px rgba(102,126,234,0.3)'\" />\n";
+    } else {
+        echo "<input type=\"submit\" name=\"SUBMIT\" value=\""._QXZ("SUBMIT")."\" style=\"flex:1;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:15px;transition:all 0.2s;box-shadow:0 4px 12px rgba(102,126,234,0.3);\" onmouseover=\"this.style.boxShadow='0 6px 16px rgba(102,126,234,0.4)'\" onmouseout=\"this.style.boxShadow='0 4px 12px rgba(102,126,234,0.3)'\" />\n";
+    }
+    echo "</div>\n";
+    
+    // Footer
+    echo "<div style=\"margin-top:30px;padding-top:20px;border-top:1px solid #e0e0e0;font-size:12px;color:#999;text-align:center;\">\n";
+    echo _QXZ("VERSION").": $version &nbsp; &nbsp; "._QXZ("BUILD").": $build\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    
+    echo "</form>\n";
+    echo "$LoginLoadingBox";
+    echo "$INSERT_before_body_close";
+    echo "</body>\n";
+    echo "</html>\n";
+    exit;
+}
 	else
 		{
 		##### BEGIN phone login load balancing functions #####
