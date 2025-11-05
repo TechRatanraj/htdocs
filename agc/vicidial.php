@@ -25145,7 +25145,7 @@ $zi=2;
 <div style="
     position:fixed;
     right:0;
-    top:30%;
+    top:400%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
     
@@ -25156,12 +25156,12 @@ $zi=2;
                 align-items:center;
                 justify-content:center;
                 writing-mode:vertical-rl;
-                padding:30px 12px;
+                padding:20px 10px;
                 background:linear-gradient(180deg, #667eea, #764ba2);
                 color:#fff;
                 text-decoration:none;
                 border-radius:0 10px 10px 0;
-                font-size:14px;
+                font-size:12px;
                 font-weight:700;
                 text-transform:uppercase;
                 letter-spacing:1.5px;
@@ -25185,7 +25185,7 @@ $zi=2;
 <div style="
     position:fixed;
     right:0;
-    top:50%;
+    top:70%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
     
@@ -25194,12 +25194,12 @@ $zi=2;
         align-items:center;
         justify-content:center;
         writing-mode:vertical-rl;
-        padding:30px 12px;
+        padding:10px 10px;
         background:linear-gradient(180deg, #10b981, #059669);
         color:#fff;
         text-decoration:none;
         border-radius:0 10px 10px 0;
-        font-size:14px;
+        font-size:12px;
         font-weight:700;
         text-transform:uppercase;
         letter-spacing:1.5px;
