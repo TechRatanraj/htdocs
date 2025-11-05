@@ -25185,7 +25185,7 @@ $zi=2;
 <div style="
     position:fixed;
     right:0;
-    top:55%;
+    top:80%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
     
