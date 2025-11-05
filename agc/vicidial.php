@@ -873,7 +873,7 @@ if ($relogin == 'YES') {
 // 3. CAMPAIGN LOGIN SECTION
 if ($user_login_first == 1) {
     if ((strlen($VD_login)<1) or (strlen($VD_pass)<1) or (strlen($VD_campaign)<1)) {
-        echo "<title>"._QXZ("Agent web client: Campaign")."</title>\n";
+        echo "<title>"._QXZ("Agent web client: Campaign Loing")."</title>\n";
         echo "</head>\n";
         echo "<body onresize=\"browser_dimensions();\" onload=\"browser_dimensions();\" style=\"background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0;padding:40px 20px;min-height:100vh;\">\n";
         if ($hide_timeclock_link < 1) {
@@ -894,7 +894,7 @@ if ($user_login_first == 1) {
         echo "<div style=\"background:#fff;border-radius:12px;padding:40px;box-shadow:0 8px 32px rgba(0,0,0,0.2);\">\n";
         echo "<div style=\"display:flex;align-items:center;gap:20px;margin-bottom:30px;padding-bottom:30px;border-bottom:2px solid #f0f0f0;\">\n";
         echo "<img src=\"$selected_logo\" border=\"0\" height=\"50\" width=\"180\" alt=\"Agent Screen\" style=\"flex-shrink:0;\" />\n";
-        echo "<h1 style=\"margin:0;font-size:28px;color:#667eea;font-weight:700;\">"._QXZ("Campaign Login")."</h1>\n";
+        echo "<h1 style=\"margin:0;font-size:28px;color:#667eea;font-weight:700;\">"._QXZ("Campaign")."</h1>\n";
         echo "</div>\n";
         
         echo "<div style=\"display:grid;grid-template-columns:140px 1fr;gap:12px;margin-bottom:16px;\">\n";
