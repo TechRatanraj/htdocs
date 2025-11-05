@@ -762,7 +762,7 @@ if ($relogin == 'YES') {
     echo "</head>\n";
     echo "<body onresize=\"browser_dimensions();\" onload=\"browser_dimensions();\" style=\"background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0;padding:40px 20px;min-height:100vh;\">\n";
     if ($hide_timeclock_link < 1) {
-        echo "<div style=\"max-width:500px;margin:0 auto;margin-bottom:20px;text-align:center;font-size:13px;\"><a href=\"./timeclock.php?referrer=agent&amp;pl=$phone_login&amp;pp=$phone_pass&amp;VD_login=$VD_login&amp;VD_pass=$VD_pass\" style=\"color:#fff;text-decoration:none;font-weight:500;\">"._QXZ("Timeclock")."</a>$grey_link</div>\n";
+        echo "<div style=\"max-width:500px;margin:0 auto;margin-bottom:20px;text-align:center;font-size:13px;\"><a href=\"./timeclock.php?referrer=agent&amp;pl=$phone_login&amp;pp=$phone_pass&amp;VD_login=$VD_login&amp;VD_pass=$VD_pass\" style=\"color:#fff;text-decoration:none;font-weight:500;\">"._QXZ("Timecl")."</a>$grey_link</div>\n";
     }
     echo "<table width=\"100%\"><tr><td></td>\n<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n</tr></table>\n";
     echo "<form name=\"vicidial_form\" id=\"vicidial_form\" action=\"$agcPAGE\" method=\"post\" $LOGINformSUBtrigger style=\"max-width:500px;margin:0 auto;\">\n";
