@@ -24125,11 +24125,10 @@ $zi=2;
 	if ( ($alt_number_dialing=='SELECTED') or ($alt_number_dialing=='SELECTED_TIMER_ALT') or ($alt_number_dialing=='SELECTED_TIMER_ADDR3') )
 		{$alt_phone_selected='CHECKED';}
 	?>
-	    </td></tr>
     </td></tr>
     <tr><td colspan="3"><span id="busycallsdebug"></span></td></tr>
     <tr>
-        <!-- Modern Sidebar with CSS Buttons -->
+        <!-- Modern Sidebar with JavaScript-Proof CSS Buttons -->
         <td width="180px" align="left" valign="top" style="
             padding:15px 10px;
             background:#f8fafc;
@@ -24138,9 +24137,12 @@ $zi=2;
             
             <center>
             <!-- Dial Next Number Button -->
-            <span id="DiaLControl">
-                <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');" style="
-                    display:flex;
+            <span id="DiaLControl" style="position:relative;">
+                <a href="#" onclick="ManualDialNext('','','','','','0','','','YES');return false;" 
+                   class="modern-btn modern-btn-dial" 
+                   id="dial-next-btn"
+                   style="
+                    display:flex !important;
                     align-items:center;
                     justify-content:center;
                     gap:8px;
@@ -24156,13 +24158,15 @@ $zi=2;
                     letter-spacing:0.5px;
                     box-shadow:0 4px 12px rgba(16,185,129,0.4);
                     transition:all 0.3s ease;
-                    margin-bottom:12px;"
+                    margin-bottom:12px;
+                    position:relative;
+                    z-index:10;"
                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.5)';"
                     onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.4)';">
                     <svg style="width:20px;height:20px;fill:#fff;" viewBox="0 0 24 24">
                         <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                     </svg>
-                    Dial Next Number
+                    <span id="dial-btn-text">Dial Next Number</span>
                 </a>
             </span>
             
@@ -24216,8 +24220,10 @@ $zi=2;
             
             <!-- Next Call Pause Button -->
             <span id="NexTCalLPausE">
-                <a href="#" onclick="next_call_pause_click();return false;" style="
-                    display:flex;
+                <a href="#" onclick="next_call_pause_click();return false;" 
+                   class="modern-btn modern-btn-pause"
+                   style="
+                    display:flex !important;
                     align-items:center;
                     justify-content:center;
                     gap:6px;
@@ -24231,7 +24237,9 @@ $zi=2;
                     font-size:12px;
                     font-weight:700;
                     margin-bottom:15px;
-                    transition:all 0.3s ease;"
+                    transition:all 0.3s ease;
+                    position:relative;
+                    z-index:10;"
                     onmouseover="this.style.background='#667eea';this.style.color='#fff';"
                     onmouseout="this.style.background='#fff';this.style.color='#667eea';">
                     <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24">
@@ -24284,9 +24292,11 @@ $zi=2;
             </div>
             
             <!-- Start Recording Button -->
-            <span id="RecorDControl">
-                <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;" style="
-                    display:flex;
+            <span id="RecorDControl" style="position:relative;">
+                <a href="#" onclick="conf_send_recording('MonitorConf',session_id,'','','','YES');return false;" 
+                   class="modern-btn modern-btn-record"
+                   style="
+                    display:flex !important;
                     align-items:center;
                     justify-content:center;
                     gap:8px;
@@ -24301,138 +24311,26 @@ $zi=2;
                     text-transform:uppercase;
                     box-shadow:0 4px 12px rgba(239,68,68,0.4);
                     transition:all 0.3s ease;
-                    margin-bottom:10px;"
+                    margin-bottom:10px;
+                    position:relative;
+                    z-index:10;"
                     onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.5)';"
                     onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.4)';">
                     <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="8"/>
                     </svg>
-                    Start Recording
+                    <span id="record-btn-text">Start Recording</span>
                 </a>
             </span>
             
             <span id="RecorDMute" style="display:block;margin-bottom:8px;"></span>
+            <span id="StRecorDControl" style="display:block;margin-bottom:10px;"></span>
+            <span id="SpacerSpanA"><div style="height:12px;"></div></span>
             
-            <?php
-            if ($SSstereo_recording > 0) {
-                echo "<span id=\"StRecorDControl\">
-                    <a href=\"#\" style=\"
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        gap:8px;
-                        width:100%;
-                        padding:10px 16px;
-                        background:#f97316;
-                        color:#fff;
-                        text-decoration:none;
-                        border-radius:10px;
-                        font-size:11px;
-                        font-weight:700;
-                        box-shadow:0 2px 8px rgba(249,115,22,0.3);
-                        transition:all 0.3s ease;
-                        margin-bottom:10px;\"
-                        onmouseover=\"this.style.background='#ea580c';\"
-                        onmouseout=\"this.style.background='#f97316';\">
-                        <svg style=\"width:16px;height:16px;fill:#fff;\" viewBox=\"0 0 24 24\">
-                            <circle cx=\"9\" cy=\"12\" r=\"8\"/>
-                            <circle cx=\"15\" cy=\"12\" r=\"8\"/>
-                        </svg>
-                        Stereo Recording
-                    </a>
-                </span>";
-            } else {
-                echo "<span id=\"StRecorDControl\"></span>";
-            }
-            
-            if (!preg_match("/NOGAP/",$SSrecording_buttons))
-                {echo "<span id=\"SpacerSpanA\"><div style=\"height:12px;\"></div></span>\n";}
-            
-            // Web Form Buttons
-            if ($SSenable_first_webform > 0) {
-                echo "<span id=\"WebFormSpan\">
-                    <button style=\"
-                        width:100%;
-                        padding:11px 16px;
-                        background:#fff;
-                        color:#475569;
-                        border:2px solid #cbd5e1;
-                        border-radius:10px;
-                        font-size:12px;
-                        font-weight:700;
-                        cursor:pointer;
-                        transition:all 0.3s ease;
-                        margin-bottom:8px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        gap:8px;\"
-                        onmouseover=\"this.style.background='#f1f5f9';this.style.borderColor='#94a3b8';\"
-                        onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">
-                        <svg style=\"width:16px;height:16px;fill:currentColor;\" viewBox=\"0 0 24 24\">
-                            <path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\"/>
-                        </svg>
-                        Web Form
-                    </button>
-                </span>\n";
-            }
-            
-            if ($enable_second_webform > 0) {
-                echo "<span id=\"WebFormSpanTwo\">
-                    <button style=\"
-                        width:100%;
-                        padding:11px 16px;
-                        background:#fff;
-                        color:#475569;
-                        border:2px solid #cbd5e1;
-                        border-radius:10px;
-                        font-size:12px;
-                        font-weight:700;
-                        cursor:pointer;
-                        transition:all 0.3s ease;
-                        margin-bottom:8px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        gap:8px;\"
-                        onmouseover=\"this.style.background='#f1f5f9';this.style.borderColor='#94a3b8';\"
-                        onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">
-                        <svg style=\"width:16px;height:16px;fill:currentColor;\" viewBox=\"0 0 24 24\">
-                            <path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\"/>
-                        </svg>
-                        Web Form 2
-                    </button>
-                </span>\n";
-            }
-            
-            if ($enable_third_webform > 0) {
-                echo "<span id=\"WebFormSpanThree\">
-                    <button style=\"
-                        width:100%;
-                        padding:11px 16px;
-                        background:#fff;
-                        color:#475569;
-                        border:2px solid #cbd5e1;
-                        border-radius:10px;
-                        font-size:12px;
-                        font-weight:700;
-                        cursor:pointer;
-                        transition:all 0.3s ease;
-                        margin-bottom:8px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        gap:8px;\"
-                        onmouseover=\"this.style.background='#f1f5f9';this.style.borderColor='#94a3b8';\"
-                        onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">
-                        <svg style=\"width:16px;height:16px;fill:currentColor;\" viewBox=\"0 0 24 24\">
-                            <path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z\"/>
-                        </svg>
-                        Web Form 3
-                    </button>
-                </span>\n";
-            }
-            ?>
+            <!-- Web Form Buttons -->
+            <span id="WebFormSpan" style="display:block;margin-bottom:8px;"></span>
+            <span id="WebFormSpanTwo" style="display:block;margin-bottom:8px;"></span>
+            <span id="WebFormSpanThree" style="display:block;margin-bottom:8px;"></span>
             
             <!-- Park Counter Display -->
             <div id="ParkCounterSpan" style="
@@ -24447,173 +24345,101 @@ $zi=2;
                 border:2px solid #0ea5e9;"></div>
             
             <!-- Park Call Button -->
-            <span id="ParkControl">
-                <button style="
+            <span id="ParkControl" style="position:relative;">
+                <a href="#" class="modern-btn modern-btn-park" style="
+                    display:flex !important;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
                     width:100%;
                     padding:12px 16px;
                     background:linear-gradient(135deg, #fbbf24, #f59e0b);
                     color:#fff;
-                    border:none;
+                    text-decoration:none;
                     border-radius:10px;
                     font-size:12px;
                     font-weight:700;
                     text-transform:uppercase;
-                    cursor:pointer;
                     box-shadow:0 4px 12px rgba(251,191,36,0.4);
                     transition:all 0.3s ease;
                     margin-bottom:8px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    gap:8px;"
+                    position:relative;
+                    z-index:10;"
                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(251,191,36,0.5)';"
                     onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(251,191,36,0.4)';">
                     <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
                         <path d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"/>
                     </svg>
                     Park Call
-                </button>
+                </a>
             </span>
             
-            <?php
-            if (($ivr_park_call=='ENABLED') or ($ivr_park_call=='ENABLED_PARK_ONLY')) {
-                echo "<span id=\"ivrParkControl\">
-                    <button style=\"
-                        width:100%;
-                        padding:12px 16px;
-                        background:linear-gradient(135deg, #06b6d4, #0891b2);
-                        color:#fff;
-                        border:none;
-                        border-radius:10px;
-                        font-size:12px;
-                        font-weight:700;
-                        text-transform:uppercase;
-                        cursor:pointer;
-                        box-shadow:0 4px 12px rgba(6,182,212,0.4);
-                        transition:all 0.3s ease;
-                        margin-bottom:8px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        gap:8px;\"
-                        onmouseover=\"this.style.transform='translateY(-2px)';\"
-                        onmouseout=\"this.style.transform='translateY(0)';\">
-                        <svg style=\"width:18px;height:18px;fill:#fff;\" viewBox=\"0 0 24 24\">
-                            <path d=\"M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z\"/>
-                        </svg>
-                        IVR Park Call
-                    </button>
-                </span>\n";
-            } else {
-                echo "<span id=\"ivrParkControl\"></span>\n";
-            }
-            ?>
+            <span id="ivrParkControl" style="display:block;margin-bottom:8px;"></span>
             
             <!-- Transfer/Conference Button -->
-            <span id="XferControl">
-                <button style="
+            <span id="XferControl" style="position:relative;">
+                <a href="#" class="modern-btn modern-btn-xfer" style="
+                    display:flex !important;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
                     width:100%;
                     padding:12px 16px;
                     background:linear-gradient(135deg, #8b5cf6, #7c3aed);
                     color:#fff;
-                    border:none;
+                    text-decoration:none;
                     border-radius:10px;
                     font-size:12px;
                     font-weight:700;
                     text-transform:uppercase;
-                    cursor:pointer;
                     box-shadow:0 4px 12px rgba(139,92,246,0.4);
                     transition:all 0.3s ease;
                     margin-bottom:8px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    gap:8px;"
+                    position:relative;
+                    z-index:10;"
                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(139,92,246,0.5)';"
                     onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(139,92,246,0.4)';">
                     <svg style="width:18px;height:18px;fill:#fff;" viewBox="0 0 24 24">
                         <path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
                     </svg>
                     Transfer/Conference
-                </button>
+                </a>
             </span>
             
-            <?php
-            if ($quick_transfer_button_enabled > 0) {
-                echo "<span id=\"QuickXfer\">
-                    <button style=\"
-                        width:100%;
-                        padding:10px 16px;
-                        background:#6366f1;
-                        color:#fff;
-                        border:none;
-                        border-radius:10px;
-                        font-size:11px;
-                        font-weight:700;
-                        cursor:pointer;
-                        transition:all 0.3s ease;
-                        margin-bottom:8px;\"
-                        onmouseover=\"this.style.background='#4f46e5';\"
-                        onmouseout=\"this.style.background='#6366f1';\">
-                        Quick Transfer
-                    </button>
-                </span>\n";
-            }
-            
-            if ($custom_3way_button_transfer_enabled > 0) {
-                echo "<span id=\"CustomXfer\">
-                    <button style=\"
-                        width:100%;
-                        padding:10px 16px;
-                        background:#8b5cf6;
-                        color:#fff;
-                        border:none;
-                        border-radius:10px;
-                        font-size:11px;
-                        font-weight:700;
-                        cursor:pointer;
-                        transition:all 0.3s ease;
-                        margin-bottom:8px;\"
-                        onmouseover=\"this.style.background='#7c3aed';\"
-                        onmouseout=\"this.style.background='#8b5cf6';\">
-                        Custom Transfer
-                    </button>
-                </span>\n";
-            }
-            ?>
-            
+            <span id="QuickXfer" style="display:block;margin-bottom:8px;"></span>
+            <span id="CustomXfer" style="display:block;margin-bottom:8px;"></span>
             <span id="ReQueueCall"></span>
-            <?php if ($call_requeue_button > 0) {echo "<div style=\"height:8px;\"></div>\n";} ?>
             
             <span id="SpacerSpanC"><div style="height:12px;"></div></span>
             
             <!-- Hangup Customer Button -->
-            <span id="HangupControl">
-                <button style="
+            <span id="HangupControl" style="position:relative;">
+                <a href="#" class="modern-btn modern-btn-hangup" style="
+                    display:flex !important;
+                    align-items:center;
+                    justify-content:center;
+                    gap:8px;
                     width:100%;
                     padding:14px 16px;
                     background:linear-gradient(135deg, #ef4444, #b91c1c);
                     color:#fff;
-                    border:none;
+                    text-decoration:none;
                     border-radius:10px;
                     font-size:13px;
                     font-weight:800;
                     text-transform:uppercase;
-                    cursor:pointer;
                     box-shadow:0 6px 16px rgba(239,68,68,0.5);
                     transition:all 0.3s ease;
                     margin-bottom:12px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    gap:8px;<?php echo $agent_hide_hangup_ACTIVE_style ?>"
+                    position:relative;
+                    z-index:10;<?php echo $agent_hide_hangup_ACTIVE_style ?>"
                     onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 20px rgba(239,68,68,0.6)';"
                     onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.5)';">
                     <svg style="width:20px;height:20px;fill:#fff;" viewBox="0 0 24 24">
                         <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/>
                     </svg>
                     Hangup Customer
-                </button>
+                </a>
             </span>
             
             <span id="SpacerSpanD"><div style="height:12px;"></div></span>
@@ -24689,6 +24515,100 @@ $zi=2;
             <input type="hidden" name="email_row_id" id="email_row_id" value="" />
             <input type="hidden" name="chat_id" id="chat_id" value="" />
             <input type="hidden" name="customer_chat_id" id="customer_chat_id" value="" />
+
+<!-- Critical CSS to Hide Image Buttons -->
+<style>
+    /* Hide ALL images inside button containers */
+    #DiaLControl img,
+    #RecorDControl img,
+    #StRecorDControl img,
+    #ParkControl img,
+    #ivrParkControl img,
+    #XferControl img,
+    #QuickXfer img,
+    #CustomXfer img,
+    #HangupControl img,
+    #WebFormSpan img,
+    #WebFormSpanTwo img,
+    #WebFormSpanThree img {
+        display: none !important;
+        visibility: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
+    
+    /* Ensure modern buttons stay visible */
+    .modern-btn {
+        display: flex !important;
+        visibility: visible !important;
+    }
+    
+    /* Force link elements to display as flex */
+    #DiaLControl > a,
+    #RecorDControl > a,
+    #ParkControl > a,
+    #XferControl > a,
+    #HangupControl > a {
+        display: flex !important;
+    }
+</style>
+
+<script>
+// Override Vicidial's button change functions
+(function() {
+    // Store original innerHTML for our modern buttons
+    var modernButtons = {
+        'DiaLControl': document.getElementById('DiaLControl'),
+        'RecorDControl': document.getElementById('RecorDControl'),
+        'ParkControl': document.getElementById('ParkControl'),
+        'XferControl': document.getElementById('XferControl'),
+        'HangupControl': document.getElementById('HangupControl')
+    };
+    
+    // Monitor for changes and restore modern buttons
+    function preserveModernButtons() {
+        Object.keys(modernButtons).forEach(function(id) {
+            var element = document.getElementById(id);
+            if (element) {
+                // Hide any img tags that get added
+                var imgs = element.getElementsByTagName('img');
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs[i].style.display = 'none';
+                    imgs[i].style.visibility = 'hidden';
+                    imgs[i].style.position = 'absolute';
+                    imgs[i].style.left = '-9999px';
+                }
+                
+                // Ensure our modern button link is visible
+                var links = element.getElementsByTagName('a');
+                for (var j = 0; j < links.length; j++) {
+                    if (links[j].className.indexOf('modern-btn') > -1) {
+                        links[j].style.display = 'flex';
+                        links[j].style.visibility = 'visible';
+                    }
+                }
+            }
+        });
+    }
+    
+    // Run every 500ms to catch any dynamic changes
+    setInterval(preserveModernButtons, 500);
+    
+    // Also run on any DOM changes
+    if (window.MutationObserver) {
+        var observer = new MutationObserver(preserveModernButtons);
+        var config = { childList: true, subtree: true };
+        
+        Object.keys(modernButtons).forEach(function(id) {
+            var element = document.getElementById(id);
+            if (element) {
+                observer.observe(element, config);
+            }
+        });
+    }
+})();
+</script>
+
 
 
 
