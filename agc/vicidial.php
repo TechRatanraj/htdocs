@@ -25144,7 +25144,7 @@ $zi=2;
 <!-- Modern Manual Dial Button - Left Side Vertical Tab (Top) -->
 <div style="
     position:fixed;
-    left:0;
+    right:0;
     top:30%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
@@ -25184,7 +25184,7 @@ $zi=2;
 <?php if ( ($agentcall_manual == '1') and (!preg_match("/ONLY/",$manual_dial_lead_id)) ) { ?>
 <div style="
     position:fixed;
-    left:0;
+    right:0;
     top:50%;
     transform:translateY(-50%);
     z-index:<?php $zi++; echo $zi ?>;">
