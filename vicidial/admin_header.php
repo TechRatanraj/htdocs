@@ -1939,217 +1939,86 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 ?>
 <left>
 
-<div style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:170px;padding:0;border-radius:8px;box-shadow:0 4px 12px rgba(102,126,234,0.2);overflow:hidden;">
-    <!-- Logo Section -->
-    <div style="background:#<?php echo $SSmenu_background; ?>;padding:16px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.1);">
-        <a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'">
-            <img src="<?php echo htmlspecialchars($selected_logo); ?>" width="150" height="40" border="0" alt="System logo" style="display:block;max-width:100%;height:auto;">
-        </a>
-        <div style="color:#fff;font-size:12px;font-weight:700;margin-top:8px;font-family:Arial,sans-serif;letter-spacing:0.5px;">
-            <?php echo _QXZ("ADMINISTRATION"); ?>
-        </div>
-    </div>
+<TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
+<!-- BEGIN SIDEBAR NAVIGATION -->
+<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
+<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
+<B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
 
-    <!-- Sidebar Menu Container -->
-    <div style="padding:12px 0;">
-        <?php
-        
-        // Full access users - show all menus
-        if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-            
-            // Define sidebar menu items
-            $sidebar_items = array(
-                'reports' => array(
-                    'url' => '?ADD=999999',
-                    'label' => _QXZ("Reports"),
-                    'icon_var' => 'reports_icon',
-                    'submenus' => array()
-                ),
-                'users' => array(
-                    'url' => '?ADD=0A',
-                    'label' => _QXZ("Users"),
-                    'icon_var' => 'users_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=0A', 'label' => _QXZ("Show Users"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=1', 'label' => _QXZ("Add A New User"), 'sh_check' => 'new', 'condition' => '$add_copy_disabled < 1'),
-                        array('url' => '?ADD=1A', 'label' => _QXZ("Copy User"), 'sh_check' => 'copy', 'condition' => '$add_copy_disabled < 1'),
-                        array('url' => '?ADD=550', 'label' => _QXZ("Search For A User"), 'sh_check' => 'search'),
-                        array('url' => './user_stats.php?user=' . htmlspecialchars($user), 'label' => _QXZ("User Stats"), 'sh_check' => 'stats'),
-                        array('url' => './user_status.php?user=' . htmlspecialchars($user), 'label' => _QXZ("User Status"), 'sh_check' => 'status'),
-                        array('url' => './AST_agent_time_sheet.php?agent=' . htmlspecialchars($user), 'label' => _QXZ("Time Sheet"), 'sh_check' => 'sheet'),
-                        array('url' => './user_territories.php?agent=' . htmlspecialchars($user), 'label' => _QXZ("User Territories"), 'sh_check' => 'territory', 'condition' => '($SSuser_territories_active > 0) || ($user_territories_active > 0)'),
-                        array('url' => './admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall', 'label' => _QXZ("Overall New Lead Limits"), 'sh_check' => 'newlimit', 'condition' => '$SSuser_new_lead_limit > 0')
-                    )
-                ),
-                'campaigns' => array(
-                    'url' => '?ADD=10',
-                    'label' => _QXZ("Campaigns"),
-                    'icon_var' => 'campaigns_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=10', 'label' => _QXZ("Show Campaigns"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=11', 'label' => _QXZ("Add Campaign"), 'sh_check' => 'new'),
-                        array('url' => '?ADD=12', 'label' => _QXZ("Copy Campaign"), 'sh_check' => 'copy'),
-                        array('url' => '?ADD=530', 'label' => _QXZ("Search Campaigns"), 'sh_check' => 'search')
-                    )
-                ),
-                'lists' => array(
-                    'url' => '?ADD=100',
-                    'label' => _QXZ("Lists"),
-                    'icon_var' => 'lists_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=100', 'label' => _QXZ("Show Lists"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=101', 'label' => _QXZ("Add List"), 'sh_check' => 'new'),
-                        array('url' => '?ADD=102', 'label' => _QXZ("Copy List"), 'sh_check' => 'copy')
-                    )
-                ),
-                'ingroups' => array(
-                    'url' => '?ADD=1001',
-                    'label' => _QXZ("Inbound"),
-                    'icon_var' => 'inbound_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=1001', 'label' => _QXZ("Show Inbound Groups"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=1002', 'label' => _QXZ("Add Inbound Group"), 'sh_check' => 'new')
-                    )
-                ),
-                'scripts' => array(
-                    'url' => '?ADD=1000000',
-                    'label' => _QXZ("Scripts"),
-                    'icon_var' => 'scripts_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=1000000', 'label' => _QXZ("Show Scripts"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=1000001', 'label' => _QXZ("Add Script"), 'sh_check' => 'new')
-                    )
-                ),
-                'usergroups' => array(
-                    'url' => '?ADD=100000',
-                    'label' => _QXZ("User Groups"),
-                    'icon_var' => 'usergroups_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=100000', 'label' => _QXZ("Show User Groups"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=100001', 'label' => _QXZ("Add User Group"), 'sh_check' => 'new')
-                    )
-                ),
-                'remoteagents' => array(
-                    'url' => '?ADD=10000',
-                    'label' => _QXZ("Remote Agents"),
-                    'icon_var' => 'remoteagents_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=10000', 'label' => _QXZ("Show Remote Agents"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=10001', 'label' => _QXZ("Add Remote Agent"), 'sh_check' => 'new')
-                    )
-                ),
-                'filters' => array(
-                    'url' => '?ADD=10000000',
-                    'label' => _QXZ("Filters"),
-                    'icon_var' => 'filters_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=10000000', 'label' => _QXZ("Show Filters"), 'sh_check' => 'list'),
-                        array('url' => '?ADD=10000001', 'label' => _QXZ("Add Filter"), 'sh_check' => 'new')
-                    )
-                ),
-                'admin' => array(
-                    'url' => '?ADD=999998',
-                    'label' => _QXZ("Admin"),
-                    'icon_var' => 'admin_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=999998', 'label' => _QXZ("System Settings"), 'sh_check' => 'settings'),
-                        array('url' => '?ADD=999997', 'label' => _QXZ("Database Admin"), 'sh_check' => 'db')
-                    )
-                )
-            );
-            
-            // QC menu if authorized
-            if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                $sidebar_items['qc'] = array(
-                    'url' => '?ADD=100000000000000',
-                    'label' => _QXZ("Quality Control"),
-                    'icon_var' => 'qc_icon',
-                    'submenus' => array(
-                        array('url' => '?ADD=100000000000000', 'label' => _QXZ("QC Campaigns"), 'sh_check' => 'campaigns'),
-                        array('url' => '?ADD=100000000000001', 'label' => _QXZ("QC Settings"), 'sh_check' => 'settings')
-                    )
-                );
-            }
-            
-            // Render sidebar menu items
-            foreach ($sidebar_items as $key => $item) {
-                $is_selected = ($hh == $key);
-                $icon_var = $item['icon_var'];
-                $bg_color = $is_selected ? 'linear-gradient(90deg,rgba(102,126,234,0.3),rgba(118,75,162,0.3))' : 'transparent';
-                
-                ?>
-                <!-- Main Menu Item -->
-                <div style="background:<?php echo $bg_color; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;padding:0;transition:all 0.2s;" onmouseover="this.style.background='linear-gradient(90deg,rgba(102,126,234,0.2),rgba(118,75,162,0.2))'" onmouseout="this.style.background='<?php echo $bg_color; ?>'">
-                    <a href="<?php echo htmlspecialchars($ADMIN . $item['url']); ?>" style="display:flex;align-items:center;gap:8px;padding:12px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,sans-serif;transition:all 0.2s;" onclick="<?php if ($SSadmin_row_click > 0) { ?>window.document.location='<?php echo htmlspecialchars($ADMIN . $item['url']); ?>'; return false;<?php } ?>">
-                        <?php echo $$icon_var; ?>
-                        <span><?php echo htmlspecialchars($item['label']); ?></span>
-                    </a>
-                </div>
-                
-                <?php
-                // Render submenus if parent is selected
-                if ($is_selected && !empty($item['submenus'])) {
-                    foreach ($item['submenus'] as $submenu) {
-                        // Check condition if exists
-                        $show_submenu = true;
-                        if (isset($submenu['condition'])) {
-                            $show_submenu = eval('return ' . $submenu['condition'] . ';');
-                        }
-                        
-                        if ($show_submenu) {
-                            $is_sub_selected = ($sh == $submenu['sh_check']);
-                            $sub_bg = $is_sub_selected ? 'rgba(102,126,234,0.15)' : 'transparent';
-                            
-                            ?>
-                            <!-- Submenu Item -->
-                            <div style="background:<?php echo $sub_bg; ?>;border-left:3px solid <?php echo $is_sub_selected ? '#667eea' : 'transparent'; ?>;padding-left:20px;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo $sub_bg; ?>'">
-                                <a href="<?php echo htmlspecialchars($submenu['url']); ?>" style="display:block;padding:8px 12px;color:#fff;text-decoration:none;font-size:12px;font-family:Arial,sans-serif;transition:all 0.2s;" onmouseover="this.style.paddingLeft='16px'" onmouseout="this.style.paddingLeft='12px'" onclick="<?php if ($SSadmin_row_click > 0) { ?>window.document.location='<?php echo htmlspecialchars($submenu['url']); ?>'; return false;<?php } ?>">
-                                    → <?php echo htmlspecialchars($submenu['label']); ?>
-                                </a>
-                            </div>
-                            <?php
-                        }
-                    }
-                }
-                
-                // Horizontal divider between main items
-                if ($key != array_key_last($sidebar_items)) {
-                    ?>
-                    <div style="height:1px;background:rgba(255,255,255,0.1);margin:2px 0;"></div>
-                    <?php
-                }
-            }
-        }
-        
-        // Limited access - Reports only user
-        elseif ($reports_only_user > 0) {
-            ?>
-            <div style="padding:12px;color:#fff;font-size:13px;font-family:Arial,sans-serif;font-weight:600;">
-                <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" style="display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;padding:12px;background:rgba(102,126,234,0.2);border-radius:4px;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.3)'" onmouseout="this.style.background='rgba(102,126,234,0.2)'">
-                    <?php echo $reports_icon; ?>
-                    <span><?php echo _QXZ("Reports"); ?></span>
-                </a>
-            </div>
-            <?php
-        }
-        
-        // Limited access - QC only user
-        elseif ($qc_only_user > 0) {
-            ?>
-            <div style="padding:12px;color:#fff;font-size:13px;font-family:Arial,sans-serif;font-weight:600;">
-                <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" style="display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;padding:12px;background:rgba(102,126,234,0.2);border-radius:4px;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.3)'" onmouseout="this.style.background='rgba(102,126,234,0.2)'">
-                    <?php echo $qc_icon; ?>
-                    <span><?php echo _QXZ("Quality Control"); ?></span>
-                </a>
-            </div>
-            <?php
-        }
-        
-        ?>
-    </div>
-</div>
-?>
+	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160>
+	<?php
+	if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
+		{
+	?>
+	<!-- REPORTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT <?php echo $reports_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $reports_bold ?> <?php echo _QXZ("Reports"); ?> </a>
+	</TD></TR>
 
+	<!-- USERS NAVIGATION -->
+	<TR WIDTH=100%><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR WIDTH=160 BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT <?php echo $users_hh ?> WIDTH=160>
+	<a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><?php echo $users_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $users_fc ?>"><?php echo $users_bold ?><?php echo _QXZ("Users"); ?></a>
+	</TD></TR>
+	<?php
+	if (strlen($users_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$copy_sh="CLASS=\"subhead_style\"";
+		$search_sh="CLASS=\"subhead_style\"";
+		$stats_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$sheet_sh="CLASS=\"subhead_style\"";
+		$territory_sh="CLASS=\"subhead_style\"";
+		$newlimit_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copy') {$copy_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='search') {$search_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='stats') {$stats_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sheet') {$sheet_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='territory') {$territory_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newlimit') {$newlimit_sh="CLASS=\"subhead_style_selected\"";}
+
+		?>
+	<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Show Users"); ?> </a>
+	</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1';\"";} ?>><TD ALIGN=LEFT>
+	<?php if ($add_copy_disabled < 1) { ?>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Add A New User"); ?> </a>
+	</TR><TR <?php echo $copy_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1A';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1A" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Copy User"); ?> </a>
+	</TR><TR <?php echo $search_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=550';\"";} ?>><TD ALIGN=LEFT>
+	<?php } ?>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=550" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Search For A User"); ?> </a>
+	</TR><TR <?php echo $stats_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_stats.php?user=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_stats.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Stats"); ?> </a>
+	</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_status.php?user=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_status.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Status"); ?> </a>
+	</TR><TR <?php echo $sheet_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Time Sheet"); ?> </a> </TD></TR>
+	 <?php
+	if ( ($SSuser_territories_active > 0) or ($user_territories_active > 0) )
+		{ ?>
+
+	</TR><TR <?php echo $territory_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_territories.php?agent=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_territories.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Territories"); ?> </a> </TD></TR>
+
+	 <?php
+		}
+	if ($SSuser_new_lead_limit > 0)
+		{ ?>
+
+	</TR><TR <?php echo $newlimit_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Overall New Lead Limits"); ?> </a> </TD></TR>
+
+	<?php }
+	  }
+	?>
 	<!-- CAMPAIGNS NAVIGATION -->
 	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
 	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>><TD ALIGN=LEFT <?php echo $campaigns_hh ?>>
