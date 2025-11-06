@@ -460,6 +460,7 @@ if ($TCedit_javascript > 0)
 
 	<?php
 	}
+}
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
@@ -2889,6 +2890,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 submenu.classList.toggle('open');
             }
         }
+	
 
         // Initialize open submenus based on PHP variables
         document.addEventListener('DOMContentLoaded', function() {
@@ -2914,7 +2916,9 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 }
             });
         });
+	
         <?php } ?>
     </script>
 </body>
 </html>
+	
