@@ -2148,7 +2148,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
         ?>
     </div>
 </div>
-
+?>
 
 	<!-- CAMPAIGNS NAVIGATION -->
 	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
