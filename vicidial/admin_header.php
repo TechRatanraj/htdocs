@@ -4,165 +4,97 @@
 # Copyright (C) 2023  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 # 
 
-// Modern Color Palette - Extended with Purple Gradient
-$HTMLcolors = 'Purple,667eea|DeepPurple,764ba2|RoyalPurple,6A0DAD|Indigo,4B0082|Slate,708090|CharcoalGray,36454F|DarkGray,A9A9A9|LightGray,D3D3D3|WhiteSmoke,F5F5F5|IndianRed,CD5C5C|LightCoral,F08080|Salmon,FA8072|DarkSalmon,E9967A|LightSalmon,FFA07A|Crimson,DC143C|Red,FF0000|FireBrick,B22222|DarkRed,8B0000|Pink,FFC0CB|LightPink,FFB6C1|HotPink,FF69B4|DeepPink,FF1493|MediumVioletRed,C71585|PaleVioletRed,DB7093|Coral,FF7F50|Tomato,FF6347|OrangeRed,FF4500|DarkOrange,FF8C00|Orange,FFA500|Gold,FFD700|Yellow,FFFF00|LightYellow,FFFFE0|LemonChiffon,FFFACD|Lavender,E6E6FA|Thistle,D8BFD8|Plum,DDA0DD|Violet,EE82EE|Orchid,DA70D6|Fuchsia,FF00FF|Magenta,FF00FF|BlueViolet,8A2BE2|DarkViolet,9400D3|DarkOrchid,9932CC|GreenYellow,ADFF2F|Chartreuse,7FFF00|LawnGreen,7CFC00|Lime,00FF00|LimeGreen,32CD32|PaleGreen,98FB98|LightGreen,90EE90|SpringGreen,00FF7F|SeaGreen,2E8B57|ForestGreen,228B22|Green,008000|DarkGreen,006400|Teal,008080|Aqua,00FFFF|Cyan,00FFFF|LightCyan,E0FFFF|Turquoise,40E0D0|SteelBlue,4682B4|SkyBlue,87CEEB|DodgerBlue,1E90FF|CornflowerBlue,6495ED|RoyalBlue,4169E1|Blue,0000FF|MediumBlue,0000CD|DarkBlue,00008B|Navy,000080|White,FFFFFF|Snow,FFFAFA|Ivory,FFFFF0|Black,000000';
+$HTMLcolors = 'IndianRed,CD5C5C|LightCoral,F08080|Salmon,FA8072|DarkSalmon,E9967A|LightSalmon,FFA07A|Crimson,DC143C|Red,FF0000|FireBrick,B22222|DarkRed,8B0000|Pink,FFC0CB|LightPink,FFB6C1|HotPink,FF69B4|DeepPink,FF1493|MediumVioletRed,C71585|PaleVioletRed,DB7093|LightSalmon,FFA07A|Coral,FF7F50|Tomato,FF6347|OrangeRed,FF4500|DarkOrange,FF8C00|Orange,FFA500|Gold,FFD700|Yellow,FFFF00|LightYellow,FFFFE0|LemonChiffon,FFFACD|LightGoldenrodYellow,FAFAD2|PapayaWhip,FFEFD5|Moccasin,FFE4B5|PeachPuff,FFDAB9|PaleGoldenrod,EEE8AA|Khaki,F0E68C|DarkKhaki,BDB76B|Lavender,E6E6FA|Thistle,D8BFD8|Plum,DDA0DD|Violet,EE82EE|Orchid,DA70D6|Fuchsia,FF00FF|Magenta,FF00FF|MediumOrchid,BA55D3|MediumPurple,9370DB|RebeccaPurple,663399|BlueViolet,8A2BE2|DarkViolet,9400D3|DarkOrchid,9932CC|DarkMagenta,8B008B|Purple,800080|Indigo,4B0082|SlateBlue,6A5ACD|DarkSlateBlue,483D8B|MediumSlateBlue,7B68EE|GreenYellow,ADFF2F|Chartreuse,7FFF00|LawnGreen,7CFC00|Lime,00FF00|LimeGreen,32CD32|PaleGreen,98FB98|LightGreen,90EE90|MediumSpringGreen,00FA9A|SpringGreen,00FF7F|MediumSeaGreen,3CB371|SeaGreen,2E8B57|ForestGreen,228B22|Green,008000|DarkGreen,006400|YellowGreen,9ACD32|OliveDrab,6B8E23|Olive,808000|DarkOliveGreen,556B2F|MediumAquamarine,66CDAA|DarkSeaGreen,8FBC8B|LightSeaGreen,20B2AA|DarkCyan,008B8B|Teal,008080|Aqua,00FFFF|Cyan,00FFFF|LightCyan,E0FFFF|PaleTurquoise,AFEEEE|Aquamarine,7FFFD4|Turquoise,40E0D0|MediumTurquoise,48D1CC|DarkTurquoise,00CED1|CadetBlue,5F9EA0|SteelBlue,4682B4|LightSteelBlue,B0C4DE|PowderBlue,B0E0E6|LightBlue,ADD8E6|SkyBlue,87CEEB|LightSkyBlue,87CEFA|DeepSkyBlue,00BFFF|DodgerBlue,1E90FF|CornflowerBlue,6495ED|MediumSlateBlue,7B68EE|RoyalBlue,4169E1|Blue,0000FF|MediumBlue,0000CD|DarkBlue,00008B|Navy,000080|MidnightBlue,191970|Cornsilk,FFF8DC|BlanchedAlmond,FFEBCD|Bisque,FFE4C4|NavajoWhite,FFDEAD|Wheat,F5DEB3|BurlyWood,DEB887|Tan,D2B48C|RosyBrown,BC8F8F|SandyBrown,F4A460|Goldenrod,DAA520|DarkGoldenrod,B8860B|Peru,CD853F|Chocolate,D2691E|SaddleBrown,8B4513|Sienna,A0522D|Brown,A52A2A|Maroon,800000|White,FFFFFF|Snow,FFFAFA|HoneyDew,F0FFF0|MintCream,F5FFFA|Azure,F0FFFF|AliceBlue,F0F8FF|GhostWhite,F8F8FF|WhiteSmoke,F5F5F5|SeaShell,FFF5EE|Beige,F5F5DC|OldLace,FDF5E6|FloralWhite,FFFAF0|Ivory,FFFFF0|AntiqueWhite,FAEBD7|Linen,FAF0E6|LavenderBlush,FFF0F5|MistyRose,FFE4E1|Gainsboro,DCDCDC|LightGray,D3D3D3|Silver,C0C0C0|DarkGray,A9A9A9|Gray,808080|DimGray,696969|LightSlateGray,778899|SlateGray,708090|DarkSlateGray,2F4F4F|Black,000000';
 
-// ============================================
-// SYSTEM SETTINGS QUERY - ALL PHP LOGIC
-// ============================================
-$stmt = "SELECT admin_home_url,enable_tts_integration,callcard_enabled,custom_fields_enabled,allow_emails,level_8_disable_add,allow_chats,enable_languages,admin_row_click,admin_screen_colors,user_new_lead_limit,user_territories_active,qc_features_active,agent_soundboards,enable_drop_lists,allow_ip_lists,admin_web_directory FROM system_settings;";
-$rslt = mysql_to_mysqli($stmt, $link);
-if ($mel > 0) {mysql_error_logging($NOW_TIME, $link, $mel, $stmt, '00XXX', $VD_login, $server_ip, $session_name, $one_mysql_log);}
+$stmt="SELECT admin_home_url,enable_tts_integration,callcard_enabled,custom_fields_enabled,allow_emails,level_8_disable_add,allow_chats,enable_languages,admin_row_click,admin_screen_colors,user_new_lead_limit,user_territories_active,qc_features_active,agent_soundboards,enable_drop_lists,allow_ip_lists,admin_web_directory from system_settings;";
+$rslt=mysql_to_mysqli($stmt, $link);
+$row=mysqli_fetch_row($rslt);
+$admin_home_url_LU =		$row[0];
+$SSenable_tts_integration = $row[1];
+$SScallcard_enabled =		$row[2];
+$SScustom_fields_enabled =	$row[3];
+$SSemail_enabled =			$row[4];
+$SSlevel_8_disable_add =	$row[5];
+$SSchat_enabled =			$row[6];
+$SSenable_languages =		$row[7];
+$SSadmin_row_click =		$row[8];
+$SSadmin_screen_colors =	$row[9];
+$SSuser_new_lead_limit =	$row[10];
+$SSuser_territories_active = $row[11];
+$SSqc_features_active =		$row[12];
+$SSagent_soundboards =		$row[13];
+$SSenable_drop_lists =		$row[14];
+$SSallow_ip_lists =			$row[15];
+$SSadmin_web_directory =	$row[16];
 
-// Initialize with defaults
-$admin_home_url_LU = '';
-$SSenable_tts_integration = 0;
-$SScallcard_enabled = 0;
-$SScustom_fields_enabled = 0;
-$SSemail_enabled = 0;
-$SSlevel_8_disable_add = 0;
-$SSchat_enabled = 0;
-$SSenable_languages = 0;
-$SSadmin_row_click = 0;
-$SSadmin_screen_colors = 'default';
-$SSuser_new_lead_limit = 0;
-$SSuser_territories_active = 0;
-$SSqc_features_active = 0;
-$SSagent_soundboards = 0;
-$SSenable_drop_lists = 0;
-$SSallow_ip_lists = 0;
-$SSadmin_web_directory = 'admin';
+if (strlen($SSadmin_home_url) > 5) {$admin_home_url_LU = $SSadmin_home_url;}
+if(!isset($ADMIN)){$ADMIN = "../$SSadmin_web_directory/admin.php";}
 
-// Fetch and assign system settings
-$row = mysqli_fetch_row($rslt);
-if ($row) {
-    $admin_home_url_LU =        $row[0];
-    $SSenable_tts_integration = $row[1];
-    $SScallcard_enabled =       $row[2];
-    $SScustom_fields_enabled =  $row[3];
-    $SSemail_enabled =          $row[4];
-    $SSlevel_8_disable_add =    $row[5];
-    $SSchat_enabled =           $row[6];
-    $SSenable_languages =       $row[7];
-    $SSadmin_row_click =        $row[8];
-    $SSadmin_screen_colors =    $row[9];
-    $SSuser_new_lead_limit =    $row[10];
-    $SSuser_territories_active = $row[11];
-    $SSqc_features_active =     $row[12];
-    $SSagent_soundboards =      $row[13];
-    $SSenable_drop_lists =      $row[14];
-    $SSallow_ip_lists =         $row[15];
-    $SSadmin_web_directory =    $row[16];
-}
+$SSmenu_background='015B91';
+$SSframe_background='D9E6FE';
+$SSstd_row1_background='9BB9FB';
+$SSstd_row2_background='B9CBFD';
+$SSstd_row3_background='8EBCFD';
+$SSstd_row4_background='B6D3FC';
+$SSstd_row5_background='A3C3D6';
+$SSalt_row1_background='BDFFBD';
+$SSalt_row2_background='99FF99';
+$SSalt_row3_background='CCFFCC';
+$SSbutton_color='EFEFEF';
 
-// Override URLs if configured
-if (strlen($SSadmin_home_url ?? '') > 5) {
-    $admin_home_url_LU = $SSadmin_home_url;
-}
-if (!isset($ADMIN)) {
-    $ADMIN = "../$SSadmin_web_directory/admin.php";
-}
-
-// ============================================
-// DEFAULT COLOR SCHEME - MODERN PURPLE THEME
-// ============================================
-$SSmenu_background = '667eea';       // Purple header
-$SSframe_background = 'f0f4ff';      // Light blue background
-$SSstd_row1_background = 'e8e6fa';   // Light purple
-$SSstd_row2_background = 'f5f3ff';   // Lighter purple
-$SSstd_row3_background = 'e6e4f8';   // Medium light purple
-$SSstd_row4_background = 'f0ebfd';   // Very light purple
-$SSstd_row5_background = 'ddd8e8';   // Medium purple
-$SSalt_row1_background = 'c8e6c9';   // Light green
-$SSalt_row2_background = 'a5d6a7';   // Medium green
-$SSalt_row3_background = 'e8f5e9';   // Very light green
-$SSbutton_color = 'efefef';          // Light gray buttons
-
-// ============================================
-// LOAD CUSTOM COLOR SCHEME IF CONFIGURED
-// ============================================
-if (isset($SSadmin_screen_colors) && $SSadmin_screen_colors != 'default') {
-    $stmt = "SELECT menu_background, frame_background, std_row1_background, std_row2_background, std_row3_background, std_row4_background, std_row5_background, alt_row1_background, alt_row2_background, alt_row3_background, web_logo, button_color FROM vicidial_screen_colors WHERE colors_id='$SSadmin_screen_colors';";
-    
-    $rslt = mysql_to_mysqli($stmt, $link);
-    if ($mel > 0) {mysql_error_logging($NOW_TIME, $link, $mel, $stmt, '01XXX', $VD_login, $server_ip, $session_name, $one_mysql_log);}
-    if ($DB) {echo htmlspecialchars($stmt) . "\n";}
-    
-    $colors_ct = mysqli_num_rows($rslt);
-    if ($colors_ct > 0) {
-        $row = mysqli_fetch_row($rslt);
-        $SSmenu_background =        $row[0];
-        $SSframe_background =       $row[1];
-        $SSstd_row1_background =    $row[2];
-        $SSstd_row2_background =    $row[3];
-        $SSstd_row3_background =    $row[4];
-        $SSstd_row4_background =    $row[5];
-        $SSstd_row5_background =    $row[6];
-        $SSalt_row1_background =    $row[7];
-        $SSalt_row2_background =    $row[8];
-        $SSalt_row3_background =    $row[9];
-        $SSweb_logo =               $row[10];
-        $SSbutton_color =           $row[11];
-    }
-}
-
-// ============================================
-// SET MAIN COLOR VARIABLES - MODERN THEME
-// ============================================
-$Mhead_color = $SSstd_row5_background;
+if ($SSadmin_screen_colors != 'default')
+	{
+	$stmt = "SELECT menu_background,frame_background,std_row1_background,std_row2_background,std_row3_background,std_row4_background,std_row5_background,alt_row1_background,alt_row2_background,alt_row3_background,web_logo,button_color FROM vicidial_screen_colors where colors_id='$SSadmin_screen_colors';";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	if ($DB) {echo "$stmt\n";}
+	$colors_ct = mysqli_num_rows($rslt);
+	if ($colors_ct > 0)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$SSmenu_background =		$row[0];
+		$SSframe_background =		$row[1];
+		$SSstd_row1_background =	$row[2];
+		$SSstd_row2_background =	$row[3];
+		$SSstd_row3_background =	$row[4];
+		$SSstd_row4_background =	$row[5];
+		$SSstd_row5_background =	$row[6];
+		$SSalt_row1_background =	$row[7];
+		$SSalt_row2_background =	$row[8];
+		$SSalt_row3_background =	$row[9];
+		$SSweb_logo =			$row[10];
+		$SSbutton_color = 		$row[11];
+		}
+	}
+$Mhead_color =	$SSstd_row5_background;
 $Mmain_bgcolor = $SSmenu_background;
+$Mhead_color =	$SSstd_row5_background;
 
-// ============================================
-// LOGO CONFIGURATION - WITH FALLBACKS
-// ============================================
 $selected_logo = "./images/vicidial_admin_web_logo.png";
 $selected_small_logo = "./images/vicidial_admin_web_logo.png";
-
-// Logo availability flags
-$logo_new = 0;
-$logo_old = 0;
-$logo_small_old = 0;
-
-// Check logo availability
-if (file_exists('./images/vicidial_admin_web_logo.png')) {
-    $logo_new++;
-}
-if (file_exists('vicidial_admin_web_logo_small.gif')) {
-    $logo_small_old++;
-}
-if (file_exists('vicidial_admin_web_logo.gif')) {
-    $logo_old++;
-}
-
-// Select appropriate logo based on configuration
-if (isset($SSweb_logo)) {
-    if ($SSweb_logo == 'default_new') {
-        $selected_logo = "./images/vicidial_admin_web_logo.png";
-        $selected_small_logo = "./images/vicidial_admin_web_logo.png";
-    }
-    elseif (($SSweb_logo == 'default_old') && ($logo_old > 0)) {
-        $selected_logo = "./vicidial_admin_web_logo.gif";
-        $selected_small_logo = "./vicidial_admin_web_logo_small.gif";
-    }
-    elseif (($SSweb_logo != 'default_new') && ($SSweb_logo != 'default_old')) {
-        if (file_exists("./images/vicidial_admin_web_logo$SSweb_logo")) {
-            $selected_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
-            $selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
-        }
-    }
-}
-
-
-// ============================================
-// CSS COLOR VARIABLES FOR UI
-// ============================================
-// Create CSS-friendly color variables
-$SS_menu_hex = '#' . $SSmenu_background;
-$SS_frame_hex = '#' . $SSframe_background;
-$SS_row1_hex = '#' . $SSstd_row1_background;
-$SS_row2_hex = '#' . $SSstd_row2_background;
-$SS_row3_hex = '#' . $SSstd_row3_background;
-$SS_button_hex = '#' . $SSbutton_color;
+$logo_new=0;
+$logo_old=0;
+$logo_small_old=0;
+if (file_exists('./images/vicidial_admin_web_logo.png')) {$logo_new++;}
+if (file_exists('vicidial_admin_web_logo_small.gif')) {$logo_small_old++;}
+if (file_exists('vicidial_admin_web_logo.gif')) {$logo_old++;}
+if ($SSweb_logo=='default_new')
+	{
+	$selected_logo = "./images/vicidial_admin_web_logo.png";
+	$selected_small_logo = "./images/vicidial_admin_web_logo.png";
+	}
+if ( ($SSweb_logo=='default_old') and ($logo_old > 0) )
+	{
+	$selected_logo = "./vicidial_admin_web_logo.gif";
+	$selected_small_logo = "./vicidial_admin_web_logo_small.gif";
+	}
+if ( ($SSweb_logo!='default_new') and ($SSweb_logo!='default_old') )
+	{
+	if (file_exists("./images/vicidial_admin_web_logo$SSweb_logo")) 
+		{
+		$selected_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
+		$selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
+		}
+	}
 
 
 ##### BEGIN populate dynamic header content #####
@@ -1937,569 +1869,950 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 
 ?>
-<TABLE CELLPADDING=0 CELLSPACING=0 BGCOLOR=white>
+<CENTER>
+
+<TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
-<TR><TD VALIGN=TOP WIDTH=170 style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);padding:0;border-radius:8px;box-shadow:0 4px 12px rgba(102,126,234,0.2);" ALIGN=CENTER VALIGN=MIDDLE>
-<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo" style="display:block;border-radius:8px 8px 0 0;"></A>
-<B><FONT FACE="ARIAL,HELVETICA" COLOR=white style="font-size:12px;letter-spacing:0.5px;padding:8px 0;"><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
+<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
+<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
+<B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
 
-<TABLE CELLPADDING=2 CELLSPACING=0 style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:160px;border-radius:0 0 8px 8px;" WIDTH=160>
-<?php
-if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
-    {
-?>
-<!-- REPORTS NAVIGATION -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='reports') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $reports_icon ?> <?php echo _QXZ("Reports"); ?> </a>
-</TD></TR>
+	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160>
+	<?php
+	if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
+		{
+	?>
+	<!-- REPORTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT <?php echo $reports_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $reports_bold ?> <?php echo _QXZ("Reports"); ?> </a>
+	</TD></TR>
 
-<!-- USERS NAVIGATION -->
-<TR WIDTH=100%><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR WIDTH=160 style="background:<?php echo $is_selected = ($hh=='users') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT style="padding:12px;width:160px;">
-<a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $users_icon ?><?php echo _QXZ("Users"); ?></a>
-</TD></TR>
-<?php
-if (strlen($users_hh) > 25) 
-    { 
-    $list_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $new_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $copy_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $search_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $stats_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $status_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $sheet_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $territory_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newlimit_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+	<!-- USERS NAVIGATION -->
+	<TR WIDTH=100%><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR WIDTH=160 BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT <?php echo $users_hh ?> WIDTH=160>
+	<a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><?php echo $users_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $users_fc ?>"><?php echo $users_bold ?><?php echo _QXZ("Users"); ?></a>
+	</TD></TR>
+	<?php
+	if (strlen($users_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$copy_sh="CLASS=\"subhead_style\"";
+		$search_sh="CLASS=\"subhead_style\"";
+		$stats_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$sheet_sh="CLASS=\"subhead_style\"";
+		$territory_sh="CLASS=\"subhead_style\"";
+		$newlimit_sh="CLASS=\"subhead_style\"";
 
-    if ($sh=='list') {$list_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='new') {$new_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='copy') {$copy_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='search') {$search_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='stats') {$stats_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='status') {$status_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='sheet') {$sheet_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='territory') {$territory_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newlimit') {$newlimit_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copy') {$copy_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='search') {$search_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='stats') {$stats_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sheet') {$sheet_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='territory') {$territory_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newlimit') {$newlimit_sh="CLASS=\"subhead_style_selected\"";}
 
-    ?>
-<TR <?php echo $list_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='list') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Users"); ?> </a>
-</TR><TR <?php echo $new_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='new') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
-<?php if ($add_copy_disabled < 1) { ?>
- &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New User"); ?> </a>
-</TR><TR <?php echo $copy_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='copy') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1A';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1A" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy User"); ?> </a>
-</TR><TR <?php echo $search_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='search') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=550';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
-<?php } ?>
- &nbsp; <a href="<?php echo $ADMIN ?>?ADD=550" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Search For A User"); ?> </a>
-</TR><TR <?php echo $stats_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='stats') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_stats.php?user=$user';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="./user_stats.php?user=<?php echo $user ?>" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("User Stats"); ?> </a>
-</TR><TR <?php echo $status_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='status') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_status.php?user=$user';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="./user_status.php?user=<?php echo $user ?>" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("User Status"); ?> </a>
-</TR><TR <?php echo $sheet_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='sheet') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$user';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Time Sheet"); ?> </a> </TD></TR>
- <?php
-if ( ($SSuser_territories_active > 0) or ($user_territories_active > 0) )
-    { ?>
+		?>
+	<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Show Users"); ?> </a>
+	</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1';\"";} ?>><TD ALIGN=LEFT>
+	<?php if ($add_copy_disabled < 1) { ?>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Add A New User"); ?> </a>
+	</TR><TR <?php echo $copy_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1A';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1A" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Copy User"); ?> </a>
+	</TR><TR <?php echo $search_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=550';\"";} ?>><TD ALIGN=LEFT>
+	<?php } ?>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=550" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Search For A User"); ?> </a>
+	</TR><TR <?php echo $stats_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_stats.php?user=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_stats.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Stats"); ?> </a>
+	</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_status.php?user=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_status.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Status"); ?> </a>
+	</TR><TR <?php echo $sheet_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Time Sheet"); ?> </a> </TD></TR>
+	 <?php
+	if ( ($SSuser_territories_active > 0) or ($user_territories_active > 0) )
+		{ ?>
 
-</TR><TR <?php echo $territory_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='territory') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_territories.php?agent=$user';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="./user_territories.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("User Territories"); ?> </a> </TD></TR>
+	</TR><TR <?php echo $territory_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_territories.php?agent=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_territories.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Territories"); ?> </a> </TD></TR>
 
- <?php
-    }
-if ($SSuser_new_lead_limit > 0)
-    { ?>
+	 <?php
+		}
+	if ($SSuser_new_lead_limit > 0)
+		{ ?>
 
-</TR><TR <?php echo $newlimit_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newlimit') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;">
- &nbsp; <a href="./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Overall New Lead Limits"); ?> </a> </TD></TR>
+	</TR><TR <?php echo $newlimit_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Overall New Lead Limits"); ?> </a> </TD></TR>
 
-<?php }
-  }
-?>
+	<?php }
+	  }
+	?>
+	<!-- CAMPAIGNS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>><TD ALIGN=LEFT <?php echo $campaigns_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=10" STYLE="text-decoration:none;"><?php echo $campaigns_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $campaigns_fc ?>"><?php echo $campaigns_bold ?><?php echo _QXZ("Campaigns"); ?></a>
+	</TD></TR>
+	<?php
+	if (strlen($campaigns_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$hotkey_sh="CLASS=\"subhead_style\"";
+		$recycle_sh="CLASS=\"subhead_style\"";
+		$autoalt_sh="CLASS=\"subhead_style\"";
+		$pause_sh="CLASS=\"subhead_style\"";
+		$listmix_sh="CLASS=\"subhead_style\"";
+		$preset_sh="CLASS=\"subhead_style\"";
+		$accid_sh="CLASS=\"subhead_style\"";
 
-<!-- CAMPAIGNS NAVIGATION -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='campaigns') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=10" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $campaigns_icon ?> <?php echo _QXZ("Campaigns"); ?></a></TD></TR>
-<?php
-if (strlen($campaigns_hh) > 25) { 
-    $list_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $status_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $hotkey_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $recycle_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $autoalt_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $pause_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listmix_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $preset_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $accid_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+		if ($sh=='basic') {$sh='list';}
+		if ($sh=='detail') {$sh='list';}
+		if ($sh=='dialstat') {$sh='list';}
 
-    if ($sh=='basic') {$sh='list';}
-    if ($sh=='detail') {$sh='list';}
-    if ($sh=='dialstat') {$sh='list';}
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='hotkey') {$hotkey_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='recycle') {$recycle_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='autoalt') {$autoalt_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='pause') {$pause_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listmix') {$listmix_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='preset') {$preset_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='accid') {$accid_sh="CLASS=\"subhead_style_selected\"";}
 
-    if ($sh=='list') {$list_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='status') {$status_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='hotkey') {$hotkey_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='recycle') {$recycle_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='autoalt') {$autoalt_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='pause') {$pause_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listmix') {$listmix_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='preset') {$preset_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='accid') {$accid_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-?>
-<TR <?php echo $list_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='list') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Campaigns Main"); ?></a></TD></TR>
-<TR <?php echo $status_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='status') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=32';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=32" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Statuses"); ?></a></TD></TR>
-<TR <?php echo $hotkey_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='hotkey') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=33';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=33" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("HotKeys"); ?></a></TD></TR>
-<?php
-if ($SSoutbound_autodial_active > 0) {
-?>
-<TR <?php echo $recycle_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='recycle') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=35';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=35" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Lead Recycle"); ?></a></TD></TR>
-<TR <?php echo $autoalt_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='autoalt') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=36';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=36" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Auto-Alt Dial"); ?></a></TD></TR>
-<TR <?php echo $listmix_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listmix') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=39';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=39" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("List Mix"); ?></a></TD></TR>
-<?php
-}
-?>
-<TR <?php echo $pause_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='pause') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=37';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=37" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Pause Codes"); ?></a></TD></TR>
-<TR <?php echo $preset_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='preset') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=301';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=301" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Presets"); ?></a></TD></TR>
-<?php
-if ($SScampaign_cid_areacodes_enabled > 0) {
-?>
-<TR <?php echo $accid_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='accid') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=302';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=302" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("AC-CID"); ?></a></TD></TR>
-<?php
-}
-}
-?>
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $list_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Campaigns Main"); ?></a></TD>
+		</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=32';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $status_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=32" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Statuses"); ?></a></TD>
+		</TR><TR <?php echo $hotkey_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=33';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $hotkey_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=33" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("HotKeys"); ?></a></TD>
+		<?php
+		if ($SSoutbound_autodial_active > 0)
+			{
+			?>
+			</TR><TR <?php echo $recycle_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=35';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $recycle_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=35" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Lead Recycle"); ?></a></TD>
+			</TR><TR <?php echo $autoalt_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=36';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $autoalt_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=36" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Auto-Alt Dial"); ?></a></TD>
+			</TR><TR <?php echo $listmix_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=39';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $listmix_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=39" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("List Mix"); ?></a></TD>
+			<?php
+			}
+		?>
+		</TR><TR <?php echo $pause_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=37';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $pause_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=37" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Pause Codes"); ?></a></TD>
+		</TR><TR <?php echo $preset_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=301';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $preset_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=301" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Presets"); ?></a></TD>
+		<?php
+		if ($SScampaign_cid_areacodes_enabled > 0)
+			{
+			?>
+			</TR><TR <?php echo $accid_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=302';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $accid_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=302" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("AC-CID"); ?></a></TD>
+			<?php
+			}
+		 } 
+	?>
+	<!-- LISTS NAVIGATION -->
+	<?php
+	if ($SSoutbound_autodial_active > 0)
+		{
+		?>
+		<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+		<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT <?php echo $lists_hh ?>><a href="<?php echo $ADMIN ?>?ADD=100" STYLE="text-decoration:none;"><?php echo $lists_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $lists_fc ?>"><?php echo $lists_bold ?><?php echo _QXZ("Lists"); ?></a></TD></TR>
+		<?php
+		if (strlen($lists_hh) > 25) 
+			{ 
+			$list_sh="CLASS=\"subhead_style\"";
+			$new_sh="CLASS=\"subhead_style\"";
+			$search_sh="CLASS=\"subhead_style\"";
+			$lead_sh="CLASS=\"subhead_style\"";
+			$load_sh="CLASS=\"subhead_style\"";
+			$dnc_sh="CLASS=\"subhead_style\"";
+			$custom_sh="CLASS=\"subhead_style\"";
+			$cpcust_sh="CLASS=\"subhead_style\"";
+			$droplist_sh="CLASS=\"subhead_style\"";
 
-<!-- LISTS NAVIGATION -->
-<?php
-if ($SSoutbound_autodial_active > 0) {
-?>
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='lists') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=100" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $lists_icon ?> <?php echo _QXZ("Lists"); ?></a></TD></TR>
-<?php
-if (strlen($lists_hh) > 25) { 
-    $list_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $new_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $search_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $lead_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $load_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $dnc_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $custom_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $cpcust_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $droplist_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+			if ($LOGdelete_from_dnc > 0) {$DNClink = _QXZ("Add-Delete DNC Number");}
+			else {$DNClink = _QXZ("Add DNC Number");}
 
-    if ($LOGdelete_from_dnc > 0) {$DNClink = _QXZ("Add-Delete DNC Number");}
-    else {$DNClink = _QXZ("Add DNC Number");}
+			if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='search') {$search_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='lead') {$lead_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='load') {$load_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='dnc') {$dnc_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='custom') {$custom_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='cpcust') {$cpcust_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='droplist') {$droplist_sh="CLASS=\"subhead_style_selected\"";}
 
-    if ($sh=='list') {$list_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='new') {$new_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='search') {$search_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='lead') {$lead_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='load') {$load_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='dnc') {$dnc_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='custom') {$custom_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='cpcust') {$cpcust_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='droplist') {$droplist_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-?>
-<TR <?php echo $list_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='list') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Lists"); ?></a></TD></TR>
-<TR <?php echo $new_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='new') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New List"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $search_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='search') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_search_lead.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="admin_search_lead.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Search For A Lead"); ?></a></TD></TR>
-<TR <?php echo $lead_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='lead') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_modify_lead.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="admin_modify_lead.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New Lead"); ?></a></TD></TR>
-<TR <?php echo $dnc_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='dnc') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=121';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=121" STYLE="text-decoration:none;color:#fff;"><?php echo $DNClink ?></a></TD></TR>
-<TR <?php echo $load_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='load') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_listloader_fourth_gen.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="./admin_listloader_fourth_gen.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Load New Leads"); ?></a></TD></TR>
-<?php
-if ($SScustom_fields_enabled > 0) {
-    $admin_lists_custom = 'admin_lists_custom.php';
-?>
-<TR <?php echo $custom_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='custom') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$admin_lists_custom';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="./<?php echo $admin_lists_custom ?>" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("List Custom Fields"); ?></a></TD></TR>
-<TR <?php echo $cpcust_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='cpcust') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$admin_lists_custom?action=COPY_FIELDS_FORM';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="./<?php echo $admin_lists_custom ?>?action=COPY_FIELDS_FORM" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy Custom Fields"); ?></a></TD></TR>
-<?php
-}
-if ($SSenable_drop_lists > 0) {
-?>
-<TR <?php echo $droplist_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='droplist') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Drop Lists"); ?></a></TD></TR>
-<?php
-}
-}
-}
+			?>
+			<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=100" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Lists"); ?> </a>
+			</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<?php if ($add_copy_disabled < 1) { ?>
+			<a href="<?php echo $ADMIN ?>?ADD=111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New List"); ?> </a>
+			</TR><TR <?php echo $search_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_search_lead.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<?php } ?>
+			<a href="admin_search_lead.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Search For A Lead"); ?> </a>
+			</TR><TR <?php echo $lead_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_modify_lead.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="admin_modify_lead.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Lead"); ?> </a>
+			</TR><TR <?php echo $dnc_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=121';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=121" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo $DNClink ?> </a>
+			</TR><TR <?php echo $load_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_listloader_fourth_gen.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="./admin_listloader_fourth_gen.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Load New Leads"); ?> </a>
+			<?php
+			if ($SScustom_fields_enabled > 0)
+				{
+				$admin_lists_custom = 'admin_lists_custom.php';
+				?>
+				</TR><TR <?php echo $custom_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$admin_lists_custom';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+				<a href="./<?php echo $admin_lists_custom ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("List Custom Fields"); ?> </a>
+				</TR><TR <?php echo $cpcust_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$admin_lists_custom?action=COPY_FIELDS_FORM';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+				<a href="./<?php echo $admin_lists_custom ?>?action=COPY_FIELDS_FORM" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Custom Fields"); ?> </a>
+				<?php
+				}
+			if ($SSenable_drop_lists > 0)
+				{
+				?>
+				<TR <?php echo $droplist_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+				<a href="<?php echo $ADMIN ?>?ADD=130" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Drop Lists"); ?> </a>
+				<?php
+				}
+			?>
+			</TD></TR>
+			<?php
+			}
+		}
 
-if (($SSqc_features_active=='1') && ($qc_auth=='1')) { 
-?>
-<!-- QC NAVIGATION -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='qc') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $qc_icon ?> <?php echo _QXZ("Quality Control"); ?></a></TD></TR>
-<?php
-if (strlen($qc_hh) > 25) {
-    $campaign_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $ingroup_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $list_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $scorecard_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $modify_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+	if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
+		{ ?>
+	<!-- QC navigation -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $qc_hh ?>>
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><?php echo $qc_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $qc_fc ?>"><?php echo $qc_bold ?> <?php echo _QXZ("Quality Control"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<?php
+	if (strlen($qc_hh) > 25) 
+		{
+		$campaign_sh="CLASS=\"subhead_style\"";
+		$ingroup_sh="CLASS=\"subhead_style\"";
+		$list_sh="CLASS=\"subhead_style\"";
+		$enter_sh="CLASS=\"subhead_style\"";
+		$modify_sh="CLASS=\"subhead_style\"";
+		$scorecard_sh="CLASS=\"subhead_style\"";
 
-    if($qc_display_group_type=="CAMPAIGN") {$sh="campaign";}
-    if($qc_display_group_type=="INGROUP") {$sh="ingroup";}
-    if($qc_display_group_type=="LIST") {$sh="list";}
-    if($qc_display_group_type=="SCORECARD") {$sh="scorecard";}
-    if(!$sh) {$sh="campaign";}
+		if($qc_display_group_type=="CAMPAIGN") {$sh="campaign";}
+		if($qc_display_group_type=="INGROUP") {$sh="ingroup";}
+		if($qc_display_group_type=="LIST") {$sh="list";}
+		#if($sh=="modify") {$sh="modify";}
+		if($qc_display_group_type=="SCORECARD") {$sh="scorecard";}
+		if(!$sh) {$sh="campaign";}
 
-    if ($sh=='campaign') {$campaign_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='ingroup') {$ingroup_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='list') {$list_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='scorecard') {$scorecard_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='modify') {$modify_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-?>
-<TR <?php echo $campaign_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='campaign') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=CAMPAIGN';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=CAMPAIGN" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("QC Calls by Campaign"); ?></a></TD></TR>
-<TR <?php echo $list_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='list') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=LIST';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=LIST" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("QC Calls by List"); ?></a></TD></TR>
-<TR <?php echo $ingroup_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='ingroup') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=INGROUP';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=INGROUP" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("QC Calls by Ingroup"); ?></a></TD></TR>
-<TR <?php echo $scorecard_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='scorecard') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='qc_scorecards.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="qc_scorecards.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show QC Scorecards"); ?></a></TD></TR>
-<TR <?php echo $modify_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='modify') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=341111111111111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=341111111111111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Modify QC Codes"); ?></a></TD></TR>
-<?php
-}
-}
-?>
+		if ($sh=='campaign') {$campaign_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='ingroup') {$ingroup_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='enter') {$enter_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='modify') {$modify_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='scorecard') {$scorecard_sh="CLASS=\"subhead_style_selected\"";}
 
+		?>
+	<TR <?php echo $campaign_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=CAMPAIGN';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=CAMPAIGN" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Calls by Campaign"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=LIST';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=LIST" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Calls by List"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<TR <?php echo $ingroup_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=INGROUP';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=INGROUP" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Calls by Ingroup"); ?> </FONT></a>
+		</TD>
+	</TR>
+<!--
+	<TR <?php echo $enter_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Enter QC Queue"); ?> </FONT></a>
+		</TD>
+	</TR>
+//-->
+	<TR <?php echo $scorecard_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"qc_scorecards.php';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="qc_scorecards.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show QC Scorecards"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<TR <?php echo $modify_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=341111111111111';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=341111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Modify QC Codes"); ?> </FONT></a>
+		</TD>
+	</TR>
+		<?php }
+		}
+	?>
+	<!-- SCRIPTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000';\"";} ?>><TD ALIGN=LEFT <?php echo $scripts_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=1000000" STYLE="text-decoration:none;"><?php echo $scripts_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $scripts_fc ?>"><?php echo $scripts_bold ?> <?php echo _QXZ("Scripts"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($scripts_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
 
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
 
-<!-- COMPLETE INGROUPS NAVIGATION - MODERNIZED -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='ingroups') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1001';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=1001" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $inbound_icon ?> <?php echo _QXZ("Inbound"); ?></a></TD></TR>
-<?php
-if (strlen($ingroups_hh) > 25) {
-    $listIG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newIG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $copyIG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listEG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newEG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $copyEG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listCG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newCG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $copyCG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listDID_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newDID_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $copyDID_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $didRA_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listCM_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newCM_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $copyCM_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listFPG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newFPG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $addFPG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Scripts"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1111111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Script"); ?> </a>
+		<?php } ?>
+		</TD></TR>
+		<?php } 
+	?>
+	<!-- FILTERS NAVIGATION -->
+	<?php
+	if ($SSoutbound_autodial_active > 0)
+		{
+		?>
+		<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+		<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000';\"";} ?>><TD ALIGN=LEFT <?php echo $filters_hh ?>><a href="<?php echo $ADMIN ?>?ADD=10000000" STYLE="text-decoration:none;"><?php echo $filters_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $filters_fc ?>"><?php echo $filters_bold ?> <?php echo _QXZ("Filters"); ?> </a></TD></TR>
+		<?php
+		if (strlen($filters_hh) > 25) 
+			{ 
+			$list_sh="CLASS=\"subhead_style\"";
+			$new_sh="CLASS=\"subhead_style\"";
 
-    if ($sh=='listIG') {$listIG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newIG') {$newIG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='copyIG') {$copyIG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listEG') {$listEG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newEG') {$newEG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='copyEG') {$copyEG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listCG') {$listCG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newCG') {$newCG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='copyCG') {$copyCG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listDID') {$listDID_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newDID') {$newDID_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='copyDID') {$copyDID_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='didRA') {$didRA_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listCM') {$listCM_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newCM') {$newCM_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='copyCM') {$copyCM_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listFPG') {$listFPG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newFPG') {$newFPG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='addFPG') {$addFPG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
+			if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+			?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=10000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Filters"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=11111111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=11111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Filter"); ?> </a>
+		<?php } ?>
+		</TD></TR>
+		<?php } 
+		}
+	?>
+	<!-- INGROUPS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1001';\"";} ?>><TD ALIGN=LEFT <?php echo $ingroups_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=1001" STYLE="text-decoration:none;"><?php echo $inbound_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $ingroups_fc ?>"><?php echo $ingroups_bold ?> <?php echo _QXZ("Inbound"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($ingroups_hh) > 25) 
+		{
+		$listIG_sh="CLASS=\"subhead_style\"";
+		$newIG_sh="CLASS=\"subhead_style\"";
+		$copyIG_sh="CLASS=\"subhead_style\"";
+		$listEG_sh="CLASS=\"subhead_style\"";
+		$newEG_sh="CLASS=\"subhead_style\"";
+		$copyEG_sh="CLASS=\"subhead_style\"";
+		$listCG_sh="CLASS=\"subhead_style\"";
+		$newCG_sh="CLASS=\"subhead_style\"";
+		$copyCG_sh="CLASS=\"subhead_style\"";
+		$listDID_sh="CLASS=\"subhead_style\"";
+		$newDID_sh="CLASS=\"subhead_style\"";
+		$copyDID_sh="CLASS=\"subhead_style\"";
+		$didRA_sh="CLASS=\"subhead_style\"";
+		$listCM_sh="CLASS=\"subhead_style\"";
+		$newCM_sh="CLASS=\"subhead_style\"";
+		$copyCM_sh="CLASS=\"subhead_style\"";
+		$listFPG_sh="CLASS=\"subhead_style\"";
+		$newFPG_sh="CLASS=\"subhead_style\"";
+		$addFPG_sh="CLASS=\"subhead_style\"";
 
-    if ($LOGdelete_from_dnc > 0) {$FPGlink = _QXZ("Add-Delete FPG Number");}
-    else {$FPGlink = _QXZ("Add FPG Number");}
-?>
-<!-- IN-GROUPS SECTION -->
-<TR <?php echo $listIG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listIG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show In-Groups"); ?></a></TD></TR>
-<TR <?php echo $newIG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newIG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=1111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New In-Group"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $copyIG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='copyIG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1211';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1211" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy In-Group"); ?></a></TD></TR>
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);"></TD></TR>
-<?php
-if ($SSemail_enabled > 0) {
-?>
-<!-- EMAIL GROUPS SECTION -->
-<TR <?php echo $listEG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listEG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1800';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1800" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Email Groups"); ?></a></TD></TR>
-<TR <?php echo $newEG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newEG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1811';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=1811" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add New Email Group"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $copyEG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='copyEG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1911';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1911" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy Email Group"); ?></a></TD></TR>
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);"></TD></TR>
-<?php
-}
-if ($SSchat_enabled > 0) {
-?>
-<!-- CHAT GROUPS SECTION -->
-<TR <?php echo $listCG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listCG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1900';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1900" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Chat Groups"); ?></a></TD></TR>
-<TR <?php echo $newCG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newCG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=18111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=18111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add New Chat Group"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $copyCG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='copyCG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=19111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=19111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy Chat Group"); ?></a></TD></TR>
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);"></TD></TR>
-<?php
-}
-?>
-<!-- DIDs SECTION -->
-<TR <?php echo $listDID_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listDID') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1300';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1300" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show DIDs"); ?></a></TD></TR>
-<TR <?php echo $newDID_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newDID') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1311';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=1311" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New DID"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $copyDID_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='copyDID') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1411';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1411" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy DID"); ?></a></TD></TR>
-<?php
-if ($SSdid_ra_extensions_enabled > 0) {
-?>
-<TR <?php echo $didRA_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='didRA') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1320';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1320" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("RA Extensions"); ?></a></TD></TR>
-<?php
-}
-?>
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);"></TD></TR>
-<!-- CALL MENUS SECTION -->
-<TR <?php echo $listCM_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listCM') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1500';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1500" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Call Menus"); ?></a></TD></TR>
-<TR <?php echo $newCM_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newCM') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1511';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=1511" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New Call Menu"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $copyCM_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='copyCM') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1611';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1611" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Copy Call Menu"); ?></a></TD></TR>
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);"></TD></TR>
-<!-- FILTER PHONE GROUPS SECTION -->
-<TR <?php echo $listFPG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listFPG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1700';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1700" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Filter Phone Groups"); ?></a></TD></TR>
-<TR <?php echo $newFPG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newFPG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1711';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=1711" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add Filter Phone Group"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $addFPG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='addFPG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=171';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=171" STYLE="text-decoration:none;color:#fff;"><?php echo $FPGlink ?></a></TD></TR>
-<?php
-}
-?>
+		if ($sh=='listIG') {$listIG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newIG') {$newIG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyIG') {$copyIG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listEG') {$listEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newEG') {$newEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyEG') {$copyEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listCG') {$listCG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newCG') {$newCG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyCG') {$copyCG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listDID') {$listDID_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newDID') {$newDID_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyDID') {$copyDID_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='didRA') {$didRA_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listCM') {$listCM_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newCM') {$newCM_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyCM') {$copyCM_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listFPG') {$listFPG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newFPG') {$newFPG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='addFPG') {$addFPG_sh="CLASS=\"subhead_style_selected\"";}
 
-<!-- USERGROUPS NAVIGATION -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='usergroups') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=100000" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $usergroups_icon ?> <?php echo _QXZ("User Groups"); ?></a></TD></TR>
-<?php
-if (strlen($usergroups_hh) > 25) {
-    $list_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $new_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $hour_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $bulk_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+		if ($LOGdelete_from_dnc > 0) {$FPGlink = _QXZ("Add-Delete FPG Number");}
+		else {$FPGlink = _QXZ("Add FPG Number");}
+		?>
+		<TR <?php echo $listIG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1000" STYLE="text-decoration:none;"><img src="images/icon_black_inbound.png" border=0 alt=\"In-Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show In-Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newIG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1111" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New In-Group"); ?> </a>
+		</TD></TR><TR <?php echo $copyIG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1211';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1211" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy In-Group"); ?> </a>
+		<?php } ?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		<?php
+		if ($SSemail_enabled>0) 
+			{
+		?>
+		<TR <?php echo $listEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1800';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1800" STYLE="text-decoration:none;"><img src="images/icon_email.png" border=0 alt=\"Email Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Email Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1811';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1811" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add New Email Group"); ?> </a>
+		</TD></TR><TR <?php echo $copyEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1911';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1911" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Email Group"); ?> </a>
+		<?php } ?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		<?php
+			}
+		?>
+		<?php
+		if ($SSchat_enabled>0) 
+			{
+		?>
+		<TR <?php echo $listCG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1900';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1900" STYLE="text-decoration:none;"><img src="images/icon_chat.png" border=0 alt=\" Chat Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Chat Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newCG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=18111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=18111" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add New Chat Group"); ?> </a>
+		</TD></TR><TR <?php echo $copyCG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=19111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=19111" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Chat Group"); ?> </a>
+		<?php } ?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		<?php
+			}
+		?>
+		</TD></TR><TR <?php echo $listDID_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1300';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1300" STYLE="text-decoration:none;"><img src="images/icon_cidgroups.png" border=0 alt=\"DIDs\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show DIDs"); ?> </a>
+		</TD></TR><TR <?php echo $newDID_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1311';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1311" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New DID"); ?> </a>
+		</TD></TR><TR <?php echo $copyDID_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1411';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1411" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy DID"); ?> </a>
+		<?php
+			}
+		if ($SSdid_ra_extensions_enabled > 0)
+			{
+			?>
+			</TD></TR><TR <?php echo $didRA_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1320';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=1320" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("RA Extensions"); ?></a>
+			<?php
+			}
+		?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		</TD></TR><TR <?php echo $listCM_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1500';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1500" STYLE="text-decoration:none;"><img src="images/icon_callmenu.png" border=0 alt=\"Call Menus\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Call Menus"); ?> </a>
+		</TD></TR><TR <?php echo $newCM_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1511';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1511" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Call Menu"); ?> </a>
+		</TD></TR><TR <?php echo $copyCM_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1611';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1611" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Call Menu"); ?> </a>
+		<?php } ?>
 
-    if ($sh=='list') {$list_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='new') {$new_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='hour') {$hour_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='bulk') {$bulk_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-?>
-<TR <?php echo $list_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='list') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show User Groups"); ?></a></TD></TR>
-<TR <?php echo $new_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='new') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=111111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=111111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add A New User Group"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $hour_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='hour') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='group_hourly_stats.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="group_hourly_stats.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Group Hourly Report"); ?></a></TD></TR>
-<TR <?php echo $bulk_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='bulk') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='user_group_bulk_change.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="user_group_bulk_change.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Bulk Group Change"); ?></a></TD></TR>
-<?php
-}
-?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		</TD></TR><TR <?php echo $listFPG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1700';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1700" STYLE="text-decoration:none;"><img src="images/icon_filterphonegroup.png" border=0 alt=\"Filter Phone Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Filter Phone Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newFPG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1711';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1711" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add Filter Phone Group"); ?> </a>
+		</TD></TR><TR <?php echo $addFPG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=171';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php } ?>
+		<a href="<?php echo $ADMIN ?>?ADD=171" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo $FPGlink ?> </a>
+		</TD></TR>
+		<?php } 
+		?>
+	<!-- USERGROUPS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000';\"";} ?>><TD ALIGN=LEFT <?php echo $usergroups_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=100000" STYLE="text-decoration:none;"><?php echo $usergroups_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $usergroups_fc ?>"><?php echo $usergroups_bold ?> <?php echo _QXZ("User Groups"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($usergroups_hh) > 25)
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$hour_sh="CLASS=\"subhead_style\"";
+		$bulk_sh="CLASS=\"subhead_style\"";
 
-<!-- REMOTEAGENTS NAVIGATION -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='remoteagent') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=10000" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $remoteagents_icon ?> <?php echo _QXZ("Remote Agents"); ?></a></TD></TR>
-<?php
-if (strlen($remoteagent_hh) > 25) {
-    $list_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $new_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $listEG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
-    $newEG_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='hour') {$hour_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='bulk') {$bulk_sh="CLASS=\"subhead_style_selected\"";}
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=100000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show User Groups"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=111111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New User Group"); ?> </a>
+		</TR><TR <?php echo $hour_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='group_hourly_stats.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php } ?>
+		<a href="group_hourly_stats.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Group Hourly Report"); ?> </a>
+		</TR><TR <?php echo $bulk_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='user_group_bulk_change.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="user_group_bulk_change.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Bulk Group Change"); ?> </a>
+		</TD></TR>
+		<?php } 
+	?>
+	<!-- REMOTEAGENTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000';\"";} ?>><TD ALIGN=LEFT <?php echo $remoteagent_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=10000" STYLE="text-decoration:none;"><?php echo $remoteagents_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $remoteagent_fc ?>"><?php echo $remoteagent_bold ?> <?php echo _QXZ("Remote Agents"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($remoteagent_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$listEG_sh="CLASS=\"subhead_style\"";
+		$newEG_sh="CLASS=\"subhead_style\"";
 
-    if ($sh=='list') {$list_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='new') {$new_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='listEG') {$listEG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='newEG') {$newEG_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-?>
-<TR <?php echo $list_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='list') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Remote Agents"); ?></a></TD></TR>
-<TR <?php echo $new_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='new') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=11111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=11111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add New Remote Agents"); ?></a><?php } ?></TD></TR>
-<TR <?php echo $listEG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='listEG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=12000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Show Extension Groups"); ?></a></TD></TR>
-<TR <?php echo $newEG_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='newEG') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=12111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=12111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Add Extension Group"); ?></a><?php } ?></TD></TR>
-<?php
-}
-?>
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listEG') {$listEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newEG') {$newEG_sh="CLASS=\"subhead_style_selected\"";}
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=10000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Remote Agents"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=11111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=11111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add New Remote Agents"); ?> </a>
+		</TR><TR <?php echo $listEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=12000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php } ?>
+		<a href="<?php echo $ADMIN ?>?ADD=12000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Extension Groups"); ?> </a>
+		</TR><TR <?php echo $newEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=12111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=12111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add Extension Group"); ?> </a>
+		<?php } ?>
+		</TD></TR>
+	<?php } 
+	?>
+	<!-- ADMIN NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999998';\"";} ?>><TD ALIGN=LEFT <?php echo $admin_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=999998" STYLE="text-decoration:none;"><?php echo $admin_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $admin_fc ?>"><?php echo $admin_bold ?> <?php echo _QXZ("Admin"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($admin_hh) > 25) 
+		{
+		$times_sh="CLASS=\"subhead_style\"";
+		$shifts_sh="CLASS=\"subhead_style\"";
+		$templates_sh="CLASS=\"subhead_style\"";
+		$carriers_sh="CLASS=\"subhead_style\"";
+		$phones_sh="CLASS=\"subhead_style\"";
+		$server_sh="CLASS=\"subhead_style\"";
+		$conference_sh="CLASS=\"subhead_style\"";
+		$settings_sh="CLASS=\"subhead_style\"";
+		$label_sh="CLASS=\"subhead_style\"";
+		$colors_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$audio_sh="CLASS=\"subhead_style\"";
+		$moh_sh="CLASS=\"subhead_style\"";
+		$languages_sh="CLASS=\"subhead_style\"";
+		$soundboard_sh="CLASS=\"subhead_style\"";
+		$vm_sh="CLASS=\"subhead_style\"";
+		$tts_sh="CLASS=\"subhead_style\"";
+		$cc_sh="CLASS=\"subhead_style\"";
+		$cts_sh="CLASS=\"subhead_style\"";
+		$sc_sh="CLASS=\"subhead_style\"";
+		$sg_sh="CLASS=\"subhead_style\"";
+		$cg_sh="CLASS=\"subhead_style\"";
+		$vmmg_sh="CLASS=\"subhead_style\"";
+		$qg_sh="CLASS=\"subhead_style\"";
+		$emails_sh="CLASS=\"subhead_style\"";
+		$ar_sh="CLASS=\"subhead_style\"";
+		$il_sh="CLASS=\"subhead_style\"";
 
-<!-- ADMIN NAVIGATION - MODERNIZED -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:<?php echo $is_selected = ($hh=='admin') ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>;border-left:3px solid <?php echo $is_selected ? '#667eea' : 'transparent'; ?>;transition:all 0.2s;" onmouseover="this.style.background='rgba(102,126,234,0.2)'" onmouseout="this.style.background='<?php echo $is_selected ? 'rgba(102,126,234,0.3)' : 'transparent'; ?>'" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999998';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=999998" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $admin_icon ?> <?php echo _QXZ("Admin"); ?></a></TD></TR>
-<?php
-if (strlen($admin_hh) > 25) {
-    $times_sh=$shifts_sh=$templates_sh=$carriers_sh=$phones_sh=$server_sh=$conference_sh=$settings_sh=$label_sh=$colors_sh=$status_sh=$audio_sh=$moh_sh=$languages_sh=$soundboard_sh=$vm_sh=$tts_sh=$cc_sh=$cts_sh=$sc_sh=$sg_sh=$cg_sh=$vmmg_sh=$qg_sh=$emails_sh=$ar_sh=$il_sh="style=\"padding:8px 12px;background:transparent;border-left:3px solid transparent;\"";
+		if ($sh=='times') {$times_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='shifts') {$shifts_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='templates') {$templates_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='carriers') {$carriers_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='phones') {$phones_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='server') {$server_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='conference') {$conference_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='settings') {$settings_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='label') {$label_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='colors') {$colors_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='audio') {$audio_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='moh') {$moh_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='languages') {$languages_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='soundboard') {$soundboard_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='vm') {$vm_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='tts') {$tts_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='cc') {$cc_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='cts') {$cts_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sc') {$sc_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sg') {$sg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='cg') {$cg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='vmmg') {$vmmg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='qg') {$qg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='emails') {$emails_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='ar') {$ar_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='il') {$il_sh="CLASS=\"subhead_style_selected\"";}
 
-    if ($sh=='times') {$times_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='shifts') {$shifts_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='templates') {$templates_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='carriers') {$carriers_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='phones') {$phones_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='server') {$server_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='conference') {$conference_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='settings') {$settings_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='label') {$label_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='colors') {$colors_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='status') {$status_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='audio') {$audio_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='moh') {$moh_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='languages') {$languages_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='soundboard') {$soundboard_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='vm') {$vm_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='tts') {$tts_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='cc') {$cc_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='cts') {$cts_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='sc') {$sc_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='sg') {$sg_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='cg') {$cg_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='vmmg') {$vmmg_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='qg') {$qg_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='emails') {$emails_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='ar') {$ar_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-    if ($sh=='il') {$il_sh="style=\"padding:8px 12px;background:rgba(102,126,234,0.15);border-left:3px solid #667eea;\"";};
-?>
-<!-- CORE SETTINGS -->
-<TR <?php echo $times_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='times') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Call Times"); ?></a></TD></TR>
-<TR <?php echo $shifts_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='shifts') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=130000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Shifts"); ?></a></TD></TR>
-<TR <?php echo $phones_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='phones') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Phones"); ?></a></TD></TR>
-<TR <?php echo $templates_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='templates') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=130000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Templates"); ?></a></TD></TR>
-<TR <?php echo $carriers_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='carriers') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=140000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=140000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Carriers"); ?></a></TD></TR>
-<TR <?php echo $server_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='server') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Servers"); ?></a></TD></TR>
-<TR <?php echo $conference_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='conference') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1000000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Conferences"); ?></a></TD></TR>
-<TR <?php echo $settings_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='settings') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=311111111111111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=311111111111111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("System Settings"); ?></a></TD></TR>
+		?>
+		<TR <?php echo $times_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $times_sh ?> COLSPAN=2> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=100000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_calltimes.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Call Times"); ?> </a></TD>
+		</TR><TR <?php echo $shifts_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=130000000';\"";} ?>><TD ALIGN=LEFT <?php echo $shifts_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=130000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_shifts.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Shifts"); ?> </a></TD>
+		</TR><TR <?php echo $phones_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $phones_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=10000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_phones.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Phones"); ?> </a></TD>
+		</TR><TR <?php echo $templates_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=130000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $templates_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=130000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_templates.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Templates"); ?> </a></TD>
+		</TR><TR <?php echo $carriers_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=140000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $carriers_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=140000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_carriers.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Carriers"); ?> </a></TD>
+		</TR><TR <?php echo $server_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $server_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=100000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_servers.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Servers"); ?> </a></TD>
+		</TR><TR <?php echo $conference_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $conference_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_conferences.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Conferences"); ?> </a></TD>
+		</TR><TR <?php echo $settings_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=311111111111111';\"";} ?>><TD ALIGN=LEFT <?php echo $settings_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=311111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_settings.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("System Settings"); ?> </a></TD>
+		</TR><TR <?php echo $label_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=180000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $label_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=180000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_screenlabels.png" border=0 alt=\"Labels\" width=14 height=14 valign=middle> <?php echo _QXZ("Screen Labels"); ?> </a></TD>
+		</TR><TR <?php echo $colors_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=182000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $colors_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=182000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_screencolors.png" border=0 alt=\"Colors\" width=14 height=14 valign=middle> <?php echo _QXZ("Screen Colors"); ?> </a></TD>
+		</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=321111111111111';\"";} ?>><TD ALIGN=LEFT <?php echo $status_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=321111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_statuses.png" border=0 alt=\"Statuses\" width=14 height=14 valign=middle> <?php echo _QXZ("System Statuses"); ?> </a></TD>
+		</TR><TR <?php echo $sg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=193000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $sg_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=193000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_statusgroups.png" border=0 alt=\"Status Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("Status Groups"); ?> </a></TD>
+		<?php
+		if ($SScampaign_cid_areacodes_enabled > 0)
+			{
+			?>
+		</TR><TR <?php echo $cg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=196000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $cg_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=196000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_cidgroups.png" border=0 alt=\"CID Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("CID Groups"); ?> </a></TD>
+		<?php
+			}
+		?>
+		</TR><TR <?php echo $vm_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=170000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $vm_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=170000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_voicemail.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Voicemail"); ?> </a></TD>
+		</TR>
+		<?php
+		if ($SSemail_enabled > 0)
+			{ ?>
+			<TR <?php echo $emails_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_email_accounts.php';\"";} ?>><TD ALIGN=LEFT <?php echo $emails_sh ?>> &nbsp; 
+			<a href="admin_email_accounts.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_email.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Email Accounts"); ?> </a></TD>
+			</TR>
+		<?php }
+		if ( ($sounds_central_control_active > 0) or ($SSsounds_central_control_active > 0) )
+			{ ?>
+			<TR <?php echo $audio_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='audio_store.php';\"";} ?>><TD ALIGN=LEFT <?php echo $audio_sh ?>> &nbsp; 
+			<a href="audio_store.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_audiostore.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Audio Store"); ?> </a></TD>
+			</TR>
+			<TR <?php echo $moh_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=160000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $moh_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=160000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_musiconhold.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Music On Hold"); ?> </a></TD>
+			</TR>
+			<?php
+		if ($SSenable_languages > 0)
+				{ ?>
+			<TR <?php echo $languages_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_languages.php?ADD=163000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $languages_sh ?>> &nbsp; 
+			<a href="admin_languages.php?ADD=163000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_languages.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Languages"); ?> </a></TD>
+			</TR>
+			<?php }
+			if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) )
+				{
+			?>
+			<TR <?php echo $soundboard_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_soundboard.php?ADD=162000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $soundboard_sh ?>> &nbsp; 
+			<a href="admin_soundboard.php?ADD=162000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_audiosoundboards.png" border=0 alt=\"Audio Soundboards\" width=14 height=14 valign=middle> <?php echo _QXZ("Audio Soundboards"); ?> </a></TD>
+			</TR>
 
-<!-- UI CUSTOMIZATION -->
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);margin:4px 0;"></TD></TR>
-<TR <?php echo $label_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='label') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=180000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=180000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Screen Labels"); ?></a></TD></TR>
-<TR <?php echo $colors_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='colors') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=182000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=182000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Screen Colors"); ?></a></TD></TR>
-<TR <?php echo $status_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='status') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=321111111111111';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=321111111111111" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("System Statuses"); ?></a></TD></TR>
-<TR <?php echo $sg_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='sg') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=193000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=193000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Status Groups"); ?></a></TD></TR>
-<?php if ($SScampaign_cid_areacodes_enabled > 0) { ?>
-<TR <?php echo $cg_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='cg') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=196000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=196000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("CID Groups"); ?></a></TD></TR>
-<?php } ?>
+		<?php 
+				}
 
-<!-- MEDIA & VOICEMAIL -->
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);margin:4px 0;"></TD></TR>
-<TR <?php echo $vm_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='vm') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=170000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=170000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Voicemail"); ?></a></TD></TR>
-<?php if ($SSemail_enabled > 0) { ?>
-<TR <?php echo $emails_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='emails') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_email_accounts.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="admin_email_accounts.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Email Accounts"); ?></a></TD></TR>
-<?php } ?>
-<?php if (($sounds_central_control_active > 0) || ($SSsounds_central_control_active > 0)) { ?>
-<TR <?php echo $audio_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='audio') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='audio_store.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="audio_store.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Audio Store"); ?></a></TD></TR>
-<TR <?php echo $moh_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='moh') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=160000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=160000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Music On Hold"); ?></a></TD></TR>
-<?php if ($SSenable_languages > 0) { ?>
-<TR <?php echo $languages_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='languages') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_languages.php?ADD=163000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="admin_languages.php?ADD=163000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Languages"); ?></a></TD></TR>
-<?php } ?>
-<?php if ((preg_match("/soundboard/",$SSactive_modules)) || ($SSagent_soundboards > 0)) { ?>
-<TR <?php echo $soundboard_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='soundboard') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_soundboard.php?ADD=162000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="admin_soundboard.php?ADD=162000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Audio Soundboards"); ?></a></TD></TR>
-<?php } ?>
-<TR <?php echo $vmmg_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='vmmg') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=197000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=197000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("VM Message Groups"); ?></a></TD></TR>
-<?php } ?>
+			?>
+			<TR <?php echo $vmmg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='<?php echo $ADMIN ?>?ADD=197000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $vmmg_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=197000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_vm_messages.png" border=0 alt=\"VM Message Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("VM Message Groups"); ?> </a></TD>
+			</TR>
 
-<!-- ADVANCED FEATURES -->
-<TR WIDTH=160 style="background:transparent;"><TD style="border-bottom:1px solid rgba(255,255,255,0.15);margin:4px 0;"></TD></TR>
-<?php if ($SSenable_tts_integration > 0) { ?>
-<TR <?php echo $tts_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='tts') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=150000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=150000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Text To Speech"); ?></a></TD></TR>
-<?php } ?>
-<?php if ($SScallcard_enabled > 0) { ?>
-<TR <?php echo $cc_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='cc') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='callcard_admin.php';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="callcard_admin.php" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("CallCard Admin"); ?></a></TD></TR>
-<?php } ?>
-<?php if ($SScontacts_enabled > 0) { ?>
-<TR <?php echo $cts_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='cts') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=190000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=190000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Contacts"); ?></a></TD></TR>
-<?php } ?>
-<TR <?php echo $sc_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='sc') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=192000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=192000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Settings Containers"); ?></a></TD></TR>
-<?php if ($SSenable_auto_reports > 0) { ?>
-<TR <?php echo $ar_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='ar') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=194000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=194000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Automated Reports"); ?></a></TD></TR>
-<?php } ?>
-<?php if ($SSallow_ip_lists > 0) { ?>
-<TR <?php echo $il_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='il') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=195000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=195000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("IP Lists"); ?></a></TD></TR>
-<?php } ?>
-<TR <?php echo $qg_sh ?> onmouseover="this.style.background='rgba(102,126,234,0.1)'" onmouseout="this.style.background='<?php echo ($sh=='qg') ? 'rgba(102,126,234,0.15)' : 'transparent'; ?>'" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=198000000000';\"";} ?>><TD ALIGN=LEFT style="color:#fff;font-size:12px;font-family:Arial,sans-serif;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=198000000000" STYLE="text-decoration:none;color:#fff;"><?php echo _QXZ("Queue Groups"); ?></a></TD></TR>
-<?php
-}
-}
-else {
-    if ($reports_only_user > 0) {
-?>
-<!-- REPORTS ONLY ACCESS -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:rgba(102,126,234,0.3);border-left:3px solid #667eea;" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $reports_icon ?> <?php echo _QXZ("Reports"); ?></a></TD></TR>
-<?php
-    }
-    elseif (($SSqc_features_active=='1') && ($qc_auth=='1')) {
-?>
-<!-- QC ONLY ACCESS -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-<TR style="background:rgba(102,126,234,0.3);border-left:3px solid #667eea;" BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>><TD ALIGN=LEFT style="padding:12px;"><a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600;font-family:Arial,sans-serif;"><?php echo $qc_icon ?> <?php echo _QXZ("Quality Control"); ?></a></TD></TR>
-<?php
-    }
-}
-?>
+		<?php 
 
-<!-- SIDEBAR FOOTER -->
-<TR WIDTH=160><TD style="border-bottom:1px solid rgba(255,255,255,0.1);"><DIV CLASS="horiz_line"></DIV></TD></TR>
-</TABLE>
-<BR>&nbsp;
+			}
+		if ($SSenable_tts_integration > 0)
+			{ ?>
+			<TR <?php echo $tts_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=150000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $tts_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=150000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_texttospeech.png" border=0 alt=\"Text To Speech\" width=14 height=14 valign=middle> <?php echo _QXZ("Text To Speech"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		if ($SScallcard_enabled > 0)
+			{ ?>
+			<TR <?php echo $cc_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='callcard_admin.php';\"";} ?>><TD ALIGN=LEFT <?php echo $cc_sh ?>> &nbsp; 
+			<a href="callcard_admin.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_callcard.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("CallCard Admin"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		if ($SScontacts_enabled > 0)
+			{ ?>
+			<TR <?php echo $cts_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=190000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $cts_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=190000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_contacts.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Contacts"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		?>
+		</TR><TR <?php echo $sc_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=192000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $sc_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=192000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_settingscontainer.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Settings Containers"); ?> </a></TD>
+		</TR>
+		<?php
+		if ($SSenable_auto_reports > 0)
+			{ ?>
+			<TR <?php echo $ar_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=194000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $ar_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=194000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_autoreports.png" border=0 alt=\"Automated Reports\" width=14 height=14 valign=middle> <?php echo _QXZ("Automated Reports"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		if ($SSallow_ip_lists > 0)
+			{ ?>
+			<TR <?php echo $il_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=195000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $il_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=195000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_iplists.png" border=0 alt=\"IP Lists\" width=14 height=14 valign=middle> <?php echo _QXZ("IP Lists"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		?>
+		</TR><TR <?php echo $qg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=198000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $qg_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=198000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_queuegroups.png" border=0 alt=\"Queue Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("Queue Groups"); ?> </a></TD>
+		</TR>
+		<?php
+			}
+		}
+	else
+		{
+		if ($reports_only_user > 0)
+			{
+			?>
+			<!-- REPORTS NAVIGATION -->
+			<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+			<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT <?php echo $reports_hh ?>>
+			<a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $reports_bold ?> <?php echo _QXZ("Reports"); ?> </a>
+			</TD></TR>
+			<?php
+			}
+		else
+			{
+			if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
+				{ ?>
+			<!-- QC NAVIGATION -->
+			<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+			<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>>
+				<TD ALIGN=LEFT <?php echo $qc_hh ?>>
+					<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $qc_bold ?> <?php echo _QXZ("Quality Control"); ?> </FONT></a>
+				</TD>
+			</TR>
+			<?php
+			if (strlen($qc_hh) > 25) 
+					{
+				?>
+			<TR BGCOLOR=<?php echo $qc_color ?>>
+				<TD ALIGN=LEFT> &nbsp;
+					<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show QC Campaigns"); ?> </FONT></a>
+				</TD>
+			</TR>
+			<TR BGCOLOR=<?php echo $qc_color ?>>
+				<TD ALIGN=LEFT> &nbsp;
+					<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Enter QC Queue"); ?> </FONT></a>
+				</TD>
+			</TR>
+			<TR BGCOLOR=<?php echo $qc_color ?>>
+				<TD ALIGN=LEFT> &nbsp;
+					<a href="<?php echo $ADMIN ?>?ADD=341111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Modify QC Codes"); ?> </FONT></a>
+				</TD>
+			</TR>
+				<?php }
+				}
+			}
+		}
+	?>
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	</TABLE>
+	<BR>&nbsp;
 </TD><TD VALIGN=TOP WIDTH=<?php echo $page_width ?> BGCOLOR=#<?php echo $SSframe_background ?>>
 <!-- END SIDEBAR NAVIGATION -->
 
+<span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span">
 
+</span>
 
-<!-- Audio Chooser Hidden Span -->
-<span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
-
-<!-- MODERNIZED TOP NAVBAR & BREADCRUMB -->
-<TABLE BGCOLOR=linear-gradient(90deg,#<?php echo $SSmenu_background ?>,#764ba2) cellpadding=0 cellspacing=0 WIDTH=<?php echo $page_width ?> HEIGHT=auto style="background:linear-gradient(90deg,#<?php echo $SSmenu_background ?>,#764ba2);border-bottom:2px solid #667eea;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-<TR style="background:linear-gradient(90deg,#<?php echo $SSmenu_background ?>,#764ba2);"><TD ALIGN=LEFT style="padding:10px 16px;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2 style="font-weight:600;"><a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;color:#fff;transition:all 0.2s;display:inline-block;padding:4px 8px;border-radius:4px;" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='transparent';this.style.transform='translateY(0)'"><?php echo _QXZ("HOME"); ?></a> <span style="color:rgba(255,255,255,0.5);margin:0 6px;">|</span> <A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;color:#fff;transition:all 0.2s;display:inline-block;padding:4px 8px;border-radius:4px;" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='transparent';this.style.transform='translateY(0)'"> <?php echo _QXZ("Timeclock"); ?></A> <span style="color:rgba(255,255,255,0.5);margin:0 6px;">|</span> <a href="manager_chat_interface.php" STYLE="text-decoration:none;color:#fff;transition:all 0.2s;display:inline-block;padding:4px 8px;border-radius:4px;" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='transparent';this.style.transform='translateY(0)'"> <?php echo _QXZ("Chat"); ?></a> <span style="color:rgba(255,255,255,0.5);margin:0 6px;">|</span> <a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;color:#fff;transition:all 0.2s;display:inline-block;padding:4px 8px;border-radius:4px;" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='transparent';this.style.transform='translateY(0)'"><span style="color:#FFD700;font-weight:700;"><?php echo _QXZ("Logout"); ?></span></a> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1 style="opacity:0.8;">(<?php echo htmlspecialchars($PHP_AUTH_USER) ?>)</FONT>
-<?php
-if ($SSenable_languages == '1') {
-    echo " <span style=\"color:rgba(255,255,255,0.5);margin:0 6px;\">|</span> <a href=\"" . htmlspecialchars($ADMIN) . "?ADD=999989\" STYLE=\"text-decoration:none;color:#fff;transition:all 0.2s;display:inline-block;padding:4px 8px;border-radius:4px;\" onmouseover=\"this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(-1px)'\" onmouseout=\"this.style.background='transparent';this.style.transform='translateY(0)'\">" . _QXZ("Change language") . "</a>";
-}
-?>
-</FONT></TD><TD ALIGN=RIGHT style="padding:10px 16px;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2 style="font-weight:600;letter-spacing:0.5px;"><?php echo date("l F j, Y G:i:s A") ?> &nbsp; </FONT></TD></TR>
-
-<!-- BREADCRUMB CONTEXT MENU -->
-<TR style="background:rgba(102,126,234,0.1);border-top:1px solid rgba(255,255,255,0.1);"></TR>
+<TABLE BGCOLOR=#<?php echo $SSframe_background ?> cellpadding=2 cellspacing=0 WIDTH=<?php echo $page_width ?> HEIGHT=15>
+<TR BGCOLOR=#<?php echo "$SSmenu_background" ?>><TD ALIGN=LEFT BGCOLOR=#<?php echo "$SSmenu_background" ?>><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("HOME"); ?></a> | <A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Timeclock"); ?></A> | <a href="manager_chat_interface.php" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Chat"); ?></a> | <a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Logout"); ?></a> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1>(<?php echo $PHP_AUTH_USER ?>)</FONT>
 
 <?php
-// Context-aware breadcrumb shortcuts
-if ((strlen($list_sh) > 25) && (strlen($campaigns_hh) > 25)) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Show Campaigns"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=11" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Add Campaign"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <a href="<?php echo $ADMIN ?>?ADD=12" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Copy Campaign"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php } ?><a href="./AST_timeonVDADallSUMMARY.php" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Real-Time Summary"); ?></a></FONT></TD></TR>
-<?php
-}
-
-if ((strlen($droplist_sh) > 25) && ($SSenable_drop_lists > 0)) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Show Drop Lists"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=131" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Add Drop List"); ?></a><?php } ?></FONT></TD></TR>
-<?php
-}
-
-if (strlen($times_sh) > 25) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Show Call Times"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=111111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Add Call Time"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php } ?><a href="<?php echo $ADMIN ?>?ADD=1000000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("State Call Times"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <a href="<?php echo $ADMIN ?>?ADD=1200000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Holidays"); ?></a></FONT></TD></TR>
-<?php
-}
-
-if (strlen($shifts_sh) > 25) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Show Shifts"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=131111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Add Shift"); ?></a><?php } ?></FONT></TD></TR>
-<?php
-}
-
-if (strlen($phones_sh) > 25) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Show Phones"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=11111111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Add Phone"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <a href="<?php echo $ADMIN ?>?ADD=12222222222" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Copy Phone"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php } ?><a href="<?php echo $ADMIN ?>?ADD=12000000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Phone Alias"); ?></a></FONT></TD></TR>
-<?php
-}
-
-if ((strlen($servers_sh) > 25) && (strlen($admin_hh) > 25)) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Show Servers"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <?php if ($add_copy_disabled < 1) { ?><a href="<?php echo $ADMIN ?>?ADD=111111111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Add Server"); ?></a><?php } ?></FONT></TD></TR>
-<?php
-}
-
-if ((strlen($settings_sh) > 25)) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=311111111111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("System Settings"); ?></a></FONT></TD></TR>
-<?php
-}
-
-if ((strlen($status_sh) > 25) && (!preg_match('/campaign|user/i', $hh))) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=321111111111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("System Statuses"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <a href="<?php echo $ADMIN ?>?ADD=341111111111111" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("QC Codes"); ?></a></FONT></TD></TR>
-<?php
-}
-
-if (($ADD=='3') || ($ADD=='3')) {
-?>
-<TR style="background:linear-gradient(90deg,rgba(102,126,234,0.05),transparent);border-top:1px solid rgba(255,255,255,0.05);"><TD ALIGN=LEFT COLSPAN=2 style="padding:8px 16px;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:#fff;"> &nbsp; <a href="./user_stats.php?user=<?php echo htmlspecialchars($user) ?>" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("User Stats"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <a href="./user_status.php?user=<?php echo htmlspecialchars($user) ?>" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("User Status"); ?></a> <span style="color:rgba(255,255,255,0.4);">|</span> <a href="./AST_agent_time_sheet.php?agent=<?php echo htmlspecialchars($user) ?>" style="color:#FFD700;text-decoration:none;transition:all 0.2s;padding:2px 6px;border-radius:3px;" onmouseover="this.style.background='rgba(255,215,0,0.2)'" onmouseout="this.style.background='transparent'"><?php echo _QXZ("Time Sheet"); ?></a></FONT></TD></TR>
-<?php
-}
+if ($SSenable_languages == '1')
+	{
+	echo " | <a href=\"$ADMIN?ADD=999989\" STYLE=\"text-decoration:none;\"><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE SIZE=1>"._QXZ("Change language")."</a>";
+	}
 ?>
 
-<TR><TD ALIGN=LEFT COLSPAN=2 HEIGHT=2 style="background:#<?php echo $SSmenu_background; ?>;border-top:2px solid rgba(255,255,255,0.1);"></TD></TR>
-<TR><TD ALIGN=LEFT COLSPAN=2 style="padding:8px;">
-<?php
+</TD><TD ALIGN=RIGHT><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo date("l F j, Y G:i:s A") ?> &nbsp; </B></TD></TR>
+
+<TR BGCOLOR=#<?php echo "$SSmenu_background" ?>>
+
+
+
+
+
+
+
+</TR>
+	<?php
+	if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $subcamp_color ?>><TD ALIGN=LEFT COLSPAN=2><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Campaigns"); ?> </a> &nbsp; &nbsp; |<?php if ($add_copy_disabled < 1) { ?>
+&nbsp; &nbsp; <a href="<?php echo $ADMIN ?>?ADD=11"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Campaign"); ?> </a> &nbsp; &nbsp; | &nbsp; &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Campaign"); ?> </a> &nbsp; &nbsp; |<?php } ?> &nbsp; &nbsp; <a href="./AST_timeonVDADallSUMMARY.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Real-Time Campaigns Summary"); ?> </a></TD></TR>
+		<?php }
+	if ( (strlen($droplist_sh) > 25) and ($SSenable_drop_lists > 0) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $subcamp_color ?>><TD ALIGN=LEFT COLSPAN=2><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Drop Lists"); ?> </a> &nbsp; &nbsp; |<?php if ($add_copy_disabled < 1) { ?>
+&nbsp; &nbsp; <a href="<?php echo $ADMIN ?>?ADD=131"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Drop List"); ?> </a><?php } ?></TD></TR>
+		<?php }
+	if (strlen($times_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $times_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Call Times"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?>
+ <a href="<?php echo $ADMIN ?>?ADD=111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Call Time"); ?> </a> &nbsp;|<?php } ?> <a href="<?php echo $ADMIN ?>?ADD=1000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show State Call Times"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?> <a href="<?php echo $ADMIN ?>?ADD=1111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New State Call Time"); ?> </a> &nbsp;|<?php } ?> <a href="<?php echo $ADMIN ?>?ADD=1200000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Holidays"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?> <a href="<?php echo $ADMIN ?>?ADD=1211111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add Holiday"); ?> </a><?php } ?></TD></TR>
+		<?php } 
+	if (strlen($shifts_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $shifts_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Shifts"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?> <a href="<?php echo $ADMIN ?>?ADD=131111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Shift"); ?> </a><?php } ?></TD></TR>
+		<?php } 
+	if (strlen($phones_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $phones_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Phones"); ?> </a>&nbsp;|<?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=11111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Phone"); ?> </a>&nbsp;|<?php } ?><?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=12222222222"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy an Existing Phone"); ?> </a>&nbsp;|<?php } ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=12000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Phone Alias List"); ?> </a>&nbsp;|<?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=12111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Phone Alias"); ?> </a>&nbsp;|<?php } ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=13000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Group Alias List"); ?> </a>&nbsp;|<?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=13111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Group Alias"); ?> </a><?php } ?></TD></TR>
+		<?php }
+	if (strlen($conference_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $conference_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1000000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Conferences"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Conference"); ?> </a> &nbsp; |<?php } ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show VICIDIAL Conferences"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=11111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New VICIDIAL Conference"); ?> </a><?php } ?> | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12000000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show ConfBridges"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add ConfBridge"); ?> </a><?php } ?> </TD></TR>
+		<?php }
+	if ( (strlen($server_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $server_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Servers"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Server"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($templates_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $templates_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Templates"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=131111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Template"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($carriers_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $carriers_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=140000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Carriers"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=141111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Carrier"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=140111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy A Carrier"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($emails_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $emails_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="admin_email_accounts.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Email Accounts"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="admin_email_accounts.php?eact=ADD"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Account"); ?> </a> &nbsp; | &nbsp; <a href="admin_email_accounts.php?eact=COPY"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy An Account"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $tts_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=150000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show TTS Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=151111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New TTS Entry"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $cc_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="callcard_admin.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Summary"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=CALLCARD_RUNS"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Runs"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=CALLCARD_BATCHES"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Batches"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=SEARCH"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Search"); ?> </a> &nbsp; | &nbsp; <a href="callcard_report_export.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Log Export"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=GENERATE"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Generate New Numbers"); ?> </a></TD></TR>
+	<?php }
+	if ( (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $moh_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=160000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show MOH Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=161111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New MOH Entry"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $languages_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="admin_languages.php?ADD=163000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Languages"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="admin_languages.php?ADD=163111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Language"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_languages.php?ADD=163211111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy A Languages Entry"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_languages.php?ADD=163311111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Import Phrases"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_languages.php?ADD=163411111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Export Phrases"); ?></FONT></a> &nbsp; <?php } ?></TD></TR>
+	<?php }
+	if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) )
+		{
+	if ( (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $soundboard_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="admin_soundboard.php?ADD=162000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Soundboard Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="admin_soundboard.php?ADD=162111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Soundboard Entry"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_soundboard.php?ADD=162211111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy A Soundboard Entry"); ?></FONT></a> &nbsp; <?php } ?></TD></TR>
+	<?php
+		}
+	}
+	if ( (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $vm_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=170000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Voicemail Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=171111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Voicemail Entry"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($settings_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $settings_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=311111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("System Settings"); ?> </a></TD></TR>
+	<?php }
+	if (strlen($label_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $label_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=180000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Screen Labels"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=181111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Screen Label"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($colors_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $colors_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=182000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Screen Colors"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=182111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Screen Colors"); ?> </a><?php } ?> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=311111111111111#screen_colors"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Change Active Screen Colors"); ?> </a></TD></TR>
+	<?php }
+	if (strlen($cts_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $cts_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=190000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Contacts"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=191111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Contact"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($sc_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $sc_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=192000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Settings Containers"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=192111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Settings Container"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($ar_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $ar_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=194000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Automated Reports"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=194111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add An Automated Report"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($il_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $il_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=195000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("IP Lists"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=195111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add An IP List"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($sg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $sg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=193000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Status Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=193111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Status Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($cg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $cg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=196000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CID Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=196111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A CID Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($vmmg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $vmmg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=197000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("VM Message Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=197111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A VM Message Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($qg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $qg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=198000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Queue Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=198111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Queue Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $status_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=321111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("System Statuses"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=331111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Status Categories"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=341111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Status Codes"); ?> </a></TD></TR>
+	<?php }
+
+	if ( ($ADD=='3') or ($ADD=='3') ) { 
+		?>
+	<TR BGCOLOR=<?php echo $users_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="./user_stats.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("User Stats"); ?> </a> &nbsp; | &nbsp; <a href="./user_status.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("User Status"); ?> </a> &nbsp; | &nbsp; <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Time Sheet"); ?> </a> &nbsp; | &nbsp; <a href="./AST_agent_days_detail.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Days Status"); ?> </a></TD></TR>
+	<?php }
+
+
+if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) 
+	{ 
+	?>
+	<TR BGCOLOR=<?php echo $users_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999988" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Available Timezones"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999987" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Phone Codes"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999986" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Postal Codes"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999985" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Postal Codes Cities"); ?> </a> &nbsp; </TD></TR>
+	<?php 
+	}
+else
+	{
+	if (strlen($reports_hh) > 25) { 
+		?>
+		<TR BGCOLOR=<?php echo $reports_color ?>><TD ALIGN=LEFT COLSPAN=2><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;"><B> &nbsp; </B></TD></TR>
+		<?php } 
+	}
+?>
+<TR><TD ALIGN=LEFT COLSPAN=2 HEIGHT=2 BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
+<TR><TD ALIGN=LEFT COLSPAN=2>
+<?php 
 ######################### FULL HTML HEADER END #######################################
 }
