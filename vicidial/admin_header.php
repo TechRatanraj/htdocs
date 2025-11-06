@@ -435,7 +435,7 @@ else if ($android_header) {
 // ES6+ JavaScript + All Functionality Preserved
 // ============================================
 
-} else {
+ else {
     if ($no_title < 1) {
         echo "</title>\n";
     }
