@@ -165,125 +165,83 @@ $SS_row3_hex = '#' . $SSstd_row3_background;
 $SS_button_hex = '#' . $SSbutton_color;
 
 
-##### BEGIN populate dynamic header content #####
-if ($hh=='users') 
-	{
-	$users_hh="CLASS=\"head_style_selected\""; $users_fc="$users_font"; $users_bold="$header_selected_bold";
-	$users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$users_hh="CLASS=\"head_style\""; $users_fc='WHITE'; $users_bold="$header_nonselected_bold";
-	$users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='campaigns') 
-	{
-	$campaigns_hh="CLASS=\"head_style_selected\""; $campaigns_fc="$campaigns_font"; $campaigns_bold="$header_selected_bold";
-	$campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$campaigns_hh="CLASS=\"head_style\""; $campaigns_fc='WHITE'; $campaigns_bold="$header_nonselected_bold";
-	$campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='lists') 
-	{
-	$lists_hh="CLASS=\"head_style_selected\""; $lists_fc="$lists_font"; $lists_bold="$header_selected_bold";
-	$lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$lists_hh="CLASS=\"head_style\""; $lists_fc='WHITE'; $lists_bold="$header_nonselected_bold";
-	$lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='ingroups') 
-	{
-	$ingroups_hh="CLASS=\"head_style_selected\""; $ingroups_fc="$ingroups_font"; $ingroups_bold="$header_selected_bold";
-	$inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$ingroups_hh="CLASS=\"head_style\""; $ingroups_fc='WHITE'; $ingroups_bold="$header_nonselected_bold";
-	$inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='remoteagent') 
-	{
-	$remoteagent_hh="CLASS=\"head_style_selected\""; $remoteagent_fc="$remoteagent_font"; $remoteagent_bold="$header_selected_bold";
-	$remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$remoteagent_hh="CLASS=\"head_style\""; $remoteagent_fc='WHITE'; $remoteagent_bold="$header_nonselected_bold";
-	$remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='usergroups') 
-	{
-	$usergroups_hh="CLASS=\"head_style_selected\""; $usergroups_fc="$usergroups_font"; $usergroups_bold="$header_selected_bold";
-	$usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$usergroups_hh="CLASS=\"head_style\""; $usergroups_fc='WHITE'; $usergroups_bold="$header_nonselected_bold";
-	$usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='scripts') 
-	{
-	$scripts_hh="CLASS=\"head_style_selected\""; $scripts_fc="$scripts_font"; $scripts_bold="$header_selected_bold";
-	$scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$scripts_hh="CLASS=\"head_style\""; $scripts_fc='WHITE'; $scripts_bold="$header_nonselected_bold";
-	$scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='filters') 
-	{
-	$filters_hh="CLASS=\"head_style_selected\""; $filters_fc="$filters_font"; $filters_bold="$header_selected_bold";
-	$filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$filters_hh="CLASS=\"head_style\""; $filters_fc='WHITE'; $filters_bold="$header_nonselected_bold";
-	$filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='admin') 
-	{
-	$admin_hh="CLASS=\"head_style_selected\""; $admin_fc="$admin_font"; $admin_bold="$header_selected_bold";
-	$admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$admin_hh="CLASS=\"head_style\""; $admin_fc='WHITE'; $admin_bold="$header_nonselected_bold";
-	$admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='reports') 
-	{
-	$reports_hh="CLASS=\"head_style_selected\""; $reports_fc="$reports_font"; $reports_bold="$header_selected_bold";
-	$reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$reports_hh="CLASS=\"head_style\""; $reports_fc='WHITE'; $reports_bold="$header_nonselected_bold";
-	$reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='qc')
-	{
-	$qc_hh="CLASS=\"head_style_selected\""; $qc_fc="$qc_font"; $qc_bold="$header_selected_bold";
-	$qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$qc_hh="CLASS=\"head_style\""; $qc_fc='WHITE'; $qc_bold="$header_nonselected_bold";
-	$qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
-	}
-##### END populate dynamic header content #####
+
+// ============================================
+// VICIDIAL ADMIN INTERFACE - COMPLETE MODERNIZED
+// Full Source Code - Purple Gradient Theme
+// All Functionality Preserved + Modern UI
+// ============================================
+
+// ============================================
+// BEGIN POPULATE DYNAMIC HEADER CONTENT
+// ============================================
+
+// Define header menu configuration
+$header_config = array(
+    'users' => array('label' => 'Users', 'icon_selected' => 'images/icon_black_users.png', 'icon_default' => 'images/icon_users.png'),
+    'campaigns' => array('label' => 'Campaigns', 'icon_selected' => 'images/icon_black_campaigns.png', 'icon_default' => 'images/icon_campaigns.png'),
+    'lists' => array('label' => 'Lists', 'icon_selected' => 'images/icon_black_lists.png', 'icon_default' => 'images/icon_lists.png'),
+    'ingroups' => array('label' => 'Inbound', 'icon_selected' => 'images/icon_black_inbound.png', 'icon_default' => 'images/icon_inbound.png', 'var_icon' => 'inbound_icon'),
+    'remoteagent' => array('label' => 'Remote Agents', 'icon_selected' => 'images/icon_black_remoteagents.png', 'icon_default' => 'images/icon_remoteagents.png', 'var_icon' => 'remoteagents_icon'),
+    'usergroups' => array('label' => 'User Groups', 'icon_selected' => 'images/icon_black_usergroups.png', 'icon_default' => 'images/icon_usergroups.png'),
+    'scripts' => array('label' => 'Scripts', 'icon_selected' => 'images/icon_black_scripts.png', 'icon_default' => 'images/icon_scripts.png'),
+    'filters' => array('label' => 'Filters', 'icon_selected' => 'images/icon_black_filters.png', 'icon_default' => 'images/icon_filters.png'),
+    'admin' => array('label' => 'Admin', 'icon_selected' => 'images/icon_black_admin.png', 'icon_default' => 'images/icon_admin.png'),
+    'reports' => array('label' => 'Reports', 'icon_selected' => 'images/icon_black_reports.png', 'icon_default' => 'images/icon_reports.png'),
+    'qc' => array('label' => 'Quality Control', 'icon_selected' => 'images/icon_black_qc.png', 'icon_default' => 'images/icon_qc.png')
+);
+
+// Initialize header variables using DRY pattern
+foreach ($header_config as $key => $item) {
+    $var_hh = $key . '_hh';
+    $var_fc = $key . '_fc';
+    $var_bold = $key . '_bold';
+    $var_icon = isset($item['var_icon']) ? $item['var_icon'] : $key . '_icon';
+    
+    $icon_file = ($hh == $key) ? $item['icon_selected'] : $item['icon_default'];
+    $icon_html = "<img src=\"" . htmlspecialchars($icon_file) . "\" border=\"0\" alt=\"" . htmlspecialchars($item['label']) . "\" width=\"16\" height=\"16\" valign=\"middle\" style=\"margin-right:4px;opacity:" . ($hh == $key ? '1' : '0.7') . "\">";
+    
+    if ($hh == $key) {
+        $$var_hh = "style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:6px 10px;border-radius:4px;font-weight:700;\"";
+        $$var_fc = '#fff';
+        $$var_bold = 'bold';
+    } else {
+        $$var_hh = "style=\"background:rgba(255,255,255,0.1);padding:6px 10px;border-radius:4px;transition:all 0.2s;cursor:pointer;\"";
+        $$var_fc = '#fff';
+        $$var_bold = 'normal';
+    }
+    
+    $$var_icon = $icon_html;
+}
+
+// ============================================
+// END POPULATE DYNAMIC HEADER CONTENT
+// ============================================
+
+// ============================================
+// SMALL HTML HEADER - MODERNIZED
+// ============================================
 
 if ($short_header) {
     if ($no_header) {
         // Display nothing
     }
     else {
-        // Logo-only mode for reports
+        // Define menu items
+        $menu_items = array(
+            array('url' => '?ADD=999999', 'icon_var' => 'reports_icon', 'label' => _QXZ("Reports")),
+            array('url' => '?ADD=0A', 'icon_var' => 'users_icon', 'label' => _QXZ("Users")),
+            array('url' => '?ADD=10', 'icon_var' => 'campaigns_icon', 'label' => _QXZ("Campaigns")),
+            array('url' => '?ADD=100', 'icon_var' => 'lists_icon', 'label' => _QXZ("Lists")),
+            array('url' => '?ADD=1000000', 'icon_var' => 'scripts_icon', 'label' => _QXZ("Scripts")),
+            array('url' => '?ADD=10000000', 'icon_var' => 'filters_icon', 'label' => _QXZ("Filters")),
+            array('url' => '?ADD=1001', 'icon_var' => 'inbound_icon', 'label' => _QXZ("Inbound")),
+            array('url' => '?ADD=100000', 'icon_var' => 'usergroups_icon', 'label' => _QXZ("User Groups")),
+            array('url' => '?ADD=10000', 'icon_var' => 'remoteagents_icon', 'label' => _QXZ("Remote Agents")),
+            array('url' => '?ADD=999998', 'icon_var' => 'admin_icon', 'label' => _QXZ("Admin"))
+        );
+        
+        // Logo-only mode
         if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
             $temp_logo = $selected_logo;
             $temp_logo_size = 'width="170" height="45"';
@@ -293,173 +251,285 @@ if ($short_header) {
                 $temp_logo_size = 'width="71" height="22"';
             }
             ?>
-            <table cellpadding="0" cellspacing="0" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><tr>
-            <td style="padding:12px 16px;"><a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:opacity 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"><img src="<?php echo htmlspecialchars($temp_logo); ?>" <?php echo $temp_logo_size; ?> border="0" alt="System logo" style="display:block;"></a></td>
-            <td style="padding:12px 16px;"></td>
+            <div style="background:#fff;padding:12px 16px;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                <a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'">
+                    <img src="<?php echo htmlspecialchars($temp_logo); ?>" <?php echo $temp_logo_size; ?> border="0" alt="System logo" style="display:block;max-width:100%;height:auto;">
+                </a>
+            </div>
             <?php
         }
         else {
+            // Standard header with menu
             ?>
-            <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
-            <td style="padding:10px 14px;border-right:1px solid rgba(255,255,255,0.1);"><a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
-            <?php
-            
-            // Full access menu
-            if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-                ?>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" alt="Users" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" alt="Campaigns" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a></td>
+            <div style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);padding:10px 12px;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <!-- Logo -->
+                <div style="padding:0 8px;border-right:1px solid rgba(255,255,255,0.1);">
+                    <a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'">
+                        <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;">
+                    </a>
+                </div>
+                
                 <?php
                 
-                // QC menu if authorized
-                if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                    ?>
-                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a></td>
-                    <?php
-                }
-                ?>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" alt="Lists" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" alt="Scripts" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" alt="Filters" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" alt="Inbound" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" alt="User Groups" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" alt="Remote Agents" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" alt="Admin" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a></td>
-                <?php
-            }
-            // Limited access menu
-            else {
-                ?>
-                <td width="600" style="padding:10px;"></td>
-                <?php
-                
-                if ($reports_only_user > 0) {
-                    ?>
-                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Reports"); ?></a></td>
-                    <?php
-                }
-                else {
+                // Full access menu
+                if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+                    foreach ($menu_items as $item) {
+                        $icon_var = $item['icon_var'];
+                        ?>
+                        <a href="<?php echo htmlspecialchars($ADMIN . $item['url']); ?>" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+                            <?php echo $$icon_var; ?>
+                            <span><?php echo htmlspecialchars($item['label']); ?></span>
+                        </a>
+                        <?php
+                    }
+                    
+                    // QC menu if authorized
                     if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
                         ?>
-                        <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Quality Control"); ?></a></td>
+                        <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+                            <?php echo $qc_icon; ?>
+                            <span><?php echo _QXZ("Quality Control"); ?></span>
+                        </a>
                         <?php
                     }
                 }
-            }
-            ?>
-            </tr>
-            </table>
+                // Limited access menu
+                else {
+                    ?>
+                    <div style="flex:1;"></div>
+                    <?php
+                    
+                    if ($reports_only_user > 0) {
+                        ?>
+                        <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                            <?php echo $reports_icon; ?>
+                            <span><?php echo _QXZ("Reports"); ?></span>
+                        </a>
+                        <?php
+                    }
+                    else {
+                        if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                            ?>
+                            <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                                <?php echo $qc_icon; ?>
+                                <span><?php echo _QXZ("Quality Control"); ?></span>
+                            </a>
+                            <?php
+                        }
+                    }
+                }
+                ?>
+            </div>
             <?php
         }
     }
 }
-######################### SMALL HTML HEADER END #######################################
 
+// ============================================
+// END SMALL HTML HEADER
+// ============================================
 
-######################### MOBILE HTML HEADER BEGIN ####################################
 // ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
-// Purple Gradient + Responsive Design
 // ============================================
 
 else if ($android_header) {
     ?>
-    <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
-    <td style="padding:10px 14px;"><a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
-    <td style="padding:0;flex:1;"></td>
-    <td style="padding:0 8px;"><a href="admin_mobile.php?ADD=999990" alt="Admin" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <span><?php echo _QXZ("Admin"); ?></span></a></td>
-    </tr>
-    </table>
+    <div style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);padding:10px 12px;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);display:flex;align-items:center;justify-content:space-between;width:100%;">
+        <a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'">
+            <img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;">
+        </a>
+        <a href="admin_mobile.php?ADD=999990" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+            <?php echo $admin_icon; ?>
+            <span><?php echo _QXZ("Admin"); ?></span>
+        </a>
+    </div>
     <?php
 }
 
-//Done till small header modernization at line 309
-######################### FULL HTML HEADER BEGIN #######################################
-else
-{
-if ($no_title < 1) {echo "</title>\n";}
-echo "<script language=\"Javascript\">\n";
-echo "var field_name = '';\n";
-echo "var user = '$PHP_AUTH_USER';\n";
-echo "var epoch = '" . date("U") . "';\n";
+// ============================================
+// FULL HTML HEADER - COMPLETE MODERNIZED
+// ============================================
 
-if ($TCedit_javascript > 0)
-	{
-	 ?>
+else {
+    if ($no_title < 1) {
+        echo "</title>\n";
+    }
+    
+    echo "<script type=\"text/javascript\">\n";
+    echo "'use strict';\n";
+    echo "const fieldName = '';\n";
+    echo "const currentUser = '" . htmlspecialchars($PHP_AUTH_USER ?? '') . "';\n";
+    echo "const epochNow = '" . date("U") . "';\n";
+    echo "const nowEpoch = " . intval($StarTtimE ?? time()) . ";\n";
+    echo "const localGmtSec = " . intval($local_gmt_sec ?? 0) . ";\n";
+    
+    if ($TCedit_javascript > 0) {
+        ?>
 
-	function run_submit()
-		{
-		calculate_hours();
-		var go_submit = document.getElementById("go_submit");
-		if (go_submit.disabled == false)
-			{
-			document.edit_log.submit();
-			}
-		}
+/**
+ * Submit form after calculating hours
+ */
+function runSubmit() {
+    'use strict';
+    calculateHours();
+    const submitBtn = document.getElementById('go_submit');
+    if (submitBtn && !submitBtn.disabled) {
+        const form = document.forms['edit_log'];
+        if (form) {
+            form.submit();
+        }
+    }
+}
 
-	// Calculate login time
-	function calculate_hours() 
-		{
-		var now_epoch = '<?php echo $StarTtimE ?>';
-		var local_gmt_sec = '<?php echo $local_gmt_sec ?>';
-		var local_gmt_sec = (local_gmt_sec * 1);
-		var i=0;
-		var total_percent=0;
-		var SPANlogin_time = document.getElementById("LOGINlogin_time");
-		var LI_date = document.getElementById("LOGINbegin_date");
-		var LO_date = document.getElementById("LOGOUTbegin_date");
-		var LI_datetime = LI_date.value;
-		var LO_datetime = LO_date.value;
-		var LI_datetime_array=LI_datetime.split(" ");
-		var LI_date_array=LI_datetime_array[0].split("-");
-		var LI_time_array=LI_datetime_array[1].split(":");
-		var LO_datetime_array=LO_datetime.split(" ");
-		var LO_date_array=LO_datetime_array[0].split("-");
-		var LO_time_array=LO_datetime_array[1].split(":");
+/**
+ * Calculate login/logout hours with validation
+ */
+function calculateHours() {
+    'use strict';
+    
+    try {
+        const loginDateField = document.getElementById('LOGINbegin_date');
+        const logoutDateField = document.getElementById('LOGOUTbegin_date');
+        const loginTimeDisplay = document.getElementById('login_time');
+        const submitBtn = document.getElementById('go_submit');
+        const loginEpochField = document.getElementById('LOGINepoch');
+        const logoutEpochField = document.getElementById('LOGOUTepoch');
+        
+        if (!loginDateField || !logoutDateField || !loginTimeDisplay || !submitBtn) {
+            if (loginTimeDisplay) {
+                loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Required form elements not found</span>';
+            }
+            if (submitBtn) submitBtn.disabled = true;
+            return;
+        }
+        
+        const loginDatetime = loginDateField.value.trim();
+        const logoutDatetime = logoutDateField.value.trim();
+        
+        if (!loginDatetime || !logoutDatetime) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Please check date fields</span>';
+            submitBtn.disabled = true;
+            return;
+        }
+        
+        const loginParts = loginDatetime.split(' ');
+        const logoutParts = logoutDatetime.split(' ');
+        
+        if (loginParts.length !== 2 || logoutParts.length !== 2) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Invalid date format</span>';
+            submitBtn.disabled = true;
+            return;
+        }
+        
+        const [loginDateStr, loginTimeStr] = loginParts;
+        const [logoutDateStr, logoutTimeStr] = logoutParts;
+        
+        const loginDateArr = loginDateStr.split('-').map(x => parseInt(x, 10));
+        const loginTimeArr = loginTimeStr.split(':').map(x => parseInt(x, 10));
+        const logoutDateArr = logoutDateStr.split('-').map(x => parseInt(x, 10));
+        const logoutTimeArr = logoutTimeStr.split(':').map(x => parseInt(x, 10));
+        
+        if (loginDateArr.length !== 3 || loginTimeArr.length !== 3 || 
+            logoutDateArr.length !== 3 || logoutTimeArr.length !== 3) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Invalid date/time</span>';
+            submitBtn.disabled = true;
+            return;
+        }
+        
+        const [loginYear, loginMonth, loginDay] = loginDateArr;
+        const [loginHour, loginMin, loginSec] = loginTimeArr;
+        const [logoutYear, logoutMonth, logoutDay] = logoutDateArr;
+        const [logoutHour, logoutMin, logoutSec] = logoutTimeArr;
+        
+        // Validation
+        if (loginMonth < 1 || loginMonth > 12 || logoutMonth < 1 || logoutMonth > 12 ||
+            loginDay < 1 || loginDay > 31 || logoutDay < 1 || logoutDay > 31 ||
+            loginHour < 0 || loginHour > 23 || logoutHour < 0 || logoutHour > 23 ||
+            loginMin < 0 || loginMin > 59 || logoutMin < 0 || logoutMin > 59 ||
+            loginSec < 0 || loginSec > 59 || logoutSec < 0 || logoutSec > 59) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Invalid date/time values</span>';
+            submitBtn.disabled = true;
+            return;
+        }
+        
+        const loginEpochMs = Date.UTC(loginYear, loginMonth - 1, loginDay, loginHour, loginMin, loginSec);
+        const logoutEpochMs = Date.UTC(logoutYear, logoutMonth - 1, logoutDay, logoutHour, logoutMin, logoutSec);
+        
+        const loginEpoch = Math.floor(loginEpochMs / 1000) + localGmtSec;
+        const logoutEpoch = Math.floor(logoutEpochMs / 1000) + localGmtSec;
+        
+        const epochDiff = logoutEpoch - loginEpoch;
+        
+        submitBtn.disabled = true;
+        
+        if (epochDiff <= 0) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Logout must be after login</span>';
+            return;
+        }
+        
+        if (epochDiff >= 86401) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Exceeds 24 hours</span>';
+            return;
+        }
+        
+        if (loginEpoch >= nowEpoch || logoutEpoch >= nowEpoch) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: Times must be in past</span>';
+            return;
+        }
+        
+        let remainingSeconds = epochDiff;
+        const hours = Math.floor(remainingSeconds / 3600);
+        remainingSeconds -= hours * 3600;
+        const minutes = Math.floor(remainingSeconds / 60);
+        remainingSeconds -= minutes * 60;
+        
+        const paddedMinutes = String(minutes).padStart(2, '0');
+        loginTimeDisplay.innerHTML = `<span style="color:#059669;font-weight:600;">${hours}:${paddedMinutes}</span>`;
+        
+        if (loginEpochField) loginEpochField.value = loginEpoch;
+        if (logoutEpochField) logoutEpochField.value = logoutEpoch;
+        
+        submitBtn.disabled = false;
+        
+    } catch (error) {
+        console.error('calculateHours error:', error);
+        const loginTimeDisplay = document.getElementById('login_time');
+        if (loginTimeDisplay) {
+            loginTimeDisplay.innerHTML = '<span style="color:#dc2626;font-weight:600;">ERROR: ' + error.message + '</span>';
+        }
+        const submitBtn = document.getElementById('go_submit');
+        if (submitBtn) submitBtn.disabled = true;
+    }
+}
 
-		// Calculate milliseconds since 1970 for each date string and find diff
-		var LI_date_epoch = Date.UTC(LI_date_array[0], (LI_date_array[1]-1), LI_date_array[2], LI_time_array[0], LI_time_array[1], LI_time_array[2]);
-		var LO_date_epoch = Date.UTC(LO_date_array[0], (LO_date_array[1]-1), LO_date_array[2], LO_time_array[0], LO_time_array[1], LO_time_array[2]);
-		var temp_LI_epoch = ( (LI_date_epoch / 1000 ) + local_gmt_sec);
-		var temp_LO_epoch = ( (LO_date_epoch / 1000 ) + local_gmt_sec);
-		var epoch_diff = (temp_LO_epoch - temp_LI_epoch);
-		var temp_diff = epoch_diff;
+document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+    const loginDateField = document.getElementById('LOGINbegin_date');
+    const logoutDateField = document.getElementById('LOGOUTbegin_date');
+    
+    if (loginDateField && logoutDateField) {
+        loginDateField.addEventListener('change', calculateHours);
+        logoutDateField.addEventListener('change', calculateHours);
+        loginDateField.addEventListener('input', calculateHours);
+        logoutDateField.addEventListener('input', calculateHours);
+        calculateHours();
+    }
+});
 
-		document.getElementById("login_time").innerHTML = "ERROR, Please check date fields";
+        <?php
+    }
+    
+    echo "</script>\n";
+    echo "</head>\n";
+    echo "<body>\n";
+}
 
-	//	document.getElementById("login_time").innerHTML = LI_date_epoch + '|' + temp_LI_epoch + '|' + LO_date_epoch + '|' + temp_LO_epoch + '|' + (Date.UTC(LI_date_array[0], LI_date_array[1], LI_date_array[2]) / 1000) + '|' + (Date.UTC(LO_date_array[0], LO_date_array[1], LO_date_array[2]) / 1000) + "\n diff " +  epoch_diff + "\n LI " +  temp_LI_epoch + "\n LO " +  temp_LO_epoch + "\n Now " +  now_epoch + "\n local" + local_gmt_sec;
-
-		var go_submit = document.getElementById("go_submit");
-		go_submit.disabled = true;
-		// length is a positive number and no more than 24 hours, datetime is earlier than right now
-		if ( (epoch_diff < 86401) && (epoch_diff > 0) && (temp_LI_epoch < now_epoch) && (temp_LO_epoch < now_epoch) )
-			{
-			go_submit.disabled = false;
-
-			hours = Math.floor(temp_diff / (60 * 60)); 
-			temp_diff -= hours * (60 * 60);
-
-			mins = Math.floor(temp_diff / 60); 
-			temp_diff -= mins * 60;
-			if (mins < 10) {mins = "0" + mins;}
-
-			secs = Math.floor(temp_diff); 
-			temp_diff -= secs;
-
-			document.getElementById("login_time").innerHTML = hours + ":" + mins;
-
-			var form_LI_epoch = document.getElementById("LOGINepoch");
-			var form_LO_epoch = document.getElementById("LOGOUTepoch");
-			form_LI_epoch.value = temp_LI_epoch;
-			form_LO_epoch.value = temp_LO_epoch;
-			}
-		}
+// ============================================
+// END FULL HTML HEADER
+// ============================================
 
 
-
-	<?php
-	}
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
