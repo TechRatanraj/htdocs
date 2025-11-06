@@ -308,239 +308,90 @@ else if ($android_header) {
 
 //Done till small header modernization at line 309
 ######################### FULL HTML HEADER BEGIN #######################################
- else {
-    if ($no_title < 1) {
-        echo "</title>\n";
-    }
-    
-    echo "<script type=\"text/javascript\">\n";
-    echo "'use strict';\n";
-    echo "const fieldName = '';\n";
-    echo "const currentUser = '" . htmlspecialchars($PHP_AUTH_USER ?? '') . "';\n";
-    echo "const epochNow = '" . date("U") . "';\n";
-    echo "const nowEpoch = " . intval($StarTtimE ?? time()) . ";\n";
-    echo "const localGmtSec = " . intval($local_gmt_sec ?? 0) . ";\n";
-    
-    if ($TCedit_javascript > 0) {
-        ?>
+else
+{
+if ($no_title < 1) {echo "</title>\n";}
+echo "<script language=\"Javascript\">\n";
+echo "var field_name = '';\n";
+echo "var user = '$PHP_AUTH_USER';\n";
+echo "var epoch = '" . date("U") . "';\n";
 
-/**
- * Submit form after validation
- */
-function runSubmit() {
-    'use strict';
-    calculateHours();
-    const submitBtn = document.getElementById('go_submit');
-    if (submitBtn && !submitBtn.disabled) {
-        const form = document.forms['edit_log'];
-        if (form) {
-            form.submit();
-        }
-    }
-}
+if ($TCedit_javascript > 0)
+	{
+	 ?>
 
-/**
- * Calculate login/logout hours with timezone support
- * Validates date range and calculates time difference
- */
-function calculateHours() {
-    'use strict';
-    
-    try {
-        // Get DOM elements
-        const loginDateField = document.getElementById('LOGINbegin_date');
-        const logoutDateField = document.getElementById('LOGOUTbegin_date');
-        const loginTimeDisplay = document.getElementById('login_time');
-        const submitBtn = document.getElementById('go_submit');
-        const loginEpochField = document.getElementById('LOGINepoch');
-        const logoutEpochField = document.getElementById('LOGOUTepoch');
-        
-        // Validate elements exist
-        if (!loginDateField || !logoutDateField || !loginTimeDisplay || !submitBtn) {
-            if (loginTimeDisplay) {
-                loginTimeDisplay.innerHTML = 'ERROR: Required form elements not found';
-            }
-            if (submitBtn) submitBtn.disabled = true;
-            return;
-        }
-        
-        // Parse date strings (format: YYYY-MM-DD HH:MM:SS)
-        const loginDatetime = loginDateField.value.trim();
-        const logoutDatetime = logoutDateField.value.trim();
-        
-        if (!loginDatetime || !logoutDatetime) {
-            loginTimeDisplay.innerHTML = 'ERROR: Please check date fields';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        // Split and validate date/time components
-        const loginParts = loginDatetime.split(' ');
-        const logoutParts = logoutDatetime.split(' ');
-        
-        if (loginParts.length !== 2 || logoutParts.length !== 2) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid date format (use YYYY-MM-DD HH:MM:SS)';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        const [loginDateStr, loginTimeStr] = loginParts;
-        const [logoutDateStr, logoutTimeStr] = logoutParts;
-        
-        // Parse date components
-        const loginDateArr = loginDateStr.split('-').map(x => parseInt(x, 10));
-        const loginTimeArr = loginTimeStr.split(':').map(x => parseInt(x, 10));
-        const logoutDateArr = logoutDateStr.split('-').map(x => parseInt(x, 10));
-        const logoutTimeArr = logoutTimeStr.split(':').map(x => parseInt(x, 10));
-        
-        // Validate array lengths
-        if (loginDateArr.length !== 3 || loginTimeArr.length !== 3 || 
-            logoutDateArr.length !== 3 || logoutTimeArr.length !== 3) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid date/time components';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        const [loginYear, loginMonth, loginDay] = loginDateArr;
-        const [loginHour, loginMin, loginSec] = loginTimeArr;
-        const [logoutYear, logoutMonth, logoutDay] = logoutDateArr;
-        const [logoutHour, logoutMin, logoutSec] = logoutTimeArr;
-        
-        // Validate date/time values
-        if (loginMonth < 1 || loginMonth > 12 || logoutMonth < 1 || logoutMonth > 12) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid month in date';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        if (loginDay < 1 || loginDay > 31 || logoutDay < 1 || logoutDay > 31) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid day in date';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        if (loginHour < 0 || loginHour > 23 || logoutHour < 0 || logoutHour > 23) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid hour (0-23)';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        if (loginMin < 0 || loginMin > 59 || logoutMin < 0 || logoutMin > 59) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid minutes (0-59)';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        if (loginSec < 0 || loginSec > 59 || logoutSec < 0 || logoutSec > 59) {
-            loginTimeDisplay.innerHTML = 'ERROR: Invalid seconds (0-59)';
-            submitBtn.disabled = true;
-            return;
-        }
-        
-        // Calculate UTC epoch timestamps (milliseconds)
-        const loginEpochMs = Date.UTC(loginYear, loginMonth - 1, loginDay, loginHour, loginMin, loginSec);
-        const logoutEpochMs = Date.UTC(logoutYear, logoutMonth - 1, logoutDay, logoutHour, logoutMin, logoutSec);
-        
-        // Convert to seconds and apply timezone offset
-        const loginEpoch = Math.floor(loginEpochMs / 1000) + localGmtSec;
-        const logoutEpoch = Math.floor(logoutEpochMs / 1000) + localGmtSec;
-        
-        // Calculate time difference in seconds
-        const epochDiff = logoutEpoch - loginEpoch;
-        
-        // Validation checks
-        const isWithin24Hours = epochDiff < 86401;
-        const isPositiveDiff = epochDiff > 0;
-        const isPastLogin = loginEpoch < nowEpoch;
-        const isPastLogout = logoutEpoch < nowEpoch;
-        
-        // Reset submit button and display
-        submitBtn.disabled = true;
-        
-        // Detailed validation messages
-        if (!isPositiveDiff) {
-            loginTimeDisplay.innerHTML = 'ERROR: Logout must be after login';
-            return;
-        }
-        
-        if (!isWithin24Hours) {
-            loginTimeDisplay.innerHTML = 'ERROR: Time difference exceeds 24 hours';
-            return;
-        }
-        
-        if (!isPastLogin) {
-            loginTimeDisplay.innerHTML = 'ERROR: Login time must be in the past';
-            return;
-        }
-        
-        if (!isPastLogout) {
-            loginTimeDisplay.innerHTML = 'ERROR: Logout time must be in the past';
-            return;
-        }
-        
-        // All validations passed - calculate display time
-        let remainingSeconds = epochDiff;
-        
-        const hours = Math.floor(remainingSeconds / 3600);
-        remainingSeconds -= hours * 3600;
-        
-        const minutes = Math.floor(remainingSeconds / 60);
-        remainingSeconds -= minutes * 60;
-        
-        const seconds = Math.floor(remainingSeconds);
-        
-        // Format output (HH:MM)
-        const paddedMinutes = String(minutes).padStart(2, '0');
-        loginTimeDisplay.innerHTML = `${hours}:${paddedMinutes}`;
-        
-        // Update hidden epoch fields for form submission
-        if (loginEpochField) loginEpochField.value = loginEpoch;
-        if (logoutEpochField) logoutEpochField.value = logoutEpoch;
-        
-        // Enable submit button
-        submitBtn.disabled = false;
-        
-    } catch (error) {
-        console.error('calculateHours error:', error);
-        const loginTimeDisplay = document.getElementById('login_time');
-        if (loginTimeDisplay) {
-            loginTimeDisplay.innerHTML = 'ERROR: ' + error.message;
-        }
-        const submitBtn = document.getElementById('go_submit');
-        if (submitBtn) submitBtn.disabled = true;
-    }
-}
+	function run_submit()
+		{
+		calculate_hours();
+		var go_submit = document.getElementById("go_submit");
+		if (go_submit.disabled == false)
+			{
+			document.edit_log.submit();
+			}
+		}
 
-/**
- * Auto-calculate on date/time change
- */
-document.addEventListener('DOMContentLoaded', function() {
-    'use strict';
-    
-    const loginDateField = document.getElementById('LOGINbegin_date');
-    const logoutDateField = document.getElementById('LOGOUTbegin_date');
-    
-    if (loginDateField && logoutDateField) {
-        loginDateField.addEventListener('change', calculateHours);
-        logoutDateField.addEventListener('change', calculateHours);
-        loginDateField.addEventListener('input', calculateHours);
-        logoutDateField.addEventListener('input', calculateHours);
-        
-        // Initial calculation
-        calculateHours();
-    }
-});
+	// Calculate login time
+	function calculate_hours() 
+		{
+		var now_epoch = '<?php echo $StarTtimE ?>';
+		var local_gmt_sec = '<?php echo $local_gmt_sec ?>';
+		var local_gmt_sec = (local_gmt_sec * 1);
+		var i=0;
+		var total_percent=0;
+		var SPANlogin_time = document.getElementById("LOGINlogin_time");
+		var LI_date = document.getElementById("LOGINbegin_date");
+		var LO_date = document.getElementById("LOGOUTbegin_date");
+		var LI_datetime = LI_date.value;
+		var LO_datetime = LO_date.value;
+		var LI_datetime_array=LI_datetime.split(" ");
+		var LI_date_array=LI_datetime_array[0].split("-");
+		var LI_time_array=LI_datetime_array[1].split(":");
+		var LO_datetime_array=LO_datetime.split(" ");
+		var LO_date_array=LO_datetime_array[0].split("-");
+		var LO_time_array=LO_datetime_array[1].split(":");
 
-        <?php
-    }
-    
-    echo "</script>\n";
-    echo "</head>\n";
-    echo "<body>\n";
-}
+		// Calculate milliseconds since 1970 for each date string and find diff
+		var LI_date_epoch = Date.UTC(LI_date_array[0], (LI_date_array[1]-1), LI_date_array[2], LI_time_array[0], LI_time_array[1], LI_time_array[2]);
+		var LO_date_epoch = Date.UTC(LO_date_array[0], (LO_date_array[1]-1), LO_date_array[2], LO_time_array[0], LO_time_array[1], LO_time_array[2]);
+		var temp_LI_epoch = ( (LI_date_epoch / 1000 ) + local_gmt_sec);
+		var temp_LO_epoch = ( (LO_date_epoch / 1000 ) + local_gmt_sec);
+		var epoch_diff = (temp_LO_epoch - temp_LI_epoch);
+		var temp_diff = epoch_diff;
+
+		document.getElementById("login_time").innerHTML = "ERROR, Please check date fields";
+
+	//	document.getElementById("login_time").innerHTML = LI_date_epoch + '|' + temp_LI_epoch + '|' + LO_date_epoch + '|' + temp_LO_epoch + '|' + (Date.UTC(LI_date_array[0], LI_date_array[1], LI_date_array[2]) / 1000) + '|' + (Date.UTC(LO_date_array[0], LO_date_array[1], LO_date_array[2]) / 1000) + "\n diff " +  epoch_diff + "\n LI " +  temp_LI_epoch + "\n LO " +  temp_LO_epoch + "\n Now " +  now_epoch + "\n local" + local_gmt_sec;
+
+		var go_submit = document.getElementById("go_submit");
+		go_submit.disabled = true;
+		// length is a positive number and no more than 24 hours, datetime is earlier than right now
+		if ( (epoch_diff < 86401) && (epoch_diff > 0) && (temp_LI_epoch < now_epoch) && (temp_LO_epoch < now_epoch) )
+			{
+			go_submit.disabled = false;
+
+			hours = Math.floor(temp_diff / (60 * 60)); 
+			temp_diff -= hours * (60 * 60);
+
+			mins = Math.floor(temp_diff / 60); 
+			temp_diff -= mins * 60;
+			if (mins < 10) {mins = "0" + mins;}
+
+			secs = Math.floor(temp_diff); 
+			temp_diff -= secs;
+
+			document.getElementById("login_time").innerHTML = hours + ":" + mins;
+
+			var form_LI_epoch = document.getElementById("LOGINepoch");
+			var form_LO_epoch = document.getElementById("LOGOUTepoch");
+			form_LI_epoch.value = temp_LI_epoch;
+			form_LO_epoch.value = temp_LO_epoch;
+			}
+		}
 
 
-	
+
+	<?php
+	}
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
