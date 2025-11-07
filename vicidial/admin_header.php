@@ -1849,19 +1849,72 @@ background:rgb(102,255,51);
 <?php
 ##### END - bar chart CSS style #####
 
-echo "</head>\n"; echo '<div class="admin-content">'; 
+echo "</head>\n"; echo '<div class="admin-content"><div class="navbar-top">'; 
 if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 	{
 	
-    // Inject modern styling before body output
+    // Inject modern styling with proper spacing
     echo '<style>
-    body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important; }
-    .admin-layout { display: flex !important; min-height: 100vh !important; width: 100% !important; }
-    .admin-sidebar { width: 260px !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; position: fixed !important; height: 100vh !important; left: 0 !important; top: 0 !important; z-index: 1000 !important; overflow-y: auto !important; }
-    .admin-content { flex: 1 !important; margin-left: 260px !important; background: white !important; min-height: 100vh !important; }
-    TABLE { background: inherit !important; }
-    TD { background: inherit !important; }
-    TH { background: inherit !important; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { margin: 0; padding: 0; }
+    body { 
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important; 
+        margin: 0 !important; 
+        padding: 0 !important;
+    }
+    .admin-layout { 
+        display: flex !important; 
+        min-height: 100vh !important; 
+        width: 100% !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .admin-sidebar { 
+        width: 260px !important; 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; 
+        position: fixed !important; 
+        height: 100vh !important; 
+        left: 0 !important; 
+        top: 0 !important; 
+        z-index: 1000 !important; 
+        overflow-y: auto !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .admin-content { 
+        flex: 1 !important; 
+        margin-left: 260px !important; 
+        background: white !important; 
+        min-height: 100vh !important;
+        padding: 24px !important;
+        margin-top: 0 !important;
+    }
+    .navbar-top {
+        margin: 0 !important;
+        padding: 20px !important;
+        background: white !important;
+        border-bottom: 1px solid #ddd !important;
+        margin-bottom: 20px !important;
+    }
+    TABLE { 
+        background: inherit !important; 
+        margin: 0 !important;
+        padding: 8px !important;
+    }
+    TR { 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    TD { 
+        background: inherit !important; 
+        padding: 8px !important;
+        margin: 0 !important;
+    }
+    TH { 
+        background: inherit !important; 
+        padding: 8px !important;
+        margin: 0 !important;
+    }
     </style>';
 
     echo '<div class="admin-layout">';
@@ -1884,7 +1937,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 
 ?>
-<left>
+<CENTER>
+
 <TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
 <TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
@@ -2833,6 +2887,6 @@ else
 
 
     // Close modern layout at end of file
-    echo '</div></div>';
+    echo '</div></div></div></div>';
     ?>
     
