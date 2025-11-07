@@ -1560,7 +1560,6 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
 
 ### Javascript for dynamic in-group option value entries
 
-<?php
 // Javascript for dynamic in-group option value entries
 if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011) or ($ADD==4111) or ($ADD==5111) )
 {
