@@ -1866,10 +1866,11 @@ if ($header_font_size < 4) {$header_font_size='12';}
 if ($subheader_font_size < 4) {$subheader_font_size='11';}
 if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
-
+}
 
 ?>
-<CENTER>
+
+<left>
 
 
 // Modern HTML output starts here
@@ -2080,6 +2081,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
         });
     </script>
 </head>
+	
 <body>
     <div class="admin-layout">
         <!-- SIDEBAR NAVIGATION -->
@@ -2112,7 +2114,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 <?php } ?>
             </nav>
         </aside>
-
+				
         <!-- SIDEBAR OVERLAY (Mobile) -->
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
