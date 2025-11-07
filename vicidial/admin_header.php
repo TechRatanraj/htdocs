@@ -601,6 +601,8 @@ function submit_mix(vcl_id,entries)
 </script>
 MIXJS;
 	}
+?>
+	
 
 	<?php
 	if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
