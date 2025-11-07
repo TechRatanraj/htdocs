@@ -2038,26 +2038,124 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
 
 <?php
 ##### END - bar chart CSS style #####
-
 echo "</head>\n";
-if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
-	{
-	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
-	}
-else
-	{
-	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-	}
-	
+
+// Modern body styling with gradient background
+$body_styles = "
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+";
+
+// Add onLoad event if modify refresh is needed
+$onload_event = '';
+if (($SSadmin_modify_refresh > 1) && (preg_match("/^3|^4/", $ADD))) {
+    $onload_event = ' onLoad="modify_refresh_display();"';
+}
+
+echo "<BODY style=\"{$body_styles}\"{$onload_event}>\n";
+
+// Internationalization placeholder
 echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 
+// Loading animation overlay (optional - shows during page load)
+?>
+<div id="page-loader" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+">
+    <div style="text-align: center;">
+        <div style="
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255,255,255,0.2);
+            border-top-color: #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        "></div>
+        <p style="color: #fff; margin-top: 20px; font-weight: 600; font-size: 16px;">Loading...</p>
+    </div>
+</div>
 
-if ($header_font_size < 4) {$header_font_size='12';}
-if ($subheader_font_size < 4) {$subheader_font_size='11';}
-if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
+<style>
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
 
+<script>
+// Hide loader when page is fully loaded
+window.addEventListener('load', function() {
+    const loader = document.getElementById('page-loader');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(function() {
+            loader.style.display = 'none';
+        }, 500);
+    }
+});
+</script>
 
+<!-- Main Content Wrapper -->
+<div id="main-wrapper" style="
+    max-width: 1920px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    min-height: 100vh;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+">
 
+<?php
+
+// Font size validation with better defaults
+if ($header_font_size < 4) {
+    $header_font_size = '14';  // Increased from 12 for better readability
+}
+if ($subheader_font_size < 4) {
+    $subheader_font_size = '13';  // Increased from 11
+}
+if ($subcamp_font_size < 4) {
+    $subcamp_font_size = '12';  // Increased from 11
+}
+
+// Debug mode indicator (only shows if debug is enabled)
+if (isset($DB) && $DB > 0) {
+    ?>
+    <div style="
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, #F56565, #C53030);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
+        z-index: 9998;
+        letter-spacing: 0.5px;
+    ">
+        🐛 DEBUG MODE
+    </div>
+    <?php
+}
 ?>
 <left>
 
