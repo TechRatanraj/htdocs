@@ -97,148 +97,148 @@ if ( ($SSweb_logo!='default_new') and ($SSweb_logo!='default_old') )
 	}
 #### BEGIN populate dynamic header content - MODERNIZED WITH INLINE STYLES #####
 
-// USERS
 if ($hh=='users') {
-    $users_hh="CLASS=\"head_style_selected\""; 
-    $users_fc="$users_font"; 
-    $users_bold="$header_selected_bold";
-    $users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $users_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $users_fc="#FFD700"; 
+    $users_bold="<B>";
+    $users_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_users.png\" width=18 height=18></span>";
 } else {
-    $users_hh="CLASS=\"head_style\""; 
-    $users_fc='WHITE'; 
-    $users_bold="$header_nonselected_bold";
-    $users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $users_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $users_fc='#fff'; 
+    $users_bold="";
+    $users_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_users.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // CAMPAIGNS
 if ($hh=='campaigns') {
-    $campaigns_hh="CLASS=\"head_style_selected\""; 
-    $campaigns_fc="$campaigns_font"; 
-    $campaigns_bold="$header_selected_bold";
-    $campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $campaigns_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $campaigns_fc="#FFD700"; 
+    $campaigns_bold="<B>";
+    $campaigns_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_campaigns.png\" width=18 height=18></span>";
 } else {
-    $campaigns_hh="CLASS=\"head_style\""; 
-    $campaigns_fc='WHITE'; 
-    $campaigns_bold="$header_nonselected_bold";
-    $campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $campaigns_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $campaigns_fc='#fff'; 
+    $campaigns_bold="";
+    $campaigns_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_campaigns.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // LISTS
 if ($hh=='lists') {
-    $lists_hh="CLASS=\"head_style_selected\""; 
-    $lists_fc="$lists_font"; 
-    $lists_bold="$header_selected_bold";
-    $lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $lists_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $lists_fc="#FFD700"; 
+    $lists_bold="<B>";
+    $lists_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_lists.png\" width=18 height=18></span>";
 } else {
-    $lists_hh="CLASS=\"head_style\""; 
-    $lists_fc='WHITE'; 
-    $lists_bold="$header_nonselected_bold";
-    $lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $lists_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $lists_fc='#fff'; 
+    $lists_bold="";
+    $lists_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_lists.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // INBOUND/INGROUPS
 if ($hh=='ingroups') {
-    $ingroups_hh="CLASS=\"head_style_selected\""; 
-    $ingroups_fc="$ingroups_font"; 
-    $ingroups_bold="$header_selected_bold";
-    $inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $ingroups_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $ingroups_fc="#FFD700"; 
+    $ingroups_bold="<B>";
+    $inbound_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_inbound.png\" width=18 height=18></span>";
 } else {
-    $ingroups_hh="CLASS=\"head_style\""; 
-    $ingroups_fc='WHITE'; 
-    $ingroups_bold="$header_nonselected_bold";
-    $inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $ingroups_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $ingroups_fc='#fff'; 
+    $ingroups_bold="";
+    $inbound_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_inbound.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // REMOTE AGENTS
 if ($hh=='remoteagent') {
-    $remoteagent_hh="CLASS=\"head_style_selected\""; 
-    $remoteagent_fc="$remoteagent_font"; 
-    $remoteagent_bold="$header_selected_bold";
-    $remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $remoteagent_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $remoteagent_fc="#FFD700"; 
+    $remoteagent_bold="<B>";
+    $remoteagents_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_remoteagents.png\" width=18 height=18></span>";
 } else {
-    $remoteagent_hh="CLASS=\"head_style\""; 
-    $remoteagent_fc='WHITE'; 
-    $remoteagent_bold="$header_nonselected_bold";
-    $remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $remoteagent_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $remoteagent_fc='#fff'; 
+    $remoteagent_bold="";
+    $remoteagents_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_remoteagents.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // USER GROUPS
 if ($hh=='usergroups') {
-    $usergroups_hh="CLASS=\"head_style_selected\""; 
-    $usergroups_fc="$usergroups_font"; 
-    $usergroups_bold="$header_selected_bold";
-    $usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $usergroups_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $usergroups_fc="#FFD700"; 
+    $usergroups_bold="<B>";
+    $usergroups_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_usergroups.png\" width=18 height=18></span>";
 } else {
-    $usergroups_hh="CLASS=\"head_style\""; 
-    $usergroups_fc='WHITE'; 
-    $usergroups_bold="$header_nonselected_bold";
-    $usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $usergroups_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $usergroups_fc='#fff'; 
+    $usergroups_bold="";
+    $usergroups_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_usergroups.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // SCRIPTS
 if ($hh=='scripts') {
-    $scripts_hh="CLASS=\"head_style_selected\""; 
-    $scripts_fc="$scripts_font"; 
-    $scripts_bold="$header_selected_bold";
-    $scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $scripts_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $scripts_fc="#FFD700"; 
+    $scripts_bold="<B>";
+    $scripts_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_scripts.png\" width=18 height=18></span>";
 } else {
-    $scripts_hh="CLASS=\"head_style\""; 
-    $scripts_fc='WHITE'; 
-    $scripts_bold="$header_nonselected_bold";
-    $scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $scripts_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $scripts_fc='#fff'; 
+    $scripts_bold="";
+    $scripts_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_scripts.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // FILTERS
 if ($hh=='filters') {
-    $filters_hh="CLASS=\"head_style_selected\""; 
-    $filters_fc="$filters_font"; 
-    $filters_bold="$header_selected_bold";
-    $filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $filters_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $filters_fc="#FFD700"; 
+    $filters_bold="<B>";
+    $filters_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_filters.png\" width=18 height=18></span>";
 } else {
-    $filters_hh="CLASS=\"head_style\""; 
-    $filters_fc='WHITE'; 
-    $filters_bold="$header_nonselected_bold";
-    $filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $filters_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $filters_fc='#fff'; 
+    $filters_bold="";
+    $filters_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_filters.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // ADMIN
 if ($hh=='admin') {
-    $admin_hh="CLASS=\"head_style_selected\""; 
-    $admin_fc="$admin_font"; 
-    $admin_bold="$header_selected_bold";
-    $admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $admin_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $admin_fc="#FFD700"; 
+    $admin_bold="<B>";
+    $admin_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_admin.png\" width=18 height=18></span>";
 } else {
-    $admin_hh="CLASS=\"head_style\""; 
-    $admin_fc='WHITE'; 
-    $admin_bold="$header_nonselected_bold";
-    $admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $admin_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $admin_fc='#fff'; 
+    $admin_bold="";
+    $admin_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_admin.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // REPORTS
 if ($hh=='reports') {
-    $reports_hh="CLASS=\"head_style_selected\""; 
-    $reports_fc="$reports_font"; 
-    $reports_bold="$header_selected_bold";
-    $reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $reports_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $reports_fc="#FFD700"; 
+    $reports_bold="<B>";
+    $reports_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_reports.png\" width=18 height=18></span>";
 } else {
-    $reports_hh="CLASS=\"head_style\""; 
-    $reports_fc='WHITE'; 
-    $reports_bold="$header_nonselected_bold";
-    $reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $reports_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $reports_fc='#fff'; 
+    $reports_bold="";
+    $reports_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_reports.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
 
 // QUALITY CONTROL
 if ($hh=='qc') {
-    $qc_hh="CLASS=\"head_style_selected\""; 
-    $qc_fc="$qc_font"; 
-    $qc_bold="$header_selected_bold";
-    $qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+    $qc_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
+    $qc_fc="#FFD700"; 
+    $qc_bold="<B>";
+    $qc_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_qc.png\" width=18 height=18></span>";
 } else {
-    $qc_hh="CLASS=\"head_style\""; 
-    $qc_fc='WHITE'; 
-    $qc_bold="$header_nonselected_bold";
-    $qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+    $qc_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
+    $qc_fc='#fff'; 
+    $qc_bold="";
+    $qc_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_qc.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
 }
+
 
 ##### END populate dynamic header content #####
 
