@@ -26,7 +26,6 @@
 # 3. Test: Open VICIDIAL admin panel - all functionality preserved!
 ###############################################################################
 
-<?php
 # admin_header.php - VICIDIAL administration header
 #
 # Copyright (C) 2023  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
