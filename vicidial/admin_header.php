@@ -455,18 +455,31 @@ if ($TCedit_javascript > 0)
 # End of snippet you provided. If there is more code below this point in your original file,
 # send it next and I will merge the remainder in-place (keeping the same modernized header).
 
-
-######################
-# ADD=31 or 34 and SUB=29 for list mixes
-######################
-if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) )
 	{
-
-	?>
-	// List Mix status add and remove
-	function mod_mix_status(stage,vcl_id,entry) 
+echo <<< 'MIXJS'
+<script type="text/javascript">
+// List Mix status add and remove
+function mod_mix_status(stage,vcl_id,entry) 
+	{
+	if (stage=="ALL")
 		{
-		if (stage=="ALL")
+		var count=0;
+		var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
+
+		while (count < entry)
+			{
+			var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
+			var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
+
+			old_statuses.value = ROnew_statuses.value;
+			ROold_statuses.value = ROnew_statuses.value;
+			count++;
+			}
+		}
+	else
+		{
+		if (stage=="EMPTY")
 			{
 			var count=0;
 			var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
@@ -475,136 +488,119 @@ if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_c
 				{
 				var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
 				var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
-
-				old_statuses.value = ROnew_statuses.value;
-				ROold_statuses.value = ROnew_statuses.value;
+				
+				if (ROold_statuses.value.length < 3)
+					{
+					old_statuses.value = ROnew_statuses.value;
+					ROold_statuses.value = ROnew_statuses.value;
+					}
 				count++;
 				}
 			}
+
 		else
 			{
-			if (stage=="EMPTY")
+			var mod_status = document.getElementById("dial_status_" + entry + "_" + vcl_id);
+			if (mod_status.value.length < 1)
 				{
-				var count=0;
-				var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
-
-				while (count < entry)
-					{
-					var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
-					var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
-					
-					if (ROold_statuses.value.length < 3)
-						{
-						old_statuses.value = ROnew_statuses.value;
-						ROold_statuses.value = ROnew_statuses.value;
-						}
-					count++;
-					}
+				alert("You must select a status first");
 				}
-
 			else
 				{
-				var mod_status = document.getElementById("dial_status_" + entry + "_" + vcl_id);
-				if (mod_status.value.length < 1)
+				var old_statuses = document.getElementById("status_" + entry + "_" + vcl_id);
+				var ROold_statuses = document.getElementById("ROstatus_" + entry + "_" + vcl_id);
+				var MODstatus = new RegExp(" " + mod_status.value + " ","g");
+				if (stage=="ADD")
 					{
-					alert("You must select a status first");
+					if (old_statuses.value.match(MODstatus))
+						{
+						alert("The status " + mod_status.value + " is already present");
+						}
+					else
+						{
+						var new_statuses = " " + mod_status.value + "" + old_statuses.value;
+						old_statuses.value = new_statuses;
+						ROold_statuses.value = new_statuses;
+						mod_status.value = "";
+						}
 					}
-				else
+				if (stage=="REMOVE")
 					{
-					var old_statuses = document.getElementById("status_" + entry + "_" + vcl_id);
-					var ROold_statuses = document.getElementById("ROstatus_" + entry + "_" + vcl_id);
 					var MODstatus = new RegExp(" " + mod_status.value + " ","g");
-					if (stage=="ADD")
-						{
-						if (old_statuses.value.match(MODstatus))
-							{
-							alert("The status " + mod_status.value + " is already present");
-							}
-						else
-							{
-							var new_statuses = " " + mod_status.value + "" + old_statuses.value;
-							old_statuses.value = new_statuses;
-							ROold_statuses.value = new_statuses;
-							mod_status.value = "";
-							}
-						}
-					if (stage=="REMOVE")
-						{
-						var MODstatus = new RegExp(" " + mod_status.value + " ","g");
-						old_statuses.value = old_statuses.value.replace(MODstatus, " ");
-						ROold_statuses.value = ROold_statuses.value.replace(MODstatus, " ");
-						}
+					old_statuses.value = old_statuses.value.replace(MODstatus, " ");
+					ROold_statuses.value = ROold_statuses.value.replace(MODstatus, " ");
 					}
 				}
 			}
 		}
+	}
 
-	// List Mix percent difference calculation and warning message
-	function mod_mix_percent(vcl_id,entries) 
+// List Mix percent difference calculation and warning message
+function mod_mix_percent(vcl_id,entries) 
+	{
+	var i=0;
+	var total_percent=0;
+	var percent_diff='';
+	while(i < entries)
+		{
+		var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
+		temp_percent = mod_percent_field.value * 1;
+		total_percent = (total_percent + temp_percent);
+		i++;
+		}
+
+	var mod_diff_percent = document.getElementById("PCT_DIFF_" + vcl_id);
+	percent_diff = (total_percent - 100);
+	if (percent_diff > 0)
+		{
+		percent_diff = '+' + percent_diff;
+		}
+	var mix_list_submit = document.getElementById("submit_" + vcl_id);
+	if ( (percent_diff > 0) || (percent_diff < 0) )
+		{
+		mix_list_submit.disabled = true;
+		document.getElementById("ERROR_" + vcl_id).innerHTML = "<font color=red><B>The Difference % must be 0</B></font>";
+		}
+	else
+		{
+		mix_list_submit.disabled = false;
+		document.getElementById("ERROR_" + vcl_id).innerHTML = "";
+		}
+
+	mod_diff_percent.value = percent_diff;
+	}
+
+function submit_mix(vcl_id,entries) 
+	{
+	var h=1;
+	var j=1;
+	var list_mix_container='';
+	var mod_list_mix_container_field = document.getElementById("list_mix_container_" + vcl_id);
+	while(h < 41)
 		{
 		var i=0;
-		var total_percent=0;
-		var percent_diff='';
 		while(i < entries)
 			{
+			var mod_list_id_field = document.getElementById("list_id_" + i + "_" + vcl_id);
+			var mod_priority_field = document.getElementById("priority_" + i + "_" + vcl_id);
 			var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
-			temp_percent = mod_percent_field.value * 1;
-			total_percent = (total_percent + temp_percent);
+			var mod_statuses_field = document.getElementById("status_" + i + "_" + vcl_id);
+			if (mod_priority_field.value==h)
+				{
+				list_mix_container = list_mix_container + mod_list_id_field.value + "|" + j + "|" + mod_percent_field.value + "|" + mod_statuses_field.value + "|:";
+				j++;
+				}
 			i++;
 			}
-
-		var mod_diff_percent = document.getElementById("PCT_DIFF_" + vcl_id);
-		percent_diff = (total_percent - 100);
-		if (percent_diff > 0)
-			{
-			percent_diff = '+' + percent_diff;
-			}
-		var mix_list_submit = document.getElementById("submit_" + vcl_id);
-		if ( (percent_diff > 0) || (percent_diff < 0) )
-			{
-			mix_list_submit.disabled = true;
-			document.getElementById("ERROR_" + vcl_id).innerHTML = "<font color=red><B>The Difference % must be 0</B></font>";
-			}
-		else
-			{
-			mix_list_submit.disabled = false;
-			document.getElementById("ERROR_" + vcl_id).innerHTML = "";
-			}
-
-		mod_diff_percent.value = percent_diff;
+		h++;
 		}
-
-	function submit_mix(vcl_id,entries) 
-		{
-		var h=1;
-		var j=1;
-		var list_mix_container='';
-		var mod_list_mix_container_field = document.getElementById("list_mix_container_" + vcl_id);
-		while(h < 41)
-			{
-			var i=0;
-			while(i < entries)
-				{
-				var mod_list_id_field = document.getElementById("list_id_" + i + "_" + vcl_id);
-				var mod_priority_field = document.getElementById("priority_" + i + "_" + vcl_id);
-				var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
-				var mod_statuses_field = document.getElementById("status_" + i + "_" + vcl_id);
-				if (mod_priority_field.value==h)
-					{
-					list_mix_container = list_mix_container + mod_list_id_field.value + "|" + j + "|" + mod_percent_field.value + "|" + mod_statuses_field.value + "|:";
-					j++;
-					}
-				i++;
-				}
-			h++;
-			}
-		mod_list_mix_container_field.value = list_mix_container;
-		var form_to_submit = document.getElementById("" + vcl_id);
-		form_to_submit.submit();
-		}
-	<?php
+	mod_list_mix_container_field.value = list_mix_container;
+	var form_to_submit = document.getElementById("" + vcl_id);
+	form_to_submit.submit();
 	}
-	?>
+</script>
+MIXJS;
+	}
 
 	<?php
 	if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
