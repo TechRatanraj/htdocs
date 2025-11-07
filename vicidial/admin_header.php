@@ -210,104 +210,117 @@ else
 	}
 ##### END populate dynamic header content #####
 
+/* ------------------ Modernized responsive sidebar/topbar (table-free) ------------------ */
+
+/* short_header branch: logo-only or compact nav */
 if ($short_header) {
     if ($no_header) {
-        // Display nothing
-    }
-    else {
-        // Logo-only mode for reports
+        // nothing to output
+    } else {
+        // choose logo and size as before
+        $temp_logo = $selected_logo;
+        $temp_logo_width = 170;
+        $temp_logo_height = 45;
         if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
-            $temp_logo = $selected_logo;
-            $temp_logo_size = 'width="170" height="45"';
-            
             if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') {
                 $temp_logo = $selected_small_logo;
-                $temp_logo_size = 'width="71" height="22"';
+                $temp_logo_width = 71;
+                $temp_logo_height = 22;
             }
-            ?>
-            <table cellpadding="0" cellspacing="0" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><tr>
-            <td style="padding:12px 16px;"><a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:opacity 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"><img src="<?php echo htmlspecialchars($temp_logo); ?>" <?php echo $temp_logo_size; ?> border="0" alt="System logo" style="display:block;"></a></td>
-            <td style="padding:12px 16px;"></td>
-            <?php
-        }
-        else {
-            ?>
-            <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
-            <td style="padding:10px 14px;border-right:1px solid rgba(255,255,255,0.1);"><a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
-            <?php
-            
-            // Full access menu
-            if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-                ?>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" alt="Users" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" alt="Campaigns" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a></td>
-                <?php
-                
-                // QC menu if authorized
-                if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                    ?>
-                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a></td>
-                    <?php
-                }
-                ?>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" alt="Lists" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" alt="Scripts" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" alt="Filters" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" alt="Inbound" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" alt="User Groups" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" alt="Remote Agents" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" alt="Admin" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a></td>
-                <?php
-            }
-            // Limited access menu
-            else {
-                ?>
-                <td width="600" style="padding:10px;"></td>
-                <?php
-                
-                if ($reports_only_user > 0) {
-                    ?>
-                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Reports"); ?></a></td>
-                    <?php
-                }
-                else {
+            echo '<header class="admin-header admin-header--compact" role="banner" aria-label="System header" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
+              echo '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;">';
+                echo '<a href="'.htmlspecialchars($admin_home_url_LU).'" style="display:inline-block;opacity:0.9;transition:opacity .18s;">';
+                  echo '<img src="'.htmlspecialchars($temp_logo).'" alt="System logo" style="display:block;height:auto;max-width:100%;width:'.$temp_logo_width.'px;height:'.$temp_logo_height.'px;border:0;">';
+                echo '</a>';
+                echo '<div style="flex:1"></div>';
+              echo '</div>';
+            echo '</header>';
+        } else {
+            /* full compact nav (gradient background) */
+            echo '<header class="admin-header admin-header--nav" role="banner" style="background:linear-gradient(135deg,#'.$SSmenu_background.',#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);">';
+              echo '<div style="display:flex;align-items:center;padding:10px 14px;gap:8px;">';
+                echo '<a href="'.htmlspecialchars($ADMIN).'" aria-label="Admin home" style="display:inline-block;opacity:0.9;transition:all .18s;">';
+                  echo '<img src="'.htmlspecialchars($selected_small_logo).'" alt="System logo" width="71" height="22" style="display:block;border:0;">';
+                echo '</a>';
+
+                /* menu container - responsive and semantic */
+                echo '<nav role="navigation" aria-label="Main menu" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-left:6px;">';
+
+                // If full access
+                if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999999').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$reports_icon.' '._QXZ("Reports").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=0A').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$users_icon.' '._QXZ("Users").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=10').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$campaigns_icon.' '._QXZ("Campaigns").'</a>';
+
                     if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                        ?>
-                        <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Quality Control"); ?></a></td>
-                        <?php
+                        echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$qc_icon.' '._QXZ("Quality Control").'</a>';
                     }
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$lists_icon.' '._QXZ("Lists").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=1000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$scripts_icon.' '._QXZ("Scripts").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=10000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$filters_icon.' '._QXZ("Filters").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=1001').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$inbound_icon.' '._QXZ("Inbound").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$usergroups_icon.' '._QXZ("User Groups").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=10000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$remoteagents_icon.' '._QXZ("Remote Agents").'</a>';
+
+                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999998').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$admin_icon.' '._QXZ("Admin").'</a>';
                 }
-            }
-            ?>
-            </tr>
-            </table>
-            <?php
-        }
-    }
+                // Limited access
+                else {
+                    // filler space - keeps header balanced
+                    echo '<div style="width:100%;min-width:20px;"></div>';
+
+                    if ($reports_only_user > 0) {
+                        echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999999').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;background:rgba(255,255,255,0.15);transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.25)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.15)\'">'._QXZ("Reports").'</a>';
+                    } else {
+                        if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                            echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;background:rgba(255,255,255,0.15);transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.25)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.15)\'">'._QXZ("Quality Control").'</a>';
+                        }
+                    }
+                } // end limited access else
+
+                echo '</nav>'; // end nav
+              echo '</div>';
+            echo '</header>';
+        } // end else full nav
+    } // end no_header else
+} // end short_header
+
+/* ------------------ Android/mobile header: modern inline nav ------------------ */
+else if ($android_header) {
+    echo '<header class="admin-header admin-header--mobile" role="banner" style="background:linear-gradient(135deg,#'.$SSmenu_background.',#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);">';
+      echo '<div style="display:flex;align-items:center;padding:10px 14px;">';
+        echo '<a href="./admin_mobile.php" aria-label="Mobile admin" style="display:inline-block;opacity:0.9;transition:all .18s;">';
+          echo '<img src="'.htmlspecialchars($selected_small_logo).'" width="71" height="22" alt="System logo" style="display:block;border:0;">';
+        echo '</a>';
+        echo '<div style="flex:1"></div>';
+        echo '<nav role="navigation" aria-label="Mobile menu" style="display:flex;align-items:center;">';
+          echo '<a href="admin_mobile.php?ADD=999990" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$admin_icon.' <span>'._QXZ("Admin").'</span></a>';
+        echo '</nav>';
+      echo '</div>';
+    echo '</header>';
 }
+
+/* ------------------ End of refactor block ------------------ */
+/* Note: The larger 'full HTML header' and inline JS remains below in original file. */
+
 ######################### SMALL HTML HEADER END #######################################
 
 
 ######################### MOBILE HTML HEADER BEGIN ####################################
+/* The previous table-based mobile header was replaced by the block above. */
 // ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
 // Purple Gradient + Responsive Design
 // ============================================
 
-else if ($android_header) {
-    ?>
-    <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
-    <td style="padding:10px 14px;"><a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
-    <td style="padding:0;flex:1;"></td>
-    <td style="padding:0 8px;"><a href="admin_mobile.php?ADD=999990" alt="Admin" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <span><?php echo _QXZ("Admin"); ?></span></a></td>
-    </tr>
-    </table>
-    <?php
-}
-
-//Done till small header modernization at line 309
-######################### FULL HTML HEADER BEGIN #######################################
 else
 {
 if ($no_title < 1) {echo "</title>\n";}
