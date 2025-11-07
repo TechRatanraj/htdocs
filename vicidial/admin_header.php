@@ -210,164 +210,104 @@ else
 	}
 ##### END populate dynamic header content #####
 
-######################### MODERN HEADER (replaces old table blocks) #########################
-/* Modernized header/sidebar/topbar. Output via echo to keep single PHP scope. */
-
-echo '<style>
-/* Modern header styles (inline for drop-in) */
-.admin-shell { font-family: Arial, Helvetica, sans-serif; }
-.admin-topbar, .admin-sidebar { box-sizing: border-box; }
-.admin-topbar {
-  display:none; align-items:center; gap:12px; padding:10px 14px;
-  background: linear-gradient(135deg,#'.$SSmenu_background.',#764ba2);
-  color:#fff; width:100%; border-radius:8px; margin-bottom:16px; box-shadow:0 2px 8px rgba(102,126,234,0.18);
-}
-.admin-topbar .logo { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#fff; }
-.admin-topbar nav { margin-left:auto; display:flex; gap:8px; align-items:center; }
-.admin-topbar a.menu-link { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; color:#fff; text-decoration:none; font-weight:600; font-size:13px; border-radius:6px; transition:background .12s; }
-.admin-topbar a.menu-link:hover { background: rgba(255,255,255,.12); }
-
-.admin-shell-layout { display:flex; gap:16px; align-items:flex-start; }
-
-/* Sidebar */
-.admin-sidebar {
-  width:240px; min-width:200px; background: linear-gradient(180deg,#fff,#f6f9ff);
-  border-radius:12px; padding:14px; box-shadow:0 6px 18px rgba(20,30,60,.06);
-  display:flex; flex-direction:column; gap:12px;
-}
-.admin-sidebar .brand { display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; }
-.admin-sidebar .brand img { display:block; border-radius:6px; }
-.admin-sidebar nav ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
-.admin-sidebar a.nav-item {
-  display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; color:#10233b; text-decoration:none;
-  font-weight:600; font-size:14px; transition:background .12s,transform .08s;
-}
-.admin-sidebar a.nav-item:hover { background:#eef6ff; transform:translateY(-1px); }
-.admin-sidebar a.nav-item .icon { width:18px; height:18px; display:inline-block; vertical-align:middle; }
-.admin-sidebar .spacer { flex:1; }
-
-/* Mobile: show topbar and collapse sidebar */
-@media (max-width: 880px) {
-  .admin-shell-layout { flex-direction:column; }
-  .admin-sidebar { display:none; }
-  .admin-topbar { display:flex; }
-}
-
-/* Collapsed (small) sidebar style when toggled programmatically */
-.admin-sidebar--collapsed { width:64px; min-width:64px; align-items:center; padding:10px; }
-.admin-sidebar--collapsed .label { display:none; }
-.admin-sidebar--collapsed a.nav-item { justify-content:center; padding:8px; }
-
-/* Utility */
-.badge { background:#e6eefc; padding:4px 8px; border-radius:999px; font-size:12px; color:#0b3b70; font-weight:700; }
-</style>';
-
-echo '<script>
-(function(){
-  function qs(sel){return document.querySelector(sel);}
-  document.addEventListener("click", function(e){
-    var t = e.target;
-    if (t && t.matches(".admin-hamburger, .admin-hamburger *")) {
-      var sb = qs(".admin-sidebar");
-      if (!sb) return;
-      sb.classList.toggle("admin-sidebar--collapsed");
-      e.preventDefault();
-    }
-  }, false);
-})();
-</script>';
-
 if ($short_header) {
     if ($no_header) {
-        // nothing to display
-    } else {
-        $temp_logo = $selected_logo;
-        $temp_small_logo = $selected_small_logo;
-        $logo_w = 170; $logo_h = 45;
-        if ($LOGreports_header_override == "LOGO_ONLY_SMALL") { $temp_logo = $selected_small_logo; $logo_w = 71; $logo_h = 22; }
-
-        echo '<div class="admin-shell">';
-        // mobile topbar
-        echo '<header class="admin-topbar" role="banner">';
-          echo '<a class="logo" href="'.htmlspecialchars($admin_home_url_LU).'"><img src="'.htmlspecialchars($temp_small_logo).'" alt="logo" width="71" height="22" style="display:block;border:0;"></a>';
-          echo '<button aria-label="Toggle menu" class="admin-hamburger" style="background:transparent;border:0;color:#fff;font-weight:700;padding:8px;border-radius:6px;cursor:pointer">☰</button>';
-          echo '<nav role="navigation" aria-label="Top actions">';
-            echo '<a class="menu-link" href="'.htmlspecialchars($ADMIN.'?ADD=999998').'">'.$admin_icon.' '._QXZ("Admin").'</a>';
-          echo '</nav>';
-        echo '</header>';
-
-        echo '<div class="admin-shell-layout">';
-
-          echo '<aside class="admin-sidebar" role="navigation" aria-label="Main menu">';
-            echo '<a class="brand" href="'.htmlspecialchars($ADMIN).'" title="Admin home">';
-              echo '<img src="'.htmlspecialchars($selected_logo).'" alt="System" width="120" style="display:block;border:0;">';
-            echo '</a>';
-
-            echo '<nav aria-label="Primary">';
-              echo '<ul>';
-                if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=999999').'"><span class="icon">'.$reports_icon.'</span><span class="label">'._QXZ("Reports").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=0A').'"><span class="icon">'.$users_icon.'</span><span class="label">'._QXZ("Users").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=10').'"><span class="icon">'.$campaigns_icon.'</span><span class="label">'._QXZ("Campaigns").'</span></a></li>';
-                    if (($SSqc_features_active == "1") && ($qc_auth == "1")) {
-                        echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'"><span class="icon">'.$qc_icon.'</span><span class="label">'._QXZ("Quality Control").'</span></a></li>';
-                    }
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100').'"><span class="icon">'.$lists_icon.'</span><span class="label">'._QXZ("Lists").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=1000000').'"><span class="icon">'.$scripts_icon.'</span><span class="label">'._QXZ("Scripts").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=10000000').'"><span class="icon">'.$filters_icon.'</span><span class="label">'._QXZ("Filters").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=1001').'"><span class="icon">'.$inbound_icon.'</span><span class="label">'._QXZ("Inbound").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100000').'"><span class="icon">'.$usergroups_icon.'</span><span class="label">'._QXZ("User Groups").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=10000').'"><span class="icon">'.$remoteagents_icon.'</span><span class="label">'._QXZ("Remote Agents").'</span></a></li>';
-                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=999998').'"><span class="icon">'.$admin_icon.'</span><span class="label">'._QXZ("Admin").'</span></a></li>';
-                } else {
-                    if ($reports_only_user > 0) {
-                        echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=999999').'"><span class="icon">'.$reports_icon.'</span><span class="label">'._QXZ("Reports").'</span></a></li>';
-                    } else {
-                        if (($SSqc_features_active == "1") && ($qc_auth == "1")) {
-                            echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'"><span class="icon">'.$qc_icon.'</span><span class="label">'._QXZ("Quality Control").'</span></a></li>';
-                        }
+        // Display nothing
+    }
+    else {
+        // Logo-only mode for reports
+        if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
+            $temp_logo = $selected_logo;
+            $temp_logo_size = 'width="170" height="45"';
+            
+            if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') {
+                $temp_logo = $selected_small_logo;
+                $temp_logo_size = 'width="71" height="22"';
+            }
+            ?>
+            <table cellpadding="0" cellspacing="0" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><tr>
+            <td style="padding:12px 16px;"><a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:opacity 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"><img src="<?php echo htmlspecialchars($temp_logo); ?>" <?php echo $temp_logo_size; ?> border="0" alt="System logo" style="display:block;"></a></td>
+            <td style="padding:12px 16px;"></td>
+            <?php
+        }
+        else {
+            ?>
+            <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
+            <td style="padding:10px 14px;border-right:1px solid rgba(255,255,255,0.1);"><a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
+            <?php
+            
+            // Full access menu
+            if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+                ?>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" alt="Users" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" alt="Campaigns" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a></td>
+                <?php
+                
+                // QC menu if authorized
+                if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                    ?>
+                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a></td>
+                    <?php
+                }
+                ?>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" alt="Lists" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" alt="Scripts" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" alt="Filters" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" alt="Inbound" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" alt="User Groups" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" alt="Remote Agents" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" alt="Admin" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a></td>
+                <?php
+            }
+            // Limited access menu
+            else {
+                ?>
+                <td width="600" style="padding:10px;"></td>
+                <?php
+                
+                if ($reports_only_user > 0) {
+                    ?>
+                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Reports"); ?></a></td>
+                    <?php
+                }
+                else {
+                    if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                        ?>
+                        <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Quality Control"); ?></a></td>
+                        <?php
                     }
                 }
-              echo '</ul>';
-            echo '</nav>';
-
-            echo '<div class="spacer"></div>';
-            echo '<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;">';
-              echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999998').'" class="badge" title="Admin Home">' . _QXZ("Admin") . '</a>';
-              echo '<button class="admin-hamburger" aria-label="Toggle sidebar" style="background:transparent;border:0;cursor:pointer;font-size:18px">☰</button>';
-            echo '</div>';
-
-          echo '</aside>';
-
-          echo '<main style="flex:1;"></main>';
-
-        echo '</div>'; // end layout
-        echo '</div>'; // end shell
+            }
+            ?>
+            </tr>
+            </table>
+            <?php
+        }
     }
-} else if ($android_header) {
-    echo '<div class="admin-shell">';
-      echo '<header class="admin-topbar" role="banner">';
-        echo '<a class="logo" href="./admin_mobile.php"><img src="'.htmlspecialchars($selected_small_logo).'" alt="logo" width="71" height="22" style="display:block;border:0;"></a>';
-        echo '<nav role="navigation" aria-label="Mobile menu" style="margin-left:auto;">';
-          echo '<a class="menu-link" href="admin_mobile.php?ADD=999990">'.$admin_icon.' '._QXZ("Admin").'</a>';
-        echo '</nav>';
-      echo '</header>';
-    echo '</div>';
 }
-
-/* End modernized header block. The full HTML header (larger block) and JS follow in original file. */
-
-
 ######################### SMALL HTML HEADER END #######################################
 
 
 ######################### MOBILE HTML HEADER BEGIN ####################################
-/* The older table-based mobile header was replaced by the above block. */
 // ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
 // Purple Gradient + Responsive Design
 // ============================================
 
+else if ($android_header) {
+    ?>
+    <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
+    <td style="padding:10px 14px;"><a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
+    <td style="padding:0;flex:1;"></td>
+    <td style="padding:0 8px;"><a href="admin_mobile.php?ADD=999990" alt="Admin" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <span><?php echo _QXZ("Admin"); ?></span></a></td>
+    </tr>
+    </table>
+    <?php
+}
+
+//Done till small header modernization at line 309
+######################### FULL HTML HEADER BEGIN #######################################
 else
 {
 if ($no_title < 1) {echo "</title>\n";}
@@ -452,34 +392,17 @@ if ($TCedit_javascript > 0)
 
 	<?php
 	}
-# End of snippet you provided. If there is more code below this point in your original file,
-# send it next and I will merge the remainder in-place (keeping the same modernized header).
-
-if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) )
+######################
+# ADD=31 or 34 and SUB=29 for list mixes
+######################
+if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
 	{
-echo <<< 'MIXJS'
-<script type="text/javascript">
-// List Mix status add and remove
-function mod_mix_status(stage,vcl_id,entry) 
-	{
-	if (stage=="ALL")
-		{
-		var count=0;
-		var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
 
-		while (count < entry)
-			{
-			var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
-			var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
-
-			old_statuses.value = ROnew_statuses.value;
-			ROold_statuses.value = ROnew_statuses.value;
-			count++;
-			}
-		}
-	else
+	?>
+	// List Mix status add and remove
+	function mod_mix_status(stage,vcl_id,entry) 
 		{
-		if (stage=="EMPTY")
+		if (stage=="ALL")
 			{
 			var count=0;
 			var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
@@ -488,599 +411,648 @@ function mod_mix_status(stage,vcl_id,entry)
 				{
 				var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
 				var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
-				
-				if (ROold_statuses.value.length < 3)
-					{
-					old_statuses.value = ROnew_statuses.value;
-					ROold_statuses.value = ROnew_statuses.value;
-					}
+
+				old_statuses.value = ROnew_statuses.value;
+				ROold_statuses.value = ROnew_statuses.value;
 				count++;
 				}
 			}
-
 		else
 			{
-			var mod_status = document.getElementById("dial_status_" + entry + "_" + vcl_id);
-			if (mod_status.value.length < 1)
+			if (stage=="EMPTY")
 				{
-				alert("You must select a status first");
+				var count=0;
+				var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
+
+				while (count < entry)
+					{
+					var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
+					var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
+					
+					if (ROold_statuses.value.length < 3)
+						{
+						old_statuses.value = ROnew_statuses.value;
+						ROold_statuses.value = ROnew_statuses.value;
+						}
+					count++;
+					}
+				}
+
+			else
+				{
+				var mod_status = document.getElementById("dial_status_" + entry + "_" + vcl_id);
+				if (mod_status.value.length < 1)
+					{
+					alert("You must select a status first");
+					}
+				else
+					{
+					var old_statuses = document.getElementById("status_" + entry + "_" + vcl_id);
+					var ROold_statuses = document.getElementById("ROstatus_" + entry + "_" + vcl_id);
+					var MODstatus = new RegExp(" " + mod_status.value + " ","g");
+					if (stage=="ADD")
+						{
+						if (old_statuses.value.match(MODstatus))
+							{
+							alert("The status " + mod_status.value + " is already present");
+							}
+						else
+							{
+							var new_statuses = " " + mod_status.value + "" + old_statuses.value;
+							old_statuses.value = new_statuses;
+							ROold_statuses.value = new_statuses;
+							mod_status.value = "";
+							}
+						}
+					if (stage=="REMOVE")
+						{
+						var MODstatus = new RegExp(" " + mod_status.value + " ","g");
+						old_statuses.value = old_statuses.value.replace(MODstatus, " ");
+						ROold_statuses.value = ROold_statuses.value.replace(MODstatus, " ");
+						}
+					}
+				}
+			}
+		}
+
+	// List Mix percent difference calculation and warning message
+	function mod_mix_percent(vcl_id,entries) 
+		{
+		var i=0;
+		var total_percent=0;
+		var percent_diff='';
+		while(i < entries)
+			{
+			var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
+			temp_percent = mod_percent_field.value * 1;
+			total_percent = (total_percent + temp_percent);
+			i++;
+			}
+
+		var mod_diff_percent = document.getElementById("PCT_DIFF_" + vcl_id);
+		percent_diff = (total_percent - 100);
+		if (percent_diff > 0)
+			{
+			percent_diff = '+' + percent_diff;
+			}
+		var mix_list_submit = document.getElementById("submit_" + vcl_id);
+		if ( (percent_diff > 0) || (percent_diff < 0) )
+			{
+			mix_list_submit.disabled = true;
+			document.getElementById("ERROR_" + vcl_id).innerHTML = "<font color=red><B>The Difference % must be 0</B></font>";
+			}
+		else
+			{
+			mix_list_submit.disabled = false;
+			document.getElementById("ERROR_" + vcl_id).innerHTML = "";
+			}
+
+		mod_diff_percent.value = percent_diff;
+		}
+
+	function submit_mix(vcl_id,entries) 
+		{
+		var h=1;
+		var j=1;
+		var list_mix_container='';
+		var mod_list_mix_container_field = document.getElementById("list_mix_container_" + vcl_id);
+		while(h < 41)
+			{
+			var i=0;
+			while(i < entries)
+				{
+				var mod_list_id_field = document.getElementById("list_id_" + i + "_" + vcl_id);
+				var mod_priority_field = document.getElementById("priority_" + i + "_" + vcl_id);
+				var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
+				var mod_statuses_field = document.getElementById("status_" + i + "_" + vcl_id);
+				if (mod_priority_field.value==h)
+					{
+					list_mix_container = list_mix_container + mod_list_id_field.value + "|" + j + "|" + mod_percent_field.value + "|" + mod_statuses_field.value + "|:";
+					j++;
+					}
+				i++;
+				}
+			h++;
+			}
+		mod_list_mix_container_field.value = list_mix_container;
+		var form_to_submit = document.getElementById("" + vcl_id);
+		form_to_submit.submit();
+		}
+	<?php
+	}
+	?>
+
+	<?php
+	if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+		{
+	?>
+	// List status change confirmation
+	function ConfirmListStatusChange(system_setting, listForm) {
+		if (!system_setting) {
+			// if the list change confirmation system setting is off, just submit the form
+			listForm.submit();
+			return false;
+		}
+
+		var previous_list_statuses=document.getElementById('last_list_statuses').value;
+
+		var new_list_statuses="";
+
+		var lists = document.getElementsByName('list_active_change[]');
+		var no_selected=0;
+		for (var i=0; i<lists.length; i++) {
+			new_list_statuses+=lists[i].value+"|";
+			if (lists[i].checked) {
+				new_list_statuses+="Y|";
+			} else {
+				new_list_statuses+="N|";
+			}
+		}
+
+		if (previous_list_statuses==new_list_statuses) {
+			// if none of the lists active status has been changed, just submit the form
+			listForm.submit();
+			return false;
+		} else {
+			var prev_array=previous_list_statuses.split("|");
+			var new_array=new_list_statuses.split("|");
+			if (prev_array.length!=new_array.length) {alert("List error. Reload the page and try again."); return false;}
+
+			var altered_lists="";
+			for(i=0; i<prev_array.length; i+=2) {
+				prev_status=prev_array[(i+1)];
+				new_status=new_array[(i+1)];
+				if (prev_status!=new_status) {
+					altered_lists+=" - List "+new_array[i]+": "+prev_status+" => "+new_status+"\n";
+				}
+			}
+
+			var proceed=confirm("You have changed the active status of the following lists:\n\n"+altered_lists+"\nWould you like to proceed with committing the changes?");
+			if (proceed) {
+				listForm.submit();
+			}
+		}
+
+	}
+	<?php
+		}
+
+	if ( ( ($ADD==31) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+		{
+	?>
+	// Agent Call Hangup Route change trigger
+	function AgentCallHangupRouteChange(ACHR_new_value) 
+		{
+		var ACHR_list = document.getElementById("agent_hangup_route");
+		var ACHR_route = ACHR_list.value;
+		var ACHR_value = document.getElementById("agent_hangup_value");
+		var ACHR_title = document.getElementById("agent_hangup_value_title");
+		var ACHR_chooser = document.getElementById("agent_hangup_value_chooser");
+
+		if (ACHR_route=='HANGUP')
+			{
+			ACHR_title.innerHTML = '-<?php echo _QXZ("no value required") ?>-';
+			ACHR_chooser.innerHTML = '';
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='MESSAGE')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Message") ?>';
+			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_chooser('agent_hangup_value','date');\"><?php echo _QXZ("audio chooser") ?></a> ";
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='EXTENSION')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Dialplan Extension") ?>';
+			ACHR_chooser.innerHTML = '';
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='IN_GROUP')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup In-Group") ?>';
+			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_ingroup_chooser('agent_hangup_value','group_id');\"><?php echo _QXZ("in-group chooser") ?></a> ";
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='CALLMENU')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Call Menu") ?>';
+			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_callmenu_chooser('agent_hangup_value','menu_id');\"><?php echo _QXZ("call menu chooser") ?></a> ";
+			ACHR_value.value='';
+			}
+		}
+
+	<?php
+	}
+	?>
+
+	var weak = new Image();
+	weak.src = "images/weak.png";
+	var medium = new Image();
+	medium.src = "images/medium.png";
+	var strong = new Image();
+	strong.src = "images/strong.png";
+
+	function pwdChanged(pwd_field_str, pwd_img_str, pwd_len_field, pwd_len_min) 
+		{
+		var pwd_field = document.getElementById(pwd_field_str);
+		var pwd_field_value = pwd_field.value;
+		var pwd_img = document.getElementById(pwd_img_str);
+		var pwd_len = pwd_field_value.length
+
+	//	var strong_regex = new RegExp( "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])", "g" );
+	//	var medium_regex = new RegExp( "^(?=.{6,})(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))).*$", "g" );
+		var strong_regex = new RegExp( "^(?=.{20,})(?=.*[a-zA-Z])(?=.*[0-9])", "g" );
+		var medium_regex = new RegExp( "^(?=.{10,})(?=.*[a-zA-Z])(?=.*[0-9])", "g" );
+
+		if (strong_regex.test(pwd_field.value) ) 
+			{
+			if (pwd_img.src != strong.src)
+				{pwd_img.src = strong.src;}
+			} 
+		else if (medium_regex.test( pwd_field.value) ) 
+			{
+			if (pwd_img.src != medium.src) 
+				{pwd_img.src = medium.src;}
+			}
+		else 
+			{
+			if (pwd_img.src != weak.src) 
+				{pwd_img.src = weak.src;}
+			}
+		if ( (pwd_len_min > 0) && (pwd_len_min > pwd_len) )
+			{document.getElementById(pwd_len_field).innerHTML = "<font color=red><b>" + pwd_len + "</b></font>";}
+		else
+			{document.getElementById(pwd_len_field).innerHTML = "<font color=black><b>" + pwd_len + "</b></font>";}
+		}
+
+	function openNewWindow(url) 
+		{
+		window.open (url,"",'width=620,height=300,scrollbars=yes,menubar=yes,address=yes');
+		}
+	function scriptInsertField() 
+		{
+		openField = '--A--';
+		closeField = '--B--';
+		var textBox = document.scriptForm.script_text;
+		var scriptIndex = document.getElementById("selectedField").selectedIndex;
+		var insValue =  document.getElementById('selectedField').options[scriptIndex].value;
+		if (document.selection) 
+			{
+			//IE
+			textBox = document.scriptForm.script_text;
+			insValue = document.scriptForm.selectedField.options[document.scriptForm.selectedField.selectedIndex].text;
+			textBox.focus();
+			sel = document.selection.createRange();
+			sel.text = openField + insValue + closeField;
+			} 
+		else if (textBox.selectionStart || textBox.selectionStart == 0) 
+			{
+			//Mozilla
+			var startPos = textBox.selectionStart;
+			var endPos = textBox.selectionEnd;
+			textBox.value = textBox.value.substring(0, startPos)
+			+ openField + insValue + closeField
+			+ textBox.value.substring(endPos, textBox.value.length);
+			}
+		else 
+			{
+			textBox.value += openField + insValue + closeField;
+			}
+		}
+
+	<?php
+
+#### Javascript for auto-generate of user ID Button
+if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
+	{
+	?>
+	var ar_seconds=<?php echo "$SSadmin_modify_refresh;"; ?>
+
+	function modify_refresh_display()
+		{
+		if (ar_seconds > 0)
+			{
+			ar_seconds = (ar_seconds - 1);
+			document.getElementById("refresh_countdown").innerHTML = "<font color=black> screen refresh in: " + ar_seconds + " seconds</font>";
+			setTimeout("modify_refresh_display()",1000);
+			}
+		}
+
+	<?php
+	}
+
+#### BEGIN Javascript for auto-generate of user ID Button
+if ( ($ADD==1) or ($ADD=="1A") )
+	{
+	?>
+
+	function user_auto()
+		{
+		var user_toggle = document.getElementById("user_toggle");
+		var user_field = document.getElementById("user");
+		if (user_toggle.value < 1)
+			{
+			user_field.value = 'AUTOGENERATEZZZ';
+			user_field.disabled = true;
+			user_toggle.value = 1;
+			}
+		else
+			{
+			user_field.value = '';
+			user_field.disabled = false;
+			user_toggle.value = 0;
+			}
+		}
+
+	function user_submit()
+		{
+		var user_field = document.getElementById("user");
+		user_field.disabled = false;
+		document.userform.submit();
+		}
+
+	<?php
+	}
+#### END Javascript for auto-generate of user ID Button
+
+else
+	{
+	echo "	var pass = '$PHP_AUTH_PW';\n";
+	?>
+
+	mouseY=0;
+	function getMousePos(event) {
+		mouseY=event.pageY;
+	}
+	document.addEventListener("click", getMousePos);
+
+	var chooser_field='';
+	var chooser_field_td='';
+	var chooser_type='';
+
+	function launch_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var audiolistURL = "./non_agent_api.php";
+		var audiolistQuery = "source=admin&function=sounds_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_moh_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var audiolistURL = "./non_agent_api.php";
+		var audiolistQuery = "source=admin&function=moh_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_ingroup_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var apilistURL = "./non_agent_api.php";
+		var apilistQuery = "source=admin&function=ingroup_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_callmenu_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var apilistURL = "./non_agent_api.php";
+		var apilistQuery = "source=admin&function=callmenu_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_container_chooser(fieldname,stage,type)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var apilistURL = "./non_agent_api.php";
+		var apilistQuery = "source=admin&function=container_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname + "&type=" + type;
+		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_vm_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var audiolistURL = "./non_agent_api.php";
+		var audiolistQuery = "source=admin&function=vm_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_color_chooser(fieldname,stage,type)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+		chooser_field = fieldname;
+		chooser_field_td = fieldname + '_td';
+		chooser_type = type;
+	<?php
+	$color_chooser_output .= " &nbsp; <a href=\\\"javascript:close_chooser();\\\"><font size=1 face='Arial,Helvetica'>"._QXZ("close frame")."</font></a> &nbsp; <BR>";
+	$color_chooser_output .= "<div id='select_color_frame' style=\\\"height:400px;width:400px;overflow:scroll;background-color:white;\\\">";
+	$color_chooser_output .= '<table border=0 cellpadding=2 cellspacing=2 width=400 bgcolor=white>';
+	$HTMLcolorsARY = explode('|',$HTMLcolors);
+	$HTMLcolorsARYcount = count($HTMLcolorsARY);
+	$HTMLct=0;
+	while ($HTMLcolorsARYcount > $HTMLct)
+		{
+		$HTMLcolorsLINE = explode(',',$HTMLcolorsARY[$HTMLct]);
+		if (preg_match("/1$|3$|5$|7$|9$/i", $HTMLct))
+			{$bgcolor='#E6E6E6';} 
+		else
+			{$bgcolor='#F6F6F6';}
+
+		$color_chooser_output .= "<tr bgcolor=\\\"$bgcolor\\\"><td>$HTMLcolorsLINE[0] </td><td><a href=\\\"javascript:choose_color('$HTMLcolorsLINE[1]');\\\"><font size=1 face='Arial,Helvetica'>#$HTMLcolorsLINE[1]</a> </td><td bgcolor='#$HTMLcolorsLINE[1]'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td></tr>";
+
+		$HTMLct++;
+		}
+	$color_chooser_output .= '</table></div>';
+	?>
+
+		var span_content = '<span id="color_chooser_frame' + epoch + '" name="color_chooser_frame" style="width:740;height:440;background-color:white;overflow:scroll;z-index:2;">' + "<?php  echo $color_chooser_output ?></span>";
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").style.backgroundcolor = 'white';
+		document.getElementById("audio_chooser_span").innerHTML = span_content;
+		}
+
+	function choose_color(colorname)
+		{
+		if (colorname.length > 0)
+			{
+			if (chooser_type == '2')
+				{
+				document.getElementById(chooser_field).value = colorname;
+				document.getElementById(chooser_field_td).style.backgroundColor = '#' + colorname;
 				}
 			else
 				{
-				var old_statuses = document.getElementById("status_" + entry + "_" + vcl_id);
-				var ROold_statuses = document.getElementById("ROstatus_" + entry + "_" + vcl_id);
-				var MODstatus = new RegExp(" " + mod_status.value + " ","g");
-				if (stage=="ADD")
-					{
-					if (old_statuses.value.match(MODstatus))
-						{
-						alert("The status " + mod_status.value + " is already present");
-						}
-					else
-						{
-						var new_statuses = " " + mod_status.value + "" + old_statuses.value;
-						old_statuses.value = new_statuses;
-						ROold_statuses.value = new_statuses;
-						mod_status.value = "";
-						}
-					}
-				if (stage=="REMOVE")
-					{
-					var MODstatus = new RegExp(" " + mod_status.value + " ","g");
-					old_statuses.value = old_statuses.value.replace(MODstatus, " ");
-					ROold_statuses.value = ROold_statuses.value.replace(MODstatus, " ");
-					}
+				document.getElementById(chooser_field).value = '#' + colorname;
+				document.getElementById(chooser_field_td).style.backgroundColor = '#' + colorname;
 				}
-			}
-		}
-	}
-
-// List Mix percent difference calculation and warning message
-function mod_mix_percent(vcl_id,entries) 
-	{
-	var i=0;
-	var total_percent=0;
-	var percent_diff='';
-	while(i < entries)
-		{
-		var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
-		temp_percent = mod_percent_field.value * 1;
-		total_percent = (total_percent + temp_percent);
-		i++;
-		}
-
-	var mod_diff_percent = document.getElementById("PCT_DIFF_" + vcl_id);
-	percent_diff = (total_percent - 100);
-	if (percent_diff > 0)
-		{
-		percent_diff = '+' + percent_diff;
-		}
-	var mix_list_submit = document.getElementById("submit_" + vcl_id);
-	if ( (percent_diff > 0) || (percent_diff < 0) )
-		{
-		mix_list_submit.disabled = true;
-		document.getElementById("ERROR_" + vcl_id).innerHTML = "<font color=red><B>The Difference % must be 0</B></font>";
-		}
-	else
-		{
-		mix_list_submit.disabled = false;
-		document.getElementById("ERROR_" + vcl_id).innerHTML = "";
-		}
-
-	mod_diff_percent.value = percent_diff;
-	}
-
-function submit_mix(vcl_id,entries) 
-	{
-	var h=1;
-	var j=1;
-	var list_mix_container='';
-	var mod_list_mix_container_field = document.getElementById("list_mix_container_" + vcl_id);
-	while(h < 41)
-		{
-		var i=0;
-		while(i < entries)
-			{
-			var mod_list_id_field = document.getElementById("list_id_" + i + "_" + vcl_id);
-			var mod_priority_field = document.getElementById("priority_" + i + "_" + vcl_id);
-			var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
-			var mod_statuses_field = document.getElementById("status_" + i + "_" + vcl_id);
-			if (mod_priority_field.value==h)
-				{
-				list_mix_container = list_mix_container + mod_list_id_field.value + "|" + j + "|" + mod_percent_field.value + "|" + mod_statuses_field.value + "|:";
-				j++;
-				}
-			i++;
-			}
-		h++;
-		}
-	mod_list_mix_container_field.value = list_mix_container;
-	var form_to_submit = document.getElementById("" + vcl_id);
-	form_to_submit.submit();
-	}
-</script>
-MIXJS;
-	}
-?>
-	
-<?php
-/* ----- List status confirmation, Agent Hangup route, chooser helpers, pwd helpers, user auto, shift time ----- */
-
-/* List status change confirmation (ADD 34/31/44/41) */
-if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-	{
-echo '<script type="text/javascript">
-/* List status change confirmation */
-function ConfirmListStatusChange(system_setting, listForm) {
-	if (!system_setting) {
-		// if the list change confirmation system setting is off, just submit the form
-		listForm.submit();
-		return false;
-	}
-
-	var previous_list_statuses=document.getElementById("last_list_statuses").value;
-
-	var new_list_statuses="";
-
-	var lists = document.getElementsByName("list_active_change[]");
-	for (var i=0; i<lists.length; i++) {
-		new_list_statuses+=lists[i].value+"|";
-		if (lists[i].checked) {
-			new_list_statuses+="Y|";
-		} else {
-			new_list_statuses+="N|";
-		}
-	}
-
-	if (previous_list_statuses==new_list_statuses) {
-		// if none of the lists active status has been changed, just submit the form
-		listForm.submit();
-		return false;
-	} else {
-		var prev_array=previous_list_statuses.split("|");
-		var new_array=new_list_statuses.split("|");
-		if (prev_array.length!=new_array.length) { alert("List error. Reload the page and try again."); return false; }
-
-		var altered_lists="";
-		for(var i=0; i<prev_array.length; i+=2) {
-			var prev_status=prev_array[(i+1)];
-			var new_status=new_array[(i+1)];
-			if (prev_status!=new_status) {
-				altered_lists+=" - List "+new_array[i]+": "+prev_status+" => "+new_status+"\\n";
+			close_chooser();
 			}
 		}
 
-		var proceed=confirm("You have changed the active status of the following lists:\\n\\n"+altered_lists+"\\nWould you like to proceed with committing the changes?");
-		if (proceed) {
-			listForm.submit();
+	function close_chooser()
+		{
+		document.getElementById("audio_chooser_span").style.visibility = 'hidden';
+		document.getElementById("audio_chooser_span").innerHTML = '';
 		}
-	}
 
-}
-</script>';
-	}
-
-/* Agent Call Hangup Route change trigger (ADD 31 or 41) */
-if ( ( ($ADD==31) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-	{
-echo '<script type="text/javascript">
-/* Agent Call Hangup Route change trigger */
-function AgentCallHangupRouteChange(ACHR_new_value) 
-	{
-	var ACHR_list = document.getElementById("agent_hangup_route");
-	var ACHR_route = ACHR_list.value;
-	var ACHR_value = document.getElementById("agent_hangup_value");
-	var ACHR_title = document.getElementById("agent_hangup_value_title");
-	var ACHR_chooser = document.getElementById("agent_hangup_value_chooser");
-
-	if (ACHR_route=="HANGUP")
+	function user_submit()
 		{
-		ACHR_title.innerHTML = \'-' . _QXZ("no value required") . '-\';
-		ACHR_chooser.innerHTML = "";
-		ACHR_value.value="";
-		}
-	if (ACHR_route=="MESSAGE")
-		{
-		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup Message") . '";
-		ACHR_chooser.innerHTML = " <a href=\\"javascript:launch_chooser(\\\'agent_hangup_value\\\',\\\'date\\\');\\">' . _QXZ("audio chooser") . '</a> ";
-		ACHR_value.value="";
-		}
-	if (ACHR_route=="EXTENSION")
-		{
-		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup Dialplan Extension") . '";
-		ACHR_chooser.innerHTML = "";
-		ACHR_value.value="";
-		}
-	if (ACHR_route=="IN_GROUP")
-		{
-		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup In-Group") . '";
-		ACHR_chooser.innerHTML = " <a href=\\"javascript:launch_ingroup_chooser(\\\'agent_hangup_value\\\',\\\'group_id\\\');\\">' . _QXZ("in-group chooser") . '</a> ";
-		ACHR_value.value="";
-		}
-	if (ACHR_route=="CALLMENU")
-		{
-		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup Call Menu") . '";
-		ACHR_chooser.innerHTML = " <a href=\\"javascript:launch_callmenu_chooser(\\\'agent_hangup_value\\\',\\\'menu_id\\\');\\">' . _QXZ("call menu chooser") . '</a> ";
-		ACHR_value.value="";
-		}
-	}
-</script>';
-	}
-
-/* Password strength images and helper functions (always safe to output) */
-echo '<script type="text/javascript">
-var weak = new Image(); weak.src = "images/weak.png";
-var medium = new Image(); medium.src = "images/medium.png";
-var strong = new Image(); strong.src = "images/strong.png";
-
-function pwdChanged(pwd_field_str, pwd_img_str, pwd_len_field, pwd_len_min) 
-	{
-	var pwd_field = document.getElementById(pwd_field_str);
-	if (!pwd_field) return;
-	var pwd_field_value = pwd_field.value;
-	var pwd_img = document.getElementById(pwd_img_str);
-	var pwd_len = pwd_field_value.length;
-
-	var strong_regex = new RegExp("^(?=.{20,})(?=.*[a-zA-Z])(?=.*[0-9])", "g");
-	var medium_regex = new RegExp("^(?=.{10,})(?=.*[a-zA-Z])(?=.*[0-9])", "g");
-
-	if (strong_regex.test(pwd_field_value) ) 
-		{
-		if (pwd_img && pwd_img.src != strong.src) { pwd_img.src = strong.src; }
-		} 
-	else if (medium_regex.test(pwd_field_value) ) 
-		{
-		if (pwd_img && pwd_img.src != medium.src) { pwd_img.src = medium.src; }
-		}
-	else 
-		{
-		if (pwd_img && pwd_img.src != weak.src) { pwd_img.src = weak.src; }
-		}
-	if ( (pwd_len_min > 0) && (pwd_len_min > pwd_len) )
-		{ if (document.getElementById(pwd_len_field)) document.getElementById(pwd_len_field).innerHTML = "<font color=red><b>" + pwd_len + "</b></font>"; }
-	else
-		{ if (document.getElementById(pwd_len_field)) document.getElementById(pwd_len_field).innerHTML = "<font color=black><b>" + pwd_len + "</b></font>"; }
-	}
-
-function openNewWindow(url) 
-	{
-	window.open (url,"","width=620,height=300,scrollbars=yes,menubar=yes,address=yes");
-	}
-
-function scriptInsertField() 
-	{
-	var openField = "--A--";
-	var closeField = "--B--";
-	var textBox = document.scriptForm && document.scriptForm.script_text;
-	if (!textBox) return;
-	var scriptIndex = document.getElementById("selectedField") ? document.getElementById("selectedField").selectedIndex : -1;
-	var insValue = (scriptIndex >= 0) ? document.getElementById("selectedField").options[scriptIndex].value : "";
-	if (document.selection) 
-		{
-		//IE
-		textBox.focus();
-		var sel = document.selection.createRange();
-		sel.text = openField + insValue + closeField;
-		} 
-	else if (typeof textBox.selectionStart !== "undefined") 
-		{
-		//Mozilla
-		var startPos = textBox.selectionStart;
-		var endPos = textBox.selectionEnd;
-		textBox.value = textBox.value.substring(0, startPos)
-		+ openField + insValue + closeField
-		+ textBox.value.substring(endPos, textBox.value.length);
-		}
-	else 
-		{
-		textBox.value += openField + insValue + closeField;
-		}
-	}
-</script>';
-
-/* Auto-refresh countdown (if enabled for ADD =~ ^3|^4 ) */
-if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
-	{
-echo '<script type="text/javascript">
-var ar_seconds=' . intval($SSadmin_modify_refresh) . ';
-function modify_refresh_display()
-	{
-	if (ar_seconds > 0)
-		{
-		ar_seconds = (ar_seconds - 1);
-		var el = document.getElementById("refresh_countdown");
-		if (el) el.innerHTML = "<font color=black> screen refresh in: " + ar_seconds + " seconds</font>";
-		setTimeout(modify_refresh_display,1000);
-		}
-	}
-</script>';
-	}
-
-/* User auto-generate ID helpers (ADD 1 or 1A) */
-if ( ($ADD==1) or ($ADD=="1A") )
-	{
-echo '<script type="text/javascript">
-function user_auto()
-	{
-	var user_toggle = document.getElementById("user_toggle");
-	var user_field = document.getElementById("user");
-	if (!user_toggle || !user_field) return;
-	if (user_toggle.value < 1)
-		{
-		user_field.value = "AUTOGENERATEZZZ";
-		user_field.disabled = true;
-		user_toggle.value = 1;
-		}
-	else
-		{
-		user_field.value = "";
+		var user_field = document.getElementById("user");
 		user_field.disabled = false;
-		user_toggle.value = 0;
+		document.userform.submit();
 		}
-	}
 
-function user_submit()
-	{
-	var user_field = document.getElementById("user");
-	if (user_field) user_field.disabled = false;
-	if (document.userform) document.userform.submit();
-	}
-</script>';
-	}
-
-/* Chooser helpers (else branch) */
-else
-	{
-/* expose pass safely if present */
-$js_pass = isset($PHP_AUTH_PW) ? addslashes($PHP_AUTH_PW) : '';
-echo '<script type="text/javascript">';
-echo "var pass = '" . $js_pass . "';\n";
-echo 'var mouseY=0;
-function getMousePos(event) { mouseY = event.pageY || (event.touches && event.touches[0] && event.touches[0].pageY) || 0; }
-document.addEventListener("click", getMousePos);
-
-var chooser_field="";
-var chooser_field_td="";
-var chooser_type="";
-
-function launch_chooser(fieldname,stage)
-	{
-	var vposition = mouseY;
-	var audiolistURL = "./non_agent_api.php";
-	var audiolistQuery = "source=admin&function=sounds_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-	var Iframe_content = \'<IFRAME SRC="\' + audiolistURL + \'?\' + audiolistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.innerHTML = Iframe_content;
-	}
-
-function launch_moh_chooser(fieldname,stage)
-	{
-	var vposition = mouseY;
-	var audiolistURL = "./non_agent_api.php";
-	var audiolistQuery = "source=admin&function=moh_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-	var Iframe_content = \'<IFRAME SRC="\' + audiolistURL + \'?\' + audiolistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.innerHTML = Iframe_content;
-	}
-
-function launch_ingroup_chooser(fieldname,stage)
-	{
-	var vposition = mouseY;
-	var apilistURL = "./non_agent_api.php";
-	var apilistQuery = "source=admin&function=ingroup_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-	var Iframe_content = \'<IFRAME SRC="\' + apilistURL + \'?\' + apilistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.innerHTML = Iframe_content;
-	}
-
-function launch_callmenu_chooser(fieldname,stage)
-	{
-	var vposition = mouseY;
-	var apilistURL = "./non_agent_api.php";
-	var apilistQuery = "source=admin&function=callmenu_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-	var Iframe_content = \'<IFRAME SRC="\' + apilistURL + \'?\' + apilistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.innerHTML = Iframe_content;
-	}
-';
-/* container and vm choosers */
-echo 'function launch_container_chooser(fieldname,stage,type)
-	{
-	var vposition = mouseY;
-	var apilistURL = "./non_agent_api.php";
-	var apilistQuery = "source=admin&function=container_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname + "&type=" + type;
-	var Iframe_content = \'<IFRAME SRC="\' + apilistURL + \'?\' + apilistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.innerHTML = Iframe_content;
-	}
-
-function launch_vm_chooser(fieldname,stage)
-	{
-	var vposition = mouseY;
-	var audiolistURL = "./non_agent_api.php";
-	var audiolistQuery = "source=admin&function=vm_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-	var Iframe_content = \'<IFRAME SRC="\' + audiolistURL + \'?\' + audiolistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.innerHTML = Iframe_content;
-	}
-';
-/* Build color chooser HTML server-side */
-$color_chooser_output = " &nbsp; <a href=\\\"javascript:close_chooser();\\\"><font size=1 face=\\'Arial,Helvetica\\'>" . _QXZ("close frame") . "</font></a> &nbsp; <BR>";
-$color_chooser_output .= "<div id=\\'select_color_frame\\' style=\\\"height:400px;width:400px;overflow:scroll;background-color:white;\\\">";
-$color_chooser_output .= "<table border=0 cellpadding=2 cellspacing=2 width=400 bgcolor=white>";
-$HTMLcolorsARY = explode('|',$HTMLcolors);
-$HTMLcolorsARYcount = count($HTMLcolorsARY);
-$HTMLct = 0;
-while ($HTMLct < $HTMLcolorsARYcount)
-	{
-	$HTMLcolorsLINE = explode(',',$HTMLcolorsARY[$HTMLct]);
-	$bgcolor = (preg_match("/1$|3$|5$|7$|9$/i", $HTMLct)) ? '#E6E6E6' : '#F6F6F6';
-	$color_chooser_output .= "<tr bgcolor=\\\"" . $bgcolor . "\\\"><td>" . htmlspecialchars($HTMLcolorsLINE[0]) . " </td><td><a href=\\\"javascript:choose_color('" . $HTMLcolorsLINE[1] . "');\\\"><font size=1 face=\\'Arial,Helvetica\\'>#" . $HTMLcolorsLINE[1] . "</a> </td><td bgcolor=\\'#" . $HTMLcolorsLINE[1] . "\\'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td></tr>";
-	$HTMLct++;
-	}
-$color_chooser_output .= "</table></div>";
-/* embed color chooser safely */
-echo '
-function launch_color_chooser(fieldname,stage,type)
-	{
-	var vposition = mouseY;
-	chooser_field = fieldname;
-	chooser_field_td = fieldname + "_td";
-	chooser_type = type;
-	var span_content = ' . json_encode($color_chooser_output) . ';
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.position = "absolute";
-	span.style.left = "220px";
-	span.style.top = vposition + "px";
-	span.style.visibility = "visible";
-	span.style.backgroundColor = "white";
-	span.innerHTML = span_content;
-	}
-
-function choose_color(colorname)
-	{
-	if (colorname.length > 0)
+	function play_browser_sound(temp_element,temp_volume)
 		{
-		if (chooser_type == "2")
+		var taskIndex = document.getElementById(temp_element).selectedIndex;
+		var taskValue = document.getElementById(temp_element).options[taskIndex].value;
+		var temp_selected_element = 'BAS_' + taskValue;
+		if ( (taskValue != '---NONE---') && (taskValue != '---DISABLED---') && (taskValue != '') )
 			{
-			document.getElementById(chooser_field).value = colorname;
-			document.getElementById(chooser_field_td).style.backgroundColor = "#" + colorname;
+			var temp_audio = document.getElementById(temp_selected_element);
+			var taskVolIndex = document.getElementById(temp_volume).selectedIndex;
+			var taskVolValue = document.getElementById(temp_volume).options[taskVolIndex].value;
+			var temp_js_volume = (taskVolValue * .01);
+			temp_audio.volume = temp_js_volume;
+		//	alert(temp_selected_element + ' ' + temp_js_volume);
+			temp_audio.play();
+			}
+		}
+	<?php
+	}
+
+### Javascript for shift end-time calculation and display
+if ( ($ADD==131111111) or ($ADD==331111111) or ($ADD==431111111) )
+	{
+	?>
+	function shift_time()
+		{
+		var start_time = document.getElementById("shift_start_time");
+		var end_time = document.getElementById("shift_end_time");
+		var length = document.getElementById("shift_length");
+
+		var st_value = start_time.value;
+		var et_value = end_time.value;
+		while (st_value.length < 4) {st_value = "0" + st_value;}
+		while (et_value.length < 4) {et_value = "0" + et_value;}
+		var st_hour=st_value.substring(0,2);
+		var st_min=st_value.substring(2,4);
+		var et_hour=et_value.substring(0,2);
+		var et_min=et_value.substring(2,4);
+		if (st_hour > 23) {st_hour = 23;}
+		if (et_hour > 23) {et_hour = 23;}
+		if (st_min > 59) {st_min = 59;}
+		if (et_min > 59) {et_min = 59;}
+		start_time.value = st_hour + "" + st_min;
+		end_time.value = et_hour + "" + et_min;
+
+		var start_time_hour=start_time.value.substring(0,2);
+		var start_time_min=start_time.value.substring(2,4);
+		var end_time_hour=end_time.value.substring(0,2);
+		var end_time_min=end_time.value.substring(2,4);
+		start_time_hour=(start_time_hour * 1);
+		start_time_min=(start_time_min * 1);
+		end_time_hour=(end_time_hour * 1);
+		end_time_min=(end_time_min * 1);
+
+		if (start_time.value == end_time.value)
+			{
+			var shift_length = '24:00';
 			}
 		else
 			{
-			document.getElementById(chooser_field).value = "#" + colorname;
-			document.getElementById(chooser_field_td).style.backgroundColor = "#" + colorname;
+			if ( (start_time_hour > end_time_hour) || ( (start_time_hour == end_time_hour) && (start_time_min > end_time_min) ) )
+				{
+				var shift_hour = ( (24 - start_time_hour) + end_time_hour);
+				var shift_minute = ( (60 - start_time_min) + end_time_min);
+				if (shift_minute >= 60) 
+					{
+					shift_minute = (shift_minute - 60);
+					}
+				else
+					{
+					shift_hour = (shift_hour - 1);
+					}
+				}
+			else
+				{
+				var shift_hour = (end_time_hour - start_time_hour);
+				var shift_minute = (end_time_min - start_time_min);
+				}
+			if (shift_minute < 0) 
+				{
+				shift_minute = (shift_minute + 60);
+				shift_hour = (shift_hour - 1);
+				}
+
+			if (shift_hour < 10) {shift_hour = '0' + shift_hour}
+			if (shift_minute < 10) {shift_minute = '0' + shift_minute}
+			var shift_length = shift_hour + ':' + shift_minute;
 			}
-		close_chooser();
-		}
-	}
+	//	alert(start_time_hour + '|' + start_time_min + '|' + end_time_hour + '|' + end_time_min + '|--|' + shift_hour + ':' + shift_minute + '|' + shift_length + '|');
 
-function close_chooser()
-	{
-	var span = document.getElementById("audio_chooser_span");
-	if (!span) return;
-	span.style.visibility = "hidden";
-	span.innerHTML = "";
-	}
-
-function user_submit()
-	{
-	var user_field = document.getElementById("user");
-	if (user_field) user_field.disabled = false;
-	if (document.userform) document.userform.submit();
-	}
-
-function play_browser_sound(temp_element,temp_volume)
-	{
-	var sel = document.getElementById(temp_element);
-	if (!sel) return;
-	var taskIndex = sel.selectedIndex;
-	var taskValue = sel.options[taskIndex].value;
-	var temp_selected_element = "BAS_" + taskValue;
-	if ( (taskValue != "---NONE---") && (taskValue != "---DISABLED---") && (taskValue != "") )
-		{
-		var temp_audio = document.getElementById(temp_selected_element);
-		var volsel = document.getElementById(temp_volume);
-		if (!temp_audio || !volsel) return;
-		var taskVolIndex = volsel.selectedIndex;
-		var taskVolValue = volsel.options[taskVolIndex].value;
-		var temp_js_volume = (taskVolValue * .01);
-		temp_audio.volume = temp_js_volume;
-		temp_audio.play();
-		}
-	}
-</script>';
-	} /* end chooser else branch */
-
-/* Shift end-time calculation (ADD 131111111 or 331111111 or 431111111) */
-if ( ($ADD==131111111) or ($ADD==331111111) or ($ADD==431111111) )
-	{
-echo '<script type="text/javascript">
-function shift_time()
-	{
-	var start_time = document.getElementById("shift_start_time");
-	var end_time = document.getElementById("shift_end_time");
-	var length = document.getElementById("shift_length");
-	if (!start_time || !end_time || !length) return;
-
-	var st_value = String(start_time.value);
-	var et_value = String(end_time.value);
-	while (st_value.length < 4) {st_value = "0" + st_value;}
-	while (et_value.length < 4) {et_value = "0" + et_value;}
-	var st_hour= parseInt(st_value.substring(0,2),10) || 0;
-	var st_min= parseInt(st_value.substring(2,4),10) || 0;
-	var et_hour= parseInt(et_value.substring(0,2),10) || 0;
-	var et_min= parseInt(et_value.substring(2,4),10) || 0;
-
-	if (st_hour > 23) st_hour = 23;
-	if (et_hour > 23) et_hour = 23;
-	if (st_min > 59) st_min = 59;
-	if (et_min > 59) et_min = 59;
-
-	start_time.value = (("0"+st_hour).slice(-2)) + (("0"+st_min).slice(-2));
-	end_time.value = (("0"+et_hour).slice(-2)) + (("0"+et_min).slice(-2));
-
-	if (start_time.value == end_time.value)
-		{
-		length.value = "24:00";
-		return;
+		length.value = shift_length;
 		}
 
-	var shift_hour, shift_minute;
-	if ( (st_hour > et_hour) || ( (st_hour == et_hour) && (st_min > et_min) ) )
-		{
-		shift_hour = ((24 - st_hour) + et_hour);
-		shift_minute = ((60 - st_min) + et_min);
-		if (shift_minute >= 60) { shift_minute = shift_minute - 60; }
-		else { shift_hour = shift_hour - 1; }
-		}
-	else
-		{
-		shift_hour = (et_hour - st_hour);
-		shift_minute = (et_min - st_min);
-		}
-
-	if (shift_minute < 0) { shift_minute = shift_minute + 60; shift_hour = shift_hour - 1; }
-
-	if (shift_hour < 10) shift_hour = "0" + shift_hour;
-	if (shift_minute < 10) shift_minute = "0" + shift_minute;
-
-	length.value = shift_hour + ":" + shift_minute;
+<?php
 	}
 
-	}
-?>
+
+
 
 ### Javascript for selecting and deselecting all AC-CIDs and other checkboxes "active" on the modify page
 if ( ($ADD==3111) or ($ADD==4111) or ($ADD==5111) or ($ADD==3811) or ($ADD==4811) or ($ADD==5811) or ($ADD==3911) or ($ADD==4911) or ($ADD==5911) or ($ADD==31) or ($ADD==34) or ($ADD==202) or ($ADD==396111111111) or ($ADD==496111111111) )
