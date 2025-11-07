@@ -1885,7 +1885,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 ?>
 <left>
-
 <TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
 <TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
