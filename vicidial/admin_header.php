@@ -95,119 +95,157 @@ if ( ($SSweb_logo!='default_new') and ($SSweb_logo!='default_old') )
 		$selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
 		}
 	}
+#### BEGIN populate dynamic header content - MODERNIZED WITH INLINE STYLES #####
+
+// USERS
+if ($hh=='users') {
+    $users_hh="CLASS=\"head_style_selected\""; 
+    $users_fc="$users_font"; 
+    $users_bold="$header_selected_bold";
+    $users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $users_hh="CLASS=\"head_style\""; 
+    $users_fc='WHITE'; 
+    $users_bold="$header_nonselected_bold";
+    $users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// CAMPAIGNS
+if ($hh=='campaigns') {
+    $campaigns_hh="CLASS=\"head_style_selected\""; 
+    $campaigns_fc="$campaigns_font"; 
+    $campaigns_bold="$header_selected_bold";
+    $campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $campaigns_hh="CLASS=\"head_style\""; 
+    $campaigns_fc='WHITE'; 
+    $campaigns_bold="$header_nonselected_bold";
+    $campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// LISTS
+if ($hh=='lists') {
+    $lists_hh="CLASS=\"head_style_selected\""; 
+    $lists_fc="$lists_font"; 
+    $lists_bold="$header_selected_bold";
+    $lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $lists_hh="CLASS=\"head_style\""; 
+    $lists_fc='WHITE'; 
+    $lists_bold="$header_nonselected_bold";
+    $lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// INBOUND/INGROUPS
+if ($hh=='ingroups') {
+    $ingroups_hh="CLASS=\"head_style_selected\""; 
+    $ingroups_fc="$ingroups_font"; 
+    $ingroups_bold="$header_selected_bold";
+    $inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $ingroups_hh="CLASS=\"head_style\""; 
+    $ingroups_fc='WHITE'; 
+    $ingroups_bold="$header_nonselected_bold";
+    $inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// REMOTE AGENTS
+if ($hh=='remoteagent') {
+    $remoteagent_hh="CLASS=\"head_style_selected\""; 
+    $remoteagent_fc="$remoteagent_font"; 
+    $remoteagent_bold="$header_selected_bold";
+    $remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $remoteagent_hh="CLASS=\"head_style\""; 
+    $remoteagent_fc='WHITE'; 
+    $remoteagent_bold="$header_nonselected_bold";
+    $remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// USER GROUPS
+if ($hh=='usergroups') {
+    $usergroups_hh="CLASS=\"head_style_selected\""; 
+    $usergroups_fc="$usergroups_font"; 
+    $usergroups_bold="$header_selected_bold";
+    $usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $usergroups_hh="CLASS=\"head_style\""; 
+    $usergroups_fc='WHITE'; 
+    $usergroups_bold="$header_nonselected_bold";
+    $usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// SCRIPTS
+if ($hh=='scripts') {
+    $scripts_hh="CLASS=\"head_style_selected\""; 
+    $scripts_fc="$scripts_font"; 
+    $scripts_bold="$header_selected_bold";
+    $scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $scripts_hh="CLASS=\"head_style\""; 
+    $scripts_fc='WHITE'; 
+    $scripts_bold="$header_nonselected_bold";
+    $scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// FILTERS
+if ($hh=='filters') {
+    $filters_hh="CLASS=\"head_style_selected\""; 
+    $filters_fc="$filters_font"; 
+    $filters_bold="$header_selected_bold";
+    $filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $filters_hh="CLASS=\"head_style\""; 
+    $filters_fc='WHITE'; 
+    $filters_bold="$header_nonselected_bold";
+    $filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// ADMIN
+if ($hh=='admin') {
+    $admin_hh="CLASS=\"head_style_selected\""; 
+    $admin_fc="$admin_font"; 
+    $admin_bold="$header_selected_bold";
+    $admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $admin_hh="CLASS=\"head_style\""; 
+    $admin_fc='WHITE'; 
+    $admin_bold="$header_nonselected_bold";
+    $admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// REPORTS
+if ($hh=='reports') {
+    $reports_hh="CLASS=\"head_style_selected\""; 
+    $reports_fc="$reports_font"; 
+    $reports_bold="$header_selected_bold";
+    $reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $reports_hh="CLASS=\"head_style\""; 
+    $reports_fc='WHITE'; 
+    $reports_bold="$header_nonselected_bold";
+    $reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+// QUALITY CONTROL
+if ($hh=='qc') {
+    $qc_hh="CLASS=\"head_style_selected\""; 
+    $qc_fc="$qc_font"; 
+    $qc_bold="$header_selected_bold";
+    $qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=20 height=20 valign=middle style=\"filter:drop-shadow(0 2px 4px rgba(102,126,234,0.3));transition:all 0.3s;\">";
+} else {
+    $qc_hh="CLASS=\"head_style\""; 
+    $qc_fc='WHITE'; 
+    $qc_bold="$header_nonselected_bold";
+    $qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=20 height=20 valign=middle style=\"opacity:0.9;transition:all 0.3s;filter:brightness(1.1);\">";
+}
+
+##### END populate dynamic header content #####
 
 
-##### BEGIN populate dynamic header content #####
-if ($hh=='users') 
-	{
-	$users_hh="CLASS=\"head_style_selected\""; $users_fc="$users_font"; $users_bold="$header_selected_bold";
-	$users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$users_hh="CLASS=\"head_style\""; $users_fc='WHITE'; $users_bold="$header_nonselected_bold";
-	$users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='campaigns') 
-	{
-	$campaigns_hh="CLASS=\"head_style_selected\""; $campaigns_fc="$campaigns_font"; $campaigns_bold="$header_selected_bold";
-	$campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$campaigns_hh="CLASS=\"head_style\""; $campaigns_fc='WHITE'; $campaigns_bold="$header_nonselected_bold";
-	$campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='lists') 
-	{
-	$lists_hh="CLASS=\"head_style_selected\""; $lists_fc="$lists_font"; $lists_bold="$header_selected_bold";
-	$lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$lists_hh="CLASS=\"head_style\""; $lists_fc='WHITE'; $lists_bold="$header_nonselected_bold";
-	$lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='ingroups') 
-	{
-	$ingroups_hh="CLASS=\"head_style_selected\""; $ingroups_fc="$ingroups_font"; $ingroups_bold="$header_selected_bold";
-	$inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$ingroups_hh="CLASS=\"head_style\""; $ingroups_fc='WHITE'; $ingroups_bold="$header_nonselected_bold";
-	$inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='remoteagent') 
-	{
-	$remoteagent_hh="CLASS=\"head_style_selected\""; $remoteagent_fc="$remoteagent_font"; $remoteagent_bold="$header_selected_bold";
-	$remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$remoteagent_hh="CLASS=\"head_style\""; $remoteagent_fc='WHITE'; $remoteagent_bold="$header_nonselected_bold";
-	$remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='usergroups') 
-	{
-	$usergroups_hh="CLASS=\"head_style_selected\""; $usergroups_fc="$usergroups_font"; $usergroups_bold="$header_selected_bold";
-	$usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$usergroups_hh="CLASS=\"head_style\""; $usergroups_fc='WHITE'; $usergroups_bold="$header_nonselected_bold";
-	$usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='scripts') 
-	{
-	$scripts_hh="CLASS=\"head_style_selected\""; $scripts_fc="$scripts_font"; $scripts_bold="$header_selected_bold";
-	$scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$scripts_hh="CLASS=\"head_style\""; $scripts_fc='WHITE'; $scripts_bold="$header_nonselected_bold";
-	$scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='filters') 
-	{
-	$filters_hh="CLASS=\"head_style_selected\""; $filters_fc="$filters_font"; $filters_bold="$header_selected_bold";
-	$filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$filters_hh="CLASS=\"head_style\""; $filters_fc='WHITE'; $filters_bold="$header_nonselected_bold";
-	$filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='admin') 
-	{
-	$admin_hh="CLASS=\"head_style_selected\""; $admin_fc="$admin_font"; $admin_bold="$header_selected_bold";
-	$admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$admin_hh="CLASS=\"head_style\""; $admin_fc='WHITE'; $admin_bold="$header_nonselected_bold";
-	$admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='reports') 
-	{
-	$reports_hh="CLASS=\"head_style_selected\""; $reports_fc="$reports_font"; $reports_bold="$header_selected_bold";
-	$reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$reports_hh="CLASS=\"head_style\""; $reports_fc='WHITE'; $reports_bold="$header_nonselected_bold";
-	$reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
-	}
-if ($hh=='qc')
-	{
-	$qc_hh="CLASS=\"head_style_selected\""; $qc_fc="$qc_font"; $qc_bold="$header_selected_bold";
-	$qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
-	}
-else 
-	{
-	$qc_hh="CLASS=\"head_style\""; $qc_fc='WHITE'; $qc_bold="$header_nonselected_bold";
-	$qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
-	}
+
+
+
 ##### END populate dynamic header content #####
 
 if ($short_header) {
@@ -286,11 +324,7 @@ if ($short_header) {
         }
     }
 }
-######################### SMALL HTML HEADER END #######################################
 
-
-######################### MOBILE HTML HEADER BEGIN ####################################
-// ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
 // Purple Gradient + Responsive Design
 // ============================================
