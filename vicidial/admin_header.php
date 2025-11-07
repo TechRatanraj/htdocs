@@ -1,2542 +1,2818 @@
 <?php
-# admin_header.php - Admin UI header and navigation for VICIDIAL
-# 
+# admin_header.php - VICIDIAL administration header
+#
 # Copyright (C) 2023  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
-# Copyright (C) 2023  Lottolotto OÜ <info@vicidial.com>    LICENSE: AGPLv2
 # 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Added to comply with AGPLv2 sections 13 & 14
-# This product includes software developed at  
-# 37, rue Beau-Site 80000 Amiens, France
-# and University of Texas at Austin
-# Contact: vicidial-developers@vicidial.com
+$HTMLcolors = 'IndianRed,CD5C5C|LightCoral,F08080|Salmon,FA8072|DarkSalmon,E9967A|LightSalmon,FFA07A|Crimson,DC143C|Red,FF0000|FireBrick,B22222|DarkRed,8B0000|Pink,FFC0CB|LightPink,FFB6C1|HotPink,FF69B4|DeepPink,FF1493|MediumVioletRed,C71585|PaleVioletRed,DB7093|LightSalmon,FFA07A|Coral,FF7F50|Tomato,FF6347|OrangeRed,FF4500|DarkOrange,FF8C00|Orange,FFA500|Gold,FFD700|Yellow,FFFF00|LightYellow,FFFFE0|LemonChiffon,FFFACD|LightGoldenrodYellow,FAFAD2|PapayaWhip,FFEFD5|Moccasin,FFE4B5|PeachPuff,FFDAB9|PaleGoldenrod,EEE8AA|Khaki,F0E68C|DarkKhaki,BDB76B|Lavender,E6E6FA|Thistle,D8BFD8|Plum,DDA0DD|Violet,EE82EE|Orchid,DA70D6|Fuchsia,FF00FF|Magenta,FF00FF|MediumOrchid,BA55D3|MediumPurple,9370DB|RebeccaPurple,663399|BlueViolet,8A2BE2|DarkViolet,9400D3|DarkOrchid,9932CC|DarkMagenta,8B008B|Purple,800080|Indigo,4B0082|SlateBlue,6A5ACD|DarkSlateBlue,483D8B|MediumSlateBlue,7B68EE|GreenYellow,ADFF2F|Chartreuse,7FFF00|LawnGreen,7CFC00|Lime,00FF00|LimeGreen,32CD32|PaleGreen,98FB98|LightGreen,90EE90|MediumSpringGreen,00FA9A|SpringGreen,00FF7F|MediumSeaGreen,3CB371|SeaGreen,2E8B57|ForestGreen,228B22|Green,008000|DarkGreen,006400|YellowGreen,9ACD32|OliveDrab,6B8E23|Olive,808000|DarkOliveGreen,556B2F|MediumAquamarine,66CDAA|DarkSeaGreen,8FBC8B|LightSeaGreen,20B2AA|DarkCyan,008B8B|Teal,008080|Aqua,00FFFF|Cyan,00FFFF|LightCyan,E0FFFF|PaleTurquoise,AFEEEE|Aquamarine,7FFFD4|Turquoise,40E0D0|MediumTurquoise,48D1CC|DarkTurquoise,00CED1|CadetBlue,5F9EA0|SteelBlue,4682B4|LightSteelBlue,B0C4DE|PowderBlue,B0E0E6|LightBlue,ADD8E6|SkyBlue,87CEEB|LightSkyBlue,87CEFA|DeepSkyBlue,00BFFF|DodgerBlue,1E90FF|CornflowerBlue,6495ED|MediumSlateBlue,7B68EE|RoyalBlue,4169E1|Blue,0000FF|MediumBlue,0000CD|DarkBlue,00008B|Navy,000080|MidnightBlue,191970|Cornsilk,FFF8DC|BlanchedAlmond,FFEBCD|Bisque,FFE4C4|NavajoWhite,FFDEAD|Wheat,F5DEB3|BurlyWood,DEB887|Tan,D2B48C|RosyBrown,BC8F8F|SandyBrown,F4A460|Goldenrod,DAA520|DarkGoldenrod,B8860B|Peru,CD853F|Chocolate,D2691E|SaddleBrown,8B4513|Sienna,A0522D|Brown,A52A2A|Maroon,800000|White,FFFFFF|Snow,FFFAFA|HoneyDew,F0FFF0|MintCream,F5FFFA|Azure,F0FFFF|AliceBlue,F0F8FF|GhostWhite,F8F8FF|WhiteSmoke,F5F5F5|SeaShell,FFF5EE|Beige,F5F5DC|OldLace,FDF5E6|FloralWhite,FFFAF0|Ivory,FFFFF0|AntiqueWhite,FAEBD7|Linen,FAF0E6|LavenderBlush,FFF0F5|MistyRose,FFE4E1|Gainsboro,DCDCDC|LightGray,D3D3D3|Silver,C0C0C0|DarkGray,A9A9A9|Gray,808080|DimGray,696969|LightSlateGray,778899|SlateGray,708090|DarkSlateGray,2F4F4F|Black,000000';
 
-###################################################################################################
-###################################################################################################
-#######                                                                                     #######
-#######                           VICIDIAL (Asterisk-based)                                  #######
-#######                                                                                     #######
-#######              37, rue Beau-Site 80000 Amiens, France                                 #######
-#######                        University of Texas at Austin                                #######
-#######                                                                                     #######
-#######                (C) 2016-2023 VICIDIAL, All Rights Reserved                         #######
-#######                                                                                     #######
-#######          This program is free software: you can redistribute it and/or modify      #######
-#######          it under the terms of the GNU General Public License as published by      #######
-#######          the Free Software Foundation, either version 2 of the License, or         #######
-#######          (at your option) any later version.                                       #######
-#######                                                                                     #######
-#######          This program is distributed in the hope that it will be useful,           #######
-#######          but WITHOUT ANY WARRANTY; without even the implied warranty of            #######
-#######          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             #######
-#######          GNU General Public License for more details.                              #######
-#######                                                                                     #######
-#######          You should have received a copy of the GNU General Public License         #######
-#######          along with this program.  If not, see <https://www.gnu.org/licenses/>.    #######
-#######                                                                                     #######
-#######                                                                                     #######
-###################################################################################################
-###################################################################################################
+$stmt="SELECT admin_home_url,enable_tts_integration,callcard_enabled,custom_fields_enabled,allow_emails,level_8_disable_add,allow_chats,enable_languages,admin_row_click,admin_screen_colors,user_new_lead_limit,user_territories_active,qc_features_active,agent_soundboards,enable_drop_lists,allow_ip_lists,admin_web_directory from system_settings;";
+$rslt=mysql_to_mysqli($stmt, $link);
+$row=mysqli_fetch_row($rslt);
+$admin_home_url_LU =		$row[0];
+$SSenable_tts_integration = $row[1];
+$SScallcard_enabled =		$row[2];
+$SScustom_fields_enabled =	$row[3];
+$SSemail_enabled =			$row[4];
+$SSlevel_8_disable_add =	$row[5];
+$SSchat_enabled =			$row[6];
+$SSenable_languages =		$row[7];
+$SSadmin_row_click =		$row[8];
+$SSadmin_screen_colors =	$row[9];
+$SSuser_new_lead_limit =	$row[10];
+$SSuser_territories_active = $row[11];
+$SSqc_features_active =		$row[12];
+$SSagent_soundboards =		$row[13];
+$SSenable_drop_lists =		$row[14];
+$SSallow_ip_lists =			$row[15];
+$SSadmin_web_directory =	$row[16];
 
-# Modernized admin header with enhanced UI/UX while preserving all functionality
+if (strlen($SSadmin_home_url) > 5) {$admin_home_url_LU = $SSadmin_home_url;}
+if(!isset($ADMIN)){$ADMIN = "../$SSadmin_web_directory/admin.php";}
 
-# Color definitions (140+ colors for backward compatibility)
- $HTMLcolors = array("ALICEBLUE"=>"F0F8FF","ANTIQUEWHITE"=>"FAEBD7","AQUA"=>"00FFFF","AQUAMARINE"=>"7FFFD4","AZURE"=>"F0FFFF",
-"BEIGE"=>"F5F5DC","BISQUE"=>"FFE4C4","BLACK"=>"000000","BLANCHEDALMOND"=>"FFEBCD","BLUE"=>"0000FF","BLUEVIOLET"=>"8A2BE2",
-"BROWN"=>"A52A2A","BURLYWOOD"=>"DEB887","CADETBLUE"=>"5F9EA0","CHARTREUSE"=>"7FFF00","CHOCOLATE"=>"D2691E","CORAL"=>"FF7F50",
-"CORNFLOWERBLUE"=>"6495ED","CORNSILK"=>"FFF8DC","CRIMSON"=>"DC143C","CYAN"=>"00FFFF","DARKBLUE"=>"00008B","DARKCYAN"=>"008B8B",
-"DARKGOLDENROD"=>"B8860B","DARKGRAY"=>"A9A9A9","DARKGREEN"=>"006400","DARKKHAKI"=>"BDB76B","DARKMAGENTA"=>"8B008B","DARKOLIVEGREEN"=>"556B2F",
-"DARKORANGE"=>"FF8C00","DARKORCHID"=>"9932CC","DARKRED"=>"8B0000","DARKSALMON"=>"E9967A","DARKSEAGREEN"=>"8FBC8F","DARKSLATEBLUE"=>"483D8B",
-"DARKSLATEGRAY"=>"2F4F4F","DARKTURQUOISE"=>"00CED1","DARKVIOLET"=>"9400D3","DEEPPINK"=>"FF1493","DEEPSKYBLUE"=>"00BFFF","DIMGRAY"=>"696969",
-"DODGERBLUE"=>"1E90FF","FIREBRICK"=>"B22222","FLORALWHITE"=>"FFFAF0","FORESTGREEN"=>"228B22","FUCHSIA"=>"FF00FF","GAINSBORO"=>"DCDCDC",
-"GHOSTWHITE"=>"F8F8FF","GOLD"=>"FFD700","GOLDENROD"=>"DAA520","GRAY"=>"808080","GREEN"=>"008000","GREENYELLOW"=>"ADFF2F",
-"HONEYDEW"=>"F0FFF0","HOTPINK"=>"FF69B4","INDIANRED"=>"CD5C5C","INDIGO"=>"4B0082","IVORY"=>"FFFFF0","KHAKI"=>"F0E68C",
-"LAVENDER"=>"E6E6FA","LAVENDERBLUSH"=>"FFF0F5","LAWNGREEN"=>"7CFC00","LEMONCHIFFON"=>"FFFACD","LIGHTBLUE"=>"ADD8E6","LIGHTCORAL"=>"F08080",
-"LIGHTCYAN"=>"E0FFFF","LIGHTGOLDENRODYELLOW"=>"FAFAD2","LIGHTGRAY"=>"D3D3D3","LIGHTGREEN"=>"90EE90","LIGHTPINK"=>"FFB6C1",
-"LIGHTSALMON"=>"FFA07A","LIGHTSEAGREEN"=>"20B2AA","LIGHTSKYBLUE"=>"87CEFA","LIGHTSLATEGRAY"=>"778899","LIGHTSTEELBLUE"=>"B0C4DE",
-"LIGHTYELLOW"=>"FFFFE0","LIME"=>"00FF00","LIMEGREEN"=>"32CD32","LINEN"=>"FAF0E6","MAGENTA"=>"FF00FF","MAROON"=>"800000",
-"MEDIUMAQUAMARINE"=>"66CDAA","MEDIUMBLUE"=>"0000CD","MEDIUMORCHID"=>"BA55D3","MEDIUMPURPLE"=>"9370DB","MEDIUMSEAGREEN"=>"3CB371",
-"MEDIUMSLATEBLUE"=>"7B68EE","MEDIUMSPRINGGREEN"=>"00FA9A","MEDIUMTURQUOISE"=>"48D1CC","MEDIUMVIOLETRED"=>"C71585","MIDNIGHTBLUE"=>"191970",
-"MINTCREAM"=>"F5FFFA","MISTYROSE"=>"FFE4E1","MOCCASIN"=>"FFE4B5","NAVAJOWHITE"=>"FFDEAD","NAVY"=>"000080","OLDLACE"=>"FDF5E6",
-"OLIVE"=>"808000","OLIVEDRAB"=>"6B8E23","ORANGE"=>"FFA500","ORANGERED"=>"FF4500","ORCHID"=>"DA70D6","PALEGOLDENROD"=>"EEE8AA",
-"PALEGREEN"=>"98FB98","PALETURQUOISE"=>"AFEEEE","PALEVIOLETRED"=>"DB7093","PAPAYAWHIP"=>"FFEFD5","PEACHPUFF"=>"FFDAB9","PERU"=>"CD853F",
-"PINK"=>"FFC0CB","PLUM"=>"DDA0DD","POWDERBLUE"=>"B0E0E6","PURPLE"=>"800080","RED"=>"FF0000","ROSYBROWN"=>"BC8F8F","ROYALBLUE"=>"4169E1",
-"SADDLEBROWN"=>"8B4513","SALMON"=>"FA8072","SANDYBROWN"=>"F4A460","SEAGREEN"=>"2E8B57","SEASHELL"=>"FFF5EE","SIENNA"=>"A0522D",
-"SILVER"=>"C0C0C0","SKYBLUE"=>"87CEEB","SLATEBLUE"=>"6A5ACD","SLATEGRAY"=>"708090","SNOW"=>"FFFAFA","SPRINGGREEN"=>"00FF7F",
-"STEELBLUE"=>"4682B4","TAN"=>"D2B48C","TEAL"=>"008080","THISTLE"=>"D8BFD8","TOMATO"=>"FF6347","TURQUOISE"=>"40E0D0",
-"VIOLET"=>"EE82EE","WHEAT"=>"F5DEB3","WHITE"=>"FFFFFF","WHITESMOKE"=>"F5F5F5","YELLOW"=>"FFFF00","YELLOWGREEN"=>"9ACD32");
+$SSmenu_background='015B91';
+$SSframe_background='D9E6FE';
+$SSstd_row1_background='9BB9FB';
+$SSstd_row2_background='B9CBFD';
+$SSstd_row3_background='8EBCFD';
+$SSstd_row4_background='B6D3FC';
+$SSstd_row5_background='A3C3D6';
+$SSalt_row1_background='BDFFBD';
+$SSalt_row2_background='99FF99';
+$SSalt_row3_background='CCFFCC';
+$SSbutton_color='EFEFEF';
 
-# Database connection and system settings
-require_once("dbconnect_mysqli.php");
-require_once("functions.php");
+if ($SSadmin_screen_colors != 'default')
+	{
+	$stmt = "SELECT menu_background,frame_background,std_row1_background,std_row2_background,std_row3_background,std_row4_background,std_row5_background,alt_row1_background,alt_row2_background,alt_row3_background,web_logo,button_color FROM vicidial_screen_colors where colors_id='$SSadmin_screen_colors';";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	if ($DB) {echo "$stmt\n";}
+	$colors_ct = mysqli_num_rows($rslt);
+	if ($colors_ct > 0)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$SSmenu_background =		$row[0];
+		$SSframe_background =		$row[1];
+		$SSstd_row1_background =	$row[2];
+		$SSstd_row2_background =	$row[3];
+		$SSstd_row3_background =	$row[4];
+		$SSstd_row4_background =	$row[5];
+		$SSstd_row5_background =	$row[6];
+		$SSalt_row1_background =	$row[7];
+		$SSalt_row2_background =	$row[8];
+		$SSalt_row3_background =	$row[9];
+		$SSweb_logo =			$row[10];
+		$SSbutton_color = 		$row[11];
+		}
+	}
+$Mhead_color =	$SSstd_row5_background;
+$Mmain_bgcolor = $SSmenu_background;
+$Mhead_color =	$SSstd_row5_background;
 
-# System settings query
- $stmt = "SELECT * FROM system_settings;";
- $rslt = mysql_to_mysqli($stmt, $link);
-if ($rslt) {$SS = mysqli_fetch_array($rslt, MYSQLI_ASSOC);} else {$SS = array();}
+$selected_logo = "./images/vicidial_admin_web_logo.png";
+$selected_small_logo = "./images/vicidial_admin_web_logo.png";
+$logo_new=0;
+$logo_old=0;
+$logo_small_old=0;
+if (file_exists('./images/vicidial_admin_web_logo.png')) {$logo_new++;}
+if (file_exists('vicidial_admin_web_logo_small.gif')) {$logo_small_old++;}
+if (file_exists('vicidial_admin_web_logo.gif')) {$logo_old++;}
+if ($SSweb_logo=='default_new')
+	{
+	$selected_logo = "./images/vicidial_admin_web_logo.png";
+	$selected_small_logo = "./images/vicidial_admin_web_logo.png";
+	}
+if ( ($SSweb_logo=='default_old') and ($logo_old > 0) )
+	{
+	$selected_logo = "./vicidial_admin_web_logo.gif";
+	$selected_small_logo = "./vicidial_admin_web_logo_small.gif";
+	}
+if ( ($SSweb_logo!='default_new') and ($SSweb_logo!='default_old') )
+	{
+	if (file_exists("./images/vicidial_admin_web_logo$SSweb_logo")) 
+		{
+		$selected_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
+		$selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
+		}
+	}
 
-# Enhanced system settings
- $SSadmin_row_click = $SS['admin_row_click'] ?? 0;
- $SSmenu_background = $SS['menu_background'] ?? '333333';
- $SSframe_background = $SS['frame_background'] ?? '000000';
- $SSoutbound_autodial_active = $SS['outbound_autodial_active'] ?? 0;
- $SSemail_enabled = $SS['email_enabled'] ?? 0;
- $SSchat_enabled = $SS['chat_enabled'] ?? 0;
- $SScustom_fields_enabled = $SS['custom_fields_enabled'] ?? 0;
- $SSenable_drop_lists = $SS['enable_drop_lists'] ?? 0;
- $SSqc_features_active = $SS['qc_features_active'] ?? 0;
- $SSenable_languages = $SS['enable_languages'] ?? 0;
- $SSenable_tts_integration = $SS['enable_tts_integration'] ?? 0;
- $SScallcard_enabled = $SS['callcard_enabled'] ?? 0;
- $SScontacts_enabled = $SS['contacts_enabled'] ?? 0;
- $SSenable_auto_reports = $SS['enable_auto_reports'] ?? 0;
- $SSallow_ip_lists = $SS['allow_ip_lists'] ?? 0;
- $SSdid_ra_extensions_enabled = $SS['did_ra_extensions_enabled'] ?? 0;
- $SScampaign_cid_areacodes_enabled = $SS['campaign_cid_areacodes_enabled'] ?? 0;
 
-# Additional system settings
- $SSsounds_central_control_active = $SS['sounds_central_control_active'] ?? 0;
- $SSagent_soundboards = $SS['agent_soundboards'] ?? 0;
+##### BEGIN populate dynamic header content #####
+if ($hh=='users') 
+	{
+	$users_hh="CLASS=\"head_style_selected\""; $users_fc="$users_font"; $users_bold="$header_selected_bold";
+	$users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$users_hh="CLASS=\"head_style\""; $users_fc='WHITE'; $users_bold="$header_nonselected_bold";
+	$users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='campaigns') 
+	{
+	$campaigns_hh="CLASS=\"head_style_selected\""; $campaigns_fc="$campaigns_font"; $campaigns_bold="$header_selected_bold";
+	$campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$campaigns_hh="CLASS=\"head_style\""; $campaigns_fc='WHITE'; $campaigns_bold="$header_nonselected_bold";
+	$campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='lists') 
+	{
+	$lists_hh="CLASS=\"head_style_selected\""; $lists_fc="$lists_font"; $lists_bold="$header_selected_bold";
+	$lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$lists_hh="CLASS=\"head_style\""; $lists_fc='WHITE'; $lists_bold="$header_nonselected_bold";
+	$lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='ingroups') 
+	{
+	$ingroups_hh="CLASS=\"head_style_selected\""; $ingroups_fc="$ingroups_font"; $ingroups_bold="$header_selected_bold";
+	$inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$ingroups_hh="CLASS=\"head_style\""; $ingroups_fc='WHITE'; $ingroups_bold="$header_nonselected_bold";
+	$inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='remoteagent') 
+	{
+	$remoteagent_hh="CLASS=\"head_style_selected\""; $remoteagent_fc="$remoteagent_font"; $remoteagent_bold="$header_selected_bold";
+	$remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$remoteagent_hh="CLASS=\"head_style\""; $remoteagent_fc='WHITE'; $remoteagent_bold="$header_nonselected_bold";
+	$remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='usergroups') 
+	{
+	$usergroups_hh="CLASS=\"head_style_selected\""; $usergroups_fc="$usergroups_font"; $usergroups_bold="$header_selected_bold";
+	$usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$usergroups_hh="CLASS=\"head_style\""; $usergroups_fc='WHITE'; $usergroups_bold="$header_nonselected_bold";
+	$usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='scripts') 
+	{
+	$scripts_hh="CLASS=\"head_style_selected\""; $scripts_fc="$scripts_font"; $scripts_bold="$header_selected_bold";
+	$scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$scripts_hh="CLASS=\"head_style\""; $scripts_fc='WHITE'; $scripts_bold="$header_nonselected_bold";
+	$scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='filters') 
+	{
+	$filters_hh="CLASS=\"head_style_selected\""; $filters_fc="$filters_font"; $filters_bold="$header_selected_bold";
+	$filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$filters_hh="CLASS=\"head_style\""; $filters_fc='WHITE'; $filters_bold="$header_nonselected_bold";
+	$filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='admin') 
+	{
+	$admin_hh="CLASS=\"head_style_selected\""; $admin_fc="$admin_font"; $admin_bold="$header_selected_bold";
+	$admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$admin_hh="CLASS=\"head_style\""; $admin_fc='WHITE'; $admin_bold="$header_nonselected_bold";
+	$admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='reports') 
+	{
+	$reports_hh="CLASS=\"head_style_selected\""; $reports_fc="$reports_font"; $reports_bold="$header_selected_bold";
+	$reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$reports_hh="CLASS=\"head_style\""; $reports_fc='WHITE'; $reports_bold="$header_nonselected_bold";
+	$reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='qc')
+	{
+	$qc_hh="CLASS=\"head_style_selected\""; $qc_fc="$qc_font"; $qc_bold="$header_selected_bold";
+	$qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$qc_hh="CLASS=\"head_style\""; $qc_fc='WHITE'; $qc_bold="$header_nonselected_bold";
+	$qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
+	}
+##### END populate dynamic header content #####
 
-# User permissions and session
- $user = $PHP_AUTH_USER ?? $_SESSION['user'] ?? '';
- $pass = $PHP_AUTH_PW ?? $_SESSION['pass'] ?? '';
-
-# Permission checks
- $stmt = "SELECT user_group, user_level, agent_logins, admin_logins, hotkeys_active, admin_reports_only, vicidial_recording, vicidial_transfers, 
-         vicidial_all_force_change_password, vicidial_user_reports, vicidial_user_stats, vicidial_user_buttons, vicidial_user_call_times, 
-         vicidial_user_campaigns, vicidial_user_ingroups, vicidial_user_remoteagents, vicidial_user_scripts, vicidial_user_filter, 
-         vicidial_user_languages, admin_cf_show_display, admin_cf_show_value, modify_any_user, modify_any_contact, user_hide_realtime,
-         add_timeclock_log, modify_timeclock_log, export_reports, delete_recording, alter_agent_interface_options, alter_agent_enable_modules,
-         modify_scripts, modify_filters, modify_campaigns, modify_inbound, modify_lists, modify_dids, modify_load_broadcast, add_reports,
-         modify_admin, modify_shifts, modify_phones, modify_carriers, modify_voicemail, modify_moh, modify_users, modify_camptelco,
-         user_hide_phone_search, user_hide_camp_list, user_callerid_search, user_newhouser, user_name_optimization, xfer_view, manual_dial_filter,
-         delete_from_dnc, all_force_timeclock_login, modify_custom_fields, modify_email_accounts, modify_call_times, modify_soundboard,
-         vicidial_languages, vicidial_language_set, xfer_mans_log, modify_ip_lists, campaign_realtime, modify_auto_reports, modify_tts_integration,
-         modify_organizations, modify_contacts, modify_settings_containers, modify_queue_groups, modify_vm_message_groups, modify_cid_groups,
-         modify_status_groups, qc_phone_login, qc_view, qc_modify, user_gender, user_territories
-         FROM vicidial_users WHERE user='$user' LIMIT 1;";
- $rslt = mysql_to_mysqli($stmt, $link);
-if ($rslt) {$row = mysqli_fetch_row($rslt);} else {$row = array();}
-
-if ($row) {
-    $LOGuser_group = $row[0];
-    $LOGuser_level = $row[1];
-    $LOGagent_logins = $row[2];
-    $LOGadmin_logins = $row[3];
-    $LOGhotkeys_active = $row[4];
-    $LOGadmin_reports_only = $row[5];
-    $LOGvicidial_recording = $row[6];
-    $LOGvicidial_transfers = $row[7];
-    $LOGvicidial_all_force_change_password = $row[8];
-    $LOGvicidial_user_reports = $row[9];
-    $LOGvicidial_user_stats = $row[10];
-    $LOGvicidial_user_buttons = $row[11];
-    $LOGvicidial_user_call_times = $row[12];
-    $LOGvicidial_user_campaigns = $row[13];
-    $LOGvicidial_user_ingroups = $row[14];
-    $LOGvicidial_user_remoteagents = $row[15];
-    $LOGvicidial_user_scripts = $row[16];
-    $LOGvicidial_user_filter = $row[17];
-    $LOGvicidial_user_languages = $row[18];
-    $LOGadmin_cf_show_display = $row[19];
-    $LOGadmin_cf_show_value = $row[20];
-    $LOGmodify_any_user = $row[21];
-    $LOGmodify_any_contact = $row[22];
-    $LOGuser_hide_realtime = $row[23];
-    $LOGadd_timeclock_log = $row[24];
-    $LOGmodify_timeclock_log = $row[25];
-    $LOGexport_reports = $row[26];
-    $LOGdelete_recording = $row[27];
-    $LOGalter_agent_interface_options = $row[28];
-    $LOGalter_agent_enable_modules = $row[29];
-    $LOGmodify_scripts = $row[30];
-    $LOGmodify_filters = $row[31];
-    $LOGmodify_campaigns = $row[32];
-    $LOGmodify_inbound = $row[33];
-    $LOGmodify_lists = $row[34];
-    $LOGmodify_dids = $row[35];
-    $LOGmodify_load_broadcast = $row[36];
-    $LOGadd_reports = $row[37];
-    $LOGmodify_admin = $row[38];
-    $LOGmodify_shifts = $row[39];
-    $LOGmodify_phones = $row[40];
-    $LOGmodify_carriers = $row[41];
-    $LOGmodify_voicemail = $row[42];
-    $LOGmodify_moh = $row[43];
-    $LOGmodify_users = $row[44];
-    $LOGmodify_camptelco = $row[45];
-    $LOGuser_hide_phone_search = $row[46];
-    $LOGuser_hide_camp_list = $row[47];
-    $LOGuser_callerid_search = $row[48];
-    $LOGuser_newhouser = $row[49];
-    $LOGuser_name_optimization = $row[50];
-    $LOGxfer_view = $row[51];
-    $LOGmanual_dial_filter = $row[52];
-    $LOGdelete_from_dnc = $row[53];
-    $LOGall_force_timeclock_login = $row[54];
-    $LOGmodify_custom_fields = $row[55];
-    $LOGmodify_email_accounts = $row[56];
-    $LOGmodify_call_times = $row[57];
-    $LOGmodify_soundboard = $row[58];
-    $LOGvicidial_languages = $row[59];
-    $LOGvicidial_language_set = $row[60];
-    $LOGxfer_mans_log = $row[61]; // Fixed typo from original code
-    $LOGmodify_ip_lists = $row[62];
-    $LOGcampaign_realtime = $row[63];
-    $LOGmodify_auto_reports = $row[64];
-    $LOGmodify_tts_integration = $row[65];
-    $LOGmodify_organizations = $row[66];
-    $LOGmodify_contacts = $row[67];
-    $LOGmodify_settings_containers = $row[68];
-    $LOGmodify_queue_groups = $row[69];
-    $LOGmodify_vm_message_groups = $row[70];
-    $LOGmodify_cid_groups = $row[71];
-    $LOGmodify_status_groups = $row[72];
-    $LOGqc_phone_login = $row[73];
-    $LOGqc_view = $row[74];
-    $LOGqc_modify = $row[75];
-    $LOGuser_gender = $row[76];
-    $LOGuser_territories = $row[77];
-} else {
-    die("No such user: $user");
-}
-
-# Additional variables
- $LOGmodify_users = 1;  # Simplified for this example
- $LOGmodify_campaigns = 1;
- $LOGmodify_inbound = 1;
- $LOGmodify_lists = 1;
- $LOGmodify_dids = 1;
- $LOGmodify_load_broadcast = 1;
- $LOGadd_reports = 1;
- $LOGmodify_admin = 1;
- $LOGmodify_shifts = 1;
- $LOGmodify_phones = 1;
- $LOGmodify_carriers = 1;
- $LOGmodify_voicemail = 1;
- $LOGmodify_moh = 1;
- $LOGmodify_call_times = 1;
- $LOGmodify_custom_fields = 1;
- $LOGmodify_email_accounts = 1;
- $LOGmodify_soundboard = 1;
- $LOGmodify_ip_lists = 1;
- $LOGmodify_auto_reports = 1;
- $LOGmodify_tts_integration = 1;
- $LOGmodify_contacts = 1;
- $LOGmodify_settings_containers = 1;
- $LOGmodify_queue_groups = 1;
- $LOGmodify_vm_message_groups = 1;
- $LOGmodify_cid_groups = 1;
- $LOGmodify_status_groups = 1;
-
-# Determine if user has admin access
-if (($LOGuser_level >= 7) or ($LOGadmin_logins > 0)) {$admin_access = 1;} else {$admin_access = 0;}
-if (($LOGuser_level >= 6) or ($LOGadmin_reports_only > 0)) {$reports_only_user = 1;} else {$reports_only_user = 0;}
-
-# Additional access checks
-if ($LOGvicidial_user_campaigns > 0) {$campaigns_hh = "BGCOLOR=#000000"; $campaigns_fc = "#FFFFFF"; $campaigns_bold = "<B>";} else {$campaigns_hh = ""; $campaigns_fc = "#666666"; $campaigns_bold = "";}
-if ($LOGvicidial_user_lists > 0) {$lists_hh = "BGCOLOR=#000000"; $lists_fc = "#FFFFFF"; $lists_bold = "<B>";} else {$lists_hh = ""; $lists_fc = "#666666"; $lists_bold = "";}
-if ($admin_access > 0) {
-    $users_hh = "BGCOLOR=#000000"; $users_fc = "#FFFFFF"; $users_bold = "<B>";
-    $scripts_hh = "BGCOLOR=#000000"; $scripts_fc = "#FFFFFF"; $scripts_bold = "<B>";
-    $filters_hh = "BGCOLOR=#000000"; $filters_fc = "#FFFFFF"; $filters_bold = "<B>";
-    $ingroups_hh = "BGCOLOR=#000000"; $ingroups_fc = "#FFFFFF"; $ingroups_bold = "<B>";
-    $usergroups_hh = "BGCOLOR=#000000"; $usergroups_fc = "#FFFFFF"; $usergroups_bold = "<B>";
-    $remoteagent_hh = "BGCOLOR=#000000"; $remoteagent_fc = "#FFFFFF"; $remoteagent_bold = "<B>";
-    $admin_hh = "BGCOLOR=#000000"; $admin_fc = "#FFFFFF"; $admin_bold = "<B>";
-    $qc_hh = "BGCOLOR=#000000"; $qc_fc = "#FFFFFF"; $qc_bold = "<B>";
-    $reports_hh = "BGCOLOR=#000000"; $reports_fc = "#FFFFFF"; $reports_bold = "<B>";
-} else {
-    $users_hh = ""; $users_fc = "#666666"; $users_bold = "";
-    $scripts_hh = ""; $scripts_fc = "#666666"; $scripts_bold = "";
-    $filters_hh = ""; $filters_fc = "#666666"; $filters_bold = "";
-    $ingroups_hh = ""; $ingroups_fc = "#666666"; $ingroups_bold = "";
-    $usergroups_hh = ""; $usergroups_fc = "#666666"; $usergroups_bold = "";
-    $remoteagent_hh = ""; $remoteagent_fc = "#666666"; $remoteagent_bold = "";
-    $admin_hh = ""; $admin_fc = "#666666"; $admin_bold = "";
-    $qc_hh = ""; $qc_fc = "#666666"; $qc_bold = "";
-    $reports_hh = ""; $reports_fc = "#666666"; $reports_bold = "";
-}
-
-# Initialize font sizes
- $header_font_size = "12";
- $subheader_font_size = "11";
- $subcamp_font_size = "10";
-
-# Icon definitions (simplified)
- $users_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M16 7c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zm-4 7c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z'/></svg>";
- $campaigns_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z'/></svg>";
- $lists_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/></svg>";
- $qc_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>";
- $scripts_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z'/></svg>";
- $filters_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z'/></svg>";
- $inbound_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/></svg>";
- $usergroups_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 5V12c0 .55-.45 1-1 1h-1v1c0 .55-.45 1-1 1s-1-.45-1-1v-1H7c-.55 0-1-.45-1-1s.45-1 1-1h1V9c0-1.1.9-2 2-2h2.5c.8 0 1.54-.37 2-1l3-5V6c0-.55.45-1 1-1s1 .45 1 1v4h1c.55 0 1 .45 1 1s-.45 1-1 1h-1z'/></svg>";
- $remoteagents_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.12-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.27-.27.36-.67.24-1.02C7.7 6.45 7.5 5.25 7.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z'/></svg>";
- $admin_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/></svg>";
- $reports_icon = "<svg width='14' height='14' viewBox='0 0 24 24' fill='currentColor'><path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/></svg>";
-
-# Page dimensions
- $page_width = '970';
-
-# Additional configuration
- $autoalt_sh = "";
- $listmix_sh = "";
- $pause_sh = "";
- $preset_sh = "";
- $accid_sh = "";
- $autoalt_color = "#CCCCCC";
- $listmix_color = "#CCCCCC";
- $pause_color = "#CCCCCC";
- $preset_color = "#CCCCCC";
- $accid_color = "#CCCCCC";
- $subcamp_color = "#999999";
- $times_color = "#666666";
- $shifts_color = "#666666";
- $phones_color = "#666666";
- $conference_color = "#666666";
- $server_color = "#666666";
- $templates_color = "#666666";
- $carriers_color = "#666666";
- $emails_color = "#666666";
- $tts_color = "#666666";
- $cc_color = "#666666";
- $moh_color = "#666666";
- $languages_color = "#666666";
- $soundboard_color = "#666666";
- $vm_color = "#666666";
- $settings_color = "#666666";
- $label_color = "#666666";
- $colors_color = "#666666";
- $cts_color = "#666666";
- $sc_color = "#666666";
- $ar_color = "#666666";
- $il_color = "#666666";
- $sg_color = "#666666";
- $cg_color = "#666666";
- $vmmg_color = "#666666";
- $qg_color = "#666666";
- $status_color = "#666666";
- $qc_color = "#CCCCCC";
- $reports_color = "#666666";
-
-# Calculate access permissions
- $add_copy_disabled = 0;
- $admin_home_url_LU = "admin.php";
- $ADMIN = "admin.php";
- $menu_background = $SSmenu_background;
- $frame_background = $SSframe_background;
-
-# QC authentication
- $qc_auth = 0;
-if (($SSqc_features_active == '1') and ($LOGqc_modify > 0)) {$qc_auth = 1;}
-
-# Current section
- $sh = $_GET['sh'] ?? '';
-
-# JavaScript functions for time validation
-?>
-<script language="JavaScript">
-function isNumber(sText) {
-    var ValidChars = "0123456789.";
-    var IsNumber = true;
-    var Char;
-    for (var i = 0; i < sText.length && IsNumber == true; i++) {
-        Char = sText.charAt(i);
-        if (ValidChars.indexOf(Char) == -1) {
-            IsNumber = false;
+if ($short_header) {
+    if ($no_header) {
+        // Display nothing
+    }
+    else {
+        // Logo-only mode for reports
+        if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
+            $temp_logo = $selected_logo;
+            $temp_logo_size = 'width="170" height="45"';
+            
+            if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') {
+                $temp_logo = $selected_small_logo;
+                $temp_logo_size = 'width="71" height="22"';
+            }
+            ?>
+            <table cellpadding="0" cellspacing="0" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><tr>
+            <td style="padding:12px 16px;"><a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:opacity 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"><img src="<?php echo htmlspecialchars($temp_logo); ?>" <?php echo $temp_logo_size; ?> border="0" alt="System logo" style="display:block;"></a></td>
+            <td style="padding:12px 16px;"></td>
+            <?php
         }
-    }
-    return IsNumber;
-}
-
-function valid_time(time_str) {
-    var time_value = time_str;
-    if (time_value.length == 0) {
-        alert("<?php echo _QXZ("Time cannot be empty"); ?>");
-        return false;
-    }
-    if (time_value.length != 4) {
-        alert("<?php echo _QXZ("Time must be in HH:MM format"); ?>");
-        return false;
-    }
-    if (time_value.indexOf(":") != 2) {
-        alert("<?php echo _QXZ("Time must be in HH:MM format"); ?>");
-        return false;
-    }
-    if (!isNumber(time_value.substring(0,2))) {
-        alert("<?php echo _QXZ("Hours must be numbers"); ?>");
-        return false;
-    }
-    if (!isNumber(time_value.substring(3,4))) {
-        alert("<?php echo _QXZ("Minutes must be numbers"); ?>");
-        return false;
-    }
-    var hours = time_value.substring(0,2);
-    var minutes = time_value.substring(3,4);
-    var hour_value = parseInt(hours);
-    var minute_value = parseInt(minutes);
-    if ((hour_value < 0) || (hour_value > 23)) {
-        alert("<?php echo _QXZ("Hours must be between 00 and 23"); ?>");
-        return false;
-    }
-    if ((minute_value < 0) || (minute_value > 59)) {
-        alert("<?php echo _QXZ("Minutes must be between 00 and 59"); ?>");
-        return false;
-    }
-    return true;
-}
-</script>
-
-<style>
-/* Modern CSS Design System */
-:root {
-    --primary-color: #333;
-    --primary-hover: #444;
-    --secondary-color: #666;
-    --accent-color: #007bff;
-    --background-light: #f5f5f5;
-    --border-color: #ddd;
-    --text-primary: #333;
-    --text-secondary: #666;
-    --text-light: #999;
-    --success-color: #28a745;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --sidebar-width: 240px;
-    --header-height: 60px;
-    --z-index-header: 1000;
-    --z-index-sidebar: 999;
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    --border-radius: 4px;
-    --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    --transition: all 0.2s ease;
-    --header-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-family);
-    font-size: 14px;
-    line-height: 1.4;
-    color: var(--text-primary);
-    background-color: #f0f0f0;
-}
-
-/* Modern Layout Structure */
-.admin-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-}
-
-/* Header Navigation */
-.admin-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--header-height);
-    background: var(--header-bg);
-    color: white;
-    z-index: var(--z-index-header);
-    box-shadow: var(--box-shadow);
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.header-nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.header-logo {
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.header-logo svg {
-    width: 24px;
-    height: 24px;
-}
-
-.header-links {
-    display: flex;
-    gap: 15px;
-}
-
-.header-link {
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    padding: 5px 10px;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.header-link:hover {
-    background-color: rgba(255,255,255,0.1);
-}
-
-.header-link svg {
-    width: 16px;
-    height: 16px;
-}
-
-.header-time {
-    font-size: 12px;
-    opacity: 0.9;
-}
-
-/* Sidebar Navigation */
-.admin-sidebar {
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    width: var(--sidebar-width);
-    height: calc(100vh - var(--header-height));
-    background-color: white;
-    border-right: 1px solid var(--border-color);
-    overflow-y: auto;
-    z-index: var(--z-index-sidebar);
-    box-shadow: 2px 0 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.sidebar-menu {
-    padding: 20px 0;
-}
-
-.menu-section {
-    margin-bottom: 20px;
-}
-
-.menu-section-title {
-    padding: 10px 20px;
-    background-color: var(--background-light);
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--text-secondary);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.menu-section-title:hover {
-    background-color: #e9ecef;
-}
-
-.menu-section-title .toggle-icon {
-    margin-left: auto;
-    transition: transform 0.2s ease;
-}
-
-.menu-section-title.collapsed .toggle-icon {
-    transform: rotate(-90deg);
-}
-
-.menu-items {
-    max-height: 500px;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.menu-section.collapsed .menu-items {
-    max-height: 0;
-}
-
-.menu-item {
-    display: block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: var(--text-primary);
-    font-size: 13px;
-    transition: var(--transition);
-    border-left: 3px solid transparent;
-    position: relative;
-}
-
-.menu-item:hover {
-    background-color: var(--background-light);
-    border-left-color: var(--accent-color);
-}
-
-.menu-item.active {
-    background-color: var(--accent-color);
-    color: white;
-    border-left-color: var(--accent-color);
-}
-
-.menu-item.submenu {
-    padding-left: 40px;
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.menu-item.submenu:hover {
-    color: var(--text-primary);
-}
-
-.menu-item.submenu.active {
-    background-color: rgba(0, 123, 255, 0.1);
-    color: var(--accent-color);
-    border-left-color: var(--accent-color);
-}
-
-.menu-icon {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin-right: 8px;
-    flex-shrink: 0;
-}
-
-.menu-divider {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 10px 20px;
-}
-
-/* Main Content Area */
-.admin-main {
-    margin-left: var(--sidebar-width);
-    margin-top: var(--header-height);
-    min-height: calc(100vh - var(--header-height));
-    padding: 20px;
-    background-color: #f0f0f0;
-    transition: margin-left 0.3s ease;
-}
-
-.content-wrapper {
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-}
-
-.content-header {
-    background-color: var(--background-light);
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.content-header h1 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.content-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.content-body {
-    padding: 20px;
-}
-
-/* Breadcrumb Navigation */
-.breadcrumb {
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 5px;
-}
-
-.breadcrumb-item {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-}
-
-.breadcrumb-item:hover {
-    color: var(--accent-color);
-    background-color: rgba(0, 123, 255, 0.05);
-}
-
-.breadcrumb-separator {
-    color: var(--text-light);
-    font-size: 12px;
-}
-
-/* Utility Classes */
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.text-muted { color: var(--text-secondary); }
-.text-success { color: var(--success-color); }
-.text-warning { color: var(--warning-color); }
-.text-danger { color: var(--danger-color); }
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 8px 16px;
-    font-size: 12px;
-    font-weight: 500;
-    text-decoration: none;
-    border: 1px solid transparent;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.btn svg {
-    width: 16px;
-    height: 16px;
-}
-
-.btn-primary {
-    background-color: var(--accent-color);
-    color: white;
-    border-color: var(--accent-color);
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-
-.btn-secondary {
-    background-color: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-}
-
-.btn-secondary:hover {
-    background-color: #545b62;
-    border-color: #545b62;
-}
-
-.btn-outline {
-    background-color: transparent;
-    color: var(--accent-color);
-    border-color: var(--accent-color);
-}
-
-.btn-outline:hover {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 11px;
-}
-
-.btn-icon {
-    padding: 8px;
-    border-radius: 50%;
-}
-
-/* Status Indicators */
-.status-indicator {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-
-.status-active { background-color: var(--success-color); }
-.status-inactive { background-color: var(--danger-color); }
-.status-warning { background-color: var(--warning-color); }
-
-/* Form Elements */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--text-primary);
-    font-size: 12px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 13px;
-    transition: var(--transition);
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-}
-
-/* Card Components */
-.card {
-    background-color: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    margin-bottom: 20px;
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-}
-
-.card-header {
-    background-color: var(--background-light);
-    padding: 12px 15px;
-    border-bottom: 1px solid var(--border-color);
-    font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-body {
-    padding: 15px;
-}
-
-/* Table Components */
-.table-container {
-    overflow-x: auto;
-    background-color: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-}
-
-.table th,
-.table td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.table th {
-    background-color: var(--background-light);
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.table tr:hover {
-    background-color: var(--background-light);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    :root {
-        --sidebar-width: 200px;
-    }
-    
-    .admin-sidebar {
-        transform: translateX(-100%);
-    }
-    
-    .admin-sidebar.mobile-open {
-        transform: translateX(0);
-    }
-    
-    .admin-main {
-        margin-left: 0;
-    }
-    
-    .header-links {
-        display: none;
-    }
-    
-    .mobile-menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        padding: 5px;
-        border-radius: var(--border-radius);
-    }
-    
-    .mobile-menu-toggle:hover {
-        background-color: rgba(255,255,255,0.1);
-    }
-    
-    .content-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    :root {
-        --sidebar-width: 100%;
-    }
-    
-    .admin-header {
-        padding: 0 15px;
-    }
-    
-    .admin-main {
-        padding: 10px;
-    }
-    
-    .content-body {
-        padding: 15px;
-    }
-    
-    .breadcrumb {
-        font-size: 11px;
-    }
-}
-
-/* Print Styles */
-@media print {
-    .admin-header,
-    .admin-sidebar {
-        display: none;
-    }
-    
-    .admin-main {
-        margin: 0;
-        padding: 0;
-    }
-    
-    .content-wrapper {
-        box-shadow: none;
-        border: none;
-    }
-}
-
-/* Loading States */
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
-    position: relative;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid var(--accent-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Accessibility */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Focus styles for keyboard navigation */
-.menu-item:focus,
-.btn:focus,
-.form-control:focus {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
-}
-
-/* Modern scrollbar */
-.admin-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.admin-sidebar::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.admin-sidebar::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 3px;
-}
-
-.admin-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-}
-
-/* Collapsible sections */
-.collapsible-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary-color: #f5f5f5;
-        --primary-hover: #e0e0e0;
-        --secondary-color: #bbb;
-        --accent-color: #4dabf7;
-        --background-light: #2d2d2d;
-        --border-color: #444;
-        --text-primary: #f5f5f5;
-        --text-secondary: #bbb;
-        --text-light: #888;
-        --header-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-    }
-    
-    body {
-        background-color: #1a1a1a;
-    }
-    
-    .admin-sidebar {
-        background-color: #2d2d2d;
-        border-right-color: #444;
-    }
-    
-    .content-wrapper {
-        background-color: #2d2d2d;
-    }
-    
-    .card {
-        background-color: #2d2d2d;
-        border-color: #444;
-    }
-    
-    .card-header {
-        background-color: #3a3a3a;
-        border-bottom-color: #444;
-    }
-    
-    .table-container {
-        background-color: #2d2d2d;
-        border-color: #444;
-    }
-    
-    .table th {
-        background-color: #3a3a3a;
-    }
-    
-    .table tr:hover {
-        background-color: #3a3a3a;
-    }
-}
-
-/* Animation for menu items */
-.menu-item {
-    position: relative;
-    overflow: hidden;
-}
-
-.menu-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transition: left 0.5s;
-}
-
-.menu-item:hover::before {
-    left: 100%;
-}
-
-/* Mobile menu overlay */
-.mobile-menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 998;
-}
-
-@media (max-width: 768px) {
-    .mobile-menu-overlay.active {
-        display: block;
-    }
-}
-</style>
-
-<div class="admin-container">
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
-    
-    <!-- Header Navigation -->
-    <header class="admin-header">
-        <div class="header-nav">
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-            <a href="<?php echo $admin_home_url_LU ?>" class="header-logo">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
-                </svg>
-                VICIDIAL Admin
-            </a>
-            <div class="header-links">
-                <a href="<?php echo $admin_home_url_LU ?>" class="header-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                    </svg>
-                    HOME
-                </a>
-                <a href="../agc/timeclock.php?referrer=admin" class="header-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                    </svg>
-                    Timeclock
-                </a>
-                <a href="manager_chat_interface.php" class="header-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-                    </svg>
-                    Chat
-                </a>
-                <a href="<?php echo $ADMIN ?>?force_logout=1" class="header-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-                    </svg>
-                    Logout (<?php echo $user ?>)
-                </a>
-                <?php if ($SSenable_languages == '1'): ?>
-                <a href="<?php echo $ADMIN ?>?ADD=999989" class="header-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
-                    </svg>
-                    Change language
-                </a>
-                <?php endif; ?>
-            </div>
-        </div>
-        <div class="header-time">
-            <?php echo date("l F j, Y G:i:s A") ?>
-        </div>
-    </header>
-
-    <!-- Sidebar Navigation -->
-    <nav class="admin-sidebar" id="admin-sidebar">
-        <div class="sidebar-menu">
-            <!-- USERS NAVIGATION -->
-            <?php if ($LOGuser_level >= 6): ?>
-            <div class="menu-section" id="users-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16 7c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zm-4 7c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/>
-                    </svg>
-                    <?php echo _QXZ("Users"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=3" class="menu-item <?php echo ($sh=='users' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Users"); ?>
-                    </a>
-                    <?php if ($LOGmodify_users > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=2" class="menu-item <?php echo ($sh=='new' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New User"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=22" class="menu-item <?php echo ($sh=='copy' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy A User"); ?>
-                    </a>
-                    <?php endif; ?>
-                    <?php if ($LOGuser_level >= 8): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=2" class="menu-item <?php echo ($sh=='bulk' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l-5.5 9h11z M12 22l5.5-9h-11z M3.5 9l5.5 9v-11z M20.5 9l-5.5 9v-11z"/>
-                        </svg>
-                        <?php echo _QXZ("Bulk User Change"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=2" class="menu-item <?php echo ($sh=='list_nonactive' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Non Active Users"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=2" class="menu-item <?php echo ($sh=='manual_dial_filter' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
-                        </svg>
-                        <?php echo _QXZ("Manual Dial Filter"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- CAMPAIGNS NAVIGATION -->
-            <?php if ($SSoutbound_autodial_active > 0): ?>
-            <div class="menu-section" id="campaigns-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                    </svg>
-                    <?php echo _QXZ("Campaigns"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=10" class="menu-item <?php echo ($sh=='campaigns' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Campaigns"); ?>
-                    </a>
-                    <?php if ($LOGmodify_campaigns > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=11" class="menu-item <?php echo ($sh=='new' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New Campaign"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=12" class="menu-item <?php echo ($sh=='copy' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy Campaign"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- Campaign Settings -->
-                    <a href="<?php echo $ADMIN ?>?ADD=15" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Pause Codes"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=301" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Presets"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=39" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                        </svg>
-                        <?php echo _QXZ("List Mix"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=36" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("Auto-Alt Dial"); ?>
-                    </a>
-                    
-                    <?php if ($SScampaign_cid_areacodes_enabled > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=302" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <?php echo _QXZ("AC-CID"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- LISTS NAVIGATION -->
-            <?php if ($SSoutbound_autodial_active > 0): ?>
-            <div class="menu-section" id="lists-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                    </svg>
-                    <?php echo _QXZ("Lists"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=100" class="menu-item <?php echo ($sh=='lists' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Lists"); ?>
-                    </a>
-                    <?php if ($LOGmodify_lists > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=111" class="menu-item <?php echo ($sh=='new' ? 'active' : '') ?>">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New List"); ?>
-                    </a>
-                    <?php endif; ?>
-                    <a href="admin_search_lead.php" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                        </svg>
-                        <?php echo _QXZ("Search For A Lead"); ?>
-                    </a>
-                    <a href="admin_modify_lead.php" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New Lead"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=121" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                        </svg>
-                        <?php echo $LOGdelete_from_dnc > 0 ? _QXZ("Add-Delete DNC Number") : _QXZ("Add DNC Number"); ?>
-                    </a>
-                    <a href="./admin_listloader_fourth_gen.php" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                        </svg>
-                        <?php echo _QXZ("Load New Leads"); ?>
-                    </a>
-                    
-                    <?php if ($SScustom_fields_enabled > 0): ?>
-                    <a href="admin_lists_custom.php" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                        </svg>
-                        <?php echo _QXZ("List Custom Fields"); ?>
-                    </a>
-                    <a href="admin_lists_custom.php?action=COPY_FIELDS_FORM" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy Custom Fields"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <?php if ($SSenable_drop_lists > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=130" class="menu-item submenu">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                        </svg>
-                        <?php echo _QXZ("Drop Lists"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- QUALITY CONTROL NAVIGATION -->
-            <?php if (($SSqc_features_active == '1') && ($qc_auth == '1')): ?>
-            <div class="menu-section" id="qc-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
-                    <?php echo _QXZ("Quality Control"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=CAMPAIGN" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("QC Calls by Campaign"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=LIST" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                        </svg>
-                        <?php echo _QXZ("QC Calls by List"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=INGROUP" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <?php echo _QXZ("QC Calls by Ingroup"); ?>
-                    </a>
-                    <a href="qc_scorecards.php" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Show QC Scorecards"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=341111111111111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                        </svg>
-                        <?php echo _QXZ("Modify QC Codes"); ?>
-                    </a>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- SCRIPTS NAVIGATION -->
-            <div class="menu-section" id="scripts-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
-                    </svg>
-                    <?php echo _QXZ("Scripts"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=1000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Scripts"); ?>
-                    </a>
-                    <?php if ($LOGmodify_scripts > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1111111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New Script"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <!-- FILTERS NAVIGATION -->
-            <?php if ($SSoutbound_autodial_active > 0): ?>
-            <div class="menu-section" id="filters-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
-                    </svg>
-                    <?php echo _QXZ("Filters"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=10000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Filters"); ?>
-                    </a>
-                    <?php if ($LOGmodify_filters > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=11111111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New Filter"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- INBOUND/INGROUPS NAVIGATION -->
-            <div class="menu-section" id="inbound-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                    </svg>
-                    <?php echo _QXZ("Inbound"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=1000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show In-Groups"); ?>
-                    </a>
-                    <?php if ($LOGmodify_inbound > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New In-Group"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=1211" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy In-Group"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- Email Groups -->
-                    <?php if ($SSemail_enabled > 0): ?>
-                    <div class="menu-divider"></div>
-                    <a href="<?php echo $ADMIN ?>?ADD=1800" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Email Groups"); ?>
-                    </a>
-                    <?php if ($LOGmodify_inbound > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1811" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add New Email Group"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=1911" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy Email Group"); ?>
-                    </a>
-                    <?php endif; ?>
-                    <?php endif; ?>
-                    
-                    <!-- Chat Groups -->
-                    <?php if ($SSchat_enabled > 0): ?>
-                    <div class="menu-divider"></div>
-                    <a href="<?php echo $ADMIN ?>?ADD=1900" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Chat Groups"); ?>
-                    </a>
-                    <?php if ($LOGmodify_inbound > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=18111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add New Chat Group"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=19111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy Chat Group"); ?>
-                    </a>
-                    <?php endif; ?>
-                    <?php endif; ?>
-                    
-                    <!-- DIDs and Call Menus -->
-                    <div class="menu-divider"></div>
-                    <a href="<?php echo $ADMIN ?>?ADD=1300" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <?php echo _QXZ("Show DIDs"); ?>
-                    </a>
-                    <?php if ($LOGmodify_dids > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1311" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New DID"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=1411" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy DID"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <?php if ($SSdid_ra_extensions_enabled > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1320" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.12-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.27-.27.36-.67.24-1.02C7.7 6.45 7.5 5.25 7.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
-                        </svg>
-                        <?php echo _QXZ("RA Extensions"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <a href="<?php echo $ADMIN ?>?ADD=1500" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Call Menus"); ?>
-                    </a>
-                    <?php if ($LOGmodify_inbound > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1511" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New Call Menu"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=1611" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                        </svg>
-                        <?php echo _QXZ("Copy Call Menu"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- Filter Phone Groups -->
-                    <a href="<?php echo $ADMIN ?>?ADD=1700" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                        </svg>
-                        <?php echo _QXZ("Filter Phone Groups"); ?>
-                    </a>
-                    <?php if ($LOGmodify_inbound > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=1711" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add Filter Phone Group"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=171" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                        </svg>
-                        <?php echo $LOGdelete_from_dnc > 0 ? _QXZ("Add-Delete FPG Number") : _QXZ("Add FPG Number"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <!-- USER GROUPS NAVIGATION -->
-            <div class="menu-section" id="usergroups-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-
-                        2-2 2-2-.89-2-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 5V12c0 .55-.45 1-1 1h-1v1c0 .55-.45 1-1 1s-1-.45-1-1v-1H7c-.55 0-1-.45-1-1s.45-1 1-1h1V9c0-1.1.9-2 2-2h2.5c.8 0 1.54-.37 2-1l3-5V6c0-.55.45-1 1-1s1 .45 1 1v4h1c.55 0 1 .45 1 1s-.45 1-1 1h-1z"/>
-                    </svg>
-                    <?php echo _QXZ("User Groups"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=100000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show User Groups"); ?>
-                    </a>
-                    <?php if ($LOGuser_level >= 8): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=111111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add A New User Group"); ?>
-                    </a>
-                    <a href="group_hourly_stats.php" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                        </svg>
-                        <?php echo _QXZ("Group Hourly Report"); ?>
-                    </a>
-                    <a href="user_group_bulk_change.php" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("Bulk Group Change"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <!-- REMOTE AGENTS NAVIGATION -->
-            <div class="menu-section" id="remoteagents-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.12-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.27-.27.36-.67.24-1.02C7.7 6.45 7.5 5.25 7.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/>
-                    </svg>
-                    <?php echo _QXZ("Remote Agents"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=10000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Remote Agents"); ?>
-                    </a>
-                    <?php if ($LOGvicidial_user_remoteagents > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=11111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add New Remote Agents"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=12000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("Show Extension Groups"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=12111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Add Extension Group"); ?>
-                    </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <!-- ADMIN NAVIGATION -->
-            <?php if ($admin_access > 0): ?>
-            <div class="menu-section" id="admin-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                    </svg>
-                    <?php echo _QXZ("Admin"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <!-- System Configuration -->
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                        </svg>
-                        <?php echo _QXZ("Call Times"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=130000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                        </svg>
-                        <?php echo _QXZ("Shifts"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=10000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <?php echo _QXZ("Phones"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=130000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                        </svg>
-                        <?php echo _QXZ("Templates"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=140000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Carriers"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("Servers"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=1000000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("Conferences"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=311111111111111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-                        </svg>
-                        <?php echo _QXZ("System Settings"); ?>
-                    </a>
-                    
-                    <!-- Interface Configuration -->
-                    <a href="<?php echo $ADMIN ?>?ADD=180000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                        </svg>
-                        <?php echo _QXZ("Screen Labels"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=182000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-                        </svg>
-                        <?php echo _QXZ("Screen Colors"); ?>
-                    </a>
-                    
-                    <!-- Status and Groups -->
-                    <a href="<?php echo $ADMIN ?>?ADD=321111111111111" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("System Statuses"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=193000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
-                        </svg>
-                        <?php echo _QXZ("Status Groups"); ?>
-                    </a>
-                    
-                    <?php if ($SScampaign_cid_areacodes_enabled > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=196000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <?php echo _QXZ("CID Groups"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- Communication -->
-                    <a href="<?php echo $ADMIN ?>?ADD=170000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Voicemail"); ?>
-                    </a>
-                    
-                    <?php if ($SSemail_enabled > 0): ?>
-                    <a href="admin_email_accounts.php" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                        <?php echo _QXZ("Email Accounts"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- Audio and Media -->
-                    <?php if (($SSsounds_central_control_active > 0) or ($SSagent_soundboards > 0)): ?>
-                    <a href="audio_store.php" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                        </svg>
-                        <?php echo _QXZ("Audio Store"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=160000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                        </svg>
-                        <?php echo _QXZ("Music On Hold"); ?>
-                    </a>
-                    
-                    <?php if ($SSenable_languages > 0): ?>
-                    <a href="admin_languages.php?ADD=163000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
-                        </svg>
-                        <?php echo _QXZ("Languages"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <?php if ((preg_match("/soundboard/", $SSactive_modules)) or ($SSagent_soundboards > 0)): ?>
-                    <a href="admin_soundboard.php?ADD=162000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                        </svg>
-                        <?php echo _QXZ("Audio Soundboards"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <a href="<?php echo $ADMIN ?>?ADD=197000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
-                        </svg>
-                        <?php echo _QXZ("VM Message Groups"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- Advanced Features -->
-                    <?php if ($SSenable_tts_integration > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=150000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                        </svg>
-                        <?php echo _QXZ("Text To Speech"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <?php if ($SScallcard_enabled > 0): ?>
-                    <a href="callcard_admin.php" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/>
-                        </svg>
-                        <?php echo _QXZ("CallCard Admin"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <?php if ($SScontacts_enabled > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=190000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <?php echo _QXZ("Contacts"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <!-- System Management -->
-                    <a href="<?php echo $ADMIN ?>?ADD=192000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-                        </svg>
-                        <?php echo _QXZ("Settings Containers"); ?>
-                    </a>
-                    
-                    <?php if ($SSenable_auto_reports > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=194000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                        </svg>
-                        <?php echo _QXZ("Automated Reports"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <?php if ($SSallow_ip_lists > 0): ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=195000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                        </svg>
-                        <?php echo _QXZ("IP Lists"); ?>
-                    </a>
-                    <?php endif; ?>
-                    
-                    <a href="<?php echo $ADMIN ?>?ADD=198000000000" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php echo _QXZ("Queue Groups"); ?>
-                    </a>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- REPORTS NAVIGATION -->
-            <?php if ($reports_only_user > 0): ?>
-            <div class="menu-section" id="reports-section">
-                <div class="menu-section-title">
-                    <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                    </svg>
-                    <?php echo _QXZ("Reports"); ?>
-                    <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                </div>
-                <div class="menu-items">
-                    <a href="<?php echo $ADMIN ?>?ADD=999999" class="menu-item">
-                        <svg class="menu-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                        </svg>
-                        <?php echo _QXZ("Reports Menu"); ?>
-                    </a>
-                </div>
-            </div>
-            <?php endif; ?>
-        </div>
-    </nav>
-
-    <!-- Main Content Area -->
-    <main class="admin-main">
-        <div class="content-wrapper">
-            <div class="content-header">
-                <h1>VICIDIAL Administration</h1>
-                <div class="content-actions">
-                    <button class="btn btn-outline btn-sm" id="theme-toggle" aria-label="Toggle theme">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-.89 0-1.74-.2-2.5-.55C11.06 16.12 12 13.86 12 11.5s-.94-4.62-2.5-5.95C10.26 5.2 11.11 5 12 5c3.31 0 6 2.69 6 6s-2.69 6-6 6z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="content-body">
+        else {
+            ?>
+            <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
+            <td style="padding:10px 14px;border-right:1px solid rgba(255,255,255,0.1);"><a href="<?php echo htmlspecialchars($ADMIN); ?>" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
+            <?php
+            
+            // Full access menu
+            if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+                ?>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" alt="Users" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" alt="Campaigns" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a></td>
                 <?php
-                # Dynamic sub-navigation based on current selection
-                if ((strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=10" class="breadcrumb-item"><?php echo _QXZ("Show Campaigns"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=11" class="breadcrumb-item"><?php echo _QXZ("Add A New Campaign"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=12" class="breadcrumb-item"><?php echo _QXZ("Copy Campaign"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="./AST_timeonVDADallSUMMARY.php" class="breadcrumb-item"><?php echo _QXZ("Real-Time Campaigns Summary"); ?></a>
-                </div>
-                <?php endif; ?>
                 
-                <?php if (strlen($times_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000" class="breadcrumb-item"><?php echo _QXZ("Show Call Times"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Call Time"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=1000000000" class="breadcrumb-item"><?php echo _QXZ("Show State Call Times"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=1111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New State Call Time"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=1200000000" class="breadcrumb-item"><?php echo _QXZ("Holidays"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=1211111111" class="breadcrumb-item"><?php echo _QXZ("Add Holiday"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($shifts_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=130000000" class="breadcrumb-item"><?php echo _QXZ("Show Shifts"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=131111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Shift"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($phones_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=10000000000" class="breadcrumb-item"><?php echo _QXZ("Show Phones"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=11111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Phone"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=12222222222" class="breadcrumb-item"><?php echo _QXZ("Copy an Existing Phone"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=12000000000" class="breadcrumb-item"><?php echo _QXZ("Phone Alias List"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=12111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Phone Alias"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=13000000000" class="breadcrumb-item"><?php echo _QXZ("Group Alias List"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=13111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Group Alias"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($conference_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=1000000000000" class="breadcrumb-item"><?php echo _QXZ("Show Conferences"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=1111111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Conference"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=10000000000000" class="breadcrumb-item"><?php echo _QXZ("Show VICIDIAL Conferences"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=11111111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New VICIDIAL Conference"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=12000000000000" class="breadcrumb-item"><?php echo _QXZ("Show ConfBridges"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=12111111111111" class="breadcrumb-item"><?php echo _QXZ("Add ConfBridge"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($server_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=100000000000" class="breadcrumb-item"><?php echo _QXZ("Show Servers"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=111111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Server"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($templates_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=130000000000" class="breadcrumb-item"><?php echo _QXZ("Show Templates"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=131111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Template"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($carriers_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=140000000000" class="breadcrumb-item"><?php echo _QXZ("Show Carriers"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=141111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Carrier"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=140111111111" class="breadcrumb-item"><?php echo _QXZ("Copy A Carrier"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($emails_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="admin_email_accounts.php" class="breadcrumb-item"><?php echo _QXZ("Show Email Accounts"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_email_accounts.php?eact=ADD" class="breadcrumb-item"><?php echo _QXZ("Add A New Account"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_email_accounts.php?eact=COPY" class="breadcrumb-item"><?php echo _QXZ("Copy An Account"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($tts_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=150000000000" class="breadcrumb-item"><?php echo _QXZ("Show TTS Entries"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=151111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New TTS Entry"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($cc_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="callcard_admin.php" class="breadcrumb-item"><?php echo _QXZ("CallCard Summary"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="callcard_admin.php?action=CALLCARD_RUNS" class="breadcrumb-item"><?php echo _QXZ("Runs"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="callcard_admin.php?action=CALLCARD_BATCHES" class="breadcrumb-item"><?php echo _QXZ("Batches"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="callcard_admin.php?action=SEARCH" class="breadcrumb-item"><?php echo _QXZ("CallCard Search"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="callcard_report_export.php" class="breadcrumb-item"><?php echo _QXZ("CallCard Log Export"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="callcard_admin.php?action=GENERATE" class="breadcrumb-item"><?php echo _QXZ("CallCard Generate New Numbers"); ?></a>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($moh_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=160000000000" class="breadcrumb-item"><?php echo _QXZ("Show MOH Entries"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=161111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New MOH Entry"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0)): ?>
-                <div class="breadcrumb">
-                    <a href="admin_languages.php?ADD=163000000000" class="breadcrumb-item"><?php echo _QXZ("Show Languages"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_languages.php?ADD=163111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Language"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_languages.php?ADD=163211111111" class="breadcrumb-item"><?php echo _QXZ("Copy A Languages Entry"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_languages.php?ADD=163311111111" class="breadcrumb-item"><?php echo _QXZ("Import Phrases"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_languages.php?ADD=163411111111" class="breadcrumb-item"><?php echo _QXZ("Export Phrases"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((preg_match("/soundboard/", $SSactive_modules)) or ($SSagent_soundboards > 0)):
-                    if ((strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="admin_soundboard.php?ADD=162000000000" class="breadcrumb-item"><?php echo _QXZ("Show Soundboard Entries"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_soundboard.php?ADD=162111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Soundboard Entry"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="admin_soundboard.php?ADD=162211111111" class="breadcrumb-item"><?php echo _QXZ("Copy A Soundboard Entry"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php 
-                    endif; 
-                endif; ?>
-                
-                <?php if ((strlen($vm_sh) > 25) and (strlen($admin_hh) > 25)): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=170000000000" class="breadcrumb-item"><?php echo _QXZ("Show Voicemail Entries"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=171111111111" class="breadcrumb-item"><?php echo _QXZ("Add A New Voicemail Entry"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($settings_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=311111111111111" class="breadcrumb-item"><?php echo _QXZ("System Settings"); ?></a>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($label_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=180000000000" class="breadcrumb-item"><?php echo _QXZ("Screen Labels"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=181111111111" class="breadcrumb-item"><?php echo _QXZ("Add A Screen Label"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($colors_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=182000000000" class="breadcrumb-item"><?php echo _QXZ("Screen Colors"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=182111111111" class="breadcrumb-item"><?php echo _QXZ("Add A Screen Colors"); ?></a>
-                    <?php endif; ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=311111111111111#screen_colors" class="breadcrumb-item"><?php echo _QXZ("Change Active Screen Colors"); ?></a>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($cts_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=190000000000" class="breadcrumb-item"><?php echo _QXZ("Contacts"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=191111111111" class="breadcrumb-item"><?php echo _QXZ("Add A Contact"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($sc_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=192000000000" class="breadcrumb-item"><?php echo _QXZ("Settings Containers"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=192111111111" class="breadcrumb-item"><?php echo _QXZ("Add A Settings Container"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($ar_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=194000000000" class="breadcrumb-item"><?php echo _QXZ("Automated Reports"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=194111111111" class="breadcrumb-item"><?php echo _QXZ("Add An Automated Report"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($il_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=195000000000" class="breadcrumb-item"><?php echo _QXZ("IP Lists"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=195111111111" class="breadcrumb-item"><?php echo _QXZ("Add An IP List"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($sg_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=193000000000" class="breadcrumb-item"><?php echo _QXZ("Status Groups"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=193111111111" class="breadcrumb-item"><?php echo _QXZ("Add A Status Group"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($cg_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=196000000000" class="breadcrumb-item"><?php echo _QXZ("CID Groups"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=196111111111" class="breadcrumb-item"><?php echo _QXZ("Add A CID Group"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($vmmg_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=197000000000" class="breadcrumb-item"><?php echo _QXZ("VM Message Groups"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=197111111111" class="breadcrumb-item"><?php echo _QXZ("Add A VM Message Group"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if (strlen($qg_sh) > 25): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=198000000000" class="breadcrumb-item"><?php echo _QXZ("Queue Groups"); ?></a>
-                    <?php if ($add_copy_disabled < 1): ?>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=198111111111" class="breadcrumb-item"><?php echo _QXZ("Add A Queue Group"); ?></a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                
-                <?php if ((strlen($status_sh) > 25) and (!preg_match('/campaign|user/i', $hh))): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=321111111111111" class="breadcrumb-item"><?php echo _QXZ("System Statuses"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=331111111111111" class="breadcrumb-item"><?php echo _QXZ("Status Categories"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=341111111111111" class="breadcrumb-item"><?php echo _QXZ("QC Status Codes"); ?></a>
-                </div>
-                <?php endif; ?>
-
-                <?php if (($ADD == '3') or ($ADD == '3')): ?>
-                <div class="breadcrumb">
-                    <a href="./user_stats.php?user=<?php echo $user ?>" class="breadcrumb-item"><?php echo _QXZ("User Stats"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="./user_status.php?user=<?php echo $user ?>" class="breadcrumb-item"><?php echo _QXZ("User Status"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" class="breadcrumb-item"><?php echo _QXZ("Time Sheet"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="./AST_agent_days_detail.php?user=<?php echo $user ?>" class="breadcrumb-item"><?php echo _QXZ("Days Status"); ?></a>
-                </div>
-                <?php endif; ?>
-
-                <?php if (($ADD == '999988') or ($ADD == '999987') or ($ADD == '999986') or ($ADD == '999985')): ?>
-                <div class="breadcrumb">
-                    <a href="<?php echo $ADMIN ?>?ADD=999988" class="breadcrumb-item"><?php echo _QXZ("Available Timezones"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=999987" class="breadcrumb-item"><?php echo _QXZ("Phone Codes"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=999986" class="breadcrumb-item"><?php echo _QXZ("Postal Codes"); ?></a>
-                    <span class="breadcrumb-separator">|</span>
-                    <a href="<?php echo $ADMIN ?>?ADD=999985" class="breadcrumb-item"><?php echo _QXZ("Postal Codes Cities"); ?></a>
-                </div>
-                <?php endif; ?>
-                
-                <!-- Content Area -->
-                <div id="content-area">
-                    <!-- Main application content will be loaded here -->
-                    <p class="text-muted text-center">Select an option from the navigation menu to begin.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-</div>
-
-<script>
-// Enhanced navigation functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('mobile-menu-toggle');
-    const sidebar = document.getElementById('admin-sidebar');
-    const overlay = document.getElementById('mobile-menu-overlay');
-    
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('mobile-open');
-            overlay.classList.toggle('active');
-        });
-    }
-    
-    // Close mobile menu when clicking overlay
-    if (overlay) {
-        overlay.addEventListener('click', function() {
-            sidebar.classList.remove('mobile-open');
-            overlay.classList.remove('active');
-        });
-    }
-    
-    // Collapsible menu sections
-    const menuSections = document.querySelectorAll('.menu-section-title');
-    menuSections.forEach(section => {
-        section.addEventListener('click', function() {
-            const parent = this.parentElement;
-            parent.classList.toggle('collapsed');
-            
-            // Save collapsed state to localStorage
-            const sectionId = parent.id;
-            if (sectionId) {
-                const isCollapsed = parent.classList.contains('collapsed');
-                localStorage.setItem(`menu_${sectionId}_collapsed`, isCollapsed);
+                // QC menu if authorized
+                if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                    ?>
+                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a></td>
+                    <?php
+                }
+                ?>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" alt="Lists" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" alt="Scripts" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" alt="Filters" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" alt="Inbound" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" alt="User Groups" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" alt="Remote Agents" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" alt="Admin" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a></td>
+                <?php
             }
-        });
-        
-        // Restore collapsed state from localStorage
-        const sectionId = section.parentElement.id;
-        if (sectionId) {
-            const isCollapsed = localStorage.getItem(`menu_${sectionId}_collapsed`) === 'true';
-            if (isCollapsed) {
-                section.parentElement.classList.add('collapsed');
-            }
-        }
-    });
-    
-    // Active menu highlighting
-    const currentPath = window.location.pathname;
-    const currentParams = new URLSearchParams(window.location.search);
-    const currentAdd = currentParams.get('ADD');
-    
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-        const href = item.getAttribute('href');
-        if (href) {
-            const itemParams = new URLSearchParams(href.split('?')[1] || '');
-            const itemAdd = itemParams.get('ADD');
-            
-            // Check if current ADD matches menu item ADD
-            if (currentAdd && itemAdd && currentAdd === itemAdd) {
-                item.classList.add('active');
+            // Limited access menu
+            else {
+                ?>
+                <td width="600" style="padding:10px;"></td>
+                <?php
                 
-                // Expand parent section if collapsed
-                const parentSection = item.closest('.menu-section');
-                if (parentSection && parentSection.classList.contains('collapsed')) {
-                    parentSection.classList.remove('collapsed');
+                if ($reports_only_user > 0) {
+                    ?>
+                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Reports"); ?></a></td>
+                    <?php
+                }
+                else {
+                    if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+                        ?>
+                        <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Quality Control"); ?></a></td>
+                        <?php
+                    }
                 }
             }
-        }
-    });
-    
-    // Theme toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-theme');
-            const isDark = document.body.classList.contains('dark-theme');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-        
-        // Restore theme from localStorage
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
+            ?>
+            </tr>
+            </table>
+            <?php
         }
     }
-    
-    // Auto-hide flash messages
-    setTimeout(function() {
-        const flashMessages = document.querySelectorAll('.alert');
-        flashMessages.forEach(message => {
-            message.style.transition = 'opacity 0.5s';
-            message.style.opacity = '0';
-            setTimeout(() => message.remove(), 500);
-        });
-    }, 5000);
-    
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-        // Ctrl+M to toggle mobile menu
-        if (e.ctrlKey && e.key === 'm') {
-            e.preventDefault();
-            sidebar.classList.toggle('mobile-open');
-            overlay.classList.toggle('active');
-        }
-        
-        // Escape to close mobile menu
-        if (e.key === 'Escape') {
-            sidebar.classList.remove('mobile-open');
-            overlay.classList.remove('active');
-        }
-    });
-    
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    // Initialize tooltips if needed
-    const tooltipElements = document.querySelectorAll('[title]');
-    tooltipElements.forEach(element => {
-        element.addEventListener('mouseenter', function() {
-            // Simple tooltip implementation
-            const title = this.getAttribute('title');
-            if (title && !this.querySelector('.tooltip')) {
-                const tooltip = document.createElement('div');
-                tooltip.className = 'tooltip';
-                tooltip.textContent = title;
-                tooltip.style.cssText = `
-                    position: absolute;
-                    background: #333;
-                    color: white;
-                    padding: 5px 10px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    z-index: 10000;
-                    white-space: nowrap;
-                    top: -30px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                `;
-                this.style.position = 'relative';
-                this.appendChild(tooltip);
-                this.removeAttribute('title');
-            }
-        });
-        
-        element.addEventListener('mouseleave', function() {
-            const tooltip = this.querySelector('.tooltip');
-            if (tooltip) {
-                this.setAttribute('title', tooltip.textContent);
-                tooltip.remove();
-            }
-        });
-    });
-});
-</script>
+}
+######################### SMALL HTML HEADER END #######################################
+
+
+######################### MOBILE HTML HEADER BEGIN ####################################
+// ============================================
+// ANDROID MOBILE HEADER - INLINE MODERNIZED
+// Purple Gradient + Responsive Design
+// ============================================
+
+else if ($android_header) {
+    ?>
+    <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
+    <td style="padding:10px 14px;"><a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
+    <td style="padding:0;flex:1;"></td>
+    <td style="padding:0 8px;"><a href="admin_mobile.php?ADD=999990" alt="Admin" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <span><?php echo _QXZ("Admin"); ?></span></a></td>
+    </tr>
+    </table>
+    <?php
+}
+
+//Done till small header modernization at line 309
+######################### FULL HTML HEADER BEGIN #######################################
+else
+{
+if ($no_title < 1) {echo "</title>\n";}
+echo "<script language=\"Javascript\">\n";
+echo "var field_name = '';\n";
+echo "var user = '$PHP_AUTH_USER';\n";
+echo "var epoch = '" . date("U") . "';\n";
+
+if ($TCedit_javascript > 0)
+	{
+	 ?>
+
+	function run_submit()
+		{
+		calculate_hours();
+		var go_submit = document.getElementById("go_submit");
+		if (go_submit.disabled == false)
+			{
+			document.edit_log.submit();
+			}
+		}
+
+	// Calculate login time
+	function calculate_hours() 
+		{
+		var now_epoch = '<?php echo $StarTtimE ?>';
+		var local_gmt_sec = '<?php echo $local_gmt_sec ?>';
+		var local_gmt_sec = (local_gmt_sec * 1);
+		var i=0;
+		var total_percent=0;
+		var SPANlogin_time = document.getElementById("LOGINlogin_time");
+		var LI_date = document.getElementById("LOGINbegin_date");
+		var LO_date = document.getElementById("LOGOUTbegin_date");
+		var LI_datetime = LI_date.value;
+		var LO_datetime = LO_date.value;
+		var LI_datetime_array=LI_datetime.split(" ");
+		var LI_date_array=LI_datetime_array[0].split("-");
+		var LI_time_array=LI_datetime_array[1].split(":");
+		var LO_datetime_array=LO_datetime.split(" ");
+		var LO_date_array=LO_datetime_array[0].split("-");
+		var LO_time_array=LO_datetime_array[1].split(":");
+
+		// Calculate milliseconds since 1970 for each date string and find diff
+		var LI_date_epoch = Date.UTC(LI_date_array[0], (LI_date_array[1]-1), LI_date_array[2], LI_time_array[0], LI_time_array[1], LI_time_array[2]);
+		var LO_date_epoch = Date.UTC(LO_date_array[0], (LO_date_array[1]-1), LO_date_array[2], LO_time_array[0], LO_time_array[1], LO_time_array[2]);
+		var temp_LI_epoch = ( (LI_date_epoch / 1000 ) + local_gmt_sec);
+		var temp_LO_epoch = ( (LO_date_epoch / 1000 ) + local_gmt_sec);
+		var epoch_diff = (temp_LO_epoch - temp_LI_epoch);
+		var temp_diff = epoch_diff;
+
+		document.getElementById("login_time").innerHTML = "ERROR, Please check date fields";
+
+	//	document.getElementById("login_time").innerHTML = LI_date_epoch + '|' + temp_LI_epoch + '|' + LO_date_epoch + '|' + temp_LO_epoch + '|' + (Date.UTC(LI_date_array[0], LI_date_array[1], LI_date_array[2]) / 1000) + '|' + (Date.UTC(LO_date_array[0], LO_date_array[1], LO_date_array[2]) / 1000) + "\n diff " +  epoch_diff + "\n LI " +  temp_LI_epoch + "\n LO " +  temp_LO_epoch + "\n Now " +  now_epoch + "\n local" + local_gmt_sec;
+
+		var go_submit = document.getElementById("go_submit");
+		go_submit.disabled = true;
+		// length is a positive number and no more than 24 hours, datetime is earlier than right now
+		if ( (epoch_diff < 86401) && (epoch_diff > 0) && (temp_LI_epoch < now_epoch) && (temp_LO_epoch < now_epoch) )
+			{
+			go_submit.disabled = false;
+
+			hours = Math.floor(temp_diff / (60 * 60)); 
+			temp_diff -= hours * (60 * 60);
+
+			mins = Math.floor(temp_diff / 60); 
+			temp_diff -= mins * 60;
+			if (mins < 10) {mins = "0" + mins;}
+
+			secs = Math.floor(temp_diff); 
+			temp_diff -= secs;
+
+			document.getElementById("login_time").innerHTML = hours + ":" + mins;
+
+			var form_LI_epoch = document.getElementById("LOGINepoch");
+			var form_LO_epoch = document.getElementById("LOGOUTepoch");
+			form_LI_epoch.value = temp_LI_epoch;
+			form_LO_epoch.value = temp_LO_epoch;
+			}
+		}
+
+
+
+	<?php
+	}
+######################
+# ADD=31 or 34 and SUB=29 for list mixes
+######################
+if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+	{
+
+	?>
+	// List Mix status add and remove
+	function mod_mix_status(stage,vcl_id,entry) 
+		{
+		if (stage=="ALL")
+			{
+			var count=0;
+			var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
+
+			while (count < entry)
+				{
+				var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
+				var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
+
+				old_statuses.value = ROnew_statuses.value;
+				ROold_statuses.value = ROnew_statuses.value;
+				count++;
+				}
+			}
+		else
+			{
+			if (stage=="EMPTY")
+				{
+				var count=0;
+				var ROnew_statuses = document.getElementById("ROstatus_X_" + vcl_id);
+
+				while (count < entry)
+					{
+					var old_statuses = document.getElementById("status_" + count + "_" + vcl_id);
+					var ROold_statuses = document.getElementById("ROstatus_" + count + "_" + vcl_id);
+					
+					if (ROold_statuses.value.length < 3)
+						{
+						old_statuses.value = ROnew_statuses.value;
+						ROold_statuses.value = ROnew_statuses.value;
+						}
+					count++;
+					}
+				}
+
+			else
+				{
+				var mod_status = document.getElementById("dial_status_" + entry + "_" + vcl_id);
+				if (mod_status.value.length < 1)
+					{
+					alert("You must select a status first");
+					}
+				else
+					{
+					var old_statuses = document.getElementById("status_" + entry + "_" + vcl_id);
+					var ROold_statuses = document.getElementById("ROstatus_" + entry + "_" + vcl_id);
+					var MODstatus = new RegExp(" " + mod_status.value + " ","g");
+					if (stage=="ADD")
+						{
+						if (old_statuses.value.match(MODstatus))
+							{
+							alert("The status " + mod_status.value + " is already present");
+							}
+						else
+							{
+							var new_statuses = " " + mod_status.value + "" + old_statuses.value;
+							old_statuses.value = new_statuses;
+							ROold_statuses.value = new_statuses;
+							mod_status.value = "";
+							}
+						}
+					if (stage=="REMOVE")
+						{
+						var MODstatus = new RegExp(" " + mod_status.value + " ","g");
+						old_statuses.value = old_statuses.value.replace(MODstatus, " ");
+						ROold_statuses.value = ROold_statuses.value.replace(MODstatus, " ");
+						}
+					}
+				}
+			}
+		}
+
+	// List Mix percent difference calculation and warning message
+	function mod_mix_percent(vcl_id,entries) 
+		{
+		var i=0;
+		var total_percent=0;
+		var percent_diff='';
+		while(i < entries)
+			{
+			var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
+			temp_percent = mod_percent_field.value * 1;
+			total_percent = (total_percent + temp_percent);
+			i++;
+			}
+
+		var mod_diff_percent = document.getElementById("PCT_DIFF_" + vcl_id);
+		percent_diff = (total_percent - 100);
+		if (percent_diff > 0)
+			{
+			percent_diff = '+' + percent_diff;
+			}
+		var mix_list_submit = document.getElementById("submit_" + vcl_id);
+		if ( (percent_diff > 0) || (percent_diff < 0) )
+			{
+			mix_list_submit.disabled = true;
+			document.getElementById("ERROR_" + vcl_id).innerHTML = "<font color=red><B>The Difference % must be 0</B></font>";
+			}
+		else
+			{
+			mix_list_submit.disabled = false;
+			document.getElementById("ERROR_" + vcl_id).innerHTML = "";
+			}
+
+		mod_diff_percent.value = percent_diff;
+		}
+
+	function submit_mix(vcl_id,entries) 
+		{
+		var h=1;
+		var j=1;
+		var list_mix_container='';
+		var mod_list_mix_container_field = document.getElementById("list_mix_container_" + vcl_id);
+		while(h < 41)
+			{
+			var i=0;
+			while(i < entries)
+				{
+				var mod_list_id_field = document.getElementById("list_id_" + i + "_" + vcl_id);
+				var mod_priority_field = document.getElementById("priority_" + i + "_" + vcl_id);
+				var mod_percent_field = document.getElementById("percentage_" + i + "_" + vcl_id);
+				var mod_statuses_field = document.getElementById("status_" + i + "_" + vcl_id);
+				if (mod_priority_field.value==h)
+					{
+					list_mix_container = list_mix_container + mod_list_id_field.value + "|" + j + "|" + mod_percent_field.value + "|" + mod_statuses_field.value + "|:";
+					j++;
+					}
+				i++;
+				}
+			h++;
+			}
+		mod_list_mix_container_field.value = list_mix_container;
+		var form_to_submit = document.getElementById("" + vcl_id);
+		form_to_submit.submit();
+		}
+	<?php
+	}
+	?>
+
+	<?php
+	if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+		{
+	?>
+	// List status change confirmation
+	function ConfirmListStatusChange(system_setting, listForm) {
+		if (!system_setting) {
+			// if the list change confirmation system setting is off, just submit the form
+			listForm.submit();
+			return false;
+		}
+
+		var previous_list_statuses=document.getElementById('last_list_statuses').value;
+
+		var new_list_statuses="";
+
+		var lists = document.getElementsByName('list_active_change[]');
+		var no_selected=0;
+		for (var i=0; i<lists.length; i++) {
+			new_list_statuses+=lists[i].value+"|";
+			if (lists[i].checked) {
+				new_list_statuses+="Y|";
+			} else {
+				new_list_statuses+="N|";
+			}
+		}
+
+		if (previous_list_statuses==new_list_statuses) {
+			// if none of the lists active status has been changed, just submit the form
+			listForm.submit();
+			return false;
+		} else {
+			var prev_array=previous_list_statuses.split("|");
+			var new_array=new_list_statuses.split("|");
+			if (prev_array.length!=new_array.length) {alert("List error. Reload the page and try again."); return false;}
+
+			var altered_lists="";
+			for(i=0; i<prev_array.length; i+=2) {
+				prev_status=prev_array[(i+1)];
+				new_status=new_array[(i+1)];
+				if (prev_status!=new_status) {
+					altered_lists+=" - List "+new_array[i]+": "+prev_status+" => "+new_status+"\n";
+				}
+			}
+
+			var proceed=confirm("You have changed the active status of the following lists:\n\n"+altered_lists+"\nWould you like to proceed with committing the changes?");
+			if (proceed) {
+				listForm.submit();
+			}
+		}
+
+	}
+	<?php
+		}
+
+	if ( ( ($ADD==31) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+		{
+	?>
+	// Agent Call Hangup Route change trigger
+	function AgentCallHangupRouteChange(ACHR_new_value) 
+		{
+		var ACHR_list = document.getElementById("agent_hangup_route");
+		var ACHR_route = ACHR_list.value;
+		var ACHR_value = document.getElementById("agent_hangup_value");
+		var ACHR_title = document.getElementById("agent_hangup_value_title");
+		var ACHR_chooser = document.getElementById("agent_hangup_value_chooser");
+
+		if (ACHR_route=='HANGUP')
+			{
+			ACHR_title.innerHTML = '-<?php echo _QXZ("no value required") ?>-';
+			ACHR_chooser.innerHTML = '';
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='MESSAGE')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Message") ?>';
+			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_chooser('agent_hangup_value','date');\"><?php echo _QXZ("audio chooser") ?></a> ";
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='EXTENSION')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Dialplan Extension") ?>';
+			ACHR_chooser.innerHTML = '';
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='IN_GROUP')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup In-Group") ?>';
+			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_ingroup_chooser('agent_hangup_value','group_id');\"><?php echo _QXZ("in-group chooser") ?></a> ";
+			ACHR_value.value='';
+			}
+		if (ACHR_route=='CALLMENU')
+			{
+			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Call Menu") ?>';
+			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_callmenu_chooser('agent_hangup_value','menu_id');\"><?php echo _QXZ("call menu chooser") ?></a> ";
+			ACHR_value.value='';
+			}
+		}
+
+	<?php
+	}
+	?>
+
+	var weak = new Image();
+	weak.src = "images/weak.png";
+	var medium = new Image();
+	medium.src = "images/medium.png";
+	var strong = new Image();
+	strong.src = "images/strong.png";
+
+	function pwdChanged(pwd_field_str, pwd_img_str, pwd_len_field, pwd_len_min) 
+		{
+		var pwd_field = document.getElementById(pwd_field_str);
+		var pwd_field_value = pwd_field.value;
+		var pwd_img = document.getElementById(pwd_img_str);
+		var pwd_len = pwd_field_value.length
+
+	//	var strong_regex = new RegExp( "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])", "g" );
+	//	var medium_regex = new RegExp( "^(?=.{6,})(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))).*$", "g" );
+		var strong_regex = new RegExp( "^(?=.{20,})(?=.*[a-zA-Z])(?=.*[0-9])", "g" );
+		var medium_regex = new RegExp( "^(?=.{10,})(?=.*[a-zA-Z])(?=.*[0-9])", "g" );
+
+		if (strong_regex.test(pwd_field.value) ) 
+			{
+			if (pwd_img.src != strong.src)
+				{pwd_img.src = strong.src;}
+			} 
+		else if (medium_regex.test( pwd_field.value) ) 
+			{
+			if (pwd_img.src != medium.src) 
+				{pwd_img.src = medium.src;}
+			}
+		else 
+			{
+			if (pwd_img.src != weak.src) 
+				{pwd_img.src = weak.src;}
+			}
+		if ( (pwd_len_min > 0) && (pwd_len_min > pwd_len) )
+			{document.getElementById(pwd_len_field).innerHTML = "<font color=red><b>" + pwd_len + "</b></font>";}
+		else
+			{document.getElementById(pwd_len_field).innerHTML = "<font color=black><b>" + pwd_len + "</b></font>";}
+		}
+
+	function openNewWindow(url) 
+		{
+		window.open (url,"",'width=620,height=300,scrollbars=yes,menubar=yes,address=yes');
+		}
+	function scriptInsertField() 
+		{
+		openField = '--A--';
+		closeField = '--B--';
+		var textBox = document.scriptForm.script_text;
+		var scriptIndex = document.getElementById("selectedField").selectedIndex;
+		var insValue =  document.getElementById('selectedField').options[scriptIndex].value;
+		if (document.selection) 
+			{
+			//IE
+			textBox = document.scriptForm.script_text;
+			insValue = document.scriptForm.selectedField.options[document.scriptForm.selectedField.selectedIndex].text;
+			textBox.focus();
+			sel = document.selection.createRange();
+			sel.text = openField + insValue + closeField;
+			} 
+		else if (textBox.selectionStart || textBox.selectionStart == 0) 
+			{
+			//Mozilla
+			var startPos = textBox.selectionStart;
+			var endPos = textBox.selectionEnd;
+			textBox.value = textBox.value.substring(0, startPos)
+			+ openField + insValue + closeField
+			+ textBox.value.substring(endPos, textBox.value.length);
+			}
+		else 
+			{
+			textBox.value += openField + insValue + closeField;
+			}
+		}
+
+	<?php
+
+#### Javascript for auto-generate of user ID Button
+if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
+	{
+	?>
+	var ar_seconds=<?php echo "$SSadmin_modify_refresh;"; ?>
+
+	function modify_refresh_display()
+		{
+		if (ar_seconds > 0)
+			{
+			ar_seconds = (ar_seconds - 1);
+			document.getElementById("refresh_countdown").innerHTML = "<font color=black> screen refresh in: " + ar_seconds + " seconds</font>";
+			setTimeout("modify_refresh_display()",1000);
+			}
+		}
+
+	<?php
+	}
+
+#### BEGIN Javascript for auto-generate of user ID Button
+if ( ($ADD==1) or ($ADD=="1A") )
+	{
+	?>
+
+	function user_auto()
+		{
+		var user_toggle = document.getElementById("user_toggle");
+		var user_field = document.getElementById("user");
+		if (user_toggle.value < 1)
+			{
+			user_field.value = 'AUTOGENERATEZZZ';
+			user_field.disabled = true;
+			user_toggle.value = 1;
+			}
+		else
+			{
+			user_field.value = '';
+			user_field.disabled = false;
+			user_toggle.value = 0;
+			}
+		}
+
+	function user_submit()
+		{
+		var user_field = document.getElementById("user");
+		user_field.disabled = false;
+		document.userform.submit();
+		}
+
+	<?php
+	}
+#### END Javascript for auto-generate of user ID Button
+
+else
+	{
+	echo "	var pass = '$PHP_AUTH_PW';\n";
+	?>
+
+	mouseY=0;
+	function getMousePos(event) {
+		mouseY=event.pageY;
+	}
+	document.addEventListener("click", getMousePos);
+
+	var chooser_field='';
+	var chooser_field_td='';
+	var chooser_type='';
+
+	function launch_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var audiolistURL = "./non_agent_api.php";
+		var audiolistQuery = "source=admin&function=sounds_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_moh_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var audiolistURL = "./non_agent_api.php";
+		var audiolistQuery = "source=admin&function=moh_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_ingroup_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var apilistURL = "./non_agent_api.php";
+		var apilistQuery = "source=admin&function=ingroup_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_callmenu_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var apilistURL = "./non_agent_api.php";
+		var apilistQuery = "source=admin&function=callmenu_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_container_chooser(fieldname,stage,type)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var apilistURL = "./non_agent_api.php";
+		var apilistQuery = "source=admin&function=container_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname + "&type=" + type;
+		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_vm_chooser(fieldname,stage)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+
+		var audiolistURL = "./non_agent_api.php";
+		var audiolistQuery = "source=admin&function=vm_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+		}
+
+	function launch_color_chooser(fieldname,stage,type)
+		{
+		var h = window.innerHeight;		
+		var vposition=mouseY;
+		chooser_field = fieldname;
+		chooser_field_td = fieldname + '_td';
+		chooser_type = type;
+	<?php
+	$color_chooser_output .= " &nbsp; <a href=\\\"javascript:close_chooser();\\\"><font size=1 face='Arial,Helvetica'>"._QXZ("close frame")."</font></a> &nbsp; <BR>";
+	$color_chooser_output .= "<div id='select_color_frame' style=\\\"height:400px;width:400px;overflow:scroll;background-color:white;\\\">";
+	$color_chooser_output .= '<table border=0 cellpadding=2 cellspacing=2 width=400 bgcolor=white>';
+	$HTMLcolorsARY = explode('|',$HTMLcolors);
+	$HTMLcolorsARYcount = count($HTMLcolorsARY);
+	$HTMLct=0;
+	while ($HTMLcolorsARYcount > $HTMLct)
+		{
+		$HTMLcolorsLINE = explode(',',$HTMLcolorsARY[$HTMLct]);
+		if (preg_match("/1$|3$|5$|7$|9$/i", $HTMLct))
+			{$bgcolor='#E6E6E6';} 
+		else
+			{$bgcolor='#F6F6F6';}
+
+		$color_chooser_output .= "<tr bgcolor=\\\"$bgcolor\\\"><td>$HTMLcolorsLINE[0] </td><td><a href=\\\"javascript:choose_color('$HTMLcolorsLINE[1]');\\\"><font size=1 face='Arial,Helvetica'>#$HTMLcolorsLINE[1]</a> </td><td bgcolor='#$HTMLcolorsLINE[1]'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td></tr>";
+
+		$HTMLct++;
+		}
+	$color_chooser_output .= '</table></div>';
+	?>
+
+		var span_content = '<span id="color_chooser_frame' + epoch + '" name="color_chooser_frame" style="width:740;height:440;background-color:white;overflow:scroll;z-index:2;">' + "<?php  echo $color_chooser_output ?></span>";
+
+		document.getElementById("audio_chooser_span").style.position = "absolute";
+		document.getElementById("audio_chooser_span").style.left = "220px";
+		document.getElementById("audio_chooser_span").style.top = vposition + "px";
+		document.getElementById("audio_chooser_span").style.visibility = 'visible';
+		document.getElementById("audio_chooser_span").style.backgroundcolor = 'white';
+		document.getElementById("audio_chooser_span").innerHTML = span_content;
+		}
+
+	function choose_color(colorname)
+		{
+		if (colorname.length > 0)
+			{
+			if (chooser_type == '2')
+				{
+				document.getElementById(chooser_field).value = colorname;
+				document.getElementById(chooser_field_td).style.backgroundColor = '#' + colorname;
+				}
+			else
+				{
+				document.getElementById(chooser_field).value = '#' + colorname;
+				document.getElementById(chooser_field_td).style.backgroundColor = '#' + colorname;
+				}
+			close_chooser();
+			}
+		}
+
+	function close_chooser()
+		{
+		document.getElementById("audio_chooser_span").style.visibility = 'hidden';
+		document.getElementById("audio_chooser_span").innerHTML = '';
+		}
+
+	function user_submit()
+		{
+		var user_field = document.getElementById("user");
+		user_field.disabled = false;
+		document.userform.submit();
+		}
+
+	function play_browser_sound(temp_element,temp_volume)
+		{
+		var taskIndex = document.getElementById(temp_element).selectedIndex;
+		var taskValue = document.getElementById(temp_element).options[taskIndex].value;
+		var temp_selected_element = 'BAS_' + taskValue;
+		if ( (taskValue != '---NONE---') && (taskValue != '---DISABLED---') && (taskValue != '') )
+			{
+			var temp_audio = document.getElementById(temp_selected_element);
+			var taskVolIndex = document.getElementById(temp_volume).selectedIndex;
+			var taskVolValue = document.getElementById(temp_volume).options[taskVolIndex].value;
+			var temp_js_volume = (taskVolValue * .01);
+			temp_audio.volume = temp_js_volume;
+		//	alert(temp_selected_element + ' ' + temp_js_volume);
+			temp_audio.play();
+			}
+		}
+	<?php
+	}
+
+### Javascript for shift end-time calculation and display
+if ( ($ADD==131111111) or ($ADD==331111111) or ($ADD==431111111) )
+	{
+	?>
+	function shift_time()
+		{
+		var start_time = document.getElementById("shift_start_time");
+		var end_time = document.getElementById("shift_end_time");
+		var length = document.getElementById("shift_length");
+
+		var st_value = start_time.value;
+		var et_value = end_time.value;
+		while (st_value.length < 4) {st_value = "0" + st_value;}
+		while (et_value.length < 4) {et_value = "0" + et_value;}
+		var st_hour=st_value.substring(0,2);
+		var st_min=st_value.substring(2,4);
+		var et_hour=et_value.substring(0,2);
+		var et_min=et_value.substring(2,4);
+		if (st_hour > 23) {st_hour = 23;}
+		if (et_hour > 23) {et_hour = 23;}
+		if (st_min > 59) {st_min = 59;}
+		if (et_min > 59) {et_min = 59;}
+		start_time.value = st_hour + "" + st_min;
+		end_time.value = et_hour + "" + et_min;
+
+		var start_time_hour=start_time.value.substring(0,2);
+		var start_time_min=start_time.value.substring(2,4);
+		var end_time_hour=end_time.value.substring(0,2);
+		var end_time_min=end_time.value.substring(2,4);
+		start_time_hour=(start_time_hour * 1);
+		start_time_min=(start_time_min * 1);
+		end_time_hour=(end_time_hour * 1);
+		end_time_min=(end_time_min * 1);
+
+		if (start_time.value == end_time.value)
+			{
+			var shift_length = '24:00';
+			}
+		else
+			{
+			if ( (start_time_hour > end_time_hour) || ( (start_time_hour == end_time_hour) && (start_time_min > end_time_min) ) )
+				{
+				var shift_hour = ( (24 - start_time_hour) + end_time_hour);
+				var shift_minute = ( (60 - start_time_min) + end_time_min);
+				if (shift_minute >= 60) 
+					{
+					shift_minute = (shift_minute - 60);
+					}
+				else
+					{
+					shift_hour = (shift_hour - 1);
+					}
+				}
+			else
+				{
+				var shift_hour = (end_time_hour - start_time_hour);
+				var shift_minute = (end_time_min - start_time_min);
+				}
+			if (shift_minute < 0) 
+				{
+				shift_minute = (shift_minute + 60);
+				shift_hour = (shift_hour - 1);
+				}
+
+			if (shift_hour < 10) {shift_hour = '0' + shift_hour}
+			if (shift_minute < 10) {shift_minute = '0' + shift_minute}
+			var shift_length = shift_hour + ':' + shift_minute;
+			}
+	//	alert(start_time_hour + '|' + start_time_min + '|' + end_time_hour + '|' + end_time_min + '|--|' + shift_hour + ':' + shift_minute + '|' + shift_length + '|');
+
+		length.value = shift_length;
+		}
 
 <?php
-######################### FULL HTML HEADER END #######################################
+	}
+
+
+
+
+### Javascript for selecting and deselecting all AC-CIDs and other checkboxes "active" on the modify page
+if ( ($ADD==3111) or ($ADD==4111) or ($ADD==5111) or ($ADD==3811) or ($ADD==4811) or ($ADD==5811) or ($ADD==3911) or ($ADD==4911) or ($ADD==5911) or ($ADD==31) or ($ADD==34) or ($ADD==202) or ($ADD==396111111111) or ($ADD==496111111111) )
+	{
 ?>
+	function FORM_selectall(temp_count,temp_fields,temp_option,temp_span)
+		{
+		var fields_array=temp_fields.split('|');
+		var inc=0;
+		while (temp_count >= inc)
+			{
+			if (fields_array[inc].length > 0)
+				{
+				if (temp_option == 'off')
+					{document.getElementById(fields_array[inc]).checked=false;}
+				else
+					{document.getElementById(fields_array[inc]).checked=true;}
+				}
+			inc++;
+			}
+		if (temp_option == 'off')
+			{
+			document.getElementById(temp_span).innerHTML = "<a href=\"#\" onclick=\"FORM_selectall('" + temp_count + "','" + temp_fields + "','on','" + temp_span + "');return false;\"><font size=1><?php echo _QXZ("select all"); ?></font></a>";
+			}
+		else
+			{
+			document.getElementById(temp_span).innerHTML = "<a href=\"#\" onclick=\"FORM_selectall('" + temp_count + "','" + temp_fields + "','off','" + temp_span + "');return false;\"><font size=1><?php echo _QXZ("deselect all"); ?></font></a>";
+			}
+		}
+
+	<?php
+	}
+
+
+$stmt="SELECT menu_id,menu_name from vicidial_call_menu $whereLOGadmin_viewable_groupsSQL order by menu_id limit 10000;";
+$rslt=mysql_to_mysqli($stmt, $link);
+$menus_to_print = mysqli_num_rows($rslt);
+$call_menu_list='';
+$i=0;
+while ($i < $menus_to_print)
+	{
+	$row=mysqli_fetch_row($rslt);
+	$call_menu_list .= "<option value=\"$row[0]\">$row[0] - $row[1]</option>";
+	$i++;
+	}
+
+### select list contents generation for dynamic route displays in call menu and in-group screens
+if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011) or ($ADD==4111) or ($ADD==5111) )
+	{
+	$stmt="SELECT did_pattern,did_description,did_route from vicidial_inbound_dids where did_active='Y' $LOGadmin_viewable_groupsSQL order by did_pattern;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$dids_to_print = mysqli_num_rows($rslt);
+	$did_list='';
+	$i=0;
+	while ($i < $dids_to_print)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$did_list .= "<option value=\"$row[0]\">$row[0] - $row[1] - $row[2]</option>";
+		$i++;
+		}
+
+	$stmt="SELECT group_id,group_name from vicidial_inbound_groups where active='Y' and group_id NOT LIKE \"AGENTDIRECT%\" $LOGadmin_viewable_groupsSQL order by group_id;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$ingroups_to_print = mysqli_num_rows($rslt);
+	$ingroup_list='';
+	$i=0;
+	while ($i < $ingroups_to_print)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$ingroup_list .= "<option value=\"$row[0]\">$row[0] - $row[1]</option>";
+		$i++;
+		}
+
+	$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where active='Y' $LOGallowed_campaignsSQL order by campaign_id;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$IGcampaigns_to_print = mysqli_num_rows($rslt);
+	$IGcampaign_id_list='';
+	$i=0;
+	while ($i < $IGcampaigns_to_print)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$IGcampaign_id_list .= "<option value=\"$row[0]\">$row[0] - $row[1]</option>";
+		$i++;
+		}
+
+	$IGhandle_method_list = '<option>CID</option><option>CIDLOOKUP</option><option>CIDLOOKUPRL</option><option>CIDLOOKUPRC</option><option>CIDLOOKUPALT</option><option>CIDLOOKUPRLALT</option><option>CIDLOOKUPRCALT</option><option>CIDLOOKUPADDR3</option><option>CIDLOOKUPRLADDR3</option><option>CIDLOOKUPRCADDR3</option><option>CIDLOOKUPALTADDR3</option><option>CIDLOOKUPRLALTADDR3</option><option>CIDLOOKUPRCALTADDR3</option><option>ANI</option><option>ANILOOKUP</option><option>ANILOOKUPRL</option><option>VIDPROMPT</option><option>VIDPROMPTLOOKUP</option><option>VIDPROMPTLOOKUPRL</option><option>VIDPROMPTLOOKUPRC</option><option>VIDPROMPTSPECIALLOOKUP</option><option>VIDPROMPTSPECIALLOOKUPRL</option><option>VIDPROMPTSPECIALLOOKUPRC</option><option>CLOSER</option><option>3DIGITID</option><option>4DIGITID</option><option>5DIGITID</option><option>10DIGITID</option><option>CIDLOOKUPOWNERCUSTOMX</option><option>CIDLOOKUPRLOWNERCUSTOMX</option><option>CIDLOOKUPRCOWNERCUSTOMX</option><option>CIDLOOKUPALTOWNERCUSTOMX</option><option>CIDLOOKUPRLALTOWNERCUSTOMX</option><option>CIDLOOKUPRCALTOWNERCUSTOMX</option><option>CIDLOOKUPADDR3OWNERCUSTOMX</option><option>CIDLOOKUPRLADDR3OWNERCUSTOMX</option><option>CIDLOOKUPRCADDR3OWNERCUSTOMX</option><option>CIDLOOKUPALTADDR3OWNERCUSTOMX</option><option>CIDLOOKUPRLALTADDR3OWNERCUSTOMX</option><option>CIDLOOKUPRCALTADDR3OWNERCUSTOMX</option>';
+
+	$IGsearch_method_list = '<option value=\\"LB\\">LB - '._QXZ("Load Balanced").'</option><option value=\\"LO\\">LO - '._QXZ("Load Balanced Overflow").'</option><option value=\\"SO\\">SO - '._QXZ("Server Only").'</option>';
+
+	$stmt="SELECT login,server_ip,extension,dialplan_number from phones where active='Y' $LOGadmin_viewable_groupsSQL order by login,server_ip;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$phones_to_print = mysqli_num_rows($rslt);
+	$phone_list='';
+	$i=0;
+	while ($i < $phones_to_print)
+		{
+		$row=mysqli_fetch_row($rslt);
+		$phone_list .= "<option value=\"$row[0]\">$row[0] - $row[1] - $row[2] - $row[3]</option>";
+		$i++;
+		}
+	}
+
+# dynamic options for options in call_menu screen
+if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511) )
+	{
+
+	?>
+	function call_menu_option(option,route,value,value_context,chooser_height)
+		{
+		var call_menu_list = '<?php echo $call_menu_list ?>';
+		var ingroup_list = '<?php echo $ingroup_list ?>';
+		var IGcampaign_id_list = '<?php echo $IGcampaign_id_list ?>';
+		var IGhandle_method_list = '<?php echo $IGhandle_method_list ?>';
+		var IGsearch_method_list = "<?php echo $IGsearch_method_list ?>";
+		var did_list = '<?php echo $did_list ?>';
+		var phone_list = '<?php echo $phone_list ?>';
+		var selected_value = '';
+		var selected_context = '';
+		var new_content = '';
+
+		var select_list = document.getElementById("option_route_" + option);
+		var selected_route = select_list.value;
+		var span_to_update = document.getElementById("option_value_value_context_" + option);
+
+		if (selected_route=='CALLMENU')
+			{
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED value="' + value + '">' + value + "</option>\n";
+				}
+			else
+				{value='';}
+			new_content = '<span name=option_route_link_' + option + ' id=option_route_link_' + option + "><a href=\"<?php echo $ADMIN ?>?ADD=3511&menu_id=" + value + "\"><?php echo _QXZ("Call Menu"); ?>: </a></span><select size=1 name=option_route_value_" + option + " id=option_route_value_" + option + " onChange=\"call_menu_link('" + option + "','CALLMENU');\">" + call_menu_list + "\n" + selected_value + '</select>';
+			}
+		if (selected_route=='INGROUP')
+			{
+			if (value_context.length < 10)
+				{value_context = 'CID,LB,998,TESTCAMP,1,,,,,';}
+			var value_context_split =		value_context.split(",");
+			var IGhandle_method =			value_context_split[0];
+			var IGsearch_method =			value_context_split[1];
+			var IGlist_id =					value_context_split[2];
+			var IGcampaign_id =				value_context_split[3];
+			var IGphone_code =				value_context_split[4];
+			var IGvid_enter_filename =		value_context_split[5];
+			var IGvid_id_number_filename =	value_context_split[6];
+			var IGvid_confirm_filename =	value_context_split[7];
+			var IGvid_validate_digits =		value_context_split[8];
+			var IGvid_container =			value_context_split[9];
+
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED>' + value + '</option>';
+				}
+
+			new_content = '<input type=hidden name=option_route_value_context_' + option + ' id=option_route_value_context_' + option + ' value="' + selected_value + '">';
+			new_content = new_content + '<span name="option_route_link_' + option + '" id="option_route_link_' + option + '">';
+			new_content = new_content + "<a href=\"<?php echo $ADMIN ?>?ADD=3111&group_id=" + value + "\"><?php echo _QXZ("In-Group"); ?>:</a> </span>";
+			new_content = new_content + '<select size=1 name=option_route_value_' + option + ' id=option_route_value_' + option + " onChange=\"call_menu_link('" + option + "','INGROUP');\">";
+			new_content = new_content + '' + ingroup_list + "\n" + selected_value + '<option>DYNAMIC_INGROUP_VAR</option></select>';
+			new_content = new_content + " &nbsp; <?php echo _QXZ("Handle Method"); ?>: <select size=1 name=IGhandle_method_" + option + ' id=IGhandle_method_' + option + '>';
+			new_content = new_content + '' + '<option SELECTED>' + IGhandle_method + '</option>' + IGhandle_method_list + '</select>' + "\n";
+			new_content = new_content + ' &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, \'call_menu-ingroup_settings\')" WIDTH=20 HEIGHT=20 BORDER=0 ALT="HELP" ALIGN=TOP>';
+			new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
+			new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
+			new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
+			new_content = new_content + "<BR><?php echo _QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
+			new_content = new_content + '' + IGcampaign_id_list + "\n" + '<option SELECTED>' + IGcampaign_id + '</select>';
+			new_content = new_content + " &nbsp; <?php echo _QXZ("Phone Code"); ?>: <input type=text size=5 maxlength=14 name=IGphone_code_" + option + ' id=IGphone_code_' + option + ' value="' + IGphone_code + '">';
+			new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Enter Filename"); ?>: <input type=text name=IGvid_enter_filename_" + option + " id=IGvid_enter_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_enter_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_enter_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+			new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID ID Number Filename"); ?>: <input type=text name=IGvid_id_number_filename_" + option + " id=IGvid_id_number_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_id_number_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_id_number_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+			new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Confirm Filename"); ?>: <input type=text name=IGvid_confirm_filename_" + option + " id=IGvid_confirm_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_confirm_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_confirm_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+			new_content = new_content + " &nbsp; <?php echo _QXZ("VID Digits"); ?>: <input type=text size=3 maxlength=3 name=IGvid_validate_digits_" + option + ' id=IGvid_validate_digits_' + option + ' value="' + IGvid_validate_digits + '">';
+			new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Container"); ?>: <input type=text size=40 maxlength=40 name=IGvid_container_" + option + ' id=IGvid_container_' + option + ' value="' + IGvid_container + '">';
+			new_content = new_content + " &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, 'call_menu-ingroup_vid_container')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP> <a href=\"javascript:launch_container_chooser('IGvid_container_" + option + "','date','CM_VIDPROMPT_SPECIAL');\"><?php echo _QXZ("container chooser"); ?></a>";
+			}
+		if (selected_route=='DID')
+			{
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED value="' + value + '">' + value + "</option>\n";
+				}
+			else
+				{value='';}
+			new_content = '<span name=option_route_link_' + option + ' id=option_route_link_' + option + '><a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + value + "\"><?php echo _QXZ("DID"); ?>:</a> </span><select size=1 name=option_route_value_" + option + ' id=option_route_value_' + option + " onChange=\"call_menu_link('" + option + "','DID');\">" + did_list + "\n" + selected_value + '</select>';
+			}
+		if (selected_route=='HANGUP')
+			{
+			if (route == selected_route)
+				{
+				selected_value = value;
+				}
+			else
+				{value='vm-goodbye';}
+			new_content = "<?php echo _QXZ("Audio File"); ?>: <input type=text name=option_route_value_" + option + " id=option_route_value_" + option + " size=40 maxlength=255 value=\"" + selected_value + "\"> <a href=\"javascript:launch_chooser('option_route_value_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+			}
+		if (selected_route=='EXTENSION')
+			{
+			if (route == selected_route)
+				{
+				selected_value = value;
+				selected_context = value_context;
+				}
+			else
+				{value='8304';}
+			new_content = "<?php echo _QXZ("Extension"); ?>: <input type=text name=option_route_value_" + option + " id=option_route_value_" + option + " size=20 maxlength=255 value=\"" + selected_value + "\"> &nbsp; <?php echo _QXZ("Context"); ?>: <input type=text name=option_route_value_context_" + option + " id=option_route_value_context_" + option + " size=20 maxlength=255 value=\"" + selected_context + "\"> ";
+			}
+		if (selected_route=='PHONE')
+			{
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED value="' + value + '">' + value + "</option>\n";
+				}
+			else
+				{value='';}
+			new_content = "<?php echo _QXZ("Phone"); ?>: <select size=1 name=option_route_value_" + option + ' id=option_route_value_' + option + '>' + phone_list + "\n" + selected_value + '</select>';
+			}
+		if ( (selected_route=='VOICEMAIL') || (selected_route=='VMAIL_NO_INST') )
+			{
+			if (route == selected_route)
+				{
+				selected_value = value;
+				}
+			else
+				{value='';}
+			new_content = "<?php echo _QXZ("Voicemail Box"); ?>: <input type=text name=option_route_value_" + option + " id=option_route_value_" + option + " size=12 maxlength=10 value=\"" + selected_value + "\"> <a href=\"javascript:launch_vm_chooser('option_route_value_" + option + "','date');\"><?php echo _QXZ("voicemail chooser"); ?></a>";
+			}
+		if (selected_route=='AGI')
+			{
+			if (route == selected_route)
+				{
+				selected_value = value;
+				}
+			else
+				{value='';}
+			new_content = "<?php echo _QXZ("AGI"); ?>: <input type=text name=option_route_value_" + option + " id=option_route_value_" + option + " size=80 maxlength=255 value=\"" + selected_value + "\"> ";
+			}
+
+		if (new_content.length < 1)
+			{new_content = selected_route}
+
+		span_to_update.innerHTML = new_content;
+		}
+
+	function call_menu_link(option,route)
+		{
+		var selected_value = '';
+		var new_content = '';
+
+		var select_list = document.getElementById("option_route_value_" + option);
+		var selected_value = select_list.value;
+		var span_to_update = document.getElementById("option_route_link_" + option);
+
+		if (route=='CALLMENU')
+			{
+			new_content = "<a href=\"<?php echo $ADMIN ?>?ADD=3511&menu_id=" + selected_value + "\"><?php echo _QXZ("Call Menu"); ?>:</a>";
+			}
+		if (route=='INGROUP')
+			{
+			new_content = "<a href=\"<?php echo $ADMIN ?>?ADD=3111&group_id=" + selected_value + "\"><?php echo _QXZ("In-Group"); ?>:</a>";
+			}
+		if (route=='DID')
+			{
+			new_content = "<a href=\"<?php echo $ADMIN ?>?ADD=3311&did_pattern=" + selected_value + "\"><?php echo _QXZ("DID"); ?>:</a>";
+			}
+
+		if (new_content.length < 1)
+			{new_content = selected_value}
+
+		span_to_update.innerHTML = new_content;
+		}
+
+	function copy_prev_cm_option(item_number,item_height)
+		{
+		var prev_item_number = (item_number - 1)
+
+		var temp_option_value = 'option_value_' + item_number;
+		var temp_option_description = 'option_description_' + item_number;
+		var temp_option_route = 'option_route_' + item_number;
+		var temp_option_route_value = 'option_route_value_' + item_number;
+		var temp_option_route_value_context = 'option_route_value_context_' + item_number;
+
+		var temp_prev_option_value = 'option_value_' + prev_item_number;
+		var temp_prev_option_description = 'option_description_' + prev_item_number;
+		var temp_prev_option_route = 'option_route_' + prev_item_number;
+		var temp_prev_option_route_value = 'option_route_value_' + prev_item_number;
+		var temp_prev_option_route_value_context = 'option_route_value_context_' + prev_item_number;
+
+		var temp_ValIndex = document.getElementById(temp_prev_option_value).selectedIndex;
+		var temp_ValLength = document.getElementById(temp_prev_option_value).length;
+		var temp_ValValue =  document.getElementById(temp_prev_option_value).options[temp_ValIndex].value;
+		var temp_ValNewLength = document.getElementById(temp_option_value).length;
+		var NEWtemp_ValIndex = (temp_ValIndex + 1);
+		if (temp_ValNewLength >= 21) 
+			{
+			if (temp_ValNewLength > temp_ValLength) 
+				{
+				NEWtemp_ValIndex = (NEWtemp_ValIndex + 1);
+				}
+			if (NEWtemp_ValIndex > 21) {NEWtemp_ValIndex=1;}
+			}
+		else
+			{
+			if (NEWtemp_ValIndex > 20) {NEWtemp_ValIndex=0;}
+			}
+		document.getElementById(temp_option_value).selectedIndex = NEWtemp_ValIndex;
+
+		var temp_optionIndex = document.getElementById(temp_prev_option_route).selectedIndex;
+		var temp_optionValue =  document.getElementById(temp_prev_option_route).options[temp_optionIndex].value;
+
+		var rIndex = 0;
+		if (temp_optionValue == 'CALLMENU') {rIndex = 0;}
+		if (temp_optionValue == 'INGROUP') {rIndex = 1;}
+		if (temp_optionValue == 'DID') {rIndex = 2;}
+		if (temp_optionValue == 'HANGUP') {rIndex = 3;}
+		if (temp_optionValue == 'EXTENSION') {rIndex = 4;}
+		if (temp_optionValue == 'PHONE') {rIndex = 5;}
+		if (temp_optionValue == 'VOICEMAIL') {rIndex = 6;}
+		if (temp_optionValue == 'VMAIL_NO_INST') {rIndex = 7;}
+		document.getElementById(temp_option_route).selectedIndex = rIndex;
+		document.getElementById(temp_option_description).value = document.getElementById(temp_prev_option_description).value;
+
+		call_menu_option(item_number,temp_optionValue,'','',item_height);
+
+		if ( (temp_optionValue == 'CALLMENU') || (temp_optionValue == 'DID') || (temp_optionValue == 'PHONE') )
+			{
+			var temp_prev_optionVal = document.getElementById(temp_prev_option_route_value);
+			var temp_prev_optionValIndex = temp_prev_optionVal.selectedIndex;
+			var temp_prev_optionValValue = temp_prev_optionVal.options[temp_prev_optionValIndex].value;
+
+			var temp_optionVal = document.getElementById(temp_option_route_value);
+			var temp_optionValIndex = 0;
+			var temp_optionValLength = temp_optionVal.length;
+			var temp_counter=0; 
+			while (temp_counter < temp_optionValLength)
+				{
+				if (temp_prev_optionValValue == temp_optionVal.options[temp_counter].value)
+					{temp_optionValIndex = temp_counter;}
+
+				temp_counter++;
+				}
+			document.getElementById(temp_option_route_value).selectedIndex = temp_optionValIndex;
+
+			if ( (temp_optionValue == 'CALLMENU') || (temp_optionValue == 'DID') )
+				{
+				call_menu_link(item_number,temp_optionValue);
+				}
+			}
+
+		if ( (temp_optionValue == 'HANGUP') || (temp_optionValue == 'VOICEMAIL') || (temp_optionValue == 'VMAIL_NO_INST') )
+			{
+			var temp_prev_optionVal = document.getElementById(temp_prev_option_route_value);
+			var temp_optionVal = document.getElementById(temp_option_route_value);
+
+			temp_optionVal.value = temp_prev_optionVal.value;
+			}
+
+		if (temp_optionValue == 'EXTENSION') 
+			{
+			var temp_prev_optionVal = document.getElementById(temp_prev_option_route_value);
+			var temp_optionVal = document.getElementById(temp_option_route_value);
+			var temp_prev_optionValContext = document.getElementById(temp_prev_option_route_value_context);
+			var temp_optionValContext = document.getElementById(temp_option_route_value_context);
+
+			temp_optionVal.value = temp_prev_optionVal.value;
+			temp_optionValContext.value = temp_prev_optionValContext.value;
+			}
+
+		if (temp_optionValue == 'INGROUP') 
+			{
+			// In-Group select list
+			var temp_prev_optionVal = document.getElementById(temp_prev_option_route_value);
+			var temp_prev_optionValIndex = temp_prev_optionVal.selectedIndex;
+			var temp_prev_optionValValue = temp_prev_optionVal.options[temp_prev_optionValIndex].value;
+
+			var temp_optionVal = document.getElementById(temp_option_route_value);
+			var temp_optionValIndex = 0;
+			var temp_optionValLength = temp_optionVal.length;
+			var temp_counter=0; 
+			while (temp_counter < temp_optionValLength)
+				{
+				if (temp_prev_optionValValue == temp_optionVal.options[temp_counter].value)
+					{temp_optionValIndex = temp_counter;}
+
+				temp_counter++;
+				}
+			document.getElementById(temp_option_route_value).selectedIndex = temp_optionValIndex;
+			call_menu_link(item_number,temp_optionValue);
+
+			// In-Group Handle Method
+			var temp2_option_route_value = 'IGhandle_method_' + item_number;
+			var temp2_prev_option_route_value = 'IGhandle_method_' + prev_item_number;
+
+			var temp2_prev_optionVal = document.getElementById(temp2_prev_option_route_value);
+			var temp2_prev_optionValIndex = temp2_prev_optionVal.selectedIndex;
+			var temp2_prev_optionValValue = temp2_prev_optionVal.options[temp2_prev_optionValIndex].value;
+
+			var temp2_optionVal = document.getElementById(temp2_option_route_value);
+			var temp2_optionValIndex = 0;
+			var temp2_optionValLength = temp2_optionVal.length;
+			var temp2_counter=0; 
+			while (temp2_counter < temp2_optionValLength)
+				{
+				if (temp2_prev_optionValValue == temp2_optionVal.options[temp2_counter].value)
+					{temp2_optionValIndex = temp2_counter;}
+
+				temp2_counter++;
+				}
+			document.getElementById(temp2_option_route_value).selectedIndex = temp2_optionValIndex;
+
+			// In-Group Search Method
+			var temp3_option_route_value = 'IGsearch_method_' + item_number;
+			var temp3_prev_option_route_value = 'IGsearch_method_' + prev_item_number;
+
+			var temp3_prev_optionVal = document.getElementById(temp3_prev_option_route_value);
+			var temp3_prev_optionValIndex = temp3_prev_optionVal.selectedIndex;
+			var temp3_prev_optionValValue = temp3_prev_optionVal.options[temp3_prev_optionValIndex].value;
+
+			var temp3_optionVal = document.getElementById(temp3_option_route_value);
+			var temp3_optionValIndex = 0;
+			var temp3_optionValLength = temp3_optionVal.length;
+			var temp3_counter=0; 
+			while (temp3_counter < temp3_optionValLength)
+				{
+				if (temp3_prev_optionValValue == temp3_optionVal.options[temp3_counter].value)
+					{temp3_optionValIndex = temp3_counter;}
+
+				temp3_counter++;
+				}
+			document.getElementById(temp3_option_route_value).selectedIndex = temp3_optionValIndex;
+
+			// In-Group Campaign
+			var temp4_option_route_value = 'IGcampaign_id_' + item_number;
+			var temp4_prev_option_route_value = 'IGcampaign_id_' + prev_item_number;
+
+			var temp4_prev_optionVal = document.getElementById(temp4_prev_option_route_value);
+			var temp4_prev_optionValIndex = temp4_prev_optionVal.selectedIndex;
+			var temp4_prev_optionValValue = temp4_prev_optionVal.options[temp4_prev_optionValIndex].value;
+
+			var temp4_optionVal = document.getElementById(temp4_option_route_value);
+			var temp4_optionValIndex = 0;
+			var temp4_optionValLength = temp4_optionVal.length;
+			var temp4_counter=0; 
+			while (temp4_counter < temp4_optionValLength)
+				{
+				if (temp4_prev_optionValValue == temp4_optionVal.options[temp4_counter].value)
+					{temp4_optionValIndex = temp4_counter;}
+
+				temp4_counter++;
+				}
+			document.getElementById(temp4_option_route_value).selectedIndex = temp4_optionValIndex;
+
+			// In-Group List ID
+			var temp5 = 'IGlist_id_' + item_number;
+			var temp5_prev = 'IGlist_id_' + prev_item_number;
+			var temp5_optionVal = document.getElementById(temp5);
+			var temp5_prev_optionVal = document.getElementById(temp5_prev);
+			temp5_optionVal.value = temp5_prev_optionVal.value;
+
+			// In-Group Phone Code
+			var temp6 = 'IGphone_code_' + item_number;
+			var temp6_prev = 'IGphone_code_' + prev_item_number;
+			var temp6_optionVal = document.getElementById(temp6);
+			var temp6_prev_optionVal = document.getElementById(temp6_prev);
+			temp6_optionVal.value = temp6_prev_optionVal.value;
+
+			// In-Group VID Enter Filename
+			var temp7 = 'IGvid_enter_filename_' + item_number;
+			var temp7_prev = 'IGvid_enter_filename_' + prev_item_number;
+			var temp7_optionVal = document.getElementById(temp7);
+			var temp7_prev_optionVal = document.getElementById(temp7_prev);
+			temp7_optionVal.value = temp7_prev_optionVal.value;
+
+			// In-Group VID ID Number Filename
+			var temp8 = 'IGvid_id_number_filename_' + item_number;
+			var temp8_prev = 'IGvid_id_number_filename_' + prev_item_number;
+			var temp8_optionVal = document.getElementById(temp8);
+			var temp8_prev_optionVal = document.getElementById(temp8_prev);
+			temp8_optionVal.value = temp8_prev_optionVal.value;
+
+			// In-Group VID Confirm Filename
+			var temp9 = 'IGvid_confirm_filename_' + item_number;
+			var temp9_prev = 'IGvid_confirm_filename_' + prev_item_number;
+			var temp9_optionVal = document.getElementById(temp9);
+			var temp9_prev_optionVal = document.getElementById(temp9_prev);
+			temp9_optionVal.value = temp9_prev_optionVal.value;
+
+			// In-Group VID Digits
+			var temp10 = 'IGvid_validate_digits_' + item_number;
+			var temp10_prev = 'IGvid_validate_digits_' + prev_item_number;
+			var temp10_optionVal = document.getElementById(temp10);
+			var temp10_prev_optionVal = document.getElementById(temp10_prev);
+			temp10_optionVal.value = temp10_prev_optionVal.value;
+
+			// In-Group VID Container
+			var temp11 = 'IGvid_container_' + item_number;
+			var temp11_prev = 'IGvid_container_' + prev_item_number;
+			var temp11_optionVal = document.getElementById(temp11);
+			var temp11_prev_optionVal = document.getElementById(temp11_prev);
+			temp11_optionVal.value = temp11_prev_optionVal.value;
+			}
+		}
+	<?php
+	}
+
+
+### Javascript for dynamic in-group option value entries
+if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011) or ($ADD==4111) or ($ADD==5111) )
+	{
+
+	?>
+	function dynamic_call_action(option,route,value,chooser_height)
+		{
+		var call_menu_list = '<?php echo $call_menu_list ?>';
+		var ingroup_list = '<?php echo $ingroup_list ?>';
+		var IGcampaign_id_list = '<?php echo $IGcampaign_id_list ?>';
+		var IGhandle_method_list = '<?php echo $IGhandle_method_list ?>';
+		var IGsearch_method_list = "<?php echo $IGsearch_method_list ?>";
+		var did_list = '<?php echo $did_list ?>';
+		var selected_value = '';
+		var selected_context = '';
+		var new_content = '';
+
+		var select_list = document.getElementById(option + "");
+		var selected_route = select_list.value;
+		var span_to_update = document.getElementById(option + "_value_span");
+
+		if (selected_route=='CALLMENU')
+			{
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED value="' + value + '">' + value + "</option>\n";
+				}
+			else
+				{value = '';}
+			new_content = '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3511&menu_id=' + value + "\"><?php echo _QXZ("Call Menu"); ?>: </a></span><select size=1 name=" + option + '_value id=' + option + "_value onChange=\"dynamic_call_action_link('" + option + "','CALLMENU');\">" + call_menu_list + "\n" + selected_value + '</select>';
+			}
+		if (selected_route=='INGROUP')
+			{
+			if ( (route != selected_route) || (value.length < 10) )
+				{value = 'SALESLINE,CID,LB,998,TESTCAMP,1,,,,,';}
+			var value_split = value.split(",");
+			var IGgroup_id =				value_split[0];
+			var IGhandle_method =			value_split[1];
+			var IGsearch_method =			value_split[2];
+			var IGlist_id =					value_split[3];
+			var IGcampaign_id =				value_split[4];
+			var IGphone_code =				value_split[5];
+			var IGvid_enter_filename =		value_split[6];
+			var IGvid_id_number_filename =	value_split[7];
+			var IGvid_confirm_filename =	value_split[8];
+			var IGvid_validate_digits =		value_split[9];
+			var IGvid_container =			value_split[10];
+
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED>' + IGgroup_id + '</option>';
+				}
+
+			new_content = new_content + '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3111&group_id=' + IGgroup_id + "\"><?php echo _QXZ("In-Group"); ?>:</a> </span> ";
+			new_content = new_content + '<select size=1 name=IGgroup_id_' + option + ' id=IGgroup_id_' + option + " onChange=\"dynamic_call_action_link('IGgroup_id_" + option + "','INGROUP');\">";
+			new_content = new_content + '' + ingroup_list + "\n" + selected_value + '</select>';
+			new_content = new_content + " &nbsp; <?php echo _QXZ("Handle Method"); ?>: <select size=1 name=IGhandle_method_" + option + ' id=IGhandle_method_' + option + '>';
+			new_content = new_content + '' + '<option SELECTED>' + IGhandle_method + '</option>' + IGhandle_method_list + '</select>' + "\n";
+			new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
+			new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
+			new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
+			new_content = new_content + "<BR><?php echo _QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
+			new_content = new_content + '' + IGcampaign_id_list + "\n" + '<option SELECTED>' + IGcampaign_id + '</select>';
+			new_content = new_content + " &nbsp; <?php echo _QXZ("Phone Code"); ?>: <input type=text size=5 maxlength=14 name=IGphone_code_" + option + ' id=IGphone_code_' + option + ' value="' + IGphone_code + '">';
+		//	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Enter Filename"); ?>: <input type=text name=IGvid_enter_filename_" + option + " id=IGvid_enter_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_enter_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_enter_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+		//	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID ID Number Filename"); ?>: <input type=text name=IGvid_id_number_filename_" + option + " id=IGvid_id_number_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_id_number_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_id_number_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+		//	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Confirm Filename"); ?>: <input type=text name=IGvid_confirm_filename_" + option + " id=IGvid_confirm_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_confirm_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_confirm_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+		//	new_content = new_content + ' &nbsp; <?php echo _QXZ("VID Digits"); ?>: <input type=text size=3 maxlength=3 name=IGvid_validate_digits_' + option + ' id=IGvid_validate_digits_' + option + ' value="' + IGvid_validate_digits + '">';
+		//	new_content = new_content + '<BR> &nbsp; <?php echo _QXZ("VID Container"); ?>: <input type=text size=40 maxlength=40 name=IGvid_container_' + option + ' id=IGvid_container_' + option + ' value="' + IGvid_container_ + '">';
+
+			}
+		if (selected_route=='DID')
+			{
+			if (route == selected_route)
+				{
+				selected_value = '<option SELECTED value="' + value + '">' + value + "</option>\n";
+				}
+			else
+				{value = '';}
+			new_content = '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + value + "\"><?php echo _QXZ("DID"); ?>:</a> </span><select size=1 name=" + option + '_value id=' + option + "_value onChange=\"dynamic_call_action_link('" + option + "','DID');\">" + did_list + "\n" + selected_value + '</select>';
+			}
+		if (selected_route=='MESSAGE')
+			{
+			if (route == selected_route)
+				{
+				selected_value = value;
+				}
+			else
+				{value = 'nbdy-avail-to-take-call|vm-goodbye';}
+			new_content = "<?php echo _QXZ("Audio File"); ?>: <input type=text name=" + option + "_value id=" + option + "_value size=40 maxlength=255 value=\"" + value + "\"> <a href=\"javascript:launch_chooser('" + option + "_value','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
+			}
+		if (selected_route=='EXTENSION')
+			{
+			if ( (route != selected_route) || (value.length < 3) )
+				{value = '8304,default';}
+			var value_split = value.split(",");
+			var EXextension =	value_split[0];
+			var EXcontext =		value_split[1];
+
+			new_content = "<?php echo _QXZ("Extension"); ?>: <input type=text name=EXextension_" + option + " id=EXextension_" + option + " size=20 maxlength=255 value=\"" + EXextension + "\"> &nbsp; <?php echo _QXZ("Context"); ?>: <input type=text name=EXcontext_" + option + " id=EXcontext_" + option + " size=20 maxlength=255 value=\"" + EXcontext + "\"> ";
+			}
+		if ( (selected_route=='VOICEMAIL') || (selected_route=='VMAIL_NO_INST') )
+			{
+			if (route == selected_route)
+				{
+				selected_value = value;
+				}
+			else
+				{value = '101';}
+			new_content = "<?php echo _QXZ("Voicemail Box"); ?>: <input type=text name=" + option + "_value id=" + option + "_value size=12 maxlength=10 value=\"" + value + "\"> <a href=\"javascript:launch_vm_chooser('" + option + "_value','date');\"><?php echo _QXZ("voicemail chooser"); ?></a>";
+			}
+
+		if (new_content.length < 1)
+			{new_content = selected_route}
+
+		span_to_update.innerHTML = new_content;
+		}
+
+	function dynamic_call_action_link(field,route)
+		{
+		var selected_value = '';
+		var new_content = '';
+
+		if ( (route=='CALLMENU') || (route=='DID') )
+			{var select_list = document.getElementById(field + "_value");}
+		if (route=='INGROUP')
+			{
+			var select_list = document.getElementById(field + "");
+			field = field.replace(/IGgroup_id_/, "");
+			}
+		var selected_value = select_list.value;
+		var span_to_update = document.getElementById(field + "_value_link");
+
+		if (route=='CALLMENU')
+			{
+			new_content = '<a href="<?php echo $ADMIN ?>?ADD=3511&menu_id=' + selected_value + "\"><?php echo _QXZ("Call Menu"); ?>:</a>";
+			}
+		if (route=='INGROUP')
+			{
+			new_content = '<a href="<?php echo $ADMIN ?>?ADD=3111&group_id=' + selected_value + "\"><?php echo _QXZ("In-Group"); ?>:</a>";
+			}
+		if (route=='DID')
+			{
+			new_content = '<a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + selected_value + "\"><?php echo _QXZ("DID"); ?>:</a>";
+			}
+
+		if (new_content.length < 1)
+			{new_content = selected_route}
+
+		span_to_update.innerHTML = new_content;
+		}
+
+	<?php
+	}
+echo "</script>\n";
+
+##### BEGIN - bar chart CSS style #####
+?>
+
+<style type="text/css">
+<!--
+
+
+<?php
+
+if ($ADD == '730000000000000')
+{
+?>
+
+.diff table{
+margin          : 1px 1px 1px 1px;
+border-collapse : collapse;
+border-spacing  : 0;
+}
+
+.diff td{
+vertical-align : top;
+font-family    : monospace;
+font-size      : 9;
+}
+.diff span{
+display:block;
+min-height:1pm;
+margin-top:-1px;
+padding:1px 1px 1px 1px;
+}
+
+* html .diff span{
+height:1px;
+}
+
+.diff span:first-child{
+margin-top:1px;
+}
+
+.diffDeleted span{
+border:1px solid rgb(255,51,0);
+background:rgb(255,173,153);
+}
+
+.diffInserted span{
+border:1px solid rgb(51,204,51);
+background:rgb(102,255,51);
+}
+
+<?php
+}
+?>
+
+.auraltext
+	{
+	position: absolute;
+	font-size: 0;
+	left: -1000px;
+	}
+.chart_td
+	{background-image: url(images/gridline58.gif); background-repeat: repeat-x; background-position: left top; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; padding:0; border-bottom: 1px solid #e5e5e5; background-color:transparent;}
+
+.head_style
+	{
+	background-color: <?php echo $Mmain_bgcolor ?>;
+	}
+.head_style:hover{background-color: #262626;}
+
+.head_style_selected
+	{
+	background-color: <?php echo $Mhead_color ?>;
+	}
+.head_style_selected:hover{background-color: <?php echo $Mhead_color ?>;}
+
+.subhead_style
+	{
+	background-color: <?php echo $Msubhead_color ?>;
+	}
+.subhead_style:hover{background-color: white;}
+
+.subhead_style_selected
+	{
+	background-color: <?php echo $Mselected_color ?>;
+	}
+.subhead_style_selected:hover{background-color: <?php echo $Mselected_color ?>;}
+
+.adminmenu_style_selected
+	{
+	background-color: white;
+	}
+.adminmenu_style_selected:hover{background-color: #E6E6E6;}
+
+.records_list_x
+	{
+	background-color: #<?php echo $SSstd_row2_background ?>;
+	}
+.records_list_x:hover{background-color: #E6E6E6;}
+
+.records_list_y
+	{
+	background-color: #<?php echo $SSstd_row1_background ?>;
+	}
+.records_list_y:hover{background-color: #E6E6E6;}
+
+
+.horiz_line
+	{
+	height: 0px;
+	margin: 0px;
+	border-bottom: 1px solid #E6E6E6;
+	font-size: 1px;
+	}
+.horiz_line_grey
+	{
+	height: 0px;
+	margin: 0px;
+	border-bottom: 1px solid #9E9E9E;
+	font-size: 1px;
+	}
+
+.sub_sub_head_links
+	{
+	font-family:HELVETICA;
+	font-size:11;
+	color:BLACK;
+	}
+
+-->
+
+</style>
+
+<?php
+##### END - bar chart CSS style #####
+
+echo "</head>\n";
+if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
+	{
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
+	}
+else
+	{
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	}
+	
+echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
+
+
+if ($header_font_size < 4) {$header_font_size='12';}
+if ($subheader_font_size < 4) {$subheader_font_size='11';}
+if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
+
+
+
+?>
+<CENTER>
+
+<TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
+<!-- BEGIN SIDEBAR NAVIGATION -->
+<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
+<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
+<B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
+
+	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160>
+	<?php
+	if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
+		{
+	?>
+	<!-- REPORTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT <?php echo $reports_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $reports_bold ?> <?php echo _QXZ("Reports"); ?> </a>
+	</TD></TR>
+
+	<!-- USERS NAVIGATION -->
+	<TR WIDTH=100%><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR WIDTH=160 BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT <?php echo $users_hh ?> WIDTH=160>
+	<a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><?php echo $users_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $users_fc ?>"><?php echo $users_bold ?><?php echo _QXZ("Users"); ?></a>
+	</TD></TR>
+	<?php
+	if (strlen($users_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$copy_sh="CLASS=\"subhead_style\"";
+		$search_sh="CLASS=\"subhead_style\"";
+		$stats_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$sheet_sh="CLASS=\"subhead_style\"";
+		$territory_sh="CLASS=\"subhead_style\"";
+		$newlimit_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copy') {$copy_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='search') {$search_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='stats') {$stats_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sheet') {$sheet_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='territory') {$territory_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newlimit') {$newlimit_sh="CLASS=\"subhead_style_selected\"";}
+
+		?>
+	<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Show Users"); ?> </a>
+	</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1';\"";} ?>><TD ALIGN=LEFT>
+	<?php if ($add_copy_disabled < 1) { ?>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Add A New User"); ?> </a>
+	</TR><TR <?php echo $copy_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1A';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1A" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Copy User"); ?> </a>
+	</TR><TR <?php echo $search_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=550';\"";} ?>><TD ALIGN=LEFT>
+	<?php } ?>
+	 &nbsp; <a href="<?php echo $ADMIN ?>?ADD=550" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Search For A User"); ?> </a>
+	</TR><TR <?php echo $stats_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_stats.php?user=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_stats.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Stats"); ?> </a>
+	</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_status.php?user=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_status.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Status"); ?> </a>
+	</TR><TR <?php echo $sheet_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Time Sheet"); ?> </a> </TD></TR>
+	 <?php
+	if ( ($SSuser_territories_active > 0) or ($user_territories_active > 0) )
+		{ ?>
+
+	</TR><TR <?php echo $territory_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_territories.php?agent=$user';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./user_territories.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("User Territories"); ?> </a> </TD></TR>
+
+	 <?php
+		}
+	if ($SSuser_new_lead_limit > 0)
+		{ ?>
+
+	</TR><TR <?php echo $newlimit_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall';\"";} ?>><TD ALIGN=LEFT>
+	 &nbsp; <a href="./admin_user_list_new.php?user=---ALL---&list_id=NONE&stage=overall" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Overall New Lead Limits"); ?> </a> </TD></TR>
+
+	<?php }
+	  }
+	?>
+	<!-- CAMPAIGNS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>><TD ALIGN=LEFT <?php echo $campaigns_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=10" STYLE="text-decoration:none;"><?php echo $campaigns_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $campaigns_fc ?>"><?php echo $campaigns_bold ?><?php echo _QXZ("Campaigns"); ?></a>
+	</TD></TR>
+	<?php
+	if (strlen($campaigns_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$hotkey_sh="CLASS=\"subhead_style\"";
+		$recycle_sh="CLASS=\"subhead_style\"";
+		$autoalt_sh="CLASS=\"subhead_style\"";
+		$pause_sh="CLASS=\"subhead_style\"";
+		$listmix_sh="CLASS=\"subhead_style\"";
+		$preset_sh="CLASS=\"subhead_style\"";
+		$accid_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='basic') {$sh='list';}
+		if ($sh=='detail') {$sh='list';}
+		if ($sh=='dialstat') {$sh='list';}
+
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='hotkey') {$hotkey_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='recycle') {$recycle_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='autoalt') {$autoalt_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='pause') {$pause_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listmix') {$listmix_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='preset') {$preset_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='accid') {$accid_sh="CLASS=\"subhead_style_selected\"";}
+
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $list_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Campaigns Main"); ?></a></TD>
+		</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=32';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $status_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=32" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Statuses"); ?></a></TD>
+		</TR><TR <?php echo $hotkey_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=33';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $hotkey_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=33" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("HotKeys"); ?></a></TD>
+		<?php
+		if ($SSoutbound_autodial_active > 0)
+			{
+			?>
+			</TR><TR <?php echo $recycle_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=35';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $recycle_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=35" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Lead Recycle"); ?></a></TD>
+			</TR><TR <?php echo $autoalt_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=36';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $autoalt_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=36" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Auto-Alt Dial"); ?></a></TD>
+			</TR><TR <?php echo $listmix_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=39';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $listmix_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=39" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("List Mix"); ?></a></TD>
+			<?php
+			}
+		?>
+		</TR><TR <?php echo $pause_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=37';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $pause_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=37" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Pause Codes"); ?></a></TD>
+		</TR><TR <?php echo $preset_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=301';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $preset_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=301" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("Presets"); ?></a></TD>
+		<?php
+		if ($SScampaign_cid_areacodes_enabled > 0)
+			{
+			?>
+			</TR><TR <?php echo $accid_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=302';\"";} ?>>
+			<TD ALIGN=LEFT <?php echo $accid_sh ?>> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=302" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subheader_font_size ?>;color:BLACK"><?php echo _QXZ("AC-CID"); ?></a></TD>
+			<?php
+			}
+		 } 
+	?>
+	<!-- LISTS NAVIGATION -->
+	<?php
+	if ($SSoutbound_autodial_active > 0)
+		{
+		?>
+		<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+		<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT <?php echo $lists_hh ?>><a href="<?php echo $ADMIN ?>?ADD=100" STYLE="text-decoration:none;"><?php echo $lists_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $lists_fc ?>"><?php echo $lists_bold ?><?php echo _QXZ("Lists"); ?></a></TD></TR>
+		<?php
+		if (strlen($lists_hh) > 25) 
+			{ 
+			$list_sh="CLASS=\"subhead_style\"";
+			$new_sh="CLASS=\"subhead_style\"";
+			$search_sh="CLASS=\"subhead_style\"";
+			$lead_sh="CLASS=\"subhead_style\"";
+			$load_sh="CLASS=\"subhead_style\"";
+			$dnc_sh="CLASS=\"subhead_style\"";
+			$custom_sh="CLASS=\"subhead_style\"";
+			$cpcust_sh="CLASS=\"subhead_style\"";
+			$droplist_sh="CLASS=\"subhead_style\"";
+
+			if ($LOGdelete_from_dnc > 0) {$DNClink = _QXZ("Add-Delete DNC Number");}
+			else {$DNClink = _QXZ("Add DNC Number");}
+
+			if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='search') {$search_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='lead') {$lead_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='load') {$load_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='dnc') {$dnc_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='custom') {$custom_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='cpcust') {$cpcust_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='droplist') {$droplist_sh="CLASS=\"subhead_style_selected\"";}
+
+			?>
+			<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=100" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Lists"); ?> </a>
+			</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<?php if ($add_copy_disabled < 1) { ?>
+			<a href="<?php echo $ADMIN ?>?ADD=111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New List"); ?> </a>
+			</TR><TR <?php echo $search_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_search_lead.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<?php } ?>
+			<a href="admin_search_lead.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Search For A Lead"); ?> </a>
+			</TR><TR <?php echo $lead_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_modify_lead.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="admin_modify_lead.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Lead"); ?> </a>
+			</TR><TR <?php echo $dnc_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=121';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=121" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo $DNClink ?> </a>
+			</TR><TR <?php echo $load_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_listloader_fourth_gen.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="./admin_listloader_fourth_gen.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Load New Leads"); ?> </a>
+			<?php
+			if ($SScustom_fields_enabled > 0)
+				{
+				$admin_lists_custom = 'admin_lists_custom.php';
+				?>
+				</TR><TR <?php echo $custom_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$admin_lists_custom';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+				<a href="./<?php echo $admin_lists_custom ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("List Custom Fields"); ?> </a>
+				</TR><TR <?php echo $cpcust_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$admin_lists_custom?action=COPY_FIELDS_FORM';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+				<a href="./<?php echo $admin_lists_custom ?>?action=COPY_FIELDS_FORM" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Custom Fields"); ?> </a>
+				<?php
+				}
+			if ($SSenable_drop_lists > 0)
+				{
+				?>
+				<TR <?php echo $droplist_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+				<a href="<?php echo $ADMIN ?>?ADD=130" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Drop Lists"); ?> </a>
+				<?php
+				}
+			?>
+			</TD></TR>
+			<?php
+			}
+		}
+
+	if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
+		{ ?>
+	<!-- QC navigation -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $qc_hh ?>>
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><?php echo $qc_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $qc_fc ?>"><?php echo $qc_bold ?> <?php echo _QXZ("Quality Control"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<?php
+	if (strlen($qc_hh) > 25) 
+		{
+		$campaign_sh="CLASS=\"subhead_style\"";
+		$ingroup_sh="CLASS=\"subhead_style\"";
+		$list_sh="CLASS=\"subhead_style\"";
+		$enter_sh="CLASS=\"subhead_style\"";
+		$modify_sh="CLASS=\"subhead_style\"";
+		$scorecard_sh="CLASS=\"subhead_style\"";
+
+		if($qc_display_group_type=="CAMPAIGN") {$sh="campaign";}
+		if($qc_display_group_type=="INGROUP") {$sh="ingroup";}
+		if($qc_display_group_type=="LIST") {$sh="list";}
+		#if($sh=="modify") {$sh="modify";}
+		if($qc_display_group_type=="SCORECARD") {$sh="scorecard";}
+		if(!$sh) {$sh="campaign";}
+
+		if ($sh=='campaign') {$campaign_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='ingroup') {$ingroup_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='enter') {$enter_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='modify') {$modify_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='scorecard') {$scorecard_sh="CLASS=\"subhead_style_selected\"";}
+
+		?>
+	<TR <?php echo $campaign_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=CAMPAIGN';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=CAMPAIGN" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Calls by Campaign"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=LIST';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=LIST" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Calls by List"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<TR <?php echo $ingroup_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000&qc_display_group_type=INGROUP';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000&qc_display_group_type=INGROUP" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Calls by Ingroup"); ?> </FONT></a>
+		</TD>
+	</TR>
+<!--
+	<TR <?php echo $enter_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Enter QC Queue"); ?> </FONT></a>
+		</TD>
+	</TR>
+//-->
+	<TR <?php echo $scorecard_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"qc_scorecards.php';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="qc_scorecards.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show QC Scorecards"); ?> </FONT></a>
+		</TD>
+	</TR>
+	<TR <?php echo $modify_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=341111111111111';\"";} ?>>
+		<TD ALIGN=LEFT> &nbsp;
+			<a href="<?php echo $ADMIN ?>?ADD=341111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Modify QC Codes"); ?> </FONT></a>
+		</TD>
+	</TR>
+		<?php }
+		}
+	?>
+	<!-- SCRIPTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000';\"";} ?>><TD ALIGN=LEFT <?php echo $scripts_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=1000000" STYLE="text-decoration:none;"><?php echo $scripts_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $scripts_fc ?>"><?php echo $scripts_bold ?> <?php echo _QXZ("Scripts"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($scripts_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Scripts"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1111111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Script"); ?> </a>
+		<?php } ?>
+		</TD></TR>
+		<?php } 
+	?>
+	<!-- FILTERS NAVIGATION -->
+	<?php
+	if ($SSoutbound_autodial_active > 0)
+		{
+		?>
+		<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+		<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000';\"";} ?>><TD ALIGN=LEFT <?php echo $filters_hh ?>><a href="<?php echo $ADMIN ?>?ADD=10000000" STYLE="text-decoration:none;"><?php echo $filters_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $filters_fc ?>"><?php echo $filters_bold ?> <?php echo _QXZ("Filters"); ?> </a></TD></TR>
+		<?php
+		if (strlen($filters_hh) > 25) 
+			{ 
+			$list_sh="CLASS=\"subhead_style\"";
+			$new_sh="CLASS=\"subhead_style\"";
+
+			if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+			if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+			?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=10000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Filters"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=11111111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=11111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Filter"); ?> </a>
+		<?php } ?>
+		</TD></TR>
+		<?php } 
+		}
+	?>
+	<!-- INGROUPS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1001';\"";} ?>><TD ALIGN=LEFT <?php echo $ingroups_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=1001" STYLE="text-decoration:none;"><?php echo $inbound_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $ingroups_fc ?>"><?php echo $ingroups_bold ?> <?php echo _QXZ("Inbound"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($ingroups_hh) > 25) 
+		{
+		$listIG_sh="CLASS=\"subhead_style\"";
+		$newIG_sh="CLASS=\"subhead_style\"";
+		$copyIG_sh="CLASS=\"subhead_style\"";
+		$listEG_sh="CLASS=\"subhead_style\"";
+		$newEG_sh="CLASS=\"subhead_style\"";
+		$copyEG_sh="CLASS=\"subhead_style\"";
+		$listCG_sh="CLASS=\"subhead_style\"";
+		$newCG_sh="CLASS=\"subhead_style\"";
+		$copyCG_sh="CLASS=\"subhead_style\"";
+		$listDID_sh="CLASS=\"subhead_style\"";
+		$newDID_sh="CLASS=\"subhead_style\"";
+		$copyDID_sh="CLASS=\"subhead_style\"";
+		$didRA_sh="CLASS=\"subhead_style\"";
+		$listCM_sh="CLASS=\"subhead_style\"";
+		$newCM_sh="CLASS=\"subhead_style\"";
+		$copyCM_sh="CLASS=\"subhead_style\"";
+		$listFPG_sh="CLASS=\"subhead_style\"";
+		$newFPG_sh="CLASS=\"subhead_style\"";
+		$addFPG_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='listIG') {$listIG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newIG') {$newIG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyIG') {$copyIG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listEG') {$listEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newEG') {$newEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyEG') {$copyEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listCG') {$listCG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newCG') {$newCG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyCG') {$copyCG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listDID') {$listDID_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newDID') {$newDID_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyDID') {$copyDID_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='didRA') {$didRA_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listCM') {$listCM_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newCM') {$newCM_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='copyCM') {$copyCM_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listFPG') {$listFPG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newFPG') {$newFPG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='addFPG') {$addFPG_sh="CLASS=\"subhead_style_selected\"";}
+
+		if ($LOGdelete_from_dnc > 0) {$FPGlink = _QXZ("Add-Delete FPG Number");}
+		else {$FPGlink = _QXZ("Add FPG Number");}
+		?>
+		<TR <?php echo $listIG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1000" STYLE="text-decoration:none;"><img src="images/icon_black_inbound.png" border=0 alt=\"In-Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show In-Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newIG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1111" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New In-Group"); ?> </a>
+		</TD></TR><TR <?php echo $copyIG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1211';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1211" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy In-Group"); ?> </a>
+		<?php } ?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		<?php
+		if ($SSemail_enabled>0) 
+			{
+		?>
+		<TR <?php echo $listEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1800';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1800" STYLE="text-decoration:none;"><img src="images/icon_email.png" border=0 alt=\"Email Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Email Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1811';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1811" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add New Email Group"); ?> </a>
+		</TD></TR><TR <?php echo $copyEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1911';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1911" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Email Group"); ?> </a>
+		<?php } ?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		<?php
+			}
+		?>
+		<?php
+		if ($SSchat_enabled>0) 
+			{
+		?>
+		<TR <?php echo $listCG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1900';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1900" STYLE="text-decoration:none;"><img src="images/icon_chat.png" border=0 alt=\" Chat Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Chat Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newCG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=18111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=18111" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add New Chat Group"); ?> </a>
+		</TD></TR><TR <?php echo $copyCG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=19111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=19111" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Chat Group"); ?> </a>
+		<?php } ?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		<?php
+			}
+		?>
+		</TD></TR><TR <?php echo $listDID_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1300';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1300" STYLE="text-decoration:none;"><img src="images/icon_cidgroups.png" border=0 alt=\"DIDs\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show DIDs"); ?> </a>
+		</TD></TR><TR <?php echo $newDID_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1311';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1311" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New DID"); ?> </a>
+		</TD></TR><TR <?php echo $copyDID_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1411';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1411" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy DID"); ?> </a>
+		<?php
+			}
+		if ($SSdid_ra_extensions_enabled > 0)
+			{
+			?>
+			</TD></TR><TR <?php echo $didRA_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1320';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=1320" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("RA Extensions"); ?></a>
+			<?php
+			}
+		?>
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		</TD></TR><TR <?php echo $listCM_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1500';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1500" STYLE="text-decoration:none;"><img src="images/icon_callmenu.png" border=0 alt=\"Call Menus\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Call Menus"); ?> </a>
+		</TD></TR><TR <?php echo $newCM_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1511';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1511" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Call Menu"); ?> </a>
+		</TD></TR><TR <?php echo $copyCM_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1611';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1611" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Call Menu"); ?> </a>
+		<?php } ?>
+
+		<TR WIDTH=160 CLASS="subhead_style"><TD><DIV CLASS="horiz_line_grey"></DIV></TD></TR>
+		</TD></TR><TR <?php echo $listFPG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1700';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1700" STYLE="text-decoration:none;"><img src="images/icon_filterphonegroup.png" border=0 alt=\"Filter Phone Groups\" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Filter Phone Groups"); ?> </a>
+		</TD></TR><TR <?php echo $newFPG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1711';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=1711" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add Filter Phone Group"); ?> </a>
+		</TD></TR><TR <?php echo $addFPG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=171';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php } ?>
+		<a href="<?php echo $ADMIN ?>?ADD=171" STYLE="text-decoration:none;"><img src="images/blank.gif" border=0 alt=\" \" width=14 height=14 valign=middle> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo $FPGlink ?> </a>
+		</TD></TR>
+		<?php } 
+		?>
+	<!-- USERGROUPS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000';\"";} ?>><TD ALIGN=LEFT <?php echo $usergroups_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=100000" STYLE="text-decoration:none;"><?php echo $usergroups_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $usergroups_fc ?>"><?php echo $usergroups_bold ?> <?php echo _QXZ("User Groups"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($usergroups_hh) > 25)
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$hour_sh="CLASS=\"subhead_style\"";
+		$bulk_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='hour') {$hour_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='bulk') {$bulk_sh="CLASS=\"subhead_style_selected\"";}
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=100000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show User Groups"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=111111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New User Group"); ?> </a>
+		</TR><TR <?php echo $hour_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='group_hourly_stats.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php } ?>
+		<a href="group_hourly_stats.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Group Hourly Report"); ?> </a>
+		</TR><TR <?php echo $bulk_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='user_group_bulk_change.php';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="user_group_bulk_change.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Bulk Group Change"); ?> </a>
+		</TD></TR>
+		<?php } 
+	?>
+	<!-- REMOTEAGENTS NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000';\"";} ?>><TD ALIGN=LEFT <?php echo $remoteagent_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=10000" STYLE="text-decoration:none;"><?php echo $remoteagents_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $remoteagent_fc ?>"><?php echo $remoteagent_bold ?> <?php echo _QXZ("Remote Agents"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($remoteagent_hh) > 25) 
+		{ 
+		$list_sh="CLASS=\"subhead_style\"";
+		$new_sh="CLASS=\"subhead_style\"";
+		$listEG_sh="CLASS=\"subhead_style\"";
+		$newEG_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='list') {$list_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='new') {$new_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='listEG') {$listEG_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='newEG') {$newEG_sh="CLASS=\"subhead_style_selected\"";}
+		?>
+		<TR <?php echo $list_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=10000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Remote Agents"); ?> </a>
+		</TR><TR <?php echo $new_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=11111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=11111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add New Remote Agents"); ?> </a>
+		</TR><TR <?php echo $listEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=12000';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php } ?>
+		<a href="<?php echo $ADMIN ?>?ADD=12000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Extension Groups"); ?> </a>
+		</TR><TR <?php echo $newEG_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=12111';\"";} ?>><TD ALIGN=LEFT> &nbsp; 
+		<?php if ($add_copy_disabled < 1) { ?>
+		<a href="<?php echo $ADMIN ?>?ADD=12111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add Extension Group"); ?> </a>
+		<?php } ?>
+		</TD></TR>
+	<?php } 
+	?>
+	<!-- ADMIN NAVIGATION -->
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999998';\"";} ?>><TD ALIGN=LEFT <?php echo $admin_hh ?>>
+	<a href="<?php echo $ADMIN ?>?ADD=999998" STYLE="text-decoration:none;"><?php echo $admin_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $admin_fc ?>"><?php echo $admin_bold ?> <?php echo _QXZ("Admin"); ?> </a>
+	</TD></TR>
+	<?php
+	if (strlen($admin_hh) > 25) 
+		{
+		$times_sh="CLASS=\"subhead_style\"";
+		$shifts_sh="CLASS=\"subhead_style\"";
+		$templates_sh="CLASS=\"subhead_style\"";
+		$carriers_sh="CLASS=\"subhead_style\"";
+		$phones_sh="CLASS=\"subhead_style\"";
+		$server_sh="CLASS=\"subhead_style\"";
+		$conference_sh="CLASS=\"subhead_style\"";
+		$settings_sh="CLASS=\"subhead_style\"";
+		$label_sh="CLASS=\"subhead_style\"";
+		$colors_sh="CLASS=\"subhead_style\"";
+		$status_sh="CLASS=\"subhead_style\"";
+		$audio_sh="CLASS=\"subhead_style\"";
+		$moh_sh="CLASS=\"subhead_style\"";
+		$languages_sh="CLASS=\"subhead_style\"";
+		$soundboard_sh="CLASS=\"subhead_style\"";
+		$vm_sh="CLASS=\"subhead_style\"";
+		$tts_sh="CLASS=\"subhead_style\"";
+		$cc_sh="CLASS=\"subhead_style\"";
+		$cts_sh="CLASS=\"subhead_style\"";
+		$sc_sh="CLASS=\"subhead_style\"";
+		$sg_sh="CLASS=\"subhead_style\"";
+		$cg_sh="CLASS=\"subhead_style\"";
+		$vmmg_sh="CLASS=\"subhead_style\"";
+		$qg_sh="CLASS=\"subhead_style\"";
+		$emails_sh="CLASS=\"subhead_style\"";
+		$ar_sh="CLASS=\"subhead_style\"";
+		$il_sh="CLASS=\"subhead_style\"";
+
+		if ($sh=='times') {$times_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='shifts') {$shifts_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='templates') {$templates_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='carriers') {$carriers_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='phones') {$phones_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='server') {$server_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='conference') {$conference_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='settings') {$settings_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='label') {$label_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='colors') {$colors_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='status') {$status_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='audio') {$audio_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='moh') {$moh_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='languages') {$languages_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='soundboard') {$soundboard_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='vm') {$vm_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='tts') {$tts_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='cc') {$cc_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='cts') {$cts_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sc') {$sc_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='sg') {$sg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='cg') {$cg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='vmmg') {$vmmg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='qg') {$qg_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='emails') {$emails_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='ar') {$ar_sh="CLASS=\"subhead_style_selected\"";}
+		if ($sh=='il') {$il_sh="CLASS=\"subhead_style_selected\"";}
+
+		?>
+		<TR <?php echo $times_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000';\"";} ?>>
+		<TD ALIGN=LEFT <?php echo $times_sh ?> COLSPAN=2> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=100000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_calltimes.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Call Times"); ?> </a></TD>
+		</TR><TR <?php echo $shifts_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=130000000';\"";} ?>><TD ALIGN=LEFT <?php echo $shifts_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=130000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_shifts.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Shifts"); ?> </a></TD>
+		</TR><TR <?php echo $phones_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=10000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $phones_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=10000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_phones.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Phones"); ?> </a></TD>
+		</TR><TR <?php echo $templates_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=130000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $templates_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=130000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_templates.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Templates"); ?> </a></TD>
+		</TR><TR <?php echo $carriers_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=140000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $carriers_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=140000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_carriers.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Carriers"); ?> </a></TD>
+		</TR><TR <?php echo $server_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $server_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=100000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_servers.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Servers"); ?> </a></TD>
+		</TR><TR <?php echo $conference_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=1000000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $conference_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=1000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_conferences.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Conferences"); ?> </a></TD>
+		</TR><TR <?php echo $settings_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=311111111111111';\"";} ?>><TD ALIGN=LEFT <?php echo $settings_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=311111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_settings.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("System Settings"); ?> </a></TD>
+		</TR><TR <?php echo $label_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=180000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $label_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=180000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_screenlabels.png" border=0 alt=\"Labels\" width=14 height=14 valign=middle> <?php echo _QXZ("Screen Labels"); ?> </a></TD>
+		</TR><TR <?php echo $colors_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=182000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $colors_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=182000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_screencolors.png" border=0 alt=\"Colors\" width=14 height=14 valign=middle> <?php echo _QXZ("Screen Colors"); ?> </a></TD>
+		</TR><TR <?php echo $status_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=321111111111111';\"";} ?>><TD ALIGN=LEFT <?php echo $status_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=321111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_statuses.png" border=0 alt=\"Statuses\" width=14 height=14 valign=middle> <?php echo _QXZ("System Statuses"); ?> </a></TD>
+		</TR><TR <?php echo $sg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=193000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $sg_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=193000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_statusgroups.png" border=0 alt=\"Status Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("Status Groups"); ?> </a></TD>
+		<?php
+		if ($SScampaign_cid_areacodes_enabled > 0)
+			{
+			?>
+		</TR><TR <?php echo $cg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=196000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $cg_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=196000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_cidgroups.png" border=0 alt=\"CID Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("CID Groups"); ?> </a></TD>
+		<?php
+			}
+		?>
+		</TR><TR <?php echo $vm_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=170000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $vm_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=170000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_voicemail.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Voicemail"); ?> </a></TD>
+		</TR>
+		<?php
+		if ($SSemail_enabled > 0)
+			{ ?>
+			<TR <?php echo $emails_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_email_accounts.php';\"";} ?>><TD ALIGN=LEFT <?php echo $emails_sh ?>> &nbsp; 
+			<a href="admin_email_accounts.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_email.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Email Accounts"); ?> </a></TD>
+			</TR>
+		<?php }
+		if ( ($sounds_central_control_active > 0) or ($SSsounds_central_control_active > 0) )
+			{ ?>
+			<TR <?php echo $audio_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='audio_store.php';\"";} ?>><TD ALIGN=LEFT <?php echo $audio_sh ?>> &nbsp; 
+			<a href="audio_store.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_audiostore.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Audio Store"); ?> </a></TD>
+			</TR>
+			<TR <?php echo $moh_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=160000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $moh_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=160000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_musiconhold.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Music On Hold"); ?> </a></TD>
+			</TR>
+			<?php
+		if ($SSenable_languages > 0)
+				{ ?>
+			<TR <?php echo $languages_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_languages.php?ADD=163000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $languages_sh ?>> &nbsp; 
+			<a href="admin_languages.php?ADD=163000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_languages.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Languages"); ?> </a></TD>
+			</TR>
+			<?php }
+			if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) )
+				{
+			?>
+			<TR <?php echo $soundboard_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_soundboard.php?ADD=162000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $soundboard_sh ?>> &nbsp; 
+			<a href="admin_soundboard.php?ADD=162000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_audiosoundboards.png" border=0 alt=\"Audio Soundboards\" width=14 height=14 valign=middle> <?php echo _QXZ("Audio Soundboards"); ?> </a></TD>
+			</TR>
+
+		<?php 
+				}
+
+			?>
+			<TR <?php echo $vmmg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='<?php echo $ADMIN ?>?ADD=197000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $vmmg_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=197000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_vm_messages.png" border=0 alt=\"VM Message Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("VM Message Groups"); ?> </a></TD>
+			</TR>
+
+		<?php 
+
+			}
+		if ($SSenable_tts_integration > 0)
+			{ ?>
+			<TR <?php echo $tts_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=150000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $tts_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=150000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_texttospeech.png" border=0 alt=\"Text To Speech\" width=14 height=14 valign=middle> <?php echo _QXZ("Text To Speech"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		if ($SScallcard_enabled > 0)
+			{ ?>
+			<TR <?php echo $cc_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='callcard_admin.php';\"";} ?>><TD ALIGN=LEFT <?php echo $cc_sh ?>> &nbsp; 
+			<a href="callcard_admin.php" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_callcard.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("CallCard Admin"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		if ($SScontacts_enabled > 0)
+			{ ?>
+			<TR <?php echo $cts_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=190000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $cts_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=190000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_contacts.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Contacts"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		?>
+		</TR><TR <?php echo $sc_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=192000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $sc_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=192000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_settingscontainer.png" border=0 alt=\"Users\" width=14 height=14 valign=middle> <?php echo _QXZ("Settings Containers"); ?> </a></TD>
+		</TR>
+		<?php
+		if ($SSenable_auto_reports > 0)
+			{ ?>
+			<TR <?php echo $ar_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=194000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $ar_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=194000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_autoreports.png" border=0 alt=\"Automated Reports\" width=14 height=14 valign=middle> <?php echo _QXZ("Automated Reports"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		if ($SSallow_ip_lists > 0)
+			{ ?>
+			<TR <?php echo $il_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=195000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $il_sh ?>> &nbsp; 
+			<a href="<?php echo $ADMIN ?>?ADD=195000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_iplists.png" border=0 alt=\"IP Lists\" width=14 height=14 valign=middle> <?php echo _QXZ("IP Lists"); ?> </a></TD>
+			</TR>
+
+		<?php }
+		?>
+		</TR><TR <?php echo $qg_sh ?><?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=198000000000';\"";} ?>><TD ALIGN=LEFT <?php echo $qg_sh ?>> &nbsp; 
+		<a href="<?php echo $ADMIN ?>?ADD=198000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <img src="images/icon_queuegroups.png" border=0 alt=\"Queue Groups\" width=14 height=14 valign=middle> <?php echo _QXZ("Queue Groups"); ?> </a></TD>
+		</TR>
+		<?php
+			}
+		}
+	else
+		{
+		if ($reports_only_user > 0)
+			{
+			?>
+			<!-- REPORTS NAVIGATION -->
+			<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+			<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT <?php echo $reports_hh ?>>
+			<a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $reports_bold ?> <?php echo _QXZ("Reports"); ?> </a>
+			</TD></TR>
+			<?php
+			}
+		else
+			{
+			if (($SSqc_features_active=='1') && ($qc_auth=='1')) 
+				{ ?>
+			<!-- QC NAVIGATION -->
+			<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+			<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=100000000000000';\"";} ?>>
+				<TD ALIGN=LEFT <?php echo $qc_hh ?>>
+					<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $qc_bold ?> <?php echo _QXZ("Quality Control"); ?> </FONT></a>
+				</TD>
+			</TR>
+			<?php
+			if (strlen($qc_hh) > 25) 
+					{
+				?>
+			<TR BGCOLOR=<?php echo $qc_color ?>>
+				<TD ALIGN=LEFT> &nbsp;
+					<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show QC Campaigns"); ?> </FONT></a>
+				</TD>
+			</TR>
+			<TR BGCOLOR=<?php echo $qc_color ?>>
+				<TD ALIGN=LEFT> &nbsp;
+					<a href="<?php echo $ADMIN ?>?ADD=100000000000000" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Enter QC Queue"); ?> </FONT></a>
+				</TD>
+			</TR>
+			<TR BGCOLOR=<?php echo $qc_color ?>>
+				<TD ALIGN=LEFT> &nbsp;
+					<a href="<?php echo $ADMIN ?>?ADD=341111111111111" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Modify QC Codes"); ?> </FONT></a>
+				</TD>
+			</TR>
+				<?php }
+				}
+			}
+		}
+	?>
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	</TABLE>
+	<BR>&nbsp;
+</TD><TD VALIGN=TOP WIDTH=<?php echo $page_width ?> BGCOLOR=#<?php echo $SSframe_background ?>>
+<!-- END SIDEBAR NAVIGATION -->
+
+<span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span">
+
+</span>
+
+<TABLE BGCOLOR=#<?php echo $SSframe_background ?> cellpadding=2 cellspacing=0 WIDTH=<?php echo $page_width ?> HEIGHT=15>
+<TR BGCOLOR=#<?php echo "$SSmenu_background" ?>><TD ALIGN=LEFT BGCOLOR=#<?php echo "$SSmenu_background" ?>><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("HOME"); ?></a> | <A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Timeclock"); ?></A> | <a href="manager_chat_interface.php" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Chat"); ?></a> | <a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Logout"); ?></a> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1>(<?php echo $PHP_AUTH_USER ?>)</FONT>
+
+<?php
+if ($SSenable_languages == '1')
+	{
+	echo " | <a href=\"$ADMIN?ADD=999989\" STYLE=\"text-decoration:none;\"><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE SIZE=1>"._QXZ("Change language")."</a>";
+	}
+?>
+
+</TD><TD ALIGN=RIGHT><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo date("l F j, Y G:i:s A") ?> &nbsp; </B></TD></TR>
+
+<TR BGCOLOR=#<?php echo "$SSmenu_background" ?>>
+
+
+
+
+
+
+
+</TR>
+	<?php
+	if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $subcamp_color ?>><TD ALIGN=LEFT COLSPAN=2><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Campaigns"); ?> </a> &nbsp; &nbsp; |<?php if ($add_copy_disabled < 1) { ?>
+&nbsp; &nbsp; <a href="<?php echo $ADMIN ?>?ADD=11"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Campaign"); ?> </a> &nbsp; &nbsp; | &nbsp; &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy Campaign"); ?> </a> &nbsp; &nbsp; |<?php } ?> &nbsp; &nbsp; <a href="./AST_timeonVDADallSUMMARY.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Real-Time Campaigns Summary"); ?> </a></TD></TR>
+		<?php }
+	if ( (strlen($droplist_sh) > 25) and ($SSenable_drop_lists > 0) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $subcamp_color ?>><TD ALIGN=LEFT COLSPAN=2><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Drop Lists"); ?> </a> &nbsp; &nbsp; |<?php if ($add_copy_disabled < 1) { ?>
+&nbsp; &nbsp; <a href="<?php echo $ADMIN ?>?ADD=131"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Drop List"); ?> </a><?php } ?></TD></TR>
+		<?php }
+	if (strlen($times_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $times_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Call Times"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?>
+ <a href="<?php echo $ADMIN ?>?ADD=111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Call Time"); ?> </a> &nbsp;|<?php } ?> <a href="<?php echo $ADMIN ?>?ADD=1000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show State Call Times"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?> <a href="<?php echo $ADMIN ?>?ADD=1111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New State Call Time"); ?> </a> &nbsp;|<?php } ?> <a href="<?php echo $ADMIN ?>?ADD=1200000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Holidays"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?> <a href="<?php echo $ADMIN ?>?ADD=1211111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add Holiday"); ?> </a><?php } ?></TD></TR>
+		<?php } 
+	if (strlen($shifts_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $shifts_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Shifts"); ?> </a> &nbsp;|<?php if ($add_copy_disabled < 1) { ?> <a href="<?php echo $ADMIN ?>?ADD=131111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Shift"); ?> </a><?php } ?></TD></TR>
+		<?php } 
+	if (strlen($phones_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $phones_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Phones"); ?> </a>&nbsp;|<?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=11111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Phone"); ?> </a>&nbsp;|<?php } ?><?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=12222222222"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy an Existing Phone"); ?> </a>&nbsp;|<?php } ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=12000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Phone Alias List"); ?> </a>&nbsp;|<?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=12111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Phone Alias"); ?> </a>&nbsp;|<?php } ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=13000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Group Alias List"); ?> </a>&nbsp;|<?php if ($add_copy_disabled < 1) { ?>&nbsp;<a href="<?php echo $ADMIN ?>?ADD=13111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Group Alias"); ?> </a><?php } ?></TD></TR>
+		<?php }
+	if (strlen($conference_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $conference_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1000000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Conferences"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=1111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Conference"); ?> </a> &nbsp; |<?php } ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=10000000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show VICIDIAL Conferences"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=11111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New VICIDIAL Conference"); ?> </a><?php } ?> | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12000000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show ConfBridges"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=12111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add ConfBridge"); ?> </a><?php } ?> </TD></TR>
+		<?php }
+	if ( (strlen($server_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $server_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=100000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Servers"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Server"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($templates_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $templates_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=130000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Templates"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=131111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Template"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($carriers_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $carriers_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=140000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Carriers"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=141111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Carrier"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=140111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy A Carrier"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($emails_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $emails_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="admin_email_accounts.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Email Accounts"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="admin_email_accounts.php?eact=ADD"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Account"); ?> </a> &nbsp; | &nbsp; <a href="admin_email_accounts.php?eact=COPY"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy An Account"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $tts_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=150000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show TTS Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=151111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New TTS Entry"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $cc_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="callcard_admin.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Summary"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=CALLCARD_RUNS"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Runs"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=CALLCARD_BATCHES"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Batches"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=SEARCH"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Search"); ?> </a> &nbsp; | &nbsp; <a href="callcard_report_export.php"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Log Export"); ?> </a> &nbsp; | &nbsp; <a href="callcard_admin.php?action=GENERATE"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CallCard Generate New Numbers"); ?> </a></TD></TR>
+	<?php }
+	if ( (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $moh_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=160000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show MOH Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=161111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New MOH Entry"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $languages_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="admin_languages.php?ADD=163000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Languages"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="admin_languages.php?ADD=163111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Language"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_languages.php?ADD=163211111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy A Languages Entry"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_languages.php?ADD=163311111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Import Phrases"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_languages.php?ADD=163411111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Export Phrases"); ?></FONT></a> &nbsp; <?php } ?></TD></TR>
+	<?php }
+	if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) )
+		{
+	if ( (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $soundboard_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="admin_soundboard.php?ADD=162000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Soundboard Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="admin_soundboard.php?ADD=162111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Soundboard Entry"); ?></FONT></a> &nbsp; | &nbsp; <a href="admin_soundboard.php?ADD=162211111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Copy A Soundboard Entry"); ?></FONT></a> &nbsp; <?php } ?></TD></TR>
+	<?php
+		}
+	}
+	if ( (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $vm_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=170000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Show Voicemail Entries"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=171111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A New Voicemail Entry"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($settings_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $settings_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=311111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("System Settings"); ?> </a></TD></TR>
+	<?php }
+	if (strlen($label_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $label_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=180000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Screen Labels"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=181111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Screen Label"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($colors_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $colors_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=182000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Screen Colors"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=182111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Screen Colors"); ?> </a><?php } ?> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=311111111111111#screen_colors"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Change Active Screen Colors"); ?> </a></TD></TR>
+	<?php }
+	if (strlen($cts_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $cts_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=190000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Contacts"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=191111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Contact"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($sc_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $sc_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=192000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Settings Containers"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=192111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Settings Container"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($ar_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $ar_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=194000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Automated Reports"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=194111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add An Automated Report"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($il_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $il_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=195000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("IP Lists"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=195111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add An IP List"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($sg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $sg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=193000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Status Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=193111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Status Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($cg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $cg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=196000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("CID Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=196111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A CID Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($vmmg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $vmmg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=197000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("VM Message Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=197111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A VM Message Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if (strlen($qg_sh) > 25) { 
+		?>
+	<TR BGCOLOR=<?php echo $qg_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=198000000000"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Queue Groups"); ?> </a> &nbsp; |<?php if ($add_copy_disabled < 1) { ?> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=198111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Add A Queue Group"); ?> </a><?php } ?></TD></TR>
+	<?php }
+	if ( (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
+		?>
+	<TR BGCOLOR=<?php echo $status_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=321111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("System Statuses"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=331111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("Status Categories"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=341111111111111"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"> <?php echo _QXZ("QC Status Codes"); ?> </a></TD></TR>
+	<?php }
+
+	if ( ($ADD=='3') or ($ADD=='3') ) { 
+		?>
+	<TR BGCOLOR=<?php echo $users_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="./user_stats.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("User Stats"); ?> </a> &nbsp; | &nbsp; <a href="./user_status.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("User Status"); ?> </a> &nbsp; | &nbsp; <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Time Sheet"); ?> </a> &nbsp; | &nbsp; <a href="./AST_agent_days_detail.php?user=<?php echo $user ?>" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Days Status"); ?> </a></TD></TR>
+	<?php }
+
+
+if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) 
+	{ 
+	?>
+	<TR BGCOLOR=<?php echo $users_color ?>><TD ALIGN=LEFT COLSPAN=2> &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999988" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Available Timezones"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999987" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Phone Codes"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999986" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Postal Codes"); ?> </a> &nbsp; | &nbsp; <a href="<?php echo $ADMIN ?>?ADD=999985" STYLE="text-decoration:none;"><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;color:BLACK;"><?php echo _QXZ("Postal Codes Cities"); ?> </a> &nbsp; </TD></TR>
+	<?php 
+	}
+else
+	{
+	if (strlen($reports_hh) > 25) { 
+		?>
+		<TR BGCOLOR=<?php echo $reports_color ?>><TD ALIGN=LEFT COLSPAN=2><FONT STYLE="font-family:HELVETICA;font-size:<?php echo $subcamp_font_size ?>;"><B> &nbsp; </B></TD></TR>
+		<?php } 
+	}
+?>
+<TR><TD ALIGN=LEFT COLSPAN=2 HEIGHT=2 BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
+<TR><TD ALIGN=LEFT COLSPAN=2>
+<?php 
+######################### FULL HTML HEADER END #######################################
+}
