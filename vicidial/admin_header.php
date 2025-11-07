@@ -3331,7 +3331,9 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 }
             }
         }
+}
     ?>
+	
     <TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
     </TABLE>
     <BR>&nbsp;
@@ -3382,4 +3384,5 @@ window.addEventListener('resize', function() {
         overlay.classList.remove('active');
     }
 });
+
 </script>
