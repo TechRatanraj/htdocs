@@ -1869,30 +1869,127 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 
 ?>
-<CENTER>
+<left>
 
-<TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
-<!-- BEGIN SIDEBAR NAVIGATION -->
-<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
-<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
-<B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
+<?php
+// convenience shorthands
+$menuBg = "#{$SSmenu_background}";
+$admin  = $ADMIN;
+$logo   = $selected_logo;
+$logoAlt = "System logo";
+$enableRowClick = ($SSadmin_row_click ?? 0) > 0;
+?>
+<!-- Sidebar -->
+<aside class="sidebar" style="--menu-bg: <?= htmlspecialchars($menuBg) ?>;">
+  <div class="brand">
+    <a href="<?= htmlspecialchars($admin) ?>">
+      <img src="<?= htmlspecialchars($logo) ?>" width="170" height="45" alt="<?= htmlspecialchars($logoAlt) ?>">
+    </a>
+    <div class="brand-title"><?= _QXZ("ADMINISTRATION"); ?></div>
+  </div>
 
-	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160>
-	<?php
-	if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
-		{
-	?>
-	<!-- REPORTS NAVIGATION -->
-	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
-	<TR BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=999999';\"";} ?>><TD ALIGN=LEFT <?php echo $reports_hh ?>>
-	<a href="<?php echo $ADMIN ?>?ADD=999999" STYLE="text-decoration:none;"><?php echo $reports_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $reports_fc ?>"><?php echo $reports_bold ?> <?php echo _QXZ("Reports"); ?> </a>
-	</TD></TR>
+  <nav class="nav">
+    <?php if ( ($reports_only_user < 1) && ($qc_only_user < 1) ) : ?>
+      <hr class="sep">
 
-	<!-- USERS NAVIGATION -->
-	<TR WIDTH=100%><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
-	<TR WIDTH=160 BGCOLOR=#<?php echo "$SSmenu_background "; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$ADMIN?ADD=0A';\"";} ?>><TD ALIGN=LEFT <?php echo $users_hh ?> WIDTH=160>
-	<a href="<?php echo $ADMIN ?>?ADD=0A" STYLE="text-decoration:none;"><?php echo $users_icon ?> <FONT STYLE="font-family:HELVETICA;font-size:<?php echo $header_font_size ?>;color:<?php echo $users_fc ?>"><?php echo $users_bold ?><?php echo _QXZ("Users"); ?></a>
-	</TD></TR>
+      <!-- Reports -->
+      <a
+        class="nav-item<?= $enableRowClick ? ' row-click' : '' ?>"
+        href="<?= htmlspecialchars($admin) ?>?ADD=999999"
+        <?php if (!empty($reports_hh)) echo ' ' . $reports_hh; ?>
+      >
+        <span class="icon"><?= $reports_icon ?></span>
+        <span
+          class="label"
+          style="font-size: <?= htmlspecialchars($header_font_size) ?>; color: <?= htmlspecialchars($reports_fc) ?>;"
+        >
+          <?= _QXZ("Reports"); ?>
+        </span>
+      </a>
+
+      <hr class="sep">
+
+      <!-- Users -->
+      <a
+        class="nav-item<?= $enableRowClick ? ' row-click' : '' ?>"
+        href="<?= htmlspecialchars($admin) ?>?ADD=0A"
+        <?php if (!empty($users_hh)) echo ' ' . $users_hh; ?>
+      >
+        <span class="icon"><?= $users_icon ?></span>
+        <span
+          class="label"
+          style="font-size: <?= htmlspecialchars($header_font_size) ?>; color: <?= htmlspecialchars($users_fc) ?>;"
+        >
+          <?= _QXZ("Users"); ?>
+        </span>
+      </a>
+    <?php endif; ?>
+  </nav>
+</aside>
+
+<!-- minimal, inline CSS to replace table/layout + <font> -->
+<style>
+  .sidebar{
+    width:170px;
+    background: var(--menu-bg, #263238);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:8px 5px 14px;
+    box-sizing:border-box;
+  }
+  .brand{ width:100%; text-align:center; }
+  .brand img{ display:block; margin:0 auto 6px; height:auto; }
+  .brand-title{
+    font: 700 12px/1 Arial, Helvetica, sans-serif;
+    color:#fff;
+    letter-spacing:.5px;
+    margin-bottom:4px;
+  }
+  .nav{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .sep{
+    border:0;
+    height:1px;
+    background: rgba(255,255,255,.25);
+    margin:6px 0;
+  }
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 6px;
+    border-radius:6px;
+    text-decoration:none;
+    background: transparent;
+    transition: background .15s ease, transform .02s ease;
+  }
+  .nav-item:hover{ background: rgba(255,255,255,.08); }
+  .nav-item:active{ transform: translateY(1px); }
+  .nav-item .icon{ display:inline-flex; }
+  .nav-item .label{
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 600; /* replaces legacy <B> usage */
+  }
+</style>
+
+<?php if ($enableRowClick): ?>
+<script>
+  // Optional: make the whole row feel clickable (already an <a>, so this is just polish)
+  document.addEventListener('click', function(e){
+    const item = e.target.closest('.nav-item');
+    if (item && item.tagName === 'A') {
+      // default anchor behavior is enough; this block is a placeholder if you ever need custom logic.
+    }
+  });
+</script>
+<?php endif; ?>
+
 	<?php
 	if (strlen($users_hh) > 25) 
 		{ 
