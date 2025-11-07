@@ -1599,8 +1599,6 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
         }
     <?php
     }
-
-<?php
 // Check if we should include the dynamic JavaScript
  $validAddValues = [2811, 3811, 3111, 2111, 2011, 4111, 5111];
 if (in_array($ADD, $validAddValues)) {
