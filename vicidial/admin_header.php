@@ -1849,10 +1849,25 @@ background:rgb(102,255,51);
 <?php
 ##### END - bar chart CSS style #####
 
-echo "</head>\n";
+echo "</head>\n"; echo '<div class="admin-content">'; 
 if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 	{
-	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
+	
+    // Inject modern styling before body output
+    echo '<style>
+    body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important; }
+    .admin-layout { display: flex !important; min-height: 100vh !important; width: 100% !important; }
+    .admin-sidebar { width: 260px !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; position: fixed !important; height: 100vh !important; left: 0 !important; top: 0 !important; z-index: 1000 !important; overflow-y: auto !important; }
+    .admin-content { flex: 1 !important; margin-left: 260px !important; background: white !important; min-height: 100vh !important; }
+    TABLE { background: inherit !important; }
+    TD { background: inherit !important; }
+    TH { background: inherit !important; }
+    </style>';
+
+    echo '<div class="admin-layout">';
+    echo '<div class="admin-sidebar">';
+
+    echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
 	}
 else
 	{
@@ -1871,73 +1886,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 ?>
 <CENTER>
 
-
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
-    color: #333;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-.admin-layout {
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
-}
-.admin-sidebar {
-    width: 260px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-    overflow-y: auto;
-    position: fixed;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    padding-bottom: 100px !important;
-}
-.admin-sidebar TD { background: none !important; border: none !important; }
-.admin-sidebar A { color: white !important; }
-.admin-sidebar A:hover { background: rgba(255,255,255,0.1) !important; }
-.admin-content {
-    flex: 1;
-    margin-left: 260px;
-    background: white !important;
-    min-height: 100vh;
-}
-@media (max-width: 768px) {
-    .admin-sidebar { transform: translateX(-100%); transition: transform 0.3s ease; width: 280px; }
-    .admin-sidebar.open { transform: translateX(0); }
-    .admin-content { margin-left: 0; }
-}
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
-::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 5px; }
-</style>
-<script>
-function toggleSidebar() {
-    const sb = document.querySelector('.admin-sidebar');
-    if (sb.classList.contains('open')) {
-        sb.classList.remove('open');
-    } else {
-        sb.classList.add('open');
-    }
-}
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const sb = document.querySelector('.admin-sidebar');
-        if (sb) sb.classList.remove('open');
-    }
-});
-</script>
-<div class="admin-layout">
-<table class="admin-sidebar" cellpadding=0 cellspacing=0 border=0 style="background: none; box-shadow: none;">
-<tr><td style="background: none; border: none;">
-
+<TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
 <TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
 <A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
@@ -2706,10 +2655,7 @@ document.addEventListener('keydown', function(e) {
 		}
 	?>
 	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
-	
-</td></tr></table>
-</div>
-
+	</TABLE>
 	<BR>&nbsp;
 </TD><TD VALIGN=TOP WIDTH=<?php echo $page_width ?> BGCOLOR=#<?php echo $SSframe_background ?>>
 <!-- END SIDEBAR NAVIGATION -->
@@ -2885,3 +2831,9 @@ else
 <?php 
 ######################### FULL HTML HEADER END #######################################
 }
+
+
+    // Close modern layout at end of file
+    echo '</div></div>';
+    ?>
+    
