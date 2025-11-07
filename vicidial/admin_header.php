@@ -331,6 +331,11 @@ if ($short_header) {
     }
 }
 
+// ANDROID MOBILE HEADER - INLINE MODERNIZED
+// Purple Gradient + Responsive Design
+// ============================================
+
+//Done till small header modernization at
 ######################### FULL HTML HEADER BEGIN #######################################
 else
 {
@@ -1743,419 +1748,155 @@ echo "</script>\n";
 ?>
 
 <style type="text/css">
-/* ===================================
-   MODERNIZED VICIDIAL ADMIN STYLES
-   Updated: <?php echo date('Y-m-d'); ?>
-   =================================== */
+<!--
 
-/* ============ DIFF TABLE STYLES (Conditional) ============ */
-<?php if ($ADD == '730000000000000') { ?>
-.diff table {
-    margin: 1px;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border-radius: 4px;
-    overflow: hidden;
+
+<?php
+
+if ($ADD == '730000000000000')
+{
+?>
+
+.diff table{
+margin          : 1px 1px 1px 1px;
+border-collapse : collapse;
+border-spacing  : 0;
 }
 
-.diff td {
-    vertical-align: top;
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    padding: 4px 8px;
+.diff td{
+vertical-align : top;
+font-family    : monospace;
+font-size      : 9;
+}
+.diff span{
+display:block;
+min-height:1pm;
+margin-top:-1px;
+padding:1px 1px 1px 1px;
 }
 
-.diff span {
-    display: block;
-    min-height: 1em;
-    margin-top: -1px;
-    padding: 4px 6px;
-    border-radius: 3px;
-    transition: all 0.2s ease;
+* html .diff span{
+height:1px;
 }
 
-.diff span:first-child {
-    margin-top: 1px;
+.diff span:first-child{
+margin-top:1px;
 }
 
-.diffDeleted span {
-    border: 1px solid rgba(255, 51, 0, 0.5);
-    background: linear-gradient(135deg, rgba(255, 173, 153, 0.9), rgba(255, 100, 80, 0.1));
-    box-shadow: 0 1px 3px rgba(255, 51, 0, 0.1);
+.diffDeleted span{
+border:1px solid rgb(255,51,0);
+background:rgb(255,173,153);
 }
 
-.diffDeleted span:hover {
-    background: rgba(255, 173, 153, 1);
-    box-shadow: 0 2px 6px rgba(255, 51, 0, 0.2);
+.diffInserted span{
+border:1px solid rgb(51,204,51);
+background:rgb(102,255,51);
 }
 
-.diffInserted span {
-    border: 1px solid rgba(51, 204, 51, 0.5);
-    background: linear-gradient(135deg, rgba(153, 255, 102, 0.9), rgba(51, 204, 51, 0.1));
-    box-shadow: 0 1px 3px rgba(51, 204, 51, 0.1);
+<?php
 }
+?>
 
-.diffInserted span:hover {
-    background: rgba(153, 255, 102, 1);
-    box-shadow: 0 2px 6px rgba(51, 204, 51, 0.2);
-}
-<?php } ?>
+.auraltext
+	{
+	position: absolute;
+	font-size: 0;
+	left: -1000px;
+	}
+.chart_td
+	{background-image: url(images/gridline58.gif); background-repeat: repeat-x; background-position: left top; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; padding:0; border-bottom: 1px solid #e5e5e5; background-color:transparent;}
 
-/* ============ ACCESSIBILITY ============ */
-.auraltext {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
+.head_style
+	{
+	background-color: <?php echo $Mmain_bgcolor ?>;
+	}
+.head_style:hover{background-color: #262626;}
 
-/* ============ CHART STYLES ============ */
-.chart_td {
-    background-image: url(images/gridline58.gif);
-    background-repeat: repeat-x;
-    background-position: left top;
-    border: 1px solid rgba(229, 229, 229, 0.8);
-    border-top: none;
-    padding: 0;
-    background-color: transparent;
-    transition: all 0.2s ease;
-}
+.head_style_selected
+	{
+	background-color: <?php echo $Mhead_color ?>;
+	}
+.head_style_selected:hover{background-color: <?php echo $Mhead_color ?>;}
 
-.chart_td:hover {
-    background-color: rgba(102, 126, 234, 0.05);
-    border-color: rgba(102, 126, 234, 0.3);
-}
+.subhead_style
+	{
+	background-color: <?php echo $Msubhead_color ?>;
+	}
+.subhead_style:hover{background-color: white;}
 
-/* ============ NAVIGATION HEADER STYLES ============ */
-.head_style {
-    background: transparent;
-    padding: 12px;
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+.subhead_style_selected
+	{
+	background-color: <?php echo $Mselected_color ?>;
+	}
+.subhead_style_selected:hover{background-color: <?php echo $Mselected_color ?>;}
 
-.head_style:hover {
-    background: rgba(102, 126, 234, 0.15);
-    border-left: 3px solid #667eea;
-    transform: translateX(2px);
-}
+.adminmenu_style_selected
+	{
+	background-color: white;
+	}
+.adminmenu_style_selected:hover{background-color: #E6E6E6;}
 
-.head_style_selected {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    padding: 12px;
-    border-left: 4px solid #FFD700;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-    transform: translateX(2px);
-}
+.records_list_x
+	{
+	background-color: #<?php echo $SSstd_row2_background ?>;
+	}
+.records_list_x:hover{background-color: #E6E6E6;}
 
-.head_style_selected:hover {
-    background: linear-gradient(135deg, #7c8ef5, #8656b8);
-    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.5);
-}
+.records_list_y
+	{
+	background-color: #<?php echo $SSstd_row1_background ?>;
+	}
+.records_list_y:hover{background-color: #E6E6E6;}
 
-/* ============ SUBMENU STYLES ============ */
-.subhead_style {
-    background: transparent;
-    padding: 8px 12px;
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
 
-.subhead_style:hover {
-    background: rgba(102, 126, 234, 0.1);
-    border-left: 3px solid #667eea;
-    transform: translateX(4px);
-}
+.horiz_line
+	{
+	height: 0px;
+	margin: 0px;
+	border-bottom: 1px solid #E6E6E6;
+	font-size: 1px;
+	}
+.horiz_line_grey
+	{
+	height: 0px;
+	margin: 0px;
+	border-bottom: 1px solid #9E9E9E;
+	font-size: 1px;
+	}
 
-.subhead_style_selected {
-    background: rgba(102, 126, 234, 0.2);
-    padding: 8px 12px;
-    border-left: 3px solid #667eea;
-    box-shadow: inset 0 1px 3px rgba(102, 126, 234, 0.2);
-}
+.sub_sub_head_links
+	{
+	font-family:HELVETICA;
+	font-size:11;
+	color:BLACK;
+	}
 
-.subhead_style_selected:hover {
-    background: rgba(102, 126, 234, 0.25);
-    box-shadow: inset 0 1px 4px rgba(102, 126, 234, 0.3);
-}
+-->
 
-/* ============ ADMIN MENU STYLES ============ */
-.adminmenu_style_selected {
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-    border-left: 3px solid #667eea;
-    padding: 10px 14px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-    transition: all 0.2s ease;
-}
-
-.adminmenu_style_selected:hover {
-    background: linear-gradient(90deg, rgba(230, 230, 230, 1), rgba(240, 240, 240, 1));
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-    transform: translateX(2px);
-}
-
-/* ============ RECORDS LIST (STRIPED ROWS) ============ */
-.records_list_x {
-    background-color: #<?php echo $SSstd_row2_background ?>;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
-}
-
-.records_list_x:hover {
-    background: linear-gradient(90deg, rgba(230, 230, 230, 0.95), rgba(240, 240, 240, 0.95));
-    border-left: 3px solid #667eea;
-    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.15);
-    transform: scale(1.005);
-}
-
-.records_list_y {
-    background-color: #<?php echo $SSstd_row1_background ?>;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
-}
-
-.records_list_y:hover {
-    background: linear-gradient(90deg, rgba(230, 230, 230, 0.95), rgba(240, 240, 240, 0.95));
-    border-left: 3px solid #667eea;
-    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.15);
-    transform: scale(1.005);
-}
-
-/* ============ DIVIDER LINES ============ */
-.horiz_line {
-    height: 0;
-    margin: 0;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0;
-}
-
-.horiz_line_grey {
-    height: 0;
-    margin: 4px 0;
-    border: none;
-    border-bottom: 1px solid rgba(158, 158, 158, 0.3);
-    font-size: 0;
-}
-
-/* ============ SUB-SUB HEADING LINKS ============ */
-.sub_sub_head_links {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 11px;
-    color: #333;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-
-.sub_sub_head_links:hover {
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-    transform: translateY(-1px);
-}
-
-/* ============ GLOBAL ENHANCEMENTS ============ */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Selection color */
-::selection {
-    background: rgba(102, 126, 234, 0.3);
-    color: #fff;
-}
-
-::-moz-selection {
-    background: rgba(102, 126, 234, 0.3);
-    color: #fff;
-}
-
-/* Focus styles for accessibility */
-a:focus, button:focus, input:focus, select:focus, textarea:focus {
-    outline: 2px solid #667eea;
-    outline-offset: 2px;
-}
-
-/* Custom scrollbar (webkit browsers) */
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #7c8ef5, #8656b8);
-}
-
-/* ============ RESPONSIVE UTILITIES ============ */
-@media (max-width: 768px) {
-    .head_style, .head_style_selected {
-        padding: 8px;
-    }
-    
-    .subhead_style, .subhead_style_selected {
-        padding: 6px 10px;
-    }
-}
-
-/* Print styles */
-@media print {
-    .head_style, .subhead_style {
-        background: none !important;
-        border: 1px solid #ccc !important;
-    }
-}
 </style>
-
 
 <?php
 ##### END - bar chart CSS style #####
+
 echo "</head>\n";
-
-// Modern body styling with gradient background
-$body_styles = "
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    margin: 0;
-    padding: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #333;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-";
-
-// Add onLoad event if modify refresh is needed
-$onload_event = '';
-if (($SSadmin_modify_refresh > 1) && (preg_match("/^3|^4/", $ADD))) {
-    $onload_event = ' onLoad="modify_refresh_display();"';
-}
-
-echo "<BODY style=\"{$body_styles}\"{$onload_event}>\n";
-
-// Internationalization placeholder
+if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
+	{
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
+	}
+else
+	{
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	}
+	
 echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 
-// Loading animation overlay (optional - shows during page load)
-?>
-<div id="page-loader" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-">
-    <div style="text-align: center;">
-        <div style="
-            width: 60px;
-            height: 60px;
-            border: 6px solid rgba(255,255,255,0.2);
-            border-top-color: #FFD700;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        "></div>
-        <p style="color: #fff; margin-top: 20px; font-weight: 600; font-size: 16px;">Loading...</p>
-    </div>
-</div>
 
-<style>
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-</style>
+if ($header_font_size < 4) {$header_font_size='12';}
+if ($subheader_font_size < 4) {$subheader_font_size='11';}
+if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
-<script>
-// Hide loader when page is fully loaded
-window.addEventListener('load', function() {
-    const loader = document.getElementById('page-loader');
-    if (loader) {
-        loader.style.opacity = '0';
-        setTimeout(function() {
-            loader.style.display = 'none';
-        }, 500);
-    }
-});
-</script>
 
-<!-- Main Content Wrapper -->
-<div id="main-wrapper" style="
-    max-width: 1920px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    min-height: 100vh;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-">
 
-<?php
-
-// Font size validation with better defaults
-if ($header_font_size < 4) {
-    $header_font_size = '14';  // Increased from 12 for better readability
-}
-if ($subheader_font_size < 4) {
-    $subheader_font_size = '13';  // Increased from 11
-}
-if ($subcamp_font_size < 4) {
-    $subcamp_font_size = '12';  // Increased from 11
-}
-
-// Debug mode indicator (only shows if debug is enabled)
-if (isset($DB) && $DB > 0) {
-    ?>
-    <div style="
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background: linear-gradient(135deg, #F56565, #C53030);
-        color: #fff;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
-        z-index: 9998;
-        letter-spacing: 0.5px;
-    ">
-        🐛 DEBUG MODE
-    </div>
-    <?php
-}
 ?>
 <left>
 
