@@ -95,152 +95,121 @@ if ( ($SSweb_logo!='default_new') and ($SSweb_logo!='default_old') )
 		$selected_small_logo = "./images/vicidial_admin_web_logo$SSweb_logo";
 		}
 	}
-#### BEGIN populate dynamic header content - MODERNIZED WITH INLINE STYLES #####
-
-if ($hh=='users') {
-    $users_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $users_fc="#FFD700"; 
-    $users_bold="<B>";
-    $users_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_users.png\" width=18 height=18></span>";
-} else {
-    $users_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $users_fc='#fff'; 
-    $users_bold="";
-    $users_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_users.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// CAMPAIGNS
-if ($hh=='campaigns') {
-    $campaigns_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $campaigns_fc="#FFD700"; 
-    $campaigns_bold="<B>";
-    $campaigns_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_campaigns.png\" width=18 height=18></span>";
-} else {
-    $campaigns_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $campaigns_fc='#fff'; 
-    $campaigns_bold="";
-    $campaigns_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_campaigns.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// LISTS
-if ($hh=='lists') {
-    $lists_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $lists_fc="#FFD700"; 
-    $lists_bold="<B>";
-    $lists_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_lists.png\" width=18 height=18></span>";
-} else {
-    $lists_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $lists_fc='#fff'; 
-    $lists_bold="";
-    $lists_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_lists.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// INBOUND/INGROUPS
-if ($hh=='ingroups') {
-    $ingroups_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $ingroups_fc="#FFD700"; 
-    $ingroups_bold="<B>";
-    $inbound_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_inbound.png\" width=18 height=18></span>";
-} else {
-    $ingroups_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $ingroups_fc='#fff'; 
-    $ingroups_bold="";
-    $inbound_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_inbound.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// REMOTE AGENTS
-if ($hh=='remoteagent') {
-    $remoteagent_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $remoteagent_fc="#FFD700"; 
-    $remoteagent_bold="<B>";
-    $remoteagents_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_remoteagents.png\" width=18 height=18></span>";
-} else {
-    $remoteagent_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $remoteagent_fc='#fff'; 
-    $remoteagent_bold="";
-    $remoteagents_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_remoteagents.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// USER GROUPS
-if ($hh=='usergroups') {
-    $usergroups_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $usergroups_fc="#FFD700"; 
-    $usergroups_bold="<B>";
-    $usergroups_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_usergroups.png\" width=18 height=18></span>";
-} else {
-    $usergroups_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $usergroups_fc='#fff'; 
-    $usergroups_bold="";
-    $usergroups_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_usergroups.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// SCRIPTS
-if ($hh=='scripts') {
-    $scripts_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $scripts_fc="#FFD700"; 
-    $scripts_bold="<B>";
-    $scripts_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_scripts.png\" width=18 height=18></span>";
-} else {
-    $scripts_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $scripts_fc='#fff'; 
-    $scripts_bold="";
-    $scripts_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_scripts.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// FILTERS
-if ($hh=='filters') {
-    $filters_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $filters_fc="#FFD700"; 
-    $filters_bold="<B>";
-    $filters_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_filters.png\" width=18 height=18></span>";
-} else {
-    $filters_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $filters_fc='#fff'; 
-    $filters_bold="";
-    $filters_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_filters.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// ADMIN
-if ($hh=='admin') {
-    $admin_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $admin_fc="#FFD700"; 
-    $admin_bold="<B>";
-    $admin_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_admin.png\" width=18 height=18></span>";
-} else {
-    $admin_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $admin_fc='#fff'; 
-    $admin_bold="";
-    $admin_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_admin.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// REPORTS
-if ($hh=='reports') {
-    $reports_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $reports_fc="#FFD700"; 
-    $reports_bold="<B>";
-    $reports_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_reports.png\" width=18 height=18></span>";
-} else {
-    $reports_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $reports_fc='#fff'; 
-    $reports_bold="";
-    $reports_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_reports.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
-
-// QUALITY CONTROL
-if ($hh=='qc') {
-    $qc_hh="style=\"background:linear-gradient(135deg,#667eea,#764ba2);padding:12px;border-left:4px solid #FFD700;box-shadow:0 2px 8px rgba(102,126,234,0.4);\""; 
-    $qc_fc="#FFD700"; 
-    $qc_bold="<B>";
-    $qc_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#fff;border-radius:8px;margin-right:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);\"><img src=\"images/icon_black_qc.png\" width=18 height=18></span>";
-} else {
-    $qc_hh="style=\"background:transparent;padding:12px;border-left:4px solid transparent;transition:all 0.3s;\" onmouseover=\"this.style.background='rgba(102,126,234,0.15)';this.style.borderLeft='4px solid #667eea'\" onmouseout=\"this.style.background='transparent';this.style.borderLeft='4px solid transparent'\""; 
-    $qc_fc='#fff'; 
-    $qc_bold="";
-    $qc_icon="<span style=\"display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;margin-right:8px;\"><img src=\"images/icon_qc.png\" width=18 height=18 style=\"opacity:0.8\"></span>";
-}
 
 
+##### BEGIN populate dynamic header content #####
+if ($hh=='users') 
+	{
+	$users_hh="CLASS=\"head_style_selected\""; $users_fc="$users_font"; $users_bold="$header_selected_bold";
+	$users_icon="<img src=\"images/icon_black_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$users_hh="CLASS=\"head_style\""; $users_fc='WHITE'; $users_bold="$header_nonselected_bold";
+	$users_icon="<img src=\"images/icon_users.png\" border=0 alt=\"Users\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='campaigns') 
+	{
+	$campaigns_hh="CLASS=\"head_style_selected\""; $campaigns_fc="$campaigns_font"; $campaigns_bold="$header_selected_bold";
+	$campaigns_icon="<img src=\"images/icon_black_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$campaigns_hh="CLASS=\"head_style\""; $campaigns_fc='WHITE'; $campaigns_bold="$header_nonselected_bold";
+	$campaigns_icon="<img src=\"images/icon_campaigns.png\" border=0 alt=\"Campaigns\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='lists') 
+	{
+	$lists_hh="CLASS=\"head_style_selected\""; $lists_fc="$lists_font"; $lists_bold="$header_selected_bold";
+	$lists_icon="<img src=\"images/icon_black_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$lists_hh="CLASS=\"head_style\""; $lists_fc='WHITE'; $lists_bold="$header_nonselected_bold";
+	$lists_icon="<img src=\"images/icon_lists.png\" border=0 alt=\"Lists\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='ingroups') 
+	{
+	$ingroups_hh="CLASS=\"head_style_selected\""; $ingroups_fc="$ingroups_font"; $ingroups_bold="$header_selected_bold";
+	$inbound_icon="<img src=\"images/icon_black_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$ingroups_hh="CLASS=\"head_style\""; $ingroups_fc='WHITE'; $ingroups_bold="$header_nonselected_bold";
+	$inbound_icon="<img src=\"images/icon_inbound.png\" border=0 alt=\"Inbound\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='remoteagent') 
+	{
+	$remoteagent_hh="CLASS=\"head_style_selected\""; $remoteagent_fc="$remoteagent_font"; $remoteagent_bold="$header_selected_bold";
+	$remoteagents_icon="<img src=\"images/icon_black_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$remoteagent_hh="CLASS=\"head_style\""; $remoteagent_fc='WHITE'; $remoteagent_bold="$header_nonselected_bold";
+	$remoteagents_icon="<img src=\"images/icon_remoteagents.png\" border=0 alt=\"Remote Agents\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='usergroups') 
+	{
+	$usergroups_hh="CLASS=\"head_style_selected\""; $usergroups_fc="$usergroups_font"; $usergroups_bold="$header_selected_bold";
+	$usergroups_icon="<img src=\"images/icon_black_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$usergroups_hh="CLASS=\"head_style\""; $usergroups_fc='WHITE'; $usergroups_bold="$header_nonselected_bold";
+	$usergroups_icon="<img src=\"images/icon_usergroups.png\" border=0 alt=\"User Groups\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='scripts') 
+	{
+	$scripts_hh="CLASS=\"head_style_selected\""; $scripts_fc="$scripts_font"; $scripts_bold="$header_selected_bold";
+	$scripts_icon="<img src=\"images/icon_black_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$scripts_hh="CLASS=\"head_style\""; $scripts_fc='WHITE'; $scripts_bold="$header_nonselected_bold";
+	$scripts_icon="<img src=\"images/icon_scripts.png\" border=0 alt=\"Scripts\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='filters') 
+	{
+	$filters_hh="CLASS=\"head_style_selected\""; $filters_fc="$filters_font"; $filters_bold="$header_selected_bold";
+	$filters_icon="<img src=\"images/icon_black_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$filters_hh="CLASS=\"head_style\""; $filters_fc='WHITE'; $filters_bold="$header_nonselected_bold";
+	$filters_icon="<img src=\"images/icon_filters.png\" border=0 alt=\"Filters\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='admin') 
+	{
+	$admin_hh="CLASS=\"head_style_selected\""; $admin_fc="$admin_font"; $admin_bold="$header_selected_bold";
+	$admin_icon="<img src=\"images/icon_black_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$admin_hh="CLASS=\"head_style\""; $admin_fc='WHITE'; $admin_bold="$header_nonselected_bold";
+	$admin_icon="<img src=\"images/icon_admin.png\" border=0 alt=\"Admin\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='reports') 
+	{
+	$reports_hh="CLASS=\"head_style_selected\""; $reports_fc="$reports_font"; $reports_bold="$header_selected_bold";
+	$reports_icon="<img src=\"images/icon_black_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$reports_hh="CLASS=\"head_style\""; $reports_fc='WHITE'; $reports_bold="$header_nonselected_bold";
+	$reports_icon="<img src=\"images/icon_reports.png\" border=0 alt=\"Reports\" width=14 height=14 valign=middle>";
+	}
+if ($hh=='qc')
+	{
+	$qc_hh="CLASS=\"head_style_selected\""; $qc_fc="$qc_font"; $qc_bold="$header_selected_bold";
+	$qc_icon="<img src=\"images/icon_black_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
+	}
+else 
+	{
+	$qc_hh="CLASS=\"head_style\""; $qc_fc='WHITE'; $qc_bold="$header_nonselected_bold";
+	$qc_icon="<img src=\"images/icon_qc.png\" border=0 alt=\"Quality Control\" width=14 height=14 valign=middle>";
+	}
 ##### END populate dynamic header content #####
+
 if ($short_header) {
     if ($no_header) {
         // Display nothing
@@ -259,7 +228,6 @@ if ($short_header) {
             <table cellpadding="0" cellspacing="0" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);"><tr>
             <td style="padding:12px 16px;"><a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:opacity 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'"><img src="<?php echo htmlspecialchars($temp_logo); ?>" <?php echo $temp_logo_size; ?> border="0" alt="System logo" style="display:block;"></a></td>
             <td style="padding:12px 16px;"></td>
-            </tr></table>
             <?php
         }
         else {
@@ -270,38 +238,26 @@ if ($short_header) {
             
             // Full access menu
             if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-                // Define active states based on current page
-                $is_reports = ($hh == 'reports') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_users = ($hh == 'users') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_campaigns = ($hh == 'campaigns') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_qc = ($hh == 'qc') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_lists = ($hh == 'lists') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_scripts = ($hh == 'scripts') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_filters = ($hh == 'filters') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_ingroups = ($hh == 'ingroups') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_usergroups = ($hh == 'usergroups') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_remoteagent = ($hh == 'remoteagent') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
-                $is_admin = ($hh == 'admin') ? 'background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;' : '';
                 ?>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_reports; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_reports ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" alt="Users" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_users; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_users ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" alt="Campaigns" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_campaigns; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_campaigns ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" alt="Users" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" alt="Campaigns" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a></td>
                 <?php
                 
                 // QC menu if authorized
                 if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
                     ?>
-                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_qc; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_qc ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a></td>
+                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a></td>
                     <?php
                 }
                 ?>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" alt="Lists" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_lists; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_lists ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" alt="Scripts" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_scripts; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_scripts ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" alt="Filters" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_filters; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_filters ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" alt="Inbound" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_ingroups; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_ingroups ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" alt="User Groups" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_usergroups; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_usergroups ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" alt="Remote Agents" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_remoteagent; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_remoteagent ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a></td>
-                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" alt="Admin" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:all 0.2s;<?php echo $is_admin; ?>" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='<?php echo $is_admin ? 'rgba(255,215,0,0.2)' : 'transparent'; ?>'"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" alt="Lists" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" alt="Scripts" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" alt="Filters" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" alt="Inbound" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" alt="User Groups" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" alt="Remote Agents" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a></td>
+                <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" alt="Admin" style="display:inline-flex;align-items:center;gap:4px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a></td>
                 <?php
             }
             // Limited access menu
@@ -312,13 +268,13 @@ if ($short_header) {
                 
                 if ($reports_only_user > 0) {
                     ?>
-                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,215,0,0.3)'" onmouseout="this.style.background='rgba(255,215,0,0.2)'"><?php echo _QXZ("Reports"); ?></a></td>
+                    <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" alt="Reports" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Reports"); ?></a></td>
                     <?php
                 }
                 else {
                     if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
                         ?>
-                        <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,215,0,0.2);border-bottom:3px solid #FFD700;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,215,0,0.3)'" onmouseout="this.style.background='rgba(255,215,0,0.2)'"><?php echo _QXZ("Quality Control"); ?></a></td>
+                        <td style="padding:0 8px;"><a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" alt="Quality Control" style="display:inline-flex;align-items:center;gap:4px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;background:rgba(255,255,255,0.15);border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'"><?php echo _QXZ("Quality Control"); ?></a></td>
                         <?php
                     }
                 }
@@ -330,12 +286,27 @@ if ($short_header) {
         }
     }
 }
+######################### SMALL HTML HEADER END #######################################
 
+
+######################### MOBILE HTML HEADER BEGIN ####################################
+// ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
 // Purple Gradient + Responsive Design
 // ============================================
 
-//Done till small header modernization at
+else if ($android_header) {
+    ?>
+    <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
+    <td style="padding:10px 14px;"><a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
+    <td style="padding:0;flex:1;"></td>
+    <td style="padding:0 8px;"><a href="admin_mobile.php?ADD=999990" alt="Admin" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;font-family:Arial,Helvetica,sans-serif;border-radius:4px;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'"><?php echo $admin_icon; ?> <span><?php echo _QXZ("Admin"); ?></span></a></td>
+    </tr>
+    </table>
+    <?php
+}
+
+//Done till small header modernization at line 309
 ######################### FULL HTML HEADER BEGIN #######################################
 else
 {
@@ -1898,7 +1869,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 
 ?>
-<left>
+<CENTER>
 
 <TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
