@@ -331,96 +331,158 @@ if ($short_header) {
     }
 }
 
-// ANDROID MOBILE HEADER - INLINE MODERNIZED
-// Purple Gradient + Responsive Design
-// ============================================
-
-//Done till small header modernization at
 ######################### FULL HTML HEADER BEGIN #######################################
+
 else
 {
 if ($no_title < 1) {echo "</title>\n";}
 echo "<script language=\"Javascript\">\n";
+echo "// Initialize global variables\n";
 echo "var field_name = '';\n";
-echo "var user = '$PHP_AUTH_USER';\n";
+echo "var user = '" . htmlspecialchars($PHP_AUTH_USER, ENT_QUOTES) . "';\n";
 echo "var epoch = '" . date("U") . "';\n";
+echo "var DEBUG_MODE = false; // Set to true for console logging\n\n";
 
-if ($TCedit_javascript > 0)
-	{
-	 ?>
+if ($TCedit_javascript > 0) {
+?>
 
-	function run_submit()
-		{
-		calculate_hours();
-		var go_submit = document.getElementById("go_submit");
-		if (go_submit.disabled == false)
-			{
-			document.edit_log.submit();
-			}
-		}
+/**
+ * Submit form after validation
+ */
+function run_submit() {
+    calculate_hours();
+    const submitBtn = document.getElementById("go_submit");
+    
+    if (submitBtn && !submitBtn.disabled) {
+        if (DEBUG_MODE) console.log('[SUBMIT] Form validation passed, submitting...');
+        document.edit_log.submit();
+    } else {
+        if (DEBUG_MODE) console.warn('[SUBMIT] Form validation failed or button disabled');
+    }
+}
 
-	// Calculate login time
-	function calculate_hours() 
-		{
-		var now_epoch = '<?php echo $StarTtimE ?>';
-		var local_gmt_sec = '<?php echo $local_gmt_sec ?>';
-		var local_gmt_sec = (local_gmt_sec * 1);
-		var i=0;
-		var total_percent=0;
-		var SPANlogin_time = document.getElementById("LOGINlogin_time");
-		var LI_date = document.getElementById("LOGINbegin_date");
-		var LO_date = document.getElementById("LOGOUTbegin_date");
-		var LI_datetime = LI_date.value;
-		var LO_datetime = LO_date.value;
-		var LI_datetime_array=LI_datetime.split(" ");
-		var LI_date_array=LI_datetime_array[0].split("-");
-		var LI_time_array=LI_datetime_array[1].split(":");
-		var LO_datetime_array=LO_datetime.split(" ");
-		var LO_date_array=LO_datetime_array[0].split("-");
-		var LO_time_array=LO_datetime_array[1].split(":");
+/**
+ * Calculate and validate login time duration
+ * Ensures login period is valid and within acceptable range
+ */
+function calculate_hours() {
+    // Constants
+    const now_epoch = <?php echo $StarTtimE ?>;
+    const local_gmt_sec = <?php echo $local_gmt_sec ?>;
+    const MAX_HOURS = 86401; // 24 hours + 1 second
+    
+    // Get DOM elements
+    const loginTimeDisplay = document.getElementById("login_time");
+    const loginDateInput = document.getElementById("LOGINbegin_date");
+    const logoutDateInput = document.getElementById("LOGOUTbegin_date");
+    const submitBtn = document.getElementById("go_submit");
+    
+    if (!loginDateInput || !logoutDateInput || !loginTimeDisplay) {
+        console.error('[CALCULATE] Required DOM elements not found');
+        return;
+    }
+    
+    try {
+        // Parse login datetime
+        const loginDateTime = loginDateInput.value;
+        const logoutDateTime = logoutDateInput.value;
+        
+        const [loginDate, loginTime] = loginDateTime.split(" ");
+        const [loginYear, loginMonth, loginDay] = loginDate.split("-");
+        const [loginHour, loginMin, loginSec] = loginTime.split(":");
+        
+        // Parse logout datetime
+        const [logoutDate, logoutTime] = logoutDateTime.split(" ");
+        const [logoutYear, logoutMonth, logoutDay] = logoutDate.split("-");
+        const [logoutHour, logoutMin, logoutSec] = logoutTime.split(":");
+        
+        // Calculate epochs (milliseconds since 1970)
+        const loginEpoch = Date.UTC(loginYear, loginMonth - 1, loginDay, loginHour, loginMin, loginSec) / 1000 + local_gmt_sec;
+        const logoutEpoch = Date.UTC(logoutYear, logoutMonth - 1, logoutDay, logoutHour, logoutMin, logoutSec) / 1000 + local_gmt_sec;
+        const epochDiff = logoutEpoch - loginEpoch;
+        
+        if (DEBUG_MODE) {
+            console.log('[CALCULATE] Login epoch:', loginEpoch);
+            console.log('[CALCULATE] Logout epoch:', logoutEpoch);
+            console.log('[CALCULATE] Difference (seconds):', epochDiff);
+            console.log('[CALCULATE] Current epoch:', now_epoch);
+        }
+        
+        // Default error state
+        loginTimeDisplay.innerHTML = "<span style='color:#F56565;font-weight:600;'>⚠ ERROR: Please check date fields</span>";
+        submitBtn.disabled = true;
+        
+        // Validate time period
+        const isValidDuration = epochDiff > 0 && epochDiff < MAX_HOURS;
+        const isNotFuture = loginEpoch < now_epoch && logoutEpoch < now_epoch;
+        
+        if (isValidDuration && isNotFuture) {
+            // Calculate hours and minutes
+            let remainingSecs = epochDiff;
+            const hours = Math.floor(remainingSecs / 3600);
+            remainingSecs -= hours * 3600;
+            
+            const mins = Math.floor(remainingSecs / 60);
+            const paddedMins = mins < 10 ? '0' + mins : mins;
+            
+            // Display formatted time with modern styling
+            loginTimeDisplay.innerHTML = `<span style='color:#48BB78;font-weight:700;font-size:16px;'>✓ ${hours}:${paddedMins}</span>`;
+            submitBtn.disabled = false;
+            
+            // Update hidden form fields with epoch values
+            document.getElementById("LOGINepoch").value = loginEpoch;
+            document.getElementById("LOGOUTepoch").value = logoutEpoch;
+            
+            if (DEBUG_MODE) {
+                console.log('[CALCULATE] ✓ Validation passed');
+                console.log('[CALCULATE] Duration:', hours + ':' + paddedMins);
+            }
+        } else {
+            if (DEBUG_MODE) {
+                console.warn('[CALCULATE] ✗ Validation failed:');
+                console.warn('  - Valid duration:', isValidDuration);
+                console.warn('  - Not in future:', isNotFuture);
+            }
+        }
+    } catch (error) {
+        console.error('[CALCULATE] Error during calculation:', error);
+        loginTimeDisplay.innerHTML = "<span style='color:#F56565;font-weight:600;'>⚠ ERROR: " + error.message + "</span>";
+        submitBtn.disabled = true;
+    }
+}
 
-		// Calculate milliseconds since 1970 for each date string and find diff
-		var LI_date_epoch = Date.UTC(LI_date_array[0], (LI_date_array[1]-1), LI_date_array[2], LI_time_array[0], LI_time_array[1], LI_time_array[2]);
-		var LO_date_epoch = Date.UTC(LO_date_array[0], (LO_date_array[1]-1), LO_date_array[2], LO_time_array[0], LO_time_array[1], LO_time_array[2]);
-		var temp_LI_epoch = ( (LI_date_epoch / 1000 ) + local_gmt_sec);
-		var temp_LO_epoch = ( (LO_date_epoch / 1000 ) + local_gmt_sec);
-		var epoch_diff = (temp_LO_epoch - temp_LI_epoch);
-		var temp_diff = epoch_diff;
+// Auto-calculate on page load if elements exist
+document.addEventListener('DOMContentLoaded', function() {
+    if (DEBUG_MODE) console.log('[INIT] Page loaded, checking for time calculation elements...');
+    
+    const loginInput = document.getElementById("LOGINbegin_date");
+    const logoutInput = document.getElementById("LOGOUTbegin_date");
+    
+    if (loginInput && logoutInput) {
+        if (DEBUG_MODE) console.log('[INIT] Time elements found, setting up listeners...');
+        
+        // Auto-calculate when dates change
+        loginInput.addEventListener('change', calculate_hours);
+        logoutInput.addEventListener('change', calculate_hours);
+        
+        // Initial calculation if values exist
+        if (loginInput.value && logoutInput.value) {
+            calculate_hours();
+        }
+    }
+});
 
-		document.getElementById("login_time").innerHTML = "ERROR, Please check date fields";
-
-	//	document.getElementById("login_time").innerHTML = LI_date_epoch + '|' + temp_LI_epoch + '|' + LO_date_epoch + '|' + temp_LO_epoch + '|' + (Date.UTC(LI_date_array[0], LI_date_array[1], LI_date_array[2]) / 1000) + '|' + (Date.UTC(LO_date_array[0], LO_date_array[1], LO_date_array[2]) / 1000) + "\n diff " +  epoch_diff + "\n LI " +  temp_LI_epoch + "\n LO " +  temp_LO_epoch + "\n Now " +  now_epoch + "\n local" + local_gmt_sec;
-
-		var go_submit = document.getElementById("go_submit");
-		go_submit.disabled = true;
-		// length is a positive number and no more than 24 hours, datetime is earlier than right now
-		if ( (epoch_diff < 86401) && (epoch_diff > 0) && (temp_LI_epoch < now_epoch) && (temp_LO_epoch < now_epoch) )
-			{
-			go_submit.disabled = false;
-
-			hours = Math.floor(temp_diff / (60 * 60)); 
-			temp_diff -= hours * (60 * 60);
-
-			mins = Math.floor(temp_diff / 60); 
-			temp_diff -= mins * 60;
-			if (mins < 10) {mins = "0" + mins;}
-
-			secs = Math.floor(temp_diff); 
-			temp_diff -= secs;
-
-			document.getElementById("login_time").innerHTML = hours + ":" + mins;
-
-			var form_LI_epoch = document.getElementById("LOGINepoch");
-			var form_LO_epoch = document.getElementById("LOGOUTepoch");
-			form_LI_epoch.value = temp_LI_epoch;
-			form_LO_epoch.value = temp_LO_epoch;
-			}
-		}
+<?php
+}
+?>
+</script>
+<?php
+}
 
 
 
-	<?php
-	}
+
+
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
