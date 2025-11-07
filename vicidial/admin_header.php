@@ -351,7 +351,7 @@ else if ($android_header) {
 
 ######################### FULL HTML HEADER BEGIN #######################################
 else
-{
+
 if ($no_title < 1) {echo "</title>\n";}
 echo "<script language=\"Javascript\">\n";
 echo "var field_name = '';\n";
@@ -3032,7 +3032,7 @@ body {
                                 <!-- Additional header content -->
                             </tr>
                         </table>
-                        
+											         
                         <main class="admin-main-content">
                             <!-- Main content area -->
                             <?php 
@@ -3043,5 +3043,6 @@ body {
                 </tr>
             </table>
         </center>
+											
     </header>
 </div>            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + selected_value + "\"><?php echo _QXZ
