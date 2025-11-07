@@ -603,518 +603,484 @@ MIXJS;
 	}
 ?>
 	
+<?php
+/* ----- List status confirmation, Agent Hangup route, chooser helpers, pwd helpers, user auto, shift time ----- */
 
-	<?php
-	if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-		{
-	?>
-	// List status change confirmation
-	function ConfirmListStatusChange(system_setting, listForm) {
-		if (!system_setting) {
-			// if the list change confirmation system setting is off, just submit the form
-			listForm.submit();
-			return false;
-		}
+/* List status change confirmation (ADD 34/31/44/41) */
+if ( ( ($ADD==34) or ($ADD==31) or ($ADD==44) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+	{
+echo '<script type="text/javascript">
+/* List status change confirmation */
+function ConfirmListStatusChange(system_setting, listForm) {
+	if (!system_setting) {
+		// if the list change confirmation system setting is off, just submit the form
+		listForm.submit();
+		return false;
+	}
 
-		var previous_list_statuses=document.getElementById('last_list_statuses').value;
+	var previous_list_statuses=document.getElementById("last_list_statuses").value;
 
-		var new_list_statuses="";
+	var new_list_statuses="";
 
-		var lists = document.getElementsByName('list_active_change[]');
-		var no_selected=0;
-		for (var i=0; i<lists.length; i++) {
-			new_list_statuses+=lists[i].value+"|";
-			if (lists[i].checked) {
-				new_list_statuses+="Y|";
-			} else {
-				new_list_statuses+="N|";
-			}
-		}
-
-		if (previous_list_statuses==new_list_statuses) {
-			// if none of the lists active status has been changed, just submit the form
-			listForm.submit();
-			return false;
+	var lists = document.getElementsByName("list_active_change[]");
+	for (var i=0; i<lists.length; i++) {
+		new_list_statuses+=lists[i].value+"|";
+		if (lists[i].checked) {
+			new_list_statuses+="Y|";
 		} else {
-			var prev_array=previous_list_statuses.split("|");
-			var new_array=new_list_statuses.split("|");
-			if (prev_array.length!=new_array.length) {alert("List error. Reload the page and try again."); return false;}
-
-			var altered_lists="";
-			for(i=0; i<prev_array.length; i+=2) {
-				prev_status=prev_array[(i+1)];
-				new_status=new_array[(i+1)];
-				if (prev_status!=new_status) {
-					altered_lists+=" - List "+new_array[i]+": "+prev_status+" => "+new_status+"\n";
-				}
-			}
-
-			var proceed=confirm("You have changed the active status of the following lists:\n\n"+altered_lists+"\nWould you like to proceed with committing the changes?");
-			if (proceed) {
-				listForm.submit();
-			}
+			new_list_statuses+="N|";
 		}
-
 	}
-	<?php
-		}
 
-	if ( ( ($ADD==31) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-		{
-	?>
-	// Agent Call Hangup Route change trigger
-	function AgentCallHangupRouteChange(ACHR_new_value) 
-		{
-		var ACHR_list = document.getElementById("agent_hangup_route");
-		var ACHR_route = ACHR_list.value;
-		var ACHR_value = document.getElementById("agent_hangup_value");
-		var ACHR_title = document.getElementById("agent_hangup_value_title");
-		var ACHR_chooser = document.getElementById("agent_hangup_value_chooser");
+	if (previous_list_statuses==new_list_statuses) {
+		// if none of the lists active status has been changed, just submit the form
+		listForm.submit();
+		return false;
+	} else {
+		var prev_array=previous_list_statuses.split("|");
+		var new_array=new_list_statuses.split("|");
+		if (prev_array.length!=new_array.length) { alert("List error. Reload the page and try again."); return false; }
 
-		if (ACHR_route=='HANGUP')
-			{
-			ACHR_title.innerHTML = '-<?php echo _QXZ("no value required") ?>-';
-			ACHR_chooser.innerHTML = '';
-			ACHR_value.value='';
-			}
-		if (ACHR_route=='MESSAGE')
-			{
-			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Message") ?>';
-			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_chooser('agent_hangup_value','date');\"><?php echo _QXZ("audio chooser") ?></a> ";
-			ACHR_value.value='';
-			}
-		if (ACHR_route=='EXTENSION')
-			{
-			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Dialplan Extension") ?>';
-			ACHR_chooser.innerHTML = '';
-			ACHR_value.value='';
-			}
-		if (ACHR_route=='IN_GROUP')
-			{
-			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup In-Group") ?>';
-			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_ingroup_chooser('agent_hangup_value','group_id');\"><?php echo _QXZ("in-group chooser") ?></a> ";
-			ACHR_value.value='';
-			}
-		if (ACHR_route=='CALLMENU')
-			{
-			ACHR_title.innerHTML = '<?php echo _QXZ("Agent Hangup Call Menu") ?>';
-			ACHR_chooser.innerHTML = " <a href=\"javascript:launch_callmenu_chooser('agent_hangup_value','menu_id');\"><?php echo _QXZ("call menu chooser") ?></a> ";
-			ACHR_value.value='';
+		var altered_lists="";
+		for(var i=0; i<prev_array.length; i+=2) {
+			var prev_status=prev_array[(i+1)];
+			var new_status=new_array[(i+1)];
+			if (prev_status!=new_status) {
+				altered_lists+=" - List "+new_array[i]+": "+prev_status+" => "+new_status+"\\n";
 			}
 		}
 
-	<?php
+		var proceed=confirm("You have changed the active status of the following lists:\\n\\n"+altered_lists+"\\nWould you like to proceed with committing the changes?");
+		if (proceed) {
+			listForm.submit();
+		}
 	}
-	?>
 
-	var weak = new Image();
-	weak.src = "images/weak.png";
-	var medium = new Image();
-	medium.src = "images/medium.png";
-	var strong = new Image();
-	strong.src = "images/strong.png";
+}
+</script>';
+	}
 
-	function pwdChanged(pwd_field_str, pwd_img_str, pwd_len_field, pwd_len_min) 
+/* Agent Call Hangup Route change trigger (ADD 31 or 41) */
+if ( ( ($ADD==31) or ($ADD==41) ) and ($LOGmodify_campaigns==1) and ( (preg_match("/$campaign_id/i", $LOGallowed_campaigns)) or (preg_match("/ALL\-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
+	{
+echo '<script type="text/javascript">
+/* Agent Call Hangup Route change trigger */
+function AgentCallHangupRouteChange(ACHR_new_value) 
+	{
+	var ACHR_list = document.getElementById("agent_hangup_route");
+	var ACHR_route = ACHR_list.value;
+	var ACHR_value = document.getElementById("agent_hangup_value");
+	var ACHR_title = document.getElementById("agent_hangup_value_title");
+	var ACHR_chooser = document.getElementById("agent_hangup_value_chooser");
+
+	if (ACHR_route=="HANGUP")
 		{
-		var pwd_field = document.getElementById(pwd_field_str);
-		var pwd_field_value = pwd_field.value;
-		var pwd_img = document.getElementById(pwd_img_str);
-		var pwd_len = pwd_field_value.length
-
-	//	var strong_regex = new RegExp( "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])", "g" );
-	//	var medium_regex = new RegExp( "^(?=.{6,})(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))).*$", "g" );
-		var strong_regex = new RegExp( "^(?=.{20,})(?=.*[a-zA-Z])(?=.*[0-9])", "g" );
-		var medium_regex = new RegExp( "^(?=.{10,})(?=.*[a-zA-Z])(?=.*[0-9])", "g" );
-
-		if (strong_regex.test(pwd_field.value) ) 
-			{
-			if (pwd_img.src != strong.src)
-				{pwd_img.src = strong.src;}
-			} 
-		else if (medium_regex.test( pwd_field.value) ) 
-			{
-			if (pwd_img.src != medium.src) 
-				{pwd_img.src = medium.src;}
-			}
-		else 
-			{
-			if (pwd_img.src != weak.src) 
-				{pwd_img.src = weak.src;}
-			}
-		if ( (pwd_len_min > 0) && (pwd_len_min > pwd_len) )
-			{document.getElementById(pwd_len_field).innerHTML = "<font color=red><b>" + pwd_len + "</b></font>";}
-		else
-			{document.getElementById(pwd_len_field).innerHTML = "<font color=black><b>" + pwd_len + "</b></font>";}
+		ACHR_title.innerHTML = \'-' . _QXZ("no value required") . '-\';
+		ACHR_chooser.innerHTML = "";
+		ACHR_value.value="";
 		}
-
-	function openNewWindow(url) 
+	if (ACHR_route=="MESSAGE")
 		{
-		window.open (url,"",'width=620,height=300,scrollbars=yes,menubar=yes,address=yes');
+		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup Message") . '";
+		ACHR_chooser.innerHTML = " <a href=\\"javascript:launch_chooser(\\\'agent_hangup_value\\\',\\\'date\\\');\\">' . _QXZ("audio chooser") . '</a> ";
+		ACHR_value.value="";
 		}
-	function scriptInsertField() 
+	if (ACHR_route=="EXTENSION")
 		{
-		openField = '--A--';
-		closeField = '--B--';
-		var textBox = document.scriptForm.script_text;
-		var scriptIndex = document.getElementById("selectedField").selectedIndex;
-		var insValue =  document.getElementById('selectedField').options[scriptIndex].value;
-		if (document.selection) 
-			{
-			//IE
-			textBox = document.scriptForm.script_text;
-			insValue = document.scriptForm.selectedField.options[document.scriptForm.selectedField.selectedIndex].text;
-			textBox.focus();
-			sel = document.selection.createRange();
-			sel.text = openField + insValue + closeField;
-			} 
-		else if (textBox.selectionStart || textBox.selectionStart == 0) 
-			{
-			//Mozilla
-			var startPos = textBox.selectionStart;
-			var endPos = textBox.selectionEnd;
-			textBox.value = textBox.value.substring(0, startPos)
-			+ openField + insValue + closeField
-			+ textBox.value.substring(endPos, textBox.value.length);
-			}
-		else 
-			{
-			textBox.value += openField + insValue + closeField;
-			}
+		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup Dialplan Extension") . '";
+		ACHR_chooser.innerHTML = "";
+		ACHR_value.value="";
 		}
+	if (ACHR_route=="IN_GROUP")
+		{
+		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup In-Group") . '";
+		ACHR_chooser.innerHTML = " <a href=\\"javascript:launch_ingroup_chooser(\\\'agent_hangup_value\\\',\\\'group_id\\\');\\">' . _QXZ("in-group chooser") . '</a> ";
+		ACHR_value.value="";
+		}
+	if (ACHR_route=="CALLMENU")
+		{
+		ACHR_title.innerHTML = "' . _QXZ("Agent Hangup Call Menu") . '";
+		ACHR_chooser.innerHTML = " <a href=\\"javascript:launch_callmenu_chooser(\\\'agent_hangup_value\\\',\\\'menu_id\\\');\\">' . _QXZ("call menu chooser") . '</a> ";
+		ACHR_value.value="";
+		}
+	}
+</script>';
+	}
 
-	<?php
+/* Password strength images and helper functions (always safe to output) */
+echo '<script type="text/javascript">
+var weak = new Image(); weak.src = "images/weak.png";
+var medium = new Image(); medium.src = "images/medium.png";
+var strong = new Image(); strong.src = "images/strong.png";
 
-#### Javascript for auto-generate of user ID Button
+function pwdChanged(pwd_field_str, pwd_img_str, pwd_len_field, pwd_len_min) 
+	{
+	var pwd_field = document.getElementById(pwd_field_str);
+	if (!pwd_field) return;
+	var pwd_field_value = pwd_field.value;
+	var pwd_img = document.getElementById(pwd_img_str);
+	var pwd_len = pwd_field_value.length;
+
+	var strong_regex = new RegExp("^(?=.{20,})(?=.*[a-zA-Z])(?=.*[0-9])", "g");
+	var medium_regex = new RegExp("^(?=.{10,})(?=.*[a-zA-Z])(?=.*[0-9])", "g");
+
+	if (strong_regex.test(pwd_field_value) ) 
+		{
+		if (pwd_img && pwd_img.src != strong.src) { pwd_img.src = strong.src; }
+		} 
+	else if (medium_regex.test(pwd_field_value) ) 
+		{
+		if (pwd_img && pwd_img.src != medium.src) { pwd_img.src = medium.src; }
+		}
+	else 
+		{
+		if (pwd_img && pwd_img.src != weak.src) { pwd_img.src = weak.src; }
+		}
+	if ( (pwd_len_min > 0) && (pwd_len_min > pwd_len) )
+		{ if (document.getElementById(pwd_len_field)) document.getElementById(pwd_len_field).innerHTML = "<font color=red><b>" + pwd_len + "</b></font>"; }
+	else
+		{ if (document.getElementById(pwd_len_field)) document.getElementById(pwd_len_field).innerHTML = "<font color=black><b>" + pwd_len + "</b></font>"; }
+	}
+
+function openNewWindow(url) 
+	{
+	window.open (url,"","width=620,height=300,scrollbars=yes,menubar=yes,address=yes");
+	}
+
+function scriptInsertField() 
+	{
+	var openField = "--A--";
+	var closeField = "--B--";
+	var textBox = document.scriptForm && document.scriptForm.script_text;
+	if (!textBox) return;
+	var scriptIndex = document.getElementById("selectedField") ? document.getElementById("selectedField").selectedIndex : -1;
+	var insValue = (scriptIndex >= 0) ? document.getElementById("selectedField").options[scriptIndex].value : "";
+	if (document.selection) 
+		{
+		//IE
+		textBox.focus();
+		var sel = document.selection.createRange();
+		sel.text = openField + insValue + closeField;
+		} 
+	else if (typeof textBox.selectionStart !== "undefined") 
+		{
+		//Mozilla
+		var startPos = textBox.selectionStart;
+		var endPos = textBox.selectionEnd;
+		textBox.value = textBox.value.substring(0, startPos)
+		+ openField + insValue + closeField
+		+ textBox.value.substring(endPos, textBox.value.length);
+		}
+	else 
+		{
+		textBox.value += openField + insValue + closeField;
+		}
+	}
+</script>';
+
+/* Auto-refresh countdown (if enabled for ADD =~ ^3|^4 ) */
 if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 	{
-	?>
-	var ar_seconds=<?php echo "$SSadmin_modify_refresh;"; ?>
-
-	function modify_refresh_display()
+echo '<script type="text/javascript">
+var ar_seconds=' . intval($SSadmin_modify_refresh) . ';
+function modify_refresh_display()
+	{
+	if (ar_seconds > 0)
 		{
-		if (ar_seconds > 0)
-			{
-			ar_seconds = (ar_seconds - 1);
-			document.getElementById("refresh_countdown").innerHTML = "<font color=black> screen refresh in: " + ar_seconds + " seconds</font>";
-			setTimeout("modify_refresh_display()",1000);
-			}
+		ar_seconds = (ar_seconds - 1);
+		var el = document.getElementById("refresh_countdown");
+		if (el) el.innerHTML = "<font color=black> screen refresh in: " + ar_seconds + " seconds</font>";
+		setTimeout(modify_refresh_display,1000);
 		}
-
-	<?php
+	}
+</script>';
 	}
 
-#### BEGIN Javascript for auto-generate of user ID Button
+/* User auto-generate ID helpers (ADD 1 or 1A) */
 if ( ($ADD==1) or ($ADD=="1A") )
 	{
-	?>
-
-	function user_auto()
+echo '<script type="text/javascript">
+function user_auto()
+	{
+	var user_toggle = document.getElementById("user_toggle");
+	var user_field = document.getElementById("user");
+	if (!user_toggle || !user_field) return;
+	if (user_toggle.value < 1)
 		{
-		var user_toggle = document.getElementById("user_toggle");
-		var user_field = document.getElementById("user");
-		if (user_toggle.value < 1)
-			{
-			user_field.value = 'AUTOGENERATEZZZ';
-			user_field.disabled = true;
-			user_toggle.value = 1;
-			}
-		else
-			{
-			user_field.value = '';
-			user_field.disabled = false;
-			user_toggle.value = 0;
-			}
+		user_field.value = "AUTOGENERATEZZZ";
+		user_field.disabled = true;
+		user_toggle.value = 1;
 		}
-
-	function user_submit()
+	else
 		{
-		var user_field = document.getElementById("user");
+		user_field.value = "";
 		user_field.disabled = false;
-		document.userform.submit();
+		user_toggle.value = 0;
 		}
-
-	<?php
 	}
-#### END Javascript for auto-generate of user ID Button
 
+function user_submit()
+	{
+	var user_field = document.getElementById("user");
+	if (user_field) user_field.disabled = false;
+	if (document.userform) document.userform.submit();
+	}
+</script>';
+	}
+
+/* Chooser helpers (else branch) */
 else
 	{
-	echo "	var pass = '$PHP_AUTH_PW';\n";
-	?>
+/* expose pass safely if present */
+$js_pass = isset($PHP_AUTH_PW) ? addslashes($PHP_AUTH_PW) : '';
+echo '<script type="text/javascript">';
+echo "var pass = '" . $js_pass . "';\n";
+echo 'var mouseY=0;
+function getMousePos(event) { mouseY = event.pageY || (event.touches && event.touches[0] && event.touches[0].pageY) || 0; }
+document.addEventListener("click", getMousePos);
 
-	mouseY=0;
-	function getMousePos(event) {
-		mouseY=event.pageY;
+var chooser_field="";
+var chooser_field_td="";
+var chooser_type="";
+
+function launch_chooser(fieldname,stage)
+	{
+	var vposition = mouseY;
+	var audiolistURL = "./non_agent_api.php";
+	var audiolistQuery = "source=admin&function=sounds_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+	var Iframe_content = \'<IFRAME SRC="\' + audiolistURL + \'?\' + audiolistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.innerHTML = Iframe_content;
 	}
-	document.addEventListener("click", getMousePos);
 
-	var chooser_field='';
-	var chooser_field_td='';
-	var chooser_type='';
+function launch_moh_chooser(fieldname,stage)
+	{
+	var vposition = mouseY;
+	var audiolistURL = "./non_agent_api.php";
+	var audiolistQuery = "source=admin&function=moh_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+	var Iframe_content = \'<IFRAME SRC="\' + audiolistURL + \'?\' + audiolistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.innerHTML = Iframe_content;
+	}
 
-	function launch_chooser(fieldname,stage)
+function launch_ingroup_chooser(fieldname,stage)
+	{
+	var vposition = mouseY;
+	var apilistURL = "./non_agent_api.php";
+	var apilistQuery = "source=admin&function=ingroup_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+	var Iframe_content = \'<IFRAME SRC="\' + apilistURL + \'?\' + apilistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.innerHTML = Iframe_content;
+	}
+
+function launch_callmenu_chooser(fieldname,stage)
+	{
+	var vposition = mouseY;
+	var apilistURL = "./non_agent_api.php";
+	var apilistQuery = "source=admin&function=callmenu_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+	var Iframe_content = \'<IFRAME SRC="\' + apilistURL + \'?\' + apilistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.innerHTML = Iframe_content;
+	}
+';
+/* container and vm choosers */
+echo 'function launch_container_chooser(fieldname,stage,type)
+	{
+	var vposition = mouseY;
+	var apilistURL = "./non_agent_api.php";
+	var apilistQuery = "source=admin&function=container_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname + "&type=" + type;
+	var Iframe_content = \'<IFRAME SRC="\' + apilistURL + \'?\' + apilistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.innerHTML = Iframe_content;
+	}
+
+function launch_vm_chooser(fieldname,stage)
+	{
+	var vposition = mouseY;
+	var audiolistURL = "./non_agent_api.php";
+	var audiolistQuery = "source=admin&function=vm_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
+	var Iframe_content = \'<IFRAME SRC="\' + audiolistURL + \'?\' + audiolistQuery + \'" style="width:740px;height:440px;background-color:white;" scrolling="NO" frameborder="0" id="audio_chooser_frame\' + epoch + \'" name="audio_chooser_frame"> </IFRAME>\';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.innerHTML = Iframe_content;
+	}
+';
+/* Build color chooser HTML server-side */
+$color_chooser_output = " &nbsp; <a href=\\\"javascript:close_chooser();\\\"><font size=1 face=\\'Arial,Helvetica\\'>" . _QXZ("close frame") . "</font></a> &nbsp; <BR>";
+$color_chooser_output .= "<div id=\\'select_color_frame\\' style=\\\"height:400px;width:400px;overflow:scroll;background-color:white;\\\">";
+$color_chooser_output .= "<table border=0 cellpadding=2 cellspacing=2 width=400 bgcolor=white>";
+$HTMLcolorsARY = explode('|',$HTMLcolors);
+$HTMLcolorsARYcount = count($HTMLcolorsARY);
+$HTMLct = 0;
+while ($HTMLct < $HTMLcolorsARYcount)
+	{
+	$HTMLcolorsLINE = explode(',',$HTMLcolorsARY[$HTMLct]);
+	$bgcolor = (preg_match("/1$|3$|5$|7$|9$/i", $HTMLct)) ? '#E6E6E6' : '#F6F6F6';
+	$color_chooser_output .= "<tr bgcolor=\\\"" . $bgcolor . "\\\"><td>" . htmlspecialchars($HTMLcolorsLINE[0]) . " </td><td><a href=\\\"javascript:choose_color('" . $HTMLcolorsLINE[1] . "');\\\"><font size=1 face=\\'Arial,Helvetica\\'>#" . $HTMLcolorsLINE[1] . "</a> </td><td bgcolor=\\'#" . $HTMLcolorsLINE[1] . "\\'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td></tr>";
+	$HTMLct++;
+	}
+$color_chooser_output .= "</table></div>";
+/* embed color chooser safely */
+echo '
+function launch_color_chooser(fieldname,stage,type)
+	{
+	var vposition = mouseY;
+	chooser_field = fieldname;
+	chooser_field_td = fieldname + "_td";
+	chooser_type = type;
+	var span_content = ' . json_encode($color_chooser_output) . ';
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.position = "absolute";
+	span.style.left = "220px";
+	span.style.top = vposition + "px";
+	span.style.visibility = "visible";
+	span.style.backgroundColor = "white";
+	span.innerHTML = span_content;
+	}
+
+function choose_color(colorname)
+	{
+	if (colorname.length > 0)
 		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-
-		var audiolistURL = "./non_agent_api.php";
-		var audiolistQuery = "source=admin&function=sounds_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
-		}
-
-	function launch_moh_chooser(fieldname,stage)
-		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-
-		var audiolistURL = "./non_agent_api.php";
-		var audiolistQuery = "source=admin&function=moh_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
-		}
-
-	function launch_ingroup_chooser(fieldname,stage)
-		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-
-		var apilistURL = "./non_agent_api.php";
-		var apilistQuery = "source=admin&function=ingroup_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
-		}
-
-	function launch_callmenu_chooser(fieldname,stage)
-		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-
-		var apilistURL = "./non_agent_api.php";
-		var apilistQuery = "source=admin&function=callmenu_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
-		}
-
-	function launch_container_chooser(fieldname,stage,type)
-		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-
-		var apilistURL = "./non_agent_api.php";
-		var apilistQuery = "source=admin&function=container_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname + "&type=" + type;
-		var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
-		}
-
-	function launch_vm_chooser(fieldname,stage)
-		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-
-		var audiolistURL = "./non_agent_api.php";
-		var audiolistQuery = "source=admin&function=vm_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-		var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
-		}
-
-	function launch_color_chooser(fieldname,stage,type)
-		{
-		var h = window.innerHeight;		
-		var vposition=mouseY;
-		chooser_field = fieldname;
-		chooser_field_td = fieldname + '_td';
-		chooser_type = type;
-	<?php
-	$color_chooser_output .= " &nbsp; <a href=\\\"javascript:close_chooser();\\\"><font size=1 face='Arial,Helvetica'>"._QXZ("close frame")."</font></a> &nbsp; <BR>";
-	$color_chooser_output .= "<div id='select_color_frame' style=\\\"height:400px;width:400px;overflow:scroll;background-color:white;\\\">";
-	$color_chooser_output .= '<table border=0 cellpadding=2 cellspacing=2 width=400 bgcolor=white>';
-	$HTMLcolorsARY = explode('|',$HTMLcolors);
-	$HTMLcolorsARYcount = count($HTMLcolorsARY);
-	$HTMLct=0;
-	while ($HTMLcolorsARYcount > $HTMLct)
-		{
-		$HTMLcolorsLINE = explode(',',$HTMLcolorsARY[$HTMLct]);
-		if (preg_match("/1$|3$|5$|7$|9$/i", $HTMLct))
-			{$bgcolor='#E6E6E6';} 
+		if (chooser_type == "2")
+			{
+			document.getElementById(chooser_field).value = colorname;
+			document.getElementById(chooser_field_td).style.backgroundColor = "#" + colorname;
+			}
 		else
-			{$bgcolor='#F6F6F6';}
-
-		$color_chooser_output .= "<tr bgcolor=\\\"$bgcolor\\\"><td>$HTMLcolorsLINE[0] </td><td><a href=\\\"javascript:choose_color('$HTMLcolorsLINE[1]');\\\"><font size=1 face='Arial,Helvetica'>#$HTMLcolorsLINE[1]</a> </td><td bgcolor='#$HTMLcolorsLINE[1]'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td></tr>";
-
-		$HTMLct++;
-		}
-	$color_chooser_output .= '</table></div>';
-	?>
-
-		var span_content = '<span id="color_chooser_frame' + epoch + '" name="color_chooser_frame" style="width:740;height:440;background-color:white;overflow:scroll;z-index:2;">' + "<?php  echo $color_chooser_output ?></span>";
-
-		document.getElementById("audio_chooser_span").style.position = "absolute";
-		document.getElementById("audio_chooser_span").style.left = "220px";
-		document.getElementById("audio_chooser_span").style.top = vposition + "px";
-		document.getElementById("audio_chooser_span").style.visibility = 'visible';
-		document.getElementById("audio_chooser_span").style.backgroundcolor = 'white';
-		document.getElementById("audio_chooser_span").innerHTML = span_content;
-		}
-
-	function choose_color(colorname)
-		{
-		if (colorname.length > 0)
 			{
-			if (chooser_type == '2')
-				{
-				document.getElementById(chooser_field).value = colorname;
-				document.getElementById(chooser_field_td).style.backgroundColor = '#' + colorname;
-				}
-			else
-				{
-				document.getElementById(chooser_field).value = '#' + colorname;
-				document.getElementById(chooser_field_td).style.backgroundColor = '#' + colorname;
-				}
-			close_chooser();
+			document.getElementById(chooser_field).value = "#" + colorname;
+			document.getElementById(chooser_field_td).style.backgroundColor = "#" + colorname;
 			}
+		close_chooser();
 		}
-
-	function close_chooser()
-		{
-		document.getElementById("audio_chooser_span").style.visibility = 'hidden';
-		document.getElementById("audio_chooser_span").innerHTML = '';
-		}
-
-	function user_submit()
-		{
-		var user_field = document.getElementById("user");
-		user_field.disabled = false;
-		document.userform.submit();
-		}
-
-	function play_browser_sound(temp_element,temp_volume)
-		{
-		var taskIndex = document.getElementById(temp_element).selectedIndex;
-		var taskValue = document.getElementById(temp_element).options[taskIndex].value;
-		var temp_selected_element = 'BAS_' + taskValue;
-		if ( (taskValue != '---NONE---') && (taskValue != '---DISABLED---') && (taskValue != '') )
-			{
-			var temp_audio = document.getElementById(temp_selected_element);
-			var taskVolIndex = document.getElementById(temp_volume).selectedIndex;
-			var taskVolValue = document.getElementById(temp_volume).options[taskVolIndex].value;
-			var temp_js_volume = (taskVolValue * .01);
-			temp_audio.volume = temp_js_volume;
-		//	alert(temp_selected_element + ' ' + temp_js_volume);
-			temp_audio.play();
-			}
-		}
-	<?php
 	}
 
-### Javascript for shift end-time calculation and display
+function close_chooser()
+	{
+	var span = document.getElementById("audio_chooser_span");
+	if (!span) return;
+	span.style.visibility = "hidden";
+	span.innerHTML = "";
+	}
+
+function user_submit()
+	{
+	var user_field = document.getElementById("user");
+	if (user_field) user_field.disabled = false;
+	if (document.userform) document.userform.submit();
+	}
+
+function play_browser_sound(temp_element,temp_volume)
+	{
+	var sel = document.getElementById(temp_element);
+	if (!sel) return;
+	var taskIndex = sel.selectedIndex;
+	var taskValue = sel.options[taskIndex].value;
+	var temp_selected_element = "BAS_" + taskValue;
+	if ( (taskValue != "---NONE---") && (taskValue != "---DISABLED---") && (taskValue != "") )
+		{
+		var temp_audio = document.getElementById(temp_selected_element);
+		var volsel = document.getElementById(temp_volume);
+		if (!temp_audio || !volsel) return;
+		var taskVolIndex = volsel.selectedIndex;
+		var taskVolValue = volsel.options[taskVolIndex].value;
+		var temp_js_volume = (taskVolValue * .01);
+		temp_audio.volume = temp_js_volume;
+		temp_audio.play();
+		}
+	}
+</script>';
+	} /* end chooser else branch */
+
+/* Shift end-time calculation (ADD 131111111 or 331111111 or 431111111) */
 if ( ($ADD==131111111) or ($ADD==331111111) or ($ADD==431111111) )
 	{
-	?>
-	function shift_time()
+echo '<script type="text/javascript">
+function shift_time()
+	{
+	var start_time = document.getElementById("shift_start_time");
+	var end_time = document.getElementById("shift_end_time");
+	var length = document.getElementById("shift_length");
+	if (!start_time || !end_time || !length) return;
+
+	var st_value = String(start_time.value);
+	var et_value = String(end_time.value);
+	while (st_value.length < 4) {st_value = "0" + st_value;}
+	while (et_value.length < 4) {et_value = "0" + et_value;}
+	var st_hour= parseInt(st_value.substring(0,2),10) || 0;
+	var st_min= parseInt(st_value.substring(2,4),10) || 0;
+	var et_hour= parseInt(et_value.substring(0,2),10) || 0;
+	var et_min= parseInt(et_value.substring(2,4),10) || 0;
+
+	if (st_hour > 23) st_hour = 23;
+	if (et_hour > 23) et_hour = 23;
+	if (st_min > 59) st_min = 59;
+	if (et_min > 59) et_min = 59;
+
+	start_time.value = (("0"+st_hour).slice(-2)) + (("0"+st_min).slice(-2));
+	end_time.value = (("0"+et_hour).slice(-2)) + (("0"+et_min).slice(-2));
+
+	if (start_time.value == end_time.value)
 		{
-		var start_time = document.getElementById("shift_start_time");
-		var end_time = document.getElementById("shift_end_time");
-		var length = document.getElementById("shift_length");
-
-		var st_value = start_time.value;
-		var et_value = end_time.value;
-		while (st_value.length < 4) {st_value = "0" + st_value;}
-		while (et_value.length < 4) {et_value = "0" + et_value;}
-		var st_hour=st_value.substring(0,2);
-		var st_min=st_value.substring(2,4);
-		var et_hour=et_value.substring(0,2);
-		var et_min=et_value.substring(2,4);
-		if (st_hour > 23) {st_hour = 23;}
-		if (et_hour > 23) {et_hour = 23;}
-		if (st_min > 59) {st_min = 59;}
-		if (et_min > 59) {et_min = 59;}
-		start_time.value = st_hour + "" + st_min;
-		end_time.value = et_hour + "" + et_min;
-
-		var start_time_hour=start_time.value.substring(0,2);
-		var start_time_min=start_time.value.substring(2,4);
-		var end_time_hour=end_time.value.substring(0,2);
-		var end_time_min=end_time.value.substring(2,4);
-		start_time_hour=(start_time_hour * 1);
-		start_time_min=(start_time_min * 1);
-		end_time_hour=(end_time_hour * 1);
-		end_time_min=(end_time_min * 1);
-
-		if (start_time.value == end_time.value)
-			{
-			var shift_length = '24:00';
-			}
-		else
-			{
-			if ( (start_time_hour > end_time_hour) || ( (start_time_hour == end_time_hour) && (start_time_min > end_time_min) ) )
-				{
-				var shift_hour = ( (24 - start_time_hour) + end_time_hour);
-				var shift_minute = ( (60 - start_time_min) + end_time_min);
-				if (shift_minute >= 60) 
-					{
-					shift_minute = (shift_minute - 60);
-					}
-				else
-					{
-					shift_hour = (shift_hour - 1);
-					}
-				}
-			else
-				{
-				var shift_hour = (end_time_hour - start_time_hour);
-				var shift_minute = (end_time_min - start_time_min);
-				}
-			if (shift_minute < 0) 
-				{
-				shift_minute = (shift_minute + 60);
-				shift_hour = (shift_hour - 1);
-				}
-
-			if (shift_hour < 10) {shift_hour = '0' + shift_hour}
-			if (shift_minute < 10) {shift_minute = '0' + shift_minute}
-			var shift_length = shift_hour + ':' + shift_minute;
-			}
-	//	alert(start_time_hour + '|' + start_time_min + '|' + end_time_hour + '|' + end_time_min + '|--|' + shift_hour + ':' + shift_minute + '|' + shift_length + '|');
-
-		length.value = shift_length;
+		length.value = "24:00";
+		return;
 		}
 
-<?php
+	var shift_hour, shift_minute;
+	if ( (st_hour > et_hour) || ( (st_hour == et_hour) && (st_min > et_min) ) )
+		{
+		shift_hour = ((24 - st_hour) + et_hour);
+		shift_minute = ((60 - st_min) + et_min);
+		if (shift_minute >= 60) { shift_minute = shift_minute - 60; }
+		else { shift_hour = shift_hour - 1; }
+		}
+	else
+		{
+		shift_hour = (et_hour - st_hour);
+		shift_minute = (et_min - st_min);
+		}
+
+	if (shift_minute < 0) { shift_minute = shift_minute + 60; shift_hour = shift_hour - 1; }
+
+	if (shift_hour < 10) shift_hour = "0" + shift_hour;
+	if (shift_minute < 10) shift_minute = "0" + shift_minute;
+
+	length.value = shift_hour + ":" + shift_minute;
 	}
 
-
-
+	}
+?>
 
 ### Javascript for selecting and deselecting all AC-CIDs and other checkboxes "active" on the modify page
 if ( ($ADD==3111) or ($ADD==4111) or ($ADD==5111) or ($ADD==3811) or ($ADD==4811) or ($ADD==5811) or ($ADD==3911) or ($ADD==4911) or ($ADD==5911) or ($ADD==31) or ($ADD==34) or ($ADD==202) or ($ADD==396111111111) or ($ADD==496111111111) )
