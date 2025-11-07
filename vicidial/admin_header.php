@@ -210,112 +210,159 @@ else
 	}
 ##### END populate dynamic header content #####
 
-/* ------------------ Modernized responsive sidebar/topbar (table-free) ------------------ */
+######################### MODERN HEADER (replaces old table blocks) #########################
+/* Modernized header/sidebar/topbar. Output via echo to keep single PHP scope. */
 
-/* short_header branch: logo-only or compact nav */
-if ($short_header) {
-    if ($no_header) {
-        // nothing to output
-    } else {
-        // choose logo and size as before
-        $temp_logo = $selected_logo;
-        $temp_logo_width = 170;
-        $temp_logo_height = 45;
-        if (($LOGreports_header_override == 'LOGO_ONLY_SMALL') || ($LOGreports_header_override == 'LOGO_ONLY_LARGE')) {
-            if ($LOGreports_header_override == 'LOGO_ONLY_SMALL') {
-                $temp_logo = $selected_small_logo;
-                $temp_logo_width = 71;
-                $temp_logo_height = 22;
-            }
-            echo '<header class="admin-header admin-header--compact" role="banner" aria-label="System header" style="background:#fff;width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
-              echo '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;">';
-                echo '<a href="'.htmlspecialchars($admin_home_url_LU).'" style="display:inline-block;opacity:0.9;transition:opacity .18s;">';
-                  echo '<img src="'.htmlspecialchars($temp_logo).'" alt="System logo" style="display:block;height:auto;max-width:100%;width:'.$temp_logo_width.'px;height:'.$temp_logo_height.'px;border:0;">';
-                echo '</a>';
-                echo '<div style="flex:1"></div>';
-              echo '</div>';
-            echo '</header>';
-        } else {
-            /* full compact nav (gradient background) */
-            echo '<header class="admin-header admin-header--nav" role="banner" style="background:linear-gradient(135deg,#'.$SSmenu_background.',#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);">';
-              echo '<div style="display:flex;align-items:center;padding:10px 14px;gap:8px;">';
-                echo '<a href="'.htmlspecialchars($ADMIN).'" aria-label="Admin home" style="display:inline-block;opacity:0.9;transition:all .18s;">';
-                  echo '<img src="'.htmlspecialchars($selected_small_logo).'" alt="System logo" width="71" height="22" style="display:block;border:0;">';
-                echo '</a>';
+echo '<style>
+/* Modern header styles (inline for drop-in) */
+.admin-shell { font-family: Arial, Helvetica, sans-serif; }
+.admin-topbar, .admin-sidebar { box-sizing: border-box; }
+.admin-topbar {
+  display:none; align-items:center; gap:12px; padding:10px 14px;
+  background: linear-gradient(135deg,#'.$SSmenu_background.',#764ba2);
+  color:#fff; width:100%; border-radius:8px; margin-bottom:16px; box-shadow:0 2px 8px rgba(102,126,234,0.18);
+}
+.admin-topbar .logo { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#fff; }
+.admin-topbar nav { margin-left:auto; display:flex; gap:8px; align-items:center; }
+.admin-topbar a.menu-link { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; color:#fff; text-decoration:none; font-weight:600; font-size:13px; border-radius:6px; transition:background .12s; }
+.admin-topbar a.menu-link:hover { background: rgba(255,255,255,.12); }
 
-                /* menu container - responsive and semantic */
-                echo '<nav role="navigation" aria-label="Main menu" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-left:6px;">';
+.admin-shell-layout { display:flex; gap:16px; align-items:flex-start; }
 
-                // If full access
-                if (($reports_only_user < 1) && ($qc_only_user < 1)) {
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999999').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$reports_icon.' '._QXZ("Reports").'</a>';
+/* Sidebar */
+.admin-sidebar {
+  width:240px; min-width:200px; background: linear-gradient(180deg,#fff,#f6f9ff);
+  border-radius:12px; padding:14px; box-shadow:0 6px 18px rgba(20,30,60,.06);
+  display:flex; flex-direction:column; gap:12px;
+}
+.admin-sidebar .brand { display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; }
+.admin-sidebar .brand img { display:block; border-radius:6px; }
+.admin-sidebar nav ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.admin-sidebar a.nav-item {
+  display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; color:#10233b; text-decoration:none;
+  font-weight:600; font-size:14px; transition:background .12s,transform .08s;
+}
+.admin-sidebar a.nav-item:hover { background:#eef6ff; transform:translateY(-1px); }
+.admin-sidebar a.nav-item .icon { width:18px; height:18px; display:inline-block; vertical-align:middle; }
+.admin-sidebar .spacer { flex:1; }
 
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=0A').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$users_icon.' '._QXZ("Users").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=10').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$campaigns_icon.' '._QXZ("Campaigns").'</a>';
-
-                    if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                        echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$qc_icon.' '._QXZ("Quality Control").'</a>';
-                    }
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$lists_icon.' '._QXZ("Lists").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=1000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$scripts_icon.' '._QXZ("Scripts").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=10000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$filters_icon.' '._QXZ("Filters").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=1001').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$inbound_icon.' '._QXZ("Inbound").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$usergroups_icon.' '._QXZ("User Groups").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=10000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$remoteagents_icon.' '._QXZ("Remote Agents").'</a>';
-
-                    echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999998').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$admin_icon.' '._QXZ("Admin").'</a>';
-                }
-                // Limited access
-                else {
-                    // filler space - keeps header balanced
-                    echo '<div style="width:100%;min-width:20px;"></div>';
-
-                    if ($reports_only_user > 0) {
-                        echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999999').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;background:rgba(255,255,255,0.15);transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.25)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.15)\'">'._QXZ("Reports").'</a>';
-                    } else {
-                        if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
-                            echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;background:rgba(255,255,255,0.15);transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.25)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.15)\'">'._QXZ("Quality Control").'</a>';
-                        }
-                    }
-                } // end limited access else
-
-                echo '</nav>'; // end nav
-              echo '</div>';
-            echo '</header>';
-        } // end else full nav
-    } // end no_header else
-} // end short_header
-
-/* ------------------ Android/mobile header: modern inline nav ------------------ */
-else if ($android_header) {
-    echo '<header class="admin-header admin-header--mobile" role="banner" style="background:linear-gradient(135deg,#'.$SSmenu_background.',#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);">';
-      echo '<div style="display:flex;align-items:center;padding:10px 14px;">';
-        echo '<a href="./admin_mobile.php" aria-label="Mobile admin" style="display:inline-block;opacity:0.9;transition:all .18s;">';
-          echo '<img src="'.htmlspecialchars($selected_small_logo).'" width="71" height="22" alt="System logo" style="display:block;border:0;">';
-        echo '</a>';
-        echo '<div style="flex:1"></div>';
-        echo '<nav role="navigation" aria-label="Mobile menu" style="display:flex;align-items:center;">';
-          echo '<a href="admin_mobile.php?ADD=999990" style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;border-radius:4px;transition:background .18s;" onmouseover="this.style.background=\'rgba(255,255,255,0.15)\'" onmouseout="this.style.background=\'transparent\'">'.$admin_icon.' <span>'._QXZ("Admin").'</span></a>';
-        echo '</nav>';
-      echo '</div>';
-    echo '</header>';
+/* Mobile: show topbar and collapse sidebar */
+@media (max-width: 880px) {
+  .admin-shell-layout { flex-direction:column; }
+  .admin-sidebar { display:none; }
+  .admin-topbar { display:flex; }
 }
 
-/* ------------------ End of refactor block ------------------ */
-/* Note: The larger 'full HTML header' and inline JS remains below in original file. */
+/* Collapsed (small) sidebar style when toggled programmatically */
+.admin-sidebar--collapsed { width:64px; min-width:64px; align-items:center; padding:10px; }
+.admin-sidebar--collapsed .label { display:none; }
+.admin-sidebar--collapsed a.nav-item { justify-content:center; padding:8px; }
+
+/* Utility */
+.badge { background:#e6eefc; padding:4px 8px; border-radius:999px; font-size:12px; color:#0b3b70; font-weight:700; }
+</style>';
+
+echo '<script>
+(function(){
+  function qs(sel){return document.querySelector(sel);}
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    if (t && t.matches(".admin-hamburger, .admin-hamburger *")) {
+      var sb = qs(".admin-sidebar");
+      if (!sb) return;
+      sb.classList.toggle("admin-sidebar--collapsed");
+      e.preventDefault();
+    }
+  }, false);
+})();
+</script>';
+
+if ($short_header) {
+    if ($no_header) {
+        // nothing to display
+    } else {
+        $temp_logo = $selected_logo;
+        $temp_small_logo = $selected_small_logo;
+        $logo_w = 170; $logo_h = 45;
+        if ($LOGreports_header_override == "LOGO_ONLY_SMALL") { $temp_logo = $selected_small_logo; $logo_w = 71; $logo_h = 22; }
+
+        echo '<div class="admin-shell">';
+        // mobile topbar
+        echo '<header class="admin-topbar" role="banner">';
+          echo '<a class="logo" href="'.htmlspecialchars($admin_home_url_LU).'"><img src="'.htmlspecialchars($temp_small_logo).'" alt="logo" width="71" height="22" style="display:block;border:0;"></a>';
+          echo '<button aria-label="Toggle menu" class="admin-hamburger" style="background:transparent;border:0;color:#fff;font-weight:700;padding:8px;border-radius:6px;cursor:pointer">☰</button>';
+          echo '<nav role="navigation" aria-label="Top actions">';
+            echo '<a class="menu-link" href="'.htmlspecialchars($ADMIN.'?ADD=999998').'">'.$admin_icon.' '._QXZ("Admin").'</a>';
+          echo '</nav>';
+        echo '</header>';
+
+        echo '<div class="admin-shell-layout">';
+
+          echo '<aside class="admin-sidebar" role="navigation" aria-label="Main menu">';
+            echo '<a class="brand" href="'.htmlspecialchars($ADMIN).'" title="Admin home">';
+              echo '<img src="'.htmlspecialchars($selected_logo).'" alt="System" width="120" style="display:block;border:0;">';
+            echo '</a>';
+
+            echo '<nav aria-label="Primary">';
+              echo '<ul>';
+                if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=999999').'"><span class="icon">'.$reports_icon.'</span><span class="label">'._QXZ("Reports").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=0A').'"><span class="icon">'.$users_icon.'</span><span class="label">'._QXZ("Users").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=10').'"><span class="icon">'.$campaigns_icon.'</span><span class="label">'._QXZ("Campaigns").'</span></a></li>';
+                    if (($SSqc_features_active == "1") && ($qc_auth == "1")) {
+                        echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'"><span class="icon">'.$qc_icon.'</span><span class="label">'._QXZ("Quality Control").'</span></a></li>';
+                    }
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100').'"><span class="icon">'.$lists_icon.'</span><span class="label">'._QXZ("Lists").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=1000000').'"><span class="icon">'.$scripts_icon.'</span><span class="label">'._QXZ("Scripts").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=10000000').'"><span class="icon">'.$filters_icon.'</span><span class="label">'._QXZ("Filters").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=1001').'"><span class="icon">'.$inbound_icon.'</span><span class="label">'._QXZ("Inbound").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100000').'"><span class="icon">'.$usergroups_icon.'</span><span class="label">'._QXZ("User Groups").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=10000').'"><span class="icon">'.$remoteagents_icon.'</span><span class="label">'._QXZ("Remote Agents").'</span></a></li>';
+                    echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=999998').'"><span class="icon">'.$admin_icon.'</span><span class="label">'._QXZ("Admin").'</span></a></li>';
+                } else {
+                    if ($reports_only_user > 0) {
+                        echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=999999').'"><span class="icon">'.$reports_icon.'</span><span class="label">'._QXZ("Reports").'</span></a></li>';
+                    } else {
+                        if (($SSqc_features_active == "1") && ($qc_auth == "1")) {
+                            echo '<li><a class="nav-item" href="'.htmlspecialchars($ADMIN.'?ADD=100000000000000').'"><span class="icon">'.$qc_icon.'</span><span class="label">'._QXZ("Quality Control").'</span></a></li>';
+                        }
+                    }
+                }
+              echo '</ul>';
+            echo '</nav>';
+
+            echo '<div class="spacer"></div>';
+            echo '<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;">';
+              echo '<a href="'.htmlspecialchars($ADMIN.'?ADD=999998').'" class="badge" title="Admin Home">' . _QXZ("Admin") . '</a>';
+              echo '<button class="admin-hamburger" aria-label="Toggle sidebar" style="background:transparent;border:0;cursor:pointer;font-size:18px">☰</button>';
+            echo '</div>';
+
+          echo '</aside>';
+
+          echo '<main style="flex:1;"></main>';
+
+        echo '</div>'; // end layout
+        echo '</div>'; // end shell
+    }
+} else if ($android_header) {
+    echo '<div class="admin-shell">';
+      echo '<header class="admin-topbar" role="banner">';
+        echo '<a class="logo" href="./admin_mobile.php"><img src="'.htmlspecialchars($selected_small_logo).'" alt="logo" width="71" height="22" style="display:block;border:0;"></a>';
+        echo '<nav role="navigation" aria-label="Mobile menu" style="margin-left:auto;">';
+          echo '<a class="menu-link" href="admin_mobile.php?ADD=999990">'.$admin_icon.' '._QXZ("Admin").'</a>';
+        echo '</nav>';
+      echo '</header>';
+    echo '</div>';
+}
+
+/* End modernized header block. The full HTML header (larger block) and JS follow in original file. */
+
 
 ######################### SMALL HTML HEADER END #######################################
 
 
 ######################### MOBILE HTML HEADER BEGIN ####################################
-/* The previous table-based mobile header was replaced by the block above. */
+/* The older table-based mobile header was replaced by the above block. */
 // ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
 // Purple Gradient + Responsive Design
@@ -405,6 +452,10 @@ if ($TCedit_javascript > 0)
 
 	<?php
 	}
+# End of snippet you provided. If there is more code below this point in your original file,
+# send it next and I will merge the remainder in-place (keeping the same modernized header).
+
+
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
