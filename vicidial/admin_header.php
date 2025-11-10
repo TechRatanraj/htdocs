@@ -1942,11 +1942,13 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 <TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
-<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
+<TD VALIGNTOP WIDTH=170 HEIGHT=800 STYLE="height: 800px !important; min-height: 800px !important; display: flex; flex-direction: column;" BGCOLOR=<?php echo $SSmenu_background ?> ALIGNCENTER VALIGNTOP>
+
+
 <A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
 <B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
 
-	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160>
+<TABLE CELLPADDING=6 CELLSPACING=0 BGCOLOR=<?php echo $SSmenu_background ?> WIDTH=160 STYLE="height: 750px; min-height: 750px; padding-top: 20px;">
 	<?php
 	if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
 		{
