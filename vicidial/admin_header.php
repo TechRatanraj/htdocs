@@ -1,4 +1,5 @@
 <?php
+<div class="admin-layout">
 # admin_header.php - VICIDIAL administration header
 #
 # Copyright (C) 2023  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
