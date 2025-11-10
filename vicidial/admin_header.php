@@ -1935,7 +1935,7 @@ if ($header_font_size < 4) {$header_font_size='12';}
 if ($subheader_font_size < 4) {$subheader_font_size='11';}
 if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
-
+}
 
 ?>
 
