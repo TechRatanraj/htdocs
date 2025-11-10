@@ -2711,36 +2711,27 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 		}
 	?>
 	<TR WIDTH=100%><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
-</TABLE>
-</TD>
-
-<!-- MAIN CONTENT AREA STARTS HERE -->
-<TD VALIGN=TOP WIDTH=<?php echo $page_width ?> BGCOLOR=#<?php echo $SSframe_background ?>>
+	</TABLE>
+	<BR>&nbsp;
+</TD><TD VALIGN=TOP WIDTH=<?php echo $page_width ?> BGCOLOR=#<?php echo $SSframe_background ?>>
 <!-- END SIDEBAR NAVIGATION -->
 
-<!-- NAVBAR TABLE (Full Width, Navy Blue) -->
-<TABLE BGCOLOR="#003366" cellpadding=3 cellspacing=0 WIDTH=100% STYLE="width: 100%; margin: 0; padding: 0; border-collapse: collapse; table-layout: fixed;">
-<TR BGCOLOR="#003366">
-<TD ALIGN=LEFT BGCOLOR="#003366" STYLE="width: 100%; padding: 10px 15px; box-sizing: border-box;">
-<FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("HOME"); ?></a> | <A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Timeclock"); ?></A> | <a href="manager_chat_interface.php" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Chat"); ?></a> | <a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Logout"); ?></a> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1>(<?php echo $PHP_AUTH_USER ?>)</FONT>
-<?php
-if ($SSenable_languages == '1')
-    {
-    echo " | <a href=\"$ADMIN?ADD=999989\" STYLE=\"text-decoration:none;\"><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE SIZE=1>"._QXZ("Change language")."</a>";
-    }
-?>
-</TD>
-<TD ALIGN=RIGHT BGCOLOR="#003366" STYLE="padding: 10px 15px; box-sizing: border-box; white-space: nowrap;">
-<FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo date("l F j, Y G:i:s A") ?> &nbsp; </B></FONT>
-</TD>
-</TR>
-</TABLE>
-
-<!-- Audio Chooser (Hidden) -->
 <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span">
+
 </span>
 
-<!-- YOUR PAGE CONTENT STARTS HERE -->
+<TABLE BGCOLOR="#003366" cellpadding=3 cellspacing=0 WIDTH=100% STYLE="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
+<TR BGCOLOR="#003366" STYLE="width: 100%;"><TD ALIGN=LEFT BGCOLOR="#003366" WIDTH=100% STYLE="width: 100%; padding: 10px 15px;">
+<FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("HOME"); ?></a> | <A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Timeclock"); ?></A> | <a href="manager_chat_interface.php" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Chat"); ?></a> | <a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Logout"); ?></a> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1>(<?php echo $PHP_AUTH_USER ?>)</FONT>
+
+<?php
+if ($SSenable_languages == '1')
+	{
+	echo " | <a href=\"$ADMIN?ADD=999989\" STYLE=\"text-decoration:none;\"><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE SIZE=1>"._QXZ("Change language")."</a>";
+	}
+?>
+
+</TD><TD ALIGN=RIGHT><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo date("l F j, Y G:i:s A") ?> &nbsp; </B></TD></TR>
 
 <TR BGCOLOR=#<?php echo "$SSmenu_background" ?>>
 
