@@ -30,17 +30,18 @@ $SSadmin_web_directory =	$row[16];
 if (strlen($SSadmin_home_url) > 5) {$admin_home_url_LU = $SSadmin_home_url;}
 if(!isset($ADMIN)){$ADMIN = "../$SSadmin_web_directory/admin.php";}
 
-$SSmenu_background='015B91';
-$SSframe_background='D9E6FE';
-$SSstd_row1_background='9BB9FB';
-$SSstd_row2_background='B9CBFD';
-$SSstd_row3_background='8EBCFD';
-$SSstd_row4_background='B6D3FC';
-$SSstd_row5_background='A3C3D6';
-$SSalt_row1_background='BDFFBD';
-$SSalt_row2_background='99FF99';
-$SSalt_row3_background='CCFFCC';
-$SSbutton_color='EFEFEF';
+$SSmenu_background='000000';           // Black menu header
+$SSframe_background='FFFFFF';          // Pure white background
+$SSstd_row1_background='F5F5F5';       // Light gray - Standard row 1
+$SSstd_row2_background='FFFFFF';       // White - Standard row 2
+$SSstd_row3_background='F0F0F0';       // Light gray - Standard row 3
+$SSstd_row4_background='FFFFFF';       // White - Standard row 4
+$SSstd_row5_background='E8E8E8';       // Light gray - Standard row 5
+$SSalt_row1_background='FFFFFF';       // White - Alternative row 1
+$SSalt_row2_background='F5F5F5';       // Light gray - Alternative row 2
+$SSalt_row3_background='FFFFFF';       // White - Alternative row 3
+$SSbutton_color='F0F0F0';              // Light gray - Button color
+
 
 if ($SSadmin_screen_colors != 'default')
 	{
