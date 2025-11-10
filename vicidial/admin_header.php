@@ -2717,7 +2717,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 <!-- END SIDEBAR NAVIGATION -->
 
 <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span">
-<TD COLSPAN=2 BGCOLOR="#003366" WIDTH=100%>
+
 </span>
 
 <TABLE BGCOLOR="#003366" cellpadding=3 cellspacing=0 WIDTH=100% STYLE="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
