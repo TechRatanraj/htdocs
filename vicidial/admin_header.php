@@ -1938,7 +1938,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 
 ?>
-}
+
+
 <div class="admin-layout">
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -3325,4 +3326,4 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 }
 </style>
 
-<span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>    
+<span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
