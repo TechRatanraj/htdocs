@@ -1942,7 +1942,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 <TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
 <!-- BEGIN SIDEBAR NAVIGATION -->
-<TD VALIGNTOP WIDTH=170 HEIGHT=800 STYLE="height: 800px !important; min-height: 800px !important; display: flex; flex-direction: column; margin-top: 20px;" BGCOLOR=<?php echo $SSmenu_background ?>
+<TD VALIGNTOP WIDTH=170 HEIGHT=800 STYLE="height: 800px !important; min-height: 800px !important; display: flex; flex-direction: column;" BGCOLOR=<?php echo $SSmenu_background ?> ALIGNCENTER VALIGNTOP>
 
 <A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
 <B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
