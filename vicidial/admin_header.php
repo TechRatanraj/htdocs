@@ -2882,8 +2882,8 @@ else
 		<?php } 
 	}
 ?>
-<TR><TD ALIGN=LEFT COLSPAN=2 HEIGHT=2 BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
-<TR><TD ALIGN=LEFT COLSPAN=2 WIDTH=100% BGCOLOR="#003366">
+<TR><TD ALIGN=LEFT COLSPAN=4 HEIGHT=3 WIDTH=100% BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
+<TR><TD ALIGN=LEFT COLSPAN=2 WIDTH=100% BGCOLOR="#f2f1f1ff">
 <?php 
 ######################### FULL HTML HEADER END #######################################
 }
