@@ -1770,8 +1770,8 @@ echo "</script>\n";
 /* Modern Admin Header Styles */
 .modern-header-container {
     position: relative;
-    width: 100%;          /* leaves a 5% gap on the left */
-    margin-left: 5%;     /* shifts the bar right to create that space */
+    width: 98%;          /* leaves a 5% gap on the left */
+    margin-left: 2%;     /* shifts the bar right to create that space */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     border-radius: 8px;  /* soft edges now visible */
