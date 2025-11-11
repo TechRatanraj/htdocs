@@ -309,13 +309,13 @@ else if ($android_header) {
 //Done till small header modernization at line 309
 ######################### FULL HTML HEADER BEGIN #######################################
 else
-{
+
 if ($no_title < 1) {echo "</title>\n";}
 echo "<script language=\"Javascript\">\n";
 echo "var field_name = '';\n";
 echo "var user = '$PHP_AUTH_USER';\n";
 echo "var epoch = '" . date("U") . "';\n";
-}
+
 if ($TCedit_javascript > 0)
 	{
 	 ?>
