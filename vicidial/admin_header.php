@@ -1782,7 +1782,7 @@ echo "</script>\n";
     align-items: center;
     justify-content: space-between;
     padding: 8px 20px; /* reduced height */
-    height: 50px;
+    height: 40px;
 }
 
 .logo-container {
