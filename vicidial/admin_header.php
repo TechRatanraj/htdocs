@@ -3132,7 +3132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             element.textContent = new Date().toLocaleString();
         });
     }
-    
+}    
     // Update clock initially and then every second
     updateClock();
     setInterval(updateClock, 1000);
