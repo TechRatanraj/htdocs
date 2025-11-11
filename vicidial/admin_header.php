@@ -284,15 +284,19 @@ if ($short_header) {
             </table>
             <?php
         }
-	}
-        else if ($android_header) {
-            ?>
-		
+    }
+}
+######################### SMALL HTML HEADER END #######################################
+
+
 ######################### MOBILE HTML HEADER BEGIN ####################################
 // ============================================
 // ANDROID MOBILE HEADER - INLINE MODERNIZED
 // Purple Gradient + Responsive Design
 // ============================================
+
+else if ($android_header) {
+    ?>
     <table cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#<?php echo $SSmenu_background; ?>,#764ba2);width:100%;border-radius:8px;margin-bottom:16px;box-shadow:0 2px 8px rgba(102,126,234,0.2);"><tr>
     <td style="padding:10px 14px;"><a href="./admin_mobile.php" style="display:inline-block;transition:all 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='0.9';this.style.transform='scale(1)'"><img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;"></a></td>
     <td style="padding:0;flex:1;"></td>
@@ -300,13 +304,12 @@ if ($short_header) {
     </tr>
     </table>
     <?php
-    }
 }
 
 //Done till small header modernization at line 309
 ######################### FULL HTML HEADER BEGIN #######################################
 else
-{
+
 if ($no_title < 1) {echo "</title>\n";}
 echo "<script language=\"Javascript\">\n";
 echo "var field_name = '';\n";
@@ -1938,40 +1941,6 @@ else
     position: relative;
 }
 
-/* Main content area styling */
-.main-content-area {
-    min-height: 400px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 8px;
-    margin: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Content wrapper */
-.content-wrapper {
-    min-height: 300px;
-    padding: 20px;
-}
-
-/* Welcome message styling */
-.welcome-message {
-    text-align: center;
-    padding: 60px 20px;
-    color: #666;
-}
-
-.welcome-message h2 {
-    color: #333;
-    margin-bottom: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.welcome-message p {
-    font-size: 16px;
-    line-height: 1.6;
-}
-
 /* Top navbar modern styling */
 .modern-top-nav {
     background: linear-gradient(135deg, var(--primary-bg), #<?php echo $SSmenu_background; ?>);
@@ -3113,32 +3082,12 @@ else
 	}
 ?>
 <TR><TD ALIGN=LEFT COLSPAN=2 HEIGHT=2 BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
-
-<!-- BEGIN MAIN CONTENT AREA -->
-<TR><TD ALIGN=LEFT COLSPAN=2 CLASS="main-content-area">
-<div class="content-wrapper">
-<?php
-// Main content area - this is where the actual page content should be displayed
-// This placeholder will be replaced by content from the calling page
-if (isset($main_content)) {
-    echo $main_content;
-} else {
-    // Default content when no specific content is provided
-    echo '<div class="welcome-message">';
-    echo '<h2>Welcome to VICIDIAL Administration</h2>';
-    echo '<p>Select an option from the menu to begin.</p>';
-    echo '</div>';
-}
-?>
-</div>
+<TR><TD ALIGN=LEFT COLSPAN=2>
 </TD></TR>
-<!-- END MAIN CONTENT AREA -->
-
 </TABLE> <!-- Close main admin table -->
 <?php 
 ######################### FULL HTML HEADER END #######################################
-
-
+?>
 <!-- Enhanced navigation with modern JavaScript -->
 <script>
 // Modern Admin Navigation Enhancements
@@ -3238,9 +3187,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(mobileToggle);
     }
 });
+
 </script>
 
 </div> <!-- Close main-container -->
 </body>
 </html>
-}
+
