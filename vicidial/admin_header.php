@@ -315,7 +315,7 @@ echo "<script language=\"Javascript\">\n";
 echo "var field_name = '';\n";
 echo "var user = '$PHP_AUTH_USER';\n";
 echo "var epoch = '" . date("U") . "';\n";
-
+}
 if ($TCedit_javascript > 0)
 	{
 	 ?>
