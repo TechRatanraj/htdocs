@@ -1778,11 +1778,6 @@ echo "</script>\n";
     overflow: hidden;
 }
 
-body {
-    background-color: #0b2447;  /* match sidebar background */
-    margin: 0;
-    padding: 0;
-}
 
 .header-top {
     display: flex;
