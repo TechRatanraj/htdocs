@@ -3816,8 +3816,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             </div>
                         </div>
                     </div>
-                    <?php 
-                } 
+                </div>
+                <?php 
             }
             ?>
         </div>
