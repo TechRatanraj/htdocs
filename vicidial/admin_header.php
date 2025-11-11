@@ -2791,7 +2791,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                     <?php } ?>
                     <?php
                 }
-                
+			}
                 if (strlen($admin_hh) > 25) {
                     ?>
                     <div class="nav-subitem <?php echo ($sh=='times') ? 'active' : ''; ?>">
@@ -3007,14 +3007,14 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             }
             ?>
         </nav>
-        
+		     
         <div style="padding: 20px; margin-top: auto;">
             <div style="color: rgba(255,255,255,0.6); font-size: 12px; text-align: center;">
                 <?php echo date("Y-m-d H:i:s"); ?>
             </div>
         </div>
     </div>
-    
+		
     <div class="admin-content">
         <div class="modern-header-container">
             <div class="header-top">
