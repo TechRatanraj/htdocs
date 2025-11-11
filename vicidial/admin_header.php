@@ -721,7 +721,7 @@ if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_c
 		}
 
 	<?php
-}
+
 #### Javascript for auto-generate of user ID Button
 if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 	{
@@ -740,7 +740,7 @@ if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 
 	<?php
 	}
-
+}
 #### BEGIN Javascript for auto-generate of user ID Button
 if ( ($ADD==1) or ($ADD=="1A") )
 	{
