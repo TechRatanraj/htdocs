@@ -1770,13 +1770,14 @@ echo "</script>\n";
 /* Modern Admin Header Styles */
 .modern-header-container {
     position: relative;
-    width: calc(100% - 220px); /* fits neatly beside a 220px sidebar */
-    margin-left: 220px;        /* aligns flush with sidebar edge */
+    width: calc(100% - 220px);  /* subtract sidebar width */
+    margin-left: 220px;         /* align to sidebar edge */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0; /* only round right side */
     overflow: hidden;
 }
+
 
 
 .header-top {
