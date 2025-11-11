@@ -1768,15 +1768,18 @@ echo "</script>\n";
 <!--
 
 /* Modern Admin Header Styles */
+.modern-header-container 
 .modern-header-container {
     position: relative;
-    width: 100%;          /* leaves a 5% gap on the left */
-    /* shifts the bar right to create that space */
+    width: 95%;               /* covers most of the screen */
+    margin-left: 5%;          /* creates the left-side gap */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    border-radius: 8px;  /* soft edges now visible */
+    border-radius: 8px;       /* keeps that nice rounded edge */
     overflow: hidden;
 }
+
+
 
 .header-top {
     display: flex;
