@@ -1770,7 +1770,7 @@ echo "</script>\n";
 /* Modern Admin Header Styles */
 .modern-header-container {
     position: relative;
-    width: 100%;          /* leaves a 5% gap on the left */
+    width: 99.9%;          /* leaves a 5% gap on the left */
     /* shifts the bar right to create that space */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
@@ -3555,17 +3555,18 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         <div class="modern-card-body">
                             <div style="color: #5a6c7d; font-style: italic;">
                                 <?php echo _QXZ("Select a report category from the sidebar to view available reports"); ?>
-                            </div>
+                                                      </div>
                         </div>
                     </div>
-                    <?php 
-                } 
-            }
-            ?>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
         </div>
     </div>
 </div>
-
 <?php
 ######################### FULL HTML HEADER END #######################################
 }
