@@ -2067,13 +2067,7 @@ if ($SSadmin_modify_refresh > 1) {
         padding: 0 !important;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
     }
-    .admin-content { 
-        flex: 1 !important; 
-        margin-left: 260px !important; 
-        background: white !important; 
-        min-height: 100vh !important;
-        padding: 0 !important;
-    }
+   
     .modern-header-container {
         margin: 0 !important;
         padding: 0 !important;
