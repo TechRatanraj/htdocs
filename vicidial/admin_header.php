@@ -1786,7 +1786,7 @@ echo "</script>\n";
     align-items: center;
     justify-content: space-between;
     padding: 12px 20px;
-    min-height: 40px;
+    min-height: 60px;
 }
 
 .logo-container {
@@ -2301,6 +2301,7 @@ margin-top:1px;
 ##### END - bar chart CSS style #####
 
 echo "</head>\n";
+
 if ($SSadmin_modify_refresh > 1) {
     echo '<style>
     .admin-layout { 
@@ -2791,7 +2792,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                     <?php } ?>
                     <?php
                 }
-			}
+                
                 if (strlen($admin_hh) > 25) {
                     ?>
                     <div class="nav-subitem <?php echo ($sh=='times') ? 'active' : ''; ?>">
@@ -3007,14 +3008,14 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             }
             ?>
         </nav>
-		     
+        
         <div style="padding: 20px; margin-top: auto;">
             <div style="color: rgba(255,255,255,0.6); font-size: 12px; text-align: center;">
                 <?php echo date("Y-m-d H:i:s"); ?>
             </div>
         </div>
     </div>
-		
+    
     <div class="admin-content">
         <div class="modern-header-container">
             <div class="header-top">
@@ -3776,7 +3777,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 </div>
                 <?php 
             }
-		
+
             if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) { 
                 ?>
                 <div class="modern-card">
@@ -3800,7 +3801,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-			                                <?php 
+                <?php 
             }
             else {
                 if (strlen($reports_hh) > 25) { 
@@ -3815,14 +3816,14 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             </div>
                         </div>
                     </div>
-                </div>
-                <?php 
+                    <?php 
+                } 
             }
             ?>
         </div>
     </div>
 </div>
-		
+
 <?php
 ######################### FULL HTML HEADER END #######################################
 }
