@@ -298,8 +298,8 @@ if ($short_header) {
     </tr>
     </table>
     <?php
-    }
-}
+        } else {
+            ?>
 
 //Done till small header modernization at line 309
 ######################### FULL HTML HEADER BEGIN #######################################
@@ -3135,7 +3135,6 @@ if (isset($main_content)) {
 </TABLE> <!-- Close main admin table -->
 <?php 
 ######################### FULL HTML HEADER END #######################################
-
 
 <!-- Enhanced navigation with modern JavaScript -->
 <script>
