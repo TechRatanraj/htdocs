@@ -3555,18 +3555,17 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         <div class="modern-card-body">
                             <div style="color: #5a6c7d; font-style: italic;">
                                 <?php echo _QXZ("Select a report category from the sidebar to view available reports"); ?>
-                                                      </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        </div>
-    </div>
+                    <?php 
+                } 
+            }
+            ?>
         </div>
     </div>
 </div>
+
 <?php
 ######################### FULL HTML HEADER END #######################################
 }
