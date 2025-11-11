@@ -1846,7 +1846,7 @@ echo "</script>\n";
 }
 
 .nav-spacer {
-    width: 20px;
+    width: 0px;
 }
 
 /* Modern Sidebar Styles */
