@@ -30,18 +30,17 @@ $SSadmin_web_directory =	$row[16];
 if (strlen($SSadmin_home_url) > 5) {$admin_home_url_LU = $SSadmin_home_url;}
 if(!isset($ADMIN)){$ADMIN = "../$SSadmin_web_directory/admin.php";}
 
-$SSmenu_background='000000';           // Black menu header
-$SSframe_background='FFFFFF';          // Pure white background
-$SSstd_row1_background='F5F5F5';       // Light gray - Standard row 1
-$SSstd_row2_background='FFFFFF';       // White - Standard row 2
-$SSstd_row3_background='F0F0F0';       // Light gray - Standard row 3
-$SSstd_row4_background='FFFFFF';       // White - Standard row 4
-$SSstd_row5_background='E8E8E8';       // Light gray - Standard row 5
-$SSalt_row1_background='FFFFFF';       // White - Alternative row 1
-$SSalt_row2_background='F5F5F5';       // Light gray - Alternative row 2
-$SSalt_row3_background='FFFFFF';       // White - Alternative row 3
-$SSbutton_color='F0F0F0';              // Light gray - Button color
-
+$SSmenu_background='015B91';
+$SSframe_background='D9E6FE';
+$SSstd_row1_background='9BB9FB';
+$SSstd_row2_background='B9CBFD';
+$SSstd_row3_background='8EBCFD';
+$SSstd_row4_background='B6D3FC';
+$SSstd_row5_background='A3C3D6';
+$SSalt_row1_background='BDFFBD';
+$SSalt_row2_background='99FF99';
+$SSalt_row3_background='CCFFCC';
+$SSbutton_color='EFEFEF';
 
 if ($SSadmin_screen_colors != 'default')
 	{
@@ -1850,83 +1849,220 @@ background:rgb(102,255,51);
 <?php
 ##### END - bar chart CSS style #####
 
-echo "</head>\n"; echo '<div class="admin-content"><div class="navbar-top">'; 
+echo "</head>\n";
 if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 	{
-	
-    // Inject modern styling with proper spacing
-    echo '<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { margin: 0; padding: 0; }
-    body { 
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important; 
-        margin: 0 !important; 
-        padding: 0 !important;
-    }
-    .admin-layout { 
-        display: flex !important; 
-        min-height: 100vh !important; 
-        width: 100% !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    .admin-sidebar { 
-        width: 260px !important; 
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; 
-        position: fixed !important; 
-        height: 100vh !important; 
-        left: 0 !important; 
-        top: 0 !important; 
-        z-index: 1000 !important; 
-        overflow-y: auto !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    .admin-content { 
-        flex: 1 !important; 
-        margin-left: 260px !important; 
-        background: white !important; 
-        min-height: 100vh !important;
-        padding: 24px !important;
-        margin-top: 0 !important;
-    }
-    .navbar-top {
-        margin: 0 !important;
-        padding: 20px !important;
-        background: white !important;
-        border-bottom: 1px solid #ddd !important;
-        margin-bottom: 20px !important;
-    }
-    TABLE { 
-        background: inherit !important; 
-        margin: 0 !important;
-        padding: 8px !important;
-    }
-    TR { 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    TD { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    TH { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    </style>';
-
-    echo '<div class="admin-layout">';
-    echo '<div class="admin-sidebar">';
-
-    echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0 onLoad=\"modify_refresh_display();\">\n";
 	}
 else
 	{
 	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
 	}
+
+// Modern CSS for enhanced styling while preserving existing structure
+?>
+<style>
+/* Modern CSS Variables for theming */
+:root {
+    --primary-bg: #<?php echo $SSmenu_background ?? '015B91'; ?>;
+    --frame-bg: #<?php echo $SSframe_background ?? 'D9E6FE'; ?>;
+    --hover-overlay: rgba(255, 255, 255, 0.15);
+    --text-light: #ffffff;
+    --border-radius: 8px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+}
+
+/* Main container modern styling */
+.main-container {
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Enhanced main table */
+.modern-admin-table {
+    background: var(--frame-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin: 16px auto;
+}
+
+/* Modern sidebar navigation */
+.sidebar-nav {
+    background: linear-gradient(135deg, var(--primary-bg), #<?php echo $SSmenu_background; ?>);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+/* Logo enhancement */
+.sidebar-logo {
+    padding: 16px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo img {
+    transition: var(--transition);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.sidebar-logo img:hover {
+    transform: scale(1.05);
+}
+
+/* Enhanced navigation links */
+.nav-link {
+    transition: var(--transition);
+    border-radius: 4px;
+    margin: 2px 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link:hover {
+    background: var(--hover-overlay);
+    transform: translateX(4px);
+}
+
+.nav-link a {
+    text-decoration: none;
+    color: var(--text-light);
+    display: block;
+    padding: 8px 12px;
+    font-weight: 600;
+    position: relative;
+}
+
+/* Main content area enhancement */
+.main-content {
+    background: var(--frame-bg);
+    position: relative;
+}
+
+/* Top navbar modern styling */
+.modern-top-nav {
+    background: linear-gradient(135deg, var(--primary-bg), #<?php echo $SSmenu_background; ?>);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow);
+}
+
+.top-nav-container {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 16px;
+}
+
+.top-nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.top-nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: var(--transition);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-nav-link:hover {
+    background: var(--hover-overlay);
+    transform: translateY(-1px);
+}
+
+.top-nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar-nav {
+        position: fixed;
+        left: -200px;
+        top: 0;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar-nav.open {
+        left: 0;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+        background: var(--primary-bg);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 8px;
+    }
+}
+
+/* Animation for navigation sections */
+.nav-section {
+    animation: fadeInLeft 0.3s ease-out;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced horizontal lines */
+.horiz_line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    margin: 8px 0;
+}
+
+/* Modern button styling */
+.modern-btn {
+    background: linear-gradient(135deg, #<?php echo $SSmenu_background; ?>, #764ba2);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.modern-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced navigation table styling */
+nav nav nav nav nav nav nav nav nav nav
+</style>
+
+<?php
 	
 echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 
@@ -1938,17 +2074,18 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 
 ?>
-<left>
+<div class="main-container">
+<CENTER>
 
-<TABLE BGCOLOR=white cellpadding=0 cellspacing=0>
+<TABLE BGCOLOR=white cellpadding=0 cellspacing=0 CLASS="modern-admin-table">
 <!-- BEGIN SIDEBAR NAVIGATION -->
-<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
-
-
+<TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> CLASS="sidebar-nav">
+<div class="sidebar-logo">
 <A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=170 HEIGHT=45 BORDER=0 ALT="System logo"></A>
-<B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
+<B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B>
+</div>
 
-<TABLE CELLPADDING=6 CELLSPACING=0 BGCOLOR=<?php echo $SSmenu_background ?> WIDTH=160 STYLE="height: 750px; min-height: 750px; padding-top: 20px;">
+	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160 CLASS="nav-section">
 	<?php
 	if ( ($reports_only_user < 1) and ($qc_only_user < 1) )
 		{
@@ -2710,7 +2847,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 			}
 		}
 	?>
-	<TR WIDTH=100%><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
+	<TR WIDTH=160><TD><DIV CLASS="horiz_line"></DIV></TD></TR>
 	</TABLE>
 	<BR>&nbsp;
 </TD><TD VALIGN=TOP WIDTH=<?php echo $page_width ?> BGCOLOR=#<?php echo $SSframe_background ?>>
@@ -2720,9 +2857,64 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 </span>
 
-<TABLE BGCOLOR="#003366" cellpadding=3 cellspacing=0 WIDTH=100% STYLE="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
-<TR BGCOLOR="#003366" STYLE="width: 100%;"><TD ALIGN=LEFT BGCOLOR="#003366" WIDTH=100% STYLE="width: 100%; padding: 10px 15px;">
-<FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("HOME"); ?></a> | <A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Timeclock"); ?></A> | <a href="manager_chat_interface.php" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1> <?php echo _QXZ("Chat"); ?></a> | <a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Logout"); ?></a> <FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1>(<?php echo $PHP_AUTH_USER ?>)</FONT>
+<!-- MODERN TOP NAVIGATION -->
+<div class="modern-top-nav">
+<div class="top-nav-container">
+<div class="top-nav-logo">
+<a href="<?php echo htmlspecialchars($admin_home_url_LU); ?>" style="display:inline-block;transition:opacity 0.2s;opacity:0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+<img src="<?php echo htmlspecialchars($selected_small_logo); ?>" width="71" height="22" border="0" alt="System logo" style="display:block;">
+</a>
+</div>
+
+<?php
+// Top navigation links based on user permissions
+if (($reports_only_user < 1) && ($qc_only_user < 1)) {
+    // Full access menu
+    ?>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" class="top-nav-link"><?php echo $reports_icon; ?> <?php echo _QXZ("Reports"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=0A'); ?>" class="top-nav-link"><?php echo $users_icon; ?> <?php echo _QXZ("Users"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10'); ?>" class="top-nav-link"><?php echo $campaigns_icon; ?> <?php echo _QXZ("Campaigns"); ?></a>
+    
+    <?php
+    // QC menu if authorized
+    if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+        ?>
+        <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" class="top-nav-link"><?php echo $qc_icon; ?> <?php echo _QXZ("Quality Control"); ?></a>
+        <?php
+    }
+    ?>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100'); ?>" class="top-nav-link"><?php echo $lists_icon; ?> <?php echo _QXZ("Lists"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1000000'); ?>" class="top-nav-link"><?php echo $scripts_icon; ?> <?php echo _QXZ("Scripts"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000000'); ?>" class="top-nav-link"><?php echo $filters_icon; ?> <?php echo _QXZ("Filters"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=1001'); ?>" class="top-nav-link"><?php echo $inbound_icon; ?> <?php echo _QXZ("Inbound"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000'); ?>" class="top-nav-link"><?php echo $usergroups_icon; ?> <?php echo _QXZ("User Groups"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=10000'); ?>" class="top-nav-link"><?php echo $remoteagents_icon; ?> <?php echo _QXZ("Remote Agents"); ?></a>
+    <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999998'); ?>" class="top-nav-link"><?php echo $admin_icon; ?> <?php echo _QXZ("Admin"); ?></a>
+    <?php
+} else {
+    // Limited access menu
+    if ($reports_only_user > 0) {
+        ?>
+        <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=999999'); ?>" class="top-nav-link" style="background:rgba(255,255,255,0.15);"><?php echo _QXZ("Reports"); ?></a>
+        <?php
+    } else {
+        if (($SSqc_features_active == '1') && ($qc_auth == '1')) {
+            ?>
+            <a href="<?php echo htmlspecialchars($ADMIN . '?ADD=100000000000000'); ?>" class="top-nav-link" style="background:rgba(255,255,255,0.15);"><?php echo _QXZ("Quality Control"); ?></a>
+            <?php
+        }
+    }
+}
+?>
+
+<div class="top-nav-right">
+<FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B>
+<a href="<?php echo $admin_home_url_LU ?>" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("HOME"); ?></a> | 
+<A HREF="../agc/timeclock.php?referrer=admin" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Timeclock"); ?></A> | 
+<a href="manager_chat_interface.php" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Chat"); ?></a> | 
+<a href="<?php echo $ADMIN ?>?force_logout=1" STYLE="text-decoration:none;"><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1><?php echo _QXZ("Logout"); ?></a> 
+<FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=1>(<?php echo $PHP_AUTH_USER ?>)</FONT>
+</B></FONT>
 
 <?php
 if ($SSenable_languages == '1')
@@ -2731,9 +2923,15 @@ if ($SSenable_languages == '1')
 	}
 ?>
 
-</TD><TD ALIGN=RIGHT><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B><?php echo date("l F j, Y G:i:s A") ?> &nbsp; </B></TD></TR>
+<span style="color: white; font-weight: 600; font-size: 13px;"><?php echo date("l F j, Y G:i:s A") ?></span>
+</div>
+</div>
+</div>
+<!-- END MODERN TOP NAVIGATION -->
 
-<TR BGCOLOR=#<?php echo "$SSmenu_background" ?>>
+
+
+
 
 
 
@@ -2883,14 +3081,115 @@ else
 		<?php } 
 	}
 ?>
-<TR><TD ALIGN=LEFT COLSPAN=4 HEIGHT=3 WIDTH=100% BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
-<TR><TD ALIGN=LEFT COLSPAN=2 WIDTH=100% BGCOLOR="WHITE">
+<TR><TD ALIGN=LEFT COLSPAN=2 HEIGHT=2 BGCOLOR=#<?php echo "$SSmenu_background" ?>></TD></TR>
+<TR><TD ALIGN=LEFT COLSPAN=2>
+</TD></TR>
+</TABLE> <!-- Close main admin table -->
 <?php 
 ######################### FULL HTML HEADER END #######################################
-}
 
-
-    // Close modern layout at end of file
-    echo '</div></div></div></div>';
-    ?>
+<!-- Enhanced navigation with modern JavaScript -->
+<script>
+// Modern Admin Navigation Enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Add smooth hover effects and animations
+    const navLinks = document.querySelectorAll('.top-nav-link, .nav-link a');
     
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Add keyboard navigation support
+    navLinks.forEach(link => {
+        link.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Add loading states for better UX
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            this.style.opacity = '0.7';
+            setTimeout(() => {
+                this.style.opacity = '1';
+            }, 300);
+        });
+    });
+    
+    // Auto-refresh the clock every second
+    function updateClock() {
+        const clockElements = document.querySelectorAll('span[style*="font-weight: 600"]');
+        clockElements.forEach(element => {
+            element.textContent = new Date().toLocaleString();
+        });
+    }
+    
+    // Update clock initially and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+    
+    // Add mobile menu toggle functionality
+    const sidebar = document.querySelector('.sidebar-nav');
+    if (sidebar) {
+        // Create mobile menu toggle button
+        const mobileToggle = document.createElement('button');
+        mobileToggle.innerHTML = '☰';
+        mobileToggle.className = 'mobile-menu-toggle';
+        mobileToggle.style.cssText = `
+            display: none;
+            background: var(--primary-bg);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 8px;
+            font-size: 16px;
+        `;
+        
+        // Add mobile toggle functionality
+        mobileToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+        
+        // Add mobile styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                .mobile-menu-toggle { display: block !important; }
+                .sidebar-nav {
+                    position: fixed;
+                    left: -200px;
+                    top: 0;
+                    height: 100vh;
+                    z-index: 1000;
+                    transition: left 0.3s ease;
+                }
+                .sidebar-nav.open {
+                    left: 0;
+                }
+                .main-content {
+                    margin-left: 0;
+                }
+            }
+        `;
+        
+        document.head.appendChild(style);
+        document.body.appendChild(mobileToggle);
+    }
+});
+</script>
+
+</div> <!-- Close main-container -->
+</body>
+</html>
+}
