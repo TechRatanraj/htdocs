@@ -1869,14 +1869,11 @@ echo "</script>\n";
 
 .admin-content {
     flex: 1;
-    margin-left: 220px;     /* aligns with sidebar */
-    margin-top: 60px;       /* pushes content below the header */
+    margin-left: 220px; /* match sidebar width */
     background: #ffffff;
-    min-height: calc(100vh - 60px);
-    padding: 20px;          /* adds some breathing room inside */
-    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 0;
 }
-
 
 .sidebar-header {
     padding: 16px;
