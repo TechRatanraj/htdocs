@@ -773,7 +773,6 @@ if ( ($ADD==1) or ($ADD=="1A") )
 
 	<?php
 	}
-
 #### END Javascript for auto-generate of user ID Button
 
 else
@@ -2071,11 +2070,10 @@ echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 if ($header_font_size < 4) {$header_font_size='12';}
 if ($subheader_font_size < 4) {$subheader_font_size='11';}
 if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
-}
+
 
 
 ?>
-
 <div class="main-container">
 <CENTER>
 
@@ -3189,6 +3187,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(mobileToggle);
     }
 });
+
 </script>
 
 </div> <!-- Close main-container -->
