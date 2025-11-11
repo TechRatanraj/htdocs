@@ -1771,7 +1771,7 @@ echo "</script>\n";
 .modern-header-container {
     position: relative;
     width: 99.9%;          /* leaves a 5% gap on the left */
-    margin-left: 0.1%;     /* shifts the bar right to create that space */
+    /* shifts the bar right to create that space */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     border-radius: 8px;  /* soft edges now visible */
