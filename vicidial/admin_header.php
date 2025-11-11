@@ -1769,12 +1769,17 @@ echo "</script>\n";
 
 /* Modern Admin Header Styles */
 .modern-header-container {
+position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    margin-bottom: 20px;
-    border-radius: 0; /* full-width flat top bar */
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
     overflow: hidden;
+    z-index: 1200;
 }
 
 .header-top {
