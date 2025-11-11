@@ -1771,8 +1771,8 @@ echo "</script>\n";
 .modern-header-container {
 position: fixed;
     top: 0;
-    left: 0;
-    width: 95%;
+    left: 5%;
+    width: 10%;
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     margin: 0;
