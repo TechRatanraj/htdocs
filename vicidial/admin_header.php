@@ -1869,11 +1869,14 @@ echo "</script>\n";
 
 .admin-content {
     flex: 1;
-    margin-left: 220px; /* match sidebar width */
+    margin-left: 220px;     /* aligns with sidebar */
+    margin-top: 60px;       /* pushes content below the header */
     background: #ffffff;
-    min-height: 100vh;
-    padding: 0;
+    min-height: calc(100vh - 60px);
+    padding: 20px;          /* adds some breathing room inside */
+    box-sizing: border-box;
 }
+
 
 .sidebar-header {
     padding: 16px;
@@ -2067,7 +2070,13 @@ if ($SSadmin_modify_refresh > 1) {
         padding: 0 !important;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
     }
-   
+    .admin-content { 
+        flex: 1 !important; 
+        margin-left: 260px !important; 
+        background: white !important; 
+        min-height: 100vh !important;
+        padding: 0 !important;
+    }
     .modern-header-container {
         margin: 0 !important;
         padding: 0 !important;
