@@ -1770,15 +1770,13 @@ echo "</script>\n";
 /* Modern Admin Header Styles */
 .modern-header-container {
     position: relative;
-    width: calc(100% - 220px);  /* subtract sidebar width */
-    margin-left: 220px;         /* align to sidebar edge */
+    width: 100%;          /* leaves a 5% gap on the left */
+    /* shifts the bar right to create that space */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    border-radius: 0 8px 8px 0; /* only round right side */
+    border-radius: 8px;  /* soft edges now visible */
     overflow: hidden;
 }
-
-
 
 .header-top {
     display: flex;
