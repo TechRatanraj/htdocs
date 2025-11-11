@@ -1770,7 +1770,7 @@ echo "</script>\n";
 /* Modern Admin Header Styles */
 .modern-header-container {
     position: relative;
-    width: calc(100% - 218px);   /* overlap sidebar by ~2px */
+    width: 100%;   /* overlap sidebar by ~2px */
     margin-left: 218px;          /* moves it slightly left */
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
