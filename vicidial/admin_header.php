@@ -3087,7 +3087,7 @@ else
 </TABLE> <!-- Close main admin table -->
 <?php 
 ######################### FULL HTML HEADER END #######################################
-
+?>
 <!-- Enhanced navigation with modern JavaScript -->
 <script>
 // Modern Admin Navigation Enhancements
