@@ -3777,7 +3777,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 </div>
                 <?php 
             }
-
+		}
             if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) { 
                 ?>
                 <div class="modern-card">
@@ -3801,7 +3801,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                <?php 
+			                    <?php 
             }
             else {
                 if (strlen($reports_hh) > 25) { 
@@ -3823,7 +3823,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
         </div>
     </div>
 </div>
-
+		
 <?php
 ######################### FULL HTML HEADER END #######################################
 }
