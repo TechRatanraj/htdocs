@@ -1765,11 +1765,7 @@ echo "</script>\n";
 ?>
 
 <style type="text/css">
-<!--
-
-/* Modern Admin Header Styles */
-<style type="text/css">
-/* Modern Admin Layout - Final Optimized Version */
+/* Modern Admin Layout - Fixed Top Positioning */
 * {
     box-sizing: border-box !important;
 }
@@ -1795,9 +1791,9 @@ html, body {
 
 /* SIDEBAR - Fixed Position */
 .admin-sidebar {
-    width: 209px !important;
-    min-width: 209px !important;
-    max-width: 209px !important;
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
     background: linear-gradient(180deg, #0b2447 0%, #19376d 100%) !important;
     position: fixed !important;
     height: 100vh !important;
@@ -1807,17 +1803,20 @@ html, body {
     overflow-y: auto !important;
     overflow-x: hidden !important;
     box-shadow: 2px 0 15px rgba(0,0,0,0.2) !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 /* MAIN CONTENT - Accounts for Fixed Sidebar */
 .admin-content {
     flex: 1 !important;
-    margin-left: 209px !important;
-    width: calc(100% - 209px) !important;
+    margin-left: 200px !important;
+    width: calc(100% - 200px) !important;
     min-height: 100vh !important;
     background: #f5f7fa !important;
     display: flex !important;
     flex-direction: column !important;
+    position: relative !important;
 }
 
 /* HEADER - Should Not Overlap Sidebar */
@@ -1847,18 +1846,15 @@ html, body {
 
 .logo-link {
     display: inline-block !important;
-    transition: transform 0.3s ease, opacity 0.3s ease !important;
-    opacity: 0.9 !important;
+    transition: transform 0.3s ease !important;
 }
 
 .logo-link:hover {
     transform: scale(1.05) !important;
-    opacity: 1 !important;
 }
 
 .logo-image {
     display: block !important;
-    border-radius: 4px !important;
     max-height: 32px !important;
     width: auto !important;
 }
@@ -1897,7 +1893,7 @@ html, body {
     font-weight: 600 !important;
 }
 
-/* CONTENT BODY - Main Container */
+/* CONTENT BODY - Starts at TOP, No Extra Spacing */
 .content-body, .main-content-area, #main-content {
     flex: 1 !important;
     width: 100% !important;
@@ -1906,22 +1902,30 @@ html, body {
     background: #f5f7fa !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+    /* CRITICAL: Align content to TOP, not center */
+    display: block !important;
+    position: relative !important;
+}
+
+/* Remove any default margins that push content down */
+.content-body > *:first-child {
+    margin-top: 0 !important;
 }
 
 /* PAGE CONTENT WRAPPER */
 .page-wrapper {
     width: 100% !important;
-    max-width: 1200px !important;
+    max-width: 1400px !important;
     margin: 0 auto !important;
 }
 
-/* CONTENT HEADER */
+/* CONTENT HEADER - Optional page title section */
 .content-header {
     background: #ffffff !important;
     padding: 20px 30px !important;
     border-bottom: 2px solid #e1e8ed !important;
     margin-bottom: 25px !important;
-    border-radius: 8px 8px 0 0 !important;
+    border-radius: 8px !important;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
 }
 
@@ -1929,93 +1933,58 @@ html, body {
     font-size: 24px !important;
     font-weight: 600 !important;
     color: #2c3e50 !important;
-    margin: 0 0 8px 0 !important;
+    margin: 0 !important;
 }
 
 .content-subtitle {
     font-size: 14px !important;
     color: #7f8c8d !important;
-    margin: 0 !important;
+    margin: 8px 0 0 0 !important;
 }
 
-/* KPI DASHBOARD - Perfectly Centered */
-.kpi-dashboard, .kpi-container, .stats-container {
+/* KPI DASHBOARD - Horizontally Centered, At Top of Page */
+.kpi-dashboard, .kpi-container, .stats-container, div[align="center"] {
     display: flex !important;
     justify-content: center !important;
     align-items: stretch !important;
-    gap: 18px !important;
+    gap: 20px !important;
     flex-wrap: wrap !important;
     width: 100% !important;
-    max-width: 1100px !important;
+    max-width: 1400px !important;
     margin: 0 auto 30px auto !important;
     padding: 0 !important;
 }
 
 /* KPI CARDS - Individual Styling */
-.kpi-card, [id*="kpi"], [class*="stat-card"], .stat-box {
+.kpi-card, [id*="kpi"], table[bgcolor="#000000"] {
     flex: 0 0 auto !important;
     width: 240px !important;
     min-width: 220px !important;
     max-width: 260px !important;
     background: #000000 !important;
     color: #ffffff !important;
-    padding: 22px 18px !important;
+    padding: 20px 18px !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
     transition: all 0.3s ease !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
+    display: inline-block !important;
+    vertical-align: top !important;
+    text-align: center !important;
 }
 
 .kpi-card:hover {
-    transform: translateY(-5px) !important;
+    transform: translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
-    background: #1a1a1a !important;
 }
 
-/* KPI Icon */
-.kpi-icon {
-    width: 50px !important;
-    min-width: 50px !important;
-    height: 50px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: rgba(255,255,255,0.1) !important;
-    border-radius: 8px !important;
-}
-
-.kpi-icon img {
-    width: 35px !important;
-    height: 35px !important;
-    filter: brightness(0) invert(1) !important;
-}
-
-/* KPI Details */
-.kpi-details, .kpi-info {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-    text-align: right !important;
-}
-
-.kpi-label, .stat-label {
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.8px !important;
-    color: rgba(255,255,255,0.9) !important;
-    line-height: 1.2 !important;
-}
-
-.kpi-value, .stat-value {
-    font-size: 36px !important;
-    font-weight: 700 !important;
+/* Target VICIdial's KPI table cells */
+table[bgcolor="#000000"] td {
     color: #ffffff !important;
-    line-height: 1 !important;
+    padding: 15px !important;
+}
+
+table[bgcolor="#000000"] td font {
+    color: #ffffff !important;
 }
 
 /* TABLES - System Summary */
@@ -2059,6 +2028,13 @@ table tbody tr:last-child td {
     border-bottom: none !important;
 }
 
+/* Prevent tables from having excessive margins */
+table[width="700"] {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 20px auto !important;
+}
+
 /* SIDEBAR NAVIGATION */
 .sidebar-header {
     padding: 16px 12px !important;
@@ -2087,7 +2063,9 @@ table tbody tr:last-child td {
 }
 
 .nav-section {
+    flex: 1 !important;
     padding: 8px 0 !important;
+    overflow-y: auto !important;
 }
 
 .nav-section-title {
@@ -2138,6 +2116,22 @@ table tbody tr:last-child td {
     margin: 12px 16px !important;
 }
 
+/* Sidebar Footer */
+.sidebar-footer {
+    padding: 15px 12px !important;
+    margin-top: auto !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(0,0,0,0.2) !important;
+}
+
+.sidebar-timestamp {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 11px !important;
+    text-align: center !important;
+    font-family: 'Courier New', monospace !important;
+    letter-spacing: 0.5px !important;
+}
+
 /* FORMS AND INPUTS */
 form {
     width: 100% !important;
@@ -2170,21 +2164,11 @@ input, select, textarea {
     
     .kpi-dashboard {
         flex-direction: column !important;
-        align-items: stretch !important;
     }
     
     .kpi-card {
         width: 100% !important;
         max-width: 100% !important;
-    }
-    
-    .nav-menu {
-        gap: 5px !important;
-    }
-    
-    .nav-item {
-        font-size: 12px !important;
-        padding: 6px 10px !important;
     }
 }
 
@@ -2195,64 +2179,25 @@ input, select, textarea {
     clear: both !important;
 }
 
-.text-center {
+/* Fix for VICIdial's centered content */
+center {
+    display: block !important;
     text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-/* ENSURE PROPER STACKING */
-.admin-content > * {
-    position: relative !important;
-    z-index: 1 !important;
+/* Ensure content aligns at top */
+br {
+    line-height: 1.5 !important;
 }
 
-/* Sidebar Footer Styles */
-.sidebar-footer {
-    padding: 15px 12px !important;
-    margin-top: auto !important;
-    border-top: 1px solid rgba(255,255,255,0.1) !important;
-    background: rgba(0,0,0,0.2) !important;
+/* Remove excessive spacing */
+p {
+    margin: 10px 0 !important;
 }
-
-.sidebar-timestamp {
-    color: rgba(255,255,255,0.6) !important;
-    font-size: 11px !important;
-    text-align: center !important;
-    font-family: 'Courier New', monospace !important;
-    letter-spacing: 0.5px !important;
-}
-
-/* Ensure sidebar uses flexbox for proper footer positioning */
-.admin-sidebar {
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.nav-section {
-    flex: 1 !important;
-    overflow-y: auto !important;
-}
-
-/* Main Content Area Wrapper */
-.admin-content {
-    flex: 1 !important;
-    margin-left: 220px !important;
-    width: calc(100% - 220px) !important;
-    min-height: 100vh !important;
-    background: #f5f7fa !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-/* Content Body Container */
-.content-body {
-    flex: 1 !important;
-    width: 100% !important;
-    padding: 30px 40px !important;
-    background: #f5f7fa !important;
-    overflow-y: auto !important;
-}
-
 </style>
+
 
 
 <?php
