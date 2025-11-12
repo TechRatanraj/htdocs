@@ -3015,7 +3015,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             <!-- Existing page content continues below -->
 
         <div class="content-body">
-            <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
+<!-- Content area starts - wrapper managed by parent -->
+<span style="position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;" id="audio_chooser_span"></span>
             
             <?php
             if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
@@ -3779,6 +3780,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                                 <?php echo _QXZ("Select a report category from the sidebar to view available reports"); ?>
                             </div>
                         </div>
+				</div>
                     </div>
                     <?php 
                 } 
