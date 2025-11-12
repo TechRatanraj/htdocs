@@ -1769,14 +1769,14 @@ echo "</script>\n";
 
 /* Modern Admin Header Styles */
 .modern-header-container {
-    position: relative;
-    width: 99.9%;          /* leaves a 5% gap on the left */
-    /* shifts the bar right to create that space */
-    background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    border-radius: 8px;  /* soft edges now visible */
-    overflow: hidden;
+    width: 100% !important;  /* Changed from 99.9% */
+    margin: 0 !important;
+    padding: 8px 20px !important;
+    background: linear-gradient(135deg, #0b2447 0%, #19376d 100%) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
+    position: relative !important;
 }
+
 
 .header-top {
     display: flex;
@@ -1849,30 +1849,27 @@ echo "</script>\n";
 
 /* Modern Sidebar Styles */
 .admin-layout {
-    display: flex;
-    min-height: 100vh;
-    background: #f5f7fa;
+    display: flex !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #f5f7fa !important;
 }
 
+
 .admin-sidebar {
-    width: 220px;
-    background: linear-gradient(180deg, #0b2447 0%, #19376d 100%);
-    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
-    position: fixed;
-    height: 100vh;
+    width: 260px !important;
+    position: fixed !important;
     left: 0;
     top: 0;
-    z-index: 1000;
-    overflow-y: auto;
-    transition: transform 0.3s ease;
+    z-index: 1000 !important;
 }
 
 .admin-content {
-    flex: 1;
-    margin-left: 220px; /* match sidebar width */
-    background: #ffffff;
+    margin-left: 260px !important;
+    width: calc(100% - 260px) !important;
     min-height: 100vh;
-    padding: 0;
 }
 
 .sidebar-header {
@@ -2001,10 +1998,12 @@ echo "</script>\n";
 }
 
 .content-body {
-    padding: 25px;
-    background: #ffffff;
-    min-height: calc(100vh - 120px);
+    padding: 25px !important;
+    background: #ffffff !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
