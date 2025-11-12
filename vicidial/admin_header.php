@@ -1765,30 +1765,32 @@ echo "</script>\n";
 ?>
 
 <style type="text/css">
-/* Modern Admin Layout - Fixed Version */
+/* Modern Admin Layout - Complete Fixed Version */
 * {
+    margin: 0 !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
 }
 
-body {
-    margin: 0 !important;
-    padding: 0 !important;
+html, body {
+    width: 100% !important;
+    height: 100% !important;
     overflow-x: hidden !important;
+    background: #f5f7fa !important;
 }
 
 .admin-layout {
     display: flex !important;
     min-height: 100vh !important;
     width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
     background: #f5f7fa !important;
 }
 
+/* SIDEBAR - Fixed Positioning */
 .admin-sidebar {
-    width: 220px !important;
-    min-width: 220px !important;
-    max-width: 220px !important;
+    width: 209px !important;
+    min-width: 209px !important;
+    max-width: 209px !important;
     background: linear-gradient(180deg, #0b2447 0%, #19376d 100%) !important;
     position: fixed !important;
     height: 100vh !important;
@@ -1796,44 +1798,130 @@ body {
     top: 0 !important;
     z-index: 1000 !important;
     overflow-y: auto !important;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.15) !important;
+    overflow-x: hidden !important;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.2) !important;
 }
 
+/* MAIN CONTENT AREA - Must Account for Sidebar */
 .admin-content {
     flex: 1 !important;
-    margin-left: 220px !important;
-    width: calc(100% - 220px) !important;
-    background: #ffffff !important;
+    margin-left: 209px !important;
+    width: calc(100% - 209px) !important;
     min-height: 100vh !important;
-    padding: 0 !important;
+    background: #f5f7fa !important;
     position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
+/* HEADER */
 .modern-header-container {
     width: 100% !important;
-    margin: 0 !important;
-    padding: 8px 20px !important;
     background: linear-gradient(135deg, #0b2447 0%, #19376d 100%) !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
-    border-radius: 0 !important;
-    position: relative !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 999 !important;
+    padding: 8px 20px !important;
 }
 
-.content-body {
-    padding: 25px !important;
-    background: #ffffff !important;
+/* CONTENT WRAPPER - This is the key for centering */
+.content-body, .main-content-area {
+    flex: 1 !important;
     width: 100% !important;
-    min-height: calc(100vh - 60px) !important;
-    box-sizing: border-box !important;
+    padding: 25px 30px !important;
+    background: #f5f7fa !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
-/* Header Styles */
+/* PAGE CONTENT CONTAINER */
+.page-content {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 25px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* KPI DASHBOARD CONTAINER - Centers the KPI Cards */
+.kpi-dashboard, .kpi-container, .dashboard-kpis {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    padding: 20px 0 !important;
+    margin: 0 auto !important;
+}
+
+/* KPI CARDS - Individual Styling */
+.kpi-card, [class*="kpi-"], [class*="stat-card"] {
+    flex: 0 0 auto !important;
+    min-width: 200px !important;
+    max-width: 250px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
+}
+
+/* KPI Card Content */
+.kpi-icon {
+    width: 50px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.kpi-icon img {
+    width: 40px !important;
+    height: 40px !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+.kpi-details {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+}
+
+.kpi-label {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: #ffffff !important;
+}
+
+.kpi-value {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    line-height: 1 !important;
+}
+
+/* HEADER STYLES */
 .header-top {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 0 !important;
-    height: 44px !important;
+    min-height: 44px !important;
 }
 
 .logo-container {
@@ -1856,6 +1944,7 @@ body {
     display: block !important;
     border-radius: 4px !important;
     max-height: 35px !important;
+    width: auto !important;
 }
 
 .nav-menu {
@@ -1874,7 +1963,7 @@ body {
     text-decoration: none !important;
     font-size: 13px !important;
     font-weight: 500 !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     border-radius: 6px !important;
     transition: all 0.3s ease !important;
     background: rgba(255,255,255,0.08) !important;
@@ -1893,9 +1982,9 @@ body {
     font-weight: 600 !important;
 }
 
-/* Sidebar Styles */
+/* SIDEBAR NAVIGATION */
 .sidebar-header {
-    padding: 16px !important;
+    padding: 16px 12px !important;
     text-align: center !important;
     border-bottom: 1px solid rgba(255,255,255,0.1) !important;
 }
@@ -1929,14 +2018,14 @@ body {
     font-weight: 600 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    padding: 10px 20px 5px !important;
+    padding: 10px 16px 5px !important;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
 .nav-item-sidebar {
     display: flex !important;
     align-items: center !important;
-    padding: 10px 20px !important;
+    padding: 10px 16px !important;
     color: #ffffff !important;
     text-decoration: none !important;
     font-size: 14px !important;
@@ -1949,7 +2038,7 @@ body {
 .nav-item-sidebar:hover {
     background: rgba(255,255,255,0.1) !important;
     border-left-color: #3498db !important;
-    transform: translateX(3px) !important;
+    padding-left: 20px !important;
 }
 
 .nav-item-sidebar.active {
@@ -1964,68 +2053,56 @@ body {
     height: 16px !important;
 }
 
-.nav-subitem {
-    display: flex !important;
-    align-items: center !important;
-    padding: 8px 20px 8px 45px !important;
-    color: rgba(255,255,255,0.8) !important;
-    text-decoration: none !important;
-    font-size: 13px !important;
-    transition: all 0.3s ease !important;
-    border-left: 3px solid transparent !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-}
-
-.nav-subitem:hover {
-    background: rgba(255,255,255,0.05) !important;
-    color: #ffffff !important;
-    border-left-color: #3498db !important;
-    transform: translateX(3px) !important;
-}
-
-.nav-subitem.active {
-    background: rgba(255,255,255,0.1) !important;
-    color: #ffffff !important;
-    border-left-color: #3498db !important;
-    font-weight: 500 !important;
-}
-
 .nav-divider {
     height: 1px !important;
     background: rgba(255,255,255,0.1) !important;
-    margin: 10px 20px !important;
+    margin: 10px 16px !important;
 }
 
-/* Content Area */
+/* CONTENT HEADERS */
 .content-header {
     background: #ffffff !important;
     padding: 15px 25px !important;
     border-bottom: 1px solid #e1e8ed !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+    margin-bottom: 20px !important;
+    border-radius: 8px 8px 0 0 !important;
 }
 
 .content-title {
     font-size: 22px !important;
     font-weight: 600 !important;
     color: #2c3e50 !important;
-    margin: 0 !important;
+    margin: 0 0 5px 0 !important;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
 .content-subtitle {
     font-size: 13px !important;
     color: #7f8c8d !important;
-    margin-top: 5px !important;
+    margin: 0 !important;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
-/* Responsive Design */
+/* TABLES AND FORMS - Prevent Overflow */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 20px 0 !important;
+}
+
+form {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .admin-sidebar {
         transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
     }
     
-    .admin-sidebar.open {
+    .admin-sidebar.mobile-open {
         transform: translateX(0) !important;
     }
     
@@ -2034,19 +2111,64 @@ body {
         width: 100% !important;
     }
     
+    .kpi-dashboard, .kpi-container {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    
+    .kpi-card {
+        max-width: 100% !important;
+    }
+    
     .nav-menu {
         flex-direction: column !important;
         gap: 5px !important;
     }
-    
-    .header-top {
-        flex-direction: column !important;
-        gap: 10px !important;
-        height: auto !important;
-    }
+}
+
+/* CLEAR FLOATS AND PREVENT OVERLAP */
+.clearfix::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
+
+/* ENSURE CONTENT STACKS PROPERLY */
+.admin-content > * {
+    position: relative !important;
+    z-index: 1 !important;
 }
 </style>
 
+
+<div class="admin-content">
+    <div class="modern-header-container">
+        <!-- Your header content here -->
+    </div>
+    
+    <div class="content-body">
+        <div class="content-header">
+            <h1 class="content-title">Reports Dashboard</h1>
+            <p class="content-subtitle">Select a report category from the sidebar to view available reports</p>
+        </div>
+        
+        <div class="kpi-dashboard">
+            <!-- Your 4 KPI cards here -->
+            <div class="kpi-card">
+                <div class="kpi-icon">
+                    <img src="agents-icon.png" alt="Agents">
+                </div>
+                <div class="kpi-details">
+                    <div class="kpi-label">Agents Logged In</div>
+                    <div class="kpi-value">0</div>
+                </div>
+            </div>
+            <!-- Repeat for other 3 cards -->
+        </div>
+        
+        <!-- Other page content goes here -->
+    </div>
+</div>
 
 <?php
 
