@@ -1261,7 +1261,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
             new_content = new_content + '' + ingroup_list + "\n" + selected_value + '<option>DYNAMIC_INGROUP_VAR</option></select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("Handle Method"); ?>: <select size=1 name=IGhandle_method_" + option + ' id=IGhandle_method_' + option + '>';
             new_content = new_content + '' + '<option SELECTED>' + IGhandle_method + '</option>' + IGhandle_method_list + '</select>' + "\n";
-            new_content = new_content + " &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, \'call_menu-ingroup_settings\')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
+            new_content = new_content + " &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, \'call_menu-ingroup_settings\')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP\">";
             new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
             new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
@@ -1666,7 +1666,7 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
             new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
             new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
-            new_content = new_content + "<BR><?php echo _QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
+            new_content = new_content + "<BR><?php echo_QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
             new_content = new_content + '' + IGcampaign_id_list + "\n" + '<option SELECTED>' + IGcampaign_id + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("Phone Code"); ?>: <input type=text size=5 maxlength=14 name=IGphone_code_" + option + ' id=IGphone_code_' + option + ' value="' + IGphone_code + '">';
         //	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Enter Filename"); ?>: <input type=text name=IGvid_enter_filename_" + option + " id=IGvid_enter_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_enter_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_enter_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
@@ -2124,12 +2124,75 @@ table[width="700"] {
     background: rgba(0,0,0,0.2) !important;
 }
 
-.sidebar-timestamp {
+    .sidebar-timestamp {
     color: rgba(255,255,255,0.6) !important;
     font-size: 11px !important;
     text-align: center !important;
     font-family: 'Courier New', monospace !important;
     letter-spacing: 0.5px !important;
+}
+
+/* MODERN CARD STYLES */
+.modern-card {
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    margin-bottom: 20px !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.modern-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+    transform: translateY(-2px) !important;
+}
+
+.modern-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    padding: 15px 20px !important;
+    border-bottom: 1px solid #e1e8ed !important;
+}
+
+.modern-card-title {
+    margin: 0 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+.modern-card-body {
+    padding: 20px !important;
+}
+
+.modern-btn {
+    display: inline-block !important;
+    padding: 8px 16px !important;
+    margin: 4px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid transparent !important;
+    background: #667eea !important;
+    color: #ffffff !important;
+}
+
+.modern-btn:hover {
+    background: #5a6fd8 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.4) !important;
+}
+
+.modern-btn.secondary {
+    background: #f8f9fa !important;
+    color: #495057 !important;
+    border-color: #dee2e6 !important;
+}
+
+.modern-btn.secondary:hover {
+    background: #e9ecef !important;
+    color: #343a40 !important;
 }
 
 /* FORMS AND INPUTS */
@@ -2195,8 +2258,8 @@ br {
 /* Remove excessive spacing */
 p {
     margin: 10px 0 !important;
-
 }
+
 /* CRITICAL FIXES - Add at end of style block */
 
 /* Handle nested content-body divs */
@@ -2249,8 +2312,6 @@ table[bgcolor="#000000"] {
 }
 
 </style>
-
-
 
 <?php
 ##### END - bar chart CSS style #####
@@ -2964,8 +3025,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             ?>
         </nav>
         
-                </nav>
-        
         <!-- Sidebar Footer -->
         <div class="sidebar-footer">
             <div class="sidebar-timestamp">
@@ -3009,40 +3068,41 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 </div>
             </div>
         </div>
-				
+                
         <!-- CONTENT BODY - All your page content renders here -->
         <div class="content-body">
-    <!-- Content area starts - wrapper managed by parent -->
-    <span style="position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;" id="audio_chooser_span"></span>
-    
-    <?php
-    if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
-        ?>
-        <div class="modern-card">
-            <div class="modern-card-header">
-                <h3 class="modern-card-title"><?php echo _QXZ("Campaign Management"); ?></h3>
-            </div>
-            <div class="modern-card-body">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <a href="<?php echo $ADMIN ?>?ADD=10" class="modern-btn secondary">
-                        <?php echo _QXZ("Show Campaigns"); ?>
-                    </a>
-                    <?php if ($add_copy_disabled < 1) { ?>
-                    <a href="<?php echo $ADMIN ?>?ADD=11" class="modern-btn">
-                        <?php echo _QXZ("Add A New Campaign"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=12" class="modern-btn secondary">
-                        <?php echo _QXZ("Copy Campaign"); ?>
-                    </a>
-                    <?php } ?>
-                    <a href="./AST_timeonVDADallSUMMARY.php" class="modern-btn secondary">
-                        <?php echo _QXZ("Real-Time Campaigns Summary"); ?>
-                    </a>
+            <!-- Content area starts - wrapper managed by parent -->
+            <span style="position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;" id="audio_chooser_span"></span>
+            
+            <?php
+            if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
+                ?>
+                <div class="modern-card">
+                    <div class="modern-card-header">
+                        <h3 class="modern-card-title"><?php echo _QXZ("Campaign Management"); ?></h3>
+                    </div>
+                    <div class="modern-card-body">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="<?php echo $ADMIN ?>?ADD=10" class="modern-btn secondary">
+                                <?php echo _QXZ("Show Campaigns"); ?>
+                            </a>
+                            <?php if ($add_copy_disabled < 1) { ?>
+                            <a href="<?php echo $ADMIN ?>?ADD=11" class="modern-btn">
+                                <?php echo _QXZ("Add A New Campaign"); ?>
+                            </a>
+                            <a href="<?php echo $ADMIN ?>?ADD=12" class="modern-btn secondary">
+                                <?php echo _QXZ("Copy Campaign"); ?>
+                            </a>
+                            <?php } ?>
+                            <a href="./AST_timeonVDADallSUMMARY.php" class="modern-btn secondary">
+                                <?php echo _QXZ("Real-Time Campaigns Summary"); ?>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <?php 
-    }    
+                <?php 
+            }
+            
             if (strlen($droplist_sh) > 25) {
                 ?>
                 <div class="modern-card">
@@ -3739,52 +3799,52 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 <?php 
             }
 
-if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) { 
-        ?>
-        <div class="modern-card">
-            <div class="modern-card-header">
-                <h3 class="modern-card-title"><?php echo _QXZ("System Reference Data"); ?></h3>
-            </div>
-            <div class="modern-card-body">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <a href="<?php echo $ADMIN ?>?ADD=999988" class="modern-btn secondary">
-                        <?php echo _QXZ("Available Timezones"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=999987" class="modern-btn secondary">
-                        <?php echo _QXZ("Phone Codes"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=999986" class="modern-btn secondary">
-                        <?php echo _QXZ("Postal Codes"); ?>
-                    </a>
-                    <a href="<?php echo $ADMIN ?>?ADD=999985" class="modern-btn secondary">
-                        <?php echo _QXZ("Postal Codes Cities"); ?>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <?php 
-    }
-    else {
-        if (strlen($reports_hh) > 25) { 
-            ?>
-            <div class="modern-card">
-                <div class="modern-card-header">
-                    <h3 class="modern-card-title"><?php echo _QXZ("Reports Dashboard"); ?></h3>
-                </div>
-                <div class="modern-card-body">
-                    <div style="color: #5a6c7d; font-style: italic;">
-                        <?php echo _QXZ("Select a report category from the sidebar to view available reports"); ?>
+            if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) { 
+                ?>
+                <div class="modern-card">
+                    <div class="modern-card-header">
+                        <h3 class="modern-card-title"><?php echo _QXZ("System Reference Data"); ?></h3>
+                    </div>
+                    <div class="modern-card-body">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="<?php echo $ADMIN ?>?ADD=999988" class="modern-btn secondary">
+                                <?php echo _QXZ("Available Timezones"); ?>
+                            </a>
+                            <a href="<?php echo $ADMIN ?>?ADD=999987" class="modern-btn secondary">
+                                <?php echo _QXZ("Phone Codes"); ?>
+                            </a>
+                            <a href="<?php echo $ADMIN ?>?ADD=999986" class="modern-btn secondary">
+                                <?php echo _QXZ("Postal Codes"); ?>
+                            </a>
+                            <a href="<?php echo $ADMIN ?>?ADD=999985" class="modern-btn secondary">
+                                <?php echo _QXZ("Postal Codes Cities"); ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php 
-        } 
-    }
-    ?>
-</div>
-<!-- END CONTENT BODY -->
-</div>
-<!-- END ADMIN CONTENT -->
+                <?php 
+            }
+            else {
+                if (strlen($reports_hh) > 25) { 
+                    ?>
+                    <div class="modern-card">
+                        <div class="modern-card-header">
+                            <h3 class="modern-card-title"><?php echo _QXZ("Reports Dashboard"); ?></h3>
+                        </div>
+                        <div class="modern-card-body">
+                            <div style="color: #5a6c7d; font-style: italic;">
+                                <?php echo _QXZ("Select a report category from sidebar to view available reports"); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                } 
+            }
+            ?>
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END ADMIN CONTENT -->
 </div>
 <!-- END ADMIN LAYOUT -->
 
