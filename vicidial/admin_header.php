@@ -2204,6 +2204,54 @@ input, select, textarea {
     position: relative !important;
     z-index: 1 !important;
 }
+
+/* Sidebar Footer Styles */
+.sidebar-footer {
+    padding: 15px 12px !important;
+    margin-top: auto !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(0,0,0,0.2) !important;
+}
+
+.sidebar-timestamp {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 11px !important;
+    text-align: center !important;
+    font-family: 'Courier New', monospace !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Ensure sidebar uses flexbox for proper footer positioning */
+.admin-sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.nav-section {
+    flex: 1 !important;
+    overflow-y: auto !important;
+}
+
+/* Main Content Area Wrapper */
+.admin-content {
+    flex: 1 !important;
+    margin-left: 220px !important;
+    width: calc(100% - 220px) !important;
+    min-height: 100vh !important;
+    background: #f5f7fa !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Content Body Container */
+.content-body {
+    flex: 1 !important;
+    width: 100% !important;
+    padding: 30px 40px !important;
+    background: #f5f7fa !important;
+    overflow-y: auto !important;
+}
+
 </style>
 
 
@@ -2919,13 +2967,18 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             ?>
         </nav>
         
-        <div style="padding: 20px; margin-top: auto;">
-            <div style="color: rgba(255,255,255,0.6); font-size: 12px; text-align: center;">
+                </nav>
+        
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+            <div class="sidebar-timestamp">
                 <?php echo date("Y-m-d H:i:s"); ?>
             </div>
         </div>
     </div>
+    <!-- END SIDEBAR -->
     
+    <!-- MAIN CONTENT AREA -->
     <div class="admin-content">
         <div class="modern-header-container">
             <div class="header-top">
@@ -2945,7 +2998,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                     <a href="manager_chat_interface.php" class="nav-item">
                         <span><?php echo _QXZ("Chat"); ?></span>
                     </a>
-                    <?php if ($SSenable_languages == '1') { ?>
+                    <?php if ($SSenable_languages > 0) { ?>
                     <a href="<?php echo $ADMIN ?>?ADD=999989" class="nav-item">
                         <span><?php echo _QXZ("Change language"); ?></span>
                     </a>
@@ -2960,6 +3013,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             </div>
         </div>
         
+        <!-- CONTENT BODY - All your page content renders here -->
+        <div class="content-body">
+            <!-- Existing page content continues below -->
+
         <div class="content-body">
             <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
             
@@ -3733,6 +3790,13 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
         </div>
     </div>
 </div>
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END ADMIN CONTENT -->
+</div>
+<!-- END ADMIN LAYOUT -->
+
 
 <?php
 ######################### FULL HTML HEADER END #######################################
