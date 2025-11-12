@@ -2039,67 +2039,6 @@ echo "</script>\n";
 
 
 <?php
-##### END - bar chart CSS style #####
-
-echo "</head>\n";
-
-if ($SSadmin_modify_refresh > 1) {
-    echo '<style>
-    .admin-layout { 
-        display: flex !important; 
-        min-height: 100vh !important; 
-        width: 100% !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #f5f7fa !important;
-    }
-    .admin-sidebar { 
-        width: 260px !important; 
-        background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%) !important; 
-        position: fixed !important; 
-        height: 100vh !important; 
-        left: 0 !important; 
-        top: 0 !important; 
-        z-index: 1000 !important; 
-        overflow-y: auto !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
-    }
-    .admin-content { 
-        flex: 1 !important; 
-        margin-left: 260px !important; 
-        background: white !important; 
-        min-height: 100vh !important;
-        padding: 0 !important;
-    }
-    .modern-header-container {
-        margin: 0 !important;
-        padding: 0 !important;
-        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-    }
-    TABLE { 
-        background: inherit !important; 
-        margin: 0 !important;
-        padding: 8px !important;
-    }
-    TR { 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    TD { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    TH { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    </style>';
-}
 
 echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 
