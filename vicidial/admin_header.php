@@ -2195,7 +2195,59 @@ br {
 /* Remove excessive spacing */
 p {
     margin: 10px 0 !important;
+
 }
+/* CRITICAL FIXES - Add at end of style block */
+
+/* Handle nested content-body divs */
+.admin-content > .content-body {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.content-body .content-body {
+    padding: 30px 40px !important;
+    margin: 0 !important;
+}
+
+/* Fix audio chooser and hidden elements */
+#audio_chooser_span,
+span[id*="audio"][style*="visibility:hidden"] {
+    position: absolute !important;
+    left: -9999px !important;
+    top: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Remove spacing from first elements */
+.content-body > *:first-child {
+    margin-top: 0 !important;
+}
+
+/* Modern card positioning */
+.modern-card:first-of-type {
+    margin-top: 0 !important;
+}
+
+/* Fix for KPI tables */
+table[bgcolor="#000000"] {
+    display: inline-block !important;
+    margin: 10px !important;
+}
+
+/* Content wrapper improvements */
+.admin-content {
+    flex: 1 !important;
+    margin-left: 200px !important;
+    width: calc(100% - 200px) !important;
+}
+
+.content-body br {
+    line-height: 1.2 !important;
+}
+
 </style>
 
 
