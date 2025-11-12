@@ -2141,34 +2141,6 @@ form {
 </style>
 
 
-<div class="admin-content">
-    <div class="modern-header-container">
-        <!-- Your header content here -->
-    </div>
-    
-    <div class="content-body">
-        <div class="content-header">
-            <h1 class="content-title">Reports Dashboard</h1>
-            <p class="content-subtitle">Select a report category from the sidebar to view available reports</p>
-        </div>
-        
-        <div class="kpi-dashboard">
-            <!-- Your 4 KPI cards here -->
-            <div class="kpi-card">
-                <div class="kpi-icon">
-                    <img src="agents-icon.png" alt="Agents">
-                </div>
-                <div class="kpi-details">
-                    <div class="kpi-label">Agents Logged In</div>
-                    <div class="kpi-value">0</div>
-                </div>
-            </div>
-            <!-- Repeat for other 3 cards -->
-        </div>
-        
-        <!-- Other page content goes here -->
-    </div>
-</div>
 
 <?php
 
