@@ -1765,346 +1765,443 @@ echo "</script>\n";
 ?>
 
 <style type="text/css">
-<!--
+/* Modern Admin Layout - Final Optimized Version */
+* {
+    box-sizing: border-box !important;
+}
 
-/* Modern Admin Header Styles */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow-x: hidden !important;
+    background: #f5f7fa !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+}
+
+/* MAIN LAYOUT CONTAINER */
+.admin-layout {
+    display: flex !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    background: #f5f7fa !important;
+    position: relative !important;
+}
+
+/* SIDEBAR - Fixed Position */
+.admin-sidebar {
+    width: 209px !important;
+    min-width: 209px !important;
+    max-width: 209px !important;
+    background: linear-gradient(180deg, #0b2447 0%, #19376d 100%) !important;
+    position: fixed !important;
+    height: 100vh !important;
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.2) !important;
+}
+
+/* MAIN CONTENT - Accounts for Fixed Sidebar */
+.admin-content {
+    flex: 1 !important;
+    margin-left: 209px !important;
+    width: calc(100% - 209px) !important;
+    min-height: 100vh !important;
+    background: #f5f7fa !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* HEADER - Should Not Overlap Sidebar */
 .modern-header-container {
-position: fixed;
-    top: 0;
-    left: 0;
-    width: %;
-    background: linear-gradient(135deg, #0b2447 0%, #19376d 100%);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
-    overflow: hidden;
-    z-index: 1200;
+    width: 100% !important;
+    background: linear-gradient(135deg, #0b2447 0%, #19376d 100%) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 999 !important;
+    padding: 10px 25px !important;
+    margin: 0 !important;
 }
 
 .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 20px; /* reduced height */
-    height: 40px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 44px !important;
+    width: 100% !important;
 }
 
 .logo-container {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
 }
 
 .logo-link {
-    display: inline-block;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0.9;
+    display: inline-block !important;
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+    opacity: 0.9 !important;
 }
 
 .logo-link:hover {
-    transform: scale(1.05);
-    opacity: 1;
+    transform: scale(1.05) !important;
+    opacity: 1 !important;
 }
 
 .logo-image {
-    display: block;
-    border-radius: 4px;
-    max-height: 35px; /* slimmer logo */
+    display: block !important;
+    border-radius: 4px !important;
+    max-height: 32px !important;
+    width: auto !important;
 }
 
 .nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
 }
 
 .nav-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px; /* slightly smaller buttons */
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 16px !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
 }
 
 .nav-item:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.2) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
 }
 
 .nav-item.nav-active {
-    background: rgba(255,255,255,0.25);
-    border: 1px solid rgba(255,255,255,0.3);
-    font-weight: 600;
+    background: rgba(255,255,255,0.25) !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    font-weight: 600 !important;
 }
 
-.nav-spacer {
-    width: 0px;
+/* CONTENT BODY - Main Container */
+.content-body, .main-content-area, #main-content {
+    flex: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 30px 40px !important;
+    background: #f5f7fa !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
-/* Modern Sidebar Styles */
-.admin-layout {
-    display: flex;
-    min-height: 100vh;
-    background: #f5f7fa;
+/* PAGE CONTENT WRAPPER */
+.page-wrapper {
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
 }
 
-.admin-sidebar {
-    width: 220px;
-    background: linear-gradient(180deg, #0b2447 0%, #19376d 100%);
-    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
-    position: fixed;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    overflow-y: auto;
-    transition: transform 0.3s ease;
-}
-
-.admin-content {
-    flex: 1;
-    margin-left: 220px; /* match sidebar width */
-    background: #ffffff;
-    min-height: 100vh;
-    padding: 0;
-}
-
-.sidebar-header {
-    padding: 16px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar-logo {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    transition: transform 0.3s ease;
-}
-
-.sidebar-logo:hover {
-    transform: scale(1.05);
-}
-
-.sidebar-title {
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-    margin-top: 8px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.nav-section {
-    padding: 10px 0;
-}
-
-.nav-section-title {
-    color: rgba(255,255,255,0.6);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 10px 20px 5px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.nav-item-sidebar {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.nav-item-sidebar:hover {
-    background: rgba(255,255,255,0.1);
-    border-left-color: #3498db;
-    transform: translateX(3px);
-}
-
-.nav-item-sidebar.active {
-    background: rgba(255,255,255,0.15);
-    border-left-color: #3498db;
-    font-weight: 600;
-}
-
-.nav-item-sidebar img {
-    margin-right: 10px;
-    width: 16px;
-    height: 16px;
-}
-
-.nav-subitem {
-    display: flex;
-    align-items: center;
-    padding: 8px 20px 8px 45px;
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    font-size: 13px;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.nav-subitem:hover {
-    background: rgba(255,255,255,0.05);
-    color: #ffffff;
-    border-left-color: #3498db;
-    transform: translateX(3px);
-}
-
-.nav-subitem.active {
-    background: rgba(255,255,255,0.1);
-    color: #ffffff;
-    border-left-color: #3498db;
-    font-weight: 500;
-}
-
-.nav-divider {
-    height: 1px;
-    background: rgba(255,255,255,0.1);
-    margin: 10px 20px;
-}
-
-/* Content Area Styles */
+/* CONTENT HEADER */
 .content-header {
-    background: #ffffff;
-    padding: 15px 25px;
-    border-bottom: 1px solid #e1e8ed;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: #ffffff !important;
+    padding: 20px 30px !important;
+    border-bottom: 2px solid #e1e8ed !important;
+    margin-bottom: 25px !important;
+    border-radius: 8px 8px 0 0 !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
 }
 
 .content-title {
-    font-size: 22px;
-    font-weight: 600;
-    color: #2c3e50;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: #2c3e50 !important;
+    margin: 0 0 8px 0 !important;
 }
 
 .content-subtitle {
-    font-size: 13px;
-    color: #7f8c8d;
-    margin-top: 5px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px !important;
+    color: #7f8c8d !important;
+    margin: 0 !important;
 }
 
-.content-body {
-    padding: 25px;
-    background: #ffffff;
-    min-height: calc(100vh - 120px);
+/* KPI DASHBOARD - Perfectly Centered */
+.kpi-dashboard, .kpi-container, .stats-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    max-width: 1100px !important;
+    margin: 0 auto 30px auto !important;
+    padding: 0 !important;
 }
 
-/* Responsive Design */
+/* KPI CARDS - Individual Styling */
+.kpi-card, [id*="kpi"], [class*="stat-card"], .stat-box {
+    flex: 0 0 auto !important;
+    width: 240px !important;
+    min-width: 220px !important;
+    max-width: 260px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    padding: 22px 18px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
+    background: #1a1a1a !important;
+}
+
+/* KPI Icon */
+.kpi-icon {
+    width: 50px !important;
+    min-width: 50px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(255,255,255,0.1) !important;
+    border-radius: 8px !important;
+}
+
+.kpi-icon img {
+    width: 35px !important;
+    height: 35px !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+/* KPI Details */
+.kpi-details, .kpi-info {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    text-align: right !important;
+}
+
+.kpi-label, .stat-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    color: rgba(255,255,255,0.9) !important;
+    line-height: 1.2 !important;
+}
+
+.kpi-value, .stat-value {
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    line-height: 1 !important;
+}
+
+/* TABLES - System Summary */
+table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 20px 0 !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+table thead {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+table thead th {
+    padding: 12px 15px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+table tbody td {
+    padding: 10px 15px !important;
+    text-align: center !important;
+    border-bottom: 1px solid #e1e8ed !important;
+    font-size: 14px !important;
+}
+
+table tbody tr:hover {
+    background: #f8f9fa !important;
+}
+
+table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* SIDEBAR NAVIGATION */
+.sidebar-header {
+    padding: 16px 12px !important;
+    text-align: center !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    margin-bottom: 5px !important;
+}
+
+.sidebar-logo {
+    max-width: 90% !important;
+    height: auto !important;
+    border-radius: 6px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.sidebar-logo:hover {
+    transform: scale(1.05) !important;
+}
+
+.sidebar-title {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin-top: 10px !important;
+    letter-spacing: 0.5px !important;
+}
+
+.nav-section {
+    padding: 8px 0 !important;
+}
+
+.nav-section-title {
+    color: rgba(255,255,255,0.5) !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.2px !important;
+    padding: 12px 16px 6px !important;
+}
+
+.nav-item-sidebar {
+    display: flex !important;
+    align-items: center !important;
+    padding: 11px 16px !important;
+    color: rgba(255,255,255,0.9) !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    border-left: 3px solid transparent !important;
+}
+
+.nav-item-sidebar:hover {
+    background: rgba(255,255,255,0.1) !important;
+    border-left-color: #3498db !important;
+    padding-left: 20px !important;
+    color: #ffffff !important;
+}
+
+.nav-item-sidebar.active {
+    background: rgba(255,255,255,0.15) !important;
+    border-left-color: #3498db !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+}
+
+.nav-item-sidebar img {
+    margin-right: 12px !important;
+    width: 18px !important;
+    height: 18px !important;
+    opacity: 0.9 !important;
+}
+
+.nav-divider {
+    height: 1px !important;
+    background: rgba(255,255,255,0.1) !important;
+    margin: 12px 16px !important;
+}
+
+/* FORMS AND INPUTS */
+form {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+input, select, textarea {
+    max-width: 100% !important;
+}
+
+/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .admin-sidebar {
-        transform: translateX(-100%);
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
     }
     
-    .admin-sidebar.open {
-        transform: translateX(0);
+    .admin-sidebar.mobile-open {
+        transform: translateX(0) !important;
     }
     
     .admin-content {
-        margin-left: 0;
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    .content-body {
+        padding: 20px 15px !important;
+    }
+    
+    .kpi-dashboard {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    
+    .kpi-card {
+        width: 100% !important;
+        max-width: 100% !important;
     }
     
     .nav-menu {
-        flex-direction: column;
-        gap: 5px;
+        gap: 5px !important;
     }
     
-    .header-top {
-        flex-direction: column;
-        gap: 10px;
-        height: auto;
+    .nav-item {
+        font-size: 12px !important;
+        padding: 6px 10px !important;
     }
 }
 
-/* Table, Button, Form, Card styles unchanged from your version */
-/* ... (keep the rest of your existing styles below this point) ... */
+/* UTILITY CLASSES */
+.clearfix::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
 
--->
+.text-center {
+    text-align: center !important;
+}
+
+/* ENSURE PROPER STACKING */
+.admin-content > * {
+    position: relative !important;
+    z-index: 1 !important;
+}
 </style>
 
-
-<?php
-##### END - bar chart CSS style #####
-
-echo "</head>\n";
-
-if ($SSadmin_modify_refresh > 1) {
-    echo '<style>
-    .admin-layout { 
-        display: flex !important; 
-        min-height: 100vh !important; 
-        width: 100% !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #f5f7fa !important;
-    }
-    .admin-sidebar { 
-        width: 260px !important; 
-        background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%) !important; 
-        position: fixed !important; 
-        height: 100vh !important; 
-        left: 0 !important; 
-        top: 0 !important; 
-        z-index: 1000 !important; 
-        overflow-y: auto !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
-    }
-    .admin-content { 
-        flex: 1 !important; 
-        margin-left: 260px !important; 
-        background: white !important; 
-        min-height: 100vh !important;
-        padding: 0 !important;
-    }
-    .modern-header-container {
-        margin: 0 !important;
-        padding: 0 !important;
-        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-    }
-    TABLE { 
-        background: inherit !important; 
-        margin: 0 !important;
-        padding: 8px !important;
-    }
-    TR { 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    TD { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    TH { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    </style>';
-}
 
 echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 
