@@ -1261,7 +1261,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
             new_content = new_content + '' + ingroup_list + "\n" + selected_value + '<option>DYNAMIC_INGROUP_VAR</option></select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("Handle Method"); ?>: <select size=1 name=IGhandle_method_" + option + ' id=IGhandle_method_' + option + '>';
             new_content = new_content + '' + '<option SELECTED>' + IGhandle_method + '</option>' + IGhandle_method_list + '</select>' + "\n";
-            new_content = new_content + " &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, \'call_menu-ingroup_settings\')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP\">";
+            new_content = new_content + " &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, \'call_menu-ingroup_settings\')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
             new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
             new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
@@ -1666,7 +1666,7 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
             new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
             new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
-            new_content = new_content + "<BR><?php echo_QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
+            new_content = new_content + "<BR><?php echo _QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
             new_content = new_content + '' + IGcampaign_id_list + "\n" + '<option SELECTED>' + IGcampaign_id + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("Phone Code"); ?>: <input type=text size=5 maxlength=14 name=IGphone_code_" + option + ' id=IGphone_code_' + option + ' value="' + IGphone_code + '">';
         //	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Enter Filename"); ?>: <input type=text name=IGvid_enter_filename_" + option + " id=IGvid_enter_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_enter_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_enter_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
@@ -1765,551 +1765,535 @@ echo "</script>\n";
 ?>
 
 <style type="text/css">
-/* Modern Admin Layout - Fixed Top Positioning */
-* {
-    box-sizing: border-box !important;
-}
+<!--
 
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow-x: hidden !important;
-    background: #f5f7fa !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
-}
-
-/* MAIN LAYOUT CONTAINER */
-.admin-layout {
-    display: flex !important;
-    min-height: 100vh !important;
-    width: 100% !important;
-    background: #f5f7fa !important;
-    position: relative !important;
-}
-
-/* SIDEBAR - Fixed Position */
-.admin-sidebar {
-    width: 200px !important;
-    min-width: 200px !important;
-    max-width: 200px !important;
-    background: linear-gradient(180deg, #0b2447 0%, #19376d 100%) !important;
-    position: fixed !important;
-    height: 100vh !important;
-    left: 0 !important;
-    top: 0 !important;
-    z-index: 1000 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    box-shadow: 2px 0 15px rgba(0,0,0,0.2) !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-/* MAIN CONTENT - Accounts for Fixed Sidebar */
-.admin-content {
-    flex: 1 !important;
-    margin-left: 200px !important;
-    width: calc(100% - 200px) !important;
-    min-height: 100vh !important;
-    background: #f5f7fa !important;
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative !important;
-}
-
-/* HEADER - Should Not Overlap Sidebar */
+/* Modern Admin Header Styles */
 .modern-header-container {
-    width: 100% !important;
-    background: linear-gradient(135deg, #0b2447 0%, #19376d 100%) !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 999 !important;
-    padding: 10px 25px !important;
-    margin: 0 !important;
+    width: 100%;
+    background: linear-gradient(135deg, #<?php echo $SSmenu_background; ?> 0%, #2c3e50 100%);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modern-header-container.mobile {
+    background: linear-gradient(135deg, #<?php echo $SSmenu_background; ?> 0%, #34495e 100%);
 }
 
 .header-top {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    min-height: 44px !important;
-    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    min-height: 60px;
 }
 
 .logo-container {
-    display: flex !important;
-    align-items: center !important;
+    display: flex;
+    align-items: center;
 }
 
 .logo-link {
-    display: inline-block !important;
-    transition: transform 0.3s ease !important;
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
 }
 
 .logo-link:hover {
-    transform: scale(1.05) !important;
+    transform: scale(1.05);
+    opacity: 1;
 }
 
 .logo-image {
-    display: block !important;
-    max-height: 32px !important;
-    width: auto !important;
+    display: block;
+    border-radius: 4px;
 }
 
 .nav-menu {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    flex-wrap: wrap !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .nav-item {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 8px 16px !important;
-    color: #ffffff !important;
-    text-decoration: none !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    border-radius: 6px !important;
-    transition: all 0.3s ease !important;
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .nav-item:hover {
-    background: rgba(255,255,255,0.2) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .nav-item.nav-active {
-    background: rgba(255,255,255,0.25) !important;
-    border: 1px solid rgba(255,255,255,0.3) !important;
-    font-weight: 600 !important;
+    background: rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.3);
+    font-weight: 600;
 }
 
-/* CONTENT BODY - Starts at TOP, No Extra Spacing */
-.content-body, .main-content-area, #main-content {
-    flex: 1 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 30px 40px !important;
-    background: #f5f7fa !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    /* CRITICAL: Align content to TOP, not center */
-    display: block !important;
-    position: relative !important;
+.nav-spacer {
+    width: 20px;
 }
 
-/* Remove any default margins that push content down */
-.content-body > *:first-child {
-    margin-top: 0 !important;
+/* Modern Sidebar Styles */
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f7fa;
 }
 
-/* PAGE CONTENT WRAPPER */
-.page-wrapper {
-    width: 100% !important;
-    max-width: 1400px !important;
-    margin: 0 auto !important;
+.admin-sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
 }
 
-/* CONTENT HEADER - Optional page title section */
-.content-header {
-    background: #ffffff !important;
-    padding: 20px 30px !important;
-    border-bottom: 2px solid #e1e8ed !important;
-    margin-bottom: 25px !important;
-    border-radius: 8px !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+.admin-content {
+    flex: 1;
+    margin-left: 260px;
+    background: #ffffff;
+    min-height: 100vh;
+    padding: 0;
 }
 
-.content-title {
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    color: #2c3e50 !important;
-    margin: 0 !important;
-}
-
-.content-subtitle {
-    font-size: 14px !important;
-    color: #7f8c8d !important;
-    margin: 8px 0 0 0 !important;
-}
-
-/* KPI DASHBOARD - Horizontally Centered, At Top of Page */
-.kpi-dashboard, .kpi-container, .stats-container, div[align="center"] {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: stretch !important;
-    gap: 20px !important;
-    flex-wrap: wrap !important;
-    width: 100% !important;
-    max-width: 1400px !important;
-    margin: 0 auto 30px auto !important;
-    padding: 0 !important;
-}
-
-/* KPI CARDS - Individual Styling */
-.kpi-card, [id*="kpi"], table[bgcolor="#000000"] {
-    flex: 0 0 auto !important;
-    width: 240px !important;
-    min-width: 220px !important;
-    max-width: 260px !important;
-    background: #000000 !important;
-    color: #ffffff !important;
-    padding: 20px 18px !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    transition: all 0.3s ease !important;
-    display: inline-block !important;
-    vertical-align: top !important;
-    text-align: center !important;
-}
-
-.kpi-card:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
-}
-
-/* Target VICIdial's KPI table cells */
-table[bgcolor="#000000"] td {
-    color: #ffffff !important;
-    padding: 15px !important;
-}
-
-table[bgcolor="#000000"] td font {
-    color: #ffffff !important;
-}
-
-/* TABLES - System Summary */
-table {
-    width: 100% !important;
-    max-width: 100% !important;
-    border-collapse: collapse !important;
-    margin: 20px 0 !important;
-    background: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
-    border-radius: 8px !important;
-    overflow: hidden !important;
-}
-
-table thead {
-    background: #000000 !important;
-    color: #ffffff !important;
-}
-
-table thead th {
-    padding: 12px 15px !important;
-    font-weight: 600 !important;
-    text-align: center !important;
-    font-size: 13px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-}
-
-table tbody td {
-    padding: 10px 15px !important;
-    text-align: center !important;
-    border-bottom: 1px solid #e1e8ed !important;
-    font-size: 14px !important;
-}
-
-table tbody tr:hover {
-    background: #f8f9fa !important;
-}
-
-table tbody tr:last-child td {
-    border-bottom: none !important;
-}
-
-/* Prevent tables from having excessive margins */
-table[width="700"] {
-    width: 100% !important;
-    max-width: 900px !important;
-    margin: 20px auto !important;
-}
-
-/* SIDEBAR NAVIGATION */
 .sidebar-header {
-    padding: 16px 12px !important;
-    text-align: center !important;
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-    margin-bottom: 5px !important;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .sidebar-logo {
-    max-width: 90% !important;
-    height: auto !important;
-    border-radius: 6px !important;
-    transition: transform 0.3s ease !important;
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-logo:hover {
-    transform: scale(1.05) !important;
+    transform: scale(1.05);
 }
 
 .sidebar-title {
-    color: #ffffff !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    margin-top: 10px !important;
-    letter-spacing: 0.5px !important;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .nav-section {
-    flex: 1 !important;
-    padding: 8px 0 !important;
-    overflow-y: auto !important;
+    padding: 10px 0;
 }
 
 .nav-section-title {
-    color: rgba(255,255,255,0.5) !important;
-    font-size: 10px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.2px !important;
-    padding: 12px 16px 6px !important;
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 20px 5px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .nav-item-sidebar {
-    display: flex !important;
-    align-items: center !important;
-    padding: 11px 16px !important;
-    color: rgba(255,255,255,0.9) !important;
-    text-decoration: none !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-    border-left: 3px solid transparent !important;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .nav-item-sidebar:hover {
-    background: rgba(255,255,255,0.1) !important;
-    border-left-color: #3498db !important;
-    padding-left: 20px !important;
-    color: #ffffff !important;
+    background: rgba(255,255,255,0.1);
+    border-left-color: #3498db;
+    transform: translateX(3px);
 }
 
 .nav-item-sidebar.active {
-    background: rgba(255,255,255,0.15) !important;
-    border-left-color: #3498db !important;
-    font-weight: 600 !important;
-    color: #ffffff !important;
+    background: rgba(255,255,255,0.15);
+    border-left-color: #3498db;
+    font-weight: 600;
 }
 
 .nav-item-sidebar img {
-    margin-right: 12px !important;
-    width: 18px !important;
-    height: 18px !important;
-    opacity: 0.9 !important;
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.nav-subitem {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px 8px 45px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.nav-subitem:hover {
+    background: rgba(255,255,255,0.05);
+    color: #ffffff;
+    border-left-color: #3498db;
+    transform: translateX(3px);
+}
+
+.nav-subitem.active {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    border-left-color: #3498db;
+    font-weight: 500;
 }
 
 .nav-divider {
-    height: 1px !important;
-    background: rgba(255,255,255,0.1) !important;
-    margin: 12px 16px !important;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 10px 20px;
 }
 
-/* Sidebar Footer */
-.sidebar-footer {
-    padding: 15px 12px !important;
-    margin-top: auto !important;
-    border-top: 1px solid rgba(255,255,255,0.1) !important;
-    background: rgba(0,0,0,0.2) !important;
+/* Content Area Styles */
+.content-header {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-bottom: 1px solid #e1e8ed;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-    .sidebar-timestamp {
-    color: rgba(255,255,255,0.6) !important;
-    font-size: 11px !important;
-    text-align: center !important;
-    font-family: 'Courier New', monospace !important;
-    letter-spacing: 0.5px !important;
+.content-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* MODERN CARD STYLES */
-.modern-card {
-    background: #ffffff !important;
-    border-radius: 8px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
-    margin-bottom: 20px !important;
-    overflow: hidden !important;
-    transition: all 0.3s ease !important;
+.content-subtitle {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 5px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.modern-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
-    transform: translateY(-2px) !important;
+.content-body {
+    padding: 30px;
+    background: #ffffff;
+    min-height: calc(100vh - 140px);
 }
 
-.modern-card-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    padding: 15px 20px !important;
-    border-bottom: 1px solid #e1e8ed !important;
-}
-
-.modern-card-title {
-    margin: 0 !important;
-    color: #ffffff !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-}
-
-.modern-card-body {
-    padding: 20px !important;
-}
-
-.modern-btn {
-    display: inline-block !important;
-    padding: 8px 16px !important;
-    margin: 4px !important;
-    border-radius: 4px !important;
-    text-decoration: none !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-    border: 1px solid transparent !important;
-    background: #667eea !important;
-    color: #ffffff !important;
-}
-
-.modern-btn:hover {
-    background: #5a6fd8 !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 2px 8px rgba(102,126,234,0.4) !important;
-}
-
-.modern-btn.secondary {
-    background: #f8f9fa !important;
-    color: #495057 !important;
-    border-color: #dee2e6 !important;
-}
-
-.modern-btn.secondary:hover {
-    background: #e9ecef !important;
-    color: #343a40 !important;
-}
-
-/* FORMS AND INPUTS */
-form {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-input, select, textarea {
-    max-width: 100% !important;
-}
-
-/* RESPONSIVE DESIGN */
+/* Responsive Design */
 @media (max-width: 768px) {
     .admin-sidebar {
-        transform: translateX(-100%) !important;
-        transition: transform 0.3s ease !important;
+        transform: translateX(-100%);
     }
     
-    .admin-sidebar.mobile-open {
-        transform: translateX(0) !important;
+    .admin-sidebar.open {
+        transform: translateX(0);
     }
     
     .admin-content {
-        margin-left: 0 !important;
-        width: 100% !important;
+        margin-left: 0;
     }
     
-    .content-body {
-        padding: 20px 15px !important;
+    .nav-menu {
+        flex-direction: column;
+        gap: 5px;
     }
     
-    .kpi-dashboard {
-        flex-direction: column !important;
-    }
-    
-    .kpi-card {
-        width: 100% !important;
-        max-width: 100% !important;
+    .header-top {
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
-/* UTILITY CLASSES */
-.clearfix::after {
-    content: "" !important;
-    display: table !important;
-    clear: both !important;
+/* Modern Table Styles */
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* Fix for VICIdial's centered content */
-center {
-    display: block !important;
-    text-align: center !important;
-    margin: 0 !important;
-    padding: 0 !important;
+.modern-table th {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 15px;
+    text-align: left;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Ensure content aligns at top */
-br {
-    line-height: 1.5 !important;
+.modern-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e1e8ed;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Remove excessive spacing */
-p {
-    margin: 10px 0 !important;
+.modern-table tr:hover {
+    background: #f8f9fa;
 }
 
-/* CRITICAL FIXES - Add at end of style block */
-
-/* Handle nested content-body divs */
-.admin-content > .content-body {
-    padding: 0 !important;
-    margin: 0 !important;
+.modern-table tr:last-child td {
+    border-bottom: none;
 }
 
-.content-body .content-body {
-    padding: 30px 40px !important;
-    margin: 0 !important;
+/* Modern Button Styles */
+.modern-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-decoration: none;
 }
 
-/* Fix audio chooser and hidden elements */
-#audio_chooser_span,
-span[id*="audio"][style*="visibility:hidden"] {
-    position: absolute !important;
-    left: -9999px !important;
-    top: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
+.modern-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
-/* Remove spacing from first elements */
-.content-body > *:first-child {
-    margin-top: 0 !important;
+.modern-btn.secondary {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
 }
 
-/* Modern card positioning */
-.modern-card:first-of-type {
-    margin-top: 0 !important;
+.modern-btn.success {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
 }
 
-/* Fix for KPI tables */
-table[bgcolor="#000000"] {
-    display: inline-block !important;
-    margin: 10px !important;
+.modern-btn.danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
 }
 
-/* Content wrapper improvements */
-.admin-content {
-    flex: 1 !important;
-    margin-left: 200px !important;
-    width: calc(100% - 200px) !important;
+/* Modern Form Styles */
+.modern-form-group {
+    margin-bottom: 20px;
 }
 
-.content-body br {
-    line-height: 1.2 !important;
+.modern-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2c3e50;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
+
+.modern-form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.modern-form-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.modern-form-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.modern-form-select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Modern Card Styles */
+.modern-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.modern-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.modern-card-header {
+    border-bottom: 1px solid #e1e8ed;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.modern-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.modern-card-body {
+    color: #5a6c7d;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Original VICIDIAL Styles (Preserved) */
+.auraltext
+    {
+    position: absolute;
+    font-size: 0;
+    left: -1000px;
+    }
+.chart_td
+    {background-image: url(images/gridline58.gif); background-repeat: repeat-x; background-position: left top; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; padding:0; border-bottom: 1px solid #e5e5e5; background-color:transparent;}
+
+.head_style
+    {
+    background-color: <?php echo $Mmain_bgcolor ?>;
+    }
+.head_style:hover{background-color: #262626;}
+
+.head_style_selected
+    {
+    background-color: <?php echo $Mhead_color ?>;
+    }
+.head_style_selected:hover{background-color: <?php echo $Mhead_color ?>;}
+
+.subhead_style
+    {
+    background-color: <?php echo $Msubhead_color ?>;
+    }
+.subhead_style:hover{background-color: white;}
+
+.subhead_style_selected
+    {
+    background-color: <?php echo $Mselected_color ?>;
+    }
+.subhead_style_selected:hover{background-color: <?php echo $Mselected_color ?>;}
+
+.adminmenu_style_selected
+    {
+    background-color: white;
+    }
+.adminmenu_style_selected:hover{background-color: #E6E6E6;}
+
+.records_list_x
+    {
+    background-color: #<?php echo $SSstd_row2_background ?>;
+    }
+.records_list_x:hover{background-color: #E6E6E6;}
+
+.records_list_y
+    {
+    background-color: #<?php echo $SSstd_row1_background ?>;
+    }
+.records_list_y:hover{background-color: #E6E6E6;}
+
+
+.horiz_line
+    {
+    height: 0px;
+    margin: 0px;
+    border-bottom: 1px solid #E6E6E6;
+    font-size: 1px;
+    }
+.horiz_line_grey
+    {
+    height: 0px;
+    margin: 0px;
+    border-bottom: 1px solid #9E9E9E;
+    font-size: 1px;
+    }
+
+.sub_sub_head_links
+    {
+    font-family:HELVETICA;
+    font-size:11;
+    color:BLACK;
+    }
+
+.diff table{
+margin          : 1px 1px 1px 1px;
+border-collapse : collapse;
+border-spacing  : 0;
+}
+
+.diff td{
+vertical-align : top;
+font-family    : monospace;
+font-size      : 9;
+}
+.diff span{
+display:block;
+min-height:1pm;
+margin-top:-1px;
+padding:1px 1px 1px 1px;
+}
+
+* html .diff span{
+height:1px;
+}
+
+.diffDeleted span{
+border:1px solid rgb(255,51,0);
+background:rgb(255,173,153);
+}
+
+.diffInserted span{
+border:1px solid rgb(51,204,51);
+background:rgb(102,255,51);
+}
+
+.diff span:first-child{
+margin-top:1px;
+}
+
+-->
 
 </style>
 
@@ -3025,16 +3009,13 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             ?>
         </nav>
         
-        <!-- Sidebar Footer -->
-        <div class="sidebar-footer">
-            <div class="sidebar-timestamp">
+        <div style="padding: 20px; margin-top: auto;">
+            <div style="color: rgba(255,255,255,0.6); font-size: 12px; text-align: center;">
                 <?php echo date("Y-m-d H:i:s"); ?>
             </div>
         </div>
     </div>
-    <!-- END SIDEBAR -->
     
-    <!-- MAIN CONTENT AREA -->
     <div class="admin-content">
         <div class="modern-header-container">
             <div class="header-top">
@@ -3054,7 +3035,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                     <a href="manager_chat_interface.php" class="nav-item">
                         <span><?php echo _QXZ("Chat"); ?></span>
                     </a>
-                    <?php if ($SSenable_languages > 0) { ?>
+                    <?php if ($SSenable_languages == '1') { ?>
                     <a href="<?php echo $ADMIN ?>?ADD=999989" class="nav-item">
                         <span><?php echo _QXZ("Change language"); ?></span>
                     </a>
@@ -3068,11 +3049,9 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 </div>
             </div>
         </div>
-                
-        <!-- CONTENT BODY - All your page content renders here -->
+        
         <div class="content-body">
-            <!-- Content area starts - wrapper managed by parent -->
-            <span style="position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;" id="audio_chooser_span"></span>
+            <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
             
             <?php
             if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
@@ -3833,7 +3812,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                         <div class="modern-card-body">
                             <div style="color: #5a6c7d; font-style: italic;">
-                                <?php echo _QXZ("Select a report category from sidebar to view available reports"); ?>
+                                <?php echo _QXZ("Select a report category from the sidebar to view available reports"); ?>
                             </div>
                         </div>
                     </div>
@@ -3842,11 +3821,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             }
             ?>
         </div>
-        <!-- END CONTENT BODY -->
     </div>
-    <!-- END ADMIN CONTENT -->
 </div>
-<!-- END ADMIN LAYOUT -->
 
 <?php
 ######################### FULL HTML HEADER END #######################################
