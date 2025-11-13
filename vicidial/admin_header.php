@@ -31,7 +31,7 @@ if (strlen($SSadmin_home_url) > 5) {$admin_home_url_LU = $SSadmin_home_url;}
 if(!isset($ADMIN)){$ADMIN = "../$SSadmin_web_directory/admin.php";}
 
 $SSmenu_background='015B91';
-$SSframe_background='D9E6FE';
+$SSframe_background='FFFFFF';
 $SSstd_row1_background='9BB9FB';
 $SSstd_row2_background='B9CBFD';
 $SSstd_row3_background='8EBCFD';
