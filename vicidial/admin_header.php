@@ -2841,7 +2841,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 <br>
 <br>
 
-
 <div style="background-color: #<?php echo $SSframe_background ?>; padding: 15px;">
   <?php
   if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
@@ -2872,25 +2871,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   
   if (strlen($times_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $times_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=100000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Call Times"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Call Time"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=1000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show State Call Times"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=1111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New State Call Time"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=1200000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Holidays"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=1211111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add Holiday"); ?></a>
-      <?php } ?>
-    </div>
+   
+   
   <?php } 
   
   if (strlen($shifts_sh) > 25) { 
