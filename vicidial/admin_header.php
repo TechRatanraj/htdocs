@@ -2776,8 +2776,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   <!-- Main content area -->
 <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
 
-<header style="background-color: #<?php echo $SSmenu_background ?>; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-  <nav style="display: flex; align-items: center; gap: 15px;">
+<header style="position: relative; width: 100%; margin: 0; padding: 0; background-color: #<?php echo $SSmenu_background ?>; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <nav style="display: flex; align-items: center; gap: 15px;">
+    
     <a href="<?php echo $admin_home_url_LU ?>" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("HOME"); ?></a>
     <span style="color: rgba(255,255,255,0.7);">|</span>
     <a href="../agc/timeclock.php?referrer=admin" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("Timeclock"); ?></a>
