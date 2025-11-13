@@ -51944,299 +51944,267 @@ if ($ADD==999990)
 				$agent_total = "$AAf$agent_total / $vla_set$AAb";
 				}
 			}
+		
+$section_width = 1000;
+echo "<br>";
+// Realtime Stats Section
+echo "<center>";
+echo "<table width='$section_width' cellpadding='6' cellspacing='0' style='border-collapse:collapse;box-shadow:0 2px 4px rgba(0,0,0,0.1);'>\n";
+echo "<tr" . ($SSadmin_row_click > 0 ? " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\" style='cursor:pointer;'" : "") . ">";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:15px;border-radius:4px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_users.png' width='42' height='42' border='0' alt='Users'></a></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>" . _QXZ("Agents Logged In") . "</span></td>";
+echo "<td width='10' rowspan='2'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:15px;border-radius:4px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_agentsincalls.png' width='42' height='42' border='0' alt='Agents in Calls'></a></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>" . _QXZ("Agents In Calls") . "</span></td>";
+echo "<td width='10' rowspan='2'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:15px;border-radius:4px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_calls.png' width='42' height='42' border='0' alt='Active Calls'></a></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>" . _QXZ("Active Calls") . "</span></td>";
+echo "<td width='10' rowspan='2'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:15px;border-radius:4px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_ringing.png' width='42' height='42' border='0' alt='Ringing'></a></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>" . _QXZ("Calls Ringing") . "</span></td>";
+echo "</tr>";
+echo "<tr" . ($SSadmin_row_click > 0 ? " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\" style='cursor:pointer;'" : "") . ">";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:24px;color:white;font-weight:bold;'>" . htmlspecialchars($agent_total) . "</span></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:24px;color:white;font-weight:bold;'>" . htmlspecialchars($agent_incall) . "</span></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:24px;color:white;font-weight:bold;'>" . htmlspecialchars($agent_incall) . "</span></td>";
+echo "<td align='center' valign='middle' style='background-color:#$SSmenu_background;padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:24px;color:white;font-weight:bold;'>" . htmlspecialchars($ringing_calls) . "</span></td>";
+echo "</tr>";
+echo "</table>";
+echo "<br><br>";
 
-		$section_width=1000;
-		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=10>";
+// System Summary Section
+echo "<table width='$section_width' cellspacing='2' style='border-collapse:collapse;'>\n";
+echo "<tr>";
+echo "<td align='left' colspan='4' style='padding:10px 0;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:18px;color:#333;font-weight:bold;'>" . _QXZ("System Summary") . ":</span></td>";
+echo "</tr>";
 
-		echo "<center>";
-		echo "<TABLE width=$section_width cellpadding=6 cellspacing=0>\n";
-		echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} echo ">";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_users.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Agents Logged In")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_agentsincalls.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Agents In Calls")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_calls.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Active Calls")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_ringing.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Calls Ringing")."</font></td>";
-		echo "</tr>";
-		echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} echo ">";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_total</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_incall</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_incall</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$ringing_calls</font></td>";
-		echo "</tr>";
-		echo "</TABLE>";
-		echo "<br><br>";
+echo "<tr style='background-color:#000;'>";
+echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Records") . " &nbsp;</span></td>";
+echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Active") . " &nbsp;</span></td>";
+echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Inactive") . " &nbsp;</span></td>";
+echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total") . " &nbsp;</span></td>";
+echo "</tr>";
 
+echo "<tr style='background-color:#$SSstd_row4_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row4_background';\"><td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=0A' style='text-decoration:none;color:#333;'>" . _QXZ("Users") . ":</a></td><td align='center' style='padding:10px;'><strong>" . ($users["Y"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($users["N"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($users["Y"] + $users["N"] + 0) . "</strong></td></tr>\n";
 
-		echo "<TABLE width=$section_width cellspacing=2>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='4'><font style=\"font-family:HELVETICA;font-size:16;color:black;font-weight:bold;\">"._QXZ("System Summary").":</font></td>";
-		echo "</tr>";
+echo "<tr style='background-color:#$SSstd_row4_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row4_background';\"><td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=10' style='text-decoration:none;color:#333;'>" . _QXZ("Campaigns") . ":</a></td><td align='center' style='padding:10px;'><strong>" . ($campaigns["Y"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($campaigns["N"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($campaigns["Y"] + $campaigns["N"] + 0) . "</strong></td></tr>\n";
 
-		echo "<tr bgcolor=black>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Records")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Active")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Inactive")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Total")." &nbsp;</font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=0A' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Users").": </a></td><td align=center><b>".($users["Y"]+0)."</b></td><td align=center><b>".($users["N"]+0)."</b></td><td align=center><b>".($users["Y"]+$users["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=10' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Campaigns").": </a></td><td align=center><b>".($campaigns["Y"]+0)."</b></td><td align=center><b>".($campaigns["N"]+0)."</b></td><td align=center><b>".($campaigns["Y"]+$campaigns["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=100' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Lists").": </a></td><td align=center><b>".($lists["Y"]+0)."</b></td><td align=center><b>".($lists["N"]+0)."</b></td><td align=center><b>".($lists["Y"]+$lists["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=1000' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("In-Groups").": </a></td><td align=center><b>".($ingroups["Y"]+0)."</b></td><td align=center><b>".($ingroups["N"]+0)."</b></td><td align=center><b>".($ingroups["Y"]+$ingroups["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=1300' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("DIDs").": </a></td><td align=center><b>".($dids["Y"]+0)."</b></td><td align=center><b>".($dids["N"]+0)."</b></td><td align=center><b>".($dids["Y"]+$dids["N"]+0)."</b></td></tr>\n";
-	
-		// New voicemailbox code
-		$stmt="(SELECT voicemail_id,count(*),messages,old_messages,'vm','vm' from vicidial_voicemail where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) UNION (SELECT voicemail_id,count(*),messages,old_messages,extension,server_ip from phones where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) order by voicemail_id;";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$vm_rows=mysqli_num_rows($rslt);
-		if ($vm_rows>0) 
-			{
-			echo "<tr>";
-			echo "<td align='left' colspan='4'>&nbsp;</td>";  # Padding
-			echo "</tr>";
-			echo "<tr bgcolor=black>";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Voicemail Box")." &nbsp;</font></td>\n";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("New")." &nbsp;</font></td>\n";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Old")." &nbsp;</font></td>\n";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Total")." &nbsp;</font></td>\n";
-			echo "</tr>\n";
-	
-			while($row=mysqli_fetch_array($rslt)) 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>\n";
-				if ($row[4] == 'vm')
-					{
-					echo "<td align='right'><a href='$PHP_SELF?ADD=371111111111&voicemail_id=$row[0]' STYLE=\"text-decoration:none;\"><font color=black>$row[0]:</a></font></td>\n";
-					}
-				else
-					{
-					echo "<td align='right'><a href='$PHP_SELF?ADD=31111111111&extension=$row[4]&server_ip=$row[5]' STYLE=\"text-decoration:none;\"><font color=black>$row[0]:</a></font></td>\n";
-					}
-				echo "<td align='center'>$row[2]</font></td>\n";
-				echo "<td align='center'>$row[3]</font></td>\n";
-				echo "<td align='center'>".($row[2]+$row[3])."</font></td>\n";
-				echo "</tr>\n";
-				}
-			}
-		// End new voicemail box code
+echo "<tr style='background-color:#$SSstd_row4_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row4_background';\"><td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=100' style='text-decoration:none;color:#333;'>" . _QXZ("Lists") . ":</a></td><td align='center' style='padding:10px;'><strong>" . ($lists["Y"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($lists["N"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($lists["Y"] + $lists["N"] + 0) . "</strong></td></tr>\n";
 
-		if ($SSqc_features_active>0) 
-			{
-			echo "<tr>";
-			echo "<td align='left' colspan='4'>&nbsp;</td>";  # Padding
-			echo "</tr>";
-			echo "<tr>";
-			echo "<td align='left' colspan='4'><font style=\"font-family:HELVETICA;font-size:16;color:black;font-weight:bold;\">"._QXZ("Quality Control stats").":</font></td>";
-			echo "</tr>";
+echo "<tr style='background-color:#$SSstd_row4_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row4_background';\"><td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=1000' style='text-decoration:none;color:#333;'>" . _QXZ("In-Groups") . ":</a></td><td align='center' style='padding:10px;'><strong>" . ($ingroups["Y"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($ingroups["N"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($ingroups["Y"] + $ingroups["N"] + 0) . "</strong></td></tr>\n";
 
-			echo "<tr bgcolor=black>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("Campaign")."</font></td>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("Unclaimed Calls")."</font></td>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("In Review")."</font></td>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("Finished today")."</font></td>";
-			echo "</tr>";
+echo "<tr style='background-color:#$SSstd_row4_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row4_background';\"><td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=1300' style='text-decoration:none;color:#333;'>" . _QXZ("DIDs") . ":</a></td><td align='center' style='padding:10px;'><strong>" . ($dids["Y"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($dids["N"] + 0) . "</strong></td><td align='center' style='padding:10px;'><strong>" . ($dids["Y"] + $dids["N"] + 0) . "</strong></td></tr>\n";
 
-			# $stmt="SELECT campaign_id, qc_statuses from vicidial_campaigns where active = 'Y' and qc_enabled='Y' $LOGqc_allowed_campaignsSQL order by campaign_id";
-			$stmt="SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
+// Voicemail Box Section
+$stmt = "(SELECT voicemail_id,count(*),messages,old_messages,'vm','vm' from vicidial_voicemail where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) UNION (SELECT voicemail_id,count(*),messages,old_messages,extension,server_ip from phones where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) order by voicemail_id;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt = mysql_to_mysqli($stmt, $link);
+$vm_rows = mysqli_num_rows($rslt);
 
-		if ($DB) {echo "|$stmt|\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$vicidialconf_to_print = mysqli_num_rows($rslt);
-			if ($vicidialconf_to_print > 0) 
-				{
-				while ($row=mysqli_fetch_array($rslt)) 
-					{
-					$campaign_id=$row[0];
+if ($vm_rows > 0) {
+    echo "<tr><td align='left' colspan='4' style='padding:15px 0;'>&nbsp;</td></tr>";
+    echo "<tr style='background-color:#000;'>";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Voicemail Box") . " &nbsp;</span></td>\n";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("New") . " &nbsp;</span></td>\n";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Old") . " &nbsp;</span></td>\n";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total") . " &nbsp;</span></td>\n";
+    echo "</tr>\n";
+    
+    while ($row = mysqli_fetch_array($rslt)) {
+        echo "<tr style='background-color:#$SSstd_row2_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row2_background';\">\n";
+        if ($row[4] == 'vm') {
+            echo "<td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=371111111111&voicemail_id=" . urlencode($row[0]) . "' style='text-decoration:none;color:#333;'>" . htmlspecialchars($row[0]) . ":</a></td>\n";
+        } else {
+            echo "<td align='right' style='padding:10px;'><a href='" . htmlspecialchars($PHP_SELF) . "?ADD=31111111111&extension=" . urlencode($row[4]) . "&server_ip=" . urlencode($row[5]) . "' style='text-decoration:none;color:#333;'>" . htmlspecialchars($row[0]) . ":</a></td>\n";
+        }
+        echo "<td align='center' style='padding:10px;'>" . htmlspecialchars($row[2]) . "</td>\n";
+        echo "<td align='center' style='padding:10px;'>" . htmlspecialchars($row[3]) . "</td>\n";
+        echo "<td align='center' style='padding:10px;'>" . ($row[2] + $row[3]) . "</td>\n";
+        echo "</tr>\n";
+    }
+}
 
-					$qc_status_list=array();
-					$qc_status_container_stmt="select container_entry from vicidial_settings_containers where container_id='$row[2]'";
-					$qc_status_container_rslt=mysql_to_mysqli($qc_status_container_stmt, $link);
-					while ($qcsc_row=mysqli_fetch_row($qc_status_container_rslt))
-						{
-						$container_text=preg_split('/\r|\n/', $qcsc_row[0]);
-						for ($q=0; $q<count($container_text); $q++)
-							{
-							$line=trim($container_text[$q]);
-							if (!preg_match('/^[\#|\;]/', $line) && strlen($line)>0)
-								{
-								$qc_status_list=preg_split('/,/', $line); 
-								break;
-								}
-							}
-						}
+// Quality Control Section
+if ($SSqc_features_active > 0) {
+    echo "<tr><td align='left' colspan='4' style='padding:15px 0;'>&nbsp;</td></tr>";
+    echo "<tr>";
+    echo "<td align='left' colspan='4' style='padding:10px 0;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:18px;color:#333;font-weight:bold;'>" . _QXZ("Quality Control stats") . ":</span></td>";
+    echo "</tr>";
+    
+    echo "<tr style='background-color:#000;'>";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Campaign") . "</span></td>";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Unclaimed Calls") . "</span></td>";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("In Review") . "</span></td>";
+    echo "<td align='center' style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Finished today") . "</span></td>";
+    echo "</tr>";
+    
+    $stmt = "SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
+    
+    if ($DB) {echo "|$stmt|\n";}
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $vicidialconf_to_print = mysqli_num_rows($rslt);
+    
+    if ($vicidialconf_to_print > 0) {
+        while ($row = mysqli_fetch_array($rslt)) {
+            $campaign_id = $row[0];
+            
+            $qc_status_list = array();
+            $qc_status_container_stmt = "select container_entry from vicidial_settings_containers where container_id='" . mysqli_real_escape_string($link, $row[2]) . "'";
+            $qc_status_container_rslt = mysql_to_mysqli($qc_status_container_stmt, $link);
+            while ($qcsc_row = mysqli_fetch_row($qc_status_container_rslt)) {
+                $container_text = preg_split('/\r|\n/', $qcsc_row[0]);
+                for ($q = 0; $q < count($container_text); $q++) {
+                    $line = trim($container_text[$q]);
+                    if (!preg_match('/^[\#|\;]/', $line) && strlen($line) > 0) {
+                        $qc_status_list = preg_split('/,/', $line);
+                        break;
+                    }
+                }
+            }
+            
+            $total_qc_count = 0;
+            $qc_ct_stmt = "select count(*) From vicidial_agent_log where campaign_id='" . mysqli_real_escape_string($link, $campaign_id) . "' and status in ('" . implode("','", array_map(function($item) use ($link) { return mysqli_real_escape_string($link, $item); }, $qc_status_list)) . "') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY";
+            if ($DB) {echo "|$qc_ct_stmt|<br>\n";}
+            $qc_ct_rslt = mysql_to_mysqli($qc_ct_stmt, $link);
+            $qc_ct_row = mysqli_fetch_row($qc_ct_rslt);
+            $total_qc_count = $qc_ct_row[0];
+            
+            $qc_grabbed_stmt = "select count(*) From quality_control_queue where campaign_id='" . mysqli_real_escape_string($link, $campaign_id) . "' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='CLAIMED'";
+            if ($DB) {echo "|$qc_grabbed_stmt|<br>\n";}
+            $qc_grabbed_rslt = mysql_to_mysqli($qc_grabbed_stmt, $link);
+            $qc_grabbed_row = mysqli_fetch_row($qc_grabbed_rslt);
+            $total_inreview_count = $qc_grabbed_row[0];
+            
+            $qc_finished_stmt = "select count(*), sum(if(call_date>=date(now()),1,0)) as finished_today From quality_control_queue where campaign_id='" . mysqli_real_escape_string($link, $campaign_id) . "' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='FINISHED'";
+            if ($DB) {echo "|$qc_finished_stmt|<br>\n";}
+            $qc_finished_rslt = mysql_to_mysqli($qc_finished_stmt, $link);
+            $qc_finished_row = mysqli_fetch_row($qc_finished_rslt);
+            $total_finish_count = $qc_finished_row[0];
+            $today_finish_count = $qc_finished_row[1];
+            
+            echo "<tr style='background-color:#$SSstd_row2_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row2_background';\">";
+            echo "<td align='right' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;'>" . htmlspecialchars($campaign_id) . ":</span></td>";
+            echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;'>" . ($total_qc_count - $total_inreview_count - $total_finish_count + 0) . "</span></td>";
+            echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;'>" . ($total_inreview_count + 0) . "</span></td>";
+            echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:14px;'>" . ($today_finish_count + 0) . "</span></td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr style='background-color:#$SSstd_row2_background;'>";
+        echo "<td align='center' colspan='4' style='padding:15px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:#666;'>*** " . _QXZ("NO ACTIVITY FOR") . " " . htmlspecialchars($today) . " ***</span></td>";
+        echo "</tr>";
+    }
+}
 
-					$total_qc_count=0;
-					$qc_ct_stmt="select count(*) From vicidial_agent_log where campaign_id='$campaign_id' and status in ('".implode("','", $qc_status_list)."') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY"; 
-					if ($DB) {echo "|$qc_ct_stmt|<BR>\n";}
-					$qc_ct_rslt=mysql_to_mysqli($qc_ct_stmt, $link);
-					$qc_ct_row=mysqli_fetch_row($qc_ct_rslt);
-					$total_qc_count=$qc_ct_row[0];
-				
-					$qc_grabbed_stmt="select count(*) From quality_control_queue where campaign_id='$campaign_id' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='CLAIMED'";
-					if ($DB) {echo "|$qc_grabbed_stmt|<BR>\n";}
-					$qc_grabbed_rslt=mysql_to_mysqli($qc_grabbed_stmt, $link);
-					$qc_grabbed_row=mysqli_fetch_row($qc_grabbed_rslt);
-					$total_inreview_count=$qc_grabbed_row[0];
+echo "</table></center>\n";
+echo "<br>\n";
 
-					$qc_finished_stmt="select count(*), sum(if(call_date>=date(now()),1,0)) as finished_today From quality_control_queue where campaign_id='$campaign_id' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='FINISHED'";
-					if ($DB) {echo "|$qc_finished_stmt|<BR>\n";}
-					$qc_finished_rslt=mysql_to_mysqli($qc_finished_stmt, $link);
-					$qc_finished_row=mysqli_fetch_row($qc_finished_rslt);
-					$total_finish_count=$qc_finished_row[0];
-					$today_finish_count=$qc_finished_row[1];
+// Today's Stats Section
+$today = date("Y-m-d");
+$yesterday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - 1, date("Y")));
+$thirtydays = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - 29, date("Y")));
 
-					echo "<tr bgcolor='#$SSstd_row2_background'>";
-				#	echo "<td align='left'><font size=1>".$row["campaign_id"]."</font></td>";
-					echo "<td align='right'><font style=\"font-family:HELVETICA;font-size:14;\">".$campaign_id.":</font></td>";
-					echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;\">".($total_qc_count-$total_inreview_count-$total_finish_count+0)."</font></td>";
-					echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;\">".($total_inreview_count+0)."</font></td>";
-					echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;\">".($today_finish_count+0)."</font></td>";
-					echo "</tr>";
-					}
-				} 
-			else 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>";
-				echo "<td align='center' colspan='4'><font size=1>*** "._QXZ("NO ACTIVITY FOR")." $today ***</font></td>";
-				echo "</tr>";
-				}
+$total_calls = 0;
+$total_inbound = 0;
+$total_outbound = 0;
 
+$stmt = "SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='OPEN' and stats_date='$today' $LOGallowed_campaignsSQL group by stats_type;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt = mysql_to_mysqli($stmt, $link);
+$rows_to_print = mysqli_num_rows($rslt);
 
-			}
+if ($rows_to_print > 0) {
+    while ($rowx = mysqli_fetch_row($rslt)) {
+        $total_calls += $rowx[1];
+        if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound += $rowx[1];}
+        if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound += $rowx[1];}
+    }
+}
 
-			echo "</TABLE></center>\n";
+$stmt = "SELECT * from vicidial_daily_max_stats where stats_date='$today' and stats_flag='OPEN' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
+if ($DB) {echo "|$stmt|\n";}
+$rslt = mysql_to_mysqli($stmt, $link);
 
-			echo "<BR>\n";
+echo "<center><table width='$section_width' cellspacing='0' cellpadding='1' style='border-collapse:collapse;box-shadow:0 2px 4px rgba(0,0,0,0.1);'>\n";
+echo "<tr>";
+echo "<td align='left' colspan='3' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:16px;color:#333;font-weight:bold;'>" . _QXZ("Total Stats for Today") . ":</span></td>";
+echo "<td align='right' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'><a href='" . htmlspecialchars($PHP_SELF) . "?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL' style='color:#0066cc;text-decoration:none;'>[" . _QXZ("view max stats") . "]</a></span></td>";
+echo "</tr>";
+echo "<tr style='background-color:#000;'>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total Calls") . " &nbsp;</span></td>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total Inbound Calls") . " &nbsp;</span></td>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total Outbound Calls") . " &nbsp;</span></td>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Maximum Agents") . " &nbsp;</span></td>";
+echo "</tr>";
 
-		$today=date("Y-m-d");
-		$yesterday=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-1,date("Y")));
-		$thirtydays=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-29,date("Y")));
+if (mysqli_num_rows($rslt) > 0) {
+    while ($row = mysqli_fetch_array($rslt)) {
+        echo "<tr style='background-color:#$SSstd_row2_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row2_background';\">";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($total_calls + 0) . "</span></td>";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($total_inbound + 0) . "</span></td>";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($total_outbound + 0) . "</span></td>";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($row["max_agents"] + 0) . "</span></td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr style='background-color:#$SSstd_row2_background;'>";
+    echo "<td align='center' colspan='4' style='padding:15px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:#666;'>*** " . _QXZ("NO ACTIVITY FOR") . " " . htmlspecialchars($today) . " ***</span></td>";
+    echo "</tr>";
+}
+echo "</table></center>\n";
 
-		$total_calls=0;
-		$total_inbound=0;
-		$total_outbound=0;
-		$stmt="SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='OPEN' and stats_date='$today' $LOGallowed_campaignsSQL group by stats_type;";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rows_to_print = mysqli_num_rows($rslt);
-		if ($rows_to_print > 0) 
-			{
-			while ($rowx=mysqli_fetch_row($rslt)) 
-				{
-				$total_calls += $rowx[1];
-				if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound+=$rowx[1];}
-				if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound+=$rowx[1];}
-				}
-			}
+// Yesterday's Stats Section
+$total_calls = 0;
+$total_inbound = 0;
+$total_outbound = 0;
 
-		$stmt="SELECT * from vicidial_daily_max_stats where stats_date='$today' and stats_flag='OPEN' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='3'><font style=\"font-family:HELVETICA;font-size:12;color:black;font-weight:bold;\">"._QXZ("Total Stats for Today").":</font></td>";
-		echo "<td align='right'><font size=1><a href='$PHP_SELF?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL'>["._QXZ("view max stats")."]</a></font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=black>";
-		# echo "<td><font size=1 color=white align=left><B>CAMPAIGN ID</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Inbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Outbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Maximum Agents")." &nbsp;</B></font></td>";
+$stmt = "SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='CLOSED' and stats_date='$yesterday' $LOGallowed_campaignsSQL group by stats_type;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt = mysql_to_mysqli($stmt, $link);
+$rows_to_print = mysqli_num_rows($rslt);
 
-		if (mysqli_num_rows($rslt)>0) 
-			{
-			while ($row=mysqli_fetch_array($rslt)) 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>";
-			#	echo "<td align='left'><font size=1>".$row["campaign_id"]."</font></td>";
-				echo "<td align='center'><font size=1>".($total_calls+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_inbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_outbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($row["max_agents"]+0)."</font></td>";
-				echo "</tr>";
-				}
-			} 
-		else 
-			{
-			echo "<tr bgcolor='#$SSstd_row2_background'>";
-			echo "<td align='center' colspan='4'><font size=1>*** "._QXZ("NO ACTIVITY FOR")." $today ***</font></td>";
-			echo "</tr>";
-			}
-		echo "</TABLE></center>\n";
+if ($rows_to_print > 0) {
+    while ($rowx = mysqli_fetch_row($rslt)) {
+        $total_calls += $rowx[1];
+        if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound += $rowx[1];}
+        if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound += $rowx[1];}
+    }
+}
 
-		$total_calls=0;
-		$total_inbound=0;
-		$total_outbound=0;
-		$stmt="SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='CLOSED' and stats_date='$yesterday' $LOGallowed_campaignsSQL group by stats_type;";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rows_to_print = mysqli_num_rows($rslt);
-		if ($rows_to_print > 0) 
-			{
-			while ($rowx=mysqli_fetch_row($rslt)) 
-				{
-				$total_calls += $rowx[1];
-				if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound+=$rowx[1];}
-				if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound+=$rowx[1];}
-				}
-			}
+echo "<center><table width='$section_width' cellspacing='0' cellpadding='1' style='border-collapse:collapse;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-top:20px;'>\n";
+echo "<tr>";
+echo "<td align='left' colspan='3' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:16px;color:#333;font-weight:bold;'>" . _QXZ("Total Stats for Yesterday") . ":</span></td>";
+echo "<td align='right' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'><a href='" . htmlspecialchars($PHP_SELF) . "?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL' style='color:#0066cc;text-decoration:none;'>[" . _QXZ("view max stats") . "]</a></span></td>";
+echo "</tr>";
+echo "<tr style='background-color:#000;'>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total Calls") . " &nbsp;</span></td>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total Inbound Calls") . " &nbsp;</span></td>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Total Outbound Calls") . " &nbsp;</span></td>";
+echo "<td style='padding:12px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:white;font-weight:bold;'>&nbsp; " . _QXZ("Maximum Agents") . " &nbsp;</span></td>";
+echo "</tr>";
 
-		echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='3'><font style=\"font-family:HELVETICA;font-size:12;color:black;font-weight:bold;\">"._QXZ("Total Stats for Yesterday").":</font></td>";
-		echo "<td align='right'><font size=1><a href='$PHP_SELF?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL'>["._QXZ("view max stats")."]</a></font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=black>";
-	#	echo "<td><font size=1 color=white align=left><B>CAMPAIGN ID</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Inbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Outbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Maximum Agents")." &nbsp;</B></font></td>";
+$stmt = "SELECT * from vicidial_daily_max_stats where stats_date='$yesterday' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
+if ($DB) {echo "|$stmt|\n";}
+$rslt = mysql_to_mysqli($stmt, $link);
 
-		$stmt="SELECT * from vicidial_daily_max_stats where stats_date='$yesterday' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		if (mysqli_num_rows($rslt)>0) 
-			{
-			while ($row=mysqli_fetch_array($rslt)) 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>";
-				#echo "<td align='left'><font size=1>".$row["campaign_id"]."</font></td>";
-				echo "<td align='center'><font size=1>".($row["total_calls"]+0)." / ".($total_calls+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_inbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_outbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($row["max_agents"]+0)."</font></td>";
-				echo "</tr>";
-				}
-			} 
-		else 
-			{
-			echo "<tr bgcolor='#$SSstd_row2_background'>";
-			echo "<td align='center' colspan='4'><font size=1>*** "._QXZ("NO ACTIVITY FOR")." $today ***</font></td>";
-			echo "</tr>";
-			}
+if (mysqli_num_rows($rslt) > 0) {
+    while ($row = mysqli_fetch_array($rslt)) {
+        echo "<tr style='background-color:#$SSstd_row2_background;transition:background-color 0.2s;' onmouseover=\"this.style.backgroundColor='#E6E6E6';\" onmouseout=\"this.style.backgroundColor='#$SSstd_row2_background';\">";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($row["total_calls"] + 0) . " / " . ($total_calls + 0) . "</span></td>";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($total_inbound + 0) . "</span></td>";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($total_outbound + 0) . "</span></td>";
+        echo "<td align='center' style='padding:10px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;'>" . ($row["max_agents"] + 0) . "</span></td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr style='background-color:#$SSstd_row2_background;'>";
+    echo "<td align='center' colspan='4' style='padding:15px;'><span style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:12px;color:#666;'>*** " . _QXZ("NO ACTIVITY FOR") . " " . htmlspecialchars($today) . " ***</span></td>";
+    echo "</tr>";
+}
 
-		echo "</FONT><BR><BR>";
-		}
-	else
-		{
-		$section_width=640;
-		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-		echo "<center><TABLE width=$section_width cellspacing=2>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='4'>"._QXZ("Welcome")."</td>";
-		echo "</tr>";
+echo "</table></center>\n";
+echo "<br><br>";
 
-		echo "</FONT><BR><BR>";
-		}
-	}
 
 ##### If report run, update the time in the vicidial_report_log table #####
 if ( ($ADD==999993) or ($ADD==999992) or ($ADD==730000000000000) or ($ADD==830000000000000) )
