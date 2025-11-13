@@ -843,13 +843,19 @@ else
 
         var audiolistURL = "./non_agent_api.php";
         var audiolistQuery = "source=admin&function=sounds_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-        var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+        var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2000"> </IFRAME>';
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.innerHTML = Iframe_content;
+        }
         }
 
     function launch_moh_chooser(fieldname,stage)
@@ -859,13 +865,19 @@ else
 
         var audiolistURL = "./non_agent_api.php";
         var audiolistQuery = "source=admin&function=moh_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-        var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+        var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2000"> </IFRAME>';
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.innerHTML = Iframe_content;
+        }
         }
 
     function launch_ingroup_chooser(fieldname,stage)
@@ -875,13 +887,19 @@ else
 
         var apilistURL = "./non_agent_api.php";
         var apilistQuery = "source=admin&function=ingroup_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-        var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+        var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2000"> </IFRAME>';
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.innerHTML = Iframe_content;
+        }
         }
 
     function launch_callmenu_chooser(fieldname,stage)
@@ -891,13 +909,19 @@ else
 
         var apilistURL = "./non_agent_api.php";
         var apilistQuery = "source=admin&function=callmenu_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-        var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+        var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2000"> </IFRAME>';
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.innerHTML = Iframe_content;
+        }
         }
 
     function launch_container_chooser(fieldname,stage,type)
@@ -907,13 +931,19 @@ else
 
         var apilistURL = "./non_agent_api.php";
         var apilistQuery = "source=admin&function=container_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname + "&type=" + type;
-        var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+        var Iframe_content = '<IFRAME SRC="' + apilistURL + '?' + apilistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2000"> </IFRAME>';
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.innerHTML = Iframe_content;
+        }
         }
 
     function launch_vm_chooser(fieldname,stage)
@@ -923,13 +953,19 @@ else
 
         var audiolistURL = "./non_agent_api.php";
         var audiolistQuery = "source=admin&function=vm_list&user=" + user + "&pass=" + pass + "&format=selectframe&stage=" + stage + "&comments=" + fieldname;
-        var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2"> </IFRAME>';
+        var Iframe_content = '<IFRAME SRC="' + audiolistURL + '?' + audiolistQuery + '"  style="width:740;height:440;background-color:white;" scrolling="NO" frameborder="0" allowtransparency="true" id="audio_chooser_frame' + epoch + '" name="audio_chooser_frame" width="740" height="460" STYLE="z-index:2000"> </IFRAME>';
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").innerHTML = Iframe_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.innerHTML = Iframe_content;
+        }
         }
 
     function launch_color_chooser(fieldname,stage,type)
@@ -961,14 +997,20 @@ else
     $color_chooser_output .= '</table></div>';
     ?>
 
-        var span_content = '<span id="color_chooser_frame' + epoch + '" name="color_chooser_frame" style="width:740;height:440;background-color:white;overflow:scroll;z-index:2;">' + "<?php  echo $color_chooser_output ?></span>";
+        var span_content = '<span id="color_chooser_frame' + epoch + '" name="color_chooser_frame" style="width:740;height:440;background-color:white;overflow:scroll;z-index:2000;">' + "<?php  echo $color_chooser_output ?></span>";
 
-        document.getElementById("audio_chooser_span").style.position = "absolute";
-        document.getElementById("audio_chooser_span").style.left = "220px";
-        document.getElementById("audio_chooser_span").style.top = vposition + "px";
-        document.getElementById("audio_chooser_span").style.visibility = 'visible';
-        document.getElementById("audio_chooser_span").style.backgroundcolor = 'white';
-        document.getElementById("audio_chooser_span").innerHTML = span_content;
+        // Fixed positioning to prevent overlap
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.position = "fixed";
+            chooserSpan.style.left = "50%";
+            chooserSpan.style.top = "50%";
+            chooserSpan.style.transform = "translate(-50%, -50%)";
+            chooserSpan.style.visibility = 'visible';
+            chooserSpan.style.zIndex = '2000';
+            chooserSpan.style.backgroundcolor = 'white';
+            chooserSpan.innerHTML = span_content;
+        }
         }
 
     function choose_color(colorname)
@@ -991,8 +1033,11 @@ else
 
     function close_chooser()
         {
-        document.getElementById("audio_chooser_span").style.visibility = 'hidden';
-        document.getElementById("audio_chooser_span").innerHTML = '';
+        var chooserSpan = document.getElementById("audio_chooser_span");
+        if (chooserSpan) {
+            chooserSpan.style.visibility = 'hidden';
+            chooserSpan.innerHTML = '';
+        }
         }
 
     function user_submit()
@@ -1262,7 +1307,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
             new_content = new_content + " &nbsp; <?php echo _QXZ("Handle Method"); ?>: <select size=1 name=IGhandle_method_" + option + ' id=IGhandle_method_' + option + '>';
             new_content = new_content + '' + '<option SELECTED>' + IGhandle_method + '</option>' + IGhandle_method_list + '</select>' + "\n";
             new_content = new_content + " &nbsp; <IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, \'call_menu-ingroup_settings\')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
-            new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
+            new_content = new_content + "<BR><?php echo_QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
             new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
             new_content = new_content + "<BR><?php echo_QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
@@ -1283,7 +1328,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
                 }
             else
                 {value='';}
-            new_content = '<span name=option_route_link_' + option + ' id=option_route_link_' + option + '><a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + value + "\"><?php echo _QXZ("DID"); ?>:</a> </span><select size=1 name=option_route_value_" + option + ' id=option_route_value_' + option + " onChange=\"call_menu_link('" + option + "','DID');\">" + did_list + "\n" + selected_value + '</select>';
+            new_content = '<span name=option_route_link_' + option + ' id=option_route_link_' + option + '><a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + value + "\"><?php echo _QXZ("DID"); ?>:</a> </span><select size=1 name=option_route_value_' + option + ' id=option_route_value_' + option + " onChange=\"call_menu_link('" + option + "','DID');\">" + did_list + "\n" + selected_value + '</select>';
             }
         if (selected_route=='HANGUP')
             {
@@ -1503,7 +1548,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
             while (temp2_counter < temp2_optionValLength)
                 {
                 if (temp2_prev_optionValValue == temp2_optionVal.options[temp2_counter].value)
-                    {temp2_optionValIndex = temp_counter;}
+                    {temp2_optionValIndex = temp2_counter;}
 
                 temp2_counter++;
                 }
@@ -1524,7 +1569,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
             while (temp3_counter < temp3_optionValLength)
                 {
                 if (temp3_prev_optionValValue == temp3_optionVal.options[temp3_counter].value)
-                    {temp3_optionValIndex = temp_counter;}
+                    {temp3_optionValIndex = temp3_counter;}
 
                 temp3_counter++;
                 }
@@ -1545,7 +1590,7 @@ if ( ($ADD==3511) or ($ADD==2511) or ($ADD==2611) or ($ADD==4511) or ($ADD==5511
             while (temp4_counter < temp4_optionValLength)
                 {
                 if (temp4_prev_optionValValue == temp4_optionVal.options[temp4_counter].value)
-                    {temp4_optionValIndex = temp_counter;}
+                    {temp4_optionValIndex = temp4_counter;}
 
                 temp4_counter++;
                 }
@@ -1618,6 +1663,35 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
         var IGhandle_method_list = '<?php echo $IGhandle_method_list ?>';
         var IGsearch_method_list = "<?php echo $IGsearch_method_list ?>";
         var did_list = '<?php echo $did_list ?>';
+        var selected_value =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ### Javascript for dynamic in-group option value entries
+if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011) or ($ADD==4111) or ($ADD==5111) )
+    {
+
+    ?>
+    function dynamic_call_action(option,route,value,chooser_height)
+        {
+        var call_menu_list = '<?php echo $call_menu_list ?>';
+        var ingroup_list = '<?php echo $ingroup_list ?>';
+        var IGcampaign_id_list = '<?php echo $IGcampaign_id_list ?>';
+        var IGhandle_method_list = '<?php echo $IGhandle_method_list ?>';
+        var IGsearch_method_list = "<?php echo $IGsearch_method_list ?>";
+        var did_list = '<?php echo $did_list ?>';
         var selected_value = '';
         var selected_context = '';
         var new_content = '';
@@ -1634,7 +1708,7 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
                 }
             else
                 {value = '';}
-            new_content = '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3511&menu_id=' + value + "\"><?php echo _QXZ("Call Menu"); ?>: </a></span><select size=1 name=" + option + '_value id=' + option + "_value onChange=\"dynamic_call_action_link('" + option + "','CALLMENU');\">" + call_menu_list + "\n" + selected_value + '</select>';
+            new_content = '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3511&menu_id=' + value + "\"><?php echo _QXZ("Call Menu"); ?>: </a></span><select size=1 name=' + option + '_value id=' + option + "_value onChange=\"dynamic_call_action_link('" + option + "','CALLMENU');\">" + call_menu_list + "\n" + selected_value + '</select>';
             }
         if (selected_route=='INGROUP')
             {
@@ -1660,21 +1734,15 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
 
             new_content = new_content + '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3111&group_id=' + IGgroup_id + "\"><?php echo _QXZ("In-Group"); ?>:</a> </span> ';
             new_content = new_content + '<select size=1 name=IGgroup_id_' + option + ' id=IGgroup_id_' + option + " onChange=\"dynamic_call_action_link('IGgroup_id_" + option + "','INGROUP');\">";
-            new_content = new_content + '' + ingroup_list + "\n" + selected_value + '</select>';
+            new_content = new_content + '' + ingroup_list + "\n" + selected_value + '<option>DYNAMIC_INGROUP_VAR</option></select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("Handle Method"); ?>: <select size=1 name=IGhandle_method_" + option + ' id=IGhandle_method_' + option + '>';
             new_content = new_content + '' + '<option SELECTED>' + IGhandle_method + '</option>' + IGhandle_method_list + '</select>' + "\n";
             new_content = new_content + "<BR><?php echo _QXZ("Search Method"); ?>: <select size=1 name=IGsearch_method_" + option + ' id=IGsearch_method_' + option + '>';
             new_content = new_content + '' + IGsearch_method_list + "\n" + '<option SELECTED>' + IGsearch_method + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("List ID"); ?>: <input type=text size=5 maxlength=14 name=IGlist_id_" + option + ' id=IGlist_id_' + option + ' value="' + IGlist_id + '">';
-            new_content = new_content + "<BR><?php echo _QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
+            new_content = new_content + "<BR><?php echo_QXZ("Campaign ID"); ?>: <select size=1 name=IGcampaign_id_" + option + ' id=IGcampaign_id_' + option + '>';
             new_content = new_content + '' + IGcampaign_id_list + "\n" + '<option SELECTED>' + IGcampaign_id + '</select>';
             new_content = new_content + " &nbsp; <?php echo _QXZ("Phone Code"); ?>: <input type=text size=5 maxlength=14 name=IGphone_code_" + option + ' id=IGphone_code_' + option + ' value="' + IGphone_code + '">';
-        //	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Enter Filename"); ?>: <input type=text name=IGvid_enter_filename_" + option + " id=IGvid_enter_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_enter_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_enter_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
-        //	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID ID Number Filename"); ?>: <input type=text name=IGvid_id_number_filename_" + option + " id=IGvid_id_number_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_id_number_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_id_number_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
-        //	new_content = new_content + "<BR> &nbsp; <?php echo _QXZ("VID Confirm Filename"); ?>: <input type=text name=IGvid_confirm_filename_" + option + " id=IGvid_confirm_filename_" + option + " size=40 maxlength=255 value=\"" + IGvid_confirm_filename + "\"> <a href=\"javascript:launch_chooser('IGvid_confirm_filename_" + option + "','date');\"><?php echo _QXZ("audio chooser"); ?></a>";
-        //	new_content = new_content + ' &nbsp; <?php echo _QXZ("VID Digits"); ?>: <input type=text size=3 maxlength=3 name=IGvid_validate_digits_' + option + ' id=IGvid_validate_digits_' + option + ' value="' + IGvid_validate_digits + '">';
-        //	new_content = new_content + '<BR> &nbsp; <?php echo _QXZ("VID Container"); ?>: <input type=text size=40 maxlength=40 name=IGvid_container_' + option + ' id=IGvid_container_' + option + ' value="' + IGvid_container_ + '">';
-
             }
         if (selected_route=='DID')
             {
@@ -1684,7 +1752,7 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
                 }
             else
                 {value = '';}
-            new_content = '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + value + "\"><?php echo _QXZ("DID"); ?>:</a> </span><select size=1 name=" + option + '_value id=' + option + "_value onChange=\"dynamic_call_action_link('" + option + "','DID');\">" + did_list + "\n" + selected_value + '</select>';
+            new_content = '<span name=' + option + '_value_link id=' + option + '_value_link><a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + value + "\"><?php echo _QXZ("DID"); ?>:</a> </span><select size=1 name=' + option + '_value id=' + option + "_value onChange=\"dynamic_call_action_link('" + option + "','DID');\">" + did_list + "\n" + selected_value + '</select>';
             }
         if (selected_route=='MESSAGE')
             {
@@ -1740,15 +1808,15 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
 
         if (route=='CALLMENU')
             {
-            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3511&menu_id=' + selected_value + "\"><?php echo _QXZ("Call Menu"); ?>:</a>";
+            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3511&menu_id=' + selected_value + "\"><?php echo _QXZ("Call Menu"); ?>:</a>';
             }
         if (route=='INGROUP')
             {
-            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3111&group_id=' + selected_value + "\"><?php echo _QXZ("In-Group"); ?>:</a>";
+            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3111&group_id=' + selected_value + "\"><?php echo _QXZ("In-Group"); ?>:</a>';
             }
         if (route=='DID')
             {
-            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + selected_value + "\"><?php echo _QXZ("DID"); ?>:</a>";
+            new_content = '<a href="<?php echo $ADMIN ?>?ADD=3311&did_pattern=' + selected_value + "\"><?php echo _QXZ("DID"); ?>:</a>';
             }
 
         if (new_content.length < 1)
@@ -2038,71 +2106,10 @@ echo "</script>\n";
 -->
 </style>
 
-
 <?php
 ##### END - bar chart CSS style #####
 
 echo "</head>\n";
-
-if ($SSadmin_modify_refresh > 1) {
-    echo '<style>
-    .admin-layout { 
-        display: flex !important; 
-        min-height: 100vh !important; 
-        width: 100% !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #f5f7fa !important;
-    }
-    .admin-sidebar { 
-        width: 260px !important; 
-        background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%) !important; 
-        position: fixed !important; 
-        height: 100vh !important; 
-        left: 0 !important; 
-        top: 0 !important; 
-        z-index: 1000 !important; 
-        overflow-y: auto !important; 
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
-    }
-    .admin-content { 
-        flex: 1 !important; 
-        margin-left: 260px !important; 
-        background: white !important; 
-        min-height: 100vh !important;
-        padding: 0 !important;
-    }
-    .modern-header-container {
-        margin: 0 !important;
-        padding: 0 !important;
-        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-    }
-    TABLE { 
-        background: inherit !important; 
-        margin: 0 !important;
-        padding: 8px !important;
-    }
-    TR { 
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    TD { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    TH { 
-        background: inherit !important; 
-        padding: 8px !important;
-        margin: 0 !important;
-    }
-    </style>';
-}
-
-echo "<!-- INTERNATIONALIZATION-LINKS-PLACEHOLDER-VICIDIAL -->\n";
 
 if ($header_font_size < 4) {$header_font_size='12';}
 if ($subheader_font_size < 4) {$subheader_font_size='11';}
@@ -2821,6 +2828,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -2842,6 +2850,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -2881,6 +2890,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -2902,6 +2912,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -2944,6 +2955,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -2982,6 +2994,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3004,6 +3017,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3025,6 +3039,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3051,6 +3066,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3076,10 +3092,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3098,10 +3115,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3130,10 +3148,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3152,10 +3171,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
+            if (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3183,10 +3203,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) and ((preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0)) ) { 
+            if (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) and ((preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0)) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3208,10 +3229,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3230,6 +3252,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3244,6 +3267,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php echo _QXZ("System Settings"); ?>
                         </a>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3267,6 +3291,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3285,12 +3310,13 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <a href="<?php echo $ADMIN ?>?ADD=182111111111" class="modern-btn">
                                 <?php echo _QXZ("Add A Screen Colors"); ?>
                             </a>
-                            <?php } ?>
                             <a href="<?php echo $ADMIN ?>?ADD=311111111111111#screen_colors" class="modern-btn secondary">
                                 <?php echo _QXZ("Change Active Screen Colors"); ?>
                             </a>
+                            <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3314,6 +3340,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3335,6 +3362,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3358,6 +3386,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3379,6 +3408,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3402,6 +3432,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3423,6 +3454,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3446,6 +3478,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
@@ -3468,10 +3501,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             
-            if ( (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
+            if (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3490,6 +3524,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             </a>
                         </div>
                     </div>
+                </div>
                 </div>
                 <?php 
             }
@@ -3517,6 +3552,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
 
@@ -3543,6 +3579,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
+                </div>
                 <?php 
             }
             else {
@@ -3558,6 +3595,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             </div>
                         </div>
                     </div>
+                    </div>
                     <?php 
                 } 
             }
@@ -3570,3 +3608,9 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 ######################### FULL HTML HEADER END #######################################
 }
 ?>
+
+            
+
+
+
+
