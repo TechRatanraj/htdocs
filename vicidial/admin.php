@@ -51945,7 +51945,7 @@ if ($ADD==999990)
 				}
 			}
 
-		$section_width=900;
+		$section_width=1000;
 		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=10>";
 
 		echo "<center>";
