@@ -1702,7 +1702,7 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
 
 	<?php
 	}
-
+}
 echo "</script>\n";
 ?>
 <!DOCTYPE html>
