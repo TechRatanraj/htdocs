@@ -1,27 +1,16 @@
 <?php
 # vicidial_stylesheet.php
 # 
-# Copyright (C) 2023  Matt Florell <vicidial@gmail.com>, Joe Johnson <freewermadmin@gmail.com>    LICENSE: AGPLv2
-#
-# Modernized CSS/PHP file that uses system-defined screen colors to display report elements
-#
-# 170830-2123 - First build
-# 180501-0045 - New elements added
-# 190129-1303 - New mobile display elements added
-# 200309-1819 - Modifications for display formatting
-# 221230-2220 - Added cust_form style for text input fields
-# 231127-1002 - Added HCI buttons styles
-# 241113-1600 - Modernized CSS with accessibility improvements
 
 require("dbconnect_mysqli.php");
 require("functions.php");
 header("Content-type: text/css");
 require("screen_colors.php");
-?>
 
 /* ============================================
    CSS CUSTOM PROPERTIES (Design System)
    ============================================ */
+
 :root {
     /* System Font Stack */
     --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, Helvetica, sans-serif;
@@ -1391,3 +1380,4 @@ span.android_onbutton {
         border: 1px solid black;
     }
 }
+
