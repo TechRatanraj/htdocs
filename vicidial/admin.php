@@ -52166,129 +52166,128 @@ echo "<br>\n";
 	
 		// Done the UI design till this line with KPI cards.	
 
-		$today=date("Y-m-d");
-		$yesterday=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-1,date("Y")));
-		$thirtydays=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-29,date("Y")));
+		// Daily Stats Section - Today
+$today=date("Y-m-d");
+$yesterday=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-1,date("Y")));
+$thirtydays=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-29,date("Y")));
 
-		$total_calls=0;
-		$total_inbound=0;
-		$total_outbound=0;
-		$stmt="SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='OPEN' and stats_date='$today' $LOGallowed_campaignsSQL group by stats_type;";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rows_to_print = mysqli_num_rows($rslt);
-		if ($rows_to_print > 0) 
-			{
-			while ($rowx=mysqli_fetch_row($rslt)) 
-				{
-				$total_calls += $rowx[1];
-				if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound+=$rowx[1];}
-				if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound+=$rowx[1];}
-				}
-			}
+$total_calls=0;
+$total_inbound=0;
+$total_outbound=0;
+$stmt="SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='OPEN' and stats_date='$today' $LOGallowed_campaignsSQL group by stats_type;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+$rows_to_print = mysqli_num_rows($rslt);
+if ($rows_to_print > 0) 
+    {
+    while ($rowx=mysqli_fetch_row($rslt)) 
+        {
+        $total_calls += $rowx[1];
+        if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound+=$rowx[1];}
+        if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound+=$rowx[1];}
+        }
+    }
 
-		$stmt="SELECT * from vicidial_daily_max_stats where stats_date='$today' and stats_flag='OPEN' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='3'><font style=\"font-family:HELVETICA;font-size:12;color:black;font-weight:bold;\">"._QXZ("Total Stats for Today").":</font></td>";
-		echo "<td align='right'><font size=1><a href='$PHP_SELF?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL'>["._QXZ("view max stats")."]</a></font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=black>";
-		# echo "<td><font size=1 color=white align=left><B>CAMPAIGN ID</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Inbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Outbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Maximum Agents")." &nbsp;</B></font></td>";
+$stmt="SELECT * from vicidial_daily_max_stats where stats_date='$today' and stats_flag='OPEN' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
+if ($DB) {echo "|$stmt|\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
 
-		if (mysqli_num_rows($rslt)>0) 
-			{
-			while ($row=mysqli_fetch_array($rslt)) 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>";
-			#	echo "<td align='left'><font size=1>".$row["campaign_id"]."</font></td>";
-				echo "<td align='center'><font size=1>".($total_calls+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_inbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_outbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($row["max_agents"]+0)."</font></td>";
-				echo "</tr>";
-				}
-			} 
-		else 
-			{
-			echo "<tr bgcolor='#$SSstd_row2_background'>";
-			echo "<td align='center' colspan='4'><font size=1>*** "._QXZ("NO ACTIVITY FOR")." $today ***</font></td>";
-			echo "</tr>";
-			}
-		echo "</TABLE></center>\n";
+echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
+echo "<table width='100%' cellspacing='0' style='border-collapse: collapse;'>\n";
+echo "<tr>";
+echo "<td align='left' colspan='3' style='padding-bottom: 20px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 700; letter-spacing: -0.5px;'>"._QXZ("Total Stats for Today")."</span></td>";
+echo "<td align='right' style='padding-bottom: 20px;'><a href='$PHP_SELF?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 12px; color: #3498db; text-decoration: none; font-weight: 500; transition: color 0.2s ease;' onmouseover=\"this.style.color='#2980b9';\" onmouseout=\"this.style.color='#3498db';\">"._QXZ("view max stats")." →</a></td>";
+echo "</tr>";
 
-		$total_calls=0;
-		$total_inbound=0;
-		$total_outbound=0;
-		$stmt="SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='CLOSED' and stats_date='$yesterday' $LOGallowed_campaignsSQL group by stats_type;";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rows_to_print = mysqli_num_rows($rslt);
-		if ($rows_to_print > 0) 
-			{
-			while ($rowx=mysqli_fetch_row($rslt)) 
-				{
-				$total_calls += $rowx[1];
-				if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound+=$rowx[1];}
-				if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound+=$rowx[1];}
-				}
-			}
+echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+echo "<td align='center' style='padding: 16px; border-radius: 10px 0 0 0; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Total Calls")."</span></td>";
+echo "<td align='center' style='padding: 16px; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Total Inbound Calls")."</span></td>";
+echo "<td align='center' style='padding: 16px; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Total Outbound Calls")."</span></td>";
+echo "<td align='center' style='padding: 16px; border-radius: 0 10px 0 0; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Maximum Agents")."</span></td>";
+echo "</tr>";
 
-		echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='3'><font style=\"font-family:HELVETICA;font-size:12;color:black;font-weight:bold;\">"._QXZ("Total Stats for Yesterday").":</font></td>";
-		echo "<td align='right'><font size=1><a href='$PHP_SELF?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL'>["._QXZ("view max stats")."]</a></font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=black>";
-	#	echo "<td><font size=1 color=white align=left><B>CAMPAIGN ID</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Inbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Total Outbound Calls")." &nbsp;</B></font></td>";
-		echo "<td><font size=1 color=white><B>&nbsp; "._QXZ("Maximum Agents")." &nbsp;</B></font></td>";
+if (mysqli_num_rows($rslt)>0) 
+    {
+    while ($row=mysqli_fetch_array($rslt)) 
+        {
+        echo "<tr style='background: #f8f9fa; transition: background-color 0.2s ease;' onmouseover=\"this.style.background='#e3f2fd';\" onmouseout=\"this.style.background='#f8f9fa';\">";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #2c3e50; font-weight: 700;'>".number_format($total_calls+0)."</span></td>";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #3498db; font-weight: 700;'>".number_format($total_inbound+0)."</span></td>";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #e67e22; font-weight: 700;'>".number_format($total_outbound+0)."</span></td>";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #9b59b6; font-weight: 700;'>".($row["max_agents"]+0)."</span></td>";
+        echo "</tr>";
+        }
+    } 
+else 
+    {
+    echo "<tr style='background: #f8f9fa;'>";
+    echo "<td align='center' colspan='4' style='padding: 24px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #95a5a6; font-style: italic;'>*** "._QXZ("NO ACTIVITY FOR")." $today ***</span></td>";
+    echo "</tr>";
+    }
+echo "</table>";
+echo "</div>";
 
-		$stmt="SELECT * from vicidial_daily_max_stats where stats_date='$yesterday' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		if (mysqli_num_rows($rslt)>0) 
-			{
-			while ($row=mysqli_fetch_array($rslt)) 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>";
-				#echo "<td align='left'><font size=1>".$row["campaign_id"]."</font></td>";
-				echo "<td align='center'><font size=1>".($row["total_calls"]+0)." / ".($total_calls+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_inbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($total_outbound+0)."</font></td>";
-				echo "<td align='center'><font size=1>".($row["max_agents"]+0)."</font></td>";
-				echo "</tr>";
-				}
-			} 
-		else 
-			{
-			echo "<tr bgcolor='#$SSstd_row2_background'>";
-			echo "<td align='center' colspan='4'><font size=1>*** "._QXZ("NO ACTIVITY FOR")." $today ***</font></td>";
-			echo "</tr>";
-			}
+// Daily Stats Section - Yesterday
+$total_calls=0;
+$total_inbound=0;
+$total_outbound=0;
+$stmt="SELECT stats_type,sum(total_calls) from vicidial_daily_max_stats where campaign_id!='' and stats_flag='CLOSED' and stats_date='$yesterday' $LOGallowed_campaignsSQL group by stats_type;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+$rows_to_print = mysqli_num_rows($rslt);
+if ($rows_to_print > 0) 
+    {
+    while ($rowx=mysqli_fetch_row($rslt)) 
+        {
+        $total_calls += $rowx[1];
+        if (preg_match('/INGROUP/', $rowx[0])) {$total_inbound+=$rowx[1];}
+        if (preg_match('/CAMPAIGN/', $rowx[0])) {$total_outbound+=$rowx[1];}
+        }
+    }
 
-		echo "</FONT><BR><BR>";
-		}
-	else
-		{
-		$section_width=640;
-		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-		echo "<center><TABLE width=$section_width cellspacing=2>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='4'>"._QXZ("Welcome")."</td>";
-		echo "</tr>";
+echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
+echo "<table width='100%' cellspacing='0' style='border-collapse: collapse;'>\n";
+echo "<tr>";
+echo "<td align='left' colspan='3' style='padding-bottom: 20px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 700; letter-spacing: -0.5px;'>"._QXZ("Total Stats for Yesterday")."</span></td>";
+echo "<td align='right' style='padding-bottom: 20px;'><a href='$PHP_SELF?query_date=$thirtydays&end_date=$today&max_system_stats_submit=ADJUST+DATE+RANGE&ADD=999992&stage=TOTAL' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 12px; color: #3498db; text-decoration: none; font-weight: 500; transition: color 0.2s ease;' onmouseover=\"this.style.color='#2980b9';\" onmouseout=\"this.style.color='#3498db';\">"._QXZ("view max stats")." →</a></td>";
+echo "</tr>";
 
-		echo "</FONT><BR><BR>";
-		}
-	}
+echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+echo "<td align='center' style='padding: 16px; border-radius: 10px 0 0 0; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Total Calls")."</span></td>";
+echo "<td align='center' style='padding: 16px; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Total Inbound Calls")."</span></td>";
+echo "<td align='center' style='padding: 16px; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Total Outbound Calls")."</span></td>";
+echo "<td align='center' style='padding: 16px; border-radius: 0 10px 0 0; width: 25%;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;'>"._QXZ("Maximum Agents")."</span></td>";
+echo "</tr>";
+
+$stmt="SELECT * from vicidial_daily_max_stats where stats_date='$yesterday' and stats_type='TOTAL' $LOGallowed_campaignsSQL order by stats_date, campaign_id asc";
+if ($DB) {echo "|$stmt|\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+if (mysqli_num_rows($rslt)>0) 
+    {
+    while ($row=mysqli_fetch_array($rslt)) 
+        {
+        echo "<tr style='background: #f8f9fa; transition: background-color 0.2s ease;' onmouseover=\"this.style.background='#e3f2fd';\" onmouseout=\"this.style.background='#f8f9fa';\">";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 18px; color: #7f8c8d; font-weight: 600;'>".number_format($row["total_calls"]+0)."</span> <span style='color: #bdc3c7; font-size: 16px;'>/</span> <span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700;'>".number_format($total_calls+0)."</span></td>";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #3498db; font-weight: 700;'>".number_format($total_inbound+0)."</span></td>";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #e67e22; font-weight: 700;'>".number_format($total_outbound+0)."</span></td>";
+        echo "<td align='center' style='padding: 18px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #9b59b6; font-weight: 700;'>".($row["max_agents"]+0)."</span></td>";
+        echo "</tr>";
+        }
+    } 
+else 
+    {
+    echo "<tr style='background: #f8f9fa;'>";
+    echo "<td align='center' colspan='4' style='padding: 24px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #95a5a6; font-style: italic;'>*** "._QXZ("NO ACTIVITY FOR")." $today ***</span></td>";
+    echo "</tr>";
+    }
+
+echo "</table>";
+echo "</div>";
+
+echo "</div>"; // Close max-width container
+echo "</div>"; // Close full-width wrapper
+
+echo "<br>\n";
 
 ##### If report run, update the time in the vicidial_report_log table #####
 if ( ($ADD==999993) or ($ADD==999992) or ($ADD==730000000000000) or ($ADD==830000000000000) )
