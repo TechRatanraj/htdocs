@@ -2776,29 +2776,58 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   <!-- Main content area -->
 <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
 
-<header style="position: relative; width: 100%; margin: 0; padding: 0; background-color: #<?php echo $SSmenu_background ?>; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <nav style="display: flex; align-items: center; gap: 15px;">
-    
-    <a href="<?php echo $admin_home_url_LU ?>" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("HOME"); ?></a>
-    <span style="color: rgba(255,255,255,0.7);">|</span>
-    <a href="../agc/timeclock.php?referrer=admin" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("Timeclock"); ?></a>
-    <span style="color: rgba(255,255,255,0.7);">|</span>
-    <a href="manager_chat_interface.php" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("Chat"); ?></a>
-    <span style="color: rgba(255,255,255,0.7);">|</span>
-    <a href="<?php echo $ADMIN ?>?force_logout=1" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("Logout"); ?></a>
-    <span style="color: rgba(255,255,255,0.7);">(<?php echo $PHP_AUTH_USER ?>)</span>
-    
-    <?php if ($SSenable_languages == '1') { ?>
-      <span style="color: rgba(255,255,255,0.7);">|</span>
-      <a href="<?php echo $ADMIN ?>?ADD=999989" style="color: white; text-decoration: none; font-size: 14px; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s;"><?php echo _QXZ("Change language"); ?></a>
-    <?php } ?>
-  </nav>
-  
-  <div style="font-size: 14px; font-weight: bold;">
-    <?php echo date("l F j, Y G:i:s A"); ?>
-  </div>
+<header style="width:100%;background:linear-gradient(90deg,#<?php echo $SSmenu_background ?>,#0b2447);color:white;padding:14px 28px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);position:relative;z-index:100;">
+
+    <!-- LEFT NAVIGATION -->
+    <nav style="display:flex;align-items:center;gap:12px;">
+
+        <a href='<?php echo $admin_home_url_LU ?>' 
+           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
+           <?php echo _QXZ("HOME"); ?>
+        </a>
+
+        <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+
+        <a href='../agc/timeclock.php?referrer=admin'
+           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
+           <?php echo _QXZ("Timeclock"); ?>
+        </a>
+
+        <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+
+        <a href='manager_chat_interface.php'
+           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
+           <?php echo _QXZ("Chat"); ?>
+        </a>
+
+        <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+
+        <a href='<?php echo $ADMIN ?>?force_logout=1'
+           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
+           <?php echo _QXZ("Logout"); ?>
+        </a>
+
+        <span style="color:white;font-size:14px;font-weight:500;">
+            (<?php echo $PHP_AUTH_USER ?>)
+        </span>
+
+        <?php if ($SSenable_languages == '1') { ?>
+            <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+            <a href='<?php echo $ADMIN ?>?ADD=999989'
+               style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
+               <?php echo _QXZ("Change language"); ?>
+            </a>
+        <?php } ?>
+
+    </nav>
+
+    <!-- RIGHT CLOCK -->
+    <div style="font-size:14px;font-weight:600;letter-spacing:0.5px;">
+        <?php echo date("l F j, Y g:i:s A"); ?>
+    </div>
+
 </header>
+
 
 <div style="background-color: #<?php echo $SSframe_background ?>; padding: 15px;">
   <?php
