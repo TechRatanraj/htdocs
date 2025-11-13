@@ -51946,7 +51946,7 @@ if ($ADD==999990)
 				}
 			}
 		}
-	}
+	
 $section_width = 1000;
 echo "<br>";
 // Realtime Stats Section
