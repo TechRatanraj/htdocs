@@ -381,7 +381,7 @@ if ($TCedit_javascript > 0)
 
 	<?php
 
-    }}
+    }
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
@@ -530,6 +530,7 @@ if ( ( ($ADD==34) or ($ADD==31) or ($ADD==49) ) and ($SUB==29) and ($LOGmodify_c
 		}
 	<?php
 	}
+}
 	?>
 
 	<?php
