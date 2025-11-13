@@ -1852,6 +1852,9 @@ body {
   border-radius: 0 8px 8px 0;
   overflow-y: auto;
   transition: all 0.3s ease;
+  height: calc(100vh - 60px); /* Set height to viewport height minus header */
+  position: sticky;
+  top: 0;
 }
 
 .sidebar-logo {
@@ -1897,6 +1900,7 @@ body {
   font-size: 14px;
   transition: all 0.2s ease;
   position: relative;
+  line-height: 1.4; /* Ensure proper line height */
 }
 
 .nav-item:hover {
@@ -1927,6 +1931,7 @@ body {
   text-decoration: none;
   font-size: 13px;
   transition: all 0.2s ease;
+  line-height: 1.4; /* Ensure proper line height */
 }
 
 .nav-subitem:hover {
@@ -1940,85 +1945,18 @@ body {
   font-weight: 500;
 }
 
-/* Main Content Area */
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #f5f7fa;
-  overflow-y: auto;
+/* Add spacing between navigation sections */
+.nav-section + .nav-section {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.content-header {
-  background: white;
-  border-radius: 8px;
-  padding: 15px 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Ensure images in navigation items don't cause overlap */
+.nav-item img, .nav-subitem img {
+  margin-right: 8px;
+  vertical-align: middle;
 }
-
-.content-title {
-  font-size: 22px;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.content-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.btn {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary {
-  background-color: #3498db;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #2980b9;
-}
-
-.btn-secondary {
-  background-color: #ecf0f1;
-  color: #2c3e50;
-}
-
-.btn-secondary:hover {
-  background-color: #dde4e6;
-}
-
-/* Content Card */
-.content-card {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-/* Tables */
-.modern-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.modern-table
-
-
 
 
 <?php
