@@ -52153,13 +52153,7 @@ if ($SSqc_features_active>0)
     echo "</table>";
     echo "</div>";
     }
-
-echo "</div>"; // Close max-width container
-echo "</div>"; // Close full-width wrapper
-
-echo "<br>\n";
-
-		// Daily Stats Section - Modernized
+	// Daily Stats Section - Modernized
 $today=date("Y-m-d");
 $yesterday=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-1,date("Y")));
 $thirtydays=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-29,date("Y")));
@@ -52278,8 +52272,15 @@ echo "</table>";
 echo "</div>";
 
 echo "<br>\n";
-}
-}	
+
+
+echo "</div>"; // Close max-width container
+echo "</div>"; // Close full-width wrapper
+
+echo "<br>\n";
+
+		
+
 ##### If report run, update the time in the vicidial_report_log table #####
 if ( ($ADD==999993) or ($ADD==999992) or ($ADD==730000000000000) or ($ADD==830000000000000) )
 	{
