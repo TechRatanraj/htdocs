@@ -10,7 +10,8 @@ require("screen_colors.php");
 /* ============================================
    CSS CUSTOM PROPERTIES (Design System)
    ============================================ */
-
+?>
+<style>
 :root {
     /* System Font Stack */
     --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, Helvetica, sans-serif;
@@ -1381,3 +1382,4 @@ span.android_onbutton {
     }
 }
 
+</style>
