@@ -50112,496 +50112,489 @@ if ($ADD==999999)
         {
         $server_id=$MT; $server_description=$MT; $server_ip=$MT; $active=$MT; $sysload=$MT; $channels_total=$MT; $cpu_idle_percent=$MT; $disk_usage=$MT; $active_agent_login_server=$MT; $active_asterisk_server=$MT;
 
-        $stmt="SELECT server_id,server_description,server_ip,active,sysload,channels_total,cpu_idle_percent,disk_usage,active_agent_login_server,active_asterisk_server from servers order by server_id;";
-        $rslt=mysql_to_mysqli($stmt, $link);
-        if ($DB) {echo "$stmt\n";}
-        $servers_to_print = mysqli_num_rows($rslt);
-        $i=0;
-        while ($i < $servers_to_print)
-            {
-            $row=mysqli_fetch_row($rslt);
-            $server_id[$i] = $row;
-            $server_description[$i] = $row;
-            $server_ip[$i] = $row;
-            $active[$i] = $row;
-            $sysload[$i] = $row;
-            $channels_total[$i] = $row;
-            $cpu_idle_percent[$i] = $row;
-            $disk_usage[$i] = $row;
-            $active_agent_login_server[$i] = $row;
-            $active_asterisk_server[$i] = $row;
-            $i++;
-            }
-
-        $stmt="SELECT queuemetrics_url,vtiger_url from system_settings;";
-        $rslt=mysql_to_mysqli($stmt, $link);
+            $stmt="SELECT server_id,server_description,server_ip,active,sysload,channels_total,cpu_idle_percent,disk_usage,active_agent_login_server,active_asterisk_server from servers order by server_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    if ($DB) {echo "$stmt\n";}
+    $servers_to_print = mysqli_num_rows($rslt);
+    $i=0;
+    while ($i < $servers_to_print)
+        {
         $row=mysqli_fetch_row($rslt);
-        $queuemetrics_url_LU = $row;
-        $vtiger_url_LU = $row;
+        $server_id[$i] = $row;
+        $server_description[$i] = $row;
+        $server_ip[$i] = $row;
+        $active[$i] = $row;
+        $sysload[$i] = $row;
+        $channels_total[$i] = $row;
+        $cpu_idle_percent[$i] = $row;
+        $disk_usage[$i] = $row;
+        $active_agent_login_server[$i] = $row;
+        $active_asterisk_server[$i] = $row;
+        $i++;
+        }
 
-        $stmt="SELECT count(*) from vicidial_list_update_log;";
-        $rslt=mysql_to_mysqli($stmt, $link);
-        $row=mysqli_fetch_row($rslt);
-        $list_update_count = $row;
+    $stmt="SELECT queuemetrics_url,vtiger_url from system_settings;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $row=mysqli_fetch_row($rslt);
+    $queuemetrics_url_LU = $row;
+    $vtiger_url_LU = $row;
 
-        $stmt="SELECT count(*) from dialable_inventory_snapshots;";
-        $rslt=mysql_to_mysqli($stmt, $link);
-        $row=mysqli_fetch_row($rslt);
-        $inventory_report_count = $row;
-        ?>
-        </head>
-        <body style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); margin: 0; padding: 0;">
-        
-        <div style="width: 100%; max-width: 100%; padding: 24px; box-sizing: border-box;">
-        <div style="max-width: 1400px; margin: 0 auto;">
-        
-        <!-- Header Section -->
-        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <img src="images/icon_black_reports.png" alt="Reports" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-                <div>
-                    <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("Server Stats and Reports"); ?></h1>
-                    <p style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; margin: 4px 0 0 0;">
-                        <a href="admin.php" style="color: #3498db; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#2980b9';" onmouseout="this.style.color='#3498db';"><?php echo _QXZ("System Summary"); ?></a>
-                    </p>
-                </div>
+    $stmt="SELECT count(*) from vicidial_list_update_log;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $row=mysqli_fetch_row($rslt);
+    $list_update_count = $row;
+
+    $stmt="SELECT count(*) from dialable_inventory_snapshots;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $row=mysqli_fetch_row($rslt);
+    $inventory_report_count = $row;
+    ?>
+    </head>
+    <body style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); margin: 0; padding: 0;">
+    
+    <div style="width: 100%; max-width: 100%; padding: 24px; box-sizing: border-box;">
+    <div style="max-width: 1400px; margin: 0 auto;">
+    
+    <!-- Header Section -->
+    <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <img src="images/icon_black_reports.png" alt="Reports" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+            <div>
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("Server Stats and Reports"); ?></h1>
+                <p style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; margin: 4px 0 0 0;">
+                    <a href="admin.php" style="color: #3498db; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#2980b9';" onmouseout="this.style.color='#3498db';"><?php echo _QXZ("System Summary"); ?></a>
+                </p>
             </div>
         </div>
+    </div>
 
-        <!-- Reports Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; margin-bottom: 24px;">
-            
-            <!-- Real-Time Reports Card -->
-            <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Real-Time Reports"); ?></h2>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                <?php
-                if ( (preg_match("/VERM Reports/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='../VERM/VERM_admin.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VERM - Enhanced Reporting Module")."</a></li>\n";}
-                if ( (preg_match("/Real-Time Main Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='realtime_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Real-Time Main Report")."</a></li>\n";}
-                if ( (preg_match("/Real-Time Campaign Summary/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_timeonVDADallSUMMARY.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Real-Time Campaign Summary")."</a></li>\n";}
-                if ( (preg_match("/Real-Time Whiteboard Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_rt_whiteboard_rpt.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Real-Time Whiteboard Report")."</a></li>\n";}
-                ?>
-                </ul>
-            </div>
+    <!-- Two Column Reports Grid -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px;">
+        
+        <!-- Column 1: Real-Time Reports -->
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Real-Time Reports"); ?></h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+            <?php
+            if ( (preg_match("/VERM Reports/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='../VERM/VERM_admin.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VERM - Enhanced Reporting Module")."</a></li>\n";}
+            if ( (preg_match("/Real-Time Main Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='realtime_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Real-Time Main Report")."</a></li>\n";}
+            if ( (preg_match("/Real-Time Campaign Summary/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_timeonVDADallSUMMARY.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Real-Time Campaign Summary")."</a></li>\n";}
+            if ( (preg_match("/Real-Time Whiteboard Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_rt_whiteboard_rpt.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Real-Time Whiteboard Report")."</a></li>\n";}
+            ?>
+            </ul>
 
-            <!-- Inbound/Outbound Reports Card -->
-            <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Inbound and Outbound Calling Reports"); ?></h2>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                <?php
-                if ( (preg_match("/VERM Reports/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='../VERM/VERM_admin.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VERM - Enhanced Reporting Module")."</a></li>\n";}
-                if ( (preg_match("/Inbound Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_CLOSERstats.php' style='color: #2c3e50; text-decoration: none; transition: color 0.2s ease;' onmouseover=\"this.style.color='#3498db';\" onmouseout=\"this.style.color='#2c3e50';\">"._QXZ("Inbound Report")."</a> <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_CLOSERstats_v2.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("v2")."</a></span></li>\n";}
-                if ( (preg_match("/Inbound Report by DID/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERstats.php?DID=Y' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Report by DID")."</a></li>\n";}
-                if ( (preg_match("/Inbound Service Level Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSER_service_level.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Service Level Report")."</a></li>\n";}
-                if ( (preg_match("/Inbound Summary Hourly Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERsummary_hourly.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Summary Hourly Report")."</a></li>\n";}
-                if ( (preg_match("/Inbound Daily Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_inbound_daily_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Daily Report")."</a></li>\n";}
-                if ( (preg_match("/Inbound DID Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_DIDstats.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Inbound DID Report")."</a>";}
-                if ( (preg_match("/Inbound DID Summary Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_DIDstats_v2.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("DID Summary")."</a>";}
-                if ( (preg_match("/Agent DID Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_agentDIDstats.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Agent DID")."</a></span></li>\n";}
-                if ( (preg_match("/Inbound IVR Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_IVRstats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound IVR Report")."</a></li>\n";}
-                if ( (preg_match("/Inbound Forecasting Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {
-                    echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_inbound_forecasting.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Inbound Forecasting Report")."</a>";
-                    if ( (preg_match("/Advanced Forecasting Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='Erlang_report.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Advanced")."</a>";}
-                    echo "</span></li>\n";
-                    }
-                if ( (preg_match("/Outbound Calling Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_VDADstats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Outbound Calling Report")."</a></li>\n";}
-                if ( (preg_match("/Outbound Summary Interval Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_OUTBOUNDsummary_interval.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Outbound Summary Interval Report")."</a></li>\n";}
-                if ( (preg_match("/Outbound IVR Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {
-                    echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_IVRstats.php?type=outbound' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Outbound IVR Report")."</a>";
-                    if ($LOGexport_reports >= 1)
-                        {
-                        if ( (preg_match("/Export Calls Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                            {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='call_report_export.php?ivr_export=YES' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Export")."</a>";}
-                        }
-                    if ( (preg_match("/Callmenu Survey Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_CMstats.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Callmenu Agent")."</a>";}
-                    echo "</span></li>\n";
-                    }
-                if ( (preg_match("/Outbound Lead Source Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_source_vlc_status_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Outbound Lead Source Report")."</a></li>\n";}
-                if ( (preg_match("/Fronter - Closer Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='fcstats.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Fronter - Closer Report")."</a>";}
-                if ( (preg_match("/Fronter - Closer Detail Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='fcstats_detail.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Detail")."</a></span></li>\n";}
-                if ( (preg_match("/Lists Pass Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_LISTS_pass_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Lists Pass Report")."</a></li>\n";}
-                if ( (preg_match("/Lists Campaign Statuses Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_LISTS_campaign_stats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Lists Campaign Statuses Report")."</a></li>\n";}
-                if ( (preg_match("/Called Counts List IDs Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='called_counts_multilist_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Called Counts List IDs Report")."</a></li>\n";}
-                if ( (preg_match("/Campaign Status List Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_campaign_status_list_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Campaign Status List Report")."</a></li>\n";}
-                if ( ( (preg_match("/Dialer Inventory Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) and ($inventory_report_count > 0) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_dialer_inventory_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Dialer Inventory Report")."</a></li>\n";}
-                if ($SSemail_enabled > 0)
-                    {
-                    if ( ( (preg_match("/Inbound Report/",$LOGallowed_reports)) and (preg_match("/Inbound Email Report/",$LOGallowed_reports)) ) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERstats_v2.php?EMAIL=Y' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Email Report")."</a></li>\n";}
-                    if ( (preg_match("/Email Log Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='AST_email_log_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Email Log Report")."</a></li>\n";}
-                    }
-                if ($SSallow_chats > 0)
-                    {
-                    if ( ( (preg_match("/Inbound Report/",$LOGallowed_reports)) and (preg_match("/Inbound Chat Report/",$LOGallowed_reports)) ) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERstats_v2.php?CHAT=Y' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Chat Report")."</a></li>\n";}
-                    }
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 24px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Agent Reports"); ?></h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+            <?php
+            if ( (preg_match("/VERM Reports/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='../VERM/VERM_admin.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VERM - Enhanced Reporting Module")."</a></li>\n";}
+            if ( (preg_match("/Agent Time Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_time_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Agent Time Detail")."</a></li>\n";}
+            if ( (preg_match("/Agent Status Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_agent_status_detail.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Agent Status Detail")."</a>";}
+            if ( (preg_match("/Agent Inbound Status Summary/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_agent_inbound_status.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Inbound Summary")."</a></span></li>\n";}
+            if ( (preg_match("/Agent Performance Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_performance_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Agent Performance Detail")."</a></li>\n";}
+            if ( (preg_match("/Team Performance Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_team_performance_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Team Performance Detail")."</a></li>\n";}
+            if ( (preg_match("/Performance Comparison Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_performance_comparison_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Performance Comparison Report")."</a></li>\n";}
+            if ( (preg_match("/Single Agent Daily$/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_agent_days_detail.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Single Agent Daily")."</a>";}
+            if ( (preg_match("/Single Agent Daily Time/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_agent_days_time.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Time")."</a></span></li>\n";}
+            if ( (preg_match("/User Group Login Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_usergroup_login_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Group Login Report")."</a></li>\n";}
+            if ( (preg_match("/User Group Hourly Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_user_group_hourly_detail.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("User Group Hourly Report")."</a> <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_user_group_hourly_detail_v2.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("v2")."</a></span></li>\n";}
+            if ( (preg_match("/User Stats/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='user_stats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Stats")."</a></li>\n";}
+            if ( (preg_match("/User Time Sheet/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_time_sheet.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Time Sheet")."</a></li>\n";}
+            ?>
+            </ul>
+
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 24px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Time Clock Reports"); ?></h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+            <?php
+            if ( (preg_match("/User Timeclock Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='timeclock_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Timeclock Report")."</a></li>\n";}
+            if ( (preg_match("/User Group Timeclock Status Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='timeclock_status.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Group Timeclock Status Report")."</a></li>\n";}
+            if ( (preg_match("/User Timeclock Detail Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_timeclock_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Timeclock Detail Report")."</a></li>\n";}
+            ?>
+            </ul>
+
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 24px 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Other Reports and Links"); ?></h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+            <?php
+            if ( (preg_match("/Server Performance Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_server_performance.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Server Performance Report")."</a></li>\n";}
+            if ( (preg_match("/Maximum System Stats/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='admin.php?ADD=999992&stage=TOTAL' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Maximum System Stats")."</a></li>\n";}
+            if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+                {echo "<li style='margin-bottom: 8px;'><a href='$PHP_SELF?ADD=700000000000000' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Administration Change Log")."</a></li>\n";}
+            if ($SSenable_queuemetrics_logging > 0)
+                {echo "<li style='margin-bottom: 8px;'><a href='$queuemetrics_url_LU' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("QueueMetrics Reports")."</a></li>\n";}
+            if ($SSenable_vtiger_integration > 0)
+                {echo "<li style='margin-bottom: 8px;'><a href='$vtiger_url_LU' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VtigerCRM Home")."</a></li>\n";}
+            if ( ($list_update_count > 0) and ( (preg_match("/List Update Stats/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+                {echo "<li style='margin-bottom: 8px;'><a href='./AST_LIST_UPDATEstats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("List Update Stats")."</a></li>\n";}
+            if ($SScallcard_enabled > 0)
+                {
+                if ( (preg_match("/CallCard Search/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='callcard_admin.php?action=SEARCH' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("CallCard Search")."</a></li>\n";}
+                }
+            if ($SSqc_features_active > 0)
+                {
+                if ( (preg_match("/Quality Control Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='AST_quality_control_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Quality Control Report")."</a></li>\n";}
+                }
+            ?>
+            </ul>
+        </div>
+
+        <!-- Column 2: Inbound/Outbound Reports -->
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Inbound and Outbound Calling Reports"); ?></h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+            <?php
+            if ( (preg_match("/VERM Reports/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='../VERM/VERM_admin.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VERM - Enhanced Reporting Module")."</a></li>\n";}
+            if ( (preg_match("/Inbound Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_CLOSERstats.php' style='color: #2c3e50; text-decoration: none; transition: color 0.2s ease;' onmouseover=\"this.style.color='#3498db';\" onmouseout=\"this.style.color='#2c3e50';\">"._QXZ("Inbound Report")."</a> <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_CLOSERstats_v2.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("v2")."</a></span></li>\n";}
+            if ( (preg_match("/Inbound Report by DID/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERstats.php?DID=Y' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Report by DID")."</a></li>\n";}
+            if ( (preg_match("/Inbound Service Level Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSER_service_level.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Service Level Report")."</a></li>\n";}
+            if ( (preg_match("/Inbound Summary Hourly Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERsummary_hourly.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Summary Hourly Report")."</a></li>\n";}
+            if ( (preg_match("/Inbound Daily Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_inbound_daily_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Daily Report")."</a></li>\n";}
+            if ( (preg_match("/Inbound DID Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_DIDstats.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Inbound DID Report")."</a>";}
+            if ( (preg_match("/Inbound DID Summary Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_DIDstats_v2.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("DID Summary")."</a>";}
+            if ( (preg_match("/Agent DID Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_agentDIDstats.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Agent DID")."</a></span></li>\n";}
+            if ( (preg_match("/Inbound IVR Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_IVRstats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound IVR Report")."</a></li>\n";}
+            if ( (preg_match("/Inbound Forecasting Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {
+                echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_inbound_forecasting.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Inbound Forecasting Report")."</a>";
+                if ( (preg_match("/Advanced Forecasting Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='Erlang_report.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Advanced")."</a>";}
+                echo "</span></li>\n";
+                }
+            if ( (preg_match("/Outbound Calling Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_VDADstats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Outbound Calling Report")."</a></li>\n";}
+            if ( (preg_match("/Outbound Summary Interval Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_OUTBOUNDsummary_interval.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Outbound Summary Interval Report")."</a></li>\n";}
+            if ( (preg_match("/Outbound IVR Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {
+                echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_IVRstats.php?type=outbound' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Outbound IVR Report")."</a>";
                 if ($LOGexport_reports >= 1)
                     {
                     if ( (preg_match("/Export Calls Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='call_report_export.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Export Calls Report")."</a></li>\n";}
-                    if ( (preg_match("/Export Leads Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='lead_report_export.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Export Leads Report")."</a></li>\n";}
+                        {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='call_report_export.php?ivr_export=YES' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Export")."</a>";}
                     }
-                ?>
-                </ul>
-            </div>
-
-            <!-- Agent Reports Card -->
-            <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Agent Reports"); ?></h2>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                <?php
-                if ( (preg_match("/VERM Reports/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='../VERM/VERM_admin.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VERM - Enhanced Reporting Module")."</a></li>\n";}
-                if ( (preg_match("/Agent Time Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_time_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Agent Time Detail")."</a></li>\n";}
-                if ( (preg_match("/Agent Status Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_agent_status_detail.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Agent Status Detail")."</a>";}
-                if ( (preg_match("/Agent Inbound Status Summary/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_agent_inbound_status.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Inbound Summary")."</a></span></li>\n";}
-                if ( (preg_match("/Agent Performance Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_performance_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Agent Performance Detail")."</a></li>\n";}
-                if ( (preg_match("/Team Performance Detail/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_team_performance_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Team Performance Detail")."</a></li>\n";}
-                if ( (preg_match("/Performance Comparison Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_performance_comparison_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Performance Comparison Report")."</a></li>\n";}
-                if ( (preg_match("/Single Agent Daily$/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_agent_days_detail.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Single Agent Daily")."</a>";}
-                if ( (preg_match("/Single Agent Daily Time/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_agent_days_time.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Time")."</a></span></li>\n";}
-                if ( (preg_match("/User Group Login Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_usergroup_login_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Group Login Report")."</a></li>\n";}
-                if ( (preg_match("/User Group Hourly Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='AST_user_group_hourly_detail.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("User Group Hourly Report")."</a> <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_user_group_hourly_detail_v2.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("v2")."</a></span></li>\n";}
-                if ( (preg_match("/User Stats/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='user_stats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Stats")."</a></li>\n";}
-                if ( (preg_match("/User Time Sheet/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_time_sheet.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Time Sheet")."</a></li>\n";}
-                ?>
-                </ul>
-            </div>
-
-            <!-- Time Clock Reports Card -->
-            <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Time Clock Reports"); ?></h2>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                <?php
-                if ( (preg_match("/User Timeclock Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='timeclock_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Timeclock Report")."</a></li>\n";}
-                if ( (preg_match("/User Group Timeclock Status Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='timeclock_status.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Group Timeclock Status Report")."</a></li>\n";}
-                if ( (preg_match("/User Timeclock Detail Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_agent_timeclock_detail.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("User Timeclock Detail Report")."</a></li>\n";}
-                ?>
-                </ul>
-            </div>
-
-            <!-- Other Reports Card -->
-            <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;"><?php echo _QXZ("Other Reports and Links"); ?></h2>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                <?php
-                if ( (preg_match("/Server Performance Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='AST_server_performance.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Server Performance Report")."</a></li>\n";}
-                if ( (preg_match("/Maximum System Stats/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='admin.php?ADD=999992&stage=TOTAL' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Maximum System Stats")."</a></li>\n";}
-                if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='$PHP_SELF?ADD=700000000000000' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Administration Change Log")."</a></li>\n";}
-                if ($SSenable_queuemetrics_logging > 0)
-                    {echo "<li style='margin-bottom: 8px;'><a href='$queuemetrics_url_LU' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("QueueMetrics Reports")."</a></li>\n";}
-                if ($SSenable_vtiger_integration > 0)
-                    {echo "<li style='margin-bottom: 8px;'><a href='$vtiger_url_LU' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("VtigerCRM Home")."</a></li>\n";}
-                if ( ($list_update_count > 0) and ( (preg_match("/List Update Stats/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-                    {echo "<li style='margin-bottom: 8px;'><a href='./AST_LIST_UPDATEstats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("List Update Stats")."</a></li>\n";}
-                if ($SScallcard_enabled > 0)
-                    {
-                    if ( (preg_match("/CallCard Search/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='callcard_admin.php?action=SEARCH' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("CallCard Search")."</a></li>\n";}
-                    }
-                if ($SSqc_features_active > 0)
-                    {
-                    if ( (preg_match("/Quality Control Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {echo "<li style='margin-bottom: 8px;'><a href='AST_quality_control_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Quality Control Report")."</a></li>\n";}
-                    }
-                ?>
-                </ul>
-            </div>
-
+                if ( (preg_match("/Callmenu Survey Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='AST_CMstats.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Callmenu Agent")."</a>";}
+                echo "</span></li>\n";
+                }
+            if ( (preg_match("/Outbound Lead Source Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_source_vlc_status_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Outbound Lead Source Report")."</a></li>\n";}
+            if ( (preg_match("/Fronter - Closer Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; display: flex; align-items: center; padding: 10px;'><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span><a href='fcstats.php' style='color: #2c3e50; text-decoration: none;'>"._QXZ("Fronter - Closer Report")."</a>";}
+            if ( (preg_match("/Fronter - Closer Detail Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo " <span style='color: #bdc3c7; margin: 0 6px;'>-</span> <a href='fcstats_detail.php' style='color: #7f8c8d; font-size: 13px; text-decoration: none;'>"._QXZ("Detail")."</a></span></li>\n";}
+            if ( (preg_match("/Lists Pass Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_LISTS_pass_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Lists Pass Report")."</a></li>\n";}
+            if ( (preg_match("/Lists Campaign Statuses Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_LISTS_campaign_stats.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Lists Campaign Statuses Report")."</a></li>\n";}
+            if ( (preg_match("/Called Counts List IDs Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='called_counts_multilist_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Called Counts List IDs Report")."</a></li>\n";}
+            if ( (preg_match("/Campaign Status List Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_campaign_status_list_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Campaign Status List Report")."</a></li>\n";}
+            if ( ( (preg_match("/Dialer Inventory Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) and ($inventory_report_count > 0) )
+                {echo "<li style='margin-bottom: 8px;'><a href='AST_dialer_inventory_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Dialer Inventory Report")."</a></li>\n";}
+            if ($SSemail_enabled > 0)
+                {
+                if ( ( (preg_match("/Inbound Report/",$LOGallowed_reports)) and (preg_match("/Inbound Email Report/",$LOGallowed_reports)) ) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERstats_v2.php?EMAIL=Y' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Email Report")."</a></li>\n";}
+                if ( (preg_match("/Email Log Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='AST_email_log_report.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Email Log Report")."</a></li>\n";}
+                }
+            if ($SSallow_chats > 0)
+                {
+                if ( ( (preg_match("/Inbound Report/",$LOGallowed_reports)) and (preg_match("/Inbound Chat Report/",$LOGallowed_reports)) ) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='AST_CLOSERstats_v2.php?CHAT=Y' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Inbound Chat Report")."</a></li>\n";}
+                }
+            if ($LOGexport_reports >= 1)
+                {
+                if ( (preg_match("/Export Calls Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='call_report_export.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Export Calls Report")."</a></li>\n";}
+                if ( (preg_match("/Export Leads Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+                    {echo "<li style='margin-bottom: 8px;'><a href='lead_report_export.php' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("Export Leads Report")."</a></li>\n";}
+                }
+            ?>
+            </ul>
         </div>
 
-        <?php
-        // Custom Reports Section
-        $custom_stmt="show tables like 'vicidial_custom_reports'";
-        $custom_rslt=mysql_to_mysqli($custom_stmt, $link);
-        if (mysqli_num_rows($custom_rslt)>0) 
+    </div>
+
+    <?php
+    // Custom Reports Section - Full Width
+    $custom_stmt="show tables like 'vicidial_custom_reports'";
+    $custom_rslt=mysql_to_mysqli($custom_stmt, $link);
+    if (mysqli_num_rows($custom_rslt)>0) 
+        {
+        $allowed_rpt_stmt="SELECT allowed_custom_reports from vicidial_user_groups where user_group='$LOGuser_group' and allowed_custom_reports!=''";
+        $allowed_rpt_rslt=mysql_to_mysqli($allowed_rpt_stmt, $link);
+        if (mysqli_num_rows($allowed_rpt_rslt)>0) 
             {
-            $allowed_rpt_stmt="SELECT allowed_custom_reports from vicidial_user_groups where user_group='$LOGuser_group' and allowed_custom_reports!=''";
-            $allowed_rpt_rslt=mysql_to_mysqli($allowed_rpt_stmt, $link);
-            if (mysqli_num_rows($allowed_rpt_rslt)>0) 
+            $allowed_rpt_row=mysqli_fetch_row($allowed_rpt_rslt);
+            $allowed_custom_reports=$allowed_rpt_row;
+            $allowed_reports_array=explode("|", $allowed_custom_reports);
+            if (count($allowed_reports_array)>0) 
                 {
-                $allowed_rpt_row=mysqli_fetch_row($allowed_rpt_rslt);
-                $allowed_custom_reports=$allowed_rpt_row;
-                $allowed_reports_array=explode("|", $allowed_custom_reports);
-                if (count($allowed_reports_array)>0) 
+                echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
+                echo "<h2 style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;'>"._QXZ("Custom Reports")."</h2>";
+                echo "<ul style='list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px;'>";
+                $report_links_stmt="SELECT report_name, domain, path_name, custom_variables from vicidial_custom_reports where report_name in ('".implode("','", $allowed_reports_array)."')";
+                $report_links_rslt=mysql_to_mysqli($report_links_stmt, $link);
+                while ($report_links_row=mysqli_fetch_array($report_links_rslt))
                     {
-                    echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
-                    echo "<h2 style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 2px solid #e8ecf1;'>"._QXZ("Custom Reports")."</h2>";
-                    echo "<ul style='list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px;'>";
-                    $report_links_stmt="SELECT report_name, domain, path_name, custom_variables from vicidial_custom_reports where report_name in ('".implode("','", $allowed_reports_array)."')";
-                    $report_links_rslt=mysql_to_mysqli($report_links_stmt, $link);
-                    while ($report_links_row=mysqli_fetch_array($report_links_rslt))
-                        {
-                        $domain=$report_links_row["domain"];
-                        $path_name=$report_links_row["path_name"];
-                        $custom_variables=ConvertPresets($report_links_row["custom_variables"]);
-                        $report_name=$report_links_row["report_name"];
-                        echo "<li style='margin-bottom: 8px;'><a href='".$domain.$path_name."?".$custom_variables."' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("$report_name")."</a></li>\n";
-                        }
-                    echo "</ul>";
-                    echo "</div>";
+                    $domain=$report_links_row["domain"];
+                    $path_name=$report_links_row["path_name"];
+                    $custom_variables=ConvertPresets($report_links_row["custom_variables"]);
+                    $report_name=$report_links_row["report_name"];
+                    echo "<li style='margin-bottom: 8px;'><a href='".$domain.$path_name."?".$custom_variables."' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; text-decoration: none; display: flex; align-items: center; padding: 10px; border-radius: 8px; transition: all 0.2s ease;' onmouseover=\"this.style.background='#f8f9fa'; this.style.paddingLeft='14px';\" onmouseout=\"this.style.background='transparent'; this.style.paddingLeft='10px';\"><span style='color: #3498db; margin-right: 10px; font-size: 12px;'>▶</span>"._QXZ("$report_name")."</a></li>\n";
                     }
+                echo "</ul>";
+                echo "</div>";
                 }
             }
+        }
 
-        if ( (file_exists('custom_report_links.html')) and ( (preg_match("/Custom Reports Links/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+    if ( (file_exists('custom_report_links.html')) and ( (preg_match("/Custom Reports Links/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+        {
+        echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
+        readfile('custom_report_links.html');
+        echo "</div>";
+        }
+
+    // Server Status Table - Full Width
+    if ( ($reports_only_user < 1) and ( (preg_match("/Report Page Servers Summary/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+        {
+        echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
+        echo "<h2 style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; letter-spacing: -0.5px;'>"._QXZ("Server Status")."</h2>";
+        echo "<div style='overflow-x: auto;'>";
+        echo "<table width='100%' cellspacing='0' style='border-collapse: collapse; min-width: 800px;'>\n";
+        
+        if ($stage == 'TIME')
             {
-            echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
-            readfile('custom_report_links.html');
-            echo "</div>";
+            echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+            echo "<td style='padding: 14px; border-radius: 10px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("SERVER")." <a href='$PHP_SELF?ADD=999999' style='color: white; text-decoration: none;'>-</a></span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DESCRIPTION")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("IP")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("ACT")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("LOAD")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("CHAN")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("AGNT")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DISK")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("TIME")."</span></td>";
+            echo "<td style='padding: 14px; border-radius: 0 10px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("VER")."</span></td></tr>\n";
             }
-
-        // Server Status Table
-        if ( ($reports_only_user < 1) and ( (preg_match("/Report Page Servers Summary/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+        else
             {
-            echo "<div style='background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);'>";
-            echo "<h2 style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 700; margin: 0 0 20px 0; letter-spacing: -0.5px;'>"._QXZ("Server Status")."</h2>";
-            echo "<div style='overflow-x: auto;'>";
-            echo "<table width='100%' cellspacing='0' style='border-collapse: collapse; min-width: 800px;'>\n";
+            echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+            echo "<td style='padding: 14px; border-radius: 10px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("SERVER")." <a href='$PHP_SELF?ADD=999999&stage=TIME' style='color: white; text-decoration: none;'>+</a></span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DESCRIPTION")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("IP")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("ACT")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("LOAD")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("CHAN")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("AGNT")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DISK")."</span></td>";
+            echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("OUTBOUND")."</span></td>";
+            echo "<td style='padding: 14px; border-radius: 0 10px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("INBOUND")."</span></td></tr>\n";
+            }
+        
+        $o=0;
+        $web_u_time = date('U');
+        while ($servers_to_print > $o)
+            {
+            $cpu = (100 - $cpu_idle_percent[$o]);
+            $disk = '';
+            $disk_ary = explode('|',$disk_usage[$o]);
+            $disk_ary_ct = count($disk_ary);
+            $k=0;
+            while ($k < $disk_ary_ct)
+                {
+                $disk_ary[$k] = preg_replace("/^\d* /","",$disk_ary[$k]);
+                if ($k<1) {$disk = "$disk_ary[$k]";}
+                else
+                    {
+                    if ($disk_ary[$k] > $disk) {$disk = "$disk_ary[$k]";}
+                    }
+                $k++;
+                }
+            $disk = "$disk%";
+            $s_time='&nbsp;';
+            $s_ver='&nbsp;';
+            $u_time=$web_u_time;
+            $reset_time=$web_u_time;
+            $Sdb_time=$web_u_time;
+            $stmt="SELECT last_update,UNIX_TIMESTAMP(last_update),UNIX_TIMESTAMP(db_time) from server_updater where server_ip='$server_ip[$o]';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            if ($DB) {echo "$stmt\n";}
+            $servertime_to_print = mysqli_num_rows($rslt);
+            if ($servertime_to_print)
+                {
+                $row=mysqli_fetch_row($rslt);
+                $s_time = $row;
+                $u_time = ($row + 10);
+                $reset_time = ($row + 90);
+                $Sdb_time = ($row + 10);
+                }
+            $agnt=0;
+            $stmt="SELECT count(*) from vicidial_live_agents where server_ip='$server_ip[$o]';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            if ($DB) {echo "$stmt\n";}
+            $agnt_to_print = mysqli_num_rows($rslt);
+            if ($agnt_to_print)
+                {
+                $row=mysqli_fetch_row($rslt);
+                $agnt = $row;
+                }
+            
+            $row_bg = ($o % 2 == 0) ? "#f8f9fa" : "#ffffff";
+            $server_status_color = '#27ae60';
+            
+            if ($web_u_time > $u_time)
+                {$server_status_color = '#e74c3c';}
+            if ( ($web_u_time > $reset_time) and ($web_u_time > $Sdb_time) and ($SSfrozen_server_call_clear > 0) )
+                {
+                $servercalls_count=0;
+                $stmt="SELECT count(*) from vicidial_auto_calls where server_ip='$server_ip[$o]';";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                if ($DB) {echo "$stmt\n";}
+                $servercalls_to_print = mysqli_num_rows($rslt);
+                if ($servercalls_to_print)
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    $servercalls_count = $row;
+                    }
+                if ($servercalls_count > 0)
+                    {
+                    $stmt="DELETE FROM vicidial_auto_calls where server_ip='$server_ip[$o]';";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $FCaffected_rows = mysqli_affected_rows($link);
+                    
+                    $SQL_log = "$stmt|";
+                    $SQL_log = preg_replace('/;/', '', $SQL_log);
+                    $SQL_log = addslashes($SQL_log);
+                    $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$server_ip[$o]', event_section='SERVERS', event_type='CLEAR', record_id='$server_id[$o]', event_code='FROZEN SERVER CALL CLEAR ADMIN', event_sql=\"$SQL_log\", event_notes='$servercalls_count|$FCaffected_rows|$s_time($web_u_time|$Sdb_time)';";
+                    if ($DB) {echo "|$stmt|\n";}
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    
+                    echo "<tr style='background: $row_bg; border-bottom: 1px solid #e8ecf1;'><td colspan='10' style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #e67e22; font-weight: 600;'>"._QXZ("FROZEN CALLS CLEARED").": $servercalls_count|$FCaffected_rows</span></td></tr>\n";
+                    }
+                }
+            
+            echo "<tr style='background: $row_bg; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;' onmouseover=\"this.style.background='#e3f2fd';\" onmouseout=\"this.style.background='$row_bg';\">\n";
+            echo "<td style='padding: 12px;'><a href='$PHP_SELF?ADD=311111111111&server_id=$server_id[$o]' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; text-decoration: none; font-weight: 600; display: flex; align-items: center;'><span style='width: 8px; height: 8px; border-radius: 50%; background: $server_status_color; margin-right: 8px; display: inline-block;'></span>$server_id[$o]</a></td>\n";
+            echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$server_description[$o]</span></td>\n";
+            echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;'>$server_ip[$o]</span></td>\n";
+            echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d;'>"._QXZ("$active[$o]")." / "._QXZ("$active_asterisk_server[$o]")." / "._QXZ("$active_agent_login_server[$o]")."</span></td>\n";
+            echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$sysload[$o] <span style='color: #7f8c8d; font-size: 12px;'>($cpu%)</span></span></td>\n";
+            echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>$channels_total[$o]</span></td>\n";
+            echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; font-weight: 600;'>$agnt</span></td>\n";
+            echo "<td style='padding: 12px; text-align: right;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$disk</span></td>\n";
             
             if ($stage == 'TIME')
                 {
-                echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
-                echo "<td style='padding: 14px; border-radius: 10px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("SERVER")." <a href='$PHP_SELF?ADD=999999' style='color: white; text-decoration: none;'>-</a></span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DESCRIPTION")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("IP")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("ACT")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("LOAD")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("CHAN")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("AGNT")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DISK")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("TIME")."</span></td>";
-                echo "<td style='padding: 14px; border-radius: 0 10px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("VER")."</span></td></tr>\n";
+                $stmt="SELECT svn_revision from servers where server_ip='$server_ip[$o]';";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                if ($DB) {echo "$stmt\n";}
+                $serverver_to_print = mysqli_num_rows($rslt);
+                if ($serverver_to_print)
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    $s_ver = $row;
+                    }
+                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d;'>$s_time</span></td>";
+                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d;'>$s_ver</span></td>";
                 }
             else
                 {
-                echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
-                echo "<td style='padding: 14px; border-radius: 10px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("SERVER")." <a href='$PHP_SELF?ADD=999999&stage=TIME' style='color: white; text-decoration: none;'>+</a></span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DESCRIPTION")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("IP")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("ACT")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("LOAD")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("CHAN")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("AGNT")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("DISK")."</span></td>";
-                echo "<td style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("OUTBOUND")."</span></td>";
-                echo "<td style='padding: 14px; border-radius: 0 10px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;'>"._QXZ("INBOUND")."</span></td></tr>\n";
-                }
-            
-            $o=0;
-            $web_u_time = date('U');
-            while ($servers_to_print > $o)
-                {
-                $cpu = (100 - $cpu_idle_percent[$o]);
-                $disk = '';
-                $disk_ary = explode('|',$disk_usage[$o]);
-                $disk_ary_ct = count($disk_ary);
-                $k=0;
-                while ($k < $disk_ary_ct)
+                if ( (preg_match("/Real-Time Main Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
                     {
-                    $disk_ary[$k] = preg_replace("/^\d* /","",$disk_ary[$k]);
-                    if ($k<1) {$disk = "$disk_ary[$k]";}
-                    else
-                        {
-                        if ($disk_ary[$k] > $disk) {$disk = "$disk_ary[$k]";}
-                        }
-                    $k++;
-                    }
-                $disk = "$disk%";
-                $s_time='&nbsp;';
-                $s_ver='&nbsp;';
-                $u_time=$web_u_time;
-                $reset_time=$web_u_time;
-                $Sdb_time=$web_u_time;
-                $stmt="SELECT last_update,UNIX_TIMESTAMP(last_update),UNIX_TIMESTAMP(db_time) from server_updater where server_ip='$server_ip[$o]';";
-                $rslt=mysql_to_mysqli($stmt, $link);
-                if ($DB) {echo "$stmt\n";}
-                $servertime_to_print = mysqli_num_rows($rslt);
-                if ($servertime_to_print)
-                    {
-                    $row=mysqli_fetch_row($rslt);
-                    $s_time = $row;
-                    $u_time = ($row + 10);
-                    $reset_time = ($row + 90);
-                    $Sdb_time = ($row + 10);
-                    }
-                $agnt=0;
-                $stmt="SELECT count(*) from vicidial_live_agents where server_ip='$server_ip[$o]';";
-                $rslt=mysql_to_mysqli($stmt, $link);
-                if ($DB) {echo "$stmt\n";}
-                $agnt_to_print = mysqli_num_rows($rslt);
-                if ($agnt_to_print)
-                    {
-                    $row=mysqli_fetch_row($rslt);
-                    $agnt = $row;
-                    }
-                
-                $row_bg = ($o % 2 == 0) ? "#f8f9fa" : "#ffffff";
-                $server_status_color = '#27ae60';
-                
-                if ($web_u_time > $u_time)
-                    {$server_status_color = '#e74c3c';}
-                if ( ($web_u_time > $reset_time) and ($web_u_time > $Sdb_time) and ($SSfrozen_server_call_clear > 0) )
-                    {
-                    $servercalls_count=0;
-                    $stmt="SELECT count(*) from vicidial_auto_calls where server_ip='$server_ip[$o]';";
-                    $rslt=mysql_to_mysqli($stmt, $link);
-                    if ($DB) {echo "$stmt\n";}
-                    $servercalls_to_print = mysqli_num_rows($rslt);
-                    if ($servercalls_to_print)
-                        {
-                        $row=mysqli_fetch_row($rslt);
-                        $servercalls_count = $row;
-                        }
-                    if ($servercalls_count > 0)
-                        {
-                        $stmt="DELETE FROM vicidial_auto_calls where server_ip='$server_ip[$o]';";
-                        $rslt=mysql_to_mysqli($stmt, $link);
-                        $FCaffected_rows = mysqli_affected_rows($link);
-                        
-                        $SQL_log = "$stmt|";
-                        $SQL_log = preg_replace('/;/', '', $SQL_log);
-                        $SQL_log = addslashes($SQL_log);
-                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$server_ip[$o]', event_section='SERVERS', event_type='CLEAR', record_id='$server_id[$o]', event_code='FROZEN SERVER CALL CLEAR ADMIN', event_sql=\"$SQL_log\", event_notes='$servercalls_count|$FCaffected_rows|$s_time($web_u_time|$Sdb_time)';";
-                        if ($DB) {echo "|$stmt|\n";}
-                        $rslt=mysql_to_mysqli($stmt, $link);
-                        
-                        echo "<tr style='background: $row_bg; border-bottom: 1px solid #e8ecf1;'><td colspan='10' style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #e67e22; font-weight: 600;'>"._QXZ("FROZEN CALLS CLEARED").": $servercalls_count|$FCaffected_rows</span></td></tr>\n";
-                        }
-                    }
-                
-                echo "<tr style='background: $row_bg; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;' onmouseover=\"this.style.background='#e3f2fd';\" onmouseout=\"this.style.background='$row_bg';\">\n";
-                echo "<td style='padding: 12px;'><a href='$PHP_SELF?ADD=311111111111&server_id=$server_id[$o]' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; text-decoration: none; font-weight: 600; display: flex; align-items: center;'><span style='width: 8px; height: 8px; border-radius: 50%; background: $server_status_color; margin-right: 8px; display: inline-block;'></span>$server_id[$o]</a></td>\n";
-                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$server_description[$o]</span></td>\n";
-                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;'>$server_ip[$o]</span></td>\n";
-                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d;'>"._QXZ("$active[$o]")." / "._QXZ("$active_asterisk_server[$o]")." / "._QXZ("$active_agent_login_server[$o]")."</span></td>\n";
-                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$sysload[$o] <span style='color: #7f8c8d; font-size: 12px;'>($cpu%)</span></span></td>\n";
-                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>$channels_total[$o]</span></td>\n";
-                echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; font-weight: 600;'>$agnt</span></td>\n";
-                echo "<td style='padding: 12px; text-align: right;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$disk</span></td>\n";
-                
-                if ($stage == 'TIME')
-                    {
-                    $stmt="SELECT svn_revision from servers where server_ip='$server_ip[$o]';";
-                    $rslt=mysql_to_mysqli($stmt, $link);
-                    if ($DB) {echo "$stmt\n";}
-                    $serverver_to_print = mysqli_num_rows($rslt);
-                    if ($serverver_to_print)
-                        {
-                        $row=mysqli_fetch_row($rslt);
-                        $s_ver = $row;
-                        }
-                    echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d;'>$s_time</span></td>";
-                    echo "<td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d;'>$s_ver</span></td>";
+                    echo "<td style='padding: 12px;'><a href='AST_timeonVDAD.php?server_ip=$server_ip[$o]' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 500;'>"._QXZ("LINK")."</a></td>\n";
+                    echo "<td style='padding: 12px;'><a href='AST_timeonVDAD.php?server_ip=$server_ip[$o]&closer_display=1' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 500;'>"._QXZ("LINK")."</a></td>\n";
                     }
                 else
                     {
-                    if ( (preg_match("/Real-Time Main Report/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
-                        {
-                        echo "<td style='padding: 12px;'><a href='AST_timeonVDAD.php?server_ip=$server_ip[$o]' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 500;'>"._QXZ("LINK")."</a></td>\n";
-                        echo "<td style='padding: 12px;'><a href='AST_timeonVDAD.php?server_ip=$server_ip[$o]&closer_display=1' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 500;'>"._QXZ("LINK")."</a></td>\n";
-                        }
-                    else
-                        {
-                        echo "<td style='padding: 12px;'>&nbsp;</td>\n";
-                        echo "<td style='padding: 12px;'>&nbsp;</td>\n";
-                        }
+                    echo "<td style='padding: 12px;'>&nbsp;</td>\n";
+                    echo "<td style='padding: 12px;'>&nbsp;</td>\n";
                     }
-                echo "</tr>\n";
-                $o++;
                 }
+            echo "</tr>\n";
+            $o++;
+            }
 
-            if ($stage == 'TIME')
-                {
-                echo "<tr style='background: #e8f5e9;'><td colspan='2' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>"._QXZ("PHP Time")."</span></td><td colspan='5' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>" . date("Y-m-d H:i:s") . "</span></td><td style='padding: 12px;'>&nbsp;</td></tr>";
-                
-                $stmt="SELECT NOW();";
-                $rslt=mysql_to_mysqli($stmt, $link);
-                if ($DB) {echo "$stmt\n";}
-                $dbtime_to_print = mysqli_num_rows($rslt);
-                if ($dbtime_to_print)
-                    {
-                    $row=mysqli_fetch_row($rslt);
-                    echo "<tr style='background: #e8f5e9;'><td colspan='2' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>"._QXZ("DB Time")."</span></td><td colspan='5' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$row</span></td><td style='padding: 12px;'>&nbsp;</td></tr>";
-                    }
-                }
+        if ($stage == 'TIME')
+            {
+            echo "<tr style='background: #e8f5e9;'><td colspan='2' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>"._QXZ("PHP Time")."</span></td><td colspan='5' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>" . date("Y-m-d H:i:s") . "</span></td><td style='padding: 12px;'>&nbsp;</td></tr>";
             
-            echo "</table>";
-            echo "</div>";
-            echo "</div>";
-
-            if ( ($LOGuser_level >= 9) and ( (preg_match("/Admin Utilities Page/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            $stmt="SELECT NOW();";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            if ($DB) {echo "$stmt\n";}
+            $dbtime_to_print = mysqli_num_rows($rslt);
+            if ($dbtime_to_print)
                 {
-                echo "<div style='margin-top: 20px; text-align: center;'><a href='$PHP_SELF?ADD=999994' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 500; padding: 10px 20px; border-radius: 8px; border: 2px solid #3498db; transition: all 0.2s ease; display: inline-block;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("Admin Utilities")."</a></div>\n";
+                $row=mysqli_fetch_row($rslt);
+                echo "<tr style='background: #e8f5e9;'><td colspan='2' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>"._QXZ("DB Time")."</span></td><td colspan='5' style='padding: 12px;'>&nbsp;</td><td style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;'>$row</span></td><td style='padding: 12px;'>&nbsp;</td></tr>";
                 }
             }
-        ?>
+        
+        echo "</table>";
+        echo "</div>";
+        echo "</div>";
 
-        </div>
-        </div>
-        </body>
-        <?php
+        if ( ($LOGuser_level >= 9) and ( (preg_match("/Admin Utilities Page/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            {
+            echo "<div style='margin-top: 20px; text-align: center;'><a href='$PHP_SELF?ADD=999994' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 500; padding: 10px 20px; border-radius: 8px; border: 2px solid #3498db; transition: all 0.2s ease; display: inline-block;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("Admin Utilities")."</a></div>\n";
+            }
         }
-    else
-        {
-        echo "<div style='padding: 60px 24px; text-align: center;'>";
-        echo "<div style='max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);'>";
-        echo "<div style='font-size: 48px; color: #e74c3c; margin-bottom: 20px;'>🔒</div>";
-        echo "<h2 style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #2c3e50; font-weight: 700; margin: 0 0 12px 0;'>"._QXZ("Access Denied")."</h2>";
-        echo "<p style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; color: #7f8c8d; margin: 0;'>"._QXZ("You do not have permission to view this page")."</p>";
-        echo "</div>";
-        echo "</div>";
-        exit;
-        }
+    ?>
+
+    </div>
+    </div>
+    </body>
+    <?php
     }
+else
+    {
+    echo "<div style='padding: 60px 24px; text-align: center;'>";
+    echo "<div style='max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);'>";
+    echo "<div style='font-size: 48px; color: #e74c3c; margin-bottom: 20px;'>🔒</div>";
+    echo "<h2 style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 24px; color: #2c3e50; font-weight: 700; margin: 0 0 12px 0;'>"._QXZ("Access Denied")."</h2>";
+    echo "<p style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; color: #7f8c8d; margin: 0;'>"._QXZ("You do not have permission to view this page")."</p>";
+    echo "</div>";
+    echo "</div>";
+    exit;
+    }
+}
+
+		
 ##### END report links #####
 
 
