@@ -3489,8 +3489,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                 </div>
                 <?php 
             }
-            
-            if (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
+		
+            if ( (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3509,7 +3509,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             </a>
                         </div>
                     </div>
-                </div>
                 </div>
                 <?php 
             }
@@ -3536,7 +3535,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             </a>
                         </div>
                     </div>
-                </div>
                 </div>
                 <?php 
             }
