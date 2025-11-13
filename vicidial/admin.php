@@ -52278,7 +52278,7 @@ echo "</div>"; // Close max-width container
 echo "</div>"; // Close full-width wrapper
 
 echo "<br>\n";
-
+		}
 ##### If report run, update the time in the vicidial_report_log table #####
 if ( ($ADD==999993) or ($ADD==999992) or ($ADD==730000000000000) or ($ADD==830000000000000) )
 	{
