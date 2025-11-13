@@ -2776,9 +2776,9 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   <!-- Main content area -->
 <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
 
-<header style="position: fixed; top: 0; left: 0; right: 0;
+<header style="position: fixed; top: 0; left: 220px;
     margin-left: 0;
-    width: 100%;
+    width: calc(100% - 220px);
     background: #0b2447;
     color: white;
     padding: 12px 24px;
