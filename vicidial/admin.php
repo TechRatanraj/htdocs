@@ -51944,7 +51944,7 @@ if ($ADD==999990)
 				$agent_total = "$AAf$agent_total / $vla_set$AAb";
 				}
 			}
-		
+				
 $section_width = 1000;
 echo "<br>";
 // Realtime Stats Section
@@ -52023,7 +52023,7 @@ if ($vm_rows > 0) {
         echo "</tr>\n";
     }
 }
-
+		}
 // Quality Control Section
 if ($SSqc_features_active > 0) {
     echo "<tr><td align='left' colspan='4' style='padding:15px 0;'>&nbsp;</td></tr>";
