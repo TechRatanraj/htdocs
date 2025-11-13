@@ -2839,7 +2839,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 <br>
 
-<div style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); padding: 20px;">
+<div style="background: #ffffff; padding: 20px;">
   <div style="max-width: 1400px; margin: 0 auto;">
   
   <?php
