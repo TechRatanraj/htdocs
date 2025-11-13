@@ -2837,8 +2837,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 </header>
 
-
-<br>
 <br>
 
 <div style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); padding: 20px;">
