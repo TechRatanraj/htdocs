@@ -1871,7 +1871,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 ?>
 <left>
 
-<div style="width: 250px; background-color: #<?php echo $SSmenu_background ?>; color: white; font-family: Arial, Helvetica, sans-serif; position: fixed; height: 100%; overflow-y: auto; box-shadow: 2px 0 5px rgba(0,0,0,0.1);">
+<div style="width: 200px; background-color: #<?php echo $SSmenu_background ?>; color: white; font-family: Arial, Helvetica, sans-serif; position: fixed; height: 100%; overflow-y: auto; box-shadow: 2px 0 5px rgba(0,0,0,0.1);">
   <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
     <a href="<?php echo $ADMIN ?>">
       <img src="<?php echo $selected_logo; ?>" style="width: 140px; height: auto; border: none;" alt="System logo">
@@ -2763,6 +2763,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
     <?php } ?>
   </nav>
 </div>
+
+<!---  Main Content area modernization -->
 
 <div style="margin-left: 250px; padding: 20px; background-color: #<?php echo $SSframe_background ?>; min-height: 100vh;">
   <!-- Main content area -->
