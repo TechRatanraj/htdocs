@@ -50593,185 +50593,251 @@ else
     exit;
     }
 }
-
-		
+	
 ##### END report links #####
-
 
 ######################
 # ADD=999998 display admin links page
 ######################
+
+
 if ($ADD==999998)
-	{
-	$subhead_font = "style=\"font-family:HELVETICA;font-size:14;color:BLACK;font-weight:bold;\"";
-	?>
+    {
+    ?>
+    </head>
+    <body style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); margin: 0; padding: 0;">
+    
+    <div style="width: 100%; max-width: 100%; padding: 24px; box-sizing: border-box;">
+    <div style="max-width: 1400px; margin: 0 auto;">
+    
+    <!-- Header Section -->
+    <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <img src="images/icon_black_admin.png" alt="Admin" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+            <div>
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("Administration"); ?></h1>
+            </div>
+        </div>
+    </div>
 
-	</head><BODY BGCOLOR=WHITE>
-	<img src="images/icon_black_admin.png" alt="Admin" width=42 height=42> <FONT FACE="ARIAL,HELVETICA" SIZE=4><B> <?php echo _QXZ("Administration"); ?></B></FONT><BR><CENTER>
-	<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=0 WIDTH=800>
-	<?php
-	echo "<TR>\n";
-	echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=100>&nbsp;\n";
-	echo "</TD>\n";
-	echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=220>\n";
-	echo "<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=5 WIDTH=100%>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=100000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100000000\"><img src=\"images/icon_calltimes.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Call Times")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=130000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=130000000\"><img src=\"images/icon_shifts.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=130000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Shifts")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=10000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=10000000000\"><img src=\"images/icon_phones.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=10000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Phones")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=130000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=130000000000\"><img src=\"images/icon_templates.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=130000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Templates")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=140000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=140000000000\"><img src=\"images/icon_carriers.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=140000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Carriers")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=100000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100000000000\"><img src=\"images/icon_servers.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Servers")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "</TABLE>\n";
-	echo "</TD>\n";
+    <!-- Admin Menu Grid - 4 Columns -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px;">
+        
+        <!-- Column 1 -->
+        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+            
+            <a href="<?php echo $PHP_SELF; ?>?ADD=100000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=100000000';\"";} ?>>
+                <img src="images/icon_calltimes.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Call Times"); ?></span>
+            </a>
 
-	echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=220>\n";
-	echo "<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=5 WIDTH=100%>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=1000000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=1000000000000\"><img src=\"images/icon_conferences.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=1000000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Conferences")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=311111111111111';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=311111111111111\"><img src=\"images/icon_settings.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=311111111111111\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("System Settings")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=180000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=180000000000\"><img src=\"images/icon_screenlabels.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=180000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Agent Screen Labels")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=182000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=182000000000\"><img src=\"images/icon_screencolors.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=182000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Screen Colors")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=321111111111111';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=321111111111111\"><img src=\"images/icon_statuses.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=321111111111111\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("System Statuses")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=193000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=193000000000\"><img src=\"images/icon_statusgroups.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=193000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Status Groups")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	if ($SScampaign_cid_areacodes_enabled == '1')
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=196000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=196000000000\"><img src=\"images/icon_cidgroups.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=196000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("CID Groups")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	echo "</TABLE>\n";
-	echo "</TD>\n";
+            <a href="<?php echo $PHP_SELF; ?>?ADD=130000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=130000000';\"";} ?>>
+                <img src="images/icon_shifts.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Shifts"); ?></span>
+            </a>
 
-	echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=220>\n";
-	echo "<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=5 WIDTH=100%>\n";
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=170000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=170000000000\"><img src=\"images/icon_voicemail.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=170000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Voicemail")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	if ($SSemail_enabled > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_email_accounts.php';\"";} echo ">\n";
-		echo "<TD><a href=\"admin_email_accounts.php\"><img src=\"images/icon_email.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"admin_email_accounts.php\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Email Accounts")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	if ( ($sounds_central_control_active > 0) or ($SSsounds_central_control_active > 0) )
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='audio_store.php';\"";} echo ">\n";
-		echo "<TD><a href=\"audio_store.php\"><img src=\"images/icon_audiostore.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"audio_store.php\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Audio Store")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=160000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=160000000000\"><img src=\"images/icon_musiconhold.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=160000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Music On Hold")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	if ($SSenable_languages > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_languages.php?ADD=163000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"admin_languages.php?ADD=163000000000\"><img src=\"images/icon_languages.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"admin_languages.php?ADD=163000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Languages")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) )
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin_soundboard.php?ADD=162000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"admin_soundboard.php?ADD=162000000000\"><img src=\"images/icon_audiosoundboards.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"admin_soundboard.php?ADD=162000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Audio Soundboards")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='admin.php?ADD=197000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"admin.php?ADD=197000000000\"><img src=\"images/icon_vm_messages.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"admin.php?ADD=197000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("VM Message Groups")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	echo "</TABLE>\n";
-	echo "</TD>\n";
+            <a href="<?php echo $PHP_SELF; ?>?ADD=10000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=10000000000';\"";} ?>>
+                <img src="images/icon_phones.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Phones"); ?></span>
+            </a>
 
-	echo "<TD ALIGN=LEFT VALIGN=TOP WIDTH=220>\n";
-	echo "<TABLE BORDER=0 CELLPADDING=5 CELLSPACING=5 WIDTH=100%>\n";
-	if ($SSenable_tts_integration > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=150000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=150000000000\"><img src=\"images/icon_texttospeech.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=150000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Text To Speech")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	if ($SScallcard_enabled > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='callcard_admin.php';\"";} echo ">\n";
-		echo "<TD><a href=\"callcard_admin.php\"><img src=\"images/icon_callcard.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"callcard_admin.php\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("CallCard Admin")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	if ($SScontacts_enabled > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=190000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=190000000000\"><img src=\"images/icon_contacts.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=190000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Contacts")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=192000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=192000000000\"><img src=\"images/icon_settingscontainer.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=192000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Settings Containers")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
-	if ($SSenable_auto_reports > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=194000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=194000000000\"><img src=\"images/icon_autoreports.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=194000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Automated Reports")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	if ($SSallow_ip_lists > 0)
-		{
-		echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=195000000000';\"";} echo ">\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=195000000000\"><img src=\"images/icon_iplists.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=195000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("IP Lists")." </SPAN></a></TD>\n";
-		echo "</TR>\n";
-		}
-	echo "<TR CLASS=\"adminmenu_style_selected\""; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=198000000000';\"";} echo ">\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=198000000000\"><img src=\"images/icon_queuegroups.png\" border=0 width=42 height=42 valign=middle> </a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=198000000000\" STYLE=\"text-decoration:none;\"><SPAN $subhead_font> "._QXZ("Queue Groups")." </SPAN></a></TD>\n";
-	echo "</TR>\n";
+            <a href="<?php echo $PHP_SELF; ?>?ADD=130000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=130000000000';\"";} ?>>
+                <img src="images/icon_templates.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Templates"); ?></span>
+            </a>
 
-	echo "</TABLE>\n";
-	echo "</TD><TD WIDTH=100> &nbsp; \n";
-	}
+            <a href="<?php echo $PHP_SELF; ?>?ADD=140000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=140000000000';\"";} ?>>
+                <img src="images/icon_carriers.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Carriers"); ?></span>
+            </a>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=100000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=100000000000';\"";} ?>>
+                <img src="images/icon_servers.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Servers"); ?></span>
+            </a>
+
+        </div>
+
+        <!-- Column 2 -->
+        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+            
+            <a href="<?php echo $PHP_SELF; ?>?ADD=1000000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=1000000000000';\"";} ?>>
+                <img src="images/icon_conferences.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Conferences"); ?></span>
+            </a>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=311111111111111" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=311111111111111';\"";} ?>>
+                <img src="images/icon_settings.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("System Settings"); ?></span>
+            </a>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=180000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=180000000000';\"";} ?>>
+                <img src="images/icon_screenlabels.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Agent Screen Labels"); ?></span>
+            </a>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=182000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=182000000000';\"";} ?>>
+                <img src="images/icon_screencolors.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Screen Colors"); ?></span>
+            </a>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=321111111111111" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=321111111111111';\"";} ?>>
+                <img src="images/icon_statuses.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("System Statuses"); ?></span>
+            </a>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=193000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=193000000000';\"";} ?>>
+                <img src="images/icon_statusgroups.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Status Groups"); ?></span>
+            </a>
+
+            <?php
+            if ($SScampaign_cid_areacodes_enabled == '1')
+                {
+                ?>
+                <a href="<?php echo $PHP_SELF; ?>?ADD=196000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=196000000000';\"";} ?>>
+                    <img src="images/icon_cidgroups.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("CID Groups"); ?></span>
+                </a>
+                <?php
+                }
+            ?>
+
+        </div>
+
+        <!-- Column 3 -->
+        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+            
+            <a href="<?php echo $PHP_SELF; ?>?ADD=170000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=170000000000';\"";} ?>>
+                <img src="images/icon_voicemail.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Voicemail"); ?></span>
+            </a>
+
+            <?php
+            if ($SSemail_enabled > 0)
+                {
+                ?>
+                <a href="admin_email_accounts.php" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='admin_email_accounts.php';\"";} ?>>
+                    <img src="images/icon_email.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Email Accounts"); ?></span>
+                </a>
+                <?php
+                }
+            if ( ($sounds_central_control_active > 0) or ($SSsounds_central_control_active > 0) )
+                {
+                ?>
+                <a href="audio_store.php" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='audio_store.php';\"";} ?>>
+                    <img src="images/icon_audiostore.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Audio Store"); ?></span>
+                </a>
+
+                <a href="<?php echo $PHP_SELF; ?>?ADD=160000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=160000000000';\"";} ?>>
+                    <img src="images/icon_musiconhold.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Music On Hold"); ?></span>
+                </a>
+                <?php
+                }
+            if ($SSenable_languages > 0)
+                {
+                ?>
+                <a href="admin_languages.php?ADD=163000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='admin_languages.php?ADD=163000000000';\"";} ?>>
+                    <img src="images/icon_languages.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Languages"); ?></span>
+                </a>
+                <?php
+                }
+            if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) )
+                {
+                ?>
+                <a href="admin_soundboard.php?ADD=162000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='admin_soundboard.php?ADD=162000000000';\"";} ?>>
+                    <img src="images/icon_audiosoundboards.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Audio Soundboards"); ?></span>
+                </a>
+                <?php
+                }
+            ?>
+
+            <a href="admin.php?ADD=197000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='admin.php?ADD=197000000000';\"";} ?>>
+                <img src="images/icon_vm_messages.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("VM Message Groups"); ?></span>
+            </a>
+
+        </div>
+
+        <!-- Column 4 -->
+        <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+            
+            <?php
+            if ($SSenable_tts_integration > 0)
+                {
+                ?>
+                <a href="<?php echo $PHP_SELF; ?>?ADD=150000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=150000000000';\"";} ?>>
+                    <img src="images/icon_texttospeech.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Text To Speech"); ?></span>
+                </a>
+                <?php
+                }
+            if ($SScallcard_enabled > 0)
+                {
+                ?>
+                <a href="callcard_admin.php" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='callcard_admin.php';\"";} ?>>
+                    <img src="images/icon_callcard.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("CallCard Admin"); ?></span>
+                </a>
+                <?php
+                }
+            if ($SScontacts_enabled > 0)
+                {
+                ?>
+                <a href="<?php echo $PHP_SELF; ?>?ADD=190000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=190000000000';\"";} ?>>
+                    <img src="images/icon_contacts.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Contacts"); ?></span>
+                </a>
+                <?php
+                }
+            ?>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=192000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=192000000000';\"";} ?>>
+                <img src="images/icon_settingscontainer.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Settings Containers"); ?></span>
+            </a>
+
+            <?php
+            if ($SSenable_auto_reports > 0)
+                {
+                ?>
+                <a href="<?php echo $PHP_SELF; ?>?ADD=194000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=194000000000';\"";} ?>>
+                    <img src="images/icon_autoreports.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Automated Reports"); ?></span>
+                </a>
+                <?php
+                }
+            if ($SSallow_ip_lists > 0)
+                {
+                ?>
+                <a href="<?php echo $PHP_SELF; ?>?ADD=195000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=195000000000';\"";} ?>>
+                    <img src="images/icon_iplists.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("IP Lists"); ?></span>
+                </a>
+                <?php
+                }
+            ?>
+
+            <a href="<?php echo $PHP_SELF; ?>?ADD=198000000000" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; margin-bottom: 8px;" onmouseover="this.style.background='#f8f9fa'; this.style.transform='translateX(4px)';" onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=198000000000';\"";} ?>>
+                <img src="images/icon_queuegroups.png" width="42" height="42" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #2c3e50; font-weight: 600;"><?php echo _QXZ("Queue Groups"); ?></span>
+            </a>
+
+        </div>
+
+    </div>
+
+    </div>
+    </div>
+    </body>
+    <?php
+    }
+
 ##### END admin links #####
 
 
