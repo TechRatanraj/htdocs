@@ -2163,6 +2163,7 @@ body {
   padding: 20px;
   background-color: #f5f7fa;
   overflow-y: auto;
+  margin-left: 20px; /* Add space between sidebar and main content */
 }
 
 .content-header {
@@ -2224,8 +2225,23 @@ body {
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  clear: both; /* Ensure it clears any floated elements */
+}
+/* Sub-navigation */
+.sub-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
 }
 
+.sub-navigation .btn {
+  margin-bottom: 5px; /* Add spacing between wrapped buttons */
+}
 /* Tables */
 .modern-table {
   width: 100%;
