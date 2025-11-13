@@ -1,423 +1,207 @@
-/* ============================================
-   CSS CUSTOM PROPERTIES (Design Tokens)
-   ============================================ */
-:root {
-    /* Color System */
-    --color-red-500: #DC2626;
-    --color-red-600: #B91C1C;
-    --color-blue-500: #3B82F6;
-    --color-blue-600: #2563EB;
-    --color-yellow-400: #FACC15;
-    --color-yellow-500: #EAB308;
-    --color-green-500: #22C55E;
-    --color-green-600: #16A34A;
-    --color-gray-600: #4B5563;
-    --color-gray-700: #374151;
-    --color-gray-200: #E5E7EB;
-    --color-white: #FFFFFF;
-    --color-black: #000000;
-    
-    /* Typography */
-    --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    --font-size-xs: 12px;
-    --font-size-sm: 14px;
-    --font-size-base: 16px;
-    --line-height-normal: 1.5;
-    
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 12px;
-    --spacing-lg: 16px;
-    
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: 8px;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.5);
-    
-    /* Transitions */
-    --transition-fast: 150ms ease-in-out;
-    --transition-base: 250ms ease-in-out;
-}
-
-/* ============================================
-   VERTICAL TEXT (Modernized)
-   ============================================ */
 .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     white-space: nowrap;
     display: inline-block;
-    min-width: 24px;  /* WCAG 2.2 minimum target size */
-    min-height: 24px; /* WCAG 2.2 minimum target size */
-    padding: var(--spacing-xs);
+    min-width: 24px;
+    min-height: 24px;
 }
 
-/* Alternative horizontal orientation */
-.vertical-text--horizontal {
-    writing-mode: horizontal-tb;
-    transform: rotate(90deg);
-    transform-origin: center center;
-}
-
-/* ============================================
-   MODERN BUTTON SYSTEM
-   ============================================ */
-.btn {
-    /* Base styles */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 24px;  /* WCAG 2.2 AA minimum */
-    min-height: 24px; /* WCAG 2.2 AA minimum */
-    padding: var(--spacing-sm) var(--spacing-lg);
-    
-    /* Typography */
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    line-height: var(--line-height-normal);
-    text-align: center;
-    text-decoration: none;
-    white-space: nowrap;
-    
-    /* Visual */
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
+input.tiny_red_btn {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    background: linear-gradient(180deg, #EF4444 0%, #DC2626 100%);
+    border: 1px solid #B91C1C;
+    border-radius: 4px;
+    padding: 6px 12px;
+    min-height: 32px;
     cursor: pointer;
-    
-    /* Transitions */
-    transition: all var(--transition-fast);
-    
-    /* Accessibility */
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 150ms ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Focus states for accessibility */
-.btn:focus-visible {
-    outline: 3px solid var(--color-blue-500);
+input.tiny_red_btn:hover {
+    background: linear-gradient(180deg, #DC2626 0%, #B91C1C 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+input.tiny_red_btn:active {
+    transform: translateY(0);
+}
+
+input.tiny_red_btn:focus-visible {
+    outline: 2px solid #DC2626;
     outline-offset: 2px;
 }
 
-/* Disabled state */
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
+input.tiny_blue_btn {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    background: linear-gradient(180deg, #60A5FA 0%, #3B82F6 100%);
+    border: 1px solid #2563EB;
+    border-radius: 4px;
+    padding: 6px 12px;
+    min-height: 32px;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* ============================================
-   BUTTON VARIANTS (Modernized from tiny_*_btn)
-   ============================================ */
-
-/* Red Button (Danger/Delete) */
-.btn--red,
-.tiny_red_btn {
-    color: var(--color-white);
-    background: linear-gradient(180deg, #EF4444 0%, var(--color-red-500) 100%);
-    border-color: var(--color-red-600);
-}
-
-.btn--red:hover:not(:disabled),
-.tiny_red_btn:hover:not(:disabled) {
-    background: linear-gradient(180deg, var(--color-red-500) 0%, var(--color-red-600) 100%);
+input.tiny_blue_btn:hover {
+    background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.btn--red:active,
-.tiny_red_btn:active {
+input.tiny_blue_btn:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-sm);
 }
 
-/* Blue Button (Primary) */
-.btn--blue,
-.tiny_blue_btn {
-    color: var(--color-white);
-    background: linear-gradient(180deg, #60A5FA 0%, var(--color-blue-500) 100%);
-    border-color: var(--color-blue-600);
+input.tiny_blue_btn:focus-visible {
+    outline: 2px solid #3B82F6;
+    outline-offset: 2px;
 }
 
-.btn--blue:hover:not(:disabled),
-.tiny_blue_btn:hover:not(:disabled) {
-    background: linear-gradient(180deg, var(--color-blue-500) 0%, var(--color-blue-600) 100%);
+input.tiny_yellow_btn {
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    background: linear-gradient(180deg, #FDE047 0%, #FACC15 100%);
+    border: 1px solid #EAB308;
+    border-radius: 4px;
+    padding: 6px 12px;
+    min-height: 32px;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+input.tiny_yellow_btn:hover {
+    background: linear-gradient(180deg, #FACC15 0%, #EAB308 100%);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.btn--blue:active,
-.tiny_blue_btn:active {
+input.tiny_yellow_btn:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-sm);
 }
 
-/* Yellow Button (Warning) */
-.btn--yellow,
-.tiny_yellow_btn {
-    color: var(--color-gray-700);
-    background: linear-gradient(180deg, #FDE047 0%, var(--color-yellow-400) 100%);
-    border-color: var(--color-yellow-500);
+input.tiny_yellow_btn:focus-visible {
+    outline: 2px solid #EAB308;
+    outline-offset: 2px;
 }
 
-.btn--yellow:hover:not(:disabled),
-.tiny_yellow_btn:hover:not(:disabled) {
-    background: linear-gradient(180deg, var(--color-yellow-400) 0%, var(--color-yellow-500) 100%);
+input.tiny_green_btn {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    background: linear-gradient(180deg, #4ADE80 0%, #22C55E 100%);
+    border: 1px solid #16A34A;
+    border-radius: 4px;
+    padding: 6px 12px;
+    min-height: 32px;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+input.tiny_green_btn:hover {
+    background: linear-gradient(180deg, #22C55E 0%, #16A34A 100%);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.btn--yellow:active,
-.tiny_yellow_btn:active {
+input.tiny_green_btn:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-sm);
 }
 
-/* Green Button (Success) */
-.btn--green,
-.tiny_green_btn {
-    color: var(--color-white);
-    background: linear-gradient(180deg, #4ADE80 0%, var(--color-green-500) 100%);
-    border-color: var(--color-green-600);
+input.tiny_green_btn:focus-visible {
+    outline: 2px solid #22C55E;
+    outline-offset: 2px;
 }
 
-.btn--green:hover:not(:disabled),
-.tiny_green_btn:hover:not(:disabled) {
-    background: linear-gradient(180deg, var(--color-green-500) 0%, var(--color-green-600) 100%);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn--green:active,
-.tiny_green_btn:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-sm);
-}
-
-/* ============================================
-   SCROLLING CONTAINER (Modernized)
-   ============================================ */
-.scrolling {
+div.scrolling {
     height: auto;
     max-height: 300px;
     width: 100%;
     max-width: 400px;
     overflow-y: auto;
     overflow-x: hidden;
-    
-    /* Visual */
-    background-color: var(--color-white);
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    
-    /* Modern scrollbar (Chromium/Safari) */
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: #FFF;
+    padding: 8px;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
-/* Webkit scrollbar styling */
-.scrolling::-webkit-scrollbar {
+div.scrolling::-webkit-scrollbar {
     width: 8px;
 }
 
-.scrolling::-webkit-scrollbar-track {
+div.scrolling::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: var(--radius-lg);
 }
 
-.scrolling::-webkit-scrollbar-thumb {
+div.scrolling::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: var(--radius-lg);
-    border: 2px solid transparent;
-    background-clip: content-box;
+    border-radius: 4px;
 }
 
-.scrolling::-webkit-scrollbar-thumb:hover {
+div.scrolling::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.3);
-    background-clip: content-box;
 }
 
-/* ============================================
-   CHAT BOX (Modernized)
-   ============================================ */
-.chat_box {
-    /* Typography */
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-normal);
-    
-    /* Layout */
+textarea.chat_box {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
     width: 100%;
     min-height: 80px;
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    
-    /* Visual */
-    border: 1px solid var(--color-blue-500);
-    border-radius: var(--radius-md);
-    background-color: var(--color-white);
-    
-    /* Interaction */
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid #0056b3;
+    border-radius: 4px;
+    background-color: #FFF;
     resize: vertical;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    transition: border-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
 }
 
-.chat_box:focus {
+textarea.chat_box:focus {
     outline: none;
-    border-color: var(--color-blue-600);
-    box-shadow: var(--shadow-focus);
+    border-color: #0056b3;
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25);
 }
 
-/* Chat box ended state */
-.chat_box_ended {
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-normal);
-    
+textarea.chat_box_ended {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
     width: 100%;
     min-height: 80px;
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--radius-md);
-    background-color: var(--color-gray-200);
-    color: var(--color-gray-600);
-    
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    background-color: #E5E5E5;
+    color: #666;
     resize: vertical;
     cursor: not-allowed;
 }
 
-/* ============================================
-   CUSTOMER FORM (Modernized)
-   ============================================ */
 .cust_form {
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-normal);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
     overflow: hidden;
-    
-    /* Optional: Add form grid layout */
-    display: grid;
-    gap: var(--spacing-md);
 }
 
-/* Form inputs within customer form */
 .cust_form input,
 .cust_form select,
 .cust_form textarea {
-    width: 100%;
-    padding: var(--spacing-sm);
     font-family: inherit;
-    font-size: var(--font-size-sm);
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--radius-sm);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.cust_form input:focus,
-.cust_form select:focus,
-.cust_form textarea:focus {
-    outline: none;
-    border-color: var(--color-blue-500);
-    box-shadow: var(--shadow-focus);
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-
-/* Size variants for buttons */
-.btn--sm {
-    min-height: 32px;
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: var(--font-size-xs);
-}
-
-.btn--lg {
-    min-height: 44px; /* Optimal for mobile touch */
-    padding: var(--spacing-md) var(--spacing-lg) * 1.5;
-    font-size: var(--font-size-base);
-}
-
-/* Loading state for buttons */
-.btn--loading {
-    position: relative;
-    color: transparent;
-    pointer-events: none;
-}
-
-.btn--loading::after {
-    content: "";
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 50%;
-    left: 50%;
-    margin-left: -8px;
-    margin-top: -8px;
-    border: 2px solid transparent;
-    border-top-color: currentColor;
-    border-radius: 50%;
-    animation: button-loading-spinner 600ms linear infinite;
-}
-
-@keyframes button-loading-spinner {
-    from { transform: rotate(0turn); }
-    to { transform: rotate(1turn); }
-}
-
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
-@media (max-width: 768px) {
-    :root {
-        --font-size-sm: 14px;
-        --font-size-base: 16px;
-    }
-    
-    .btn {
-        min-height: 44px; /* Larger touch targets on mobile */
-    }
-    
-    .scrolling {
-        max-width: 100%;
-    }
-}
-
-/* ============================================
-   DARK MODE SUPPORT (Optional)
-   ============================================ */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-gray-200: #374151;
-        --color-gray-600: #D1D5DB;
-        --color-gray-700: #E5E7EB;
-        --color-white: #1F2937;
-        --color-black: #F9FAFB;
-    }
-    
-    .chat_box_ended {
-        background-color: #374151;
-        color: #9CA3AF;
-    }
-}
-
-/* ============================================
-   PRINT STYLES
-   ============================================ */
-@media print {
-    .btn,
-    .scrolling {
-        box-shadow: none;
-        border: 1px solid var(--color-black);
-    }
+    font-size: 14px;
 }
