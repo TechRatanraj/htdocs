@@ -3227,7 +3227,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
     </div>
   <?php 
   }
-  
+}
   ######################### FULL HTML HEADER END #######################################
   ?>
   
