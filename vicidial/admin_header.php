@@ -2840,421 +2840,498 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 <br>
 <br>
-
-<div style="background-color: #<?php echo $SSframe_background ?>; padding: 15px;">
+<div style="background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); padding: 20px;">
+  <div style="max-width: 1400px; margin: 0 auto;">
+  
   <?php
+  // Campaigns Menu
   if ( (strlen($list_sh) > 25) and (strlen($campaigns_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $subcamp_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=10" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Campaigns"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=11" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Campaign"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <a href="<?php echo $ADMIN ?>?ADD=12" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Copy Campaign"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="./AST_timeonVDADallSUMMARY.php" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Real-Time Campaigns Summary"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #3498db;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=10" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Campaigns"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <a href="<?php echo $ADMIN ?>?ADD=11" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Campaign"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=12" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Copy Campaign"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="./AST_timeonVDADallSUMMARY.php" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Real-Time Campaigns Summary"); ?></a>
+      </div>
     </div>
   <?php }
   
+  // Drop Lists Menu
   if ( (strlen($droplist_sh) > 25) and ($SSenable_drop_lists > 0) ) { 
   ?>
-    <div style="background-color: <?php echo $subcamp_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=130" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Drop Lists"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=131" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Drop List"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #9b59b6;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=130" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Drop Lists"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=131" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Drop List"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Call Times Menu
   if (strlen($times_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $times_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=100000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Call Times"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Call Time"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=1000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show State Call Times"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=1111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New State Call Time"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=1200000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Holidays"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=1211111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add Holiday"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #e74c3c;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=100000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Call Times"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Call Time"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=1000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show State Call Times"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=1111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New State Call Time"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=1200000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Holidays"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=1211111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add Holiday"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php } 
   
+  // Shifts Menu
   if (strlen($shifts_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $shifts_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=130000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Shifts"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=131111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Shift"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #f39c12;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=130000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Shifts"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=131111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Shift"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php } 
   
+  // Phones Menu
   if (strlen($phones_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $phones_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=10000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Phones"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=11111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Phone"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=12222222222" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Copy an Existing Phone"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=12000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Phone Alias List"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=12111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Phone Alias"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=13000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Group Alias List"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=13111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Group Alias"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #1abc9c;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=10000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Phones"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=11111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Phone"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=12222222222" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Copy an Existing Phone"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=12000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Phone Alias List"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=12111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Phone Alias"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=13000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Group Alias List"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=13111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Group Alias"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Conferences Menu
   if (strlen($conference_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $conference_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=1000000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Conferences"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=1111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Conference"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=10000000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show VICIDIAL Conferences"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=11111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New VICIDIAL Conference"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=12000000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show ConfBridges"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=12111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add ConfBridge"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #34495e;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=1000000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Conferences"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=1111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Conference"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=10000000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show VICIDIAL Conferences"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=11111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New VICIDIAL Conference"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=12000000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show ConfBridges"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=12111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add ConfBridge"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Servers Menu
   if ( (strlen($server_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $server_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=100000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Servers"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Server"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #16a085;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=100000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Servers"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Server"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Templates Menu
   if ( (strlen($templates_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $templates_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=130000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Templates"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=131111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Template"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #c0392b;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=130000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Templates"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=131111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Template"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Carriers Menu
   if ( (strlen($carriers_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $carriers_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=140000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Carriers"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=141111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Carrier"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <a href="<?php echo $ADMIN ?>?ADD=140111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Copy A Carrier"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #27ae60;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=140000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Carriers"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=141111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Carrier"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=140111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Copy A Carrier"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Email Accounts Menu
   if ( (strlen($emails_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $emails_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="admin_email_accounts.php" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Email Accounts"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="admin_email_accounts.php?eact=ADD" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Account"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <a href="admin_email_accounts.php?eact=COPY" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Copy An Account"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #2980b9;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="admin_email_accounts.php" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Email Accounts"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="admin_email_accounts.php?eact=ADD" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Account"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="admin_email_accounts.php?eact=COPY" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Copy An Account"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // TTS Menu
   if ( (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $tts_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=150000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show TTS Entries"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=151111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New TTS Entry"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #8e44ad;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=150000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show TTS Entries"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=151111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New TTS Entry"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // CallCard Menu
   if ( (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $cc_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="callcard_admin.php" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("CallCard Summary"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="callcard_admin.php?action=CALLCARD_RUNS" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Runs"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="callcard_admin.php?action=CALLCARD_BATCHES" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Batches"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="callcard_admin.php?action=SEARCH" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("CallCard Search"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="callcard_report_export.php" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("CallCard Log Export"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="callcard_admin.php?action=GENERATE" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("CallCard Generate New Numbers"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #d35400;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="callcard_admin.php" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("CallCard Summary"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="callcard_admin.php?action=CALLCARD_RUNS" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Runs"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="callcard_admin.php?action=CALLCARD_BATCHES" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Batches"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="callcard_admin.php?action=SEARCH" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("CallCard Search"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="callcard_report_export.php" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("CallCard Log Export"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="callcard_admin.php?action=GENERATE" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("CallCard Generate New Numbers"); ?></a>
+      </div>
     </div>
   <?php }
   
+  // MOH Menu
   if ( (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $moh_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=160000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show MOH Entries"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=161111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New MOH Entry"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #e67e22;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=160000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show MOH Entries"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=161111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New MOH Entry"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Languages Menu
   if ( (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
   ?>
-    <div style="background-color: <?php echo $languages_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="admin_languages.php?ADD=163000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Languages"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="admin_languages.php?ADD=163111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Language"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <a href="admin_languages.php?ADD=163211111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Copy A Languages Entry"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <a href="admin_languages.php?ADD=163311111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Import Phrases"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <a href="admin_languages.php?ADD=163411111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Export Phrases"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #95a5a6;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="admin_languages.php?ADD=163000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Languages"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="admin_languages.php?ADD=163111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Language"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="admin_languages.php?ADD=163211111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Copy A Languages Entry"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="admin_languages.php?ADD=163311111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Import Phrases"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="admin_languages.php?ADD=163411111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Export Phrases"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Soundboard Menu
   if ( (preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0) ) {
     if ( (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-      <div style="background-color: <?php echo $soundboard_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-        <a href="admin_soundboard.php?ADD=162000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Soundboard Entries"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-        <?php if ($add_copy_disabled < 1) { ?>
-          <a href="admin_soundboard.php?ADD=162111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Soundboard Entry"); ?></a>
-          <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-          <a href="admin_soundboard.php?ADD=162211111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Copy A Soundboard Entry"); ?></a>
-        <?php } ?>
+      <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #2ecc71;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+          <a href="admin_soundboard.php?ADD=162000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Soundboard Entries"); ?></a>
+          <?php if ($add_copy_disabled < 1) { ?>
+            <span style="color: #bdc3c7;">- </span>
+            <a href="admin_soundboard.php?ADD=162111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Soundboard Entry"); ?></a>
+            <span style="color: #bdc3c7;">- </span>
+            <a href="admin_soundboard.php?ADD=162211111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Copy A Soundboard Entry"); ?></a>
+          <?php } ?>
+        </div>
       </div>
   <?php
     }
   }
   
+  // Voicemail Menu
   if ( (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
   ?>
-    <div style="background-color: <?php echo $vm_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=170000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Show Voicemail Entries"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=171111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A New Voicemail Entry"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #e74c3c;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=170000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Show Voicemail Entries"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=171111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A New Voicemail Entry"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // System Settings Menu
   if (strlen($settings_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $settings_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=311111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("System Settings"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #9b59b6;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=311111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("System Settings"); ?></a>
+      </div>
     </div>
   <?php }
   
+  // Screen Labels Menu
   if (strlen($label_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $label_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=180000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Screen Labels"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=181111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A Screen Label"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #3498db;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=180000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Screen Labels"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=181111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A Screen Label"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Screen Colors Menu
   if (strlen($colors_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $colors_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=182000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Screen Colors"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=182111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A Screen Colors"); ?></a>
-        <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php } ?>
-      <a href="<?php echo $ADMIN ?>?ADD=311111111111111#screen_colors" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Change Active Screen Colors"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #e74c3c;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=182000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Screen Colors"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=182111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A Screen Colors"); ?></a>
+          <span style="color: #bdc3c7;">- </span>
+        <?php } ?>
+        <a href="<?php echo $ADMIN ?>?ADD=311111111111111#screen_colors" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Change Active Screen Colors"); ?></a>
+      </div>
     </div>
   <?php }
   
+  // Contacts Menu
   if (strlen($cts_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $cts_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=190000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Contacts"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=191111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A Contact"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #1abc9c;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=190000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Contacts"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=191111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A Contact"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Settings Containers Menu
   if (strlen($sc_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $sc_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=192000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Settings Containers"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=192111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A Settings Container"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #34495e;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=192000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Settings Containers"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=192111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A Settings Container"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Automated Reports Menu
   if (strlen($ar_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $ar_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=194000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Automated Reports"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=194111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add An Automated Report"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #f39c12;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=194000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Automated Reports"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=194111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add An Automated Report"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // IP Lists Menu
   if (strlen($il_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $il_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=195000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("IP Lists"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=195111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add An IP List"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #e74c3c;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=195000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("IP Lists"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=195111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add An IP List"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Status Groups Menu
   if (strlen($sg_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $sg_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=193000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Status Groups"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=193111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A Status Group"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #27ae60;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=193000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Status Groups"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=193111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A Status Group"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // CID Groups Menu
   if (strlen($cg_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $cg_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=196000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("CID Groups"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=196111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A CID Group"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #9b59b6;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=196000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("CID Groups"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=196111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A CID Group"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // VM Message Groups Menu
   if (strlen($vmmg_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $vmmg_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=197000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("VM Message Groups"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=197111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A VM Message Group"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #16a085;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=197000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("VM Message Groups"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=197111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A VM Message Group"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // Queue Groups Menu
   if (strlen($qg_sh) > 25) { 
   ?>
-    <div style="background-color: <?php echo $qg_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=198000000000" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Queue Groups"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <?php if ($add_copy_disabled < 1) { ?>
-        <a href="<?php echo $ADMIN ?>?ADD=198111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Add A Queue Group"); ?></a>
-      <?php } ?>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #2980b9;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=198000000000" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Queue Groups"); ?></a>
+        <?php if ($add_copy_disabled < 1) { ?>
+          <span style="color: #bdc3c7;">- </span>
+          <a href="<?php echo $ADMIN ?>?ADD=198111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Add A Queue Group"); ?></a>
+        <?php } ?>
+      </div>
     </div>
   <?php }
   
+  // System Statuses Menu
   if ( (strlen($status_sh) > 25) and (!preg_match('/campaign|user/i',$hh) ) ) { 
   ?>
-    <div style="background-color: <?php echo $status_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=321111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("System Statuses"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="<?php echo $ADMIN ?>?ADD=331111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Status Categories"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="<?php echo $ADMIN ?>?ADD=341111111111111" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("QC Status Codes"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #8e44ad;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=321111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("System Statuses"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="<?php echo $ADMIN ?>?ADD=331111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Status Categories"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="<?php echo $ADMIN ?>?ADD=341111111111111" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("QC Status Codes"); ?></a>
+      </div>
     </div>
   <?php }
 
+  // User-specific Menu
   if ( ($ADD=='3') or ($ADD=='3') ) { 
   ?>
-    <div style="background-color: <?php echo $users_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="./user_stats.php?user=<?php echo $user ?>" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("User Stats"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="./user_status.php?user=<?php echo $user ?>" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("User Status"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Time Sheet"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="./AST_agent_days_detail.php?user=<?php echo $user ?>" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Days Status"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #3498db;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="./user_stats.php?user=<?php echo $user ?>" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("User Stats"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="./user_status.php?user=<?php echo $user ?>" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("User Status"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="./AST_agent_time_sheet.php?agent=<?php echo $user ?>" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Time Sheet"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="./AST_agent_days_detail.php?user=<?php echo $user ?>" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Days Status"); ?></a>
+      </div>
     </div>
   <?php }
 
+  // Timezone/Codes Menu
   if ( ($ADD=='999988') or ($ADD=='999987') or ($ADD=='999986') or ($ADD=='999985') ) { 
   ?>
-    <div style="background-color: <?php echo $users_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-      <a href="<?php echo $ADMIN ?>?ADD=999988" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Available Timezones"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="<?php echo $ADMIN ?>?ADD=999987" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Phone Codes"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="<?php echo $ADMIN ?>?ADD=999986" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Postal Codes"); ?></a>
-      <span style="margin: 0 10px; color: rgba(0,0,0,0.4);">|</span>
-      <a href="<?php echo $ADMIN ?>?ADD=999985" style="color: black; text-decoration: none; font-weight: 500;"><?php echo _QXZ("Postal Codes Cities"); ?></a>
+    <div style="background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 12px; border-left: 4px solid #95a5a6;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+        <a href="<?php echo $ADMIN ?>?ADD=999988" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Available Timezones"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="<?php echo $ADMIN ?>?ADD=999987" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Phone Codes"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="<?php echo $ADMIN ?>?ADD=999986" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Postal Codes"); ?></a>
+        <span style="color: #bdc3c7;">- </span>
+        <a href="<?php echo $ADMIN ?>?ADD=999985" style="color: #2c3e50; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f8f9fa';" onmouseout="this.style.background='transparent';"><?php echo _QXZ("Postal Codes Cities"); ?></a>
+      </div>
     </div>
   <?php 
-  } else {
-    if (strlen($reports_hh) > 25) { 
-  ?>
-      <div style="background-color: <?php echo $reports_color ?>; padding: 10px 15px; border-radius: 4px; margin-bottom: 8px; font-size: 14px;">
-        &nbsp;
-      </div>
-  <?php } 
-    }
+  }
+  
+  ######################### FULL HTML HEADER END #######################################
   ?>
   
-  <div style="height: 2px; background-color: #<?php echo $SSmenu_background ?>; margin: 10px 0;"></div>
-  
-  <div>
-    <?php 
-    ######################### FULL HTML HEADER END #######################################
-    }
-    ?>
   </div>
 </div>
