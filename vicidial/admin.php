@@ -52059,7 +52059,7 @@ if ($SSqc_features_active>0)
 echo "</div>"; // Close max-width container
 echo "</div>"; // Close full-width wrapper
 
-
+	}
 			# $stmt="SELECT campaign_id, qc_statuses from vicidial_campaigns where active = 'Y' and qc_enabled='Y' $LOGqc_allowed_campaignsSQL order by campaign_id";
 			$stmt="SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
 
