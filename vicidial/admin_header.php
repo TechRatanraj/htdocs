@@ -1874,7 +1874,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 <!-- BEGIN SIDEBAR NAVIGATION -->
 
 <TR><TD VALIGN=TOP WIDTH=170 BGCOLOR=#<?php echo "$SSmenu_background" ?> ALIGN=CENTER VALIGN=MIDDLE>
-<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=150 HEIGHT=45 BORDER=0 ALT="System logo"></A>
+<A HREF="<?php echo $ADMIN ?>"><IMG SRC="<?php echo $selected_logo; ?>" WIDTH=140 HEIGHT=90 BORDER=0 ALT="System logo"></A>
 <B><FONT FACE="ARIAL,HELVETICA" COLOR=white><?php echo _QXZ("ADMINISTRATION"); ?></FONT></B><BR>
 
 	<TABLE CELLPADDING=2 CELLSPACING=0 BGCOLOR=#<?php echo "$SSmenu_background" ?> WIDTH=160>
