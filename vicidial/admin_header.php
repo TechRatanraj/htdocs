@@ -2780,8 +2780,11 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
     position: fixed;
     top: 0;
     left: 0;
-    width: calc(100% - 219px);
-    margin-left: 219px;
+
+    /* EXACT sidebar alignment - adjust this number to your TRUE sidebar width */
+    margin-left: 220px;
+    width: calc(100% - 220px);
+
     background: linear-gradient(90deg, #<?php echo $SSmenu_background ?> 0%, #0b2447 100%);
     color: white;
     padding: 12px 24px;
@@ -2791,7 +2794,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     z-index: 2000;
 ">
-
   <nav style="display: flex; align-items: center; gap: 15px;">
 
     <a href="<?php echo $admin_home_url_LU ?>" 
@@ -2840,6 +2842,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   </div>
 
 </header>
+
 <br>
 <br>
 
