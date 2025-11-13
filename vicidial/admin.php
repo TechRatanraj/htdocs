@@ -46314,79 +46314,177 @@ if ($ADD==82)
 ######################
 # ADD=0A display all active users
 ######################
+
 if ($ADD=="0A")
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-	echo "<img src=\"images/icon_black_users.png\" alt=\"Users\" width=42 height=42> "._QXZ("USER LISTINGS").": ";
-	if (preg_match('/display_all/',$status))
-		{
-		$SQLstatus = '';
-		echo " &nbsp; <a href=\"$PHP_SELF?ADD=0A\"><font size=1 color=black>"._QXZ("show only active users")."</a>\n";
-		}
-	else
-		{
-		$SQLstatus = "and active='Y'";
-		echo " &nbsp; <a href=\"$PHP_SELF?ADD=0A&status=display_all\"><font size=1 color=black>"._QXZ("show all users")."</a>\n";
-		}
+    {
+    ?>
+    <div style="background: white; padding: 20px;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+        
+        <!-- Header Section -->
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                    <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("USER LISTINGS"); ?></h1>
+                </div>
+                <div>
+                    <?php
+                    if (preg_match('/display_all/',$status))
+                        {
+                        $SQLstatus = '';
+                        echo "<a href='$PHP_SELF?ADD=0A' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("Show Only Active Users")."</a>\n";
+                        }
+                    else
+                        {
+                        $SQLstatus = "and active='Y'";
+                        echo "<a href='$PHP_SELF?ADD=0A&status=display_all' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("Show All Users")."</a>\n";
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
 
-	$USERlink='stage=USERIDDOWN';
-	$USERNUMlink='stage=USERIDNUMDOWN';
-	$NAMElink='stage=NAMEDOWN';
-	$LEVELlink='stage=LEVELDOWN';
-	$GROUPlink='stage=GROUPDOWN';
-	$SQLorder='order by full_name';
-	if (preg_match("/USERIDUP/i",$stage)) {$SQLorder='order by user asc';   $USERlink='stage=USERIDDOWN';}
-	if (preg_match("/USERIDDOWN/i",$stage)) {$SQLorder='order by user desc';   $USERlink='stage=USERIDUP';}
-	if (preg_match("/USERIDNUMUP/i",$stage)) {$SQLorder='order by CAST(user as SIGNED INTEGER) desc';   $USERNUMlink='stage=USERIDNUMDOWN';}
-	if (preg_match("/USERIDNUMDOWN/i",$stage)) {$SQLorder='order by CAST(user as SIGNED INTEGER) asc';   $USERNUMlink='stage=USERIDNUMUP';}
-	if (preg_match("/NAMEUP/i",$stage)) {$SQLorder='order by full_name asc';   $NAMElink='stage=NAMEDOWN';}
-	if (preg_match("/NAMEDOWN/i",$stage)) {$SQLorder='order by full_name desc';   $NAMElink='stage=NAMEUP';}
-	if (preg_match("/LEVELUP/i",$stage)) {$SQLorder='order by user_level asc';   $LEVELlink='stage=LEVELDOWN';}
-	if (preg_match("/LEVELDOWN/i",$stage)) {$SQLorder='order by user_level desc';   $LEVELlink='stage=LEVELUP';}
-	if (preg_match("/GROUPUP/i",$stage)) {$SQLorder='order by user_group asc';   $GROUPlink='stage=GROUPDOWN';}
-	if (preg_match("/GROUPDOWN/i",$stage)) {$SQLorder='order by user_group desc';   $GROUPlink='stage=GROUPUP';}
-	$stmt="SELECT user,full_name,user_level,user_group,active from vicidial_users  where user_level <= $LOGuser_level $LOGadmin_viewable_groupsSQL $SQLstatus $SQLorder";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$people_to_print = mysqli_num_rows($rslt);
+        <?php
+        $USERlink='stage=USERIDDOWN';
+        $USERNUMlink='stage=USERIDNUMDOWN';
+        $NAMElink='stage=NAMEDOWN';
+        $LEVELlink='stage=LEVELDOWN';
+        $GROUPlink='stage=GROUPDOWN';
+        $SQLorder='order by full_name';
+        if (preg_match("/USERIDUP/i",$stage)) {$SQLorder='order by user asc';   $USERlink='stage=USERIDDOWN';}
+        if (preg_match("/USERIDDOWN/i",$stage)) {$SQLorder='order by user desc';   $USERlink='stage=USERIDUP';}
+        if (preg_match("/USERIDNUMUP/i",$stage)) {$SQLorder='order by CAST(user as SIGNED INTEGER) desc';   $USERNUMlink='stage=USERIDNUMDOWN';}
+        if (preg_match("/USERIDNUMDOWN/i",$stage)) {$SQLorder='order by CAST(user as SIGNED INTEGER) asc';   $USERNUMlink='stage=USERIDNUMUP';}
+        if (preg_match("/NAMEUP/i",$stage)) {$SQLorder='order by full_name asc';   $NAMElink='stage=NAMEDOWN';}
+        if (preg_match("/NAMEDOWN/i",$stage)) {$SQLorder='order by full_name desc';   $NAMElink='stage=NAMEUP';}
+        if (preg_match("/LEVELUP/i",$stage)) {$SQLorder='order by user_level asc';   $LEVELlink='stage=LEVELDOWN';}
+        if (preg_match("/LEVELDOWN/i",$stage)) {$SQLorder='order by user_level desc';   $LEVELlink='stage=LEVELUP';}
+        if (preg_match("/GROUPUP/i",$stage)) {$SQLorder='order by user_group asc';   $GROUPlink='stage=GROUPDOWN';}
+        if (preg_match("/GROUPDOWN/i",$stage)) {$SQLorder='order by user_group desc';   $GROUPlink='stage=GROUPUP';}
+        
+        $stmt="SELECT user,full_name,user_level,user_group,active from vicidial_users  where user_level <= $LOGuser_level $LOGadmin_viewable_groupsSQL $SQLstatus $SQLorder";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $people_to_print = mysqli_num_rows($rslt);
+        ?>
 
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><a href=\"$PHP_SELF?ADD=0A&status=$status&$USERlink\"><font size=1 color=white><B>"._QXZ("USER ID")."</B></a> &nbsp; ";
-	echo "<a href=\"$PHP_SELF?ADD=0A&status=$status&$USERNUMlink\"><font size=1 color=white><B>- # -</B></a></td>";
-	echo "<td><a href=\"$PHP_SELF?ADD=0A&status=$status&$NAMElink\"><font size=1 color=white><B>"._QXZ("FULL NAME")."</B></a></td>";
-	echo "<td><a href=\"$PHP_SELF?ADD=0A&status=$status&$LEVELlink\"><font size=1 color=white><B>"._QXZ("LEVEL")."</B></a></td>";
-	echo "<td><a href=\"$PHP_SELF?ADD=0A&status=$status&$GROUPlink\"><font size=1 color=white><B>"._QXZ("GROUP")."</B></a></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ACTIVE")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("STATS")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("STATUS")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("TIME")."</B></td>";
-	echo "</tr>\n";
+        <!-- User Table -->
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 900px;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); border-radius: 8px;">
+                        <th style="padding: 14px 12px; text-align: left; border-radius: 8px 0 0 0;">
+                            <a href="<?php echo $PHP_SELF ?>?ADD=0A&status=<?php echo $status ?>&<?php echo $USERlink ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("USER ID"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                            <a href="<?php echo $PHP_SELF ?>?ADD=0A&status=<?php echo $status ?>&<?php echo $USERNUMlink ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 11px; color: #bdc3c7; text-decoration: none; margin-top: 4px; display: inline-block;">
+                                - # -
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF ?>?ADD=0A&status=<?php echo $status ?>&<?php echo $NAMElink ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("FULL NAME"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF ?>?ADD=0A&status=<?php echo $status ?>&<?php echo $LEVELlink ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("LEVEL"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF ?>?ADD=0A&status=<?php echo $status ?>&<?php echo $GROUPlink ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("GROUP"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("ACTIVE"); ?>
+                            </span>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center;">
+                            <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("MODIFY"); ?>
+                            </span>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center;">
+                            <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("STATS"); ?>
+                            </span>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center;">
+                            <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("STATUS"); ?>
+                            </span>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center; border-radius: 0 8px 0 0;">
+                            <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("TIME"); ?>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $o=0;
+                while ($people_to_print > $o) 
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    $bgcolor = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                    $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+                    ?>
+                    <tr style="background: <?php echo $bgcolor ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor ?>';">
+                        <td style="padding: 12px; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
+                            <a href="<?php echo $PHP_SELF ?>?ADD=3&user=<?php echo $row ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row ?></a>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
+                            <?php echo $row ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
+                            <?php echo $row ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
+                            <?php echo $row ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
+                            <span style="padding: 4px 10px; background: <?php echo ($row=='Y') ? '#27ae60' : '#e74c3c' ?>; color: white; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                <?php echo _QXZ("$row"); ?>
+                            </span>
+                        </td>
+                        <td style="padding: 12px; text-align: center; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
+                            <a href="<?php echo $PHP_SELF ?>?ADD=3&user=<?php echo $row ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                <?php echo _QXZ("MODIFY"); ?>
+                            </a>
+                        </td>
+                        <td style="padding: 12px; text-align: center; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./user_stats.php?user=$row'\"";} ?>>
+                            <a href="./user_stats.php?user=<?php echo $row ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #9b59b6; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#9b59b6'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#9b59b6';">
+                                <?php echo _QXZ("STATS"); ?>
+                            </a>
+                        </td>
+                        <td style="padding: 12px; text-align: center; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./user_status.php?user=$row'\"";} ?>>
+                            <a href="./user_status.php?user=<?php echo $row ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #e67e22; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#e67e22'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#e67e22';">
+                                <?php echo _QXZ("STATUS"); ?>
+                            </a>
+                        </td>
+                        <td style="padding: 12px; text-align: center; <?php echo $cursor_style ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$row'\"";} ?>>
+                            <a href="./AST_agent_time_sheet.php?agent=<?php echo $row ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #16a085; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#16a085'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#16a085';">
+                                <?php echo _QXZ("TIME"); ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                    $o++;
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
 
-	$o=0;
-	while ($people_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';} 
-		echo "<tr $bgcolor><td"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} echo "><a href=\"$PHP_SELF?ADD=3&user=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} echo "><font size=1>$row[1]</td>";
-		echo "<td"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} echo "><font size=1>$row[2]</td>";
-		echo "<td"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} echo "><font size=1>$row[3]</td>";
-		echo "<td"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} echo "><font size=1>"._QXZ("$row[4]")."</td>";
-		echo "<td align=center"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} echo "><font size=1><a href=\"$PHP_SELF?ADD=3&user=$row[0]\">"._QXZ("MODIFY")."</a></td>";
-		echo "<td align=center"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_stats.php?user=$row[0]'\"";} echo "><font size=1><a href=\"./user_stats.php?user=$row[0]\">"._QXZ("STATS")."</a></td>";
-		echo "<td align=center"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./user_status.php?user=$row[0]'\"";} echo "><font size=1><a href=\"./user_status.php?user=$row[0]\">"._QXZ("STATUS")."</a></td>";
-		echo "<td align=center"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$row[0]'\"";} echo "><font size=1><a href=\"./AST_agent_time_sheet.php?agent=$row[0]\">"._QXZ("TIME")."</a></td>\n";
-		echo "</tr>\n";
-		$o++;
-		}
+        </div>
+    </div>
+    <?php
+    }
 
-	echo "</TABLE></center>\n";
-	}
+
 
 
 ######################
