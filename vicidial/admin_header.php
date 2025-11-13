@@ -2799,7 +2799,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
             </div>
         </div>
         
-        <div class="content-body">
+        
+		<div class="content-body">
             <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
             
             <?php
@@ -2828,7 +2829,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
@@ -2850,7 +2850,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
-                </div>
                 </div>
                 <?php 
             }
@@ -2890,7 +2889,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
@@ -2912,7 +2910,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
-                </div>
                 </div>
                 <?php 
             }
@@ -2955,7 +2952,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
@@ -2994,7 +2990,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
@@ -3017,7 +3012,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
@@ -3039,7 +3033,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
-                </div>
                 </div>
                 <?php 
             }
@@ -3066,7 +3059,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
@@ -3092,11 +3084,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
-            if (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if ( (strlen($tts_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3115,11 +3106,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
-            if (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if ( (strlen($cc_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3148,11 +3138,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
-            if (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if ( (strlen($moh_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3171,11 +3160,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
-            if (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
+            if ( (strlen($languages_sh) > 25) and (strlen($admin_hh) > 25) and ($SSenable_languages > 0) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3203,11 +3191,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
-            if (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) and ((preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0)) ) { 
+            if ( (strlen($soundboard_sh) > 25) and (strlen($admin_hh) > 25) and ((preg_match("/soundboard/",$SSactive_modules) ) or ($SSagent_soundboards > 0)) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3229,11 +3216,10 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                         </div>
                     </div>
                 </div>
-                </div>
                 <?php 
             }
             
-            if (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
+            if ( (strlen($vm_sh) > 25) and (strlen($admin_hh) > 25) ) { 
                 ?>
                 <div class="modern-card">
                     <div class="modern-card-header">
@@ -3251,7 +3237,6 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
                             <?php } ?>
                         </div>
                     </div>
-                </div>
                 </div>
                 <?php 
             }
