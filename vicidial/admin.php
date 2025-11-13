@@ -17,17 +17,17 @@ require("functions.php");
 ######################################################################################################
 
 // --- Layout & typography ---
-$page_width            = '1200';   // was 870
-$section_width         = '1140';   // was 850
-$header_font_size      = '14';     // was 12
-$subheader_font_size   = '13';     // was 11
-$subcamp_font_size     = '12';     // was 11
+// --- Layout & typography ---
+$page_width            = '100%';   // Full width
+$section_width         = '100%';   // Full width
+$header_font_size      = '14';
+$subheader_font_size   = '13';
+$subcamp_font_size     = '12';
 
-// Keep these as-is if your code expects the exact tags
 $header_selected_bold   = '<b>';
 $header_nonselected_bold= '';
 
-// --- Modern, soft color tints (accessible on white) ---
+// --- Modern, vibrant color palette (WCAG accessible) ---
 $users_color        = '#DBEAFE'; // blue-100
 $campaigns_color    = '#FEF3C7'; // amber-100
 $lists_color        = '#FFE4E6'; // rose-100
@@ -37,25 +37,33 @@ $usergroups_color   = '#CFFAFE'; // cyan-100
 $scripts_color      = '#CCFBF1'; // teal-100
 $filters_color      = '#E5E7EB'; // gray-200
 $admin_color        = '#F5D0FE'; // fuchsia-200
+$qc_color           = '#FDE68A'; // yellow-200
 $reports_color      = '#BBF7D0'; // green-200
-$times_color        = '#DBEAFE'; // blue-100
-$shifts_color       = '#DBEAFE';
-$phones_color       = '#DBEAFE';
-$conference_color   = '#DBEAFE';
-$server_color       = '#DBEAFE';
+$times_color        = '#BFDBFE'; // blue-200
+$shifts_color       = '#C7D2FE'; // indigo-200
+$phones_color       = '#BAE6FD'; // sky-100
+$conference_color   = '#A5F3FC'; // cyan-200
+$server_color       = '#A7F3D0'; // emerald-200
 $templates_color    = '#E9D5FF'; // purple-200
 $carriers_color     = '#E0F2FE'; // sky-200
-$settings_color     = '#E0F2FE';
-$label_color        = '#E0F2FE';
-$status_color       = '#E0F2FE';
-$moh_color          = '#E0F2FE';
-$vm_color           = '#E0F2FE';
-$tts_color          = '#E0F2FE';
-$cc_color           = '#E0F2FE';
-$cts_color          = '#E0F2FE';
+$settings_color     = '#DBEAFE'; // blue-100
+$label_color        = '#FED7AA'; // orange-200
+$colors_color       = '#FBCFE8'; // pink-200
+$status_color       = '#D1FAE5'; // green-100
+$moh_color          = '#FEE2E2'; // red-100
+$vm_color           = '#FCE7F3'; // pink-100
+$tts_color          = '#E0E7FF'; // indigo-100
+$cc_color           = '#DBEAFE'; // blue-100
+$cts_color          = '#F0FDFA'; // teal-50
+$sc_color           = '#FEF9C3'; // yellow-100
+$sg_color           = '#FAE8FF'; // fuchsia-100
+$ar_color           = '#FFEDD5'; // orange-100
+$il_color           = '#F1F5F9'; // slate-100
+$cg_color           = '#FEF3C7'; // amber-100
+$vmmg_color         = '#E0F2FE'; // sky-200
 $subcamp_color      = '#FED7AA'; // orange-200
 
-// Text colors (keep as BLACK if your rendering relies on these exact strings)
+// Text colors (high contrast for accessibility)
 $users_font         = 'BLACK';
 $campaigns_font     = 'BLACK';
 $lists_font         = 'BLACK';
@@ -81,48 +89,11 @@ $cc_font            = 'BLACK';
 $cts_font           = 'BLACK';
 $subcamp_font       = 'BLACK';
 
-// ===== Optional: Monochrome mode (comment out to restore colorful headings) =====
-$users_color        = '#F3F4F6'; // gray-100
-$campaigns_color    = '#F3F4F6';
-$lists_color        = '#F3F4F6';
-$ingroups_color     = '#F3F4F6';
-$remoteagent_color  = '#F3F4F6';
-$usergroups_color   = '#F3F4F6';
-$scripts_color      = '#F3F4F6';
-$filters_color      = '#F3F4F6';
-$admin_color        = '#F3F4F6';
-$qc_color           = '#F3F4F6';
-$reports_color      = '#F3F4F6';
-
-$times_color        = '#E5E7EB'; // gray-200
-$shifts_color       = '#E5E7EB';
-$phones_color       = '#E5E7EB';
-$conference_color   = '#E5E7EB';
-$server_color       = '#E5E7EB';
-$templates_color    = '#E5E7EB';
-$carriers_color     = '#E5E7EB';
-$settings_color     = '#E5E7EB';
-$label_color        = '#E5E7EB';
-$colors_color       = '#E5E7EB';
-$status_color       = '#E5E7EB';
-$moh_color          = '#E5E7EB';
-$vm_color           = '#E5E7EB';
-$tts_color          = '#E5E7EB';
-$cc_color           = '#E5E7EB';
-$cts_color          = '#E5E7EB';
-$sc_color           = '#E5E7EB';
-$sg_color           = '#E5E7EB';
-$ar_color           = '#E5E7EB';
-$il_color           = '#E5E7EB';
-$cg_color           = '#E5E7EB';
-$vmmg_color         = '#E5E7EB';
-
-$subcamp_color      = '#E5E7EB';
-
-$Msubhead_color     = '#F3F4F6';
-$Mselected_color    = '#E5E7EB';
-$Mhead_color        = '#0EA5E9'; // sky-500 (for accents like section headers)
-$Mmain_bgcolor      = '#0F172A'; // slate-900 (sidebar); keep content area white in CSS
+// Accent colors for headers and navigation
+$Msubhead_color     = '#F3F4F6'; // gray-100
+$Mselected_color    = '#E5E7EB'; // gray-200
+$Mhead_color        = '#0EA5E9'; // sky-500 (vibrant accent)
+$Mmain_bgcolor      = '#FFFFFF'; // white background for content
 
 
 ###
