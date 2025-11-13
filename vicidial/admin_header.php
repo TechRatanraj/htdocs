@@ -2766,7 +2766,7 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
 
 <div style="margin-left: 250px; padding: 20px; background-color: #<?php echo $SSframe_background ?>; min-height: 100vh;">
   <!-- Main content area -->
-</div>
+
 
 
 
