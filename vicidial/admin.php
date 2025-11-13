@@ -51916,51 +51916,112 @@ if ($ADD==999990)
 				}
 			}
 
-		$section_width=700;
-		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+ $section_width = 700;
+ 
+<div style="max-width: <?php echo $section_width; ?>px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; color: black; font-size: 16px;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-bottom: 30px;">
+    <!-- Agents Logged In Card -->
+    <div style="background-color: #<?php echo $SSmenu_background ?>; border-radius: 12px; padding: 20px; text-align: center; min-width: 120px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} ?> onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'">
+      <a href="realtime_report.php?report_display_type=HTML" style="text-decoration: none;">
+        <img src="images/icon_users.png" width="42" height="42" style="margin-bottom: 10px;" alt="Users">
+        <div style="color: white; font-weight: bold; font-size: 14px; margin-bottom: 5px;"><?php echo _QXZ("Agents Logged In"); ?></div>
+        <div style="color: white; font-size: 24px; font-weight: bold;"><?php echo $agent_total; ?></div>
+      </a>
+    </div>
+    
+    <!-- Agents In Calls Card -->
+    <div style="background-color: #<?php echo $SSmenu_background ?>; border-radius: 12px; padding: 20px; text-align: center; min-width: 120px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} ?> onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'">
+      <a href="realtime_report.php?report_display_type=HTML" style="text-decoration: none;">
+        <img src="images/icon_agentsincalls.png" width="42" height="42" style="margin-bottom: 10px;" alt="Agents in Calls">
+        <div style="color: white; font-weight: bold; font-size: 14px; margin-bottom: 5px;"><?php echo _QXZ("Agents In Calls"); ?></div>
+        <div style="color: white; font-size: 24px; font-weight: bold;"><?php echo $agent_incall; ?></div>
+      </a>
+    </div>
+    
+    <!-- Active Calls Card -->
+    <div style="background-color: #<?php echo $SSmenu_background ?>; border-radius: 12px; padding: 20px; text-align: center; min-width: 120px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} ?> onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'">
+      <a href="realtime_report.php?report_display_type=HTML" style="text-decoration: none;">
+        <img src="images/icon_calls.png" width="42" height="42" style="margin-bottom: 10px;" alt="Active Calls">
+        <div style="color: white; font-weight: bold; font-size: 14px; margin-bottom: 5px;"><?php echo _QXZ("Active Calls"); ?></div>
+        <div style="color: white; font-size: 24px; font-weight: bold;"><?php echo $agent_incall; ?></div>
+      </a>
+    </div>
+    
+    <!-- Calls Ringing Card -->
+    <div style="background-color: #<?php echo $SSmenu_background ?>; border-radius: 12px; padding: 20px; text-align: center; min-width: 120px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" <?php if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} ?> onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'">
+      <a href="realtime_report.php?report_display_type=HTML" style="text-decoration: none;">
+        <img src="images/icon_ringing.png" width="42" height="42" style="margin-bottom: 10px;" alt="Calls Ringing">
+        <div style="color: white; font-weight: bold; font-size: 14px; margin-bottom: 5px;"><?php echo _QXZ("Calls Ringing"); ?></div>
+        <div style="color: white; font-size: 24px; font-weight: bold;"><?php echo $ringing_calls; ?></div>
+      </a>
+    </div>
+  </div>
 
-		echo "<center>";
-		echo "<TABLE width=$section_width cellpadding=6 cellspacing=0>\n";
-		echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} echo ">";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_users.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Agents Logged In")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_agentsincalls.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Agents In Calls")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_calls.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Active Calls")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_ringing.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Calls Ringing")."</font></td>";
-		echo "</tr>";
-		echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} echo ">";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_total</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_incall</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_incall</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$ringing_calls</font></td>";
-		echo "</tr>";
-		echo "</TABLE>";
-		echo "<br><br>";
-
-
-		echo "<TABLE width=$section_width cellspacing=2>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='4'><font style=\"font-family:HELVETICA;font-size:16;color:black;font-weight:bold;\">"._QXZ("System Summary").":</font></td>";
-		echo "</tr>";
-
-		echo "<tr bgcolor=black>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Records")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Active")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Inactive")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Total")." &nbsp;</font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=0A' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Users").": </a></td><td align=center><b>".($users["Y"]+0)."</b></td><td align=center><b>".($users["N"]+0)."</b></td><td align=center><b>".($users["Y"]+$users["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=10' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Campaigns").": </a></td><td align=center><b>".($campaigns["Y"]+0)."</b></td><td align=center><b>".($campaigns["N"]+0)."</b></td><td align=center><b>".($campaigns["Y"]+$campaigns["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=100' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Lists").": </a></td><td align=center><b>".($lists["Y"]+0)."</b></td><td align=center><b>".($lists["N"]+0)."</b></td><td align=center><b>".($lists["Y"]+$lists["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=1000' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("In-Groups").": </a></td><td align=center><b>".($ingroups["Y"]+0)."</b></td><td align=center><b>".($ingroups["N"]+0)."</b></td><td align=center><b>".($ingroups["Y"]+$ingroups["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=1300' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("DIDs").": </a></td><td align=center><b>".($dids["Y"]+0)."</b></td><td align=center><b>".($dids["N"]+0)."</b></td><td align=center><b>".($dids["Y"]+$dids["N"]+0)."</b></td></tr>\n";
-	
+  <div style="margin-bottom: 30px;">
+    <h2 style="font-size: 20px; margin-bottom: 20px; color: black; font-weight: bold;"><?php echo _QXZ("System Summary"); ?>:</h2>
+    
+    <div style="background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <div style="background-color: black; color: white; display: flex; padding: 12px 0;">
+        <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;"><?php echo _QXZ("Records"); ?></div>
+        <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;"><?php echo _QXZ("Active"); ?></div>
+        <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;"><?php echo _QXZ("Inactive"); ?></div>
+        <div style="flex: 1; text-align: center; font-weight: bold; font-size: 16px;"><?php echo _QXZ("Total"); ?></div>
+      </div>
+      
+      <div style="padding: 0;">
+        <!-- Users Row -->
+        <div style="display: flex; border-bottom: 1px solid #eee; padding: 12px 0; background-color: #<?php echo $SSstd_row4_background ?>;">
+          <div style="flex: 1; text-align: right; padding-right: 15px;">
+            <a href="<?php echo $PHP_SELF ?>?ADD=0A" style="text-decoration: none; color: black; font-weight: 500;"><?php echo _QXZ("Users"); ?>:</a>
+          </div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($users["Y"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($users["N"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($users["Y"]+$users["N"]+0); ?></div>
+        </div>
+        
+        <!-- Campaigns Row -->
+        <div style="display: flex; border-bottom: 1px solid #eee; padding: 12px 0; background-color: #<?php echo $SSstd_row4_background ?>;">
+          <div style="flex: 1; text-align: right; padding-right: 15px;">
+            <a href="<?php echo $PHP_SELF ?>?ADD=10" style="text-decoration: none; color: black; font-weight: 500;"><?php echo _QXZ("Campaigns"); ?>:</a>
+          </div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($campaigns["Y"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($campaigns["N"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($campaigns["Y"]+$campaigns["N"]+0); ?></div>
+        </div>
+        
+        <!-- Lists Row -->
+        <div style="display: flex; border-bottom: 1px solid #eee; padding: 12px 0; background-color: #<?php echo $SSstd_row4_background ?>;">
+          <div style="flex: 1; text-align: right; padding-right: 15px;">
+            <a href="<?php echo $PHP_SELF ?>?ADD=100" style="text-decoration: none; color: black; font-weight: 500;"><?php echo _QXZ("Lists"); ?>:</a>
+          </div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($lists["Y"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($lists["N"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($lists["Y"]+$lists["N"]+0); ?></div>
+        </div>
+        
+        <!-- In-Groups Row -->
+        <div style="display: flex; border-bottom: 1px solid #eee; padding: 12px 0; background-color: #<?php echo $SSstd_row4_background ?>;">
+          <div style="flex: 1; text-align: right; padding-right: 15px;">
+            <a href="<?php echo $PHP_SELF ?>?ADD=1000" style="text-decoration: none; color: black; font-weight: 500;"><?php echo _QXZ("In-Groups"); ?>:</a>
+          </div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($ingroups["Y"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($ingroups["N"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($ingroups["Y"]+$ingroups["N"]+0); ?></div>
+        </div>
+        
+        <!-- DIDs Row -->
+        <div style="display: flex; padding: 12px 0; background-color: #<?php echo $SSstd_row4_background ?>;">
+          <div style="flex: 1; text-align: right; padding-right: 15px;">
+            <a href="<?php echo $PHP_SELF ?>?ADD=1300" style="text-decoration: none; color: black; font-weight: 500;"><?php echo _QXZ("DIDs"); ?>:</a>
+          </div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($dids["Y"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($dids["N"]+0); ?></div>
+          <div style="flex: 1; text-align: center; font-weight: bold;"><?php echo ($dids["Y"]+$dids["N"]+0); ?></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 		// New voicemailbox code
 		$stmt="(SELECT voicemail_id,count(*),messages,old_messages,'vm','vm' from vicidial_voicemail where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) UNION (SELECT voicemail_id,count(*),messages,old_messages,extension,server_ip from phones where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) order by voicemail_id;";
 		if ($DB) {echo "|$stmt|\n";}
