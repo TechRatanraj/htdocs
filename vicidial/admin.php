@@ -51946,7 +51946,7 @@ if ($ADD==999990)
 			}
 
 		$section_width=900;
-		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=10>";
 
 		echo "<center>";
 		echo "<TABLE width=$section_width cellpadding=6 cellspacing=0>\n";
