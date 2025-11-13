@@ -52059,78 +52059,86 @@ if ($SSqc_features_active>0)
 echo "</div>"; // Close max-width container
 echo "</div>"; // Close full-width wrapper
 
-	}
-			# $stmt="SELECT campaign_id, qc_statuses from vicidial_campaigns where active = 'Y' and qc_enabled='Y' $LOGqc_allowed_campaignsSQL order by campaign_id";
-			$stmt="SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
+# $stmt="SELECT campaign_id, qc_statuses from vicidial_campaigns where active = 'Y' and qc_enabled='Y' $LOGqc_allowed_campaignsSQL order by campaign_id";
 
-		if ($DB) {echo "|$stmt|\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$vicidialconf_to_print = mysqli_num_rows($rslt);
-			if ($vicidialconf_to_print > 0) 
-				{
-				while ($row=mysqli_fetch_array($rslt)) 
-					{
-					$campaign_id=$row[0];
+    // Quality Control Data Rows
+    $stmt="SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
 
-					$qc_status_list=array();
-					$qc_status_container_stmt="select container_entry from vicidial_settings_containers where container_id='$row[2]'";
-					$qc_status_container_rslt=mysql_to_mysqli($qc_status_container_stmt, $link);
-					while ($qcsc_row=mysqli_fetch_row($qc_status_container_rslt))
-						{
-						$container_text=preg_split('/\r|\n/', $qcsc_row[0]);
-						for ($q=0; $q<count($container_text); $q++)
-							{
-							$line=trim($container_text[$q]);
-							if (!preg_match('/^[\#|\;]/', $line) && strlen($line)>0)
-								{
-								$qc_status_list=preg_split('/,/', $line); 
-								break;
-								}
-							}
-						}
+    if ($DB) {echo "|$stmt|\n";}
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $vicidialconf_to_print = mysqli_num_rows($rslt);
+    if ($vicidialconf_to_print > 0) 
+        {
+        $row_counter = 0;
+        while ($row=mysqli_fetch_array($rslt)) 
+            {
+            $campaign_id=$row[0];
+            $row_counter++;
+            
+            $qc_status_list=array();
+            $qc_status_container_stmt="select container_entry from vicidial_settings_containers where container_id='$row[2]'";
+            $qc_status_container_rslt=mysql_to_mysqli($qc_status_container_stmt, $link);
+            while ($qcsc_row=mysqli_fetch_row($qc_status_container_rslt))
+                {
+                $container_text=preg_split('/\r|\n/', $qcsc_row[0]);
+                for ($q=0; $q<count($container_text); $q++)
+                    {
+                    $line=trim($container_text[$q]);
+                    if (!preg_match('/^[\#|\;]/', $line) && strlen($line)>0)
+                        {
+                        $qc_status_list=preg_split('/,/', $line); 
+                        break;
+                        }
+                    }
+                }
 
-					$total_qc_count=0;
-					$qc_ct_stmt="select count(*) From vicidial_agent_log where campaign_id='$campaign_id' and status in ('".implode("','", $qc_status_list)."') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY"; 
-					if ($DB) {echo "|$qc_ct_stmt|<BR>\n";}
-					$qc_ct_rslt=mysql_to_mysqli($qc_ct_stmt, $link);
-					$qc_ct_row=mysqli_fetch_row($qc_ct_rslt);
-					$total_qc_count=$qc_ct_row[0];
-				
-					$qc_grabbed_stmt="select count(*) From quality_control_queue where campaign_id='$campaign_id' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='CLAIMED'";
-					if ($DB) {echo "|$qc_grabbed_stmt|<BR>\n";}
-					$qc_grabbed_rslt=mysql_to_mysqli($qc_grabbed_stmt, $link);
-					$qc_grabbed_row=mysqli_fetch_row($qc_grabbed_rslt);
-					$total_inreview_count=$qc_grabbed_row[0];
+            $total_qc_count=0;
+            $qc_ct_stmt="select count(*) From vicidial_agent_log where campaign_id='$campaign_id' and status in ('".implode("','", $qc_status_list)."') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY"; 
+            if ($DB) {echo "|$qc_ct_stmt|<BR>\n";}
+            $qc_ct_rslt=mysql_to_mysqli($qc_ct_stmt, $link);
+            $qc_ct_row=mysqli_fetch_row($qc_ct_rslt);
+            $total_qc_count=$qc_ct_row[0];
+        
+            $qc_grabbed_stmt="select count(*) From quality_control_queue where campaign_id='$campaign_id' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='CLAIMED'";
+            if ($DB) {echo "|$qc_grabbed_stmt|<BR>\n";}
+            $qc_grabbed_rslt=mysql_to_mysqli($qc_grabbed_stmt, $link);
+            $qc_grabbed_row=mysqli_fetch_row($qc_grabbed_rslt);
+            $total_inreview_count=$qc_grabbed_row[0];
 
-					$qc_finished_stmt="select count(*), sum(if(call_date>=date(now()),1,0)) as finished_today From quality_control_queue where campaign_id='$campaign_id' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='FINISHED'";
-					if ($DB) {echo "|$qc_finished_stmt|<BR>\n";}
-					$qc_finished_rslt=mysql_to_mysqli($qc_finished_stmt, $link);
-					$qc_finished_row=mysqli_fetch_row($qc_finished_rslt);
-					$total_finish_count=$qc_finished_row[0];
-					$today_finish_count=$qc_finished_row[1];
+            $qc_finished_stmt="select count(*), sum(if(call_date>=date(now()),1,0)) as finished_today From quality_control_queue where campaign_id='$campaign_id' and call_date>=now()-INTERVAL $SSqc_expire_days DAY and qc_status='FINISHED'";
+            if ($DB) {echo "|$qc_finished_stmt|<BR>\n";}
+            $qc_finished_rslt=mysql_to_mysqli($qc_finished_stmt, $link);
+            $qc_finished_row=mysqli_fetch_row($qc_finished_rslt);
+            $total_finish_count=$qc_finished_row[0];
+            $today_finish_count=$qc_finished_row[1];
 
-					echo "<tr bgcolor='#$SSstd_row2_background'>";
-				#	echo "<td align='left'><font size=1>".$row["campaign_id"]."</font></td>";
-					echo "<td align='right'><font style=\"font-family:HELVETICA;font-size:14;\">".$campaign_id.":</font></td>";
-					echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;\">".($total_qc_count-$total_inreview_count-$total_finish_count+0)."</font></td>";
-					echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;\">".($total_inreview_count+0)."</font></td>";
-					echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;\">".($today_finish_count+0)."</font></td>";
-					echo "</tr>";
-					}
-				} 
-			else 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>";
-				echo "<td align='center' colspan='4'><font size=1>*** "._QXZ("NO ACTIVITY FOR")." $today ***</font></td>";
-				echo "</tr>";
-				}
+            // Alternate row colors
+            $row_bg = ($row_counter % 2 == 0) ? "#".$SSstd_row2_background : "#f8f9fa";
+            
+            echo "<tr style='background: $row_bg; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;' onmouseover=\"this.style.background='#e3f2fd';\" onmouseout=\"this.style.background='$row_bg';\">";
+            echo "<td align='right' style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 500;'>".$campaign_id.":</span></td>";
+            echo "<td align='center' style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>".($total_qc_count-$total_inreview_count-$total_finish_count+0)."</span></td>";
+            echo "<td align='center' style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>".($total_inreview_count+0)."</span></td>";
+            echo "<td align='center' style='padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;'>".($today_finish_count+0)."</span></td>";
+            echo "</tr>";
+            }
+        } 
+    else 
+        {
+        echo "<tr style='background: #".$SSstd_row2_background."; border-bottom: 1px solid #e8ecf1;'>";
+        echo "<td align='center' colspan='4' style='padding: 20px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d; font-style: italic;'>*** "._QXZ("NO ACTIVITY FOR")." $today ***</span></td>";
+        echo "</tr>";
+        }
+    }
 
+echo "</table>";
+echo "</div>";
 
-			}
+echo "</div>"; // Close max-width container
+echo "</div>"; // Close full-width wrapper
 
-			echo "</TABLE></center>\n";
-
-			echo "<BR>\n";
+echo "<br>\n";
+// Done the UI dashboard till the line 
 
 		$today=date("Y-m-d");
 		$yesterday=date("Y-m-d", mktime(0,0,0,date("m"),date("d")-1,date("Y")));
