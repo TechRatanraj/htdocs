@@ -1783,17 +1783,7 @@ background:rgb(102,255,51);
 .chart_td
     {background-image: url(images/gridline58.gif); background-repeat: repeat-x; background-position: left top; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; padding:0; border-bottom: 1px solid #e5e5e5; background-color:transparent;}
 
-.head_style
-    {
-    background-color: <?php echo $Mmain_bgcolor ?>;
-    }
-.head_style:hover{background-color: #262626;}
 
-.head_style_selected
-    {
-    background-color: <?php echo $Mhead_color ?>;
-    }
-.head_style_selected:hover{background-color: <?php echo $Mhead_color ?>;}
 
 .subhead_style
     {
