@@ -52054,7 +52054,7 @@ if ($SSqc_features_active>0)
     echo "</tr>";
     echo "</table>";
     echo "</div>";
-    }
+    
 
 echo "</div>"; // Close max-width container
 echo "</div>"; // Close full-width wrapper
