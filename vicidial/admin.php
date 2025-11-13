@@ -51945,104 +51945,120 @@ if ($ADD==999990)
 				}
 			}
 
-		$section_width=1000;
-		
-		echo "<br>";
+		$section_width = '100%';
 
-echo "<center>";
-echo "<table width='$section_width' cellpadding='6' cellspacing='0' style='border-collapse: collapse;'>\n";
+echo "<div style='width: 100%; max-width: 100%; padding: 24px; background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); min-height: calc(100vh - 80px); box-sizing: border-box;'>";
+
+echo "<div style='max-width: 1400px; margin: 0 auto;'>";
+
+// Stats Cards Section
+echo "<div style='margin-bottom: 32px;'>";
+echo "<table width='100%' cellpadding='6' cellspacing='0' style='border-collapse: separate; border-spacing: 12px;'>\n";
 echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\" style='cursor: pointer;'";} echo ">";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_users.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Agents Logged In")."</span></td>";
-echo "<td width='10' rowspan='2' style='background: transparent;'>&nbsp;</td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_agentsincalls.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Agents In Calls")."</span></td>";
-echo "<td width='10' rowspan='2' style='background: transparent;'>&nbsp;</td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_calls.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Active Calls")."</span></td>";
-echo "<td width='10' rowspan='2' style='background: transparent;'>&nbsp;</td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_ringing.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Calls Ringing")."</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_users.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Agents Logged In")."</span></td>";
+echo "<td width='12' rowspan='2' style='background: transparent;'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_agentsincalls.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Agents In Calls")."</span></td>";
+echo "<td width='12' rowspan='2' style='background: transparent;'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_calls.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Active Calls")."</span></td>";
+echo "<td width='12' rowspan='2' style='background: transparent;'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_ringing.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Calls Ringing")."</span></td>";
 echo "</tr>";
 echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\" style='cursor: pointer;'";} echo ">";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_total</span></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_incall</span></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_incall</span></td>";
-echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$ringing_calls</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_total</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_incall</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_incall</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$ringing_calls</span></td>";
 echo "</tr>";
 echo "</table>";
-echo "<br><br>";
+echo "</div>";
 
+// System Summary Section
+echo "<div style='background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 24px;'>";
+echo "<table width='100%' cellspacing='0' style='border-collapse: collapse;'>\n";
+echo "<tr>";
+echo "<td align='left' colspan='4' style='padding-bottom: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700;'>"._QXZ("System Summary")."</span></td>";
+echo "</tr>";
 
+echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+echo "<td align='center' style='padding: 14px; border-radius: 8px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Records")."</span></td>";
+echo "<td align='center' style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Active")."</span></td>";
+echo "<td align='center' style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Inactive")."</span></td>";
+echo "<td align='center' style='padding: 14px; border-radius: 0 8px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Total")."</span></td>";
+echo "</tr>";
 
-		echo "<TABLE width=$section_width cellspacing=2>\n";
-		echo "<tr>";
-		echo "<td align='left' colspan='4'><font style=\"font-family:HELVETICA;font-size:16;color:black;font-weight:bold;\">"._QXZ("System Summary").":</font></td>";
-		echo "</tr>";
+echo "<tr style='background: #".$SSstd_row4_background."; border-bottom: 1px solid #e8ecf1;'><td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=0A' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>"._QXZ("Users").": </a></td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($users["Y"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($users["N"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($users["Y"]+$users["N"]+0)."</td></tr>\n";
 
-		echo "<tr bgcolor=black>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Records")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Active")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Inactive")." &nbsp;</font></td>";
-		echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Total")." &nbsp;</font></td>";
-		echo "</tr>";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=0A' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Users").": </a></td><td align=center><b>".($users["Y"]+0)."</b></td><td align=center><b>".($users["N"]+0)."</b></td><td align=center><b>".($users["Y"]+$users["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=10' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Campaigns").": </a></td><td align=center><b>".($campaigns["Y"]+0)."</b></td><td align=center><b>".($campaigns["N"]+0)."</b></td><td align=center><b>".($campaigns["Y"]+$campaigns["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=100' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("Lists").": </a></td><td align=center><b>".($lists["Y"]+0)."</b></td><td align=center><b>".($lists["N"]+0)."</b></td><td align=center><b>".($lists["Y"]+$lists["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=1000' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("In-Groups").": </a></td><td align=center><b>".($ingroups["Y"]+0)."</b></td><td align=center><b>".($ingroups["N"]+0)."</b></td><td align=center><b>".($ingroups["Y"]+$ingroups["N"]+0)."</b></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href='$PHP_SELF?ADD=1300' STYLE=\"text-decoration:none;\"><font color=black>"._QXZ("DIDs").": </a></td><td align=center><b>".($dids["Y"]+0)."</b></td><td align=center><b>".($dids["N"]+0)."</b></td><td align=center><b>".($dids["Y"]+$dids["N"]+0)."</b></td></tr>\n";
-	
-		// New voicemailbox code
-		$stmt="(SELECT voicemail_id,count(*),messages,old_messages,'vm','vm' from vicidial_voicemail where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) UNION (SELECT voicemail_id,count(*),messages,old_messages,extension,server_ip from phones where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) order by voicemail_id;";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$vm_rows=mysqli_num_rows($rslt);
-		if ($vm_rows>0) 
-			{
-			echo "<tr>";
-			echo "<td align='left' colspan='4'>&nbsp;</td>";  # Padding
-			echo "</tr>";
-			echo "<tr bgcolor=black>";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Voicemail Box")." &nbsp;</font></td>\n";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("New")." &nbsp;</font></td>\n";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Old")." &nbsp;</font></td>\n";
-			echo "<td  align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\">&nbsp; "._QXZ("Total")." &nbsp;</font></td>\n";
-			echo "</tr>\n";
-	
-			while($row=mysqli_fetch_array($rslt)) 
-				{
-				echo "<tr bgcolor='#$SSstd_row2_background'>\n";
-				if ($row[4] == 'vm')
-					{
-					echo "<td align='right'><a href='$PHP_SELF?ADD=371111111111&voicemail_id=$row[0]' STYLE=\"text-decoration:none;\"><font color=black>$row[0]:</a></font></td>\n";
-					}
-				else
-					{
-					echo "<td align='right'><a href='$PHP_SELF?ADD=31111111111&extension=$row[4]&server_ip=$row[5]' STYLE=\"text-decoration:none;\"><font color=black>$row[0]:</a></font></td>\n";
-					}
-				echo "<td align='center'>$row[2]</font></td>\n";
-				echo "<td align='center'>$row[3]</font></td>\n";
-				echo "<td align='center'>".($row[2]+$row[3])."</font></td>\n";
-				echo "</tr>\n";
-				}
-			}
-		// End new voicemail box code
+echo "<tr style='background: #".$SSstd_row4_background."; border-bottom: 1px solid #e8ecf1;'><td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=10' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>"._QXZ("Campaigns").": </a></td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($campaigns["Y"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($campaigns["N"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($campaigns["Y"]+$campaigns["N"]+0)."</td></tr>\n";
 
-		if ($SSqc_features_active>0) 
-			{
-			echo "<tr>";
-			echo "<td align='left' colspan='4'>&nbsp;</td>";  # Padding
-			echo "</tr>";
-			echo "<tr>";
-			echo "<td align='left' colspan='4'><font style=\"font-family:HELVETICA;font-size:16;color:black;font-weight:bold;\">"._QXZ("Quality Control stats").":</font></td>";
-			echo "</tr>";
+echo "<tr style='background: #".$SSstd_row4_background."; border-bottom: 1px solid #e8ecf1;'><td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=100' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>"._QXZ("Lists").": </a></td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($lists["Y"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($lists["N"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($lists["Y"]+$lists["N"]+0)."</td></tr>\n";
 
-			echo "<tr bgcolor=black>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("Campaign")."</font></td>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("Unclaimed Calls")."</font></td>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("In Review")."</font></td>";
-			echo "<td align='center'><font style=\"font-family:HELVETICA;font-size:14;color:white;font-weight:bold;\"><B>&nbsp; "._QXZ("Finished today")."</font></td>";
-			echo "</tr>";
+echo "<tr style='background: #".$SSstd_row4_background."; border-bottom: 1px solid #e8ecf1;'><td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=1000' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>"._QXZ("In-Groups").": </a></td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($ingroups["Y"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($ingroups["N"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($ingroups["Y"]+$ingroups["N"]+0)."</td></tr>\n";
+
+echo "<tr style='background: #".$SSstd_row4_background.";'><td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=1300' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>"._QXZ("DIDs").": </a></td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($dids["Y"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($dids["N"]+0)."</td><td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($dids["Y"]+$dids["N"]+0)."</td></tr>\n";
+
+// Voicemail box code
+$stmt="(SELECT voicemail_id,count(*),messages,old_messages,'vm','vm' from vicidial_voicemail where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) UNION (SELECT voicemail_id,count(*),messages,old_messages,extension,server_ip from phones where on_login_report='Y' $LOGadmin_viewable_groupsSQL group by voicemail_id) order by voicemail_id;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+$vm_rows=mysqli_num_rows($rslt);
+if ($vm_rows>0) 
+    {
+    echo "<tr><td colspan='4' style='padding: 20px 0;'>&nbsp;</td></tr>";
+    
+    echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+    echo "<td align='center' style='padding: 14px; border-radius: 8px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Voicemail Box")."</span></td>\n";
+    echo "<td align='center' style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("New")."</span></td>\n";
+    echo "<td align='center' style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Old")."</span></td>\n";
+    echo "<td align='center' style='padding: 14px; border-radius: 0 8px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Total")."</span></td>\n";
+    echo "</tr>\n";
+
+    while($row=mysqli_fetch_array($rslt)) 
+        {
+        echo "<tr style='background: #".$SSstd_row2_background."; border-bottom: 1px solid #e8ecf1;'>\n";
+        if ($row[4] == 'vm')
+            {
+            echo "<td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=371111111111&voicemail_id=$row[0]' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>$row[0]:</a></td>\n";
+            }
+        else
+            {
+            echo "<td align='right' style='padding: 12px;'><a href='$PHP_SELF?ADD=31111111111&extension=$row[4]&server_ip=$row[5]' style='text-decoration: none; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 500;'>$row[0]:</a></td>\n";
+            }
+        echo "<td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>$row[2]</td>\n";
+        echo "<td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>$row[3]</td>\n";
+        echo "<td align='center' style='padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-weight: 600; color: #2c3e50;'>".($row[2]+$row[3])."</td>\n";
+        echo "</tr>\n";
+        }
+    }
+
+echo "</table>";
+echo "</div>";
+
+// Quality Control Section
+if ($SSqc_features_active>0) 
+    {
+    echo "<div style='background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);'>";
+    echo "<table width='100%' cellspacing='0' style='border-collapse: collapse;'>\n";
+    echo "<tr>";
+    echo "<td align='left' colspan='4' style='padding-bottom: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #2c3e50; font-weight: 700;'>"._QXZ("Quality Control stats")."</span></td>";
+    echo "</tr>";
+
+    echo "<tr style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);'>";
+    echo "<td align='center' style='padding: 14px; border-radius: 8px 0 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Campaign")."</span></td>";
+    echo "<td align='center' style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Unclaimed Calls")."</span></td>";
+    echo "<td align='center' style='padding: 14px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("In Review")."</span></td>";
+    echo "<td align='center' style='padding: 14px; border-radius: 0 8px 0 0;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: white; font-weight: 600;'>"._QXZ("Finished today")."</span></td>";
+    echo "</tr>";
+    echo "</table>";
+    echo "</div>";
+    }
+
+echo "</div>"; // Close max-width container
+echo "</div>"; // Close full-width wrapper
+
 
 			# $stmt="SELECT campaign_id, qc_statuses from vicidial_campaigns where active = 'Y' and qc_enabled='Y' $LOGqc_allowed_campaignsSQL order by campaign_id";
 			$stmt="SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
