@@ -51946,31 +51946,33 @@ if ($ADD==999990)
 			}
 
 		$section_width=1000;
-		echo "<BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=10>";
+		
+		echo "<br>";
 
-		echo "<center>";
-		echo "<TABLE width=$section_width cellpadding=6 cellspacing=0>\n";
-		echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} echo ">";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_users.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Agents Logged In")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_agentsincalls.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Agents In Calls")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_calls.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Active Calls")."</font></td>";
-		echo "<td width=10 rowspan=2> &nbsp; </td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background' rowspan=2><a href=\"realtime_report.php?report_display_type=HTML\"><img src=\"images/icon_ringing.png\" width=42 height=42 border=0></a></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:11;color:white;font-weight:bold;\">"._QXZ("Calls Ringing")."</font></td>";
-		echo "</tr>";
-		echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\"";} echo ">";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_total</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_incall</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$agent_incall</font></td>";
-		echo "<td align='center' valign='middle' bgcolor='#$SSmenu_background'><font style=\"font-family:HELVETICA;font-size:18;color:white;font-weight:bold;\">$ringing_calls</font></td>";
-		echo "</tr>";
-		echo "</TABLE>";
-		echo "<br><br>";
+echo "<center>";
+echo "<table width='$section_width' cellpadding='6' cellspacing='0' style='border-collapse: collapse;'>\n";
+echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\" style='cursor: pointer;'";} echo ">";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_users.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Agents Logged In")."</span></td>";
+echo "<td width='10' rowspan='2' style='background: transparent;'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_agentsincalls.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Agents In Calls")."</span></td>";
+echo "<td width='10' rowspan='2' style='background: transparent;'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_calls.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Active Calls")."</span></td>";
+echo "<td width='10' rowspan='2' style='background: transparent;'>&nbsp;</td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;' rowspan='2'><a href='realtime_report.php?report_display_type=HTML'><img src='images/icon_ringing.png' width='42' height='42' border='0' style='filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));'></a></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 12px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: rgba(255,255,255,0.95); font-weight: 600;'>"._QXZ("Calls Ringing")."</span></td>";
+echo "</tr>";
+echo "<tr"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='realtime_report.php?report_display_type=HTML';\" style='cursor: pointer;'";} echo ">";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_total</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_incall</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$agent_incall</span></td>";
+echo "<td align='center' valign='middle' style='background: linear-gradient(135deg, #".$SSmenu_background." 0%, #1e3a5f 100%); border-radius: 8px; padding: 16px;'><span style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 32px; color: white; font-weight: 700;'>$ringing_calls</span></td>";
+echo "</tr>";
+echo "</table>";
+echo "<br><br>";
+
 
 
 		echo "<TABLE width=$section_width cellspacing=2>\n";
