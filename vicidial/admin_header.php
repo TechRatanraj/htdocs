@@ -2776,57 +2776,71 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   <!-- Main content area -->
 <span style="position:absolute;left:300px;top:30px;z-index:1;visibility:hidden;" id="audio_chooser_span"></span>
 
-<header style="width:100%;background:linear-gradient(90deg,#<?php echo $SSmenu_background ?>,#0b2447);color:white;padding:14px 28px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);position:relative;z-index:100;">
+<header style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 219px);
+    margin-left: 219px;
+    background: linear-gradient(90deg, #<?php echo $SSmenu_background ?> 0%, #0b2447 100%);
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 2000;
+">
 
-    <!-- LEFT NAVIGATION -->
-    <nav style="display:flex;align-items:center;gap:12px;">
+  <nav style="display: flex; align-items: center; gap: 15px;">
 
-        <a href='<?php echo $admin_home_url_LU ?>' 
-           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
-           <?php echo _QXZ("HOME"); ?>
-        </a>
+    <a href="<?php echo $admin_home_url_LU ?>" 
+       style="color: white; text-decoration: none; font-size: 14px; padding: 6px 14px; border-radius: 6px; background: rgba(255,255,255,0.15);">
+       <?php echo _QXZ("HOME"); ?>
+    </a>
 
-        <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+    <span style="color: rgba(255,255,255,0.5); font-weight: 600;">|</span>
 
-        <a href='../agc/timeclock.php?referrer=admin'
-           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
-           <?php echo _QXZ("Timeclock"); ?>
-        </a>
+    <a href="../agc/timeclock.php?referrer=admin" 
+       style="color: white; text-decoration: none; font-size: 14px; padding: 6px 14px; border-radius: 6px; background: rgba(255,255,255,0.15);">
+       <?php echo _QXZ("Timeclock"); ?>
+    </a>
 
-        <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+    <span style="color: rgba(255,255,255,0.5); font-weight: 600;">|</span>
 
-        <a href='manager_chat_interface.php'
-           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
-           <?php echo _QXZ("Chat"); ?>
-        </a>
+    <a href="manager_chat_interface.php" 
+       style="color: white; text-decoration: none; font-size: 14px; padding: 6px 14px; border-radius: 6px; background: rgba(255,255,255,0.15);">
+       <?php echo _QXZ("Chat"); ?>
+    </a>
 
-        <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
+    <span style="color: rgba(255,255,255,0.5); font-weight: 600;">|</span>
 
-        <a href='<?php echo $ADMIN ?>?force_logout=1'
-           style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
-           <?php echo _QXZ("Logout"); ?>
-        </a>
+    <a href="<?php echo $ADMIN ?>?force_logout=1" 
+       style="color: white; text-decoration: none; font-size: 14px; padding: 6px 14px; border-radius: 6px; background: rgba(255,255,255,0.15);">
+       <?php echo _QXZ("Logout"); ?>
+    </a>
 
-        <span style="color:white;font-size:14px;font-weight:500;">
-            (<?php echo $PHP_AUTH_USER ?>)
-        </span>
+    <span style="color: rgba(255,255,255,0.85); font-size: 14px;">
+      (<?php echo $PHP_AUTH_USER ?>)
+    </span>
 
-        <?php if ($SSenable_languages == '1') { ?>
-            <span style="color:rgba(255,255,255,0.4);font-size:16px;">|</span>
-            <a href='<?php echo $ADMIN ?>?ADD=999989'
-               style="color:white;text-decoration:none;font-size:14px;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.15);transition:0.25s;font-weight:500;">
-               <?php echo _QXZ("Change language"); ?>
-            </a>
-        <?php } ?>
+    <?php if ($SSenable_languages == '1') { ?>
+      <span style="color: rgba(255,255,255,0.5); font-weight: 600;">|</span>
 
-    </nav>
+      <a href="<?php echo $ADMIN ?>?ADD=999989"
+         style="color: white; text-decoration: none; font-size: 14px; padding: 6px 14px; border-radius: 6px; background: rgba(255,255,255,0.15);">
+         <?php echo _QXZ("Change language"); ?>
+      </a>
+    <?php } ?>
 
-    <!-- RIGHT CLOCK -->
-    <div style="font-size:14px;font-weight:600;letter-spacing:0.5px;">
-        <?php echo date("l F j, Y g:i:s A"); ?>
-    </div>
+  </nav>
+
+  <div style="font-size: 14px; font-weight: bold;">
+    <?php echo date("l F j, Y g:i:s A"); ?>
+  </div>
 
 </header>
+
 
 
 <div style="background-color: #<?php echo $SSframe_background ?>; padding: 15px;">
