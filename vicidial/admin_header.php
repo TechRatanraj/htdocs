@@ -2840,7 +2840,8 @@ if ($subcamp_font_size < 4) {$subcamp_font_size='11';}
   </div>
 
 </header>
-
+<br>
+<br>
 
 
 <div style="background-color: #<?php echo $SSframe_background ?>; padding: 15px;">
