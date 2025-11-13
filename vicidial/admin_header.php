@@ -380,7 +380,8 @@ if ($TCedit_javascript > 0)
 
 
 	<?php
-	}
+
+    }}
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
@@ -1699,10 +1700,10 @@ if ( ($ADD==2811) or ($ADD==3811) or ($ADD==3111) or ($ADD==2111) or ($ADD==2011
 
 		span_to_update.innerHTML = new_content;
 		}
-
+	
 	<?php
 	}
-}
+
 echo "</script>\n";
 ?>
 <!DOCTYPE html>
@@ -1732,7 +1733,7 @@ echo "</script>\n";
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --transition: all 0.3s ease;
         }
-
+	
         * {
             margin: 0;
             padding: 0;
