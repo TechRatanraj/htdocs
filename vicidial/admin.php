@@ -46478,20 +46478,9 @@ if ($ADD=="0A")
 <div style="max-width: 1400px; margin: 0 auto;">
     
     <!-- Header Section -->
-<div style="background:#ffffff;border-radius:16px;padding:0;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.05);">
-    <div style="background:#f3f4f6;padding:18px 28px;border-radius:16px 16px 0 0;border-bottom:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-        <div style="display:flex;align-items:center;gap:16px;">
-            <span style="font-size:20px;font-weight:600;color:#333;">Header Title</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;">
-            <button style="padding:8px 14px;border-radius:8px;background:#e5e7eb;border:1px solid #d1d5db;font-size:13px;cursor:pointer;color:#333;">Action</button>
-            <span style="font-size:14px;font-weight:500;color:#555;"><?php echo date('l F j, Y g:i A'); ?></span>
-        </div>
-    </div>
-    <div style="padding:28px;">
-        <p style="margin:0;color:#444;font-size:14px;">Content area inside white card…</p>
-   
-
+    <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
                 <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
                 <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("USER LISTINGS"); ?></h1>
             </div>
