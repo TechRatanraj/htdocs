@@ -8866,7 +8866,7 @@ if ($ADD=="1A")
 
 if ($ADD == 11) {
     if ($LOGmodify_campaigns == 1) {
-        
+
         // Check ID override configuration
         $autoGenerateId = false;
         $voi_count = 0;
@@ -8874,10 +8874,10 @@ if ($ADD == 11) {
         $rslt = mysql_to_mysqli($stmt, $link);
         if ($rslt && mysqli_num_rows($rslt) > 0) {
             $row = mysqli_fetch_row($rslt);
-            $voi_count = intval($row);
+            $voi_count = intval($row[0]);
             $autoGenerateId = ($voi_count > 0);
         }
-        
+
         // Build auto dial level options
         $adl_options = '<option selected>1</option><option>0</option>';
         $adl = 0;
@@ -8911,7 +8911,7 @@ if ($ADD == 11) {
                 $adl_options .= "<option>$adl</option>";
             }
         }
-        
+
         // Build extra webform/script options
         $eswHTML = '';
         if ($SSenable_second_script > 0) {
@@ -8927,28 +8927,29 @@ if ($ADD == 11) {
         $aemHTML = ($SSallow_emails > 0) ? "<option value='EMAIL'>" . _QXZ("EMAIL") . "</option>" : '';
         $achHTML = ($SSallow_chats > 0) ? "<option value='CHAT'>" . _QXZ("CHAT") . "</option>" : '';
         ?>
-        
+
 <style>
-.nc-wrap{max-width:<?php echo $section_width; ?>px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
+.nc-wrap{max-width:1200px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
 .nc-hdr{display:flex;align-items:center;gap:15px;margin-bottom:0;padding:18px 20px;background:#f8f9fa;border:1px solid #e5e7eb;border-bottom:2px solid #e5e7eb;border-radius:6px 6px 0 0}
 .nc-hdr img{flex-shrink:0}
 .nc-hdr h2{margin:0;font-size:18px;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:0.5px}
-.nc-tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
-.nc-tbl tr{background-color:#fff;transition:background-color .15s}
-.nc-tbl tr:hover{background-color:#f9fafb}
-.nc-tbl td{padding:14px 20px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
-.nc-tbl tr:last-child td{border-bottom:none}
-.nc-lbl{font-weight:600;color:#374151;font-size:13px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
-.nc-inp,.nc-sel{padding:9px 12px;border:1.5px solid #d1d5db;border-radius:4px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff;color:#374151}
+.nc-form{background:#fff;border:1px solid #e5e7eb;border-top:none;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.nc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px;margin-bottom:20px}
+.nc-field{display:flex;flex-direction:column;gap:8px}
+.nc-field.full-width{grid-column:1 / -1}
+.nc-lbl{font-weight:600;color:#374151;font-size:13px;text-transform:uppercase;letter-spacing:0.3px}
+.nc-inp,.nc-sel{padding:9px 12px;border:1.5px solid #d1d5db;border-radius:4px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff;color:#374151;width:100%}
 .nc-inp:focus,.nc-sel:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
-.nc-badge{display:inline-block;padding:6px 14px;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;border-radius:4px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
-.nc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:10px 32px;border:none;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.nc-btn:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.15);opacity:.9}
+.nc-badge{display:inline-block;padding:8px 14px;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;border-radius:4px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;width:fit-content}
+.nc-btn{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff;padding:12px 40px;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .3s;box-shadow:0 2px 6px rgba(16,185,129,.3);width:fit-content}
+.nc-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(16,185,129,.4)}
 .nc-btn:active{transform:translateY(0)}
-.nc-link{color:#3b82f6;text-decoration:none;font-weight:500;font-size:13px}
+.nc-submit{text-align:center;padding:20px;background:#fafafa;border-top:2px solid #e5e7eb;border-radius:0 0 6px 6px;margin-top:20px}
+.nc-link{color:#3b82f6;text-decoration:none;font-weight:500;font-size:13px;margin-left:8px}
 .nc-link:hover{text-decoration:underline}
 .nc-disabled{color:#dc2626;font-weight:600;font-size:12px;margin-left:8px}
-@media (max-width:768px){.nc-wrap{margin:10px}.nc-hdr{padding:15px}.nc-tbl td{display:block;width:100%!important;text-align:left!important;padding:12px 15px}.nc-lbl{padding-bottom:5px}}
+.nc-note{color:#6b7280;font-size:12px;font-style:italic;margin-top:4px}
+@media (max-width:968px){.nc-grid{grid-template-columns:1fr;gap:15px}.nc-wrap{margin:10px}}
 </style>
 
 <div class="nc-wrap">
@@ -8956,110 +8957,88 @@ if ($ADD == 11) {
         <img src="images/icon_black_campaigns.png" alt="Campaigns" width="42" height="42">
         <h2><?php echo _QXZ("ADD A NEW CAMPAIGN"); ?></h2>
     </div>
-    
+
     <form action="<?php echo htmlspecialchars($PHP_SELF, ENT_QUOTES, 'UTF-8'); ?>" method="POST" id="ncForm">
         <input type="hidden" name="ADD" value="21">
         <input type="hidden" name="park_ext" value="">
-        
-        <table class="nc-tbl" cellspacing="0">
-            
-            <!-- Campaign ID -->
-            <tr>
-                <td align="right" width="30%" class="nc-lbl"><?php echo _QXZ("Campaign ID"); ?>:</td>
-                <td align="left" width="70%">
+
+        <div class="nc-form">
+            <div class="nc-grid">
+
+                <!-- Campaign ID -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Campaign ID"); ?>: <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?></label>
                     <?php if ($autoGenerateId): ?>
                         <span class="nc-badge"><?php echo _QXZ("Auto-Generated"); ?></span>
-                        <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
                     <?php else: ?>
-                        <input type="text" name="campaign_id" id="ncId" class="nc-inp" size="10" maxlength="8" pattern="[A-Za-z0-9_-]+" required style="max-width:150px">
-                        <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
+                        <input type="text" name="campaign_id" id="ncId" class="nc-inp" maxlength="8" pattern="[A-Za-z0-9_-]+" required>
                     <?php endif; ?>
-                </td>
-            </tr>
-            
-            <!-- Campaign Name -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Campaign Name"); ?>:</td>
-                <td align="left">
-                    <input type="text" name="campaign_name" id="ncName" class="nc-inp" size="40" maxlength="40" required style="max-width:450px">
-                    <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Campaign Description -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Campaign Description"); ?>:</td>
-                <td align="left">
-                    <input type="text" name="campaign_description" class="nc-inp" size="40" maxlength="255" style="max-width:550px">
-                    <?php echo $NWB . "#campaigns-campaign_description" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Admin User Group -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Admin User Group"); ?>:</td>
-                <td align="left">
-                    <select name="user_group" class="nc-sel" style="max-width:300px">
+                </div>
+
+                <!-- Campaign Name -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Campaign Name"); ?>: <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?></label>
+                    <input type="text" name="campaign_name" id="ncName" class="nc-inp" maxlength="40" required>
+                </div>
+
+                <!-- Campaign Description -->
+                <div class="nc-field full-width">
+                    <label class="nc-lbl"><?php echo _QXZ("Campaign Description"); ?>: <?php echo $NWB . "#campaigns-campaign_description" . $NWE; ?></label>
+                    <input type="text" name="campaign_description" class="nc-inp" maxlength="255">
+                </div>
+
+                <!-- Admin User Group -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Admin User Group"); ?>: <?php echo $NWB . "#campaigns-user_group" . $NWE; ?></label>
+                    <select name="user_group" class="nc-sel">
                         <?php echo $UUgroups_list; ?>
                         <option selected value="---ALL---"><?php echo _QXZ("All Admin User Groups"); ?></option>
                     </select>
-                    <?php echo $NWB . "#campaigns-user_group" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Active -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Active"); ?>:</td>
-                <td align="left">
-                    <select name="active" class="nc-sel" style="max-width:120px">
+                </div>
+
+                <!-- Active -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Active"); ?>: <?php echo $NWB . "#campaigns-active" . $NWE; ?></label>
+                    <select name="active" class="nc-sel">
                         <option value="Y"><?php echo _QXZ("Y"); ?></option>
                         <option value="N"><?php echo _QXZ("N"); ?></option>
                     </select>
-                    <?php echo $NWB . "#campaigns-active" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Park Music-on-Hold -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Park Music-on-Hold"); ?>:</td>
-                <td align="left">
-                    <input type="text" name="park_file_name" id="park_file_name" class="nc-inp" size="20" maxlength="100" style="max-width:250px">
-                    <a href="javascript:launch_moh_chooser('park_file_name','moh');" class="nc-link"><?php echo _QXZ("moh chooser"); ?></a>
-                    <?php echo $NWB . "#campaigns-park_ext" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Web Form -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Web Form"); ?>:</td>
-                <td align="left">
-                    <input type="text" name="web_form_address" class="nc-inp" size="70" maxlength="9999" style="max-width:600px">
-                    <?php echo $NWB . "#campaigns-web_form_address" . $NWE; ?>
+                </div>
+
+                <!-- Park Music-on-Hold -->
+                <div class="nc-field full-width">
+                    <label class="nc-lbl"><?php echo _QXZ("Park Music-on-Hold"); ?>: <?php echo $NWB . "#campaigns-park_ext" . $NWE; ?></label>
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <input type="text" name="park_file_name" id="park_file_name" class="nc-inp" maxlength="100" style="max-width:300px">
+                        <a href="javascript:launch_moh_chooser('park_file_name','moh');" class="nc-link"><?php echo _QXZ("moh chooser"); ?></a>
+                    </div>
+                </div>
+
+                <!-- Web Form -->
+                <div class="nc-field full-width">
+                    <label class="nc-lbl"><?php echo _QXZ("Web Form"); ?>: <?php echo $NWB . "#campaigns-web_form_address" . $NWE; ?>
                     <?php if ($SSenable_first_webform < 1): ?>
                         <span class="nc-disabled"><?php echo _QXZ("DISABLED"); ?></span>
                     <?php endif; ?>
-                </td>
-            </tr>
-            
-            <?php if ($SSoutbound_autodial_active > 0): ?>
-            
-            <!-- Allow Closers -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Allow Closers"); ?>:</td>
-                <td align="left">
-                    <select name="allow_closers" class="nc-sel" style="max-width:120px">
+                    </label>
+                    <input type="text" name="web_form_address" class="nc-inp" maxlength="9999">
+                </div>
+
+                <?php if ($SSoutbound_autodial_active > 0): ?>
+
+                <!-- Allow Closers -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Allow Closers"); ?>: <?php echo $NWB . "#campaigns-allow_closers" . $NWE; ?></label>
+                    <select name="allow_closers" class="nc-sel">
                         <option value="Y"><?php echo _QXZ("Y"); ?></option>
                         <option value="N"><?php echo _QXZ("N"); ?></option>
                     </select>
-                    <?php echo $NWB . "#campaigns-allow_closers" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Minimum Hopper Level -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Minimum Hopper Level"); ?>:</td>
-                <td align="left">
-                    <select name="hopper_level" class="nc-sel" style="max-width:150px">
+                </div>
+
+                <!-- Minimum Hopper Level -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Minimum Hopper Level"); ?>: <?php echo $NWB . "#campaigns-hopper_level" . $NWE; ?></label>
+                    <select name="hopper_level" class="nc-sel">
                         <option>1</option>
                         <option>5</option>
                         <option>10</option>
@@ -9074,29 +9053,29 @@ if ($ADD == 11) {
                         <option>4000</option>
                         <option>5000</option>
                     </select>
-                    <?php echo $NWB . "#campaigns-hopper_level" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Auto Dial Level -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Auto Dial Level"); ?>:</td>
-                <td align="left">
-                    <select name="auto_dial_level" class="nc-sel" style="max-width:150px">
+                </div>
+
+                <!-- Auto Dial Level -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Auto Dial Level"); ?>: <?php echo $NWB . "#campaigns-auto_dial_level" . $NWE; ?></label>
+                    <select name="auto_dial_level" class="nc-sel">
                         <?php echo $adl_options; ?>
                     </select>
-                    <span style="color:#6b7280;font-size:13px;margin-left:8px">(0 = <?php echo _QXZ("off"); ?>)</span>
-                    <?php echo $NWB . "#campaigns-auto_dial_level" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <?php endif; ?>
-            
-            <!-- Next Agent Call -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Next Agent Call"); ?>:</td>
-                <td align="left">
-                    <select name="next_agent_call" class="nc-sel" style="max-width:300px">
+                    <span class="nc-note">(0 = <?php echo _QXZ("off"); ?>)</span>
+                </div>
+
+                <!-- Voicemail -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Voicemail"); ?>: <?php echo $NWB . "#campaigns-voicemail_ext" . $NWE; ?></label>
+                    <input type="text" name="voicemail_ext" class="nc-inp" maxlength="10" value="<?php echo htmlspecialchars($voicemail_ext, ENT_QUOTES, 'UTF-8'); ?>">
+                </div>
+
+                <?php endif; ?>
+
+                <!-- Next Agent Call -->
+                <div class="nc-field full-width">
+                    <label class="nc-lbl"><?php echo _QXZ("Next Agent Call"); ?>: <?php echo $NWB . "#campaigns-next_agent_call" . $NWE; ?></label>
+                    <select name="next_agent_call" class="nc-sel">
                         <option value="random"><?php echo _QXZ("random"); ?></option>
                         <option value="oldest_call_start"><?php echo _QXZ("oldest_call_start"); ?></option>
                         <option value="oldest_call_finish"><?php echo _QXZ("oldest_call_finish"); ?></option>
@@ -9109,82 +9088,54 @@ if ($ADD == 11) {
                         <option value="campaign_rank_wait_time"><?php echo _QXZ("campaign_rank_wait_time"); ?></option>
                         <option value="fewest_calls_wait_time"><?php echo _QXZ("fewest_calls_wait_time"); ?></option>
                     </select>
-                    <?php echo $NWB . "#campaigns-next_agent_call" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <!-- Local Call Time -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Local Call Time"); ?>:</td>
-                <td align="left">
-                    <select name="local_call_time" class="nc-sel" style="max-width:300px">
+                </div>
+
+                <!-- Local Call Time -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Local Call Time"); ?>: <?php echo $NWB . "#campaigns-local_call_time" . $NWE; ?></label>
+                    <select name="local_call_time" class="nc-sel">
                         <?php echo $call_times_list; ?>
                     </select>
-                    <?php echo $NWB . "#campaigns-local_call_time" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <?php if ($SSoutbound_autodial_active > 0): ?>
-            
-            <!-- Voicemail -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Voicemail"); ?>:</td>
-                <td align="left">
-                    <input type="text" name="voicemail_ext" class="nc-inp" size="10" maxlength="10" value="<?php echo htmlspecialchars($voicemail_ext, ENT_QUOTES, 'UTF-8'); ?>" style="max-width:150px">
-                    <?php echo $NWB . "#campaigns-voicemail_ext" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <?php endif; ?>
-            
-            <!-- Script -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Script"); ?>:</td>
-                <td align="left">
-                    <select name="script_id" class="nc-sel" style="max-width:350px">
+                </div>
+
+                <!-- Script -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Script"); ?>: <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?></label>
+                    <select name="script_id" class="nc-sel">
                         <?php echo $scripts_list; ?>
                     </select>
-                    <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <?php if ($SSenable_second_script > 0): ?>
-            
-            <!-- Script Two -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Script Two"); ?>:</td>
-                <td align="left">
-                    <select name="campaign_script_two" class="nc-sel" style="max-width:350px">
+                </div>
+
+                <?php if ($SSenable_second_script > 0): ?>
+
+                <!-- Script Two -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Script Two"); ?>: <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?></label>
+                    <select name="campaign_script_two" class="nc-sel">
                         <?php echo $scripts_list; ?>
                     </select>
-                    <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?>
-                </td>
-            </tr>
-            
-            <?php endif; ?>
-            
-            <!-- Get Call Launch -->
-            <tr>
-                <td align="right" class="nc-lbl"><?php echo _QXZ("Get Call Launch"); ?>:</td>
-                <td align="left">
-                    <select name="get_call_launch" class="nc-sel" style="max-width:250px">
+                </div>
+
+                <?php endif; ?>
+
+                <!-- Get Call Launch -->
+                <div class="nc-field">
+                    <label class="nc-lbl"><?php echo _QXZ("Get Call Launch"); ?>: <?php echo $NWB . "#campaigns-get_call_launch" . $NWE; ?></label>
+                    <select name="get_call_launch" class="nc-sel">
                         <option selected value="NONE"><?php echo _QXZ("NONE"); ?></option>
                         <option value="SCRIPT"><?php echo _QXZ("SCRIPT"); ?></option>
                         <option value="WEBFORM"><?php echo _QXZ("WEBFORM"); ?></option>
                         <?php echo $eswHTML . $cfwHTML . $aemHTML . $achHTML; ?>
                     </select>
-                    <?php echo $NWB . "#campaigns-get_call_launch" . $NWE; ?>
-                </td>
-            </tr>
-            
+                </div>
+
+            </div>
+
             <!-- Submit Button -->
-            <tr>
-                <td align="center" colspan="2" style="padding:20px;background:#fafafa;border-top:1px solid #f3f4f6">
-                    <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="nc-btn">
-                </td>
-            </tr>
-            
-        </table>
+            <div class="nc-submit">
+                <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="nc-btn">
+            </div>
+        </div>
     </form>
 </div>
 
