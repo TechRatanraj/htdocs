@@ -46771,258 +46771,441 @@ if ($ADD=="0A")
 ######################
 # ADD=10 display all campaigns
 ######################
+
 if ($ADD==10)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if (file_exists('options.php'))
+        {require('options.php');}
 
-	if (file_exists('options.php'))
-		{require('options.php');}
+    $camp_group_SQL = $LOGadmin_viewable_groupsSQL;
+    if (strlen($whereLOGallowed_campaignsSQL) < 6)
+        {$camp_group_SQL = $whereLOGadmin_viewable_groupsSQL;}
+    $stmt="SELECT campaign_id,campaign_name,active,dial_method,auto_dial_level,lead_order,dial_statuses,user_group,dial_prefix,three_way_dial_prefix,manual_dial_prefix from vicidial_campaigns $whereLOGallowed_campaignsSQL $camp_group_SQL order by campaign_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $campaigns_to_print = mysqli_num_rows($rslt);
+    ?>
 
-	echo "<img src=\"images/icon_black_campaigns.png\" alt=\"Campaigns\" width=42 height=42> "._QXZ("CAMPAIGN LISTINGS").":\n";
-	if ( (preg_match('/display_active/',$status)) or ( (!preg_match('/display_all/',$status)) and ($active_only_default_campaigns > 0) ) )
-		{
-		$SQLstatus = 'Y';
-		echo " &nbsp; <a href=\"$PHP_SELF?ADD=10&status=display_all\"><font size=1 color=black>"._QXZ("show all campaigns")."</a>\n";
-		}
-	else
-		{
-		$SQLstatus = '';
-		echo " &nbsp; <a href=\"$PHP_SELF?ADD=10&status=display_active\"><font size=1 color=black>"._QXZ("show only active campaigns")."</a>\n";
-		}
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        
+        <!-- Campaign Listings Header -->
+        <div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <img src="images/icon_black_campaigns.png" alt="Campaigns" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                    <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("CAMPAIGN LISTINGS"); ?></h1>
+                </div>
+                <div>
+                    <?php
+                    if ( (preg_match('/display_active/',$status)) or ( (!preg_match('/display_all/',$status)) and ($active_only_default_campaigns > 0) ) )
+                        {
+                        $SQLstatus = 'Y';
+                        echo "<a href='$PHP_SELF?ADD=10&status=display_all' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("show all campaigns")."</a>\n";
+                        }
+                    else
+                        {
+                        $SQLstatus = '';
+                        echo "<a href='$PHP_SELF?ADD=10&status=display_active' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("show only active campaigns")."</a>\n";
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
 
-	$camp_group_SQL = $LOGadmin_viewable_groupsSQL;
-	if (strlen($whereLOGallowed_campaignsSQL) < 6)
-		{$camp_group_SQL = $whereLOGadmin_viewable_groupsSQL;}
-	$stmt="SELECT campaign_id,campaign_name,active,dial_method,auto_dial_level,lead_order,dial_statuses,user_group,dial_prefix,three_way_dial_prefix,manual_dial_prefix from vicidial_campaigns $whereLOGallowed_campaignsSQL $camp_group_SQL order by campaign_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$campaigns_to_print = mysqli_num_rows($rslt);
+        <!-- Campaign Table -->
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 900px;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("CAMPAIGN ID"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("NAME"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("ACTIVE"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("GROUP"); ?>
+                        </th>
+                        <?php if ($SSoutbound_autodial_active > 0) { ?>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("DIAL METHOD"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("LEVEL"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("LEAD ORDER"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("DIAL STATUSES"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("DP"); ?>
+                        </th>
+                        <?php } ?>
+                        <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("MODIFY"); ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $o=0; $p=0;
+                while ($campaigns_to_print > $o) 
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    if ( ($SQLstatus!='') and ($row[2]=='N') )
+                        {$skip_display=1;}
+                    else
+                        {
+                        $bgcolor = ($p % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                        $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+                        ?>
+                        <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease; <?php echo $cursor_style; ?>" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=34&campaign_id=$row[0]'\"";} ?>>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                <a href="<?php echo $PHP_SELF; ?>?ADD=34&campaign_id=<?php echo $row[0]; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row[0]; ?></a>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                                <?php echo $row[1]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo _QXZ("$row[2]"); ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo (preg_match('/\-\-ALL\-\-/', $row[7]) ? _QXZ("$row[7]") : $row[7]); ?>
+                            </td>
+                            <?php if ($SSoutbound_autodial_active > 0) {
+                                $dial_prefix = $row[8];
+                                $three_way_dial_prefix = $row[9];
+                                $manual_dial_prefix = $row[10];
+                                $adtl_prefix=0;
+                                $dial_prefix_display = "$dial_prefix";
+                                if ( (strlen($manual_dial_prefix) > 0) and (!preg_match("/^$dial_prefix$/",$manual_dial_prefix)) )
+                                    {$dial_prefix_display .= " - $manual_dial_prefix";   $adtl_prefix++;}
+                                if ( (strlen($three_way_dial_prefix) > 0) and (!preg_match("/^$dial_prefix$/",$three_way_dial_prefix)) )
+                                    {$dial_prefix_display .= " - $three_way_dial_prefix";   $adtl_prefix++;}
+                            ?>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo _QXZ("$row[3]"); ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo $row[4]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo _QXZ("$row[5]"); ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo $row[6]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo $dial_prefix_display; ?>
+                            </td>
+                            <?php } ?>
+                            <td style="padding: 12px; text-align: center;">
+                                <a href="<?php echo $PHP_SELF; ?>?ADD=31&campaign_id=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                    <?php echo _QXZ("MODIFY"); ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+                        $p++;
+                        }
+                    $o++;
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-	echo "<center><TABLE width=900 cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td NOWRAP><font size=1 color=white align=left><B>"._QXZ("CAMPAIGN ID")."</B></td>";
-	echo "<td NOWRAP><font size=1 color=white><CENTER><B>"._QXZ("NAME")."</B></CENTER></td>";
-	echo "<td NOWRAP><font size=1 color=white><B>"._QXZ("ACTIVE")." &nbsp; </B></td>";
-	echo "<td NOWRAP><font size=1 color=white><B>"._QXZ("GROUP")." &nbsp; </B></td>";
-	if ($SSoutbound_autodial_active > 0)
-		{
-		echo "<td NOWRAP><font size=1 color=white><B>"._QXZ("DIAL METHOD")." &nbsp; </B></td>";
-		echo "<td NOWRAP><font size=1 color=white><B> "._QXZ("LEVEL")." &nbsp; </B></td>";
-		echo "<td NOWRAP><font size=1 color=white><B>"._QXZ("LEAD ORDER")." &nbsp; </B></td>";
-		echo "<td NOWRAP><font size=1 color=white><B>"._QXZ("DIAL STATUSES")." &nbsp; </B></td>";
-		echo "<td NOWRAP><font size=1 color=white><B>"._QXZ("DP")." &nbsp; </B></td>";
-		}
-	echo "<td align=center NOWRAP><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0; $p=0;
-	while ($campaigns_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if ( ($SQLstatus!='') and ($row[2]=='N') )
-			{$skip_display=1;}
-		else
-			{
-			if (preg_match('/1$|3$|5$|7$|9$/i', $p))
-				{$bgcolor='class="records_list_x"';} 
-			else
-				{$bgcolor='class="records_list_y"';}
-			echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=34&campaign_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=34&campaign_id=$row[0]\"><font size=1 color=black>$row[0]</a> &nbsp; </td>";
-			echo "<td><font size=1>$row[1] &nbsp; </td>";
-			echo "<td><font size=1>"._QXZ("$row[2]")." &nbsp; </td>";
-			echo "<td><font size=1>".(preg_match('/\-\-ALL\-\-/', $row[7]) ? _QXZ("$row[7]") : $row[7])." &nbsp; </td>";
-			if ($SSoutbound_autodial_active > 0)
-				{
-				$dial_prefix =				$row[8];
-				$three_way_dial_prefix =	$row[9];
-				$manual_dial_prefix =		$row[10];
-				$adtl_prefix=0;
-				$dial_prefix_display = "$dial_prefix";
-				if ( (strlen($manual_dial_prefix) > 0) and (!preg_match("/^$dial_prefix$/",$manual_dial_prefix)) )
-					{$dial_prefix_display .= " - $manual_dial_prefix";   $adtl_prefix++;}
-				if ( (strlen($three_way_dial_prefix) > 0) and (!preg_match("/^$dial_prefix$/",$three_way_dial_prefix)) )
-					{$dial_prefix_display .= " - $three_way_dial_prefix";   $adtl_prefix++;}
-				if ($adtl_prefix > 0)
-					{$dial_prefix_display .= " &nbsp;";}
-				
-				echo "<td><font size=1>"._QXZ("$row[3]")." &nbsp; </td>";
-				echo "<td><font size=1>$row[4] &nbsp; </td>";
-				echo "<td><font size=1>"._QXZ("$row[5]")." &nbsp; </td>";
-				echo "<td><font size=1>$row[6]</td>";
-				echo "<td NOWRAP><font size=1> $dial_prefix_display </td>";
-				}
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-			$p++;
-			}
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
 # ADD=100 display all lists
 ######################
 if ($ADD==100)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    ##### get list of campaign IDs for validation of list campaign
+    $stmt="SELECT campaign_id from vicidial_campaigns;";
+    $rsltx=mysql_to_mysqli($stmt, $link);
+    $camps_to_print = mysqli_num_rows($rsltx);
+    $camp_list='|';
+    $o=0;
+    while ($camps_to_print > $o)
+        {
+        $rowx=mysqli_fetch_row($rsltx);
+        $camp_list .= "$rowx[0]|";
+        $o++;
+        }
 
-	##### get list of campaign IDs for validation of list campaign
-	$stmt="SELECT campaign_id from vicidial_campaigns;";
-	$rsltx=mysql_to_mysqli($stmt, $link);
-	$camps_to_print = mysqli_num_rows($rsltx);
-	$camp_list='|';
-	$o=0;
-	while ($camps_to_print > $o)
-		{
-		$rowx=mysqli_fetch_row($rsltx);
-		$camp_list .= "$rowx[0]|";
-		$o++;
-		}
+    $LISTlink='stage=LISTIDDOWN';
+    $NAMElink='stage=LISTNAMEDOWN';
+    $CALLTIMElink='stage=CALLTIMEDOWN';
+    $TALLYlink='stage=TALLYDOWN';
+    $ACTIVElink='stage=ACTIVEDOWN';
+    $CAMPAIGNlink='stage=CAMPAIGNDOWN';
+    $CALLDATElink='stage=CALLDATEDOWN';
+    $SQLorder='order by list_id';
+    if (preg_match('/LISTIDUP/i', $stage))      {$SQLorder='order by list_id asc';              $LISTlink='stage=LISTIDDOWN';}
+    if (preg_match('/LISTIDDOWN/i', $stage))    {$SQLorder='order by list_id desc';             $LISTlink='stage=LISTIDUP';}
+    if (preg_match('/LISTNAMEUP/i', $stage))    {$SQLorder='order by list_name asc';            $NAMElink='stage=LISTNAMEDOWN';}
+    if (preg_match('/LISTNAMEDOWN/i', $stage))  {$SQLorder='order by list_name desc';           $NAMElink='stage=LISTNAMEUP';}
+    if (preg_match('/CALLTIMEUP/i', $stage))    {$SQLorder='order by local_call_time asc';      $CALLTIMElink='stage=CALLTIMEDOWN';}
+    if (preg_match('/CALLTIMEDOWN/i', $stage))  {$SQLorder='order by local_call_time desc';     $CALLTIMElink='stage=CALLTIMEUP';}  
+    if (preg_match('/TALLYUP/i', $stage))       {$SQLorder='order by tally asc';                $TALLYlink='stage=TALLYDOWN';}
+    if (preg_match('/TALLYDOWN/i', $stage))     {$SQLorder='order by tally desc';               $TALLYlink='stage=TALLYUP';}
+    if (preg_match('/ACTIVEUP/i', $stage))      {$SQLorder='order by active asc';               $ACTIVElink='stage=ACTIVEDOWN';}
+    if (preg_match('/ACTIVEDOWN/i', $stage))    {$SQLorder='order by active desc';              $ACTIVElink='stage=ACTIVEUP';}
+    if (preg_match('/CAMPAIGNUP/i',$stage))     {$SQLorder='order by campaign_id asc';          $CAMPAIGNlink='stage=CAMPAIGNDOWN';}
+    if (preg_match('/CAMPAIGNUP/i', $stage))    {$SQLorder='order by campaign_id desc';         $CAMPAIGNlink='stage=CAMPAIGNUP';}
+    if (preg_match('/CALLDATEUP/i', $stage))    {$SQLorder='order by list_lastcalldate asc';    $CALLDATElink='stage=CALLDATEDOWN';}
+    if (preg_match('/CALLDATEDOWN/i', $stage))  {$SQLorder='order by list_lastcalldate desc';   $CALLDATElink='stage=CALLDATEUP';}
 
-	$LISTlink='stage=LISTIDDOWN';
-	$NAMElink='stage=LISTNAMEDOWN';
-	$CALLTIMElink='stage=CALLTIMEDOWN';
-	$TALLYlink='stage=TALLYDOWN';
-	$ACTIVElink='stage=ACTIVEDOWN';
-	$CAMPAIGNlink='stage=CAMPAIGNDOWN';
-	$CALLDATElink='stage=CALLDATEDOWN';
-	$SQLorder='order by list_id';
-	if (preg_match('/LISTIDUP/i', $stage))		{$SQLorder='order by list_id asc';				$LISTlink='stage=LISTIDDOWN';}
-	if (preg_match('/LISTIDDOWN/i', $stage))	{$SQLorder='order by list_id desc';				$LISTlink='stage=LISTIDUP';}
-	if (preg_match('/LISTNAMEUP/i', $stage))	{$SQLorder='order by list_name asc';			$NAMElink='stage=LISTNAMEDOWN';}
-	if (preg_match('/LISTNAMEDOWN/i', $stage))	{$SQLorder='order by list_name desc';			$NAMElink='stage=LISTNAMEUP';}
-	if (preg_match('/CALLTIMEUP/i', $stage))	{$SQLorder='order by local_call_time asc';		$CALLTIMElink='stage=CALLTIMEDOWN';}
-	if (preg_match('/CALLTIMEDOWN/i', $stage))	{$SQLorder='order by local_call_time desc';		$CALLTIMElink='stage=CALLTIMEUP';}	
-	if (preg_match('/TALLYUP/i', $stage))		{$SQLorder='order by tally asc';				$TALLYlink='stage=TALLYDOWN';}
-	if (preg_match('/TALLYDOWN/i', $stage))		{$SQLorder='order by tally desc';				$TALLYlink='stage=TALLYUP';}
-	if (preg_match('/ACTIVEUP/i', $stage))		{$SQLorder='order by active asc';				$ACTIVElink='stage=ACTIVEDOWN';}
-	if (preg_match('/ACTIVEDOWN/i', $stage))	{$SQLorder='order by active desc';				$ACTIVElink='stage=ACTIVEUP';}
-	if (preg_match('/CAMPAIGNUP/i',$stage))		{$SQLorder='order by campaign_id asc';			$CAMPAIGNlink='stage=CAMPAIGNDOWN';}
-	if (preg_match('/CAMPAIGNUP/i', $stage))	{$SQLorder='order by campaign_id desc';			$CAMPAIGNlink='stage=CAMPAIGNUP';}
-	if (preg_match('/CALLDATEUP/i', $stage))	{$SQLorder='order by list_lastcalldate asc';	$CALLDATElink='stage=CALLDATEDOWN';}
-	if (preg_match('/CALLDATEDOWN/i', $stage))	{$SQLorder='order by list_lastcalldate desc';	$CALLDATElink='stage=CALLDATEUP';}
+    $list_hideSQL='';
+    if ( ($SShide_inactive_lists > 0) and ($status != 'display_all') )
+        {$list_hideSQL = "and active='Y'";}
 
-	$list_hideSQL='';
-	if ( ($SShide_inactive_lists > 0) and ($status != 'display_all') )
-		{$list_hideSQL = "and active='Y'";}
+    $stmt="SELECT vls.list_id,list_name,list_description,count(*) as tally,active,list_lastcalldate,campaign_id,reset_time,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists vls,vicidial_list vl where vls.list_id=vl.list_id $LOGallowed_campaignsSQL $list_hideSQL group by list_id $SQLorder";
+    if ( ($SSadmin_list_counts < 1) or ($rank != '999') )
+        {$stmt="SELECT list_id,list_name,list_description,'X' as tally,active,list_lastcalldate,campaign_id,reset_time,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists where active IN('Y','N') $list_hideSQL $LOGallowed_campaignsSQL $SQLorder";}
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $lists_to_print = mysqli_num_rows($rslt);
 
-	$stmt="SELECT vls.list_id,list_name,list_description,count(*) as tally,active,list_lastcalldate,campaign_id,reset_time,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists vls,vicidial_list vl where vls.list_id=vl.list_id $LOGallowed_campaignsSQL $list_hideSQL group by list_id $SQLorder";
-	if ( ($SSadmin_list_counts < 1) or ($rank != '999') )
-		{$stmt="SELECT list_id,list_name,list_description,'X' as tally,active,list_lastcalldate,campaign_id,reset_time,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists where active IN('Y','N') $list_hideSQL $LOGallowed_campaignsSQL $SQLorder";}
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$lists_to_print = mysqli_num_rows($rslt);
+    $rankLINK="";
+    if ($SSadmin_list_counts > 0)
+        {
+        if ($rank == '999')
+            {$rankLINK = "&rank=999";}
+        else
+            {$rankLINK = "";}
+        }
+    if ($SShide_inactive_lists > 0)
+        {
+        if ($status == 'display_all')
+            {$rankLINK .= "&status=display_all";}
+        }
+    ?>
 
-	echo "<img src=\"images/icon_black_lists.png\" alt=\"Lists\" width=42 height=42> "._QXZ("LIST LISTINGS").": \n";
-	$rankLINK="";
-	if ($SSadmin_list_counts > 0)
-		{
-		if ($rank == '999')
-			{
-			$rankLINK = "&rank=999";
-			echo " &nbsp; <a href=\"$PHP_SELF?ADD=100\"><font size=1 color=black>"._QXZ("hide list leads counts")."</font></a>\n";
-			}
-		else
-			{
-			$rankLINK = "";
-			echo " &nbsp; <a href=\"$PHP_SELF?ADD=100&rank=999\"><font size=1 color=black>"._QXZ("show list leads counts")."</font></a>\n";
-			}
-		}
-	if ($SShide_inactive_lists > 0)
-		{
-		if ($status == 'display_all')
-			{
-			echo " &nbsp; &nbsp; <a href=\"$PHP_SELF?ADD=100$rankLINK\"><font size=1 color=black>"._QXZ("hide inactive lists")."</font></a>\n";
-			$rankLINK .= "&status=display_all";
-			}
-		else
-			{
-			echo " &nbsp; &nbsp; <a href=\"$PHP_SELF?ADD=100&status=display_all$rankLINK\"><font size=1 color=black>"._QXZ("show all lists")."</font></a>\n";
-			}
-		}
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<TR BGCOLOR=BLACK>";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&$LISTlink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LIST ID")."</B></a></TD>";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&$NAMElink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LIST NAME")."</B></a></TD>";
-	echo "<TD><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("DESCRIPTION")."</B></TD>\n";
-	echo "<TD><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("RTIME")."</B></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&$TALLYlink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LEADS COUNT")."</B></a></TD>\n";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&campaign_id=$campaign_id&$CALLTIMElink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("CALL TIME")."</B></a></TD>";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&$ACTIVElink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("ACTIVE")."</B></a></TD>";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&$CALLDATElink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LAST CALL DATE")."</B></a></TD>";
-	echo "<TD><a href=\"$PHP_SELF?ADD=100&$CAMPAIGNlink$rankLINK\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("CAMPAIGN")."</B></a></TD>\n";
-	echo "<TD><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("MODIFY")."</TD>\n";
-	echo "</TR>\n";
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        
+        <!-- List Listings Header -->
+        <div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <img src="images/icon_black_lists.png" alt="Lists" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                    <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("LIST LISTINGS"); ?></h1>
+                </div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <?php
+                    if ($SSadmin_list_counts > 0)
+                        {
+                        if ($rank == '999')
+                            {echo "<a href='$PHP_SELF?ADD=100' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("hide list leads counts")."</a>\n";}
+                        else
+                            {echo "<a href='$PHP_SELF?ADD=100&rank=999' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("show list leads counts")."</a>\n";}
+                        }
+                    if ($SShide_inactive_lists > 0)
+                        {
+                        if ($status == 'display_all')
+                            {echo "<a href='$PHP_SELF?ADD=100$rankLINK' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("hide inactive lists")."</a>\n";}
+                        else
+                            {echo "<a href='$PHP_SELF?ADD=100&status=display_all$rankLINK' style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; padding: 8px 16px; border: 1px solid #3498db; border-radius: 6px; transition: all 0.2s;' onmouseover=\"this.style.background='#3498db'; this.style.color='white';\" onmouseout=\"this.style.background='transparent'; this.style.color='#3498db';\">"._QXZ("show all lists")."</a>\n";}
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
 
-	$lists_printed = '';
-	$o=0;
-	while ($lists_to_print > $o)
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=311&list_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> $row[2]</td>";
-		echo "<td><font size=1> $row[7]</td>";
-		echo "<td><font size=1> $row[3]</td>";
-		if ($row[9] == 'campaign')
-			{echo "<td><font size=1> $row[9]</td>";}
-		else
-			{echo "<td><font size=1><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$row[9]\"> $row[9]</a></td>";}
-		echo "<td><font size=1> "._QXZ("$row[4]");
-		if ($row[8] < $EXPtestdate)
-			{echo " <font color=red><B>"._QXZ("EXP")."</B></font>";}
-		echo "</td>";
-		echo "<td><font size=1> $row[5]</td>";
-		if (!preg_match("/\|$row[6]\|/",$camp_list))
-			{echo "<td><font size=1> <font color=red><B>$row[6]</B></font></td>";}
-		else
-			{echo "<td><font size=1> $row[6]</td>";}
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$lists_printed .= "'$row[0]',";
-		$o++;
-		}
+        <!-- List Table -->
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 1200px;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&<?php echo $LISTlink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("LIST ID"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&<?php echo $NAMElink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("LIST NAME"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("DESCRIPTION"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("RTIME"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&<?php echo $TALLYlink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("LEADS COUNT"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&campaign_id=<?php echo $campaign_id; ?>&<?php echo $CALLTIMElink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("CALL TIME"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&<?php echo $ACTIVElink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("ACTIVE"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&<?php echo $CALLDATElink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("LAST CALL DATE"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=100&<?php echo $CAMPAIGNlink.$rankLINK; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                                <?php echo _QXZ("CAMPAIGN"); ?> <span style="font-size: 10px;">▼</span>
+                            </a>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("MODIFY"); ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $lists_printed = '';
+                $o=0;
+                while ($lists_to_print > $o)
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    $bgcolor = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                    $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+                    ?>
+                    <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease; <?php echo $cursor_style; ?>" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=311&list_id=$row[0]'\"";} ?>>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=311&list_id=<?php echo $row[0]; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row[0]; ?></a>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                            <?php echo $row[1]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[2]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[7]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[3]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php if ($row[9] == 'campaign') {
+                                echo $row[9];
+                            } else {
+                                echo "<a href='$PHP_SELF?ADD=311111111&call_time_id=$row[9]' style='color: #3498db; text-decoration: none;'>$row[9]</a>";
+                            } ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo _QXZ("$row[4]");
+                            if ($row[8] < $EXPtestdate) {
+                                echo " <span style='color: #e74c3c; font-weight: 600;'>"._QXZ("EXP")."</span>";
+                            } ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[5]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <?php
+                            if (!preg_match("/\|$row[6]\|/",$camp_list)) {
+                                echo "<span style='color: #e74c3c; font-weight: 600;'>$row[6]</span>";
+                            } else {
+                                echo "<span style='color: #7f8c8d;'>$row[6]</span>";
+                            }
+                            ?>
+                        </td>
+                        <td style="padding: 12px; text-align: center;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=311&list_id=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                <?php echo _QXZ("MODIFY"); ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                    $lists_printed .= "'$row[0]',";
+                    $o++;
+                    }
 
-	$stmt="SELECT list_id,list_name,list_description,0,active,list_lastcalldate,campaign_id,reset_time,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists where list_id NOT IN($lists_printed'') $list_hideSQL $LOGallowed_campaignsSQL;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$lists_to_print = mysqli_num_rows($rslt);
-	$p=0;
-	while ($lists_to_print > $p)
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor><td><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> $row[2]</td>";
-		echo "<td><font size=1> $row[7]</td>";
-		echo "<td><font size=1> $row[3]</td>";
-		if ($row[9] == 'campaign')
-			{echo "<td><font size=1> $row[9]</td>";}
-		else
-			{echo "<td><font size=1><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$row[9]\"> $row[9]</a></td>";}
-		echo "<td><font size=1> $row[4]";
-		if ($row[8] < $EXPtestdate)
-			{echo " <font color=red><B>"._QXZ("EXP")."</B></font>";}
-		echo "</td>";
-		echo "<td><font size=1> $row[5]</td>";
-		if (!preg_match("/\|$row[6]\|/",$camp_list))
-			{echo "<td><font size=1> <font color=red><B>$row[6]</B></font></td>";}
-		else
-			{echo "<td><font size=1> $row[6]</td>";}
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$p++;
-		$o++;
-		}
+                // Display lists with no leads
+                $stmt="SELECT list_id,list_name,list_description,0,active,list_lastcalldate,campaign_id,reset_time,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists where list_id NOT IN($lists_printed'') $list_hideSQL $LOGallowed_campaignsSQL;";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $lists_to_print = mysqli_num_rows($rslt);
+                $p=0;
+                while ($lists_to_print > $p)
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    $bgcolor = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                    ?>
+                    <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';">
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=311&list_id=<?php echo $row[0]; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row[0]; ?></a>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                            <?php echo $row[1]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[2]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[7]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[3]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php if ($row[9] == 'campaign') {
+                                echo $row[9];
+                            } else {
+                                echo "<a href='$PHP_SELF?ADD=311111111&call_time_id=$row[9]' style='color: #3498db; text-decoration: none;'>$row[9]</a>";
+                            } ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[4];
+                            if ($row[8] < $EXPtestdate) {
+                                echo " <span style='color: #e74c3c; font-weight: 600;'>"._QXZ("EXP")."</span>";
+                            } ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo $row[5]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <?php
+                            if (!preg_match("/\|$row[6]\|/",$camp_list)) {
+                                echo "<span style='color: #e74c3c; font-weight: 600;'>$row[6]</span>";
+                            } else {
+                                echo "<span style='color: #7f8c8d;'>$row[6]</span>";
+                            }
+                            ?>
+                        </td>
+                        <td style="padding: 12px; text-align: center;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=311&list_id=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                <?php echo _QXZ("MODIFY"); ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                    $p++;
+                    $o++;
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
