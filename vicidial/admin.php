@@ -8588,7 +8588,11 @@ if ($ADD=="1")
         if ($voi_ct > 0)
             {
             $row=mysqli_fetch_row($rslt);
-            $voi_count = "$row";
+            $voi_count = $row;
+            }
+        else
+            {
+            $voi_count = 0;
             }
         ##### END ID override optional section #####
 
@@ -8672,7 +8676,11 @@ if ($ADD=="1A")
         if ($voi_ct > 0)
             {
             $row=mysqli_fetch_row($rslt);
-            $voi_count = "$row";
+            $voi_count = $row;
+            }
+        else
+            {
+            $voi_count = 0;
             }
         ##### END ID override optional section #####
 
@@ -8720,7 +8728,7 @@ if ($ADD=="1A")
         while ($Uusers_to_print > $o) 
             {
             $rowx=mysqli_fetch_row($rslt);
-            $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";[1]
+            $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
             $o++;
             }
         echo "$Uusers_list";
@@ -8736,6 +8744,8 @@ if ($ADD=="1A")
         echo _QXZ("You do not have permission to view this page")."\n";
         exit;
         }
+    }
+
 
 
 
