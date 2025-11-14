@@ -32303,7 +32303,7 @@ if ($SUB < 1) {
 }
 
 echo "</div>";
-
+	}
 
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
