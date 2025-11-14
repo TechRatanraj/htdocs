@@ -8577,9 +8577,6 @@ if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 ######################
 # ADD=1 display the ADD A NEW USER FORM SCREEN
 ######################
-######################
-# ADD=1 display the ADD A NEW USER FORM SCREEN
-######################
 if ($ADD=="1")
     {
     if ($LOGmodify_users==1)
@@ -8588,7 +8585,7 @@ if ($ADD=="1")
         $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_users' and active='1';";
         $rslt=mysql_to_mysqli($stmt, $link);
         $voi_ct = mysqli_num_rows($rslt);
-        if ($voi_count > 0)
+        if ($voi_ct > 0)
             {
             $row=mysqli_fetch_row($rslt);
             $voi_count = "$row";
@@ -8610,23 +8607,23 @@ if ($ADD=="1")
         echo "<tr>";
         if ($voi_count > 0)
             {
-            echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("User Number").": </td><td bgcolor=#$SSstd_row4_background align=left>"._QXZ("Auto-Generated")." <input type=hidden name=user id=user value=\"99999\">$NWB#users-user$NWE</td>";
+            echo "<td bgcolor=white align=right>"._QXZ("User Number").": </td><td bgcolor=white align=left>"._QXZ("Auto-Generated")." <input type=hidden name=user id=user value=\"99999\">$NWB#users-user$NWE</td>";
             }
         else
             {
-            echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("User Number").": </td><td bgcolor=#$SSstd_row4_background align=left><input type=text name=user id=user size=15 maxlength=20> <input style='background-color:#$SSbutton_color' type=button name=auto_user value=\""._QXZ("AUTO-GENERATE")."\" onClick=\"user_auto()\"> $NWB#users-user$NWE</td>";
+            echo "<td bgcolor=white align=right>"._QXZ("User Number").": </td><td bgcolor=white align=left><input type=text name=user id=user size=20 maxlength=20> <input style='background-color:#$SSbutton_color' type=button name=auto_user value=\""._QXZ("AUTO-GENERATE")."\" onClick=\"user_auto()\"> $NWB#users-user$NWE</td>";
             }
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Full Name").": </td><td bgcolor=#$SSstd_row4_background align=left><input type=text name=full_name size=30 maxlength=100>$NWB#users-full_name$NWE</td>";
+        echo "<td bgcolor=white align=right>"._QXZ("Full Name").": </td><td bgcolor=white align=left><input type=text name=full_name size=20 maxlength=100>$NWB#users-full_name$NWE</td>";
         echo "</tr>\n";
 
         // Row 2: Password (full width)
         echo "<tr>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Password").": </td><td bgcolor=#$SSstd_row4_background align=left colspan=3 NOWRAP><input type=text id=reg_pass name=pass size=40 maxlength=100 onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1> "._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1>"._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td>";
+        echo "<td bgcolor=white align=right>"._QXZ("Password").": </td><td bgcolor=white align=left colspan=3 style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1> "._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1>"._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td>";
         echo "</tr>\n";
 
         // Row 3: User Level and User Group
         echo "<tr>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("User Level").": </td><td bgcolor=#$SSstd_row4_background align=left><select size=1 name=user_level>";
+        echo "<td bgcolor=white align=right>"._QXZ("User Level").": </td><td bgcolor=white align=left><select size=1 name=user_level>";
         $h=1;
         $count_user_level=$LOGuser_level;
         if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
@@ -8637,19 +8634,19 @@ if ($ADD=="1")
             $h++;
             }
         echo "</select>$NWB#users-user_level$NWE</td>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("User Group").": </td><td bgcolor=#$SSstd_row4_background align=left><select size=1 name=user_group>\n";
+        echo "<td bgcolor=white align=right>"._QXZ("User Group").": </td><td bgcolor=white align=left><select size=1 name=user_group>\n";
         echo "$UUgroups_list";
         echo "</select>$NWB#users-user_group$NWE</td>";
         echo "</tr>\n";
 
         // Row 4: Phone Login and Phone Pass
         echo "<tr>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Phone Login").": </td><td bgcolor=#$SSstd_row4_background align=left><input type=text name=phone_login size=15 maxlength=20>$NWB#users-phone_login$NWE</td>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Phone Pass").": </td><td bgcolor=#$SSstd_row4_background align=left><input type=text name=phone_pass size=15 maxlength=20>$NWB#users-phone_pass$NWE</td>";
+        echo "<td bgcolor=white align=right>"._QXZ("Phone Login").": </td><td bgcolor=white align=left><input type=text name=phone_login size=20 maxlength=20>$NWB#users-phone_login$NWE</td>";
+        echo "<td bgcolor=white align=right>"._QXZ("Phone Pass").": </td><td bgcolor=white align=left><input type=text name=phone_pass size=20 maxlength=20>$NWB#users-phone_pass$NWE</td>";
         echo "</tr>\n";
 
         // Submit Button Row
-        echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=4><input style='background-color:#$SSbutton_color' type=button name=SUBMIT value='"._QXZ("SUBMIT")."' onClick=\"user_submit()\"></td></tr>\n";
+        echo "<tr bgcolor=white><td align=center colspan=4><input style='background-color:#$SSbutton_color' type=button name=SUBMIT value='"._QXZ("SUBMIT")."' onClick=\"user_submit()\"></td></tr>\n";
         echo "</TABLE></center>\n";
         }
     else
@@ -8693,23 +8690,23 @@ if ($ADD=="1A")
         echo "<tr>";
         if ($voi_count > 0)
             {
-            echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("New User Number").": </td><td bgcolor=#$SSstd_row4_background align=left>"._QXZ("Auto-Generated")." <input type=hidden name=user id=user value=\"99999\">$NWB#users-user$NWE</td>";
+            echo "<td bgcolor=white align=right>"._QXZ("New User Number").": </td><td bgcolor=white align=left>"._QXZ("Auto-Generated")." <input type=hidden name=user id=user value=\"99999\">$NWB#users-user$NWE</td>";
             }
         else
             {
-            echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("New User Number").": </td><td bgcolor=#$SSstd_row4_background align=left><input type=text name=user id=user size=15 maxlength=20> <input style='background-color:#$SSbutton_color' type=button name=auto_user value=\""._QXZ("AUTO-GENERATE")."\" onClick=\"user_auto()\"> $NWB#users-user$NWE</td>";
+            echo "<td bgcolor=white align=right>"._QXZ("New User Number").": </td><td bgcolor=white align=left><input type=text name=user id=user size=20 maxlength=20> <input style='background-color:#$SSbutton_color' type=button name=auto_user value=\""._QXZ("AUTO-GENERATE")."\" onClick=\"user_auto()\"> $NWB#users-user$NWE</td>";
             }
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Full Name").": </td><td bgcolor=#$SSstd_row4_background align=left><input type=text name=full_name size=30 maxlength=100>$NWB#users-full_name$NWE</td>";
+        echo "<td bgcolor=white align=right>"._QXZ("Full Name").": </td><td bgcolor=white align=left><input type=text name=full_name size=20 maxlength=100>$NWB#users-full_name$NWE</td>";
         echo "</tr>\n";
 
         // Row 2: Password (full width)
         echo "<tr>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Password").": </td><td bgcolor=#$SSstd_row4_background align=left colspan=3 NOWRAP><input type=text id=reg_pass name=pass size=40 maxlength=100 onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td>";
+        echo "<td bgcolor=white align=right>"._QXZ("Password").": </td><td bgcolor=white align=left colspan=3 style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td>";
         echo "</tr>\n";
 
         // Row 3: Source User (full width)
         echo "<tr>";
-        echo "<td bgcolor=#$SSstd_row4_background align=right>"._QXZ("Source User").": </td><td bgcolor=#$SSstd_row4_background align=left colspan=3><select size=1 name=source_user_id>\n";
+        echo "<td bgcolor=white align=right>"._QXZ("Source User").": </td><td bgcolor=white align=left colspan=3><select size=1 name=source_user_id>\n";
 
         if ($LOGuser_level==9) {$levelMAX=10;}
         else {$levelMAX=$LOGuser_level;}
@@ -8723,7 +8720,7 @@ if ($ADD=="1A")
         while ($Uusers_to_print > $o) 
             {
             $rowx=mysqli_fetch_row($rslt);
-            $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
+            $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";[1]
             $o++;
             }
         echo "$Uusers_list";
@@ -8731,7 +8728,7 @@ if ($ADD=="1A")
         echo "</tr>\n";
 
         // Submit Button Row
-        echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=4><input style='background-color:#$SSbutton_color' type=button name=SUBMIT value='"._QXZ("SUBMIT")."' onClick=\"user_submit()\"></td></tr>\n";
+        echo "<tr bgcolor=white><td align=center colspan=4><input style='background-color:#$SSbutton_color' type=button name=SUBMIT value='"._QXZ("SUBMIT")."' onClick=\"user_submit()\"></td></tr>\n";
         echo "</TABLE></center>\n";
         }
     else
@@ -8739,7 +8736,8 @@ if ($ADD=="1A")
         echo _QXZ("You do not have permission to view this page")."\n";
         exit;
         }
-    }
+
+
 
 
 ######################
