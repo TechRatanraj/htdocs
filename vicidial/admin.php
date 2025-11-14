@@ -31119,6 +31119,7 @@ if ($ADD==31)
 # ADD=34 modify campaign info in the system - Basic View
 ######################
 
+
 if ( ($ADD==34) and ( (!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) {
 	$ADD=30;
 }
@@ -31494,7 +31495,6 @@ if ($ADD==34) {
         <input type="hidden" name="campaign_id" value="<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>">
 
         <div class="bv-container">
-
             <div class="bv-section-title"><?php echo _QXZ("Campaign Information"); ?></div>
             <div class="bv-grid">
                 <div class="bv-field">
@@ -31687,275 +31687,7 @@ if ($ADD==34) {
                 <?php endif; ?>
             </div>
 
-
-            <?php if ($SSoutbound_autodial_active > 0) { ?>
-    <div class="bv-section-title">Dial Statuses Management</div>
-    <div class="bv-status-fields">
-        <?php
-        $o=0;
-        while ($Ds_to_print > $o) {
-            $o++;
-            $Dstatus = $Dstatuses[$o];
-            ?>
-            <div class="bv-status-row">
-                <div class="bv-label"><?php echo _QXZ("Dial Status"); ?> <?php echo $o; ?>:</div>
-                <?php
-                if ($DEFstatusDISABLED > 0) {
-                    echo "<font color=grey><DEL><b>$Dstatus</b> - " . $statname_list[$Dstatus] . " &nbsp; <font size=2>" . _QXZ("REMOVE") . "</DEL>";
-                } else {
-                    echo "<b>$Dstatus</b> - " . $statname_list[$Dstatus] . " &nbsp; <a href=\"" . $PHP_SELF . "?ADD=68&campaign_id=$campaign_id&status=" . $Dstatuses[$o] . "\">" . _QXZ("REMOVE") . "</a>";
-                }
-                ?>
-            </div>
-        <?php } ?>
-        <div class="bv-status-row">
-            <div class="bv-field">
-                <label class="bv-label"><?php echo _QXZ("Add A Dial Status to Call"); ?>:</label>
-                <select name="dial_status" class="bv-select" <?php echo $DEFlistDISABLE; ?>>
-                    <option value=""> - <?php echo _QXZ("NONE"); ?> - </option>
-                    <?php echo $dial_statuses_list; ?>
-                </select>
-                <input type="submit" name="submit" value="<?php echo _QXZ("ADD"); ?>" class="bv-button">
-            </div>
-        </div>
-    </div>
-<?php } ?>
-<?php if ($SSoutbound_autodial_active > 0) { ?>
-    <div class="bv-section-title">Advanced Campaign Settings</div>
-    <div class="bv-grid">
-        <div class="bv-field full">
-            <label class="bv-label"><?php echo _QXZ("List Order"); ?>:</label>
-            <?php if ($ALTmultiDISABLE > 0) { ?>
-                <input type="hidden" name="lead_order" value="<?php echo $lead_order; ?>">
-                <input type="text" class="bv-input bv-readonly" value="<?php echo $lead_order; ?>" readonly>
-                <div class="bv-note"><?php echo $ALTmultiLINK; ?></div>
-            <?php } else { ?>
-                <select name="lead_order" class="bv-select">
-                    <option value="<?php echo $lead_order; ?>" SELECTED><?php echo _QXZ("$lead_order"); ?></option>
-                    <option value="DOWN"><?php echo _QXZ("DOWN"); ?></option>
-                    <option value="UP"><?php echo _QXZ("UP"); ?></option>
-                    <option value="DOWN PHONE"><?php echo _QXZ("DOWN PHONE"); ?></option>
-                    <option value="UP PHONE"><?php echo _QXZ("UP PHONE"); ?></option>
-                    <option value="DOWN LAST NAME"><?php echo _QXZ("DOWN LAST NAME"); ?></option>
-                    <option value="UP LAST NAME"><?php echo _QXZ("UP LAST NAME"); ?></option>
-                    <option value="DOWN COUNT"><?php echo _QXZ("DOWN COUNT"); ?></option>
-                    <option value="UP COUNT"><?php echo _QXZ("UP COUNT"); ?></option>
-                    <option value="RANDOM"><?php echo _QXZ("RANDOM"); ?></option>
-                    <option value="DOWN LAST CALL TIME"><?php echo _QXZ("DOWN LAST CALL TIME"); ?></option>
-                    <option value="UP LAST CALL TIME"><?php echo _QXZ("UP LAST CALL TIME"); ?></option>
-                    <option value="DOWN RANK"><?php echo _QXZ("DOWN RANK"); ?></option>
-                    <option value="UP RANK"><?php echo _QXZ("UP RANK"); ?></option>
-                    <option value="DOWN OWNER"><?php echo _QXZ("DOWN OWNER"); ?></option>
-                    <option value="UP OWNER"><?php echo _QXZ("UP OWNER"); ?></option>
-                    <option value="DOWN TIMEZONE"><?php echo _QXZ("DOWN TIMEZONE"); ?></option>
-                    <option value="UP TIMEZONE"><?php echo _QXZ("UP TIMEZONE"); ?></option>
-                    <!-- Additional options from 2nd NEW through 6th NEW variants -->
-                    <option value="DOWN 2nd NEW"><?php echo _QXZ("DOWN 2nd NEW"); ?></option>
-                    <option value="UP 2nd NEW"><?php echo _QXZ("UP 2nd NEW"); ?></option>
-                    <!-- ... continue with all 3rd, 4th, 5th, 6th variants ... -->
-                </select>
-            <?php } ?>
-        </div>
-
-        <div class="bv-field">
-            <label class="bv-label"><?php echo _QXZ("List Mix"); ?>:</label>
-            <select name="list_mix_id" class="bv-select">
-                <?php echo $mixes_list; ?>
-            </select>
-        </div>
-
-        <div class="bv-field">
-            <label class="bv-label"><?php echo _QXZ("Lead Filter"); ?>:</label>
-            <input type="text" class="bv-input bv-readonly" value="<?php echo $lead_filter_id; ?>" readonly>
-        </div>
-
-        <div class="bv-field">
-            <label class="bv-label"><?php echo _QXZ("Wrapup Message"); ?>:</label>
-            <textarea name="wrapup_message" class="bv-input" style="min-height:60px"><?php echo htmlspecialchars($wrapup_message, ENT_QUOTES); ?></textarea>
-        </div>
-
-        <div class="bv-field">
-            <label class="bv-label"><?php echo _QXZ("Drop Call Seconds"); ?>:</label>
-            <input type="text" class="bv-input" name="drop_call_seconds" value="<?php echo htmlspecialchars($drop_call_seconds, ENT_QUOTES); ?>">
-        </div>
-
-        <div class="bv-field">
-            <label class="bv-label"><?php echo _QXZ("Drop Action"); ?>:</label>
-            <select name="drop_action" class="bv-select">
-                <option value="<?php echo htmlspecialchars($drop_action, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($drop_action, ENT_QUOTES); ?></option>
-                <option value="HANGUP">HANGUP</option>
-                <option value="TRANSFER">TRANSFER</option>
-            </select>
-        </div>
-
-        <div class="bv-field">
-            <label class="bv-label"><?php echo _QXZ("Drop Lockout Time"); ?>:</label>
-            <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($drop_lockout_time, ENT_QUOTES); ?>" readonly>
-        </div>
-    </div>
-<?php } ?>
-<div class="bv-section-title"><?php echo _QXZ("Recording Configuration"); ?></div>
-<div class="bv-grid">
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Campaign Recording"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_recording, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Recording Filename"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_rec_filename, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Campaign VDAD Ext"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_vdad_exten, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Campaign Rec Ext"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_rec_exten, ENT_QUOTES); ?>" readonly>
-    </div>
-</div>
-
-<div class="bv-section-title"><?php echo _QXZ("Transfer & Advanced Settings"); ?></div>
-<div class="bv-grid">
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Transfer Conf A DTMF"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($xferconf_a_dtmf, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Transfer Conf A Number"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($xferconf_a_number, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Transfer Conf B DTMF"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($xferconf_b_dtmf, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Transfer Conf B Number"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($xferconf_b_number, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("AM Message Extension"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($am_message_exten, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("AMD Send to VMX"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($amd_send_to_vmx, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Safe Harbor Extension"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($safe_harbor_exten, ENT_QUOTES); ?>" readonly>
-    </div>
-    <div class="bv-field">
-        <label class="bv-label"><?php echo _QXZ("Alt Number Dialing"); ?>:</label>
-        <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($alt_number_dialing, ENT_QUOTES); ?>" readonly>
-    </div>
-</div>
-
-<div class="bv-section-title"><?php echo _QXZ("Agent Ranks for this Campaign"); ?></div>
-<table class="bv-grid" style="grid-template-columns: auto auto auto auto; width: 100%; border: 1px solid #e5e7eb;">
-    <tr style="background: #f3f4f6; font-weight: 600; border-bottom: 2px solid #e5e7eb;">
-        <td><?php echo _QXZ("USER"); ?></td>
-        <td><?php echo _QXZ("RANK"); ?></td>
-        <td><?php echo _QXZ("GRADE"); ?></td>
-        <td><?php echo _QXZ("CALLS TODAY"); ?></td>
-    </tr>
-    <?php
-    $stmt="SELECT user_group from vicidial_user_groups where ( (allowed_campaigns LIKE '%-ALL-CAMPAIGNS-%') or (allowed_campaigns LIKE '% $campaign_id %') )  $LOGadmin_viewable_groupsSQL;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $USERgroups_to_print = mysqli_num_rows($rslt);
-    $USERgroupsSQL="''";
-    $i=0;
-    while ($i < $USERgroups_to_print) {
-        $row=mysqli_fetch_row($rslt);
-        $USERgroupsSQL .= ",'$row'";
-        $i++;
-    }
-
-    $stmt="SELECT user,full_name from vicidial_users where user_group IN($USERgroupsSQL) and active='Y' order by user;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $users_to_print = mysqli_num_rows($rslt);
-    $U_user=array();
-    $U_full_name=array();
-    $i=0;
-    while ($i < $users_to_print) {
-        $row=mysqli_fetch_row($rslt);
-        $U_user[$i] = $row;
-        $U_full_name[$i] = $row;
-        $i++;
-    }
-
-    $o=0;
-    while ($users_to_print > $o) {
-        $temp_user = $U_user[$o];
-        $temp_name = $U_full_name[$o];
-        $campaign_rank='n/a';
-        $calls_today='n/a';
-        $campaign_grade='n/a';
-
-        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-            {$bgcolor='background: #f9fafb';}
-        else
-            {$bgcolor='background: #fff';}
-
-        $stmt="SELECT campaign_rank,calls_today,campaign_grade from vicidial_campaign_agents where user='$U_user[$o]' and campaign_id='$campaign_id';";
-        $rslt=mysql_to_mysqli($stmt, $link);
-        $USERdetails_to_print = mysqli_num_rows($rslt);
-        if ($USERdetails_to_print > 0) {
-            $row=mysqli_fetch_row($rslt);
-            $campaign_rank = $row;
-            $calls_today = $row;
-            $campaign_grade = $row;
-        }
-        $o++;
-
-        echo "<tr style=\"$bgcolor; border-bottom: 1px solid #e5e7eb; padding: 8px;\">";
-        echo "<td><a href=\"" . $PHP_SELF . "?ADD=3&user=$temp_user\" class=\"bv-link\">$temp_user</a> - $temp_name</td>";
-        echo "<td>$campaign_rank</td>";
-        echo "<td>$campaign_grade</td>";
-        echo "<td>$calls_today</td>";
-        echo "</tr>";
-    }
-    ?>
-</table>
-
-<div style="text-align:center; margin-top:20px;">
-    <a href="<?php echo $PHP_SELF; ?>?ADD=52&campaign_id=<?php echo $campaign_id; ?>&DB=<?php echo $DB; ?>" class="bv-link">
-        <?php echo _QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN"); ?>
-    </a>
-</div>
-
-<?php if ($LOGhopper_level_display > 0) { ?>
-<div style="text-align:center; margin-top:20px;">
-    <?php
-    $stmt="SELECT count(*) from vicidial_hopper_list where campaign_id='$campaign_id' and status='READY' $LOGallowed_campaignsSQL;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $rowx=mysqli_fetch_row($rslt);
-    $hopper_leads = "$rowx";
-    echo _QXZ("This campaign has") . " $hopper_leads " . _QXZ("leads in the dial hopper") . "<br><br>";
-    echo "<a href=\"./AST_VICIDIAL_hopperlist.php?group=$campaign_id\" class=\"bv-link\">" . _QXZ("Click here to see what leads are in the hopper right now") . "</a><br><br>";
-    echo "<a href=\"./AST_VDADstats.php?group=$campaign_id\" class=\"bv-link\">" . _QXZ("Click here to see a VDAD report for this campaign") . "</a><BR><BR>";
-    ?>
-</div>
-<?php } ?>
-
-<div style="text-align:center; margin-top:20px;">
-    <a href="<?php echo $PHP_SELF; ?>?ADD=81&campaign_id=<?php echo $campaign_id; ?>" class="bv-link">
-        <?php echo _QXZ("Click here to see all CallBack Holds in this campaign"); ?>
-    </a><BR><BR>
-    <?php if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)))) { ?>
-    <a href="<?php echo $PHP_SELF; ?>?ADD=7.2e+14&category=CAMPAIGNS&stage=<?php echo $campaign_id; ?>" class="bv-link">
-        <?php echo _QXZ("Click here to see Admin changes to this campaign"); ?>
-    </a><BR><BR>
-    <?php } ?>
-    <?php if ($LOGdelete_campaigns > 0) { ?>
-    <a href="<?php echo $PHP_SELF; ?>?ADD=51&campaign_id=<?php echo $campaign_id; ?>" class="bv-link" style="color: #dc2626;">
-        <?php echo _QXZ("DELETE THIS CAMPAIGN"); ?>
-    </a>
-    <?php } ?>
-</div>
-
-
-  <div class="bv-submit-area">
-  	
+            <div class="bv-submit-area">
                 <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="bv-button">
                 <a href="<?php echo $PHP_SELF; ?>?ADD=31&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-button bv-button-secondary"><?php echo _QXZ("Detail View"); ?></a>
                 <a href="./AST_VICIDIAL_hopperlist.php?group=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-button bv-button-secondary"><?php echo _QXZ("View Hopper"); ?></a>
@@ -32004,6 +31736,7 @@ if ($ADD==34) {
         exit;
     }
 }
+
 
 
 
