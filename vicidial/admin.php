@@ -9019,17 +9019,19 @@ if ($LOGmodify_campaigns==1)
 $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_campaigns' and active='1';";
 $rslt=mysql_to_mysqli($stmt, $link);
 $voi_ct = mysqli_num_rows($rslt);
+$voi_count = 0;
 if ($voi_ct > 0)
 {
 $row=mysqli_fetch_row($rslt);
-$voi_count = "$row";
+$voi_count = $row;
 }
 ##### END ID override optional section #####
 
+    // Build campaigns list for dropdown
     $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
     $rslt=mysql_to_mysqli($stmt, $link);
     $campaigns_to_print = mysqli_num_rows($rslt);
-    $campaigns_list='';
+    $campaigns_list = '';
 
     $o=0;
     while ($campaigns_to_print > $o) 
@@ -9112,7 +9114,7 @@ $voi_count = "$row";
                         <td colspan="2" style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; text-align: center;">
                             <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #856404; line-height: 1.6;">
                                 <strong style="display: block; margin-bottom: 8px;">ℹ️ <?php echo _QXZ("NOTE"); ?>:</strong>
-                                <?php echo _QXZ("NOTE: Copying a campaign will copy all settings from the master campaign you select, but it will not copy a campaign-specific DNC list if there was one on the selected master campaign."); ?>
+                                <?php echo _QXZ("Copying a campaign will copy all settings from the master campaign you select, but it will not copy a campaign-specific DNC list if there was one on the selected master campaign."); ?>
                             </div>
                         </td>
                     </tr>
