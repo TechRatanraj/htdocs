@@ -46501,7 +46501,6 @@ if ($ADD=="0A")
         </div>
     </div>
 
-
     <?php
     $USERlink='stage=USERIDDOWN';
     $USERNUMlink='stage=USERIDNUMDOWN';
@@ -46524,7 +46523,6 @@ if ($ADD=="0A")
     $rslt=mysql_to_mysqli($stmt, $link);
     $people_to_print = mysqli_num_rows($rslt);
     ?>
-
 
     <!-- User Table -->
     <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
@@ -46595,7 +46593,7 @@ if ($ADD=="0A")
                         <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $row; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row; ?></a>
                     </td>
                     <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <?php echo $row; ?>[1]
+                        <?php echo $row; ?>
                     </td>
                     <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
                         <?php echo $row; ?>
@@ -46637,13 +46635,10 @@ if ($ADD=="0A")
         </table>
     </div>
 
-
     </div>
 </div>
 <?php
 }
-
-
 
 
 ######################
