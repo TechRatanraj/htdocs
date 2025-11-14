@@ -9227,399 +9227,558 @@ if ($ADD==111)
 # ADD=121 display the ADD NUMBER TO DNC FORM SCREEN and add a new number
 ######################
 if ($ADD==121)
-	{
-	### filter for DIGITS and NEWLINES
-	$phone_numbers = preg_replace('/[^X\n0-9]/', '',$phone_numbers);
+    {
+    ### filter for DIGITS and NEWLINES
+    $phone_numbers = preg_replace('/[^X\n0-9]/', '',$phone_numbers);
 
-	echo "<TABLE WIDTH=900><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    $campaigns_list = "<option SELECTED value=\"SYSTEM_INTERNAL\">"._QXZ("SYSTEM_INTERNAL - INTERNAL DNC LIST")."</option>\n";
+    $campaigns_list .= "<option value=\"ALL_DNC_CAMPAIGNS\">"._QXZ("ALL_DNC_CAMPAIGNS - All campaign DNC lists with camp DNC active")."</option>\n";
+    $campaigns_list .= "<option value=\"ALL_ACTIVE_CAMPAIGNS\">"._QXZ("ALL_ACTIVE_CAMPAIGNS - All campaign DNC lists for active campaigns")."</option>\n";
+    $campaigns_list .= "<option value=\"ALL_ACTIVE_DNC_CAMPAIGNS\">"._QXZ("ALL_ACTIVE_DNC_CAMPAIGNS - All campaign DNC lists with camp DNC active for active campaigns")."</option>\n";
+    $campaigns_list .= "<option value=\"ALL_CAMPAIGNS\">"._QXZ("ALL_CAMPAIGNS - All campaign DNC lists")."</option>\n";
 
-	$campaigns_list = "<option SELECTED value=\"SYSTEM_INTERNAL\">"._QXZ("SYSTEM_INTERNAL - INTERNAL DNC LIST")."</option>\n";
-	$campaigns_list .= "<option value=\"ALL_DNC_CAMPAIGNS\">"._QXZ("ALL_DNC_CAMPAIGNS - All campaign DNC lists with camp DNC active")."</option>\n";
-	$campaigns_list .= "<option value=\"ALL_ACTIVE_CAMPAIGNS\">"._QXZ("ALL_ACTIVE_CAMPAIGNS - All campaign DNC lists for active campaigns")."</option>\n";
-	$campaigns_list .= "<option value=\"ALL_ACTIVE_DNC_CAMPAIGNS\">"._QXZ("ALL_ACTIVE_DNC_CAMPAIGNS - All campaign DNC lists with camp DNC active for active campaigns")."</option>\n";
-	$campaigns_list .= "<option value=\"ALL_CAMPAIGNS\">"._QXZ("ALL_CAMPAIGNS - All campaign DNC lists")."</option>\n";
+    $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where use_campaign_dnc IN('Y','AREACODE') $LOGallowed_campaignsSQL order by campaign_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $campaigns_to_print = mysqli_num_rows($rslt);
 
+    $o=0;
+    while ($campaigns_to_print > $o) 
+        {
+        $rowx=mysqli_fetch_row($rslt);
+        $campaigns_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
+        $o++;
+        }
+    ?>
 
-	$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where use_campaign_dnc IN('Y','AREACODE') $LOGallowed_campaignsSQL order by campaign_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$campaigns_to_print = mysqli_num_rows($rslt);
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
 
-	$o=0;
-	while ($campaigns_to_print > $o) 
-		{
-		$rowx=mysqli_fetch_row($rslt);
-		$campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-		$o++;
-		}
+    <?php
+    # DNC Log Search Results
+    if (strlen($phone) > 2)
+        {
+        ?>
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 600; margin: 0 0 20px 0;">
+                <?php echo _QXZ("SEARCHING FOR PHONE NUMBER IN DNC LIST LOGS"); ?>: <span style="color: #3498db;"><?php echo $phone; ?></span>
+            </h2>
 
-	# DNC Log Search
-	if (strlen($phone) > 2)
-		{
-		echo "<br>"._QXZ("SEARCHING FOR PHONE NUMBER IN DNC LIST LOGS").": <b>$phone</b><br><br>\n";
+            <?php
+            $stmt = "SELECT campaign_id,action,action_date,user FROM vicidial_dnc_log where phone_number='$phone' order by action_date desc limit 1000;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $vdl_ct = mysqli_num_rows($rslt);
+            
+            if ($vdl_ct > 0)
+                {
+                ?>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                        <thead>
+                            <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                                <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                    <?php echo _QXZ("CAMPAIGN"); ?>
+                                </th>
+                                <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                    <?php echo _QXZ("ACTION"); ?>
+                                </th>
+                                <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                    <?php echo _QXZ("DATE"); ?>
+                                </th>
+                                <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                    <?php echo _QXZ("USER"); ?>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $i=0;
+                        while ($vdl_ct > $i)
+                            {
+                            $bgcolor = ($i % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                            $row=mysqli_fetch_row($rslt);
+                            $vdl_campaign = $row;
+                            $vdl_action = $row;
+                            $vdl_action_date = $row;
+                            $vdl_user = $row;
+                            ?>
+                            <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';">
+                                <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                    <?php
+                                    if ($vdl_campaign == '-SYSINT-')
+                                        {echo "<span style='color: #7f8c8d;'>$vdl_campaign</span>";}
+                                    else
+                                        {echo "<a href='$PHP_SELF?ADD=31&campaign_id=$vdl_campaign' style='color: #3498db; text-decoration: none; font-weight: 600;'>$vdl_campaign</a>";}
+                                    ?>
+                                </td>
+                                <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                                    <span style="padding: 4px 10px; background: <?php echo ($vdl_action=='add') ? '#27ae60' : '#e74c3c'; ?>; color: white; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                        <?php echo strtoupper($vdl_action); ?>
+                                    </span>
+                                </td>
+                                <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                    <?php echo $vdl_action_date; ?>
+                                </td>
+                                <td style="padding: 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                    <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $vdl_user; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $vdl_user; ?></a>
+                                </td>
+                            </tr>
+                            <?php
+                            $i++;
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+                }
+            else
+                {
+                ?>
+                <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                    <p style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; color: #7f8c8d; margin: 0;">
+                        <?php echo _QXZ("No Results Found"); ?>
+                    </p>
+                </div>
+                <?php
+                }
+            ?>
+        </div>
+        <?php
+        }
 
-		$stmt = "SELECT campaign_id,action,action_date,user FROM vicidial_dnc_log where phone_number='$phone' order by action_date desc limit 1000;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$vdl_ct = mysqli_num_rows($rslt);
-		$i=0;
-		if ($vdl_ct > 0)
-			{
-			echo "<center><TABLE width=400 cellspacing=0 cellpadding=1>\n";
-			echo "<tr bgcolor=black>";
-			echo "<td><font size=1 color=white align=left><B>"._QXZ("CAMPAIGN")."</B></td>";
-			echo "<td><font size=1 color=white><B>"._QXZ("ACTION")."</B></td>";
-			echo "<td><font size=1 color=white><B>"._QXZ("DATE")." &nbsp; </B></td>";
-			echo "<td><font size=1 color=white><B>"._QXZ("USER")." &nbsp; </B></td></tr>\n";
-			}
-		else
-			{
-			echo _QXZ("No Results Found")."\n";
-			}
-		while ($vdl_ct > $i)
-			{
-			if (preg_match('/1$|3$|5$|7$|9$/i', $i))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#' . $SSstd_row1_background . '"';}
-			$row=mysqli_fetch_row($rslt);
-			$vdl_campaign =		$row[0];
-			$vdl_action =		$row[1];
-			$vdl_action_date =	$row[2];
-			$vdl_user =			$row[3];
+    # Add / Delete from DNC Processing Results
+    if (strlen($phone_numbers) > 2)
+        {
+        $PN = explode("\n",$phone_numbers);
+        $PNct = count($PN);
+        $p=0;   $DNCadded=0;   $DNCnotadded=0;   $DNCdeleted=0;   $DNCnotdeleted=0;
+        
+        ?>
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 600; margin: 0 0 20px 0;">
+                <?php echo _QXZ("DNC Processing Results"); ?>
+            </h2>
+            <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; line-height: 1.8;">
+        <?php
+        
+        while ($p < $PNct)
+            {
+            if ( (preg_match('/delete/',$stage)) and ($LOGdelete_from_dnc > 0) )
+                {
+                ##### BEGIN DELETE FROM DNC #####
+                if (preg_match('/SYSTEM_INTERNAL/',$campaign_id))
+                    {
+                    $stmt="SELECT count(*) from vicidial_dnc where phone_number='$PN[$p]';";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $row=mysqli_fetch_row($rslt);
+                    if ($row < 1)
+                        {
+                        echo "<div style='padding: 8px; color: #e67e22;'>⚠️ "._QXZ("DNC NOT DELETED - This phone number is not in the Do Not Call List").": <strong>$PN[$p]</strong></div>\n";
+                        $DNCnotdeleted++;
+                        }
+                    else
+                        {
+                        $stmt="DELETE FROM vicidial_dnc where phone_number='$PN[$p]';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-			echo "<tr $bgcolor><td><font size=1>";
-			if ($vdl_campaign == '-SYSINT-')
-				{echo "$vdl_campaign";}
-			else
-				{echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$vdl_campaign\">$vdl_campaign</a>";}
-			echo "</font></td>";
-			echo "<td><font size=1> $vdl_action</td>";
-			echo "<td><font size=1> $vdl_action_date</td>";
-			echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=3&user=$vdl_user\">$vdl_user</a></td></tr>\n";
+                        echo "<div style='padding: 8px; color: #27ae60;'>✓ <strong>"._QXZ("DNC DELETED").": $PN[$p]</strong></div>\n";
+                        $DNCdeleted++;
 
-			$i++;
-			}
+                        ### LOG INSERTION Admin Log Table ###
+                        $SQL_log = "$stmt|";
+                        $SQL_log = preg_replace('/;/', '', $SQL_log);
+                        $SQL_log = addslashes($SQL_log);
+                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='DELETE', record_id='$PN[$p]', event_code='ADMIN DELETE NUMBER FROM DNC LIST', event_sql=\"$SQL_log\", event_notes='';";
+                        if ($DB) {echo "|$stmt|\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-		echo "</TABLE></center>\n";
-		echo "<br><br><br>\n";
-		}
+                        $stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='-SYSINT-', action='delete', action_date=NOW(), user='$PHP_AUTH_USER';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        }
+                    }
+                ### DELETE FROM ALL_CAMPAIGNS, ALL_DNC_CAMPAIGNS, ALL_ACTIVE_CAMPAIGNS, ALL_ACTIVE_DNC_CAMPAIGNS
+                elseif (preg_match('/ALL_CAMPAIGNS|ALL_ACTIVE_CAMPAIGNS|ALL_DNC_CAMPAIGNS|ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id))
+                    {
+                    echo "<div style='padding: 8px; color: #3498db;'>ℹ️ <em>"._QXZ("DNC DELETE PROCESS STARTED").": $PN[$p] $campaign_id</em></div>\n";
+                    $multi_stmts='';
+                    $camp_typeSQL='';
+                    $numberDNCnotdeleted=0;
+                    $numberDNCdeleted=0;
+                    if (preg_match('/ALL_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where use_campaign_dnc IN('Y','AREACODE')";}
+                    if (preg_match('/ALL_ACTIVE_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y'";}
+                    if (preg_match('/ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y' and use_campaign_dnc IN('Y','AREACODE')";}
+                    ### gather all campaign IDs for selected group of campaigns
+                    $stmt = "SELECT campaign_id FROM vicidial_campaigns $camp_typeSQL order by campaign_id;";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $camp_ct = mysqli_num_rows($rslt);
+                    $cdnc=0;
+                    while ($camp_ct > $cdnc)
+                        {
+                        $row=mysqli_fetch_row($rslt);
+                        $camp_list[$cdnc] = $row;
+                        $cdnc++;
+                        }
+                    $cdnc=0;
+                    while ($camp_ct > $cdnc)
+                        {
+                        $temp_campaign_id = $camp_list[$cdnc];
+                        $stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$temp_campaign_id' $LOGallowed_campaignsSQL;";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $row=mysqli_fetch_row($rslt);
+                        if ($row < 1)
+                            {
+                            echo "<div style='padding: 8px; color: #e67e22;'>⚠️ "._QXZ("DNC NOT DELETED - This phone number is not in the Do Not Call List").": <strong>$PN[$p] $temp_campaign_id</strong></div>\n";
+                            $DNCnotdeleted++;
+                            $numberDNCnotdeleted++;
+                            }
+                        else
+                            {
+                            $stmt="DELETE FROM vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$temp_campaign_id';";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $affected_rows = mysqli_affected_rows($link);
+                            $multi_stmts .= "$stmt|";
 
-	# Add / Delete from DNC
-	if (strlen($phone_numbers) > 2)
-		{
-		$PN = explode("\n",$phone_numbers);
-		$PNct = count($PN);
-		$p=0;   $DNCadded=0;   $DNCnotadded=0;   $DNCdeleted=0;   $DNCnotdeleted=0;
-		while ($p < $PNct)
-			{
-			if ( (preg_match('/delete/',$stage)) and ($LOGdelete_from_dnc > 0) )
-				{
-				##### BEGIN DELETE FROM DNC #####
-				if (preg_match('/SYSTEM_INTERNAL/',$campaign_id))
-					{
-					$stmt="SELECT count(*) from vicidial_dnc where phone_number='$PN[$p]';";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$row=mysqli_fetch_row($rslt);
-					if ($row[0] < 1)
-						{
-						echo "<br>"._QXZ("DNC NOT DELETED - This phone number is not in the Do Not Call List").": $PN[$p]\n";
-						$DNCnotdeleted++;
-						}
-					else
-						{
-						$stmt="DELETE FROM vicidial_dnc where phone_number='$PN[$p]';";
-						$rslt=mysql_to_mysqli($stmt, $link);
+                            echo "<div style='padding: 8px; color: #27ae60;'>✓ <strong>"._QXZ("DNC DELETED").": $affected_rows - $PN[$p] $temp_campaign_id</strong></div>\n";
+                            $DNCdeleted = ($DNCdeleted + $affected_rows);
+                            $numberDNCdeleted = ($numberDNCdeleted + $affected_rows);
 
-						echo "<br><B>"._QXZ("DNC DELETED").": $PN[$p]</B>\n";
-						$DNCdeleted++;
+                            $stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$temp_campaign_id', action='delete', action_date=NOW(), user='$PHP_AUTH_USER';";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            }
+                        $cdnc++;
+                        }
 
-						### LOG INSERTION Admin Log Table ###
-						$SQL_log = "$stmt|";
-						$SQL_log = preg_replace('/;/', '', $SQL_log);
-						$SQL_log = addslashes($SQL_log);
-						$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='DELETE', record_id='$PN[$p]', event_code='ADMIN DELETE NUMBER FROM DNC LIST', event_sql=\"$SQL_log\", event_notes='';";
-						if ($DB) {echo "|$stmt|\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
+                    if ($camp_ct > 0)
+                        {
+                        ### LOG INSERTION Admin Log Table ###
+                        $SQL_log = "$multi_stmts|";
+                        $SQL_log = preg_replace('/;/', '', $SQL_log);
+                        $SQL_log = addslashes($SQL_log);
+                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='DELETE', record_id='$PN[$p]', event_code='ADMIN DELETE NUMBER FROM CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='Deleted: $numberDNCdeleted   Not-Deleted: $numberDNCnotdeleted';";
+                        if ($DB) {echo "|$stmt|\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        }
+                    }
+                else
+                    {
+                    $stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $row=mysqli_fetch_row($rslt);
+                    if ($row < 1)
+                        {
+                        echo "<div style='padding: 8px; color: #e67e22;'>⚠️ "._QXZ("DNC NOT DELETED - This phone number is not in the Do Not Call List").": <strong>$PN[$p] $campaign_id</strong></div>\n";
+                        $DNCnotdeleted++;
+                        }
+                    else
+                        {
+                        $stmt="DELETE FROM vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$campaign_id';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-						$stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='-SYSINT-', action='delete', action_date=NOW(), user='$PHP_AUTH_USER';";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						}
-					}
-				### DELETE FROM ALL_CAMPAIGNS, ALL_DNC_CAMPAIGNS, ALL_ACTIVE_CAMPAIGNS, ALL_ACTIVE_DNC_CAMPAIGNS
-				elseif (preg_match('/ALL_CAMPAIGNS|ALL_ACTIVE_CAMPAIGNS|ALL_DNC_CAMPAIGNS|ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id))
-					{
-					echo "<br><i>"._QXZ("DNC DELETE PROCESS STARTED").": $PN[$p] $campaign_id</i>\n";
-					$multi_stmts='';
-					$camp_typeSQL='';
-					$numberDNCnotdeleted=0;
-					$numberDNCdeleted=0;
-					if (preg_match('/ALL_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where use_campaign_dnc IN('Y','AREACODE')";}
-					if (preg_match('/ALL_ACTIVE_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y'";}
-					if (preg_match('/ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y' and use_campaign_dnc IN('Y','AREACODE')";}
-					### gather all campaign IDs for selected group of campaigns
-					$stmt = "SELECT campaign_id FROM vicidial_campaigns $camp_typeSQL order by campaign_id;";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$camp_ct = mysqli_num_rows($rslt);
-					$cdnc=0;
-					while ($camp_ct > $cdnc)
-						{
-						$row=mysqli_fetch_row($rslt);
-						$camp_list[$cdnc] = $row[0];
-						$cdnc++;
-						}
-					$cdnc=0;
-					while ($camp_ct > $cdnc)
-						{
-						$temp_campaign_id = $camp_list[$cdnc];
-						$stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$temp_campaign_id' $LOGallowed_campaignsSQL;";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$row=mysqli_fetch_row($rslt);
-						if ($row[0] < 1)
-							{
-							echo "<br>"._QXZ("DNC NOT DELETED - This phone number is not in the Do Not Call List").": $PN[$p] $temp_campaign_id\n";
-							$DNCnotdeleted++;
-							$numberDNCnotdeleted++;
-							}
-						else
-							{
-							$stmt="DELETE FROM vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$temp_campaign_id';";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$affected_rows = mysqli_affected_rows($link);
-							$multi_stmts .= "$stmt|";
+                        echo "<div style='padding: 8px; color: #27ae60;'>✓ <strong>"._QXZ("DNC DELETED").": $PN[$p] $campaign_id</strong></div>\n";
+                        $DNCdeleted++;
 
-							echo "<br><B>"._QXZ("DNC DELETED").": $affected_rows - $PN[$p] $temp_campaign_id</B>\n";
-							$DNCdeleted = ($DNCdeleted + $affected_rows);
-							$numberDNCdeleted = ($numberDNCdeleted + $affected_rows);
+                        ### LOG INSERTION Admin Log Table ###
+                        $SQL_log = "$stmt|";
+                        $SQL_log = preg_replace('/;/', '', $SQL_log);
+                        $SQL_log = addslashes($SQL_log);
+                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='DELETE', record_id='$PN[$p]', event_code='ADMIN DELETE NUMBER FROM CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='';";
+                        if ($DB) {echo "|$stmt|\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-							$stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$temp_campaign_id', action='delete', action_date=NOW(), user='$PHP_AUTH_USER';";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							}
-						$cdnc++;
-						}
+                        $stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$campaign_id', action='delete', action_date=NOW(), user='$PHP_AUTH_USER';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        }
+                    }
+                ##### END DELETE FROM DNC #####
+                }
+            else
+                {
+                ##### BEGIN ADD TO DNC #####
+                if (preg_match('/SYSTEM_INTERNAL/',$campaign_id))
+                    {
+                    $stmt="SELECT count(*) from vicidial_dnc where phone_number='$PN[$p]';";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $row=mysqli_fetch_row($rslt);
+                    if ($row > 0)
+                        {
+                        echo "<div style='padding: 8px; color: #e67e22;'>⚠️ "._QXZ("DNC NOT ADDED - This phone number is already in the Do Not Call List").": <strong>$PN[$p]</strong></div>\n";
+                        $DNCnotadded++;
+                        }
+                    else
+                        {
+                        $stmt="INSERT INTO vicidial_dnc (phone_number) values('$PN[$p]');";
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-					if ($camp_ct > 0)
-						{
-						### LOG INSERTION Admin Log Table ###
-						$SQL_log = "$multi_stmts|";
-						$SQL_log = preg_replace('/;/', '', $SQL_log);
-						$SQL_log = addslashes($SQL_log);
-						$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='DELETE', record_id='$PN[$p]', event_code='ADMIN DELETE NUMBER FROM CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='Deleted: $numberDNCdeleted   Not-Deleted: $numberDNCnotdeleted';";
-						if ($DB) {echo "|$stmt|\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
-						}
-					}
-				else
-					{
-					$stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$row=mysqli_fetch_row($rslt);
-					if ($row[0] < 1)
-						{
-						echo "<br>"._QXZ("DNC NOT DELETED - This phone number is not in the Do Not Call List").": $PN[$p] $campaign_id\n";
-						$DNCnotdeleted++;
-						}
-					else
-						{
-						$stmt="DELETE FROM vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$campaign_id';";
-						$rslt=mysql_to_mysqli($stmt, $link);
+                        echo "<div style='padding: 8px; color: #27ae60;'>✓ <strong>"._QXZ("DNC ADDED").": $PN[$p]</strong></div>\n";
+                        $DNCadded++;
 
-						echo "<br><B>"._QXZ("DNC DELETED").": $PN[$p] $campaign_id</B>\n";
-						$DNCdeleted++;
+                        ### LOG INSERTION Admin Log Table ###
+                        $SQL_log = "$stmt|";
+                        $SQL_log = preg_replace('/;/', '', $SQL_log);
+                        $SQL_log = addslashes($SQL_log);
+                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='ADD', record_id='$PN[$p]', event_code='ADMIN ADD NUMBER TO DNC LIST', event_sql=\"$SQL_log\", event_notes='';";
+                        if ($DB) {echo "|$stmt|\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-						### LOG INSERTION Admin Log Table ###
-						$SQL_log = "$stmt|";
-						$SQL_log = preg_replace('/;/', '', $SQL_log);
-						$SQL_log = addslashes($SQL_log);
-						$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='DELETE', record_id='$PN[$p]', event_code='ADMIN DELETE NUMBER FROM CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='';";
-						if ($DB) {echo "|$stmt|\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
+                        $stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='-SYSINT-', action='add', action_date=NOW(), user='$PHP_AUTH_USER';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        }
+                    }
+                ### ADD TO ALL_CAMPAIGNS, ALL_DNC_CAMPAIGNS, ALL_ACTIVE_CAMPAIGNS, ALL_ACTIVE_DNC_CAMPAIGNS
+                elseif (preg_match('/ALL_CAMPAIGNS|ALL_ACTIVE_CAMPAIGNS|ALL_DNC_CAMPAIGNS|ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id))
+                    {
+                    echo "<div style='padding: 8px; color: #3498db;'>ℹ️ <em>"._QXZ("DNC ADD PROCESS STARTED").": $PN[$p] $campaign_id</em></div>\n";
+                    $multi_stmts='';
+                    $camp_typeSQL='';
+                    $numberDNCnotadded=0;
+                    $numberDNCadded=0;
+                    if (preg_match('/ALL_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where use_campaign_dnc IN('Y','AREACODE')";}
+                    if (preg_match('/ALL_ACTIVE_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y'";}
+                    if (preg_match('/ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y' and use_campaign_dnc IN('Y','AREACODE')";}
+                    ### gather all campaign IDs for selected group of campaigns
+                    $stmt = "SELECT campaign_id FROM vicidial_campaigns $camp_typeSQL order by campaign_id;";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $camp_ct = mysqli_num_rows($rslt);
+                    $cdnc=0;
+                    while ($camp_ct > $cdnc)
+                        {
+                        $row=mysqli_fetch_row($rslt);
+                        $camp_list[$cdnc] = $row;
+                        $cdnc++;
+                        }
+                    $cdnc=0;
+                    while ($camp_ct > $cdnc)
+                        {
+                        $temp_campaign_id = $camp_list[$cdnc];
+                        $stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$temp_campaign_id' $LOGallowed_campaignsSQL;";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $row=mysqli_fetch_row($rslt);
+                        if ($row > 0)
+                            {
+                            echo "<div style='padding: 8px; color: #e67e22;'>⚠️ "._QXZ("DNC NOT ADDED - This phone number is already in the Do Not Call List").": <strong>$PN[$p] $temp_campaign_id</strong></div>\n";
+                            $DNCnotadded++;
+                            $numberDNCnotadded++;
+                            }
+                        else
+                            {
+                            $stmt="INSERT INTO vicidial_campaign_dnc (phone_number,campaign_id) values('$PN[$p]','$temp_campaign_id');";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $affected_rows = mysqli_affected_rows($link);
+                            $multi_stmts .= "$stmt|";
 
-						$stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$campaign_id', action='delete', action_date=NOW(), user='$PHP_AUTH_USER';";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						}
-					}
-				##### END DELETE FROM DNC #####
-				}
-			else
-				{
-				##### BEGIN ADD TO DNC #####
-				if (preg_match('/SYSTEM_INTERNAL/',$campaign_id))
-					{
-					$stmt="SELECT count(*) from vicidial_dnc where phone_number='$PN[$p]';";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$row=mysqli_fetch_row($rslt);
-					if ($row[0] > 0)
-						{
-						echo "<br>"._QXZ("DNC NOT ADDED - This phone number is already in the Do Not Call List").": $PN[$p]\n";
-						$DNCnotadded++;
-						}
-					else
-						{
-						$stmt="INSERT INTO vicidial_dnc (phone_number) values('$PN[$p]');";
-						$rslt=mysql_to_mysqli($stmt, $link);
+                            echo "<div style='padding: 8px; color: #27ae60;'>✓ <strong>"._QXZ("DNC ADDED").": $affected_rows - $PN[$p] $temp_campaign_id</strong></div>\n";
+                            $DNCadded = ($DNCadded + $affected_rows);
+                            $numberDNCadded = ($numberDNCadded + $affected_rows);
 
-						echo "<br><B>"._QXZ("DNC ADDED").": $PN[$p]</B>\n";
-						$DNCadded++;
+                            $stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$temp_campaign_id', action='add', action_date=NOW(), user='$PHP_AUTH_USER';";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            }
+                        $cdnc++;
+                        }
 
-						### LOG INSERTION Admin Log Table ###
-						$SQL_log = "$stmt|";
-						$SQL_log = preg_replace('/;/', '', $SQL_log);
-						$SQL_log = addslashes($SQL_log);
-						$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='ADD', record_id='$PN[$p]', event_code='ADMIN ADD NUMBER TO DNC LIST', event_sql=\"$SQL_log\", event_notes='';";
-						if ($DB) {echo "|$stmt|\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
+                    if ($camp_ct > 0)
+                        {
+                        ### LOG INSERTION Admin Log Table ###
+                        $SQL_log = "$multi_stmts|";
+                        $SQL_log = preg_replace('/;/', '', $SQL_log);
+                        $SQL_log = addslashes($SQL_log);
+                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='ADD', record_id='$PN[$p]', event_code='ADMIN ADD NUMBER TO CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='Added: $numberDNCadded   Not-Added: $numberDNCnotadded';";
+                        if ($DB) {echo "|$stmt|\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        }
+                    }
+                else
+                    {
+                    $stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $row=mysqli_fetch_row($rslt);
+                    if ($row > 0)
+                        {
+                        echo "<div style='padding: 8px; color: #e67e22;'>⚠️ "._QXZ("DNC NOT ADDED - This phone number is already in the Do Not Call List").": <strong>$PN[$p] $campaign_id</strong></div>\n";
+                        $DNCnotadded++;
+                        }
+                    else
+                        {
+                        $stmt="INSERT INTO vicidial_campaign_dnc (phone_number,campaign_id) values('$PN[$p]','$campaign_id');";
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-						$stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='-SYSINT-', action='add', action_date=NOW(), user='$PHP_AUTH_USER';";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						}
-					}
-				### ADD TO ALL_CAMPAIGNS, ALL_DNC_CAMPAIGNS, ALL_ACTIVE_CAMPAIGNS, ALL_ACTIVE_DNC_CAMPAIGNS
-				elseif (preg_match('/ALL_CAMPAIGNS|ALL_ACTIVE_CAMPAIGNS|ALL_DNC_CAMPAIGNS|ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id))
-					{
-					echo "<br><i>"._QXZ("DNC ADD PROCESS STARTED").": $PN[$p] $campaign_id</i>\n";
-					$multi_stmts='';
-					$camp_typeSQL='';
-					$numberDNCnotadded=0;
-					$numberDNCadded=0;
-					if (preg_match('/ALL_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where use_campaign_dnc IN('Y','AREACODE')";}
-					if (preg_match('/ALL_ACTIVE_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y'";}
-					if (preg_match('/ALL_ACTIVE_DNC_CAMPAIGNS/',$campaign_id)) {$camp_typeSQL = "where active='Y' and use_campaign_dnc IN('Y','AREACODE')";}
-					### gather all campaign IDs for selected group of campaigns
-					$stmt = "SELECT campaign_id FROM vicidial_campaigns $camp_typeSQL order by campaign_id;";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$camp_ct = mysqli_num_rows($rslt);
-					$cdnc=0;
-					while ($camp_ct > $cdnc)
-						{
-						$row=mysqli_fetch_row($rslt);
-						$camp_list[$cdnc] = $row[0];
-						$cdnc++;
-						}
-					$cdnc=0;
-					while ($camp_ct > $cdnc)
-						{
-						$temp_campaign_id = $camp_list[$cdnc];
-						$stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$temp_campaign_id' $LOGallowed_campaignsSQL;";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$row=mysqli_fetch_row($rslt);
-						if ($row[0] > 0)
-							{
-							echo "<br>"._QXZ("DNC NOT ADDED - This phone number is already in the Do Not Call List").": $PN[$p] $temp_campaign_id\n";
-							$DNCnotadded++;
-							$numberDNCnotadded++;
-							}
-						else
-							{
-							$stmt="INSERT INTO vicidial_campaign_dnc (phone_number,campaign_id) values('$PN[$p]','$temp_campaign_id');";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$affected_rows = mysqli_affected_rows($link);
-							$multi_stmts .= "$stmt|";
+                        echo "<div style='padding: 8px; color: #27ae60;'>✓ <strong>"._QXZ("DNC ADDED").": $PN[$p] $campaign_id</strong></div>\n";
+                        $DNCadded++;
 
-							echo "<br><B>"._QXZ("DNC ADDED").": $affected_rows - $PN[$p] $temp_campaign_id</B>\n";
-							$DNCadded = ($DNCadded + $affected_rows);
-							$numberDNCadded = ($numberDNCadded + $affected_rows);
+                        ### LOG INSERTION Admin Log Table ###
+                        $SQL_log = "$stmt|";
+                        $SQL_log = preg_replace('/;/', '', $SQL_log);
+                        $SQL_log = addslashes($SQL_log);
+                        $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='ADD', record_id='$PN[$p]', event_code='ADMIN ADD NUMBER TO CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='';";
+                        if ($DB) {echo "|$stmt|\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
 
-							$stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$temp_campaign_id', action='add', action_date=NOW(), user='$PHP_AUTH_USER';";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							}
-						$cdnc++;
-						}
+                        $stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$campaign_id', action='add', action_date=NOW(), user='$PHP_AUTH_USER';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        }
+                    }
+                ##### END ADD TO DNC #####
+                }
+            $p++;
+            }
+        
+        ?>
+            </div>
+            
+            <?php
+            if ( ($DNCadded > 0) or ($DNCnotadded > 0) )
+                {
+                ?>
+                <div style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 8px;">
+                    <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; font-weight: 600; color: #27ae60; margin-bottom: 10px;">
+                        <?php echo _QXZ("TOTAL NUMBERS ADDED TO DNC LIST"); ?>: <?php echo $DNCadded; ?>
+                    </div>
+                    <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; font-weight: 600; color: #e67e22;">
+                        <?php echo _QXZ("TOTAL NUMBERS NOT ADDED TO DNC LIST"); ?>: <?php echo $DNCnotadded; ?>
+                    </div>
+                </div>
+                <?php
+                }
+            if ( ($DNCdeleted > 0) or ($DNCnotdeleted > 0) )
+                {
+                ?>
+                <div style="margin-top: 20px; padding: 20px; background: #ffebee; border-radius: 8px;">
+                    <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; font-weight: 600; color: #e74c3c; margin-bottom: 10px;">
+                        <?php echo _QXZ("TOTAL NUMBERS DELETED FROM DNC LIST"); ?>: <?php echo $DNCdeleted; ?>
+                    </div>
+                    <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 16px; font-weight: 600; color: #e67e22;">
+                        <?php echo _QXZ("TOTAL NUMBERS NOT DELETED FROM DNC LIST"); ?>: <?php echo $DNCnotdeleted; ?>
+                    </div>
+                </div>
+                <?php
+                }
+            ?>
+        </div>
+        <?php
+        }
 
-					if ($camp_ct > 0)
-						{
-						### LOG INSERTION Admin Log Table ###
-						$SQL_log = "$multi_stmts|";
-						$SQL_log = preg_replace('/;/', '', $SQL_log);
-						$SQL_log = addslashes($SQL_log);
-						$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='ADD', record_id='$PN[$p]', event_code='ADMIN ADD NUMBER TO CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='Added: $numberDNCadded   Not-Added: $numberDNCnotadded';";
-						if ($DB) {echo "|$stmt|\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
-						}
-					}
-				else
-					{
-					$stmt="SELECT count(*) from vicidial_campaign_dnc where phone_number='$PN[$p]' and campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$row=mysqli_fetch_row($rslt);
-					if ($row[0] > 0)
-						{
-						echo "<br>"._QXZ("DNC NOT ADDED - This phone number is already in the Do Not Call List").": $PN[$p] $campaign_id\n";
-						$DNCnotadded++;
-						}
-					else
-						{
-						$stmt="INSERT INTO vicidial_campaign_dnc (phone_number,campaign_id) values('$PN[$p]','$campaign_id');";
-						$rslt=mysql_to_mysqli($stmt, $link);
+    # Add/Delete DNC Form
+    ?>
+    <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+        <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 600; margin: 0 0 20px 0;">
+            <?php
+            if ($LOGdelete_from_dnc > 0)
+                {echo _QXZ("ADD OR DELETE NUMBERS FROM THE DNC LIST");}
+            else
+                {echo _QXZ("ADD NUMBERS TO THE DNC LIST");}
+            ?>
+        </h2>
 
-						echo "<br><B>"._QXZ("DNC ADDED").": $PN[$p] $campaign_id</B>\n";
-						$DNCadded++;
+        <form action="<?php echo $PHP_SELF; ?>" method="POST">
+            <input type="hidden" name="ADD" value="121">
+            
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0 15px;">
+                <tr>
+                    <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 180px; vertical-align: top;">
+                        <?php echo _QXZ("List"); ?>:
+                    </td>
+                    <td style="padding: 8px;">
+                        <select name="campaign_id" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 600px; box-sizing: border-box;">
+                            <?php echo $campaigns_list; ?>
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; vertical-align: top;">
+                        <?php echo _QXZ("Phone Numbers"); ?>:
+                    </td>
+                    <td style="padding: 8px;">
+                        <textarea name="phone_numbers" rows="20" cols="20" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 400px; box-sizing: border-box; resize: vertical;"></textarea>
+                        <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d; margin-top: 8px;">
+                            (<?php echo _QXZ("one phone number per line only"); ?>) <?php echo $NWB; ?>#internal_list-dnc<?php echo $NWE; ?>
+                        </div>
+                    </td>
+                </tr>
+                
+                <?php if ($LOGdelete_from_dnc > 0) { ?>
+                <tr>
+                    <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                        <?php echo _QXZ("Add or Delete"); ?>:
+                    </td>
+                    <td style="padding: 8px;">
+                        <select name="stage" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 200px; box-sizing: border-box;">
+                            <option value="add" SELECTED><?php echo _QXZ("add"); ?></option>
+                            <option value="delete"><?php echo _QXZ("delete"); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <?php } ?>
+                
+                <tr>
+                    <td colspan="2" style="text-align: center; padding-top: 20px;">
+                        <button type="submit" name="SUBMIT" style="padding: 12px 32px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#229954'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(39,174,96,0.3)';" onmouseout="this.style.background='#27ae60'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <?php echo _QXZ("SUBMIT"); ?>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
-						### LOG INSERTION Admin Log Table ###
-						$SQL_log = "$stmt|";
-						$SQL_log = preg_replace('/;/', '', $SQL_log);
-						$SQL_log = addslashes($SQL_log);
-						$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='ADD', record_id='$PN[$p]', event_code='ADMIN ADD NUMBER TO CAMPAIGN DNC LIST $campaign_id', event_sql=\"$SQL_log\", event_notes='';";
-						if ($DB) {echo "|$stmt|\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
+    <!-- DNC Log Search Form -->
+    <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+        <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 600; margin: 0 0 20px 0;">
+            <?php echo _QXZ("DNC LOG SEARCH"); ?>
+        </h2>
 
-						$stmt="INSERT INTO vicidial_dnc_log SET phone_number='$PN[$p]', campaign_id='$campaign_id', action='add', action_date=NOW(), user='$PHP_AUTH_USER';";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						}
-					}
-				##### END ADD TO DNC #####
-				}
-			$p++;
-			}
-		
-		if ( ($DNCadded > 0) or ($DNCnotadded > 0) )
-			{
-			echo "<br>\n";
-			echo "<br><B>"._QXZ("TOTAL NUMBERS ADDED TO DNC LIST").": $DNCadded</B>\n";
-			echo "<br><B>"._QXZ("TOTAL NUMBERS NOT ADDED TO DNC LIST").": $DNCnotadded</B>\n";
-			echo "<br>\n";
-			}
-		if ( ($DNCdeleted > 0) or ($DNCnotdeleted > 0) )
-			{
-			echo "<br>\n";
-			echo "<br><B>"._QXZ("TOTAL NUMBERS DELETED FROM DNC LIST").": $DNCdeleted</B>\n";
-			echo "<br><B>"._QXZ("TOTAL NUMBERS NOT DELETED FROM DNC LIST").": $DNCnotdeleted</B>\n";
-			echo "<br>\n";
-			}
-		}
+        <form action="<?php echo $PHP_SELF; ?>" method="POST">
+            <input type="hidden" name="ADD" value="121">
+            
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0 15px;">
+                <tr>
+                    <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 180px;">
+                        <?php echo _QXZ("Phone Number"); ?>:
+                    </td>
+                    <td style="padding: 8px;">
+                        <input type="text" name="phone" size="12" maxlength="18" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 250px; box-sizing: border-box;">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2" style="text-align: center; padding-top: 20px;">
+                        <button type="submit" name="SUBMIT" style="padding: 12px 32px; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#2980b9'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(52,152,219,0.3)';" onmouseout="this.style.background='#3498db'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <?php echo _QXZ("SEARCH"); ?>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
-	if ($LOGdelete_from_dnc > 0)
-		{echo "<br>"._QXZ("ADD OR DELETE NUMBERS FROM THE DNC LIST")."<form action=$PHP_SELF method=POST>\n";}
-	else
-		{echo "<br>"._QXZ("ADD NUMBERS TO THE DNC LIST")."<form action=$PHP_SELF method=POST>\n";}
-	echo "<input type=hidden name=ADD value=121>\n";
-	echo "<center><TABLE width=850 cellspacing=3>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List").": </td><td align=left><select size=1 name=campaign_id>\n";
-	echo "$campaigns_list";
-	echo "</select></td></tr>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Numbers").": <BR><BR> ("._QXZ("one phone number per line only").")<BR>$NWB#internal_list-dnc$NWE</td><td align=left><TEXTAREA name=phone_numbers ROWS=20 COLS=20></TEXTAREA></td></tr>\n";
-	if ($LOGdelete_from_dnc > 0)
-		{
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Add or Delete").": </td><td align=left><select size=1 name=stage><option value='add' SELECTED>"._QXZ("add")."</option><option value='delete'>"._QXZ("delete")."</option></select></td></tr>\n";
-		}
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-	echo "</FORM></TABLE></center>\n";
+    <?php
+    # Download List Form
+    if ( ($LOGuser_level >= 9) and ( (preg_match("/Download List/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+        {
+        ?>
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 22px; color: #2c3e50; font-weight: 600; margin: 0 0 20px 0;">
+                <?php echo _QXZ("Download numbers in this list to a file"); ?>
+            </h2>
 
-	echo "<br>"._QXZ("DNC LOG SEARCH")."<BR><form action=$PHP_SELF method=POST>\n";
-	echo "<input type=hidden name=ADD value=121>\n";
-	echo "<center><TABLE width=400 cellspacing=3>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Number").": </td><td align=left><input type=text name=phone size=12 maxlength=18></td></tr>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SEARCH")."'></td></tr>\n";
-	echo "</FORM></TABLE></center>\n";
+            <form action="list_download.php" method="POST" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <input type="hidden" name="download_type" value="dnc">
+                <select name="group_id" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; flex: 1; min-width: 300px; box-sizing: border-box;">
+                    <?php echo $campaigns_list; ?>
+                </select>
+                <button type="submit" name="SUBMIT" style="padding: 12px 32px; background: #9b59b6; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#8e44ad'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(155,89,182,0.3)';" onmouseout="this.style.background='#9b59b6'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    <?php echo _QXZ("DOWNLOAD"); ?>
+                </button>
+            </form>
+        </div>
+        <?php
+        }
+    ?>
 
-	if ( ($LOGuser_level >= 9) and ( (preg_match("/Download List/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-		{
-		echo "<br>"._QXZ("Download numbers in this list to a file").": <form action=\"list_download.php\" method=POST>\n";
-		echo "<input type=hidden name=download_type value=dnc>\n";
-		echo "<select size=1 name=group_id>\n";
-		echo "$campaigns_list";
-		echo "</select><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></FORM>\n";
-		}
-	}
+    </div>
+    </div>
+    <?php
+    }
 
 
 ######################
