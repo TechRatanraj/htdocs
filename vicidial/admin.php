@@ -9075,63 +9075,152 @@ if ($ADD==12)
 # ADD=111 display the ADD NEW LIST FORM SCREEN
 ######################
 if ($ADD==111)
-	{
-	if ($LOGmodify_lists==1)
-		{
-		##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-		$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_lists' and active='1';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$voi_ct = mysqli_num_rows($rslt);
-		if ($voi_ct > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$voi_count = "$row[0]";
-			}
-		##### END ID override optional section #####
+    {
+    if ($LOGmodify_lists==1)
+        {
+        ##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
+        $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_lists' and active='1';";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $voi_ct = mysqli_num_rows($rslt);
+        if ($voi_ct > 0)
+            {
+            $row=mysqli_fetch_row($rslt);
+            $voi_count = "$row[0]";
+            }
+        ##### END ID override optional section #####
 
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_black_lists.png\" alt=\"Lists\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $campaigns_to_print = mysqli_num_rows($rslt);
+        $campaigns_list='';
 
-		echo "<br>"._QXZ("ADD A NEW LIST")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=211>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		if ($voi_count > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List ID").": </td><td align=left>"._QXZ("Auto-Generated")." $NWB#lists-list_id$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List ID").": </td><td align=left><input type=text name=list_id size=19 maxlength=19> ("._QXZ("digits only").")$NWB#lists-list_id$NWE</td></tr>\n";
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Name").": </td><td align=left><input type=text name=list_name size=30 maxlength=30>$NWB#lists-list_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Description").": </td><td align=left><input type=text name=list_description size=30 maxlength=255>$NWB#lists-list_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign").": </td><td align=left><select size=1 name=campaign_id>\n";
+        $o=0;
+        while ($campaigns_to_print > $o) 
+            {
+            $rowx=mysqli_fetch_row($rslt);
+            $campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+            }
+        ?>
 
-		$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$campaigns_to_print = mysqli_num_rows($rslt);
-		$campaigns_list='';
+        <div style="background: white; padding: 5px;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            
+            <!-- Add New List Form -->
+            <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e8ecf1;">
+                    <img src="images/icon_black_lists.png" alt="Lists" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                    <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("ADD A NEW LIST"); ?></h1>
+                </div>
 
-		$o=0;
-		while ($campaigns_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "$campaigns_list";
-		echo "<option SELECTED>$campaign_id</option>\n";
-		echo "</select>$NWB#lists-campaign_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#lists-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+                <form action="<?php echo $PHP_SELF; ?>" method="POST">
+                    <input type="hidden" name="ADD" value="211">
+                    
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 0 15px;">
+                        <?php if ($voi_count > 0) { ?>
+                        <tr>
+                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 180px;">
+                                <?php echo _QXZ("List ID"); ?>:
+                            </td>
+                            <td style="padding: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <span style="padding: 8px 12px; background: #e8f5e9; color: #2e7d32; border-radius: 6px; display: inline-block;">
+                                    <?php echo _QXZ("Auto-Generated"); ?>
+                                </span> <?php echo $NWB; ?>#lists-list_id<?php echo $NWE; ?>
+                            </td>
+                        </tr>
+                        <?php } else { ?>
+                        <tr>
+                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 180px;">
+                                <?php echo _QXZ("List ID"); ?>:
+                            </td>
+                            <td style="padding: 8px;">
+                                <input type="text" name="list_id" size="19" maxlength="19" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 250px; box-sizing: border-box;">
+                                <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #7f8c8d; margin-left: 8px;">(<?php echo _QXZ("digits only"); ?>)</span> <?php echo $NWB; ?>#lists-list_id<?php echo $NWE; ?>
+                            </td>
+                        </tr>
+                        <?php } ?>
+                        
+                        <tr>
+                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                <?php echo _QXZ("List Name"); ?>:
+                            </td>
+                            <td style="padding: 8px;">
+                                <input type="text" name="list_name" size="30" maxlength="30" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 400px; box-sizing: border-box;">
+                                <?php echo $NWB; ?>#lists-list_name<?php echo $NWE; ?>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                <?php echo _QXZ("List Description"); ?>:
+                            </td>
+                            <td style="padding: 8px;">
+                                <input type="text" name="list_description" size="30" maxlength="255" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 500px; box-sizing: border-box;">
+                                <?php echo $NWB; ?>#lists-list_description<?php echo $NWE; ?>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                <?php echo _QXZ("Campaign"); ?>:
+                            </td>
+                            <td style="padding: 8px;">
+                                <select name="campaign_id" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 400px; box-sizing: border-box;">
+                                    <?php echo $campaigns_list; ?>
+                                    <option SELECTED><?php echo $campaign_id; ?></option>
+                                </select>
+                                <?php echo $NWB; ?>#lists-campaign_id<?php echo $NWE; ?>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                <?php echo _QXZ("Active"); ?>:
+                            </td>
+                            <td style="padding: 8px;">
+                                <select name="active" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 150px; box-sizing: border-box;">
+                                    <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                    <option value="N" SELECTED><?php echo _QXZ("N"); ?></option>
+                                </select>
+                                <?php echo $NWB; ?>#lists-active<?php echo $NWE; ?>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" style="text-align: center; padding-top: 20px;">
+                                <button type="submit" name="SUBMIT" style="padding: 12px 32px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#229954'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(39,174,96,0.3)';" onmouseout="this.style.background='#27ae60'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                    <?php echo _QXZ("SUBMIT"); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        </div>
+        <?php
+        }
+    else
+        {
+        ?>
+        <div style="background: white; padding: 20px;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 20px; text-align: center;">
+                <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #856404; margin: 0 0 10px 0;">
+                    <?php echo _QXZ("Access Denied"); ?>
+                </h2>
+                <p style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #856404; margin: 0;">
+                    <?php echo _QXZ("You do not have permission to view this page"); ?>
+                </p>
+            </div>
+        </div>
+        </div>
+        <?php
+        exit;
+        }
+    }
+
+
 
 
 ######################
