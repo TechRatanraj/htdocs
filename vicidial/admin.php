@@ -9019,28 +9019,13 @@ if ($LOGmodify_campaigns==1)
 $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_campaigns' and active='1';";
 $rslt=mysql_to_mysqli($stmt, $link);
 $voi_ct = mysqli_num_rows($rslt);
-$voi_count = 0;
 if ($voi_ct > 0)
 {
 $row=mysqli_fetch_row($rslt);
-$voi_count = $row;
+$voi_count = "$row";
 }
 ##### END ID override optional section #####
-
-    // Build campaigns list for dropdown
-    $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $campaigns_to_print = mysqli_num_rows($rslt);
-    $campaigns_list = '';
-
-    $o=0;
-    while ($campaigns_to_print > $o) 
-        {
-        $rowx=mysqli_fetch_row($rslt);
-        $campaigns_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
-        $o++;
-        }
-    ?>
+?>
 
     <div style="background: white; padding: 5px;">
     <div style="max-width: 900px; margin: 0 auto;">
@@ -9096,7 +9081,21 @@ $voi_count = $row;
                         </td>
                         <td style="padding: 8px;">
                             <select name="source_campaign_id" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 500px; box-sizing: border-box;">
-                                <?php echo $campaigns_list; ?>
+                            <?php
+                            $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $campaigns_to_print = mysqli_num_rows($rslt);
+                            $campaigns_list='';
+
+                            $o=0;
+                            while ($campaigns_to_print > $o) 
+                                {
+                                $rowx=mysqli_fetch_row($rslt);
+                                $campaigns_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
+                                $o++;
+                                }
+                            echo "$campaigns_list";
+                            ?>
                             </select>
                             <?php echo $NWB; ?>#campaigns-campaign_id<?php echo $NWE; ?>
                         </td>
