@@ -30952,7 +30952,7 @@ if ($ADD==31)
 	echo "<div style='text-align:center; margin:32px 0; color:#ef4444; font-weight:700; font-size:16px;'>"._QXZ("You do not have permission to view this page")."</div>\n";
 	exit;
 	}
-}
+
 
 
 
