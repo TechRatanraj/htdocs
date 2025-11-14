@@ -26953,6 +26953,7 @@ if ($ADD==3)
 
 
 if ( ($LOGcampaign_detail < 1) and ($ADD==31) ) {$ADD=34;}	# send to Basic if not allowed
+{
 
 if ( ($ADD==31) and ( (!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
 	{$ADD=30;}	# send to not allowed screen if not in vicidial_user_groups allowed_campaigns list
@@ -30952,7 +30953,7 @@ if ($ADD==31)
 	echo "<div style='text-align:center; margin:32px 0; color:#ef4444; font-weight:700; font-size:16px;'>"._QXZ("You do not have permission to view this page")."</div>\n";
 	exit;
 	}
-
+}
 
 
 
