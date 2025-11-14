@@ -9025,7 +9025,20 @@ $row=mysqli_fetch_row($rslt);
 $voi_count = "$row";
 }
 ##### END ID override optional section #####
-?>
+
+    $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $campaigns_to_print = mysqli_num_rows($rslt);
+    $campaigns_list='';
+
+    $o=0;
+    while ($campaigns_to_print > $o) 
+        {
+        $rowx=mysqli_fetch_row($rslt);
+        $campaigns_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
+        $o++;
+        }
+    ?>
 
     <div style="background: white; padding: 5px;">
     <div style="max-width: 900px; margin: 0 auto;">
@@ -9081,21 +9094,7 @@ $voi_count = "$row";
                         </td>
                         <td style="padding: 8px;">
                             <select name="source_campaign_id" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 500px; box-sizing: border-box;">
-                            <?php
-                            $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-                            $rslt=mysql_to_mysqli($stmt, $link);
-                            $campaigns_to_print = mysqli_num_rows($rslt);
-                            $campaigns_list='';
-
-                            $o=0;
-                            while ($campaigns_to_print > $o) 
-                                {
-                                $rowx=mysqli_fetch_row($rslt);
-                                $campaigns_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
-                                $o++;
-                                }
-                            echo "$campaigns_list";
-                            ?>
+                                <?php echo $campaigns_list; ?>
                             </select>
                             <?php echo $NWB; ?>#campaigns-campaign_id<?php echo $NWE; ?>
                         </td>
@@ -9113,7 +9112,7 @@ $voi_count = "$row";
                         <td colspan="2" style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; text-align: center;">
                             <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #856404; line-height: 1.6;">
                                 <strong style="display: block; margin-bottom: 8px;">ℹ️ <?php echo _QXZ("NOTE"); ?>:</strong>
-                                <?php echo _QXZ("Copying a campaign will copy all settings from the master campaign you select, but it will not copy a campaign-specific DNC list if there was one on the selected master campaign."); ?>
+                                <?php echo _QXZ("NOTE: Copying a campaign will copy all settings from the master campaign you select, but it will not copy a campaign-specific DNC list if there was one on the selected master campaign."); ?>
                             </div>
                         </td>
                     </tr>
