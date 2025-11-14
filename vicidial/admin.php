@@ -46491,7 +46491,7 @@ if ($ADD=="0A")
     <div style="padding:28px;">
         <p style="margin:0;color:#444;font-size:14px;">Content area inside white card…</p>
     </div>
-</div>
+
 
                 <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
                 <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("USER LISTINGS"); ?></h1>
