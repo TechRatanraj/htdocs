@@ -8574,12 +8574,6 @@ if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 # ADD=1 display the ADD NEW USER FORM SCREEN
 ######################
 
-######################
-# ADD=1 display the ADD A NEW USER FORM SCREEN
-######################
-######################
-# ADD=1 display the ADD A NEW USER FORM SCREEN
-######################
 if ($ADD=="1")
     {
     if ($LOGmodify_users==1)
@@ -8835,7 +8829,7 @@ if ($ADD=="1A")
                                 while ($Uusers_to_print > $o) 
                                     {
                                     $rowx=mysqli_fetch_row($rslt);
-                                    $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";[1]
+                                    $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
                                     $o++;
                                     }
                                 echo "$Uusers_list";
@@ -8861,6 +8855,7 @@ if ($ADD=="1A")
         exit;
         }
     }
+
 
 
 
