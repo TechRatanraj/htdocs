@@ -46478,12 +46478,12 @@ if ($ADD=="0A")
 <div style="max-width: 1400px; margin: 0 auto;">
     
     <!-- Header Section -->
-    <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("USER LISTINGS"); ?></h1>
-            </div>
+<div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+            <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("USER LISTINGS"); ?></h1>
+        </div>
             <div>
                 <?php
                 if (preg_match('/display_all/',$status))
