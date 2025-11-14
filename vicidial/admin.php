@@ -8573,134 +8573,258 @@ if ( ($SSadmin_modify_refresh > 1) and (preg_match("/^3|^4/",$ADD)) )
 ######################
 # ADD=1 display the ADD NEW USER FORM SCREEN
 ######################
+
+######################
+# ADD=1 display the ADD A NEW USER FORM SCREEN
+######################
 if ($ADD=="1")
-	{
-	if ($LOGmodify_users==1)
-		{
-		##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-		$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_users' and active='1';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$voi_ct = mysqli_num_rows($rslt);
-		if ($voi_ct > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$voi_count = "$row[0]";
-			}
-		##### END ID override optional section #####
+    {
+    if ($LOGmodify_users==1)
+        {
+        ##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
+        $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_users' and active='1';";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $voi_ct = mysqli_num_rows($rslt);
+        if ($voi_ct > 0)
+            {
+            $row=mysqli_fetch_row($rslt);
+            $voi_count = "$row";
+            }
+        ##### END ID override optional section #####
+        ?>
 
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_black_users.png\" alt=\"Users\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        <div style="background: white; padding: 20px;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                
+                <!-- Header Section -->
+                <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                        <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("ADD A NEW USER"); ?></h1>
+                    </div>
 
-		echo "<br>"._QXZ("ADD A NEW USER")."<form action=$PHP_SELF method=POST name=userform id=userform>\n";
-		echo "<input type=hidden name=ADD value=2>\n";
-		echo "<input type=hidden name=DB value=$DB>\n";
-		echo "<input type=hidden name=user_toggle id=user_toggle value=0>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		if ($voi_count > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Number").": </td><td align=left>"._QXZ("Auto-Generated")." <input type=hidden name=user id=user value=\"99999\">$NWB#users-user$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Number").": </td><td align=left><input type=text name=user id=user size=20 maxlength=20> <input style='background-color:#$SSbutton_color' type=button name=auto_user value=\""._QXZ("AUTO-GENERATE")."\" onClick=\"user_auto()\"> $NWB#users-user$NWE</td></tr>\n";
-			}
+                    <!-- Form -->
+                    <form action="<?php echo $PHP_SELF; ?>" method="POST" name="userform" id="userform">
+                        <input type="hidden" name="ADD" value="2">
+                        <input type="hidden" name="DB" value="<?php echo $DB; ?>">
+                        <input type="hidden" name="user_toggle" id="user_toggle" value="0">
+                        
+                        <div style="display: grid; gap: 20px;">
+                            
+                            <!-- User Number -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("User Number"); ?>:</label>
+                                <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                    <?php
+                                    if ($voi_count > 0)
+                                        {
+                                        echo _QXZ("Auto-Generated")." <input type='hidden' name='user' id='user' value='99999'>$NWB#users-user$NWE";
+                                        }
+                                    else
+                                        {
+                                        echo "<input type='text' name='user' id='user' size='20' maxlength='20' style='padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;'> ";
+                                        echo "<button type='button' name='auto_user' onclick=\"user_auto()\" style='padding: 10px 16px; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.background='#2980b9';\" onmouseout=\"this.style.background='#3498db';\">"._QXZ("AUTO-GENERATE")."</button> $NWB#users-user$NWE";
+                                        }
+                                    ?>
+                                </div>
+                            </div>
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1> "._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1>"._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
+                            <!-- Password -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Password"); ?>:</label>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <input type="text" id="reg_pass" name="pass" size="50" maxlength="100" onkeyup="return pwdChanged('reg_pass','reg_pass_img','pass_length','<?php echo $SSrequire_password_length; ?>');" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; flex: 1;"><?php echo $NWB; ?>#users-pass<?php echo $NWE; ?>
+                                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 12px; color: #7f8c8d;"><?php echo _QXZ("Strength"); ?>:</span>
+                                    <img id="reg_pass_img" src="images/pixel.gif" style="vertical-align: middle;" onload="return pwdChanged('reg_pass','reg_pass_img','pass_length','<?php echo $SSrequire_password_length; ?>');">
+                                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 12px; color: #7f8c8d;"><?php echo _QXZ("Length"); ?>: <span id="pass_length" name="pass_length">0</span></span>
+                                </div>
+                            </div>
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=full_name size=20 maxlength=100>$NWB#users-full_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Level").": </td><td align=left><select size=1 name=user_level>";
-		$h=1;
-		$count_user_level=$LOGuser_level;
-		if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
-			{$count_user_level=($LOGuser_level - 1);}
-		while ($h<=$count_user_level)
-			{
-			echo "<option>$h</option>";
-			$h++;
-			}
-		echo "</select>$NWB#users-user_level$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "</select>$NWB#users-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Login").": </td><td align=left><input type=text name=phone_login size=20 maxlength=20>$NWB#users-phone_login$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Pass").": </td><td align=left><input type=text name=phone_pass size=20 maxlength=20>$NWB#users-phone_pass$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=button name=SUBMIT value='"._QXZ("SUBMIT")."' onClick=\"user_submit()\"></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+                            <!-- Full Name -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Full Name"); ?>:</label>
+                                <input type="text" name="full_name" size="20" maxlength="100" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;"><?php echo $NWB; ?>#users-full_name<?php echo $NWE; ?>
+                            </div>
+
+                            <!-- User Level -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("User Level"); ?>:</label>
+                                <select size="1" name="user_level" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white;">
+                                    <?php
+                                    $h=1;
+                                    $count_user_level=$LOGuser_level;
+                                    if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
+                                        {$count_user_level=($LOGuser_level - 1);}
+                                    while ($h<=$count_user_level)
+                                        {
+                                        echo "<option>$h</option>";
+                                        $h++;
+                                        }
+                                    ?>
+                                </select><?php echo $NWB; ?>#users-user_level<?php echo $NWE; ?>
+                            </div>
+
+                            <!-- User Group -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("User Group"); ?>:</label>
+                                <select size="1" name="user_group" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white;">
+                                    <?php echo $UUgroups_list; ?>
+                                </select><?php echo $NWB; ?>#users-user_group<?php echo $NWE; ?>
+                            </div>
+
+                            <!-- Phone Login -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Phone Login"); ?>:</label>
+                                <input type="text" name="phone_login" size="20" maxlength="20" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;"><?php echo $NWB; ?>#users-phone_login<?php echo $NWE; ?>
+                            </div>
+
+                            <!-- Phone Pass -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Phone Pass"); ?>:</label>
+                                <input type="text" name="phone_pass" size="20" maxlength="20" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;"><?php echo $NWB; ?>#users-phone_pass<?php echo $NWE; ?>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <div></div>
+                                <button type="button" name="SUBMIT" onclick="user_submit()" style="padding: 12px 24px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;" onmouseover="this.style.background='#229954';" onmouseout="this.style.background='#27ae60';"><?php echo _QXZ("SUBMIT"); ?></button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <?php
+        }
+    else
+        {
+        echo _QXZ("You do not have permission to view this page")."\n";
+        exit;
+        }
+    }
+
 
 
 ######################
 # ADD=1A display the COPY USER FORM SCREEN
 ######################
 if ($ADD=="1A")
-	{
-	if ($LOGmodify_users==1)
-		{
-		##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-		$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_users' and active='1';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$voi_ct = mysqli_num_rows($rslt);
-		if ($voi_ct > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$voi_count = "$row[0]";
-			}
-		##### END ID override optional section #####
+    {
+    if ($LOGmodify_users==1)
+        {
+        ##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
+        $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_users' and active='1';";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $voi_ct = mysqli_num_rows($rslt);
+        if ($voi_ct > 0)
+            {
+            $row=mysqli_fetch_row($rslt);
+            $voi_count = "$row";
+            }
+        ##### END ID override optional section #####
+        ?>
 
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_black_users.png\" alt=\"Users\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        <div style="background: white; padding: 20px;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                
+                <!-- Header Section -->
+                <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                        <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("COPY USER"); ?></h1>
+                    </div>
 
-		echo "<br>"._QXZ("COPY USER")."<form action=$PHP_SELF method=POST name=userform id=userform>\n";
-		echo "<input type=hidden name=ADD value=2A>\n";
-		echo "<input type=hidden name=user_toggle id=user_toggle value=0>\n";
-		echo "<center><TABLE width=800 cellspacing=3>\n";
-		if ($voi_count > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("New User Number").": </td><td align=left>"._QXZ("Auto-Generated")." <input type=hidden name=user id=user value=\"99999\">$NWB#users-user$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("New User Number").": </td><td align=left><input type=text name=user id=user size=20 maxlength=20> <input style='background-color:#$SSbutton_color' type=button name=auto_user value=\""._QXZ("AUTO-GENERATE")."\" onClick=\"user_auto()\"> $NWB#users-user$NWE</td></tr>\n";
-			}
+                    <!-- Form -->
+                    <form action="<?php echo $PHP_SELF; ?>" method="POST" name="userform" id="userform">
+                        <input type="hidden" name="ADD" value="2A">
+                        <input type="hidden" name="user_toggle" id="user_toggle" value="0">
+                        
+                        <div style="display: grid; gap: 20px;">
+                            
+                            <!-- New User Number -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("New User Number"); ?>:</label>
+                                <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                    <?php
+                                    if ($voi_count > 0)
+                                        {
+                                        echo _QXZ("Auto-Generated")." <input type='hidden' name='user' id='user' value='99999'>$NWB#users-user$NWE";
+                                        }
+                                    else
+                                        {
+                                        echo "<input type='text' name='user' id='user' size='20' maxlength='20' style='padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;'> ";
+                                        echo "<button type='button' name='auto_user' onclick=\"user_auto()\" style='padding: 10px 16px; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.background='#2980b9';\" onmouseout=\"this.style.background='#3498db';\">"._QXZ("AUTO-GENERATE")."</button> $NWB#users-user$NWE";
+                                        }
+                                    ?>
+                                </div>
+                            </div>
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
+                            <!-- Password -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Password"); ?>:</label>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <input type="text" id="reg_pass" name="pass" size="50" maxlength="100" onkeyup="return pwdChanged('reg_pass','reg_pass_img','pass_length','<?php echo $SSrequire_password_length; ?>');" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; flex: 1;"><?php echo $NWB; ?>#users-pass<?php echo $NWE; ?>
+                                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 12px; color: #7f8c8d;"><?php echo _QXZ("Strength"); ?>:</span>
+                                    <img id="reg_pass_img" src="images/pixel.gif" style="vertical-align: middle;" onload="return pwdChanged('reg_pass','reg_pass_img','pass_length','<?php echo $SSrequire_password_length; ?>');">
+                                    <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 12px; color: #7f8c8d;"><?php echo _QXZ("Length"); ?>: <span id="pass_length" name="pass_length">0</span></span>
+                                </div>
+                            </div>
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=full_name size=20 maxlength=100>$NWB#users-full_name$NWE</td></tr>\n";
+                            <!-- Full Name -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Full Name"); ?>:</label>
+                                <input type="text" name="full_name" size="20" maxlength="100" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;"><?php echo $NWB; ?>#users-full_name<?php echo $NWE; ?>
+                            </div>
 
-		if ($LOGuser_level==9) {$levelMAX=10;}
-		else {$levelMAX=$LOGuser_level;}
+                            <!-- Source User -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <label style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600; text-align: right;"><?php echo _QXZ("Source User"); ?>:</label>
+                                <select size="1" name="source_user_id" style="padding: 10px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white;">
+                                    <?php
+                                    if ($LOGuser_level==9) {$levelMAX=10;}
+                                    else {$levelMAX=$LOGuser_level;}
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Source User").": </td><td align=left><select size=1 name=source_user_id>\n";
+                                    $stmt="SELECT user,full_name from vicidial_users where user_level < $levelMAX and user NOT IN('VDAD','VDCL') $LOGadmin_viewable_groupsSQL order by full_name;";
+                                    $rslt=mysql_to_mysqli($stmt, $link);
+                                    $Uusers_to_print = mysqli_num_rows($rslt);
+                                    $Uusers_list='';
 
-		$stmt="SELECT user,full_name from vicidial_users where user_level < $levelMAX and user NOT IN('VDAD','VDCL') $LOGadmin_viewable_groupsSQL order by full_name;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$Uusers_to_print = mysqli_num_rows($rslt);
-		$Uusers_list='';
+                                    $o=0;
+                                    while ($Uusers_to_print > $o) 
+                                        {
+                                        $rowx=mysqli_fetch_row($rslt);
+                                        $Uusers_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
+                                        $o++;
+                                        }
+                                    echo "$Uusers_list";
+                                    ?>
+                                </select><?php echo $NWB; ?>#users-user<?php echo $NWE; ?>
+                            </div>
 
-		$o=0;
-		while ($Uusers_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$Uusers_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "$Uusers_list";
-		echo "</select>$NWB#users-user$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=button name=SUBMIT value='"._QXZ("SUBMIT")."' onClick=\"user_submit()\"></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+                            <!-- Submit Button -->
+                            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: center;">
+                                <div></div>
+                                <button type="button" name="SUBMIT" onclick="user_submit()" style="padding: 12px 24px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif;" onmouseover="this.style.background='#229954';" onmouseout="this.style.background='#27ae60';"><?php echo _QXZ("SUBMIT"); ?></button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <?php
+        }
+    else
+        {
+        echo _QXZ("You do not have permission to view this page")."\n";
+        exit;
+        }
+    }
 
 
 ######################
