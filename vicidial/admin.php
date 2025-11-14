@@ -9010,8 +9010,6 @@ if ($ADD==11)
 ######################
 # ADD=12 display the COPY CAMPAIGN FORM SCREEN
 ######################
-
-
 if ($ADD == 12) {
     if ($LOGmodify_campaigns == 1) {
         
@@ -9039,24 +9037,23 @@ if ($ADD == 12) {
         
 <style>
 .cc-wrap{max-width:<?php echo $section_width; ?>px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
-.cc-hdr{display:flex;align-items:center;gap:15px;margin-bottom:0;padding:20px 25px;background:#f8f9fa;border:1px solid #dee2e6;border-bottom:none;border-radius:8px 8px 0 0}
+.cc-hdr{display:flex;align-items:center;gap:15px;margin-bottom:0;padding:18px 20px;background:#f8f9fa;border:1px solid #e5e7eb;border-bottom:2px solid #e5e7eb;border-radius:6px 6px 0 0}
 .cc-hdr img{flex-shrink:0}
-.cc-hdr h2{margin:0;font-size:20px;font-weight:600;color:#2c3e50}
-.cc-tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #dee2e6;border-radius:0 0 8px 8px;overflow:hidden}
-.cc-tbl tr{background-color:#f8f9fa;transition:background-color .2s}
-.cc-tbl tr:nth-child(even){background-color:#fff}
-.cc-tbl tr:hover{background-color:#f1f3f5}
-.cc-tbl td{padding:18px 25px;border-bottom:1px solid #dee2e6}
+.cc-hdr h2{margin:0;font-size:18px;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:0.5px}
+.cc-tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.cc-tbl tr{background-color:#fff;transition:background-color .15s}
+.cc-tbl tr:hover{background-color:#f9fafb}
+.cc-tbl td{padding:16px 20px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
 .cc-tbl tr:last-child td{border-bottom:none}
-.cc-lbl{font-weight:600;color:#495057;font-size:14px;white-space:nowrap}
-.cc-inp,.cc-sel{width:100%;padding:10px 14px;border:1.5px solid #ced4da;border-radius:6px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff}
-.cc-inp:focus,.cc-sel:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.1)}
-.cc-badge{display:inline-block;padding:8px 16px;background:#e9ecef;color:#495057;border:1px solid #ced4da;border-radius:6px;font-size:13px;font-weight:600}
-.cc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:12px 40px;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;transition:all .3s;box-shadow:0 2px 4px rgba(0,0,0,.1)}
-.cc-btn:hover{transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,.15)}
+.cc-lbl{font-weight:600;color:#374151;font-size:13px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
+.cc-inp,.cc-sel{width:100%;padding:9px 12px;border:1.5px solid #d1d5db;border-radius:4px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff;color:#374151}
+.cc-inp:focus,.cc-sel:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.cc-badge{display:inline-block;padding:6px 14px;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;border-radius:4px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
+.cc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:10px 32px;border:none;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.cc-btn:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.15);opacity:.9}
 .cc-btn:active{transform:translateY(0)}
-.cc-note{background:#fff3cd;border-left:4px solid #ffc107;padding:16px 25px;font-size:13px;line-height:1.6;color:#856404;margin:0}
-.cc-note strong{display:block;margin-bottom:8px;font-size:14px;font-weight:700}
+.cc-note{background:#fffbeb;border-left:3px solid #f59e0b;padding:14px 20px;font-size:13px;line-height:1.5;color:#92400e;margin:0}
+.cc-note strong{display:block;margin-bottom:6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
 @media (max-width:768px){.cc-wrap{margin:10px}.cc-hdr{padding:15px}.cc-tbl td{display:block;width:100%!important;text-align:left!important;padding:12px 15px}.cc-lbl{padding-bottom:5px;border-bottom:none}}
 </style>
 
@@ -9078,7 +9075,7 @@ if ($ADD == 12) {
                         <span class="cc-badge"><?php echo _QXZ("Auto-Generated"); ?></span>
                         <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
                     <?php else: ?>
-                        <input type="text" name="campaign_id" id="ccId" class="cc-inp" size="10" maxlength="8" pattern="[A-Za-z0-9_-]+" required style="max-width:180px">
+                        <input type="text" name="campaign_id" id="ccId" class="cc-inp" size="10" maxlength="8" pattern="[A-Za-z0-9_-]+" required style="max-width:200px">
                         <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
                     <?php endif; ?>
                 </td>
@@ -9086,21 +9083,21 @@ if ($ADD == 12) {
             <tr>
                 <td align="right" class="cc-lbl"><?php echo _QXZ("Campaign Name"); ?>:</td>
                 <td align="left">
-                    <input type="text" name="campaign_name" id="ccName" class="cc-inp" size="40" maxlength="40" required style="max-width:550px">
+                    <input type="text" name="campaign_name" id="ccName" class="cc-inp" size="40" maxlength="40" required style="max-width:600px">
                     <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?>
                 </td>
             </tr>
             <tr>
                 <td align="right" class="cc-lbl"><?php echo _QXZ("Source Campaign"); ?>:</td>
                 <td align="left">
-                    <select name="source_campaign_id" id="ccSrc" class="cc-sel" required style="max-width:550px">
+                    <select name="source_campaign_id" id="ccSrc" class="cc-sel" required style="max-width:600px">
                         <?php echo $campaigns_list; ?>
                     </select>
                     <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
                 </td>
             </tr>
             <tr>
-                <td align="center" colspan="2" style="padding:24px 25px;background:#f8f9fa">
+                <td align="center" colspan="2" style="padding:20px;background:#fafafa;border-top:1px solid #f3f4f6">
                     <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="cc-btn">
                 </td>
             </tr>
@@ -9117,13 +9114,13 @@ if ($ADD == 12) {
 </div>
 
 <script>
-(function(){var f=document.getElementById('ccForm');if(!f)return;f.addEventListener('submit',function(e){var id=document.getElementById('ccId'),nm=document.getElementById('ccName'),src=document.getElementById('ccSrc'),btn=this.querySelector('input[type="submit"]');if(id&&!id.disabled){var v=id.value.trim();if(v.length===0){alert('<?php echo _QXZ("Campaign ID is required"); ?>');id.focus();e.preventDefault();return false}if(!/^[A-Za-z0-9_-]+$/.test(v)){alert('<?php echo _QXZ("Campaign ID can only contain letters, numbers, hyphens, and underscores"); ?>');id.focus();e.preventDefault();return false}}if(nm&&nm.value.trim().length===0){alert('<?php echo _QXZ("Campaign Name is required"); ?>');nm.focus();e.preventDefault();return false}if(src&&src.value===''){alert('<?php echo _QXZ("Please select a source campaign to copy"); ?>');src.focus();e.preventDefault();return false}if(btn){btn.disabled=true;btn.value='<?php echo _QXZ("Processing..."); ?>';btn.style.opacity='0.6'}return true});var idInp=document.getElementById('ccId');if(idInp){idInp.addEventListener('input',function(){var v=this.value;if(v&&!/^[A-Za-z0-9_-]*$/.test(v)){this.style.borderColor='#dc3545';this.setCustomValidity('<?php echo _QXZ("Only letters, numbers, hyphens, and underscores allowed"); ?>')}else{this.style.borderColor='#ced4da';this.setCustomValidity('')}})}})();
+(function(){var f=document.getElementById('ccForm');if(!f)return;f.addEventListener('submit',function(e){var id=document.getElementById('ccId'),nm=document.getElementById('ccName'),src=document.getElementById('ccSrc'),btn=this.querySelector('input[type="submit"]');if(id&&!id.disabled){var v=id.value.trim();if(v.length===0){alert('<?php echo _QXZ("Campaign ID is required"); ?>');id.focus();e.preventDefault();return false}if(!/^[A-Za-z0-9_-]+$/.test(v)){alert('<?php echo _QXZ("Campaign ID can only contain letters, numbers, hyphens, and underscores"); ?>');id.focus();e.preventDefault();return false}}if(nm&&nm.value.trim().length===0){alert('<?php echo _QXZ("Campaign Name is required"); ?>');nm.focus();e.preventDefault();return false}if(src&&src.value===''){alert('<?php echo _QXZ("Please select a source campaign to copy"); ?>');src.focus();e.preventDefault();return false}if(btn){btn.disabled=true;btn.value='<?php echo _QXZ("Processing..."); ?>';btn.style.opacity='0.6'}return true});var idInp=document.getElementById('ccId');if(idInp){idInp.addEventListener('input',function(){var v=this.value;if(v&&!/^[A-Za-z0-9_-]*$/.test(v)){this.style.borderColor='#dc3545';this.setCustomValidity('<?php echo _QXZ("Only letters, numbers, hyphens, and underscores allowed"); ?>')}else{this.style.borderColor='#d1d5db';this.setCustomValidity('')}})}})();
 </script>
 
         <?php
     } else {
         ?>
-<style>.cc-err{max-width:600px;margin:40px auto;padding:20px 24px;background:#f8d7da;border:1px solid #f5c6cb;border-left:4px solid #dc3545;border-radius:6px;font-family:Arial,Helvetica,sans-serif}.cc-err h3{margin:0 0 10px 0;color:#721c24;font-size:18px}.cc-err p{margin:0;color:#721c24;font-size:14px}</style>
+<style>.cc-err{max-width:600px;margin:40px auto;padding:20px 24px;background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #dc2626;border-radius:4px;font-family:Arial,Helvetica,sans-serif}.cc-err h3{margin:0 0 10px 0;color:#991b1b;font-size:16px;font-weight:600}.cc-err p{margin:0;color:#991b1b;font-size:14px}</style>
 <div class="cc-err">
     <h3>⛔ <?php echo _QXZ("Access Denied"); ?></h3>
     <p><?php echo _QXZ("You do not have permission to view this page"); ?></p>
@@ -9132,9 +9129,6 @@ if ($ADD == 12) {
         exit;
     }
 }
-
-
-
 
 
 ######################
