@@ -31373,10 +31373,10 @@ else {$camp_listmix_color=$campaigns_color;}
 echo "<div style='max-width: 1400px; margin: 0 auto; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
 
 // Campaign Header
-echo "<div style='background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 25px 30px; border-bottom: 3px solid #3498db;'>";
-echo "<div style='display: flex; align-items: center; gap: 15px;'>";
-echo "<div style='width: 50px; height: 50px; background: #3498db; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; font-weight: bold;'>📢</div>";
-echo "<h1 style='color: #ffffff; font-size: 28px; font-weight: 600; margin: 0; letter-spacing: -0.5px;'>$campaign_id</h1>";
+echo "<div style='background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%); padding: 12px 20px; border-bottom: 2px solid #718096;'>";
+echo "<div style='display: flex; align-items: center; gap: 10px;'>";
+echo "<div style='width: 32px; height: 32px; background: #718096; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: white; font-weight: bold;'>📢</div>";
+echo "<h1 style='color: #f7fafc; font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.3px;'>$campaign_id</h1>";
 echo "</div>";
 echo "</div>";
 
