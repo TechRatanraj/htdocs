@@ -46345,6 +46345,7 @@ if ($ADD=="0A")
         </div>
     </div>
 
+
     <?php
     $USERlink='stage=USERIDDOWN';
     $USERNUMlink='stage=USERIDNUMDOWN';
@@ -46367,6 +46368,7 @@ if ($ADD=="0A")
     $rslt=mysql_to_mysqli($stmt, $link);
     $people_to_print = mysqli_num_rows($rslt);
     ?>
+
 
     <!-- User Table -->
     <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
@@ -46433,40 +46435,40 @@ if ($ADD=="0A")
                 $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
                 ?>
                 <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';">
-                    <td style="padding: 12px; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $row; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row; ?></a>
+                    <td style="padding: 12px; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} ?>>
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $row[0]; ?></a>
                     </td>
-                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <?php echo $row; ?>
+                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} ?>>
+                        <?php echo $row[1]; ?>
                     </td>
-                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <?php echo $row; ?>
+                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} ?>>
+                        <?php echo $row[2]; ?>
                     </td>
-                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <?php echo $row; ?>
+                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} ?>>
+                        <?php echo $row[3]; ?>
                     </td>
-                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <span style="padding: 4px 10px; background: <?php echo ($row=='Y') ? '#27ae60' : '#e74c3c'; ?>; color: white; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                            <?php echo _QXZ("$row"); ?>
+                    <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} ?>>
+                        <span style="padding: 4px 10px; background: <?php echo ($row[4]=='Y') ? '#27ae60' : '#e74c3c'; ?>; color: white; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                            <?php echo _QXZ("$row[4]"); ?>
                         </span>
                     </td>
-                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row'\"";} ?>>
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $row; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=3&user=$row[0]'\"";} ?>>
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
                             <?php echo _QXZ("MODIFY"); ?>
                         </a>
                     </td>
-                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./user_stats.php?user=$row'\"";} ?>>
-                        <a href="./user_stats.php?user=<?php echo $row; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #9b59b6; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#9b59b6'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#9b59b6';">
+                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./user_stats.php?user=$row[0]'\"";} ?>>
+                        <a href="./user_stats.php?user=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #9b59b6; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#9b59b6'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#9b59b6';">
                             <?php echo _QXZ("STATS"); ?>
                         </a>
                     </td>
-                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./user_status.php?user=$row'\"";} ?>>
-                        <a href="./user_status.php?user=<?php echo $row; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #e67e22; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#e67e22'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#e67e22';">
+                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./user_status.php?user=$row[0]'\"";} ?>>
+                        <a href="./user_status.php?user=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #e67e22; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#e67e22'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#e67e22';">
                             <?php echo _QXZ("STATUS"); ?>
                         </a>
                     </td>
-                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$row'\"";} ?>>
-                        <a href="./AST_agent_time_sheet.php?agent=<?php echo $row; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #16a085; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#16a085'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#16a085';">
+                    <td style="padding: 12px; text-align: center; <?php echo $cursor_style; ?>" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='./AST_agent_time_sheet.php?agent=$row[0]'\"";} ?>>
+                        <a href="./AST_agent_time_sheet.php?agent=<?php echo $row[0]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #16a085; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#16a085'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#16a085';">
                             <?php echo _QXZ("TIME"); ?>
                         </a>
                     </td>
@@ -46479,10 +46481,13 @@ if ($ADD=="0A")
         </table>
     </div>
 
+
     </div>
 </div>
 <?php
 }
+
+
 
 
 ######################
