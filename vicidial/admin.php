@@ -46472,7 +46472,6 @@ if ($ADD==82)
 ######################    
 if ($ADD=="0A")
 {
-
 ?>
 <div style="background: white; padding: 5px;">
 <div style="max-width: 1300px; margin: 0 auto;">
@@ -46501,7 +46500,6 @@ if ($ADD=="0A")
         </div>
     </div>
 
-
     <?php
     $USERlink='stage=USERIDDOWN';
     $USERNUMlink='stage=USERIDNUMDOWN';
@@ -46525,59 +46523,56 @@ if ($ADD=="0A")
     $people_to_print = mysqli_num_rows($rslt);
     ?>
 
-
     <!-- User Table -->
 <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
     <table style="width: 100%; border-collapse: collapse; min-width: 900px;">
         <thead>
-            <tr style="background: #f2f2f29d; color: #000000;">
-                <th style="padding: 14px 12px; text-align: left; border-radius: 8px 0 0 0; color:#000000;">
-
-
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $USERlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+            <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                <th style="padding: 14px 12px; text-align: left; border-radius: 8px 0 0 0;">
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $USERlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
                             <?php echo _QXZ("USER ID"); ?> <span style="font-size: 10px;">▼</span>
                         </a>
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $USERNUMlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 11px; color: #bdc3c7; text-decoration: none; margin-top: 4px; display: inline-block;">
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $USERNUMlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 11px; color: #7f8c8d; text-decoration: none; margin-top: 4px; display: inline-block;">
                             - # -
                         </a>
                     </th>
                     <th style="padding: 14px 12px; text-align: left;">
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $NAMElink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $NAMElink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
                             <?php echo _QXZ("FULL NAME"); ?> <span style="font-size: 10px;">▼</span>
                         </a>
                     </th>
                     <th style="padding: 14px 12px; text-align: left;">
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $LEVELlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $LEVELlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
                             <?php echo _QXZ("LEVEL"); ?> <span style="font-size: 10px;">▼</span>
                         </a>
                     </th>
                     <th style="padding: 14px 12px; text-align: left;">
-                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $GROUPlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+                        <a href="<?php echo $PHP_SELF; ?>?ADD=0A&status=<?php echo $status; ?>&<?php echo $GROUPlink; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; text-decoration: none; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
                             <?php echo _QXZ("GROUP"); ?> <span style="font-size: 10px;">▼</span>
                         </a>
                     </th>
                     <th style="padding: 14px 12px; text-align: left;">
-                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
                             <?php echo _QXZ("ACTIVE"); ?>
                         </span>
                     </th>
                     <th style="padding: 14px 12px; text-align: center;">
-                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
                             <?php echo _QXZ("MODIFY"); ?>
                         </span>
                     </th>
                     <th style="padding: 14px 12px; text-align: center;">
-                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
                             <?php echo _QXZ("STATS"); ?>
                         </span>
                     </th>
                     <th style="padding: 14px 12px; text-align: center;">
-                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
                             <?php echo _QXZ("STATUS"); ?>
                         </span>
                     </th>
                     <th style="padding: 14px 12px; text-align: center; border-radius: 0 8px 0 0;">
-                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: white; font-weight: 600; text-transform: uppercase;">
+                        <span style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
                             <?php echo _QXZ("TIME"); ?>
                         </span>
                     </th>
@@ -46639,11 +46634,12 @@ if ($ADD=="0A")
         </table>
     </div>
 
-
     </div>
 </div>
 <?php
 }
+
+
 
 
 
