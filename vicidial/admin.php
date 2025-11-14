@@ -9011,6 +9011,7 @@ if ($ADD==11)
 # ADD=12 display the COPY CAMPAIGN FORM SCREEN
 ######################
 
+
 if ($ADD == 12) {
     if ($LOGmodify_campaigns == 1) {
         
@@ -9038,24 +9039,25 @@ if ($ADD == 12) {
         
 <style>
 .cc-wrap{max-width:<?php echo $section_width; ?>px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
-.cc-hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:15px;background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);border-radius:8px}
+.cc-hdr{display:flex;align-items:center;gap:15px;margin-bottom:0;padding:20px 25px;background:#f8f9fa;border:1px solid #dee2e6;border-bottom:none;border-radius:8px 8px 0 0}
 .cc-hdr img{flex-shrink:0}
 .cc-hdr h2{margin:0;font-size:20px;font-weight:600;color:#2c3e50}
-.cc-tbl{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.cc-tbl tr{background-color:#<?php echo $SSstd_row4_background; ?>;transition:background-color .2s}
-.cc-tbl tr:hover{background-color:rgba(0,0,0,.02)}
-.cc-tbl td{padding:14px 18px;border-bottom:1px solid #e8eaed}
+.cc-tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #dee2e6;border-radius:0 0 8px 8px;overflow:hidden}
+.cc-tbl tr{background-color:#f8f9fa;transition:background-color .2s}
+.cc-tbl tr:nth-child(even){background-color:#fff}
+.cc-tbl tr:hover{background-color:#f1f3f5}
+.cc-tbl td{padding:18px 25px;border-bottom:1px solid #dee2e6}
 .cc-tbl tr:last-child td{border-bottom:none}
 .cc-lbl{font-weight:600;color:#495057;font-size:14px;white-space:nowrap}
 .cc-inp,.cc-sel{width:100%;padding:10px 14px;border:1.5px solid #ced4da;border-radius:6px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff}
 .cc-inp:focus,.cc-sel:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.1)}
-.cc-badge{display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border-radius:6px;font-size:13px;font-weight:600;letter-spacing:.3px}
-.cc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:12px 40px;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;transition:all .3s;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-.cc-btn:hover{transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,.15)}
+.cc-badge{display:inline-block;padding:8px 16px;background:#e9ecef;color:#495057;border:1px solid #ced4da;border-radius:6px;font-size:13px;font-weight:600}
+.cc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:12px 40px;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;transition:all .3s;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.cc-btn:hover{transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,.15)}
 .cc-btn:active{transform:translateY(0)}
-.cc-note{background:#fff3cd;border-left:4px solid #ffc107;padding:14px 18px;font-size:13px;line-height:1.6;color:#856404}
-.cc-note strong{display:block;margin-bottom:6px;font-size:14px}
-@media (max-width:768px){.cc-wrap{margin:10px}.cc-tbl td{display:block;width:100%!important;text-align:left!important}.cc-lbl{padding-bottom:8px}}
+.cc-note{background:#fff3cd;border-left:4px solid #ffc107;padding:16px 25px;font-size:13px;line-height:1.6;color:#856404;margin:0}
+.cc-note strong{display:block;margin-bottom:8px;font-size:14px;font-weight:700}
+@media (max-width:768px){.cc-wrap{margin:10px}.cc-hdr{padding:15px}.cc-tbl td{display:block;width:100%!important;text-align:left!important;padding:12px 15px}.cc-lbl{padding-bottom:5px;border-bottom:none}}
 </style>
 
 <div class="cc-wrap">
@@ -9084,21 +9086,21 @@ if ($ADD == 12) {
             <tr>
                 <td align="right" class="cc-lbl"><?php echo _QXZ("Campaign Name"); ?>:</td>
                 <td align="left">
-                    <input type="text" name="campaign_name" id="ccName" class="cc-inp" size="40" maxlength="40" required style="max-width:450px">
+                    <input type="text" name="campaign_name" id="ccName" class="cc-inp" size="40" maxlength="40" required style="max-width:550px">
                     <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?>
                 </td>
             </tr>
             <tr>
                 <td align="right" class="cc-lbl"><?php echo _QXZ("Source Campaign"); ?>:</td>
                 <td align="left">
-                    <select name="source_campaign_id" id="ccSrc" class="cc-sel" required style="max-width:450px">
+                    <select name="source_campaign_id" id="ccSrc" class="cc-sel" required style="max-width:550px">
                         <?php echo $campaigns_list; ?>
                     </select>
                     <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
                 </td>
             </tr>
             <tr>
-                <td align="center" colspan="2" style="padding:24px 18px">
+                <td align="center" colspan="2" style="padding:24px 25px;background:#f8f9fa">
                     <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="cc-btn">
                 </td>
             </tr>
@@ -9130,6 +9132,7 @@ if ($ADD == 12) {
         exit;
     }
 }
+
 
 
 
