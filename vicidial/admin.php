@@ -32452,203 +32452,315 @@ if ($ADD==37)
     }
 
 
-
-
 ######################
 # ADD=39 display all campaign list mixes
 ######################
+######################
+# ADD=39 Campaign List Mix
+######################
 if ($ADD==39)
-	{
-	echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $campaigns_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("CAMPAIGN LIST MIX LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr>\n";
-	echo "<td><B>"._QXZ("CAMPAIGN")."</B></td>\n";
-	echo "<td><B>"._QXZ("NAME")."</B></td>\n";
-	echo "<td><B>"._QXZ("LIST MIX")."</B></td>\n";
-	echo "<td><B>"._QXZ("MODIFY")."</B></td>\n";
-	echo "</tr>\n";
+    $o=0;
+    while ($campaigns_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        $campaigns_id_list[$o] = $row[0];
+        $campaigns_name_list[$o] = $row[1];
+        $o++;
+        }
+    ?>
 
-		$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$campaigns_to_print = mysqli_num_rows($rslt);
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1300px; margin: 0 auto;">
+        
+        <div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <img src="images/icon_black_campaigns.png" alt="Campaigns" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("CAMPAIGN LIST MIX LISTINGS"); ?></h1>
+            </div>
+        </div>
 
-		$o=0;
-		while ($campaigns_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			$campaigns_id_list[$o] = $row[0];
-			$campaigns_name_list[$o] = $row[1];
-			$o++;
-			}
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("CAMPAIGN"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("NAME"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("LIST MIX"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("MODIFY"); ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $o=0;
+                while ($campaigns_to_print > $o) 
+                    {
+                    $bgcolor = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                    $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+                    ?>
+                    <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease; <?php echo $cursor_style; ?>" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaigns_id_list[$o]'\"";} ?>>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=31&SUB=29&campaign_id=<?php echo $campaigns_id_list[$o]; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $campaigns_id_list[$o]; ?></a>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                            <?php echo $campaigns_name_list[$o]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php
+                            $stmt_inner="SELECT vcl_id from vicidial_campaigns_list_mix where campaign_id='$campaigns_id_list[$o]' $LOGallowed_campaignsSQL order by status,vcl_id;";
+                            $rslt_inner=mysql_to_mysqli($stmt_inner, $link);
+                            $campstatus_to_print = mysqli_num_rows($rslt_inner);
+                            $p=0;
+                            while ( ($campstatus_to_print > $p) and ($p < 10) )
+                                {
+                                $row_inner=mysqli_fetch_row($rslt_inner);
+                                echo "$row_inner[0] ";
+                                $p++;
+                                }
+                            if ($p<1) 
+                                {echo "<span style='color: #95a5a6; text-decoration: line-through;'>"._QXZ("NONE")."</span>";}
+                            ?>
+                        </td>
+                        <td style="padding: 12px; text-align: center;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=31&SUB=29&campaign_id=<?php echo $campaigns_id_list[$o]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                <?php echo _QXZ("MODIFY LIST MIX"); ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                    $o++;
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-		$o=0;
-		while ($campaigns_to_print > $o) 
-			{
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='class="records_list_x"';} 
-			else
-				{$bgcolor='class="records_list_y"';}
-			echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaigns_id_list[$o]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaigns_id_list[$o]\"><font size=1 color=black>$campaigns_id_list[$o]</a></td>";
-			echo "<td><font size=1> $campaigns_name_list[$o] </td>";
-			echo "<td><font size=1> ";
-
-			$stmt="SELECT vcl_id from vicidial_campaigns_list_mix where campaign_id='$campaigns_id_list[$o]' $LOGallowed_campaignsSQL order by status,vcl_id;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$campstatus_to_print = mysqli_num_rows($rslt);
-			$p=0;
-			while ( ($campstatus_to_print > $p) and ($p < 10) )
-				{
-				$row=mysqli_fetch_row($rslt);
-				echo "$row[0] ";
-				$p++;
-				}
-			if ($p<1) 
-				{echo "<font color=grey><DEL>"._QXZ("NONE")."</DEL></font>";}
-			echo "</td>";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaigns_id_list[$o]\">"._QXZ("MODIFY LIST MIX")."</a></td></tr>\n";
-			$o++;
-			}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
-# ADD=301 display all campaign presets
+# ADD=301 Campaign Presets
 ######################
 if ($ADD==301)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    $stmt="SELECT campaign_id,campaign_name,enable_xfer_presets from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $campaigns_to_print = mysqli_num_rows($rslt);
+    if ($DB > 0) {echo "DEBUG: |$campaigns_to_print|$stmt|\n";}
+    
+    $o=0;
+    while ($campaigns_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        $campaigns_id_list[$o] = $row[0];
+        $campaigns_name_list[$o] = $row[1];
+        $enable_xfer_presets_list[$o] = $row[2];
+        $o++;
+        }
+    ?>
 
-	echo "<br>"._QXZ("CAMPAIGN PRESET LISTINGS").":\n";
-	echo "<center><TABLE width=900 cellspacing=0 cellpadding=1>\n";
-	echo "<tr>\n";
-	echo "<td><B>"._QXZ("CAMPAIGN")."</B></td>\n";
-	echo "<td><B>"._QXZ("NAME")."</B></td>\n";
-	echo "<td><B>"._QXZ("PRESETS")."</B></td>\n";
-	echo "<td><B>"._QXZ("MODIFY")."</B></td>\n";
-	echo "</tr>\n";
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1300px; margin: 0 auto;">
+        
+        <div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <img src="images/icon_black_campaigns.png" alt="Campaigns" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("CAMPAIGN PRESET LISTINGS"); ?></h1>
+            </div>
+        </div>
 
-	$stmt="SELECT campaign_id,campaign_name,enable_xfer_presets from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$campaigns_to_print = mysqli_num_rows($rslt);
-	if ($DB > 0) {echo "DEBUG: |$campaigns_to_print|$stmt|\n";}
-	$o=0;
-	while ($campaigns_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		$campaigns_id_list[$o] =		$row[0];
-		$campaigns_name_list[$o] =		$row[1];
-		$enable_xfer_presets_list[$o] = $row[2];
-		$o++;
-		}
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("CAMPAIGN"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("NAME"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("PRESETS"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("MODIFY"); ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $o=0;
+                $k=0;
+                while ($campaigns_to_print > $o) 
+                    {
+                    if ( ($enable_xfer_presets_list[$o] == 'ENABLED') or ($enable_xfer_presets_list[$o] == 'STAGING') )
+                        {
+                        $bgcolor = ($k % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                        $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+                        ?>
+                        <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease; <?php echo $cursor_style; ?>" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaigns_id_list[$o]'\"";} ?>>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                                <a href="<?php echo $PHP_SELF; ?>?ADD=31&SUB=201&campaign_id=<?php echo $campaigns_id_list[$o]; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $campaigns_id_list[$o]; ?></a>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                                <?php echo $campaigns_name_list[$o]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php
+                                $stmt_inner="SELECT preset_name from vicidial_xfer_presets where campaign_id='$campaigns_id_list[$o]' $LOGallowed_campaignsSQL order by preset_name;";
+                                $rslt_inner=mysql_to_mysqli($stmt_inner, $link);
+                                $campstatus_to_print = mysqli_num_rows($rslt_inner);
+                                $p=0;
+                                while ( ($campstatus_to_print > $p) and ($p < 10) )
+                                    {
+                                    $row_inner=mysqli_fetch_row($rslt_inner);
+                                    echo "$row_inner[0] ";
+                                    $p++;
+                                    }
+                                if ($p<1) 
+                                    {echo "<span style='color: #95a5a6; text-decoration: line-through;'>"._QXZ("NONE")."</span>";}
+                                ?>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <a href="<?php echo $PHP_SELF; ?>?ADD=31&SUB=201&campaign_id=<?php echo $campaigns_id_list[$o]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                    <?php echo _QXZ("MODIFY PRESETS"); ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+                        $k++;
+                        }
+                    $o++;
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-	$o=0;
-	$k=0;
-	while ($campaigns_to_print > $o) 
-		{
-		if ( ($enable_xfer_presets_list[$o] == 'ENABLED') or ($enable_xfer_presets_list[$o] == 'STAGING') )
-			{
-			if (preg_match('/1$|3$|5$|7$|9$/i', $k))
-				{$bgcolor='class="records_list_x"';} 
-			else
-				{$bgcolor='class="records_list_y"';}
-			echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaigns_id_list[$o]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaigns_id_list[$o]\"><font size=1 color=black>$campaigns_id_list[$o]</a></td>";
-			echo "<td><font size=1> $campaigns_name_list[$o] </td>";
-			echo "<td><font size=1> ";
-
-			$stmt="SELECT preset_name from vicidial_xfer_presets where campaign_id='$campaigns_id_list[$o]' $LOGallowed_campaignsSQL order by preset_name;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$campstatus_to_print = mysqli_num_rows($rslt);
-			$p=0;
-			while ( ($campstatus_to_print > $p) and ($p < 10) )
-				{
-				$row=mysqli_fetch_row($rslt);
-				echo "$row[0] ";
-				$p++;
-				}
-			if ($p<1) 
-				{echo "<font color=grey><DEL>"._QXZ("NONE")."</DEL></font>";}
-			echo "</td>";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaigns_id_list[$o]\">"._QXZ("MODIFY PRESETS")."</a></td></tr>\n";
-
-			$k++;
-			}
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
-# ADD=302 display campaign areacode cid counts
+# ADD=302 Campaign Areacode CID
 ######################
 if ($ADD==302)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    $stmt="SELECT campaign_id,campaign_name,use_custom_cid from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $campaigns_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("CAMPAIGN AREACODE CID LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr>\n";
-	echo "<td><B>"._QXZ("CAMPAIGN")."</B></td>\n";
-	echo "<td><B>"._QXZ("NAME")."</B></td>\n";
-	echo "<td><B>"._QXZ("CUSTOM CID")."</B></td>\n";
-	echo "<td><B>"._QXZ("AC-CIDS")."</B></td>\n";
-	echo "<td><B>"._QXZ("MODIFY")."</B></td>\n";
-	echo "</tr>\n";
+    $o=0;
+    while ($campaigns_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        $campaigns_id_list[$o] = $row[0];
+        $campaigns_name_list[$o] = $row[1];
+        $use_custom_cid_list[$o] = $row[2];
+        $o++;
+        }
+    ?>
 
-	$stmt="SELECT campaign_id,campaign_name,use_custom_cid from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$campaigns_to_print = mysqli_num_rows($rslt);
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1300px; margin: 0 auto;">
+        
+        <div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <img src="images/icon_black_campaigns.png" alt="Campaigns" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("CAMPAIGN AREACODE CID LISTINGS"); ?></h1>
+            </div>
+        </div>
 
-	$o=0;
-	while ($campaigns_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		$campaigns_id_list[$o] =	$row[0];
-		$campaigns_name_list[$o] =	$row[1];
-		$use_custom_cid_list[$o] =	$row[2];
-		$o++;
-		}
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05); overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 900px;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("CAMPAIGN"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("NAME"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("CUSTOM CID"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("AC-CIDS"); ?>
+                        </th>
+                        <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                            <?php echo _QXZ("MODIFY"); ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $o=0;
+                $k=0;
+                while ($campaigns_to_print > $o) 
+                    {
+                    $bgcolor = ($k % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                    $cursor_style = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+                    ?>
+                    <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease; <?php echo $cursor_style; ?>" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';" <?php if ($SSadmin_row_click > 0) {echo "onclick=\"window.document.location='$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaigns_id_list[$o]'\"";} ?>>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=31&SUB=202&campaign_id=<?php echo $campaigns_id_list[$o]; ?>" style="color: #3498db; text-decoration: none; font-weight: 600;"><?php echo $campaigns_id_list[$o]; ?></a>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                            <?php echo $campaigns_name_list[$o]; ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php echo _QXZ("$use_custom_cid_list[$o]"); ?>
+                        </td>
+                        <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                            <?php
+                            $stmt_inner="SELECT count(*) from vicidial_campaign_cid_areacodes where campaign_id='$campaigns_id_list[$o]' $LOGallowed_campaignsSQL;";
+                            $rslt_inner=mysql_to_mysqli($stmt_inner, $link);
+                            $campstatus_to_print = mysqli_num_rows($rslt_inner);
+                            $p=0;
+                            while ( ($campstatus_to_print > $p) and ($p < 10) )
+                                {
+                                $row_inner=mysqli_fetch_row($rslt_inner);
+                                echo "$row_inner[0] ";
+                                $p++;
+                                }
+                            ?>
+                        </td>
+                        <td style="padding: 12px; text-align: center;">
+                            <a href="<?php echo $PHP_SELF; ?>?ADD=31&SUB=202&campaign_id=<?php echo $campaigns_id_list[$o]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                <?php echo _QXZ("MODIFY AC-CIDS"); ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                    $k++;
+                    $o++;
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-	$o=0;
-	$k=0;
-	while ($campaigns_to_print > $o) 
-		{
-		if (preg_match('/1$|3$|5$|7$|9$/i', $k))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaigns_id_list[$o]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaigns_id_list[$o]\"><font size=1 color=black>$campaigns_id_list[$o]</a></td>";
-		echo "<td><font size=1> $campaigns_name_list[$o] </td>";
-		echo "<td><font size=1> "._QXZ("$use_custom_cid_list[$o]")." </td>";
-		echo "<td><font size=1> ";
-
-		$stmt="SELECT count(*) from vicidial_campaign_cid_areacodes where campaign_id='$campaigns_id_list[$o]' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$campstatus_to_print = mysqli_num_rows($rslt);
-		$p=0;
-		while ( ($campstatus_to_print > $p) and ($p < 10) )
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "$row[0] ";
-			$p++;
-			}
-		echo "</td>";
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaigns_id_list[$o]\">"._QXZ("MODIFY AC-CIDS")."</a></td></tr>\n";
-
-		$k++;
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
