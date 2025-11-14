@@ -31168,6 +31168,7 @@ if ($ADD==31)
 # ADD=34 modify campaign info in the system - Basic View
 ######################
 
+
 if ( ($ADD==34) and ( (!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
 	{$ADD=30;}	# send to not allowed screen if not in vicidial_user_groups allowed_campaigns list
 
@@ -31347,6 +31348,7 @@ if ($ADD==34)
 			$o++;
 			}
 		}
+		
 
 	if ($SUB<1)		{$camp_detail_color=$subcamp_color;}
 		else		{$camp_detail_color=$campaigns_color;}
@@ -31362,19 +31364,19 @@ if ($ADD==34)
 		else		{$camp_pause_color=$campaigns_color;}
 	if ($SUB==29)	{$camp_listmix_color=$subcamp_color;}
 		else		{$camp_listmix_color=$campaigns_color;}
-	echo "<TABLE WIDTH=$page_width CELLPADDING=2 CELLSPACING=0><TR BGCOLOR=\"$campaigns_color\">\n";
-	echo "<TD><font size=2 color=$subcamp_font face=\"ARIAL,HELVETICA\"> <B>$campaign_id</B>: </font></TD>";
+	
+	echo "<TABLE WIDTH=$page_width CELLPADDING=0 CELLSPACING=0 style='border-radius:12px; overflow:hidden; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); margin-bottom:30px;'><TR style='background:linear-gradient(135deg, #10b981 0%, #059669 100%);'>\n";
+	echo "<TD style='padding:18px 20px; text-align:center; border-right:1px solid rgba(255,255,255,0.1);'><font style='font-size:16px; font-weight:700; letter-spacing:0.5px;' color=white face='Arial,Helvetica'><B>$campaign_id</B></font></TD>";
 
-
-	echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_detail_color\"> &nbsp; <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Basic View")."</font></a></TD>";
-	echo "<TD ALIGN=CENTER> <a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Detail View")." </font></a> </TD>";
+	echo "<TD ALIGN=CENTER BGCOLOR='$camp_detail_color' style='padding:18px 20px; background:rgba(255,255,255,0.2); border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.25)'\" onmouseout=\"this.style.background='rgba(255,255,255,0.2)'\"> <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("Basic View")."</a></TD>";
+	echo "<TD ALIGN=CENTER style='padding:18px 20px; border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.1)'\" onmouseout=\"this.style.background='transparent'\"> <a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("Detail View")."</a></TD>";
 
 	if ($SSoutbound_autodial_active > 0)
 		{
-		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_listmix_color\"> <a href=\"$PHP_SELF?ADD=34&SUB=29&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("List Mix")."</font></a> </TD>";
+		echo "<TD ALIGN=CENTER BGCOLOR='$camp_listmix_color' style='padding:18px 20px; background:rgba(255,255,255,0.2); border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.25)'\" onmouseout=\"this.style.background='rgba(255,255,255,0.2)'\"> <a href=\"$PHP_SELF?ADD=34&SUB=29&campaign_id=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("List Mix")."</a></TD>";
 		}
-	echo "<TD ALIGN=CENTER> <a href=\"./realtime_report.php?RR=4&DB=0&group=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Real-Time Screen")."</font></a></TD>\n";
-	echo "<TD WIDTH=300><font class=\"sub_sub_head_links\"> &nbsp; </font></TD>\n";
+	echo "<TD ALIGN=CENTER style='padding:18px 20px; border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.1)'\" onmouseout=\"this.style.background='transparent'\"> <a href=\"./realtime_report.php?RR=4&DB=0&group=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("Real-Time Screen")."</a></TD>\n";
+	echo "<TD WIDTH=300 style='padding:18px 20px;'><font style='color:white; font-size:14px;'> &nbsp; </font></TD>\n";
 	if ($SSoutbound_autodial_active < 1)
 		{
 		echo "<TD></TD>";
@@ -31383,38 +31385,54 @@ if ($ADD==34)
 
 	if ($SUB < 1)
 		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+		echo "<div style='max-width:1400px; margin:0 auto; padding:20px; font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif;'>\n";
+		echo "<FONT FACE='ARIAL,HELVETICA' COLOR=BLACK SIZE=2>";
 		echo "<form action=$PHP_SELF method=POST>\n";
 		echo "<input type=hidden name=ADD value=44>\n";
 		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
 		echo "<input type=hidden name=old_campaign_allow_inbound value=\"$campaign_allow_inbound\">\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign ID").": </td><td align=left><b>$campaign_id</b>$NWB#campaigns-campaign_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Name").": </td><td align=left><input type=text name=campaign_name size=40 maxlength=40 value=\"$row[1]\">$NWB#campaigns-campaign_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Description").": </td><td align=left>$row[57]$NWB#campaigns-campaign_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Change Date").": </td><td align=left>$campaign_changedate &nbsp; $NWB#campaigns-campaign_changedate$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Login Date").": </td><td align=left>$campaign_logindate &nbsp; $NWB#campaigns-campaign_logindate$NWE</td></tr>\n";
+		
+		echo "<div style='background:#ffffff; border-radius:12px; padding:32px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);'>\n";
+		echo "<div style='display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-bottom:24px;'>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign ID").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'><b>$campaign_id</b>$NWB#campaigns-campaign_id$NWE</div></div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Name").":</div><input type=text name=campaign_name size=40 maxlength=40 value=\"$row[1]\" style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>$NWB#campaigns-campaign_name$NWE</div>\n";
+		
+		echo "<div style='grid-column:1/-1; display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Description").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$row[57]$NWB#campaigns-campaign_description$NWE</div></div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Change Date").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$campaign_changedate &nbsp; $NWB#campaigns-campaign_changedate$NWE</div></div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Login Date").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$campaign_logindate &nbsp; $NWB#campaigns-campaign_logindate$NWE</div></div>\n";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[2]' SELECTED>"._QXZ("$row[2]")."</option></select>$NWB#campaigns-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left>"._QXZ("$user_group")." $NWB#campaigns-user_group$NWE</td></tr>\n";
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Active").":</div><select size=1 name=active style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[2]' SELECTED>"._QXZ("$row[2]")."</option></select>$NWB#campaigns-active$NWE</div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Admin User Group").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$user_group")." $NWB#campaigns-user_group$NWE</div></div>\n";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Park Music-on-Hold").": </td><td align=left>$row[10] $NWB#campaigns-park_ext$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Form").": </td><td align=left>$row[11]$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) {echo " <font color=red><b>"._QXZ("DISABLED")."</b></font>";} echo "</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Closers").": </td><td align=left>"._QXZ("$row[12]")." $NWB#campaigns-allow_closers$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Default Transfer Group").": </td><td align=left>"._QXZ("$default_xfer_group")." $NWB#campaigns-default_xfer_group$NWE</td></tr>\n";
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Park Music-on-Hold").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$row[10] $NWB#campaigns-park_ext$NWE</div></div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Web Form").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$row[11]$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) {echo " <font color=red><b>"._QXZ("DISABLED")."</b></font>";} echo "</div></div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Closers").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$row[12]")." $NWB#campaigns-allow_closers$NWE</div></div>\n";
+		
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Default Transfer Group").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$default_xfer_group")." $NWB#campaigns-default_xfer_group$NWE</div></div>\n";
+		
 		if ($SSallow_emails > 0) 
 			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Emails").": </td><td align=left>"._QXZ("$allow_emails")." $NWB#campaigns-allow_emails$NWE</td></tr>\n";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Emails").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$allow_emails")." $NWB#campaigns-allow_emails$NWE</div></div>\n";
 			}
 		if ($SSallow_chats > 0) 
 			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Chats").": </td><td align=left>"._QXZ("$allow_chats")." $NWB#campaigns-allow_chats$NWE</td></tr>\n";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Chats").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$allow_chats")." $NWB#campaigns-allow_chats$NWE</div></div>\n";
 			}
 
 		if ($SSoutbound_autodial_active > 0)
 			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Inbound and Blended").": </td><td align=left>"._QXZ("$campaign_allow_inbound")." $NWB#campaigns-campaign_allow_inbound$NWE</td></tr>\n";
+			echo "<div style='grid-column:1/-1; display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Inbound and Blended").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$campaign_allow_inbound")." $NWB#campaigns-campaign_allow_inbound$NWE</div></div>\n";
+
+			echo "<div style='grid-column:1/-1; border:none; border-top:2px solid #e5e7eb; margin:16px 0;'></div>\n";
+			
+			echo "<div style='grid-column:1/-1;'><div style='font-weight:700; font-size:16px; color:#1f2937; margin-bottom:16px;'>"._QXZ("Dial Statuses")."</div><div style='background:#f9fafb; border-radius:8px; padding:16px; border:1px solid #e5e7eb;'>\n";
 
 			$o=0;
 			while ($Ds_to_print > $o) 
@@ -31422,27 +31440,27 @@ if ($ADD==34)
 				$o++;
 				$Dstatus = $Dstatuses[$o];
 
-				echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Dial Status")." $o: </td><td align=left> \n";
+				echo "<div style='display:flex; justify-content:space-between; align-items:center; padding:12px; background:#ffffff; border-radius:6px; margin-bottom:8px; border-left:3px solid #10b981; transition:all 0.2s ease;' onmouseover=\"this.style.boxShadow='0 1px 2px 0 rgba(0,0,0,0.05)'\" onmouseout=\"this.style.boxShadow='none'\">\n";
+				
 				if ($DEFstatusDISABLED > 0)
 					{
-					echo "<font color=grey><DEL><b>$Dstatus</b> - $statname_list[$Dstatus] &nbsp; &nbsp; &nbsp; &nbsp; <font size=2>\n";
-					echo _QXZ("REMOVE")."</DEL></td></tr>\n";
+					echo "<span style='color:#9ca3af; text-decoration:line-through;'><b>$Dstatus</b> - $statname_list[$Dstatus]</span><span style='color:#9ca3af; font-size:13px;'>"._QXZ("REMOVE")."</span></div>\n";
 					}
 				else
 					{
-					echo "<b>$Dstatus</b> - $statname_list[$Dstatus] &nbsp; &nbsp; &nbsp; &nbsp; <font size=2>\n";
-					echo "<a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\">"._QXZ("REMOVE")."</a></td></tr>\n";
+					echo "<span style='font-weight:600; color:#1f2937;'><b>$Dstatus</b> - $statname_list[$Dstatus]</span><a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\" style='color:#ef4444; text-decoration:none; font-size:13px; font-weight:600; padding:6px 12px; border-radius:6px; transition:all 0.2s ease;' onmouseover=\"this.style.background='#fee2e2'\" onmouseout=\"this.style.background='transparent'\">"._QXZ("REMOVE")."</a></div>\n";
 					}
 				}
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Add A Dial Status to Call").": </td><td align=left><select size=1 name=dial_status $DEFlistDISABLE>\n";
+			echo "<div style='display:flex; gap:12px; align-items:flex-end; margin-top:16px;'>\n";
+			echo "<div style='flex:1; display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Add A Dial Status to Call").":</div><select size=1 name=dial_status $DEFlistDISABLE style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
 			echo "<option value=\"\"> - "._QXZ("NONE")." - </option>\n";
-
 			echo "$dial_statuses_list";
-			echo "</select> &nbsp; \n";
-			echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'> &nbsp; &nbsp; $NWB#campaigns-dial_status$NWE</td></tr>\n";
+			echo "</select></div>\n";
+			echo "<input type=submit name=submit value='"._QXZ("ADD")."' style='background:linear-gradient(135deg,#10b981 0%,#059669 100%); color:white; border:none; padding:12px 28px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; box-shadow:0 1px 2px 0 rgba(0,0,0,0.05); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease; min-height:44px;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 2px 0 rgba(0,0,0,0.05)'\"> &nbsp; &nbsp; $NWB#campaigns-dial_status$NWE</div>\n";
+			echo "</div></div>\n";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order").": </td><td align=left>";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("List Order").":</div>";
 			if ($ALTmultiDISABLE > 0)
 				{
 				echo "<input type=hidden name=lead_order value=\"$lead_order\"> $ALTmultiLINK";
@@ -31453,7 +31471,7 @@ if ($ADD==34)
 					{require('options.php');}
 				if ($camp_lead_order_random > 0)
 					{
-					echo "<select size=1 name=lead_order>
+					echo "<select size=1 name=lead_order style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>
 					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
 					<option value='DOWN'>"._QXZ("DOWN")."</option>
 					<option value='UP'>"._QXZ("UP")."</option>
@@ -31561,7 +31579,7 @@ if ($ADD==34)
 					}
 				else
 					{
-					echo "<select size=1 name=lead_order>
+					echo "<select size=1 name=lead_order style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>
 					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
 					<option value='DOWN'>"._QXZ("DOWN")."</option>
 					<option value='UP'>"._QXZ("UP")."</option>
@@ -31662,16 +31680,16 @@ if ($ADD==34)
 					</select>$NWB#campaigns-lead_order$NWE";
 					}
 				}
-			echo "</td></tr>\n";
+			echo "</div>\n";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\">"._QXZ("List Mix")."</a>: </td><td align=left>";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\" style='color:#10b981;'>"._QXZ("List Mix")."</a>:</div>";
 			if ($ALTmultiDISABLE > 0)
 				{
 				echo "<input type=hidden name=list_order_mix value=\"$list_order_mix\"> $ALTmultiLINK";
 				}
 			else
 				{
-				echo "<select size=1 name=list_order_mix>\n";
+				echo "<select size=1 name=list_order_mix style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
 				echo "$mixes_list";
 				if (preg_match('/DISABLED/', $list_order_mix))
 					{echo "<option selected value=\"$list_order_mix\">"._QXZ("$list_order_mix")." - "._QXZ("$mixname_list[$list_order_mix]")."</option>\n";}
@@ -31679,33 +31697,35 @@ if ($ADD==34)
 					{echo "<option selected value=\"ACTIVE\">"._QXZ("ACTIVE")." ($mixname_list[ACTIVE])</option>\n";}
 				echo "</select>$NWB#campaigns-list_order_mix$NWE";
 				}
-			echo "</td></tr>\n";
+			echo "</div>\n";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\">"._QXZ("Lead Filter")."</a>: </td><td align=left>";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\" style='color:#10b981;'>"._QXZ("Lead Filter")."</a>:</div>";
 			if ($ALTmultiDISABLE > 0)
 				{
 				echo "<input type=hidden name=lead_filter_id value=\"$lead_filter_id\"> $ALTmultiLINK";
 				}
 			else
 				{
-				echo "<select size=1 name=lead_filter_id>\n";
+				echo "<select size=1 name=lead_filter_id style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
 				echo "$filters_list";
 				echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>\n";
 				echo "</select>$NWB#campaigns-lead_filter_id$NWE";
 				}
-			echo "</td></tr>\n";
+			echo "</div>\n";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Minimum Hopper Level").": </td><td align=left><select size=1 name=hopper_level><option>1</option><option>5</option><option>10</option><option>20</option><option>50</option><option>100</option><option>200</option><option>500</option><option>700</option><option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option SELECTED>$hopper_level</option></select>$NWB#campaigns-hopper_level$NWE</td></tr>\n";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Force Reset of Hopper").": </td><td align=left><select size=1 name=reset_hopper><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#campaigns-force_reset_hopper$NWE</td></tr>\n";
+
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Minimum Hopper Level").":</div><select size=1 name=hopper_level style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option>1</option><option>5</option><option>10</option><option>20</option><option>50</option><option>100</option><option>200</option><option>500</option><option>700</option><option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option SELECTED>$hopper_level</option></select>$NWB#campaigns-hopper_level$NWE</div>\n";
+
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Force Reset of Hopper").":</div><select size=1 name=reset_hopper style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#campaigns-force_reset_hopper$NWE</div>\n";
 
 			if ( (preg_match("/RATIO|ADAPT/",$dial_method)) and ($SSdisable_auto_dial > 0) )
 				{
-				echo "<tr bgcolor=#$SSalt_row1_background><td align=center colspan=2><b>"._QXZ("Auto-dialing has been disabled on this system")."</b></td></tr>\n";
+				echo "<div style='grid-column:1/-1; text-align:center; padding:16px; background:#fee2e2; border-radius:8px; border:2px solid #ef4444;'><b>"._QXZ("Auto-dialing has been disabled on this system")."</b></div>\n";
 				}
-			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Dial Method").": </td><td align=left><select size=1 name=dial_method><option value='MANUAL'>"._QXZ("MANUAL")."</option><option value='RATIO'>"._QXZ("RATIO")."</option><option value='ADAPT_HARD_LIMIT'>"._QXZ("ADAPT_HARD_LIMIT")."</option><option value='ADAPT_TAPERED'>"._QXZ("ADAPT_TAPERED")."</option><option value='ADAPT_AVERAGE'>"._QXZ("ADAPT_AVERAGE")."</option><option value='INBOUND_MAN'>"._QXZ("INBOUND_MAN")."</option><option value='$dial_method' SELECTED>"._QXZ("$dial_method")."</option></select>$NWB#campaigns-dial_method$NWE</td></tr>\n";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Dial Method").":</div><select size=1 name=dial_method style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option value='MANUAL'>"._QXZ("MANUAL")."</option><option value='RATIO'>"._QXZ("RATIO")."</option><option value='ADAPT_HARD_LIMIT'>"._QXZ("ADAPT_HARD_LIMIT")."</option><option value='ADAPT_TAPERED'>"._QXZ("ADAPT_TAPERED")."</option><option value='ADAPT_AVERAGE'>"._QXZ("ADAPT_AVERAGE")."</option><option value='INBOUND_MAN'>"._QXZ("INBOUND_MAN")."</option><option value='$dial_method' SELECTED>"._QXZ("$dial_method")."</option></select>$NWB#campaigns-dial_method$NWE</div>\n";
 
-			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Auto Dial Level").": </td><td align=left><select size=1 name=auto_dial_level><option selected>$auto_dial_level</option><option>0</option>\n";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Auto Dial Level").":</div><select size=1 name=auto_dial_level style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option selected>$auto_dial_level</option><option>0</option>\n";
 			$adl=0;
 			while($adl <= $SSauto_dial_limit)
 				{
@@ -31761,9 +31781,9 @@ if ($ADD==34)
 				if ($adl > $SSauto_dial_limit) {$hmm=1;}
 				else {echo "<option>$adl</option>\n";}
 				}
-			echo "</select>(0 = "._QXZ("off").")$NWB#campaigns-auto_dial_level$NWE</td></tr>\n";
+			echo "</select>(0 = "._QXZ("off").")$NWB#campaigns-auto_dial_level$NWE</div>\n";
 
-			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Adapt Intensity Modifier").": </td><td align=left><select size=1 name=adaptive_intensity>\n";
+			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Adapt Intensity Modifier").":</div><select size=1 name=adaptive_intensity style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
 			$n=40;
 			while ($n>=-40)
 				{
@@ -31776,16 +31796,16 @@ if ($ADD==34)
 					{echo "<option value=\"$n\">$n - $dtl</option>\n";}
 				$n--;
 				}
-			echo "</select> $NWB#campaigns-adaptive_intensity$NWE</td></tr>\n";
+			echo "</select> $NWB#campaigns-adaptive_intensity$NWE</div>\n";
 			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=3111111&script_id=$script_id\">"._QXZ("Script")."</a>: </td><td align=left>"._QXZ("$script_id")."</td></tr>\n";
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'><a href=\"$PHP_SELF?ADD=3111111&script_id=$script_id\" style='color:#10b981;'>"._QXZ("Script")."</a>:</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$script_id")."</div></div>\n";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Get Call Launch").": </td><td align=left>"._QXZ("$get_call_launch")."</td></tr>\n";
+		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Get Call Launch").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$get_call_launch")."</div></div>\n";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center></FORM>\n";
+		echo "<div style='grid-column:1/-1; text-align:center; margin-top:24px;'><input type=submit name=SUBMIT value='"._QXZ("SUBMIT")."' style='background:linear-gradient(135deg,#10b981 0%,#059669 100%); color:white; border:none; padding:14px 40px; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease; min-width:200px;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'\"></div>\n";
+		echo "</div></div></FORM>\n";
 
-		echo "<center>\n";
+		echo "<div style='text-align:center;'>\n";
 
 	if ($SSoutbound_autodial_active > 0)
 		{
@@ -31794,10 +31814,10 @@ if ($ADD==34)
 		echo "<input type=hidden name=DB value=$DB>\n";
 		echo "<input type=hidden name=stage value=list_activation>\n";
 		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<br><b>"._QXZ("LISTS WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_lists$NWE</b>\n";
+		echo "<div style='margin:40px 0 20px 0;'><b style='font-size:18px; color:#1f2937;'>"._QXZ("LISTS WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_lists$NWE</b></div>\n";
 
-		echo "<TABLE><TR><TD>\n";
-			echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+		echo "<div style='background:#ffffff; border-radius:12px; padding:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); overflow-x:auto;'>\n";
+		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
 		$LISTlink='stage=LISTIDDOWN';
 		$NAMElink='stage=LISTNAMEDOWN';
@@ -31827,16 +31847,16 @@ if ($ADD==34)
 		$rslt=mysql_to_mysqli($stmt, $link);
 		$lists_to_print = mysqli_num_rows($rslt);
 
-		echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<TR BGCOLOR=BLACK>";
-		echo "<TD><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$LISTlink\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LIST ID")."</B></a></TD>";
-		echo "<TD><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$NAMElink\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LIST NAME")."</B></a></TD>";
-		echo "<TD><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("DESCRIPTION")."</B></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$TALLYlink\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LEADS COUNT")."</B></a></TD>\n";
-		echo "<TD><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$CALLTIMElink\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("Call Time")."</B></a></TD>";
-		echo "<TD COLSPAN=3><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&$ACTIVElink\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("ACTIVE")."</B></a></TD>";
-		echo "<TD><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$CALLDATElink\"><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("LAST CALL DATE")."</B></a></TD>";
-		echo "<TD><B><FONT FACE=\"Arial,Helvetica\" size=1 color=white>"._QXZ("MODIFY")."</TD>\n";
+		echo "<TABLE width='100%' cellspacing=0 cellpadding=12 style='border-collapse:collapse; min-width:800px;'>\n";
+		echo "<TR style='background:#1f2937;'>";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$LISTlink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LIST ID")."</a></TD>";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$NAMElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LIST NAME")."</a></TD>";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><span style='color:white; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("DESCRIPTION")."</span></TD>\n";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$TALLYlink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LEADS COUNT")."</a></TD>\n";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$CALLTIMElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("Call Time")."</a></TD>";
+		echo "<TD COLSPAN=3 style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&$ACTIVElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("ACTIVE")."</a></TD>";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$CALLDATElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LAST CALL DATE")."</a></TD>";
+		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><span style='color:white; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("MODIFY")."</span></TD>\n";
 		echo "</TR>\n";
 
 		$o=0;
@@ -31846,49 +31866,50 @@ if ($ADD==34)
 			$row=mysqli_fetch_row($rslt);
 			$last_list_statuses.="$row[0]|$row[4]|";
 			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+				{$bgcolor='style="background:#f9fafb;"';} 
 			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0]</a></td>";
-			echo "<td><font size=1> $row[1]</td>";
-			echo "<td><font size=1> $row[2]</td>";
-			echo "<td><font size=1> $row[3]</td>";
+				{$bgcolor='style="background:#ffffff;"';}
+			echo "<tr $bgcolor style='transition:all 0.2s ease;' onmouseover=\"this.style.background='#f3f4f6'\" onmouseout=\"this.style.background=''\">";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#10b981; font-weight:600; text-decoration:none;'>$row[0]</a></td>";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[1]</td>";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#6b7280;'>$row[2]</td>";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[3]</td>";
 			if ($row[8] == 'campaign')
-				{echo "<td><font size=1> $row[8]</td>";}
+				{echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[8]</td>";}
 			else
-				{echo "<td><font size=1><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$row[8]\"> $row[8]</a></td>";}
-			echo "<td><font size=1> "._QXZ("$row[4]")."</td>";
-			echo "<td>";
+				{echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$row[8]\" style='color:#10b981; text-decoration:none;'>$row[8]</a></td>";}
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>"._QXZ("$row[4]")."</td>";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb;'>";
 
 			if (preg_match('/Y/',$row[4]))
 				{
 				$active_lists++;
 				$camp_lists .= "'$row[0]',";
-				echo "<input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\" CHECKED>";
+				echo "<input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\" CHECKED style='width:18px; height:18px; cursor:pointer; accent-color:#10b981;'>";
 				}
 			else
 				{
 				$inactive_lists++;
-				echo "<input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\"";
+				echo "<input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\" style='width:18px; height:18px; cursor:pointer; accent-color:#10b981;'>";
 				}
 
-			echo "</td><td><font size=1>";
+			echo "</td><td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'>";
 			if ($row[7] < $EXPtestdate)
-				{echo "<font color=red><B>"._QXZ("EXP")."</B></font>";}
+				{echo "<span style='color:#ef4444; font-weight:700;'>"._QXZ("EXP")."</span>";}
 			else
 				{echo "&nbsp;";}
 			echo "</td>";
-			echo "<td><font size=1> $row[5]</td>";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[5]</td>";
+			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#10b981; font-weight:600; text-decoration:none;'>"._QXZ("MODIFY")."</a></td></tr>\n";
 
 			$o++;
 			}
 
-		echo "<TR><TD COLSPAN=9 ALIGN=CENTER><input style='background-color:#$SSbutton_color' type=button onClick='return ConfirmListStatusChange($SSlist_status_modification_confirmation, this.form)' value=\""._QXZ("SUBMIT ACTIVE LIST CHANGES")."\"></TD></TR>\n";
+		echo "<TR><TD COLSPAN=9 ALIGN=CENTER style='padding:20px;'><input type=button onClick='return ConfirmListStatusChange($SSlist_status_modification_confirmation, this.form)' value=\""._QXZ("SUBMIT ACTIVE LIST CHANGES")."\" style='background:linear-gradient(135deg,#10b981 0%,#059669 100%); color:white; border:none; padding:12px 28px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; box-shadow:0 1px 2px 0 rgba(0,0,0,0.05); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 2px 0 rgba(0,0,0,0.05)'\"></TD></TR>\n";
 		echo "</TABLE>";
 		echo "<input type='hidden' name='last_list_statuses' id='last_list_statuses' value='$last_list_statuses'>";
-		echo "</center><BR></FORM>\n";
-		echo "<center><b>\n";
+		echo "</div><BR></FORM>\n";
+		echo "<div style='text-align:center; margin:30px 0;'><b style='font-size:16px; color:#1f2937;'>\n";
 
 		$filterSQL = $filtersql_list[$lead_filter_id];
 		$filterSQL = preg_replace("/\\\\/","",$filterSQL);
@@ -31898,8 +31919,8 @@ if ($ADD==34)
 		else
 			{$fSQL = '';}
 
-			$camp_lists = preg_replace('/.$/i','',$camp_lists);
-		echo _QXZ("This campaign has")." $active_lists "._QXZ("active lists and")." $inactive_lists "._QXZ("inactive lists")."<br><br>\n";
+		$camp_lists = preg_replace('/.$/i','',$camp_lists);
+		echo _QXZ("This campaign has")." <span style='color:#10b981; font-weight:700;'>$active_lists</span> "._QXZ("active lists and")." <span style='color:#6b7280; font-weight:700;'>$inactive_lists</span> "._QXZ("inactive lists")."</b></div>\n";
 
 
 		if ( ($display_leads_count == 'Y') and (strlen($camp_lists) > 3) )
@@ -31930,10 +31951,11 @@ if ($ADD==34)
 				}
 			# end grab status names
 
-			echo "<br><b>"._QXZ("STATUSES WITHIN THE ACTIVE LISTS FOR THIS CAMPAIGN").":</b>\n";
-			echo " - <font size=1><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=hide_leadscount\">"._QXZ("HIDE")."</a></font><BR>";
-			echo "<TABLE width=500 cellspacing=3>\n";
-			echo "<tr><td>"._QXZ("STATUS")."</td><td>"._QXZ("STATUS NAME")."</td><td>"._QXZ("CALLED")."</td><td>"._QXZ("NOT CALLED")."</td></tr>\n";
+			echo "<div style='margin:40px 0 20px 0;'><b style='font-size:18px; color:#1f2937;'>"._QXZ("STATUSES WITHIN THE ACTIVE LISTS FOR THIS CAMPAIGN").":</b>";
+			echo " - <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=hide_leadscount\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("HIDE")."</a></div>";
+			echo "<div style='background:#ffffff; border-radius:12px; padding:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); overflow-x:auto;'>";
+			echo "<TABLE width=500 cellspacing=0 cellpadding=12 style='border-collapse:collapse; margin:0 auto;'>\n";
+			echo "<tr style='background:#1f2937;'><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("STATUS")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("STATUS NAME")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("CALLED")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("NOT CALLED")."</td></tr>\n";
 
 			$leads_in_list = 0;
 			$leads_in_list_N = 0;
@@ -31979,13 +32001,13 @@ if ($ADD==34)
 				foreach($lead_list[$since_reset] as $dispo => $blank)
 					{
 					if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+						{$bgcolor='style="background:#f9fafb;"';} 
 					else
-						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+						{$bgcolor='style="background:#ffffff;"';}
 
 					if ($dispo == 'CBHOLD')
 						{
-						$CLB="<a href=\"$PHP_SELF?ADD=811&list_id=$list_id\">";
+						$CLB="<a href=\"$PHP_SELF?ADD=811&list_id=$list_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>";
 						$CLE="</a>";
 						}
 					else
@@ -31994,20 +32016,20 @@ if ($ADD==34)
 						$CLE='';
 						}
 
-					echo "<tr $bgcolor><td><font size=1>$CLB$dispo$CLE</td><td><font size=1>$statuses_name_list[$dispo]</td><td><font size=1>".$lead_list['Y'][$dispo]."</td><td><font size=1>".$lead_list['N'][$dispo]." </td></tr>\n";
+					echo "<tr $bgcolor style='transition:all 0.2s ease;' onmouseover=\"this.style.background='#f3f4f6'\" onmouseout=\"this.style.background=''\"><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$CLB$dispo$CLE</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#6b7280;'>$statuses_name_list[$dispo]</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>".$lead_list['Y'][$dispo]."</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>".$lead_list['N'][$dispo]."</td></tr>\n";
 					$o++;
 					}
 				}
 
-			echo "<tr><td colspan=2><font size=1>"._QXZ("SUBTOTALS")."</td><td><font size=1>$lead_list[Y_count]</td><td><font size=1>$lead_list[N_count]</td></tr>\n";
-			echo "<tr bgcolor=\"#$SSstd_row1_background\"><td><font size=1>"._QXZ("TOTAL")."</td><td colspan=3 align=center><font size=1>$lead_list[count]</td></tr>\n";
+			echo "<tr style='background:#f3f4f6;'><td colspan=2 style='padding:12px; border-top:2px solid #e5e7eb; font-size:13px; font-weight:700; color:#1f2937;'>"._QXZ("SUBTOTALS")."</td><td style='padding:12px; border-top:2px solid #e5e7eb; font-size:13px; font-weight:700; text-align:center; color:#1f2937;'>$lead_list[Y_count]</td><td style='padding:12px; border-top:2px solid #e5e7eb; font-size:13px; font-weight:700; text-align:center; color:#1f2937;'>$lead_list[N_count]</td></tr>\n";
+			echo "<tr style='background:#10b981;'><td style='padding:12px; color:white; font-size:14px; font-weight:700;'>"._QXZ("TOTAL")."</td><td colspan=3 align=center style='padding:12px; color:white; font-size:14px; font-weight:700;'>$lead_list[count]</td></tr>\n";
 
-			echo "</table></center><br>\n";
+			echo "</table></div><br>\n";
 			unset($lead_list);				
 			}
 		else
 			{
-			echo "<font size=1><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=show_leadscount\">"._QXZ("SHOW LEAD STATUSES IN THIS CAMPAIGN")."</a></font><BR><BR>";
+			echo "<div style='margin:20px 0;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=show_leadscount\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("SHOW LEAD STATUSES IN THIS CAMPAIGN")."</a></div>";
 			}
 
 
@@ -32017,12 +32039,12 @@ if ($ADD==34)
 			$single_status=0;
 			$only_return=0;
 			dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);
-			echo " - <font size=1><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=hide_dialable\">"._QXZ("HIDE")."</a></font><BR><BR>";
+			echo " - <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=hide_dialable\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("HIDE")."</a><BR><BR>";
 			}
 		else
 			{
-			echo "<a href=\"$PHP_SELF?ADD=73&campaign_id=$campaign_id\" target=\"_blank\">Popup Dialable Leads Count</a>";
-			echo " - <font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_dialable\">"._QXZ("SHOW")."</a></font><BR><BR>";
+			echo "<a href=\"$PHP_SELF?ADD=73&campaign_id=$campaign_id\" target=\"_blank\" style='color:#10b981; text-decoration:none; font-weight:600;'>Popup Dialable Leads Count</a>";
+			echo " - <a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_dialable\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("SHOW")."</a><BR><BR>";
 			}
 
 		$stmt="SELECT count(*) FROM vicidial_hopper where campaign_id='$campaign_id' and status IN('READY','RHOLD','RQUEUE') $LOGallowed_campaignsSQL;";
@@ -32031,25 +32053,26 @@ if ($ADD==34)
 		$rowx=mysqli_fetch_row($rslt);
 		$hopper_leads = "$rowx[0]";
 
-		echo _QXZ("This campaign has")." $hopper_leads "._QXZ("leads in the dial hopper")."<br><br>\n";
-		echo "<a href=\"./AST_VICIDIAL_hopperlist.php?group=$campaign_id\">"._QXZ("Click here to see what leads are in the hopper right now")."</a><br><br>\n";
-		echo "<a href=\"./AST_VDADstats.php?group=$campaign_id\">"._QXZ("Click here to see a VDAD report for this campaign")."</a><BR><BR>\n";
+		echo "<div style='margin:20px 0; font-size:15px; color:#1f2937;'>"._QXZ("This campaign has")." <span style='color:#10b981; font-weight:700;'>$hopper_leads</span> "._QXZ("leads in the dial hopper")."</div>\n";
+		echo "<div style='margin:15px 0;'><a href=\"./AST_VICIDIAL_hopperlist.php?group=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see what leads are in the hopper right now")."</a></div>\n";
+		echo "<div style='margin:15px 0;'><a href=\"./AST_VDADstats.php?group=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see a VDAD report for this campaign")."</a></div>\n";
 		}
-		echo "<a href=\"$PHP_SELF?ADD=81&campaign_id=$campaign_id\">"._QXZ("Click here to see all CallBack Holds in this campaign")."</a><BR><BR>\n";
+		echo "<div style='margin:15px 0;'><a href=\"$PHP_SELF?ADD=81&campaign_id=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see all CallBack Holds in this campaign")."</a></div>\n";
 		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
 			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGNS&stage=$campaign_id\">"._QXZ("Click here to see Admin changes to this campaign")."</a></FONT>\n";
+			echo "<div style='margin:15px 0;'><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGNS&stage=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see Admin changes to this campaign")."</a></div>\n";
 			}
 
-		echo "</b></center>\n";
+		echo "</b></div>\n";
 
 		echo "<br>\n";
 
 		### list of agent rank or skill-level for this campaign
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("AGENT RANKS FOR THIS CAMPAIGN").":</b><br>\n";
-		echo "<TABLE width=600 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("USER")."</td><td> &nbsp; &nbsp; "._QXZ("RANK")."</td><td> &nbsp; &nbsp; "._QXZ("GRADE")."</td><td> &nbsp; &nbsp; "._QXZ("CALLS TODAY")."</td></tr>\n";
+		echo "<div style='text-align:center; margin:40px 0;'>\n";
+		echo "<div style='margin-bottom:20px;'><b style='font-size:18px; color:#1f2937;'>"._QXZ("AGENT RANKS FOR THIS CAMPAIGN").":</b></div>\n";
+		echo "<div style='background:#ffffff; border-radius:12px; padding:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); overflow-x:auto;'>";
+		echo "<TABLE width=600 cellspacing=0 cellpadding=12 style='border-collapse:collapse; margin:0 auto; min-width:600px;'>\n";
+		echo "<tr style='background:#1f2937;'><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("USER")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("RANK")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("GRADE")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("CALLS TODAY")."</td></tr>\n";
 
 		$stmt="SELECT user_group from vicidial_user_groups where ( (allowed_campaigns LIKE \"%-ALL-CAMPAIGNS-%\") or (allowed_campaigns LIKE \"% $campaign_id %\") )  $LOGadmin_viewable_groupsSQL;";
 		$rslt=mysql_to_mysqli($stmt, $link);
@@ -32089,9 +32112,9 @@ if ($ADD==34)
 			$campaign_grade='n/a';
 
 			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+				{$bgcolor='style="background:#f9fafb;"';} 
 			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+				{$bgcolor='style="background:#ffffff;"';}
 
 			$stmt="SELECT campaign_rank,calls_today,campaign_grade from vicidial_campaign_agents where user='$U_user[$o]' and campaign_id='$campaign_id';";
 			$rslt=mysql_to_mysqli($stmt, $link);
@@ -32105,27 +32128,33 @@ if ($ADD==34)
 				}
 			$o++;
 
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=3&user=$temp_user\">$temp_user</a> - $temp_name</td><td><font size=1>$campaign_rank</td><td><font size=1>$campaign_grade</td><td><font size=1>$calls_today</td></tr>\n";
+			echo "<tr $bgcolor style='transition:all 0.2s ease;' onmouseover=\"this.style.background='#f3f4f6'\" onmouseout=\"this.style.background=''\"><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=3&user=$temp_user\" style='color:#10b981; font-weight:600; text-decoration:none;'>$temp_user</a> - <span style='color:#6b7280;'>$temp_name</span></td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>$campaign_rank</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>$campaign_grade</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>$calls_today</td></tr>\n";
 			}
 
-		echo "</table></center><br>\n";
+		echo "</table></div></div>\n";
 
 
-		echo "<a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\">"._QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN")."</a><BR><BR>\n";
+		echo "<div style='margin:30px 0; text-align:center;'><a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\" style='display:inline-block; background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%); color:white; text-decoration:none; padding:12px 28px; border-radius:8px; font-weight:600; font-size:14px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'\">"._QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN")."</a></div>\n";
 
 
 		if ($LOGdelete_campaigns > 0)
 			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\">"._QXZ("DELETE THIS CAMPAIGN")."</a>\n";
+			echo "<div style='margin:30px 0; text-align:center;'><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\" style='display:inline-block; background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 100%); color:white; text-decoration:none; padding:12px 28px; border-radius:8px; font-weight:700; font-size:14px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'\">"._QXZ("DELETE THIS CAMPAIGN")."</a></div>\n";
 			}
 		}
 	}
 	else
 	{
-	echo _QXZ("You do not have permission to view this page")."\n";
+	echo "<div style='text-align:center; padding:40px; background:#fee2e2; border-radius:12px; margin:20px; border:2px solid #ef4444;'><span style='color:#991b1b; font-size:16px; font-weight:600;'>"._QXZ("You do not have permission to view this page")."</span></div>\n";
 	exit;
 	}
 }
+
+
+
+
+
+
 
 
 ######################
