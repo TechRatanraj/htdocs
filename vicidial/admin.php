@@ -31121,352 +31121,255 @@ if ($ADD==31)
 
 
 if ( ($ADD==34) and ( (!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) {
-	$ADD=30;
+    $ADD=30;
 }
 
 if ($ADD==34) {
-	if ($LOGmodify_campaigns==1) {
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) ) {
-			$modify_url = "$PHP_SELF?ADD=31&campaign_id=$campaign_id&SUB=$SUB";
-			$modify_footer_refresh=1;
-		}
-		if ($stage=='show_dialable') {
-			$stmt="UPDATE vicidial_campaigns set display_dialable_count='Y' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-		}
-		if ($stage=='hide_dialable') {
-			$stmt="UPDATE vicidial_campaigns set display_dialable_count='N' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-		}
-		if ($stage=='show_leadscount') {
-			$stmt="UPDATE vicidial_campaigns set display_leads_count='Y' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-		}
-		if ($stage=='hide_leadscount') {
-			$stmt="UPDATE vicidial_campaigns set display_leads_count='N' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-		}
+    if ($LOGmodify_campaigns==1) {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) ) {
+            $modify_url = "$PHP_SELF?ADD=31&campaign_id=$campaign_id&SUB=$SUB";
+            $modify_footer_refresh=1;
+        }
+        if ($stage=='show_dialable') {
+            $stmt="UPDATE vicidial_campaigns set display_dialable_count='Y' where campaign_id='$campaign_id';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+        }
+        if ($stage=='hide_dialable') {
+            $stmt="UPDATE vicidial_campaigns set display_dialable_count='N' where campaign_id='$campaign_id';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+        }
+        if ($stage=='show_leadscount') {
+            $stmt="UPDATE vicidial_campaigns set display_leads_count='Y' where campaign_id='$campaign_id';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+        }
+        if ($stage=='hide_leadscount') {
+            $stmt="UPDATE vicidial_campaigns set display_leads_count='N' where campaign_id='$campaign_id';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+        }
 
-		$stmt="SELECT campaign_id,campaign_name,active,dial_status_a,dial_status_b,dial_status_c,dial_status_d,dial_status_e,lead_order,park_ext,park_file_name,web_form_address,allow_closers,hopper_level,auto_dial_level,next_agent_call,local_call_time,voicemail_ext,dial_timeout,dial_prefix,campaign_cid,campaign_vdad_exten,campaign_rec_exten,campaign_recording,campaign_rec_filename,campaign_script,get_call_launch,am_message_exten,amd_send_to_vmx,xferconf_a_dtmf,xferconf_a_number,xferconf_b_dtmf,xferconf_b_number,alt_number_dialing,scheduled_callbacks,lead_filter_id,drop_call_seconds,drop_action,safe_harbor_exten,display_dialable_count,wrapup_seconds,wrapup_message,closer_campaigns,use_internal_dnc,allcalls_delay,omit_phone_code,dial_method,available_only_ratio_tally,adaptive_dropped_percentage,adaptive_maximum_level,adaptive_latest_server_time,adaptive_intensity,adaptive_dl_diff_target,concurrent_transfers,auto_alt_dial,auto_alt_dial_statuses,agent_pause_codes_active,campaign_description,campaign_changedate,campaign_stats_refresh,campaign_logindate,dial_statuses,disable_alter_custdata,no_hopper_leads_logins,list_order_mix,campaign_allow_inbound,manual_dial_list_id,default_xfer_group,xfer_groups,queue_priority,drop_inbound_group,qc_enabled,qc_statuses,qc_lists,qc_shift_id,qc_get_record_launch,qc_show_recording,qc_web_form_address,qc_script,survey_first_audio_file,survey_dtmf_digits,survey_ni_digit,survey_opt_in_audio_file,survey_ni_audio_file,survey_method,survey_no_response_action,survey_ni_status,survey_response_digit_map,survey_xfer_exten,survey_camp_record_dir,disable_alter_custphone,display_queue_count,manual_dial_filter,agent_clipboard_copy,agent_extended_alt_dial,use_campaign_dnc,three_way_call_cid,three_way_dial_prefix,web_form_target,vtiger_search_category,vtiger_create_call_record,vtiger_create_lead_record,vtiger_screen_login,cpd_amd_action,agent_allow_group_alias,default_group_alias,vtiger_search_dead,vtiger_status_call,survey_third_digit,survey_third_audio_file,survey_third_status,survey_third_exten,survey_fourth_digit,survey_fourth_audio_file,survey_fourth_status,survey_fourth_exten,drop_lockout_time,quick_transfer_button,prepopulate_transfer_preset,drop_rate_group,view_calls_in_queue,view_calls_in_queue_launch,grab_calls_in_queue,call_requeue_button,pause_after_each_call,no_hopper_dialing,agent_dial_owner_only,agent_display_dialable_leads,web_form_address_two,waitforsilence_options,display_leads_count,user_group,allow_emails,call_count_limit,allow_chats,web_form_address_three,manual_vm_status_updates FROM vicidial_campaigns WHERE campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
+        $stmt="SELECT campaign_id,campaign_name,active,dial_status_a,dial_status_b,dial_status_c,dial_status_d,dial_status_e,lead_order,park_ext,park_file_name,web_form_address,allow_closers,hopper_level,auto_dial_level,next_agent_call,local_call_time,voicemail_ext,dial_timeout,dial_prefix,campaign_cid,campaign_vdad_exten,campaign_rec_exten,campaign_recording,campaign_rec_filename,campaign_script,get_call_launch,am_message_exten,amd_send_to_vmx,xferconf_a_dtmf,xferconf_a_number,xferconf_b_dtmf,xferconf_b_number,alt_number_dialing,scheduled_callbacks,lead_filter_id,drop_call_seconds,drop_action,safe_harbor_exten,display_dialable_count,wrapup_seconds,wrapup_message,closer_campaigns,use_internal_dnc,allcalls_delay,omit_phone_code,dial_method,available_only_ratio_tally,adaptive_dropped_percentage,adaptive_maximum_level,adaptive_latest_server_time,adaptive_intensity,adaptive_dl_diff_target,concurrent_transfers,auto_alt_dial,auto_alt_dial_statuses,agent_pause_codes_active,campaign_description,campaign_changedate,campaign_stats_refresh,campaign_logindate,dial_statuses,disable_alter_custdata,no_hopper_leads_logins,list_order_mix,campaign_allow_inbound,manual_dial_list_id,default_xfer_group,xfer_groups,queue_priority,drop_inbound_group,qc_enabled,qc_statuses,qc_lists,qc_shift_id,qc_get_record_launch,qc_show_recording,qc_web_form_address,qc_script,survey_first_audio_file,survey_dtmf_digits,survey_ni_digit,survey_opt_in_audio_file,survey_ni_audio_file,survey_method,survey_no_response_action,survey_ni_status,survey_response_digit_map,survey_xfer_exten,survey_camp_record_dir,disable_alter_custphone,display_queue_count,manual_dial_filter,agent_clipboard_copy,agent_extended_alt_dial,use_campaign_dnc,three_way_call_cid,three_way_dial_prefix,web_form_target,vtiger_search_category,vtiger_create_call_record,vtiger_create_lead_record,vtiger_screen_login,cpd_amd_action,agent_allow_group_alias,default_group_alias,vtiger_search_dead,vtiger_status_call,survey_third_digit,survey_third_audio_file,survey_third_status,survey_third_exten,survey_fourth_digit,survey_fourth_audio_file,survey_fourth_status,survey_fourth_exten,drop_lockout_time,quick_transfer_button,prepopulate_transfer_preset,drop_rate_group,view_calls_in_queue,view_calls_in_queue_launch,grab_calls_in_queue,call_requeue_button,pause_after_each_call,no_hopper_dialing,agent_dial_owner_only,agent_display_dialable_leads,web_form_address_two,waitforsilence_options,display_leads_count,user_group,allow_emails,call_count_limit,allow_chats,web_form_address_three,manual_vm_status_updates FROM vicidial_campaigns WHERE campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        
+        $dial_status_a = $row[3];
+        $dial_status_b = $row[4];
+        $dial_status_c = $row[5];
+        $dial_status_d = $row[6];
+        $dial_status_e = $row[7];
+        $lead_order = $row[8];
+        $hopper_level = $row[13];
+        $auto_dial_level = $row[14];
+        $next_agent_call = $row[15];
+        $local_call_time = $row[16];
+        $voicemail_ext = $row[17];
+        $dial_timeout = $row[18];
+        $dial_prefix = $row[19];
+        $campaign_cid = $row[20];
+        $campaign_vdad_exten = $row[21];
+        $script_id = $row[26];
+        $get_call_launch = $row[27];
+        $lead_filter_id = $row[35];
+        if ($lead_filter_id=='') {
+            $lead_filter_id='NONE';
+        }
+        $display_dialable_count = $row[40];
+        $closer_campaigns = $row[43];
+        $dial_method = $row[47];
+        $adaptive_intensity = $row[52];
+        $auto_alt_dial = $row[55];
+        $campaign_description = $row[58];
+        $campaign_changedate = $row[59];
+        $campaign_stats_refresh = $row[60];
+        $campaign_logindate = $row[61];
+        $dial_statuses = $row[62];
+        $list_order_mix = $row[65];
+        $campaign_allow_inbound = $row[66];
+        $default_xfer_group = $row[68];
+        $drop_lockout_time = $row[117];
+        $display_leads_count = $row[131];
+        $user_group = $row[132];
+        $allow_emails = $row[133];
+        $call_count_limit = $row[134];
+        $allow_chats = $row[135];
+        $web_form_address_three = $row[136];
 
-		$dial_status_a = $row[3];
-		$dial_status_b = $row[4];
-		$dial_status_c = $row[5];
-		$dial_status_d = $row[6];
-		$dial_status_e = $row[7];
-		$lead_order = $row[8];
-		$hopper_level = $row[13];
-		$auto_dial_level = $row[14];
-		$next_agent_call = $row[15];
-		$local_call_time = $row[16];
-		$voicemail_ext = $row[17];
-		$dial_timeout = $row[18];
-		$dial_prefix = $row[19];
-		$campaign_cid = $row[20];
-		$campaign_vdad_exten = $row[21];
-		$campaign_rec_exten = $row[22];
-		$campaign_recording = $row[23];
-		$campaign_rec_filename = $row[24];
-		$script_id = $row[25];
-		$get_call_launch = $row[26];
-		$am_message_exten = $row[27];
-		$amd_send_to_vmx = $row[28];
-		$xferconf_a_dtmf = $row[29];
-		$xferconf_a_number = $row[30];
-		$xferconf_b_dtmf = $row[31];
-		$xferconf_b_number = $row[32];
-		$alt_number_dialing = $row[33];
-		$scheduled_callbacks = $row[34];
-		$lead_filter_id = $row[35];
-		if ($lead_filter_id=='') {$lead_filter_id='NONE';}
-		$drop_call_seconds = $row[36];
-		$drop_action = $row[37];
-		$safe_harbor_exten = $row[38];
-		$display_dialable_count = $row[39];
-		$wrapup_seconds = $row[40];
-		$wrapup_message = $row[41];
-		$closer_campaigns = $row[42];
-		$use_internal_dnc = $row[43];
-		$allcalls_delay = $row[44];
-		$omit_phone_code = $row[45];
-		$dial_method = $row[46];
-		$available_only_ratio_tally = $row[47];
-		$adaptive_dropped_percentage = $row[48];
-		$adaptive_maximum_level = $row[49];
-		$adaptive_latest_server_time = $row[50];
-		$adaptive_intensity = $row[51];
-		$adaptive_dl_diff_target = $row[52];
-		$concurrent_transfers = $row[53];
-		$auto_alt_dial = $row[54];
-		$auto_alt_dial_statuses = $row[55];
-		$agent_pause_codes_active = $row[56];
-		$campaign_description = $row[57];
-		$campaign_changedate = $row[58];
-		$campaign_stats_refresh = $row[59];
-		$campaign_logindate = $row[60];
-		$dial_statuses = $row[61];
-		$disable_alter_custdata = $row[62];
-		$no_hopper_leads_logins = $row[63];
-		$list_order_mix = $row[64];
-		$campaign_allow_inbound = $row[65];
-		$manual_dial_list_id = $row[66];
-		$default_xfer_group = $row[67];
-		$xfer_groups = $row[68];
-		$queue_priority = $row[69];
-		$drop_inbound_group = $row[70];
-		$qc_enabled = $row[71];
-		$qc_statuses = $row[72];
-		$qc_lists = $row[73];
-		$qc_shift_id = $row[74];
-		$qc_get_record_launch = $row[75];
-		$qc_show_recording = $row[76];
-		$qc_web_form_address = $row[77];
-		$qc_script = $row[78];
-		$survey_first_audio_file = $row[79];
-		$survey_dtmf_digits = $row[80];
-		$survey_ni_digit = $row[81];
-		$survey_opt_in_audio_file = $row[82];
-		$survey_ni_audio_file = $row[83];
-		$survey_method = $row[84];
-		$survey_no_response_action = $row[85];
-		$survey_ni_status = $row[86];
-		$survey_response_digit_map = $row[87];
-		$survey_xfer_exten = $row[88];
-		$survey_camp_record_dir = $row[89];
-		$disable_alter_custphone = $row[90];
-		$display_queue_count = $row[91];
-		$manual_dial_filter = $row[92];
-		$agent_clipboard_copy = $row[93];
-		$agent_extended_alt_dial = $row[94];
-		$use_campaign_dnc = $row[95];
-		$three_way_call_cid = $row[96];
-		$three_way_dial_prefix = $row[97];
-		$web_form_target = $row[98];
-		$vtiger_search_category = $row[99];
-		$vtiger_create_call_record = $row[100];
-		$vtiger_create_lead_record = $row[101];
-		$vtiger_screen_login = $row[102];
-		$cpd_amd_action = $row[103];
-		$agent_allow_group_alias = $row[104];
-		$default_group_alias = $row[105];
-		$vtiger_search_dead = $row[106];
-		$vtiger_status_call = $row[107];
-		$survey_third_digit = $row[108];
-		$survey_third_audio_file = $row[109];
-		$survey_third_status = $row[110];
-		$survey_third_exten = $row[111];
-		$survey_fourth_digit = $row[112];
-		$survey_fourth_audio_file = $row[113];
-		$survey_fourth_status = $row[114];
-		$survey_fourth_exten = $row[115];
-		$drop_lockout_time = $row[116];
-		$quick_transfer_button = $row[117];
-		$prepopulate_transfer_preset = $row[118];
-		$drop_rate_group = $row[119];
-		$view_calls_in_queue = $row[120];
-		$view_calls_in_queue_launch = $row[121];
-		$grab_calls_in_queue = $row[122];
-		$call_requeue_button = $row[123];
-		$pause_after_each_call = $row[124];
-		$no_hopper_dialing = $row[125];
-		$agent_dial_owner_only = $row[126];
-		$agent_display_dialable_leads = $row[127];
-		$web_form_address_two = $row[128];
-		$waitforsilence_options = $row[129];
-		$display_leads_count = $row[130];
-		$user_group = $row[131];
-		$allow_emails = $row[132];
-		$call_count_limit = $row[133];
-		$allow_chats = $row[134];
-		$web_form_address_three = $row[135];
-		$manual_vm_status_updates = $row[136];
+        if (preg_match('/DISABLED/', $list_order_mix)) {
+            $DEFlistDISABLE = '';
+            $DEFstatusDISABLED=0;
+        } else {
+            $DEFlistDISABLE = 'disabled';
+            $DEFstatusDISABLED=1;
+        }
 
-		if (preg_match('/DISABLED/', $list_order_mix)) {
-			$DEFlistDISABLE = '';
-			$DEFstatusDISABLED=0;
-		} else {
-			$DEFlistDISABLE = 'disabled';
-			$DEFstatusDISABLED=1;
-		}
+        if ($auto_alt_dial == 'MULTI_LEAD') {
+            $ALTmultiDISABLE=1;
+            $ALTmultiLINK="<a href=\"./admin_campaign_multi_alt.php?campaign_id=$campaign_id\">"._QXZ("Multi-Alt-Settings")."</a>";
+        } else {
+            $ALTmultiDISABLE=0;
+            $ALTmultiLINK='';
+        }
 
-		if ($auto_alt_dial == 'MULTI_LEAD') {
-			$ALTmultiDISABLE=1;
-			$ALTmultiLINK="<a href=\"./admin_campaign_multi_alt.php?campaign_id=$campaign_id\">"._QXZ("Multi-Alt-Settings")."</a>";
-		} else {
-			$ALTmultiDISABLE=0;
-			$ALTmultiLINK='';
-		}
+        $stmt="SELECT status_group_id FROM vicidial_lists WHERE campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rslt);
+        $camp_status_groups='';
+        if ($DB) {
+            echo "$lists_to_print|$stmt|\\n";
+        }
+        $o=0;
+        while ($lists_to_print > $o) {
+            $rowx=mysqli_fetch_row($rslt);
+            if (strlen($rowx[0]) > 0) {
+                $camp_status_groups .= "'$rowx[0]',";
+            }
+            $o++;
+        }
 
-		$stmt="SELECT status_group_id FROM vicidial_lists WHERE campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-		$camp_status_groups='';
-		if ($DB) {
-			echo "$lists_to_print|$stmt|\n";
-		}
-		$o=0;
-		while ($lists_to_print > $o) {
-			$rowx=mysqli_fetch_row($rslt);
-			if (strlen($rowx[0]) > 0) {
-				$camp_status_groups .= "'$rowx[0]',";
-			}
-			$o++;
-		}
+        $closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
+        $closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
+        $stmt="SELECT status_group_id FROM vicidial_inbound_groups WHERE status_group_id NOT IN('','NONE') AND group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rslt);
+        if ($DB) {
+            echo "$lists_to_print|$stmt|\\n";
+        }
+        $o=0;
+        while ($lists_to_print > $o) {
+            $rowx=mysqli_fetch_row($rslt);
+            if (strlen($rowx[0]) > 0) {
+                $camp_status_groups .= "'$rowx[0]',";
+            }
+            $o++;
+        }
 
-		$closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
-		$closer_campaigns_array = explode(" ",$closer_campaigns);
-		$closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
-		$stmt="SELECT status_group_id FROM vicidial_inbound_groups WHERE status_group_id NOT IN('','NONE') AND group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-		if ($DB) {
-			echo "$lists_to_print|$stmt|\n";
-		}
-		$o=0;
-		while ($lists_to_print > $o) {
-			$rowx=mysqli_fetch_row($rslt);
-			if (strlen($rowx[0]) > 0) {
-				$camp_status_groups .= "'$rowx[0]',";
-			}
-			$o++;
-		}
+        $stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine FROM vicidial_statuses ORDER BY status;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $statuses_to_print = mysqli_num_rows($rslt);
+        $statuses_list='';
+        $dial_statuses_list='';
+        $o=0;
+        while ($statuses_to_print > $o) {
+            $rowx=mysqli_fetch_row($rslt);
+            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\\n";
+            if ($rowx[0] != 'CBHOLD') {
+                $dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\\n";
+            }
+            $statname_list["$rowx[0]"] = "$rowx[1]";
+            $o++;
+        }
 
-		$stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine FROM vicidial_statuses ORDER BY status;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$statuses_to_print = mysqli_num_rows($rslt);
-		$statuses_list='';
-		$dial_statuses_list='';
-		$o=0;
-		while ($statuses_to_print > $o) {
-			$rowx=mysqli_fetch_row($rslt);
-			$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			if ($rowx[0] != 'CBHOLD') {
-				$dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			}
-			$statname_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-		}
+        $stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine FROM vicidial_campaign_statuses WHERE campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL ORDER BY status;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $Cstatuses_to_print = mysqli_num_rows($rslt);
+        $o=0;
+        while ($Cstatuses_to_print > $o) {
+            $rowx=mysqli_fetch_row($rslt);
+            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\\n";
+            if ($rowx[0] != 'CBHOLD') {
+                $dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\\n";
+            }
+            $statname_list["$rowx[0]"] = "$rowx[1]";
+            $o++;
+        }
 
-		$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine FROM vicidial_campaign_statuses WHERE campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL ORDER BY status;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$Cstatuses_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($Cstatuses_to_print > $o) {
-			$rowx=mysqli_fetch_row($rslt);
-			$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			if ($rowx[0] != 'CBHOLD') {
-				$dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			}
-			$statname_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-		}
+        $dial_statuses = preg_replace("/ -$/","",$dial_statuses);
+        $Dstatuses = explode(" ", $dial_statuses);
+        $Ds_to_print = count($Dstatuses) - 1;
 
-		$dial_statuses = preg_replace("/ -$/","",$dial_statuses);
-		$Dstatuses = explode(" ", $dial_statuses);
-		$Ds_to_print = count($Dstatuses) - 1;
+        $stmt="SELECT COUNT(*) FROM vicidial_campaigns_list_mix WHERE campaign_id='$campaign_id' AND status='ACTIVE' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $rowx=mysqli_fetch_row($rslt);
+        if ($rowx[0] < 1) {
+            $mixes_list="<option value=\"DISABLED\">DISABLED</option>\\n";
+            $mixname_list["DISABLED"] = "DISABLED";
+        } else {
+            $stmt="SELECT vcl_id,vcl_name FROM vicidial_campaigns_list_mix WHERE campaign_id='$campaign_id' AND status='ACTIVE' $LOGallowed_campaignsSQL LIMIT 1;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $mixes_to_print = mysqli_num_rows($rslt);
+            $mixes_list="";
+            $o=0;
+            while ($mixes_to_print > $o) {
+                $rowx=mysqli_fetch_row($rslt);
+                $mixes_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\\n";
+                $mixname_list["ACTIVE"] = "$rowx[0] - $rowx[1]";
+                $o++;
+            }
+        }
 
-		$stmt="SELECT COUNT(*) FROM vicidial_campaigns_list_mix WHERE campaign_id='$campaign_id' AND status='ACTIVE' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rowx=mysqli_fetch_row($rslt);
-		if ($rowx[0] < 1) {
-			$mixes_list="<option value=\"DISABLED\">DISABLED</option>\n";
-			$mixname_list["DISABLED"] = "DISABLED";
-		} else {
-			$stmt="SELECT vcl_id,vcl_name FROM vicidial_campaigns_list_mix WHERE campaign_id='$campaign_id' AND status='ACTIVE' $LOGallowed_campaignsSQL LIMIT 1;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$mixes_to_print = mysqli_num_rows($rslt);
-			$mixes_list="";
-			$o=0;
-			while ($mixes_to_print > $o) {
-				$rowx=mysqli_fetch_row($rslt);
-				$mixes_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-				$mixname_list["ACTIVE"] = "$rowx[0] - $rowx[1]";
-				$o++;
-			}
-		}
-
-		if ($SUB<1) {
-			$camp_detail_color=$subcamp_color;
-		} else {
-			$camp_detail_color=$campaigns_color;
-		}
-		if ($SUB==22) {
-			$camp_statuses_color=$subcamp_color;
-		} else {
-			$camp_statuses_color=$campaigns_color;
-		}
-		if ($SUB==23) {
-			$camp_hotkeys_color=$subcamp_color;
-		} else {
-			$camp_hotkeys_color=$campaigns_color;
-		}
-		if ($SUB==25) {
-			$camp_recycle_color=$subcamp_color;
-		} else {
-			$camp_recycle_color=$campaigns_color;
-		}
-		if ($SUB==26) {
-			$camp_autoalt_color=$subcamp_color;
-		} else {
-			$camp_autoalt_color=$campaigns_color;
-		}
-		if ($SUB==27) {
-			$camp_pause_color=$subcamp_color;
-		} else {
-			$camp_pause_color=$campaigns_color;
-		}
-		if ($SUB==29) {
-			$camp_listmix_color=$subcamp_color;
-		} else {
-			$camp_listmix_color=$campaigns_color;
-		}
-
-?>
+        if ($SUB<1) {
+            $camp_detail_color=$subcamp_color;
+        } else {
+            $camp_detail_color=$campaigns_color;
+        }
+        if ($SUB==22) {
+            $camp_statuses_color=$subcamp_color;
+        } else {
+            $camp_statuses_color=$campaigns_color;
+        }
+        if ($SUB==23) {
+            $camp_hotkeys_color=$subcamp_color;
+        } else {
+            $camp_hotkeys_color=$campaigns_color;
+        }
+        if ($SUB==25) {
+            $camp_recycle_color=$subcamp_color;
+        } else {
+            $camp_recycle_color=$campaigns_color;
+        }
+        if ($SUB==26) {
+            $camp_autoalt_color=$subcamp_color;
+        } else {
+            $camp_autoalt_color=$campaigns_color;
+        }
+        if ($SUB==27) {
+            $camp_pause_color=$subcamp_color;
+        } else {
+            $camp_pause_color=$campaigns_color;
+        }
+        if ($SUB==29) {
+            $camp_listmix_color=$subcamp_color;
+        } else {
+            $camp_listmix_color=$campaigns_color;
+        }
+        
+        ?>
 
 <style>
-.bv-wrap{max-width:1400px;margin:20px auto;font-family:Arial,Helvetica,sans-serif;color:#374151}
+.bv-wrap{max-width:1200px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
 .bv-header{display:flex;align-items:center;gap:15px;margin-bottom:0;padding:18px 20px;background:#f8f9fa;border:1px solid #e5e7eb;border-bottom:2px solid #e5e7eb;border-radius:6px 6px 0 0}
 .bv-header h1{margin:0;font-size:20px;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:0.5px}
 .bv-tabs{display:flex;gap:5px;background:#fff;border:1px solid #e5e7eb;border-top:none;padding:10px 15px;border-bottom:2px solid #e5e7eb;flex-wrap:wrap}
 .bv-tab{padding:8px 16px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;text-decoration:none;font-size:13px;font-weight:600;color:#374151;transition:all .2s;cursor:pointer}
 .bv-tab:hover{background:#e5e7eb}
 .bv-tab.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
-.bv-container{background:#fff;border:1px solid #e5e7eb;border-top:none;padding:25px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.bv-container{background:#fff;border:1px solid #e5e7eb;border-top:none;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .bv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px;margin-bottom:20px}
 .bv-field{display:flex;flex-direction:column;gap:8px}
 .bv-field.full{grid-column:1/-1}
-.bv-field.three{grid-column:span 1}
+.bv-field.third{grid-column:span 1}
 .bv-label{font-weight:600;color:#374151;font-size:13px;text-transform:uppercase;letter-spacing:0.3px}
-.bv-input,.bv-select,.bv-textarea{padding:10px 13px;border:1.5px solid #d1d5db;border-radius:5px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff;color:#374151;width:100%;box-sizing:border-box}
+.bv-input,.bv-select,.bv-textarea{padding:9px 12px;border:1.5px solid #d1d5db;border-radius:4px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff;color:#374151;width:100%}
 .bv-input:focus,.bv-select:focus,.bv-textarea:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .bv-readonly{background:#f9fafb;color:#6b7280;cursor:not-allowed}
-.bv-button{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff;padding:11px 28px;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .3s;box-shadow:0 2px 6px rgba(16,185,129,.3);margin:4px}
+.bv-button{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff;padding:10px 24px;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .3s;box-shadow:0 2px 6px rgba(16,185,129,.3);margin:4px}
 .bv-button:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(16,185,129,.4)}
-.bv-button:active{transform:translateY(0);box-shadow:0 1px 3px rgba(16,185,129,.2)}
-.bv-button:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.bv-button:active{transform:translateY(0)}
 .bv-button-secondary{background:#6b7280;color:#fff}
 .bv-button-secondary:hover{background:#4b5563;transform:translateY(-2px)}
 .bv-button-danger{background:#dc2626;color:#fff}
 .bv-button-danger:hover{background:#b91c1c;transform:translateY(-2px)}
-.bv-submit-area{text-align:center;padding:25px;background:#fafafa;border-top:2px solid #e5e7eb;border-radius:0 0 6px 6px;margin-top:25px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;flex-direction:row}
+.bv-button-link{background:none;color:#3b82f6;padding:0;text-decoration:none;font-size:13px;box-shadow:none}
+.bv-button-link:hover{text-decoration:underline;background:none}
+.bv-submit-area{text-align:center;padding:20px;background:#fafafa;border-top:2px solid #e5e7eb;border-radius:0 0 6px 6px;margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .bv-link{color:#3b82f6;text-decoration:none;font-weight:500;font-size:13px}
 .bv-link:hover{text-decoration:underline}
 .bv-note{color:#6b7280;font-size:12px;font-style:italic;margin-top:4px}
-.bv-section-title{font-size:16px;font-weight:700;color:#374151;margin-top:25px;margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid #e5e7eb;text-transform:uppercase;letter-spacing:0.3px}
-.bv-section-title:first-child{margin-top:0}
-.bv-help{display:inline-block;margin-left:8px;padding:3px 8px;background:#dbeafe;color:#1e40af;border-radius:3px;font-size:11px;font-weight:600;text-transform:uppercase}
-.bv-status-fields{background:#f0f9ff;border:1px solid #bfdbfe;border-radius:6px;padding:15px;margin:15px 0}
-.bv-status-title{font-weight:600;color:#1e40af;margin-bottom:12px;font-size:13px;text-transform:uppercase}
-.bv-status-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:15px}
-.bv-status-row:last-child{margin-bottom:0}
-.bv-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-start;align-items:center}
-.bv-info-box{padding:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;color:#166534;font-size:13px;margin:10px 0}
-.bv-error-box{padding:12px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;color:#991b1b;font-size:13px;margin:10px 0}
-@media (max-width:1400px){.bv-grid{grid-template-columns:1fr 1fr;gap:20px 25px}}
-@media (max-width:1024px){.bv-grid{grid-template-columns:1fr;gap:15px}.bv-status-row{grid-template-columns:1fr}}
-@media (max-width:768px){.bv-wrap{margin:10px}.bv-header{flex-direction:column;text-align:center}.bv-tabs{flex-direction:column}.bv-container{padding:15px}.bv-submit-area{flex-direction:column}.bv-button{width:100%}}
+.bv-section-title{font-size:16px;font-weight:700;color:#374151;margin-top:20px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;text-transform:uppercase;letter-spacing:0.3px}
+.bv-status-box{padding:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;color:#166534;font-size:13px;margin-top:8px}
+.bv-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-start}
+.bv-help{display:inline-block;margin-left:8px;padding:2px 6px;background:#dbeafe;color:#1e40af;border-radius:3px;font-size:11px;font-weight:600}
+@media (max-width:1024px){.bv-grid{grid-template-columns:1fr;gap:15px}}
+@media (max-width:768px){.bv-wrap{margin:10px}.bv-header{flex-direction:column;text-align:center}.bv-tabs{flex-direction:column}}
 </style>
 
 <div class="bv-wrap">
@@ -31474,37 +31377,45 @@ if ($ADD==34) {
         <img src="images/icon_black_campaigns.png" alt="Campaigns" width="42" height="42">
         <h1><?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?> - <?php echo _QXZ("CAMPAIGN BASIC VIEW"); ?></h1>
     </div>
-
+    
     <div class="bv-tabs">
         <a href="<?php echo $PHP_SELF; ?>?ADD=34&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("Basic View"); ?></a>
         <a href="<?php echo $PHP_SELF; ?>?ADD=31&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Detail View"); ?></a>
+        <?php if ($SUB==22): ?>
+        <a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=22&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("Dial Statuses"); ?></a>
+        <?php else: ?>
         <a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=22&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Dial Statuses"); ?></a>
-        <?php if ($SUB==23): ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=23&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("Hotkeys"); ?></a><?php else: ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=23&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Hotkeys"); ?></a><?php endif; ?>
-        <?php if ($SUB==25): ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=25&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("Recycle"); ?></a><?php else: ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=25&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Recycle"); ?></a><?php endif; ?>
-        <?php if ($SUB==26): ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=26&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("Auto-Alt"); ?></a><?php else: ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=26&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Auto-Alt"); ?></a><?php endif; ?>
-        <?php if ($SUB==27): ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=27&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("Pause Codes"); ?></a><?php else: ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=27&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Pause Codes"); ?></a><?php endif; ?>
-        <?php if ($SSoutbound_autodial_active > 0): ?>
-        <?php if ($SUB==29): ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=29&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab active"><?php echo _QXZ("List Mix"); ?></a><?php else: ?><a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=29&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("List Mix"); ?></a><?php endif; ?>
         <?php endif; ?>
-        <a href="./realtime_report.php?RR=4&DB=0&group=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Real-Time"); ?></a>
+        <?php if ($SSoutbound_autodial_active > 0): ?>
+        <a href="<?php echo $PHP_SELF; ?>?ADD=34&SUB=29&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("List Mix"); ?></a>
+        <?php endif; ?>
+        <a href="./realtime_report.php?RR=4&DB=0&group=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-tab"><?php echo _QXZ("Real-Time Screen"); ?></a>
     </div>
-
+    
     <?php if ($SUB<1): ?>
     <form action="<?php echo htmlspecialchars($PHP_SELF, ENT_QUOTES); ?>" method="POST" id="bvForm">
         <input type="hidden" name="ADD" value="44">
         <input type="hidden" name="campaign_id" value="<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>">
-
+        
         <div class="bv-container">
             <div class="bv-section-title"><?php echo _QXZ("Campaign Information"); ?></div>
             <div class="bv-grid">
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Campaign ID"); ?>: <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Campaign Name"); ?>: <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?></label>
                     <input type="text" name="campaign_name" class="bv-input" value="<?php echo htmlspecialchars($row[1], ENT_QUOTES); ?>" maxlength="40" required>
                 </div>
+                
+                <div class="bv-field full">
+                    <label class="bv-label"><?php echo _QXZ("Campaign Description"); ?>: <?php echo $NWB . "#campaigns-campaign_description" . $NWE; ?></label>
+                    <textarea name="campaign_description" class="bv-input" style="min-height:60px;max-width:100%" readonly><?php echo htmlspecialchars($campaign_description, ENT_QUOTES); ?></textarea>
+                </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Active"); ?>: <?php echo $NWB . "#campaigns-active" . $NWE; ?></label>
                     <select name="active" class="bv-select">
@@ -31512,32 +31423,34 @@ if ($ADD==34) {
                         <option value="N" <?php if($row[2]=='N') echo 'selected'; ?>><?php echo _QXZ("N"); ?></option>
                     </select>
                 </div>
-                <div class="bv-field full">
-                    <label class="bv-label"><?php echo _QXZ("Campaign Description"); ?>: <?php echo $NWB . "#campaigns-campaign_description" . $NWE; ?></label>
-                    <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_description, ENT_QUOTES); ?>" readonly>
-                </div>
+                
                 <div class="bv-field">
-                    <label class="bv-label"><?php echo _QXZ("User Group"); ?>: <?php echo $NWB . "#campaigns-user_group" . $NWE; ?></label>
+                    <label class="bv-label"><?php echo _QXZ("Admin User Group"); ?>: <?php echo $NWB . "#campaigns-user_group" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($user_group, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Last Change Date"); ?>: <?php echo $NWB . "#campaigns-campaign_changedate" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_changedate, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Campaign Login Date"); ?>: <?php echo $NWB . "#campaigns-campaign_logindate" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_logindate, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Campaign Stats Refresh"); ?>: <?php echo $NWB . "#campaigns-campaign_stats_refresh" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_stats_refresh, ENT_QUOTES); ?>" readonly>
                 </div>
+                
             </div>
-
+            
             <div class="bv-section-title"><?php echo _QXZ("Dialing Configuration"); ?></div>
             <div class="bv-grid">
+                
                 <div class="bv-field">
-                    <label class="bv-label"><?php echo _QXZ("Hopper Level"); ?>: <?php echo $NWB . "#campaigns-hopper_level" . $NWE; ?></label>
+                    <label class="bv-label"><?php echo _QXZ("Minimum Hopper Level"); ?>: <?php echo $NWB . "#campaigns-hopper_level" . $NWE; ?></label>
                     <select name="hopper_level" class="bv-select">
                         <option value="<?php echo htmlspecialchars($hopper_level, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($hopper_level, ENT_QUOTES); ?></option>
                         <option>1</option><option>5</option><option>10</option><option>20</option><option>50</option>
@@ -31545,148 +31458,130 @@ if ($ADD==34) {
                         <option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option>
                     </select>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Auto Dial Level"); ?>: <?php echo $NWB . "#campaigns-auto_dial_level" . $NWE; ?></label>
                     <input type="text" name="auto_dial_level" class="bv-input" value="<?php echo htmlspecialchars($auto_dial_level, ENT_QUOTES); ?>">
+                    <span class="bv-note"><?php echo _QXZ("Set to 0 to disable auto-dial"); ?></span>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Lead Order"); ?>: <?php echo $NWB . "#campaigns-lead_order" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($lead_order, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Dial Method"); ?>: <?php echo $NWB . "#campaigns-dial_method" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($dial_method, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Next Agent Call"); ?>: <?php echo $NWB . "#campaigns-next_agent_call" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($next_agent_call, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Local Call Time"); ?>: <?php echo $NWB . "#campaigns-local_call_time" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($local_call_time, ENT_QUOTES); ?>" readonly>
                 </div>
+                
             </div>
-
-            <div class="bv-section-title"><?php echo _QXZ("Dial Statuses"); ?></div>
-            <div class="bv-status-fields">
-                <div class="bv-status-title"><?php echo _QXZ("Active Dial Statuses"); ?></div>
-                <div class="bv-status-row">
-                    <div class="bv-field">
-                        <label class="bv-label"><?php echo _QXZ("Status A"); ?>: <?php echo $NWB . "#campaigns-dial_status_a" . $NWE; ?></label>
-                        <select name="dial_status_a" class="bv-select">
-                            <option value="<?php echo htmlspecialchars($dial_status_a, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($dial_status_a, ENT_QUOTES); ?></option>
-                            <?php echo $dial_statuses_list; ?>
-                        </select>
-                    </div>
-                    <div class="bv-field">
-                        <label class="bv-label"><?php echo _QXZ("Status B"); ?>: <?php echo $NWB . "#campaigns-dial_status_b" . $NWE; ?></label>
-                        <select name="dial_status_b" class="bv-select">
-                            <option value="<?php echo htmlspecialchars($dial_status_b, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($dial_status_b, ENT_QUOTES); ?></option>
-                            <?php echo $dial_statuses_list; ?>
-                        </select>
-                    </div>
-                    <div class="bv-field">
-                        <label class="bv-label"><?php echo _QXZ("Status C"); ?>: <?php echo $NWB . "#campaigns-dial_status_c" . $NWE; ?></label>
-                        <select name="dial_status_c" class="bv-select">
-                            <option value="<?php echo htmlspecialchars($dial_status_c, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($dial_status_c, ENT_QUOTES); ?></option>
-                            <?php echo $dial_statuses_list; ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="bv-status-row">
-                    <div class="bv-field">
-                        <label class="bv-label"><?php echo _QXZ("Status D"); ?>: <?php echo $NWB . "#campaigns-dial_status_d" . $NWE; ?></label>
-                        <select name="dial_status_d" class="bv-select">
-                            <option value="<?php echo htmlspecialchars($dial_status_d, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($dial_status_d, ENT_QUOTES); ?></option>
-                            <?php echo $dial_statuses_list; ?>
-                        </select>
-                    </div>
-                    <div class="bv-field">
-                        <label class="bv-label"><?php echo _QXZ("Status E"); ?>: <?php echo $NWB . "#campaigns-dial_status_e" . $NWE; ?></label>
-                        <select name="dial_status_e" class="bv-select">
-                            <option value="<?php echo htmlspecialchars($dial_status_e, ENT_QUOTES); ?>" selected><?php echo htmlspecialchars($dial_status_e, ENT_QUOTES); ?></option>
-                            <?php echo $dial_statuses_list; ?>
-                        </select>
-                    </div>
-                    <div class="bv-field">
-                        <label class="bv-label"><?php echo _QXZ("Wrapup Seconds"); ?>: <?php echo $NWB . "#campaigns-wrapup_seconds" . $NWE; ?></label>
-                        <input type="text" name="wrapup_seconds" class="bv-input" value="<?php echo htmlspecialchars($wrapup_seconds, ENT_QUOTES); ?>">
-                    </div>
-                </div>
-            </div>
-
+            
             <div class="bv-section-title"><?php echo _QXZ("Park & Phone Configuration"); ?></div>
             <div class="bv-grid">
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Park Extension"); ?>: <?php echo $NWB . "#campaigns-park_ext" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($row[9], ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
-                    <label class="bv-label"><?php echo _QXZ("Park Music File"); ?>: <?php echo $NWB . "#campaigns-park_file_name" . $NWE; ?></label>
+                    <label class="bv-label"><?php echo _QXZ("Park Music-on-Hold"); ?>: <?php echo $NWB . "#campaigns-park_file_name" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($row[10], ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Voicemail Extension"); ?>: <?php echo $NWB . "#campaigns-voicemail_ext" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($voicemail_ext, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Dial Timeout"); ?>: <?php echo $NWB . "#campaigns-dial_timeout" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($dial_timeout, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Dial Prefix"); ?>: <?php echo $NWB . "#campaigns-dial_prefix" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($dial_prefix, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Campaign CID"); ?>: <?php echo $NWB . "#campaigns-campaign_cid" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_cid, ENT_QUOTES); ?>" readonly>
                 </div>
+                
             </div>
-
+            
             <div class="bv-section-title"><?php echo _QXZ("Web & Agent Configuration"); ?></div>
             <div class="bv-grid">
+                
                 <div class="bv-field full">
                     <label class="bv-label"><?php echo _QXZ("Web Form Address"); ?>: <?php echo $NWB . "#campaigns-web_form_address" . $NWE; ?>
-                    <?php if ($SSenable_first_webform < 1): ?><span class="bv-help"><?php echo _QXZ("DISABLED"); ?></span><?php endif; ?>
+                    <?php if ($SSenable_first_webform < 1): ?>
+                        <span class="bv-help"><?php echo _QXZ("DISABLED"); ?></span>
+                    <?php endif; ?>
                     </label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($row[11], ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Allow Closers"); ?>: <?php echo $NWB . "#campaigns-allow_closers" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($row[12], ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Default Transfer Group"); ?>: <?php echo $NWB . "#campaigns-default_xfer_group" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($default_xfer_group, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Script"); ?>: <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($script_id, ENT_QUOTES); ?>" readonly>
                 </div>
+                
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Get Call Launch"); ?>: <?php echo $NWB . "#campaigns-get_call_launch" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($get_call_launch, ENT_QUOTES); ?>" readonly>
                 </div>
+                
+                <div class="bv-field">
+                    <label class="bv-label"><?php echo _QXZ("Wrapup Seconds"); ?>: <?php echo $NWB . "#campaigns-wrapup_seconds" . $NWE; ?></label>
+                    <input type="text" name="wrapup_seconds" class="bv-input" value="<?php echo htmlspecialchars($row[41], ENT_QUOTES); ?>">
+                </div>
+                
                 <?php if ($SSallow_emails > 0): ?>
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Allow Emails"); ?>: <?php echo $NWB . "#campaigns-allow_emails" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($allow_emails, ENT_QUOTES); ?>" readonly>
                 </div>
                 <?php endif; ?>
+                
                 <?php if ($SSallow_chats > 0): ?>
                 <div class="bv-field">
                     <label class="bv-label"><?php echo _QXZ("Allow Chats"); ?>: <?php echo $NWB . "#campaigns-allow_chats" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($allow_chats, ENT_QUOTES); ?>" readonly>
                 </div>
                 <?php endif; ?>
+                
                 <?php if ($SSoutbound_autodial_active > 0): ?>
                 <div class="bv-field">
-                    <label class="bv-label"><?php echo _QXZ("Allow Inbound"); ?>: <?php echo $NWB . "#campaigns-campaign_allow_inbound" . $NWE; ?></label>
+                    <label class="bv-label"><?php echo _QXZ("Allow Inbound and Blended"); ?>: <?php echo $NWB . "#campaigns-campaign_allow_inbound" . $NWE; ?></label>
                     <input type="text" class="bv-input bv-readonly" value="<?php echo htmlspecialchars($campaign_allow_inbound, ENT_QUOTES); ?>" readonly>
                 </div>
                 <?php endif; ?>
+                
             </div>
-
+            
             <div class="bv-submit-area">
                 <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="bv-button">
                 <a href="<?php echo $PHP_SELF; ?>?ADD=31&campaign_id=<?php echo htmlspecialchars($campaign_id, ENT_QUOTES); ?>" class="bv-button bv-button-secondary"><?php echo _QXZ("Detail View"); ?></a>
@@ -31736,7 +31631,6 @@ if ($ADD==34) {
         exit;
     }
 }
-
 
 
 
