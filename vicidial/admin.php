@@ -46475,8 +46475,8 @@ if ($ADD=="0A")
 {
 
 ?>
-<div style="background: white; padding: 10px;">
-<div style="max-width: 1400px; margin: 0 auto;">
+<div style="background: white; padding: 5px;">
+<div style="max-width: 1300px; margin: 0 auto;">
     
     <!-- Header Section -->
 <div style="background: #f8f9fa; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
