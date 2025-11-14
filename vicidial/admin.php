@@ -31599,7 +31599,7 @@ if ($ADD==34) {
 })();
 </script>
 
-        <?php
+ <?php
     } else {
         ?>
 <style>.cm-err{max-width:600px;margin:40px auto;padding:20px 24px;background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #dc2626;border-radius:4px;font-family:Arial,Helvetica,sans-serif}.cm-err h3{margin:0 0 10px 0;color:#991b1b;font-size:16px;font-weight:600}.cm-err p{margin:0;color:#991b1b;font-size:14px}</style>
@@ -31611,7 +31611,7 @@ if ($ADD==34) {
         exit;
     }
 }
-
+?>
 
 ######################
 # ADD=31 or 34 and SUB=29 for list mixes
