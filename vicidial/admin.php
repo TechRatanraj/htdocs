@@ -9011,147 +9011,127 @@ if ($ADD==11)
 # ADD=12 display the COPY CAMPAIGN FORM SCREEN
 ######################
 
-if ($ADD==12)
-{
-if ($LOGmodify_campaigns==1)
-{
-##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_campaigns' and active='1';";
-$rslt=mysql_to_mysqli($stmt, $link);
-$voi_ct = mysqli_num_rows($rslt);
-if ($voi_ct > 0)
-{
-$row=mysqli_fetch_row($rslt);
-$voi_count = "$row";
-}
-##### END ID override optional section #####
-?>
-
-    <div style="background: white; padding: 5px;">
-    <div style="max-width: 900px; margin: 0 auto;">
+if ($ADD == 12) {
+    if ($LOGmodify_campaigns == 1) {
         
-        <!-- Copy Campaign Form -->
-        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e8ecf1;">
-                <img src="images/icon_black_campaigns.png" alt="Campaigns" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("COPY A CAMPAIGN"); ?></h1>
-            </div>
+        // Check ID override configuration
+        $autoGenerateId = false;
+        $voi_count = 0;
+        $stmt = "SELECT COUNT(*) FROM vicidial_override_ids WHERE id_table='vicidial_campaigns' AND active='1'";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        if ($rslt && mysqli_num_rows($rslt) > 0) {
+            $row = mysqli_fetch_row($rslt);
+            $voi_count = intval($row[0]);
+            $autoGenerateId = ($voi_count > 0);
+        }
+        
+        // Fetch available campaigns
+        $stmt = "SELECT campaign_id, campaign_name FROM vicidial_campaigns {$whereLOGallowed_campaignsSQL} ORDER BY campaign_id";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $campaigns_list = '<option value="">' . _QXZ("-- Select Campaign --") . '</option>';
+        while ($rowx = mysqli_fetch_row($rslt)) {
+            $cid = htmlspecialchars($rowx[0], ENT_QUOTES, 'UTF-8');
+            $cname = htmlspecialchars($rowx[1], ENT_QUOTES, 'UTF-8');
+            $campaigns_list .= "<option value=\"{$cid}\">{$cid} - {$cname}</option>";
+        }
+        ?>
+        
+<style>
+.cc-wrap{max-width:<?php echo $section_width; ?>px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
+.cc-hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:15px;background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);border-radius:8px}
+.cc-hdr img{flex-shrink:0}
+.cc-hdr h2{margin:0;font-size:20px;font-weight:600;color:#2c3e50}
+.cc-tbl{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.cc-tbl tr{background-color:#<?php echo $SSstd_row4_background; ?>;transition:background-color .2s}
+.cc-tbl tr:hover{background-color:rgba(0,0,0,.02)}
+.cc-tbl td{padding:14px 18px;border-bottom:1px solid #e8eaed}
+.cc-tbl tr:last-child td{border-bottom:none}
+.cc-lbl{font-weight:600;color:#495057;font-size:14px;white-space:nowrap}
+.cc-inp,.cc-sel{width:100%;padding:10px 14px;border:1.5px solid #ced4da;border-radius:6px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff}
+.cc-inp:focus,.cc-sel:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.1)}
+.cc-badge{display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border-radius:6px;font-size:13px;font-weight:600;letter-spacing:.3px}
+.cc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:12px 40px;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;transition:all .3s;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+.cc-btn:hover{transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,.15)}
+.cc-btn:active{transform:translateY(0)}
+.cc-note{background:#fff3cd;border-left:4px solid #ffc107;padding:14px 18px;font-size:13px;line-height:1.6;color:#856404}
+.cc-note strong{display:block;margin-bottom:6px;font-size:14px}
+@media (max-width:768px){.cc-wrap{margin:10px}.cc-tbl td{display:block;width:100%!important;text-align:left!important}.cc-lbl{padding-bottom:8px}}
+</style>
 
-            <form action="<?php echo $PHP_SELF; ?>" method="POST">
-                <input type="hidden" name="ADD" value="20">
-                <input type="hidden" name="DB" value="<?php echo $DB; ?>">
-                
-                <table style="width: 100%; border-collapse: separate; border-spacing: 0 15px;">
-                    <?php
-                    if ($voi_count > 0)
-                        {
-                        ?>
-                        <tr>
-                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 200px;">
-                                <?php echo _QXZ("Campaign ID"); ?>:
-                            </td>
-                            <td style="padding: 8px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
-                                <span style="padding: 8px 12px; background: #e8f5e9; color: #2e7d32; border-radius: 6px; display: inline-block;">
-                                    <?php echo _QXZ("Auto-Generated"); ?>
-                                </span> <?php echo $NWB; ?>#campaigns-campaign_id<?php echo $NWE; ?>
-                            </td>
-                        </tr>
-                        <?php
-                        }
-                    else
-                        {
-                        ?>
-                        <tr>
-                            <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 200px;">
-                                <?php echo _QXZ("Campaign ID"); ?>:
-                            </td>
-                            <td style="padding: 8px;">
-                                <input type="text" name="campaign_id" size="10" maxlength="8" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 200px; box-sizing: border-box;">
-                                <?php echo $NWB; ?>#campaigns-campaign_id<?php echo $NWE; ?>
-                            </td>
-                        </tr>
-                        <?php
-                        }
-                    ?>
-                    
-                    <tr>
-                        <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
-                            <?php echo _QXZ("Campaign Name"); ?>:
-                        </td>
-                        <td style="padding: 8px;">
-                            <input type="text" name="campaign_name" size="40" maxlength="40" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 500px; box-sizing: border-box;">
-                            <?php echo $NWB; ?>#campaigns-campaign_name<?php echo $NWE; ?>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
-                            <?php echo _QXZ("Source Campaign"); ?>:
-                        </td>
-                        <td style="padding: 8px;">
-                            <select size="1" name="source_campaign_id" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 500px; box-sizing: border-box;">
-                            <?php
-                            $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-                            $rslt=mysql_to_mysqli($stmt, $link);
-                            $campaigns_to_print = mysqli_num_rows($rslt);
-                            $campaigns_list='';
+<div class="cc-wrap">
+    <div class="cc-hdr">
+        <img src="images/icon_black_campaigns.png" alt="Campaigns" width="42" height="42">
+        <h2><?php echo _QXZ("COPY A CAMPAIGN"); ?></h2>
+    </div>
+    
+    <form action="<?php echo htmlspecialchars($PHP_SELF, ENT_QUOTES, 'UTF-8'); ?>" method="POST" id="ccForm">
+        <input type="hidden" name="ADD" value="20">
+        <input type="hidden" name="DB" value="<?php echo htmlspecialchars($DB, ENT_QUOTES, 'UTF-8'); ?>">
+        
+        <table class="cc-tbl" cellspacing="0">
+            <tr>
+                <td align="right" width="30%" class="cc-lbl"><?php echo _QXZ("Campaign ID"); ?>:</td>
+                <td align="left" width="70%">
+                    <?php if ($autoGenerateId): ?>
+                        <span class="cc-badge"><?php echo _QXZ("Auto-Generated"); ?></span>
+                        <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
+                    <?php else: ?>
+                        <input type="text" name="campaign_id" id="ccId" class="cc-inp" size="10" maxlength="8" pattern="[A-Za-z0-9_-]+" required style="max-width:180px">
+                        <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" class="cc-lbl"><?php echo _QXZ("Campaign Name"); ?>:</td>
+                <td align="left">
+                    <input type="text" name="campaign_name" id="ccName" class="cc-inp" size="40" maxlength="40" required style="max-width:450px">
+                    <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" class="cc-lbl"><?php echo _QXZ("Source Campaign"); ?>:</td>
+                <td align="left">
+                    <select name="source_campaign_id" id="ccSrc" class="cc-sel" required style="max-width:450px">
+                        <?php echo $campaigns_list; ?>
+                    </select>
+                    <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2" style="padding:24px 18px">
+                    <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="cc-btn">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:0">
+                    <div class="cc-note">
+                        <strong><?php echo _QXZ("NOTE"); ?>:</strong>
+                        <?php echo _QXZ("Copying a campaign will copy all settings from the master campaign you select, but it will not copy a campaign-specific DNC list if there was one on the selected master campaign."); ?>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 
-                            $o=0;
-                            while ($campaigns_to_print > $o) 
-                                {
-                                $rowx=mysqli_fetch_row($rslt);
-                                $campaigns_list .= "<option value=\"$rowx\">$rowx - $rowx</option>\n";
-                                $o++;
-                                }
-                            echo "$campaigns_list";
-                            ?>
-                            </select>
-                            <?php echo $NWB; ?>#campaigns-campaign_id<?php echo $NWE; ?>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td colspan="2" style="text-align: center; padding-top: 20px;">
-                            <button type="submit" name="SUBMIT" style="padding: 12px 32px; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#2980b9'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(52,152,219,0.3)';" onmouseout="this.style.background='#3498db'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                                <?php echo _QXZ("SUBMIT"); ?>
-                            </button>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td colspan="2" style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; text-align: center;">
-                            <div style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #856404; line-height: 1.6;">
-                                <strong style="display: block; margin-bottom: 8px;">ℹ️ <?php echo _QXZ("NOTE"); ?>:</strong>
-                                <?php echo _QXZ("NOTE: Copying a campaign will copy all settings from the master campaign you select, but it will not copy a campaign-specific DNC list if there was one on the selected master campaign."); ?>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    </div>
-    </div>
-    <?php
-    }
-else
-    {
-    ?>
-    <div style="background: white; padding: 20px;">
-    <div style="max-width: 800px; margin: 0 auto;">
-        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 20px; text-align: center;">
-            <h2 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 20px; color: #856404; margin: 0 0 10px 0;">
-                <?php echo _QXZ("Access Denied"); ?>
-            </h2>
-            <p style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 15px; color: #856404; margin: 0;">
-                <?php echo _QXZ("You do not have permission to view this page"); ?>
-            </p>
-        </div>
-    </div>
-    </div>
-    <?php
-    exit;
+<script>
+(function(){var f=document.getElementById('ccForm');if(!f)return;f.addEventListener('submit',function(e){var id=document.getElementById('ccId'),nm=document.getElementById('ccName'),src=document.getElementById('ccSrc'),btn=this.querySelector('input[type="submit"]');if(id&&!id.disabled){var v=id.value.trim();if(v.length===0){alert('<?php echo _QXZ("Campaign ID is required"); ?>');id.focus();e.preventDefault();return false}if(!/^[A-Za-z0-9_-]+$/.test(v)){alert('<?php echo _QXZ("Campaign ID can only contain letters, numbers, hyphens, and underscores"); ?>');id.focus();e.preventDefault();return false}}if(nm&&nm.value.trim().length===0){alert('<?php echo _QXZ("Campaign Name is required"); ?>');nm.focus();e.preventDefault();return false}if(src&&src.value===''){alert('<?php echo _QXZ("Please select a source campaign to copy"); ?>');src.focus();e.preventDefault();return false}if(btn){btn.disabled=true;btn.value='<?php echo _QXZ("Processing..."); ?>';btn.style.opacity='0.6'}return true});var idInp=document.getElementById('ccId');if(idInp){idInp.addEventListener('input',function(){var v=this.value;if(v&&!/^[A-Za-z0-9_-]*$/.test(v)){this.style.borderColor='#dc3545';this.setCustomValidity('<?php echo _QXZ("Only letters, numbers, hyphens, and underscores allowed"); ?>')}else{this.style.borderColor='#ced4da';this.setCustomValidity('')}})}})();
+</script>
+
+        <?php
+    } else {
+        ?>
+<style>.cc-err{max-width:600px;margin:40px auto;padding:20px 24px;background:#f8d7da;border:1px solid #f5c6cb;border-left:4px solid #dc3545;border-radius:6px;font-family:Arial,Helvetica,sans-serif}.cc-err h3{margin:0 0 10px 0;color:#721c24;font-size:18px}.cc-err p{margin:0;color:#721c24;font-size:14px}</style>
+<div class="cc-err">
+    <h3>⛔ <?php echo _QXZ("Access Denied"); ?></h3>
+    <p><?php echo _QXZ("You do not have permission to view this page"); ?></p>
+</div>
+        <?php
+        exit;
     }
 }
+
+
 
 
 ######################
