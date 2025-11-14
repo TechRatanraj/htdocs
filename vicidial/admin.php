@@ -31174,987 +31174,1240 @@ if ($ADD==31)
 ######################
 
 
-if ( ($ADD==34) and ( (!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-	{$ADD=30;}	# send to not allowed screen if not in vicidial_user_groups allowed_campaigns list
-
-if ($ADD==34)
-	{
-	if ($LOGmodify_campaigns==1)
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=31&campaign_id=$campaign_id&SUB=$SUB";
-			$modify_footer_refresh=1;
-			}
-		if ($stage=='show_dialable')
-			{
-			$stmt="UPDATE vicidial_campaigns set display_dialable_count='Y' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			}
-		if ($stage=='hide_dialable')
-			{
-			$stmt="UPDATE vicidial_campaigns set display_dialable_count='N' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			}
-		if ($stage=='show_leadscount')
-			{
-			$stmt="UPDATE vicidial_campaigns set display_leads_count='Y' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			}
-		if ($stage=='hide_leadscount')
-			{
-			$stmt="UPDATE vicidial_campaigns set display_leads_count='N' where campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			}
-
-		$stmt="SELECT campaign_id,campaign_name,active,dial_status_a,dial_status_b,dial_status_c,dial_status_d,dial_status_e,lead_order,park_ext,park_file_name,web_form_address,allow_closers,hopper_level,auto_dial_level,next_agent_call,local_call_time,voicemail_ext,dial_timeout,dial_prefix,campaign_cid,campaign_vdad_exten,campaign_rec_exten,campaign_recording,campaign_rec_filename,campaign_script,get_call_launch,am_message_exten,amd_send_to_vmx,xferconf_a_dtmf,xferconf_a_number,xferconf_b_dtmf,xferconf_b_number,alt_number_dialing,scheduled_callbacks,lead_filter_id,drop_call_seconds,drop_action,safe_harbor_exten,display_dialable_count,wrapup_seconds,wrapup_message,closer_campaigns,use_internal_dnc,allcalls_delay,omit_phone_code,dial_method,available_only_ratio_tally,adaptive_dropped_percentage,adaptive_maximum_level,adaptive_latest_server_time,adaptive_intensity,adaptive_dl_diff_target,concurrent_transfers,auto_alt_dial,auto_alt_dial_statuses,agent_pause_codes_active,campaign_description,campaign_changedate,campaign_stats_refresh,campaign_logindate,dial_statuses,disable_alter_custdata,no_hopper_leads_logins,list_order_mix,campaign_allow_inbound,manual_dial_list_id,default_xfer_group,xfer_groups,queue_priority,drop_inbound_group,qc_enabled,qc_statuses,qc_lists,qc_shift_id,qc_get_record_launch,qc_show_recording,qc_web_form_address,qc_script,survey_first_audio_file,survey_dtmf_digits,survey_ni_digit,survey_opt_in_audio_file,survey_ni_audio_file,survey_method,survey_no_response_action,survey_ni_status,survey_response_digit_map,survey_xfer_exten,survey_camp_record_dir,disable_alter_custphone,display_queue_count,manual_dial_filter,agent_clipboard_copy,agent_extended_alt_dial,use_campaign_dnc,three_way_call_cid,three_way_dial_prefix,web_form_target,vtiger_search_category,vtiger_create_call_record,vtiger_create_lead_record,vtiger_screen_login,cpd_amd_action,agent_allow_group_alias,default_group_alias,vtiger_search_dead,vtiger_status_call,survey_third_digit,survey_third_audio_file,survey_third_status,survey_third_exten,survey_fourth_digit,survey_fourth_audio_file,survey_fourth_status,survey_fourth_exten,drop_lockout_time,quick_transfer_button,prepopulate_transfer_preset,drop_rate_group,view_calls_in_queue,view_calls_in_queue_launch,grab_calls_in_queue,call_requeue_button,pause_after_each_call,no_hopper_dialing,agent_dial_owner_only,agent_display_dialable_leads,web_form_address_two,waitforsilence_options,display_leads_count,user_group,allow_emails,call_count_limit,allow_chats,web_form_address_three,manual_vm_status_updates from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$dial_status_a = $row[3];
-		$dial_status_b = $row[4];
-		$dial_status_c = $row[5];
-		$dial_status_d = $row[6];
-		$dial_status_e = $row[7];
-		$lead_order = $row[8];
-		$hopper_level = $row[13];
-		$auto_dial_level = $row[14];
-		$next_agent_call = $row[15];
-		$local_call_time = $row[16];
-		$voicemail_ext = $row[17];
-		$dial_timeout = $row[18];
-		$dial_prefix = $row[19];
-		$campaign_cid = $row[20];
-		$campaign_vdad_exten = $row[21];
-		$script_id = $row[25];
-		$get_call_launch = $row[26];
-		$lead_filter_id = $row[35];
-			if ($lead_filter_id=='') {$lead_filter_id='NONE';}
-		$display_dialable_count = $row[39];
-		$closer_campaigns = $row[42];
-		$dial_method = $row[46];
-		$adaptive_intensity = $row[51];
-		$auto_alt_dial = $row[54];
-		$campaign_description = $row[57];
-		$campaign_changedate = $row[58];
-		$campaign_stats_refresh = $row[59];
-		$campaign_logindate = $row[60];
-		$dial_statuses = $row[61];
-		$list_order_mix = $row[64];
-		$default_xfer_group = $row[67];
-		$campaign_allow_inbound = $row[65];
-		$default_xfer_group = $row[67];
-		$drop_lockout_time = $row[116];
-		$display_leads_count = $row[130];
-		$user_group = $row[131];
-		$allow_emails = $row[132];
-		$call_count_limit = $row[133];
-		$allow_chats = $row[134];
-		$web_form_address_three=$row[135];
-
-	if (preg_match('/DISABLED/', $list_order_mix))
-		{$DEFlistDISABLE = '';	$DEFstatusDISABLED=0;}
-	else
-		{$DEFlistDISABLE = 'disabled';	$DEFstatusDISABLED=1;}
-
-	if ($auto_alt_dial == 'MULTI_LEAD')
-		{$ALTmultiDISABLE=1;	$ALTmultiLINK="<a href=\"./admin_campaign_multi_alt.php?campaign_id=$campaign_id\">"._QXZ("Multi-Alt-Settings")."</a>";}
-	else
-		{$ALTmultiDISABLE=0;	$ALTmultiLINK='';}
-
-	##### get status groups for the lists and in-groups within this campaign
-	$stmt="SELECT status_group_id from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$lists_to_print = mysqli_num_rows($rslt);
-	$camp_status_groups='';
-	if ($DB) {echo "$lists_to_print|$stmt|\n";}
-	$o=0;
-	while ($lists_to_print > $o) 
-		{
-		$rowx=mysqli_fetch_row($rslt);
-		if (strlen($rowx[0]) > 0) {$camp_status_groups .= "'$rowx[0]',";}
-		$o++;
-		}
-	$closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
-	$closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
-	$stmt="SELECT status_group_id from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL ;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$lists_to_print = mysqli_num_rows($rslt);
-	if ($DB) {echo "$lists_to_print|$stmt|\n";}
-	$o=0;
-	while ($lists_to_print > $o) 
-		{
-		$rowx=mysqli_fetch_row($rslt);
-		if (strlen($rowx[0]) > 0) {$camp_status_groups .= "'$rowx[0]',";}
-		$o++;
-		}
-#	$camp_status_groups = preg_replace('/.$/i','',$camp_status_groups);
-
-	$stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_statuses order by status;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$statuses_to_print = mysqli_num_rows($rslt);
-	$statuses_list='';
-	$dial_statuses_list='';
-	$o=0;
-	while ($statuses_to_print > $o) 
-		{
-		$rowx=mysqli_fetch_row($rslt);
-		$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-		if ($rowx[0] != 'CBHOLD') {$dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-		$statname_list["$rowx[0]"] = "$rowx[1]";
-		$LRstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
-		if (preg_match('/Y/i', $rowx[2]))
-			{$HKstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";}
-		$o++;
-		}
-
-	$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL order by status;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$Cstatuses_to_print = mysqli_num_rows($rslt);
-
-	$o=0;
-	while ($Cstatuses_to_print > $o) 
-		{
-		$rowx=mysqli_fetch_row($rslt);
-		$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-		if ($rowx[0] != 'CBHOLD') {$dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-		$statname_list["$rowx[0]"] = "$rowx[1]";
-		$LRstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
-		if (preg_match('/Y/i', $rowx[2]))
-			{$HKstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";}
-		$o++;
-		}
-
-	$dial_statuses = preg_replace("/ -$/","",$dial_statuses);
-	$Dstatuses = explode(" ", $dial_statuses);
-	$Ds_to_print = (count($Dstatuses) -1);
-
-	$stmt="SELECT count(*) from vicidial_campaigns_list_mix where campaign_id='$campaign_id' and status='ACTIVE' $LOGallowed_campaignsSQL;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$rowx=mysqli_fetch_row($rslt);
-	if ($rowx[0] < 1)
-		{
-		$mixes_list="<option SELECTED value=\"DISABLED\">"._QXZ("DISABLED")."</option>\n";
-		$mixname_list["DISABLED"] = "DISABLED";
-		}
-	else
-		{
-		##### get list_mix listings for dynamic pulldown
-		$stmt="SELECT vcl_id,vcl_name from vicidial_campaigns_list_mix where campaign_id='$campaign_id' and status='ACTIVE' $LOGallowed_campaignsSQL limit 1;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$mixes_to_print = mysqli_num_rows($rslt);
-		$mixes_list="<option value=\"DISABLED\">"._QXZ("DISABLED")."</option>\n";
-
-		$o=0;
-		while ($mixes_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$mixes_list .= "<option value=\"ACTIVE\">"._QXZ("ACTIVE")." ($rowx[0] - $rowx[1])</option>\n";
-			$mixname_list["ACTIVE"] = "$rowx[0] - $rowx[1]";
-			$o++;
-			}
-		}
-		
-
-	if ($SUB<1)		{$camp_detail_color=$subcamp_color;}
-		else		{$camp_detail_color=$campaigns_color;}
-	if ($SUB==22)	{$camp_statuses_color=$subcamp_color;}
-		else		{$camp_statuses_color=$campaigns_color;}
-	if ($SUB==23)	{$camp_hotkeys_color=$subcamp_color;}
-		else		{$camp_hotkeys_color=$campaigns_color;}
-	if ($SUB==25)	{$camp_recycle_color=$subcamp_color;}
-		else		{$camp_recycle_color=$campaigns_color;}
-	if ($SUB==26)	{$camp_autoalt_color=$subcamp_color;}
-		else		{$camp_autoalt_color=$campaigns_color;}
-	if ($SUB==27)	{$camp_pause_color=$subcamp_color;}
-		else		{$camp_pause_color=$campaigns_color;}
-	if ($SUB==29)	{$camp_listmix_color=$subcamp_color;}
-		else		{$camp_listmix_color=$campaigns_color;}
-	
-	echo "<TABLE WIDTH=$page_width CELLPADDING=0 CELLSPACING=0 style='border-radius:12px; overflow:hidden; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); margin-bottom:30px;'><TR style='background:linear-gradient(135deg, #10b981 0%, #059669 100%);'>\n";
-	echo "<TD style='padding:18px 20px; text-align:center; border-right:1px solid rgba(255,255,255,0.1);'><font style='font-size:16px; font-weight:700; letter-spacing:0.5px;' color=white face='Arial,Helvetica'><B>$campaign_id</B></font></TD>";
-
-	echo "<TD ALIGN=CENTER BGCOLOR='$camp_detail_color' style='padding:18px 20px; background:rgba(255,255,255,0.2); border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.25)'\" onmouseout=\"this.style.background='rgba(255,255,255,0.2)'\"> <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("Basic View")."</a></TD>";
-	echo "<TD ALIGN=CENTER style='padding:18px 20px; border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.1)'\" onmouseout=\"this.style.background='transparent'\"> <a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("Detail View")."</a></TD>";
-
-	if ($SSoutbound_autodial_active > 0)
-		{
-		echo "<TD ALIGN=CENTER BGCOLOR='$camp_listmix_color' style='padding:18px 20px; background:rgba(255,255,255,0.2); border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.25)'\" onmouseout=\"this.style.background='rgba(255,255,255,0.2)'\"> <a href=\"$PHP_SELF?ADD=34&SUB=29&campaign_id=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("List Mix")."</a></TD>";
-		}
-	echo "<TD ALIGN=CENTER style='padding:18px 20px; border-right:1px solid rgba(255,255,255,0.1); transition:all 0.3s ease;' onmouseover=\"this.style.background='rgba(255,255,255,0.1)'\" onmouseout=\"this.style.background='transparent'\"> <a href=\"./realtime_report.php?RR=4&DB=0&group=$campaign_id\" style='color:white; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.5px;'>"._QXZ("Real-Time Screen")."</a></TD>\n";
-	echo "<TD WIDTH=300 style='padding:18px 20px;'><font style='color:white; font-size:14px;'> &nbsp; </font></TD>\n";
-	if ($SSoutbound_autodial_active < 1)
-		{
-		echo "<TD></TD>";
-		}
-	echo "</TR></TABLE>\n";
-
-	if ($SUB < 1)
-		{
-		echo "<div style='max-width:1400px; margin:0 auto; padding:20px; font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif;'>\n";
-		echo "<FONT FACE='ARIAL,HELVETICA' COLOR=BLACK SIZE=2>";
-		echo "<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=44>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<input type=hidden name=old_campaign_allow_inbound value=\"$campaign_allow_inbound\">\n";
-		
-		echo "<div style='background:#ffffff; border-radius:12px; padding:32px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);'>\n";
-		echo "<div style='display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-bottom:24px;'>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign ID").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'><b>$campaign_id</b>$NWB#campaigns-campaign_id$NWE</div></div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Name").":</div><input type=text name=campaign_name size=40 maxlength=40 value=\"$row[1]\" style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>$NWB#campaigns-campaign_name$NWE</div>\n";
-		
-		echo "<div style='grid-column:1/-1; display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Description").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$row[57]$NWB#campaigns-campaign_description$NWE</div></div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Change Date").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$campaign_changedate &nbsp; $NWB#campaigns-campaign_changedate$NWE</div></div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Campaign Login Date").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$campaign_logindate &nbsp; $NWB#campaigns-campaign_logindate$NWE</div></div>\n";
-
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Active").":</div><select size=1 name=active style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[2]' SELECTED>"._QXZ("$row[2]")."</option></select>$NWB#campaigns-active$NWE</div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Admin User Group").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$user_group")." $NWB#campaigns-user_group$NWE</div></div>\n";
-
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Park Music-on-Hold").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$row[10] $NWB#campaigns-park_ext$NWE</div></div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Web Form").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>$row[11]$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) {echo " <font color=red><b>"._QXZ("DISABLED")."</b></font>";} echo "</div></div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Closers").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$row[12]")." $NWB#campaigns-allow_closers$NWE</div></div>\n";
-		
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Default Transfer Group").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$default_xfer_group")." $NWB#campaigns-default_xfer_group$NWE</div></div>\n";
-		
-		if ($SSallow_emails > 0) 
-			{
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Emails").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$allow_emails")." $NWB#campaigns-allow_emails$NWE</div></div>\n";
-			}
-		if ($SSallow_chats > 0) 
-			{
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Chats").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$allow_chats")." $NWB#campaigns-allow_chats$NWE</div></div>\n";
-			}
-
-		if ($SSoutbound_autodial_active > 0)
-			{
-			echo "<div style='grid-column:1/-1; display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Allow Inbound and Blended").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$campaign_allow_inbound")." $NWB#campaigns-campaign_allow_inbound$NWE</div></div>\n";
-
-			echo "<div style='grid-column:1/-1; border:none; border-top:2px solid #e5e7eb; margin:16px 0;'></div>\n";
-			
-			echo "<div style='grid-column:1/-1;'><div style='font-weight:700; font-size:16px; color:#1f2937; margin-bottom:16px;'>"._QXZ("Dial Statuses")."</div><div style='background:#f9fafb; border-radius:8px; padding:16px; border:1px solid #e5e7eb;'>\n";
-
-			$o=0;
-			while ($Ds_to_print > $o) 
-				{
-				$o++;
-				$Dstatus = $Dstatuses[$o];
-
-				echo "<div style='display:flex; justify-content:space-between; align-items:center; padding:12px; background:#ffffff; border-radius:6px; margin-bottom:8px; border-left:3px solid #10b981; transition:all 0.2s ease;' onmouseover=\"this.style.boxShadow='0 1px 2px 0 rgba(0,0,0,0.05)'\" onmouseout=\"this.style.boxShadow='none'\">\n";
-				
-				if ($DEFstatusDISABLED > 0)
-					{
-					echo "<span style='color:#9ca3af; text-decoration:line-through;'><b>$Dstatus</b> - $statname_list[$Dstatus]</span><span style='color:#9ca3af; font-size:13px;'>"._QXZ("REMOVE")."</span></div>\n";
-					}
-				else
-					{
-					echo "<span style='font-weight:600; color:#1f2937;'><b>$Dstatus</b> - $statname_list[$Dstatus]</span><a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\" style='color:#ef4444; text-decoration:none; font-size:13px; font-weight:600; padding:6px 12px; border-radius:6px; transition:all 0.2s ease;' onmouseover=\"this.style.background='#fee2e2'\" onmouseout=\"this.style.background='transparent'\">"._QXZ("REMOVE")."</a></div>\n";
-					}
-				}
-
-			echo "<div style='display:flex; gap:12px; align-items:flex-end; margin-top:16px;'>\n";
-			echo "<div style='flex:1; display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Add A Dial Status to Call").":</div><select size=1 name=dial_status $DEFlistDISABLE style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
-			echo "<option value=\"\"> - "._QXZ("NONE")." - </option>\n";
-			echo "$dial_statuses_list";
-			echo "</select></div>\n";
-			echo "<input type=submit name=submit value='"._QXZ("ADD")."' style='background:linear-gradient(135deg,#10b981 0%,#059669 100%); color:white; border:none; padding:12px 28px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; box-shadow:0 1px 2px 0 rgba(0,0,0,0.05); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease; min-height:44px;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 2px 0 rgba(0,0,0,0.05)'\"> &nbsp; &nbsp; $NWB#campaigns-dial_status$NWE</div>\n";
-			echo "</div></div>\n";
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("List Order").":</div>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_order value=\"$lead_order\"> $ALTmultiLINK";
-				}
-			else
-				{
-				if (file_exists('options.php'))
-					{require('options.php');}
-				if ($camp_lead_order_random > 0)
-					{
-					echo "<select size=1 name=lead_order style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>
-					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
-					<option value='DOWN'>"._QXZ("DOWN")."</option>
-					<option value='UP'>"._QXZ("UP")."</option>
-					<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>
-					<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>
-					<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>
-					<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>
-					<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>
-					<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>
-					<option value='RANDOM'>"._QXZ("RANDOM")."</option>
-					<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>
-					<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>
-					<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>
-					<option value='UP RANK'>"._QXZ("UP RANK")."</option>
-					<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>
-					<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>
-					<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>
-					<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>
-					<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>
-					<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>
-					<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>
-					<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>
-					<option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>
-					<option value='UP 2nd NEW'>"._QXZ("UP 2nd NEW")."</option>
-					<option value='UP 3rd NEW'>"._QXZ("UP 3rd NEW")."</option>
-					<option value='UP 4th NEW'>"._QXZ("UP 4th NEW")."</option>
-					<option value='UP 5th NEW'>"._QXZ("UP 5th NEW")."</option>
-					<option value='UP 6th NEW'>"._QXZ("UP 6th NEW")."</option>
-					<option value='DOWN PHONE 2nd NEW'>"._QXZ("DOWN PHONE 2nd NEW")."</option>
-					<option value='DOWN PHONE 3rd NEW'>"._QXZ("DOWN PHONE 3rd NEW")."</option>
-					<option value='DOWN PHONE 4th NEW'>"._QXZ("DOWN PHONE 4th NEW")."</option>
-					<option value='DOWN PHONE 5th NEW'>"._QXZ("DOWN PHONE 5th NEW")."</option>
-					<option value='DOWN PHONE 6th NEW'>"._QXZ("DOWN PHONE 6th NEW")."</option>
-					<option value='UP PHONE 2nd NEW'>"._QXZ("UP PHONE 2nd NEW")."</option>
-					<option value='UP PHONE 3rd NEW'>"._QXZ("UP PHONE 3rd NEW")."</option>
-					<option value='UP PHONE 4th NEW'>"._QXZ("UP PHONE 4th NEW")."</option>
-					<option value='UP PHONE 5th NEW'>"._QXZ("UP PHONE 5th NEW")."</option>
-					<option value='UP PHONE 6th NEW'>"._QXZ("UP PHONE 6th NEW")."</option>
-					<option value='DOWN LAST NAME 2nd NEW'>"._QXZ("DOWN LAST NAME 2nd NEW")."</option>
-					<option value='DOWN LAST NAME 3rd NEW'>"._QXZ("DOWN LAST NAME 3rd NEW")."</option>
-					<option value='DOWN LAST NAME 4th NEW'>"._QXZ("DOWN LAST NAME 4th NEW")."</option>
-					<option value='DOWN LAST NAME 5th NEW'>"._QXZ("DOWN LAST NAME 5th NEW")."</option>
-					<option value='DOWN LAST NAME 6th NEW'>"._QXZ("DOWN LAST NAME 6th NEW")."</option>
-					<option value='UP LAST NAME 2nd NEW'>"._QXZ("UP LAST NAME 2nd NEW")."</option>
-					<option value='UP LAST NAME 3rd NEW'>"._QXZ("UP LAST NAME 3rd NEW")."</option>
-					<option value='UP LAST NAME 4th NEW'>"._QXZ("UP LAST NAME 4th NEW")."</option>
-					<option value='UP LAST NAME 5th NEW'>"._QXZ("UP LAST NAME 5th NEW")."</option>
-					<option value='UP LAST NAME 6th NEW'>"._QXZ("UP LAST NAME 6th NEW")."</option>
-					<option value='DOWN COUNT 2nd NEW'>"._QXZ("DOWN COUNT 2nd NEW")."</option>
-					<option value='DOWN COUNT 3rd NEW'>"._QXZ("DOWN COUNT 3rd NEW")."</option>
-					<option value='DOWN COUNT 4th NEW'>"._QXZ("DOWN COUNT 4th NEW")."</option>
-					<option value='DOWN COUNT 5th NEW'>"._QXZ("DOWN COUNT 5th NEW")."</option>
-					<option value='DOWN COUNT 6th NEW'>"._QXZ("DOWN COUNT 6th NEW")."</option>
-					<option value='UP COUNT 2nd NEW'>"._QXZ("UP COUNT 2nd NEW")."</option>
-					<option value='UP COUNT 3rd NEW'>"._QXZ("UP COUNT 3rd NEW")."</option>
-					<option value='UP COUNT 4th NEW'>"._QXZ("UP COUNT 4th NEW")."</option>
-					<option value='UP COUNT 5th NEW'>"._QXZ("UP COUNT 5th NEW")."</option>
-					<option value='UP COUNT 6th NEW'>"._QXZ("UP COUNT 6th NEW")."</option>
-					<option value='RANDOM 2nd NEW'>"._QXZ("RANDOM 2nd NEW")."</option>
-					<option value='RANDOM 3rd NEW'>"._QXZ("RANDOM 3rd NEW")."</option>
-					<option value='RANDOM 4th NEW'>"._QXZ("RANDOM 4th NEW")."</option>
-					<option value='RANDOM 5th NEW'>"._QXZ("RANDOM 5th NEW")."</option>
-					<option value='RANDOM 6th NEW'>"._QXZ("RANDOM 6th NEW")."</option>
-					<option value='DOWN LAST CALL TIME 2nd NEW'>"._QXZ("DOWN LAST CALL TIME 2nd NEW")."</option>
-					<option value='DOWN LAST CALL TIME 3rd NEW'>"._QXZ("DOWN LAST CALL TIME 3rd NEW")."</option>
-					<option value='DOWN LAST CALL TIME 4th NEW'>"._QXZ("DOWN LAST CALL TIME 4th NEW")."</option>
-					<option value='DOWN LAST CALL TIME 5th NEW'>"._QXZ("DOWN LAST CALL TIME 5th NEW")."</option>
-					<option value='DOWN LAST CALL TIME 6th NEW'>"._QXZ("DOWN LAST CALL TIME 6th NEW")."</option>
-					<option value='UP LAST CALL TIME 2nd NEW'>"._QXZ("UP LAST CALL TIME 2nd NEW")."</option>
-					<option value='UP LAST CALL TIME 3rd NEW'>"._QXZ("UP LAST CALL TIME 3rd NEW")."</option>
-					<option value='UP LAST CALL TIME 4th NEW'>"._QXZ("UP LAST CALL TIME 4th NEW")."</option>
-					<option value='UP LAST CALL TIME 5th NEW'>"._QXZ("UP LAST CALL TIME 5th NEW")."</option>
-					<option value='UP LAST CALL TIME 6th NEW'>"._QXZ("UP LAST CALL TIME 6th NEW")."</option>
-					<option value='DOWN RANK 2nd NEW'>"._QXZ("DOWN RANK 2nd NEW")."</option>
-					<option value='DOWN RANK 3rd NEW'>"._QXZ("DOWN RANK 3rd NEW")."</option>
-					<option value='DOWN RANK 4th NEW'>"._QXZ("DOWN RANK 4th NEW")."</option>
-					<option value='DOWN RANK 5th NEW'>"._QXZ("DOWN RANK 5th NEW")."</option>
-					<option value='DOWN RANK 6th NEW'>"._QXZ("DOWN RANK 6th NEW")."</option>
-					<option value='UP RANK 2nd NEW'>"._QXZ("UP RANK 2nd NEW")."</option>
-					<option value='UP RANK 3rd NEW'>"._QXZ("UP RANK 3rd NEW")."</option>
-					<option value='UP RANK 4th NEW'>"._QXZ("UP RANK 4th NEW")."</option>
-					<option value='UP RANK 5th NEW'>"._QXZ("UP RANK 5th NEW")."</option>
-					<option value='UP RANK 6th NEW'>"._QXZ("UP RANK 6th NEW")."</option>
-					<option value='DOWN OWNER 2nd NEW'>"._QXZ("DOWN OWNER 2nd NEW")."</option>
-					<option value='DOWN OWNER 3rd NEW'>"._QXZ("DOWN OWNER 3rd NEW")."</option>
-					<option value='DOWN OWNER 4th NEW'>"._QXZ("DOWN OWNER 4th NEW")."</option>
-					<option value='DOWN OWNER 5th NEW'>"._QXZ("DOWN OWNER 5th NEW")."</option>
-					<option value='DOWN OWNER 6th NEW'>"._QXZ("DOWN OWNER 6th NEW")."</option>
-					<option value='UP OWNER 2nd NEW'>"._QXZ("UP OWNER 2nd NEW")."</option>
-					<option value='UP OWNER 3rd NEW'>"._QXZ("UP OWNER 3rd NEW")."</option>
-					<option value='UP OWNER 4th NEW'>"._QXZ("UP OWNER 4th NEW")."</option>
-					<option value='UP OWNER 5th NEW'>"._QXZ("UP OWNER 5th NEW")."</option>
-					<option value='UP OWNER 6th NEW'>"._QXZ("UP OWNER 6th NEW")."</option>
-					<option value='DOWN TIMEZONE 2nd NEW'>"._QXZ("DOWN TIMEZONE 2nd NEW")."</option>
-					<option value='DOWN TIMEZONE 3rd NEW'>"._QXZ("DOWN TIMEZONE 3rd NEW")."</option>
-					<option value='DOWN TIMEZONE 4th NEW'>"._QXZ("DOWN TIMEZONE 4th NEW")."</option>
-					<option value='DOWN TIMEZONE 5th NEW'>"._QXZ("DOWN TIMEZONE 5th NEW")."</option>
-					<option value='DOWN TIMEZONE 6th NEW'>"._QXZ("DOWN TIMEZONE 6th NEW")."</option>
-					<option value='UP TIMEZONE 2nd NEW'>"._QXZ("UP TIMEZONE 2nd NEW")."</option>
-					<option value='UP TIMEZONE 3rd NEW'>"._QXZ("UP TIMEZONE 3rd NEW")."</option>
-					<option value='UP TIMEZONE 4th NEW'>"._QXZ("UP TIMEZONE 4th NEW")."</option>
-					<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</option>
-					<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>
-					</select>$NWB#campaigns-lead_order$NWE";
-					}
-				else
-					{
-					echo "<select size=1 name=lead_order style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>
-					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
-					<option value='DOWN'>"._QXZ("DOWN")."</option>
-					<option value='UP'>"._QXZ("UP")."</option>
-					<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>
-					<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>
-					<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>
-					<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>
-					<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>
-					<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>
-					<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>
-					<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>
-					<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>
-					<option value='UP RANK'>"._QXZ("UP RANK")."</option>
-					<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>
-					<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>
-					<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>
-					<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>
-					<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>
-					<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>
-					<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>
-					<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>
-					<option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>
-					<option value='UP 2nd NEW'>"._QXZ("UP 2nd NEW")."</option>
-					<option value='UP 3rd NEW'>"._QXZ("UP 3rd NEW")."</option>
-					<option value='UP 4th NEW'>"._QXZ("UP 4th NEW")."</option>
-					<option value='UP 5th NEW'>"._QXZ("UP 5th NEW")."</option>
-					<option value='UP 6th NEW'>"._QXZ("UP 6th NEW")."</option>
-					<option value='DOWN PHONE 2nd NEW'>"._QXZ("DOWN PHONE 2nd NEW")."</option>
-					<option value='DOWN PHONE 3rd NEW'>"._QXZ("DOWN PHONE 3rd NEW")."</option>
-					<option value='DOWN PHONE 4th NEW'>"._QXZ("DOWN PHONE 4th NEW")."</option>
-					<option value='DOWN PHONE 5th NEW'>"._QXZ("DOWN PHONE 5th NEW")."</option>
-					<option value='DOWN PHONE 6th NEW'>"._QXZ("DOWN PHONE 6th NEW")."</option>
-					<option value='UP PHONE 2nd NEW'>"._QXZ("UP PHONE 2nd NEW")."</option>
-					<option value='UP PHONE 3rd NEW'>"._QXZ("UP PHONE 3rd NEW")."</option>
-					<option value='UP PHONE 4th NEW'>"._QXZ("UP PHONE 4th NEW")."</option>
-					<option value='UP PHONE 5th NEW'>"._QXZ("UP PHONE 5th NEW")."</option>
-					<option value='UP PHONE 6th NEW'>"._QXZ("UP PHONE 6th NEW")."</option>
-					<option value='DOWN LAST NAME 2nd NEW'>"._QXZ("DOWN LAST NAME 2nd NEW")."</option>
-					<option value='DOWN LAST NAME 3rd NEW'>"._QXZ("DOWN LAST NAME 3rd NEW")."</option>
-					<option value='DOWN LAST NAME 4th NEW'>"._QXZ("DOWN LAST NAME 4th NEW")."</option>
-					<option value='DOWN LAST NAME 5th NEW'>"._QXZ("DOWN LAST NAME 5th NEW")."</option>
-					<option value='DOWN LAST NAME 6th NEW'>"._QXZ("DOWN LAST NAME 6th NEW")."</option>
-					<option value='UP LAST NAME 2nd NEW'>"._QXZ("UP LAST NAME 2nd NEW")."</option>
-					<option value='UP LAST NAME 3rd NEW'>"._QXZ("UP LAST NAME 3rd NEW")."</option>
-					<option value='UP LAST NAME 4th NEW'>"._QXZ("UP LAST NAME 4th NEW")."</option>
-					<option value='UP LAST NAME 5th NEW'>"._QXZ("UP LAST NAME 5th NEW")."</option>
-					<option value='UP LAST NAME 6th NEW'>"._QXZ("UP LAST NAME 6th NEW")."</option>
-					<option value='DOWN COUNT 2nd NEW'>"._QXZ("DOWN COUNT 2nd NEW")."</option>
-					<option value='DOWN COUNT 3rd NEW'>"._QXZ("DOWN COUNT 3rd NEW")."</option>
-					<option value='DOWN COUNT 4th NEW'>"._QXZ("DOWN COUNT 4th NEW")."</option>
-					<option value='DOWN COUNT 5th NEW'>"._QXZ("DOWN COUNT 5th NEW")."</option>
-					<option value='DOWN COUNT 6th NEW'>"._QXZ("DOWN COUNT 6th NEW")."</option>
-					<option value='UP COUNT 2nd NEW'>"._QXZ("UP COUNT 2nd NEW")."</option>
-					<option value='UP COUNT 3rd NEW'>"._QXZ("UP COUNT 3rd NEW")."</option>
-					<option value='UP COUNT 4th NEW'>"._QXZ("UP COUNT 4th NEW")."</option>
-					<option value='UP COUNT 5th NEW'>"._QXZ("UP COUNT 5th NEW")."</option>
-					<option value='UP COUNT 6th NEW'>"._QXZ("UP COUNT 6th NEW")."</option>
-					<option value='DOWN LAST CALL TIME 2nd NEW'>"._QXZ("DOWN LAST CALL TIME 2nd NEW")."</option>
-					<option value='DOWN LAST CALL TIME 3rd NEW'>"._QXZ("DOWN LAST CALL TIME 3rd NEW")."</option>
-					<option value='DOWN LAST CALL TIME 4th NEW'>"._QXZ("DOWN LAST CALL TIME 4th NEW")."</option>
-					<option value='DOWN LAST CALL TIME 5th NEW'>"._QXZ("DOWN LAST CALL TIME 5th NEW")."</option>
-					<option value='DOWN LAST CALL TIME 6th NEW'>"._QXZ("DOWN LAST CALL TIME 6th NEW")."</option>
-					<option value='UP LAST CALL TIME 2nd NEW'>"._QXZ("UP LAST CALL TIME 2nd NEW")."</option>
-					<option value='UP LAST CALL TIME 3rd NEW'>"._QXZ("UP LAST CALL TIME 3rd NEW")."</option>
-					<option value='UP LAST CALL TIME 4th NEW'>"._QXZ("UP LAST CALL TIME 4th NEW")."</option>
-					<option value='UP LAST CALL TIME 5th NEW'>"._QXZ("UP LAST CALL TIME 5th NEW")."</option>
-					<option value='UP LAST CALL TIME 6th NEW'>"._QXZ("UP LAST CALL TIME 6th NEW")."</option>
-					<option value='DOWN RANK 2nd NEW'>"._QXZ("DOWN RANK 2nd NEW")."</option>
-					<option value='DOWN RANK 3rd NEW'>"._QXZ("DOWN RANK 3rd NEW")."</option>
-					<option value='DOWN RANK 4th NEW'>"._QXZ("DOWN RANK 4th NEW")."</option>
-					<option value='DOWN RANK 5th NEW'>"._QXZ("DOWN RANK 5th NEW")."</option>
-					<option value='DOWN RANK 6th NEW'>"._QXZ("DOWN RANK 6th NEW")."</option>
-					<option value='UP RANK 2nd NEW'>"._QXZ("UP RANK 2nd NEW")."</option>
-					<option value='UP RANK 3rd NEW'>"._QXZ("UP RANK 3rd NEW")."</option>
-					<option value='UP RANK 4th NEW'>"._QXZ("UP RANK 4th NEW")."</option>
-					<option value='UP RANK 5th NEW'>"._QXZ("UP RANK 5th NEW")."</option>
-					<option value='UP RANK 6th NEW'>"._QXZ("UP RANK 6th NEW")."</option>
-					<option value='DOWN OWNER 2nd NEW'>"._QXZ("DOWN OWNER 2nd NEW")."</option>
-					<option value='DOWN OWNER 3rd NEW'>"._QXZ("DOWN OWNER 3rd NEW")."</option>
-					<option value='DOWN OWNER 4th NEW'>"._QXZ("DOWN OWNER 4th NEW")."</option>
-					<option value='DOWN OWNER 5th NEW'>"._QXZ("DOWN OWNER 5th NEW")."</option>
-					<option value='DOWN OWNER 6th NEW'>"._QXZ("DOWN OWNER 6th NEW")."</option>
-					<option value='UP OWNER 2nd NEW'>"._QXZ("UP OWNER 2nd NEW")."</option>
-					<option value='UP OWNER 3rd NEW'>"._QXZ("UP OWNER 3rd NEW")."</option>
-					<option value='UP OWNER 4th NEW'>"._QXZ("UP OWNER 4th NEW")."</option>
-					<option value='UP OWNER 5th NEW'>"._QXZ("UP OWNER 5th NEW")."</option>
-					<option value='UP OWNER 6th NEW'>"._QXZ("UP OWNER 6th NEW")."</option>
-					<option value='DOWN TIMEZONE 2nd NEW'>"._QXZ("DOWN TIMEZONE 2nd NEW")."</option>
-					<option value='DOWN TIMEZONE 3rd NEW'>"._QXZ("DOWN TIMEZONE 3rd NEW")."</option>
-					<option value='DOWN TIMEZONE 4th NEW'>"._QXZ("DOWN TIMEZONE 4th NEW")."</option>
-					<option value='DOWN TIMEZONE 5th NEW'>"._QXZ("DOWN TIMEZONE 5th NEW")."</option>
-					<option value='DOWN TIMEZONE 6th NEW'>"._QXZ("DOWN TIMEZONE 6th NEW")."</option>
-					<option value='UP TIMEZONE 2nd NEW'>"._QXZ("UP TIMEZONE 2nd NEW")."</option>
-					<option value='UP TIMEZONE 3rd NEW'>"._QXZ("UP TIMEZONE 3rd NEW")."</option>
-					<option value='UP TIMEZONE 4th NEW'>"._QXZ("UP TIMEZONE 4th NEW")."</option>
-					<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</option>
-					<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>
-					</select>$NWB#campaigns-lead_order$NWE";
-					}
-				}
-			echo "</div>\n";
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\" style='color:#10b981;'>"._QXZ("List Mix")."</a>:</div>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=list_order_mix value=\"$list_order_mix\"> $ALTmultiLINK";
-				}
-			else
-				{
-				echo "<select size=1 name=list_order_mix style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
-				echo "$mixes_list";
-				if (preg_match('/DISABLED/', $list_order_mix))
-					{echo "<option selected value=\"$list_order_mix\">"._QXZ("$list_order_mix")." - "._QXZ("$mixname_list[$list_order_mix]")."</option>\n";}
-				else
-					{echo "<option selected value=\"ACTIVE\">"._QXZ("ACTIVE")." ($mixname_list[ACTIVE])</option>\n";}
-				echo "</select>$NWB#campaigns-list_order_mix$NWE";
-				}
-			echo "</div>\n";
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\" style='color:#10b981;'>"._QXZ("Lead Filter")."</a>:</div>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_filter_id value=\"$lead_filter_id\"> $ALTmultiLINK";
-				}
-			else
-				{
-				echo "<select size=1 name=lead_filter_id style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
-				echo "$filters_list";
-				echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>\n";
-				echo "</select>$NWB#campaigns-lead_filter_id$NWE";
-				}
-			echo "</div>\n";
-
-
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Minimum Hopper Level").":</div><select size=1 name=hopper_level style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option>1</option><option>5</option><option>10</option><option>20</option><option>50</option><option>100</option><option>200</option><option>500</option><option>700</option><option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option SELECTED>$hopper_level</option></select>$NWB#campaigns-hopper_level$NWE</div>\n";
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Force Reset of Hopper").":</div><select size=1 name=reset_hopper style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#campaigns-force_reset_hopper$NWE</div>\n";
-
-			if ( (preg_match("/RATIO|ADAPT/",$dial_method)) and ($SSdisable_auto_dial > 0) )
-				{
-				echo "<div style='grid-column:1/-1; text-align:center; padding:16px; background:#fee2e2; border-radius:8px; border:2px solid #ef4444;'><b>"._QXZ("Auto-dialing has been disabled on this system")."</b></div>\n";
-				}
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Dial Method").":</div><select size=1 name=dial_method style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option value='MANUAL'>"._QXZ("MANUAL")."</option><option value='RATIO'>"._QXZ("RATIO")."</option><option value='ADAPT_HARD_LIMIT'>"._QXZ("ADAPT_HARD_LIMIT")."</option><option value='ADAPT_TAPERED'>"._QXZ("ADAPT_TAPERED")."</option><option value='ADAPT_AVERAGE'>"._QXZ("ADAPT_AVERAGE")."</option><option value='INBOUND_MAN'>"._QXZ("INBOUND_MAN")."</option><option value='$dial_method' SELECTED>"._QXZ("$dial_method")."</option></select>$NWB#campaigns-dial_method$NWE</div>\n";
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Auto Dial Level").":</div><select size=1 name=auto_dial_level style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'><option selected>$auto_dial_level</option><option>0</option>\n";
-			$adl=0;
-			while($adl <= $SSauto_dial_limit)
-				{
-				if ($adl < 1)
-					{$adl = ($adl + 1);}
-				else
-					{
-					if ($adl < 3)
-						{$adl = ($adl + 0.1);}
-					else
-						{
-						if ($adl < 4)
-							{$adl = ($adl + 0.25);}
-						else
-							{
-							if ($adl < 5)
-								{$adl = ($adl + 0.5);}
-							else
-								{
-								if ($adl < 20)
-									{$adl = ($adl + 1);}
-								else
-									{
-									if ($adl < 40)
-										{$adl = ($adl + 2);}
-									else
-										{
-										if ($adl < 100)
-											{$adl = ($adl + 5);}
-										else
-											{
-											if ($adl < 200)
-												{$adl = ($adl + 10);}
-											else
-												{
-												if ($adl < 400)
-													{$adl = ($adl + 50);}
-												else
-													{
-													if ($adl < 1000)
-														{$adl = ($adl + 100);}
-													else
-													{$adl = ($adl + 1);}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				if ($adl > $SSauto_dial_limit) {$hmm=1;}
-				else {echo "<option>$adl</option>\n";}
-				}
-			echo "</select>(0 = "._QXZ("off").")$NWB#campaigns-auto_dial_level$NWE</div>\n";
-
-			echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Adapt Intensity Modifier").":</div><select size=1 name=adaptive_intensity style='width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:14px; background:#ffffff; color:#1f2937; min-height:44px;'>\n";
-			$n=40;
-			while ($n>=-40)
-				{
-				$dtl = _QXZ("Balanced");
-				if ($n<0) {$dtl = _QXZ("Less Intense");}
-				if ($n>0) {$dtl = _QXZ("More Intense");}
-				if ($n == $adaptive_intensity) 
-					{echo "<option SELECTED value=\"$n\">$n - $dtl</option>\n";}
-				else
-					{echo "<option value=\"$n\">$n - $dtl</option>\n";}
-				$n--;
-				}
-			echo "</select> $NWB#campaigns-adaptive_intensity$NWE</div>\n";
-			}
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'><a href=\"$PHP_SELF?ADD=3111111&script_id=$script_id\" style='color:#10b981;'>"._QXZ("Script")."</a>:</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$script_id")."</div></div>\n";
-
-		echo "<div style='display:flex; flex-direction:column; gap:8px;'><div style='font-weight:600; font-size:14px; color:#1f2937;'>"._QXZ("Get Call Launch").":</div><div style='background:#f9fafb; padding:12px 16px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; color:#6b7280; min-height:44px; display:flex; align-items:center;'>"._QXZ("$get_call_launch")."</div></div>\n";
-
-		echo "<div style='grid-column:1/-1; text-align:center; margin-top:24px;'><input type=submit name=SUBMIT value='"._QXZ("SUBMIT")."' style='background:linear-gradient(135deg,#10b981 0%,#059669 100%); color:white; border:none; padding:14px 40px; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease; min-width:200px;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'\"></div>\n";
-		echo "</div></div></FORM>\n";
-
-		echo "<div style='text-align:center;'>\n";
-
-	if ($SSoutbound_autodial_active > 0)
-		{
-		echo "<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=44>\n";
-		echo "<input type=hidden name=DB value=$DB>\n";
-		echo "<input type=hidden name=stage value=list_activation>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<div style='margin:40px 0 20px 0;'><b style='font-size:18px; color:#1f2937;'>"._QXZ("LISTS WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_lists$NWE</b></div>\n";
-
-		echo "<div style='background:#ffffff; border-radius:12px; padding:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); overflow-x:auto;'>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-		$LISTlink='stage=LISTIDDOWN';
-		$NAMElink='stage=LISTNAMEDOWN';
-		$CALLTIMElink='stage=CALLTIMEDOWN';
-		$TALLYlink='stage=TALLYDOWN';
-		$ACTIVElink='stage=ACTIVEDOWN';
-		$CAMPAIGNlink='stage=CAMPAIGNDOWN';
-		$CALLDATElink='stage=CALLDATEDOWN';
-		$SQLorder='order by list_id';
-		if (preg_match('/LISTIDUP/i', $stage))		{$SQLorder='order by list_id asc';				$LISTlink='stage=LISTIDDOWN';}
-		if (preg_match('/LISTIDDOWN/i', $stage))	{$SQLorder='order by list_id desc';				$LISTlink='stage=LISTIDUP';}
-		if (preg_match('/LISTNAMEUP/i', $stage))	{$SQLorder='order by list_name asc';			$NAMElink='stage=LISTNAMEDOWN';}
-		if (preg_match('/LISTNAMEDOWN/i', $stage))	{$SQLorder='order by list_name desc';			$NAMElink='stage=LISTNAMEUP';}
-		if (preg_match('/CALLTIMEUP/i', $stage))	{$SQLorder='order by local_call_time asc';		$CALLTIMElink='stage=CALLTIMEDOWN';}
-		if (preg_match('/CALLTIMEDOWN/i', $stage))	{$SQLorder='order by local_call_time desc';		$CALLTIMElink='stage=CALLTIMEUP';}	
-		if (preg_match('/TALLYUP/i', $stage))		{$SQLorder='order by tally asc';				$TALLYlink='stage=TALLYDOWN';}
-		if (preg_match('/TALLYDOWN/i', $stage))		{$SQLorder='order by tally desc';				$TALLYlink='stage=TALLYUP';}
-		if (preg_match('/ACTIVEUP/i', $stage))		{$SQLorder='order by active asc';				$ACTIVElink='stage=ACTIVEDOWN';}
-		if (preg_match('/ACTIVEDOWN/i', $stage))	{$SQLorder='order by active desc';				$ACTIVElink='stage=ACTIVEUP';}
-		if (preg_match('/CAMPAIGNUP/i',$stage))		{$SQLorder='order by campaign_id asc';			$CAMPAIGNlink='stage=CAMPAIGNDOWN';}
-		if (preg_match('/CAMPAIGNUP/i', $stage))	{$SQLorder='order by campaign_id desc';			$CAMPAIGNlink='stage=CAMPAIGNUP';}
-		if (preg_match('/CALLDATEUP/i', $stage))	{$SQLorder='order by list_lastcalldate asc';	$CALLDATElink='stage=CALLDATEDOWN';}
-		if (preg_match('/CALLDATEDOWN/i', $stage))	{$SQLorder='order by list_lastcalldate desc';	$CALLDATElink='stage=CALLDATEUP';}
-		$stmt="SELECT vls.list_id,list_name,list_description,count(*) as tally,active,list_lastcalldate,campaign_id,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists vls,vicidial_list vl where vls.list_id=vl.list_id and campaign_id='$campaign_id' $LOGallowed_campaignsSQL group by list_id $SQLorder";
-		if ($SSadmin_list_counts < 1)
-			{$stmt="SELECT list_id,list_name,list_description,'X' as tally,active,list_lastcalldate,campaign_id,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL $SQLorder";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-
-		echo "<TABLE width='100%' cellspacing=0 cellpadding=12 style='border-collapse:collapse; min-width:800px;'>\n";
-		echo "<TR style='background:#1f2937;'>";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$LISTlink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LIST ID")."</a></TD>";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$NAMElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LIST NAME")."</a></TD>";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><span style='color:white; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("DESCRIPTION")."</span></TD>\n";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$TALLYlink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LEADS COUNT")."</a></TD>\n";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$CALLTIMElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("Call Time")."</a></TD>";
-		echo "<TD COLSPAN=3 style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&$ACTIVElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("ACTIVE")."</a></TD>";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&$CALLDATElink\" style='color:white; text-decoration:none; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("LAST CALL DATE")."</a></TD>";
-		echo "<TD style='padding:14px 12px; border-bottom:2px solid #e5e7eb;'><span style='color:white; font-weight:600; font-size:13px; letter-spacing:0.5px;'>"._QXZ("MODIFY")."</span></TD>\n";
-		echo "</TR>\n";
-
-		$o=0;
-		$last_list_statuses="";
-		while ($lists_to_print > $o)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$last_list_statuses.="$row[0]|$row[4]|";
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='style="background:#f9fafb;"';} 
-			else
-				{$bgcolor='style="background:#ffffff;"';}
-			echo "<tr $bgcolor style='transition:all 0.2s ease;' onmouseover=\"this.style.background='#f3f4f6'\" onmouseout=\"this.style.background=''\">";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#10b981; font-weight:600; text-decoration:none;'>$row[0]</a></td>";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[1]</td>";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#6b7280;'>$row[2]</td>";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[3]</td>";
-			if ($row[8] == 'campaign')
-				{echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[8]</td>";}
-			else
-				{echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$row[8]\" style='color:#10b981; text-decoration:none;'>$row[8]</a></td>";}
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>"._QXZ("$row[4]")."</td>";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb;'>";
-
-			if (preg_match('/Y/',$row[4]))
-				{
-				$active_lists++;
-				$camp_lists .= "'$row[0]',";
-				echo "<input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\" CHECKED style='width:18px; height:18px; cursor:pointer; accent-color:#10b981;'>";
-				}
-			else
-				{
-				$inactive_lists++;
-				echo "<input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\" style='width:18px; height:18px; cursor:pointer; accent-color:#10b981;'>";
-				}
-
-			echo "</td><td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'>";
-			if ($row[7] < $EXPtestdate)
-				{echo "<span style='color:#ef4444; font-weight:700;'>"._QXZ("EXP")."</span>";}
-			else
-				{echo "&nbsp;";}
-			echo "</td>";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$row[5]</td>";
-			echo "<td style='padding:12px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#10b981; font-weight:600; text-decoration:none;'>"._QXZ("MODIFY")."</a></td></tr>\n";
-
-			$o++;
-			}
-
-		echo "<TR><TD COLSPAN=9 ALIGN=CENTER style='padding:20px;'><input type=button onClick='return ConfirmListStatusChange($SSlist_status_modification_confirmation, this.form)' value=\""._QXZ("SUBMIT ACTIVE LIST CHANGES")."\" style='background:linear-gradient(135deg,#10b981 0%,#059669 100%); color:white; border:none; padding:12px 28px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; box-shadow:0 1px 2px 0 rgba(0,0,0,0.05); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 2px 0 rgba(0,0,0,0.05)'\"></TD></TR>\n";
-		echo "</TABLE>";
-		echo "<input type='hidden' name='last_list_statuses' id='last_list_statuses' value='$last_list_statuses'>";
-		echo "</div><BR></FORM>\n";
-		echo "<div style='text-align:center; margin:30px 0;'><b style='font-size:16px; color:#1f2937;'>\n";
-
-		$filterSQL = $filtersql_list[$lead_filter_id];
-		$filterSQL = preg_replace("/\\\\/","",$filterSQL);
-		$filterSQL = preg_replace('/^and|and$|^or|or$/i', '',$filterSQL);
-		if (strlen($filterSQL)>4)
-			{$fSQL = "and ($filterSQL)";}
-		else
-			{$fSQL = '';}
-
-		$camp_lists = preg_replace('/.$/i','',$camp_lists);
-		echo _QXZ("This campaign has")." <span style='color:#10b981; font-weight:700;'>$active_lists</span> "._QXZ("active lists and")." <span style='color:#6b7280; font-weight:700;'>$inactive_lists</span> "._QXZ("inactive lists")."</b></div>\n";
-
-
-		if ( ($display_leads_count == 'Y') and (strlen($camp_lists) > 3) )
-			{
-			# grab names of global statuses and statuses in the selected campaign
-			$stmt="SELECT status,status_name from vicidial_statuses order by status;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$statuses_to_print = mysqli_num_rows($rslt);
-
-			$o=0;
-			while ($statuses_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$statuses_name_list["$rowx[0]"] = "$rowx[1]";
-				$o++;
-				}
-
-			$stmt="SELECT status,status_name from vicidial_campaign_statuses where campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL order by status;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$Cstatuses_to_print = mysqli_num_rows($rslt);
-
-			$o=0;
-			while ($Cstatuses_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$statuses_name_list["$rowx[0]"] = "$rowx[1]";
-				$o++;
-				}
-			# end grab status names
-
-			echo "<div style='margin:40px 0 20px 0;'><b style='font-size:18px; color:#1f2937;'>"._QXZ("STATUSES WITHIN THE ACTIVE LISTS FOR THIS CAMPAIGN").":</b>";
-			echo " - <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=hide_leadscount\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("HIDE")."</a></div>";
-			echo "<div style='background:#ffffff; border-radius:12px; padding:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); overflow-x:auto;'>";
-			echo "<TABLE width=500 cellspacing=0 cellpadding=12 style='border-collapse:collapse; margin:0 auto;'>\n";
-			echo "<tr style='background:#1f2937;'><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("STATUS")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("STATUS NAME")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("CALLED")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("NOT CALLED")."</td></tr>\n";
-
-			$leads_in_list = 0;
-			$leads_in_list_N = 0;
-			$leads_in_list_Y = 0;
-			$stmt="SELECT status,called_since_last_reset,count(*) from vicidial_list where list_id IN($camp_lists) group by status,called_since_last_reset order by status,called_since_last_reset;";
-			if ($DB) {echo "$stmt\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$statuses_to_print = mysqli_num_rows($rslt);
-
-			$o=0;
-			$lead_list['count'] = 0;
-			$lead_list['Y_count'] = 0;
-			$lead_list['N_count'] = 0;
-			while ($statuses_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				
-				$lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-				if ($rowx[1] == 'N') 
-					{
-					$since_reset = 'N';
-					$since_resetX = 'Y';
-					}
-				else 
-					{
-					$since_reset = 'Y';
-					$since_resetX = 'N';
-					} 
-				$lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-				$lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
-				#If opposite side is not set, it may not in the future so give it a value of zero
-				if (!isset($lead_list[$since_resetX][$rowx[0]])) 
-					{
-					$lead_list[$since_resetX][$rowx[0]]=0;
-					}
-				$o++;
-				}
-		 
-			$o=0;
-			if ($lead_list['count'] > 0)
-				{
-#				while (list($dispo,) = each($lead_list[$since_reset]))
-				foreach($lead_list[$since_reset] as $dispo => $blank)
-					{
-					if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-						{$bgcolor='style="background:#f9fafb;"';} 
-					else
-						{$bgcolor='style="background:#ffffff;"';}
-
-					if ($dispo == 'CBHOLD')
-						{
-						$CLB="<a href=\"$PHP_SELF?ADD=811&list_id=$list_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>";
-						$CLE="</a>";
-						}
-					else
-						{
-						$CLB='';
-						$CLE='';
-						}
-
-					echo "<tr $bgcolor style='transition:all 0.2s ease;' onmouseover=\"this.style.background='#f3f4f6'\" onmouseout=\"this.style.background=''\"><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#1f2937;'>$CLB$dispo$CLE</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; color:#6b7280;'>$statuses_name_list[$dispo]</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>".$lead_list['Y'][$dispo]."</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>".$lead_list['N'][$dispo]."</td></tr>\n";
-					$o++;
-					}
-				}
-
-			echo "<tr style='background:#f3f4f6;'><td colspan=2 style='padding:12px; border-top:2px solid #e5e7eb; font-size:13px; font-weight:700; color:#1f2937;'>"._QXZ("SUBTOTALS")."</td><td style='padding:12px; border-top:2px solid #e5e7eb; font-size:13px; font-weight:700; text-align:center; color:#1f2937;'>$lead_list[Y_count]</td><td style='padding:12px; border-top:2px solid #e5e7eb; font-size:13px; font-weight:700; text-align:center; color:#1f2937;'>$lead_list[N_count]</td></tr>\n";
-			echo "<tr style='background:#10b981;'><td style='padding:12px; color:white; font-size:14px; font-weight:700;'>"._QXZ("TOTAL")."</td><td colspan=3 align=center style='padding:12px; color:white; font-size:14px; font-weight:700;'>$lead_list[count]</td></tr>\n";
-
-			echo "</table></div><br>\n";
-			unset($lead_list);				
-			}
-		else
-			{
-			echo "<div style='margin:20px 0;'><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=show_leadscount\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("SHOW LEAD STATUSES IN THIS CAMPAIGN")."</a></div>";
-			}
-
-
-		if ($display_dialable_count == 'Y')
-			{
-			### call function to calculate and print dialable leads
-			$single_status=0;
-			$only_return=0;
-			dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);
-			echo " - <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id&stage=hide_dialable\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("HIDE")."</a><BR><BR>";
-			}
-		else
-			{
-			echo "<a href=\"$PHP_SELF?ADD=73&campaign_id=$campaign_id\" target=\"_blank\" style='color:#10b981; text-decoration:none; font-weight:600;'>Popup Dialable Leads Count</a>";
-			echo " - <a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_dialable\" style='font-size:13px; color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("SHOW")."</a><BR><BR>";
-			}
-
-		$stmt="SELECT count(*) FROM vicidial_hopper where campaign_id='$campaign_id' and status IN('READY','RHOLD','RQUEUE') $LOGallowed_campaignsSQL;";
-		if ($DB) {echo "$stmt\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rowx=mysqli_fetch_row($rslt);
-		$hopper_leads = "$rowx[0]";
-
-		echo "<div style='margin:20px 0; font-size:15px; color:#1f2937;'>"._QXZ("This campaign has")." <span style='color:#10b981; font-weight:700;'>$hopper_leads</span> "._QXZ("leads in the dial hopper")."</div>\n";
-		echo "<div style='margin:15px 0;'><a href=\"./AST_VICIDIAL_hopperlist.php?group=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see what leads are in the hopper right now")."</a></div>\n";
-		echo "<div style='margin:15px 0;'><a href=\"./AST_VDADstats.php?group=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see a VDAD report for this campaign")."</a></div>\n";
-		}
-		echo "<div style='margin:15px 0;'><a href=\"$PHP_SELF?ADD=81&campaign_id=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see all CallBack Holds in this campaign")."</a></div>\n";
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<div style='margin:15px 0;'><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGNS&stage=$campaign_id\" style='color:#10b981; text-decoration:none; font-weight:600;'>"._QXZ("Click here to see Admin changes to this campaign")."</a></div>\n";
-			}
-
-		echo "</b></div>\n";
-
-		echo "<br>\n";
-
-		### list of agent rank or skill-level for this campaign
-		echo "<div style='text-align:center; margin:40px 0;'>\n";
-		echo "<div style='margin-bottom:20px;'><b style='font-size:18px; color:#1f2937;'>"._QXZ("AGENT RANKS FOR THIS CAMPAIGN").":</b></div>\n";
-		echo "<div style='background:#ffffff; border-radius:12px; padding:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); overflow-x:auto;'>";
-		echo "<TABLE width=600 cellspacing=0 cellpadding=12 style='border-collapse:collapse; margin:0 auto; min-width:600px;'>\n";
-		echo "<tr style='background:#1f2937;'><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("USER")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("RANK")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("GRADE")."</td><td style='padding:12px; color:white; font-weight:600; font-size:13px; border-bottom:2px solid #e5e7eb;'>"._QXZ("CALLS TODAY")."</td></tr>\n";
-
-		$stmt="SELECT user_group from vicidial_user_groups where ( (allowed_campaigns LIKE \"%-ALL-CAMPAIGNS-%\") or (allowed_campaigns LIKE \"% $campaign_id %\") )  $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$USERgroups_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$USERgroups_to_print|$stmt\n";}
-		$USERgroupsSQL="''";
-		$i=0;
-		while ($i < $USERgroups_to_print)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$USERgroupsSQL .=		",'$row[0]'";
-			$i++;
-			}
-
-		$stmt="SELECT user,full_name from vicidial_users where user_group IN($USERgroupsSQL) and active='Y' order by user;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$users_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$users_to_print|$stmt\n";}
-		$U_user=array();
-		$U_full_name=array();
-		$i=0;
-		while ($i < $users_to_print)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$U_user[$i] =			$row[0];
-			$U_full_name[$i] =		$row[1];
-			$i++;
-			}
-
-		$o=0;
-		while ($users_to_print > $o) 
-			{
-			$temp_user = $U_user[$o];
-			$temp_name = $U_full_name[$o];
-			$campaign_rank='n/a';
-			$calls_today='n/a';
-			$campaign_grade='n/a';
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='style="background:#f9fafb;"';} 
-			else
-				{$bgcolor='style="background:#ffffff;"';}
-
-			$stmt="SELECT campaign_rank,calls_today,campaign_grade from vicidial_campaign_agents where user='$U_user[$o]' and campaign_id='$campaign_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$USERdetails_to_print = mysqli_num_rows($rslt);
-			if ($USERdetails_to_print > 0)
-				{
-				$row=mysqli_fetch_row($rslt);
-				$campaign_rank =	$row[0];
-				$calls_today =		$row[1];
-				$campaign_grade =	$row[2];
-				}
-			$o++;
-
-			echo "<tr $bgcolor style='transition:all 0.2s ease;' onmouseover=\"this.style.background='#f3f4f6'\" onmouseout=\"this.style.background=''\"><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px;'><a href=\"$PHP_SELF?ADD=3&user=$temp_user\" style='color:#10b981; font-weight:600; text-decoration:none;'>$temp_user</a> - <span style='color:#6b7280;'>$temp_name</span></td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>$campaign_rank</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>$campaign_grade</td><td style='padding:10px; border-bottom:1px solid #e5e7eb; font-size:13px; text-align:center; color:#1f2937;'>$calls_today</td></tr>\n";
-			}
-
-		echo "</table></div></div>\n";
-
-
-		echo "<div style='margin:30px 0; text-align:center;'><a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\" style='display:inline-block; background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%); color:white; text-decoration:none; padding:12px 28px; border-radius:8px; font-weight:600; font-size:14px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'\">"._QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN")."</a></div>\n";
-
-
-		if ($LOGdelete_campaigns > 0)
-			{
-			echo "<div style='margin:30px 0; text-align:center;'><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\" style='display:inline-block; background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 100%); color:white; text-decoration:none; padding:12px 28px; border-radius:8px; font-weight:700; font-size:14px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); text-transform:uppercase; letter-spacing:0.5px; transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)'\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.1)'\">"._QXZ("DELETE THIS CAMPAIGN")."</a></div>\n";
-			}
-		}
-	}
-	else
-	{
-	echo "<div style='text-align:center; padding:40px; background:#fee2e2; border-radius:12px; margin:20px; border:2px solid #ef4444;'><span style='color:#991b1b; font-size:16px; font-weight:600;'>"._QXZ("You do not have permission to view this page")."</span></div>\n";
-	exit;
-	}
+if (($ADD == 34) and ((!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i", $LOGallowed_campaigns)))) {
+    $ADD = 30;
 }
 
+if ($ADD == 34) {
+    if ($LOGmodify_campaigns == 1) {
+        if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
+            $modify_url = "$PHP_SELF?ADD=31&campaign_id=$campaign_id&SUB=$SUB";
+            $modify_footer_refresh = 1;
+        }
+        
+        // Handle stage actions
+        if ($stage == 'show_dialable') {
+            $stmt = "UPDATE vicidial_campaigns set display_dialable_count='Y' where campaign_id='$campaign_id';";
+            $rslt = mysql_to_mysqli($stmt, $link);
+        }
+        if ($stage == 'hide_dialable') {
+            $stmt = "UPDATE vicidial_campaigns set display_dialable_count='N' where campaign_id='$campaign_id';";
+            $rslt = mysql_to_mysqli($stmt, $link);
+        }
+        if ($stage == 'show_leadscount') {
+            $stmt = "UPDATE vicidial_campaigns set display_leads_count='Y' where campaign_id='$campaign_id';";
+            $rslt = mysql_to_mysqli($stmt, $link);
+        }
+        if ($stage == 'hide_leadscount') {
+            $stmt = "UPDATE vicidial_campaigns set display_leads_count='N' where campaign_id='$campaign_id';";
+            $rslt = mysql_to_mysqli($stmt, $link);
+        }
+
+        // Fetch campaign data
+        $stmt = "SELECT campaign_id,campaign_name,active,dial_status_a,dial_status_b,dial_status_c,dial_status_d,dial_status_e,lead_order,park_ext,park_file_name,web_form_address,allow_closers,hopper_level,auto_dial_level,next_agent_call,local_call_time,voicemail_ext,dial_timeout,dial_prefix,campaign_cid,campaign_vdad_exten,campaign_rec_exten,campaign_recording,campaign_rec_filename,campaign_script,get_call_launch,am_message_exten,amd_send_to_vmx,xferconf_a_dtmf,xferconf_a_number,xferconf_b_dtmf,xferconf_b_number,alt_number_dialing,scheduled_callbacks,lead_filter_id,drop_call_seconds,drop_action,safe_harbor_exten,display_dialable_count,wrapup_seconds,wrapup_message,closer_campaigns,use_internal_dnc,allcalls_delay,omit_phone_code,dial_method,available_only_ratio_tally,adaptive_dropped_percentage,adaptive_maximum_level,adaptive_latest_server_time,adaptive_intensity,adaptive_dl_diff_target,concurrent_transfers,auto_alt_dial,auto_alt_dial_statuses,agent_pause_codes_active,campaign_description,campaign_changedate,campaign_stats_refresh,campaign_logindate,dial_statuses,disable_alter_custdata,no_hopper_leads_logins,list_order_mix,campaign_allow_inbound,manual_dial_list_id,default_xfer_group,xfer_groups,queue_priority,drop_inbound_group,qc_enabled,qc_statuses,qc_lists,qc_shift_id,qc_get_record_launch,qc_show_recording,qc_web_form_address,qc_script,survey_first_audio_file,survey_dtmf_digits,survey_ni_digit,survey_opt_in_audio_file,survey_ni_audio_file,survey_method,survey_no_response_action,survey_ni_status,survey_response_digit_map,survey_xfer_exten,survey_camp_record_dir,disable_alter_custphone,display_queue_count,manual_dial_filter,agent_clipboard_copy,agent_extended_alt_dial,use_campaign_dnc,three_way_call_cid,three_way_dial_prefix,web_form_target,vtiger_search_category,vtiger_create_call_record,vtiger_create_lead_record,vtiger_screen_login,cpd_amd_action,agent_allow_group_alias,default_group_alias,vtiger_search_dead,vtiger_status_call,survey_third_digit,survey_third_audio_file,survey_third_status,survey_third_exten,survey_fourth_digit,survey_fourth_audio_file,survey_fourth_status,survey_fourth_exten,drop_lockout_time,quick_transfer_button,prepopulate_transfer_preset,drop_rate_group,view_calls_in_queue,view_calls_in_queue_launch,grab_calls_in_queue,call_requeue_button,pause_after_each_call,no_hopper_dialing,agent_dial_owner_only,agent_display_dialable_leads,web_form_address_two,waitforsilence_options,display_leads_count,user_group,allow_emails,call_count_limit,allow_chats,web_form_address_three,manual_vm_status_updates from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+
+        // Extract variables
+        $dial_status_a = $row[3];
+        $dial_status_b = $row[4];
+        $dial_status_c = $row[5];
+        $dial_status_d = $row[6];
+        $dial_status_e = $row[7];
+        $lead_order = $row[8];
+        $hopper_level = $row[13];
+        $auto_dial_level = $row[14];
+        $next_agent_call = $row[15];
+        $local_call_time = $row[16];
+        $voicemail_ext = $row[17];
+        $dial_timeout = $row[18];
+        $dial_prefix = $row[19];
+        $campaign_cid = $row[20];
+        $campaign_vdad_exten = $row[21];
+        $script_id = $row[25];
+        $get_call_launch = $row[26];
+        $lead_filter_id = $row[35];
+        if ($lead_filter_id == '') {$lead_filter_id = 'NONE';}
+        $display_dialable_count = $row[39];
+        $closer_campaigns = $row[42];
+        $dial_method = $row[46];
+        $adaptive_intensity = $row[51];
+        $auto_alt_dial = $row[54];
+        $campaign_description = $row[57];
+        $campaign_changedate = $row[58];
+        $campaign_stats_refresh = $row[59];
+        $campaign_logindate = $row[60];
+        $dial_statuses = $row[61];
+        $list_order_mix = $row[64];
+        $default_xfer_group = $row[67];
+        $campaign_allow_inbound = $row[65];
+        $drop_lockout_time = $row[116];
+        $display_leads_count = $row[130];
+        $user_group = $row[131];
+        $allow_emails = $row[132];
+        $call_count_limit = $row[133];
+        $allow_chats = $row[134];
+        $web_form_address_three = $row[135];
+
+        // Set disabled states
+        if (preg_match('/DISABLED/', $list_order_mix)) {
+            $DEFlistDISABLE = '';
+            $DEFstatusDISABLED = 0;
+        } else {
+            $DEFlistDISABLE = 'disabled';
+            $DEFstatusDISABLED = 1;
+        }
+
+        if ($auto_alt_dial == 'MULTI_LEAD') {
+            $ALTmultiDISABLE = 1;
+            $ALTmultiLINK = "<a href=\"./admin_campaign_multi_alt.php?campaign_id=$campaign_id\">" . _QXZ("Multi-Alt-Settings") . "</a>";
+        } else {
+            $ALTmultiDISABLE = 0;
+            $ALTmultiLINK = '';
+        }
+
+        // Get status groups
+        $stmt = "SELECT status_group_id from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rslt);
+        $camp_status_groups = '';
+        $o = 0;
+        while ($lists_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            if (strlen($rowx[0]) > 0) {$camp_status_groups .= "'$rowx[0]',";}
+            $o++;
+        }
+
+        $closer_campaigns = preg_replace("/ -$/", "", $closer_campaigns);
+        $closer_campaigns = preg_replace("/ /", "','", $closer_campaigns);
+        $stmt = "SELECT status_group_id from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL ;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rslt);
+        $o = 0;
+        while ($lists_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            if (strlen($rowx[0]) > 0) {$camp_status_groups .= "'$rowx[0]',";}
+            $o++;
+        }
+
+        // Get statuses
+        $stmt = "SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_statuses order by status;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $statuses_to_print = mysqli_num_rows($rslt);
+        $statuses_list = '';
+        $dial_statuses_list = '';
+        $o = 0;
+        while ($statuses_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            if ($rowx[0] != 'CBHOLD') {$dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
+            $statname_list["$rowx[0]"] = "$rowx[1]";
+            $LRstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
+            if (preg_match('/Y/i', $rowx[2])) {
+                $HKstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
+            }
+            $o++;
+        }
+
+        $stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL order by status;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $Cstatuses_to_print = mysqli_num_rows($rslt);
+        $o = 0;
+        while ($Cstatuses_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            if ($rowx[0] != 'CBHOLD') {$dial_statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
+            $statname_list["$rowx[0]"] = "$rowx[1]";
+            $LRstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
+            if (preg_match('/Y/i', $rowx[2])) {
+                $HKstatuses_list .= "<option value=\"$rowx[0]-----$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
+            }
+            $o++;
+        }
+
+        $dial_statuses = preg_replace("/ -$/", "", $dial_statuses);
+        $Dstatuses = explode(" ", $dial_statuses);
+        $Ds_to_print = (count($Dstatuses) - 1);
+
+        // Get list mix
+        $stmt = "SELECT count(*) from vicidial_campaigns_list_mix where campaign_id='$campaign_id' and status='ACTIVE' $LOGallowed_campaignsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $rowx = mysqli_fetch_row($rslt);
+        if ($rowx[0] < 1) {
+            $mixes_list = "<option SELECTED value=\"DISABLED\">" . _QXZ("DISABLED") . "</option>\n";
+            $mixname_list["DISABLED"] = "DISABLED";
+        } else {
+            $stmt = "SELECT vcl_id,vcl_name from vicidial_campaigns_list_mix where campaign_id='$campaign_id' and status='ACTIVE' $LOGallowed_campaignsSQL limit 1;";
+            $rslt = mysql_to_mysqli($stmt, $link);
+            $mixes_to_print = mysqli_num_rows($rslt);
+            $mixes_list = "<option value=\"DISABLED\">" . _QXZ("DISABLED") . "</option>\n";
+            $o = 0;
+            while ($mixes_to_print > $o) {
+                $rowx = mysqli_fetch_row($rslt);
+                $mixes_list .= "<option value=\"ACTIVE\">" . _QXZ("ACTIVE") . " ($rowx[0] - $rowx[1])</option>\n";
+                $mixname_list["ACTIVE"] = "$rowx[0] - $rowx[1]";
+                $o++;
+            }
+        }
+
+        // Set tab colors
+        if ($SUB < 1) {$camp_detail_color = $subcamp_color;} else {$camp_detail_color = $campaigns_color;}
+        if ($SUB == 22) {$camp_statuses_color = $subcamp_color;} else {$camp_statuses_color = $campaigns_color;}
+        if ($SUB == 23) {$camp_hotkeys_color = $subcamp_color;} else {$camp_hotkeys_color = $campaigns_color;}
+        if ($SUB == 25) {$camp_recycle_color = $subcamp_color;} else {$camp_recycle_color = $campaigns_color;}
+        if ($SUB == 26) {$camp_autoalt_color = $subcamp_color;} else {$camp_autoalt_color = $campaigns_color;}
+        if ($SUB == 27) {$camp_pause_color = $subcamp_color;} else {$camp_pause_color = $campaigns_color;}
+        if ($SUB == 29) {$camp_listmix_color = $subcamp_color;} else {$camp_listmix_color = $campaigns_color;}
+
+        // Output HTML with modern UI
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Campaign Management - <?= $campaign_id ?></title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            <style>
+                :root {
+                    --primary-color: #4CAF50;
+                    --primary-dark: #388E3C;
+                    --secondary-color: #2196F3;
+                    --danger-color: #f44336;
+                    --warning-color: #FF9800;
+                    --light-gray: #f5f5f5;
+                    --medium-gray: #e0e0e0;
+                    --dark-gray: #757575;
+                    --text-color: #333;
+                    --border-radius: 8px;
+                    --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    --transition: all 0.3s ease;
+                }
+
+                * {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: var(--text-color);
+                    background-color: #f9f9f9;
+                    padding: 20px;
+                }
+
+                .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    background-color: white;
+                    border-radius: var(--border-radius);
+                    box-shadow: var(--box-shadow);
+                    overflow: hidden;
+                }
+
+                header {
+                    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+                    color: white;
+                    padding: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                header h1 {
+                    font-size: 1.8rem;
+                    font-weight: 500;
+                }
+
+                header .campaign-id {
+                    font-size: 1.2rem;
+                    opacity: 0.9;
+                }
+
+                .tabs {
+                    display: flex;
+                    background-color: var(--light-gray);
+                    border-bottom: 1px solid var(--medium-gray);
+                    overflow-x: auto;
+                }
+
+                .tab {
+                    padding: 15px 20px;
+                    cursor: pointer;
+                    transition: var(--transition);
+                    white-space: nowrap;
+                    border-bottom: 3px solid transparent;
+                }
+
+                .tab:hover {
+                    background-color: rgba(0,0,0,0.05);
+                }
+
+                .tab.active {
+                    border-bottom: 3px solid var(--primary-color);
+                    font-weight: 500;
+                }
+
+                .tab i {
+                    margin-right: 8px;
+                }
+
+                .content {
+                    padding: 20px;
+                }
+
+                .tab-content {
+                    display: none;
+                }
+
+                .tab-content.active {
+                    display: block;
+                    animation: fadeIn 0.3s ease;
+                }
+
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+
+                .form-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 20px;
+                    margin-bottom: 30px;
+                }
+
+                .form-group {
+                    margin-bottom: 20px;
+                }
+
+                .form-group label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                    color: var(--dark-gray);
+                }
+
+                .form-control {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid var(--medium-gray);
+                    border-radius: var(--border-radius);
+                    font-size: 16px;
+                    transition: var(--transition);
+                }
+
+                .form-control:focus {
+                    outline: none;
+                    border-color: var(--primary-color);
+                    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+                }
+
+                .form-control:disabled {
+                    background-color: var(--light-gray);
+                    cursor: not-allowed;
+                    opacity: 0.7;
+                }
+
+                .btn {
+                    padding: 12px 24px;
+                    border: none;
+                    border-radius: var(--border-radius);
+                    font-size: 16px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: var(--transition);
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .btn-primary {
+                    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+                    color: white;
+                }
+
+                .btn-primary:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+                }
+
+                .btn-secondary {
+                    background-color: var(--secondary-color);
+                    color: white;
+                }
+
+                .btn-secondary:hover {
+                    background-color: #1976D2;
+                    transform: translateY(-2px);
+                }
+
+                .btn-danger {
+                    background-color: var(--danger-color);
+                    color: white;
+                }
+
+                .btn-danger:hover {
+                    background-color: #d32f2f;
+                    transform: translateY(-2px);
+                }
+
+                .btn-group {
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                }
+
+                .card {
+                    background-color: white;
+                    border-radius: var(--border-radius);
+                    box-shadow: var(--box-shadow);
+                    padding: 20px;
+                    margin-bottom: 20px;
+                }
+
+                .card-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    padding-bottom: 10px;
+                    border-bottom: 1px solid var(--medium-gray);
+                }
+
+                .card-title {
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    color: var(--text-color);
+                }
+
+                .table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+
+                .table th, .table td {
+                    padding: 12px;
+                    text-align: left;
+                    border-bottom: 1px solid var(--medium-gray);
+                }
+
+                .table th {
+                    background-color: var(--light-gray);
+                    font-weight: 500;
+                    color: var(--dark-gray);
+                }
+
+                .table tr:hover {
+                    background-color: rgba(0,0,0,0.02);
+                }
+
+                .status-badge {
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    font-weight: 500;
+                    display: inline-block;
+                }
+
+                .status-active {
+                    background-color: #E8F5E9;
+                    color: #2E7D32;
+                }
+
+                .status-inactive {
+                    background-color: #FFEBEE;
+                    color: #C62828;
+                }
+
+                .status-expired {
+                    background-color: #FFF3E0;
+                    color: #E65100;
+                }
+
+                .readonly-field {
+                    background-color: var(--light-gray);
+                    padding: 12px;
+                    border-radius: var(--border-radius);
+                    border: 1px solid var(--medium-gray);
+                }
+
+                .alert {
+                    padding: 15px;
+                    border-radius: var(--border-radius);
+                    margin-bottom: 20px;
+                }
+
+                .alert-warning {
+                    background-color: #FFF3CD;
+                    border: 1px solid #FFEAA7;
+                    color: #856404;
+                }
+
+                .alert-danger {
+                    background-color: #F8D7DA;
+                    border: 1px solid #F5C6CB;
+                    color: #721C24;
+                }
+
+                .stats-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 20px;
+                    margin-bottom: 30px;
+                }
+
+                .stat-card {
+                    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                    padding: 20px;
+                    border-radius: var(--border-radius);
+                    text-align: center;
+                }
+
+                .stat-value {
+                    font-size: 2rem;
+                    font-weight: bold;
+                    color: var(--primary-color);
+                }
+
+                .stat-label {
+                    font-size: 0.9rem;
+                    color: var(--dark-gray);
+                    margin-top: 5px;
+                }
+
+                @media (max-width: 768px) {
+                    .form-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .tabs {
+                        flex-direction: column;
+                    }
+                    
+                    .btn-group {
+                        flex-direction: column;
+                    }
+                    
+                    .table {
+                        font-size: 14px;
+                    }
+                    
+                    .table th, .table td {
+                        padding: 8px;
+                    }
+                }
+
+                .loading {
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    border: 3px solid rgba(255,255,255,.3);
+                    border-radius: 50%;
+                    border-top-color: #fff;
+                    animation: spin 1s ease-in-out infinite;
+                }
+
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
+
+                .tooltip {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                .tooltip .tooltiptext {
+                    visibility: hidden;
+                    width: 120px;
+                    background-color: #555;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px;
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 125%;
+                    left: 50%;
+                    margin-left: -60px;
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
+
+                .tooltip:hover .tooltiptext {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <header>
+                    <div>
+                        <h1><i class="fas fa-chart-line"></i> Campaign Management</h1>
+                        <div class="campaign-id">ID: <?= $campaign_id ?></div>
+                    </div>
+                    <div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </header>
+
+                <nav class="tabs">
+                    <div class="tab active" onclick="showTab('basic')">
+                        <i class="fas fa-info-circle"></i> Basic View
+                    </div>
+                    <div class="tab" onclick="showTab('detail')">
+                        <i class="fas fa-cogs"></i> Detail View
+                    </div>
+                    <?php if ($SSoutbound_autodial_active > 0): ?>
+                    <div class="tab" onclick="showTab('listmix')">
+                        <i class="fas fa-list"></i> List Mix
+                    </div>
+                    <?php endif; ?>
+                    <div class="tab" onclick="window.location='./realtime_report.php?RR=4&DB=0&group=<?= $campaign_id ?>'">
+                        <i class="fas fa-tachometer-alt"></i> Real-Time
+                    </div>
+                </nav>
+
+                <div class="content">
+                    <div id="basic" class="tab-content active">
+                        <form action="<?= $PHP_SELF ?>" method="POST" onsubmit="return validateForm()">
+                            <input type="hidden" name="ADD" value="44">
+                            <input type="hidden" name="campaign_id" value="<?= $campaign_id ?>">
+                            <input type="hidden" name="old_campaign_allow_inbound" value="<?= $campaign_allow_inbound ?>">
+
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $active_lists ?? 0 ?></div>
+                                    <div class="stat-label">Active Lists</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $inactive_lists ?? 0 ?></div>
+                                    <div class="stat-label">Inactive Lists</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $hopper_leads ?? 0 ?></div>
+                                    <div class="stat-label">Hopper Leads</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $auto_dial_level ?></div>
+                                    <div class="stat-label">Dial Level</div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title"><i class="fas fa-cog"></i> Campaign Settings</h2>
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="campaign_id">Campaign ID</label>
+                                        <div class="readonly-field"><?= $campaign_id ?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="campaign_name">Campaign Name</label>
+                                        <input type="text" id="campaign_name" name="campaign_name" class="form-control" value="<?= $row[1] ?>" maxlength="40" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="active">Status</label>
+                                        <select id="active" name="active" class="form-control">
+                                            <option value="Y" <?= $row[2] == 'Y' ? 'selected' : '' ?>>Active</option>
+                                            <option value="N" <?= $row[2] == 'N' ? 'selected' : '' ?>>Inactive</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="user_group">Admin User Group</label>
+                                        <div class="readonly-field"><?= $user_group ?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="park_ext">Park Music-on-Hold</label>
+                                        <div class="readonly-field"><?= $row[10] ?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="web_form_address">Web Form</label>
+                                        <div class="readonly-field">
+                                            <?= $row[11] ?>
+                                            <?php if ($SSenable_first_webform < 1): ?>
+                                                <span class="status-badge status-expired">DISABLED</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="allow_closers">Allow Closers</label>
+                                        <div class="readonly-field"><?= $row[12] ?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="default_xfer_group">Default Transfer Group</label>
+                                        <div class="readonly-field"><?= $default_xfer_group ?></div>
+                                    </div>
+
+                                    <?php if ($SSallow_emails > 0): ?>
+                                    <div class="form-group">
+                                        <label for="allow_emails">Allow Emails</label>
+                                        <div class="readonly-field"><?= $allow_emails ?></div>
+                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if ($SSallow_chats > 0): ?>
+                                    <div class="form-group">
+                                        <label for="allow_chats">Allow Chats</label>
+                                        <div class="readonly-field"><?= $allow_chats ?></div>
+                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if ($SSoutbound_autodial_active > 0): ?>
+                                    <div class="form-group">
+                                        <label for="campaign_allow_inbound">Allow Inbound and Blended</label>
+                                        <div class="readonly-field"><?= $campaign_allow_inbound ?></div>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <?php if ($SSoutbound_autodial_active > 0): ?>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><i class="fas fa-phone"></i> Dialing Configuration</h3>
+                                    </div>
+
+                                    <div class="form-grid">
+                                        <?php
+                                        $o = 0;
+                                        while ($Ds_to_print > $o) {
+                                            $o++;
+                                            $Dstatus = $Dstatuses[$o];
+                                        ?>
+                                        <div class="form-group">
+                                            <label>Dial Status <?= $o ?></label>
+                                            <div class="readonly-field">
+                                                <strong><?= $Dstatus ?></strong> - <?= $statname_list[$Dstatus] ?>
+                                                <?php if ($DEFstatusDISABLED > 0): ?>
+                                                    <span class="status-badge status-inactive">DISABLED</span>
+                                                <?php else: ?>
+                                                    <a href="<?= $PHP_SELF ?>?ADD=68&campaign_id=<?= $campaign_id ?>&status=<?= $Dstatuses[$o] ?>" class="btn btn-danger btn-sm">REMOVE</a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <?php } ?>
+
+                                        <div class="form-group">
+                                            <label for="dial_status">Add A Dial Status to Call</label>
+                                            <div style="display: flex; gap: 10px;">
+                                                <select id="dial_status" name="dial_status" class="form-control" <?= $DEFlistDISABLE ?>>
+                                                    <option value="">- NONE -</option>
+                                                    <?= $dial_statuses_list ?>
+                                                </select>
+                                                <button type="submit" name="submit" value="ADD" class="btn btn-secondary">
+                                                    <i class="fas fa-plus"></i> ADD
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="lead_order">List Order</label>
+                                            <?php if ($ALTmultiDISABLE > 0): ?>
+                                                <div class="readonly-field"><?= $ALTmultiLINK ?></div>
+                                            <?php else: ?>
+                                                <select id="lead_order" name="lead_order" class="form-control">
+                                                    <option value="<?= $lead_order ?>" selected><?= $lead_order ?></option>
+                                                    <option value="DOWN">DOWN</option>
+                                                    <option value="UP">UP</option>
+                                                    <option value="DOWN PHONE">DOWN PHONE</option>
+                                                    <option value="UP PHONE">UP PHONE</option>
+                                                    <option value="DOWN LAST NAME">DOWN LAST NAME</option>
+                                                    <option value="UP LAST NAME">UP LAST NAME</option>
+                                                    <option value="DOWN COUNT">DOWN COUNT</option>
+                                                    <option value="UP COUNT">UP COUNT</option>
+                                                    <option value="RANDOM">RANDOM</option>
+                                                    <option value="DOWN LAST CALL TIME">DOWN LAST CALL TIME</option>
+                                                    <option value="UP LAST CALL TIME">UP LAST CALL TIME</option>
+                                                    <option value="DOWN RANK">DOWN RANK</option>
+                                                    <option value="UP RANK">UP RANK</option>
+                                                    <option value="DOWN OWNER">DOWN OWNER</option>
+                                                    <option value="UP OWNER">UP OWNER</option>
+                                                    <option value="DOWN TIMEZONE">DOWN TIMEZONE</option>
+                                                    <option value="UP TIMEZONE">UP TIMEZONE</option>
+                                                </select>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="list_order_mix">List Mix</label>
+                                            <?php if ($ALTmultiDISABLE > 0): ?>
+                                                <div class="readonly-field"><?= $ALTmultiLINK ?></div>
+                                            <?php else: ?>
+                                                <select id="list_order_mix" name="list_order_mix" class="form-control">
+                                                    <?= $mixes_list ?>
+                                                    <?php if (preg_match('/DISABLED/', $list_order_mix)): ?>
+                                                        <option selected value="<?= $list_order_mix ?>"><?= $list_order_mix ?> - <?= $mixname_list[$list_order_mix] ?></option>
+                                                    <?php else: ?>
+                                                        <option selected value="ACTIVE">ACTIVE (<?= $mixname_list['ACTIVE'] ?>)</option>
+                                                    <?php endif; ?>
+                                                </select>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="lead_filter_id">Lead Filter</label>
+                                            <?php if ($ALTmultiDISABLE > 0): ?>
+                                                <div class="readonly-field"><?= $ALTmultiLINK ?></div>
+                                            <?php else: ?>
+                                                <select id="lead_filter_id" name="lead_filter_id" class="form-control">
+                                                    <option value="<?= $lead_filter_id ?>"><?= $lead_filter_id ?> - <?= $filtername_list[$lead_filter_id] ?? '' ?></option>
+                                                </select>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="hopper_level">Minimum Hopper Level</label>
+                                            <select id="hopper_level" name="hopper_level" class="form-control">
+                                                <option>1</option>
+                                                <option>5</option>
+                                                <option>10</option>
+                                                <option>20</option>
+                                                <option>50</option>
+                                                <option>100</option>
+                                                <option>200</option>
+                                                <option>500</option>
+                                                <option>700</option>
+                                                <option>1000</option>
+                                                <option>2000</option>
+                                                <option>3000</option>
+                                                <option>4000</option>
+                                                <option>5000</option>
+                                                <option selected><?= $hopper_level ?></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="reset_hopper">Force Reset of Hopper</label>
+                                            <select id="reset_hopper" name="reset_hopper" class="form-control">
+                                                <option value="Y">Y</option>
+                                                <option value="N" selected>N</option>
+                                            </select>
+                                        </div>
+
+                                        <?php if ((preg_match("/RATIO|ADAPT/", $dial_method)) and ($SSdisable_auto_dial > 0)): ?>
+                                        <div class="alert alert-warning">
+                                            <i class="fas fa-exclamation-triangle"></i> Auto-dialing has been disabled on this system
+                                        </div>
+                                        <?php endif; ?>
+
+                                        <div class="form-group">
+                                            <label for="dial_method">Dial Method</label>
+                                            <select id="dial_method" name="dial_method" class="form-control">
+                                                <option value="MANUAL">MANUAL</option>
+                                                <option value="RATIO">RATIO</option>
+                                                <option value="ADAPT_HARD_LIMIT">ADAPT_HARD_LIMIT</option>
+                                                <option value="ADAPT_TAPERED">ADAPT_TAPERED</option>
+                                                <option value="ADAPT_AVERAGE">ADAPT_AVERAGE</option>
+                                                <option value="INBOUND_MAN">INBOUND_MAN</option>
+                                                <option value="<?= $dial_method ?>" selected><?= $dial_method ?></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="auto_dial_level">Auto Dial Level</label>
+                                            <select id="auto_dial_level" name="auto_dial_level" class="form-control">
+                                                <option selected><?= $auto_dial_level ?></option>
+                                                <option>0</option>
+                                                <?php
+                                                $adl = 0;
+                                                while($adl <= $SSauto_dial_limit) {
+                                                    if ($adl < 1) {
+                                                        $adl = ($adl + 1);
+                                                    } else {
+                                                        if ($adl < 3) {
+                                                            $adl = ($adl + 0.1);
+                                                        } else {
+                                                            if ($adl < 4) {
+                                                                $adl = ($adl + 0.25);
+                                                            } else {
+                                                                if ($adl < 5) {
+                                                                    $adl = ($adl + 0.5);
+                                                                } else {
+                                                                    if ($adl < 20) {
+                                                                        $adl = ($adl + 1);
+                                                                    } else {
+                                                                        if ($adl < 40) {
+                                                                            $adl = ($adl + 2);
+                                                                        } else {
+                                                                            if ($adl < 100) {
+                                                                                $adl = ($adl + 5);
+                                                                            } else {
+                                                                                if ($adl < 200) {
+                                                                                    $adl = ($adl + 10);
+                                                                                } else {
+                                                                                    if ($adl < 400) {
+                                                                                        $adl = ($adl + 50);
+                                                                                    } else {
+                                                                                        if ($adl < 1000) {
+                                                                                            $adl = ($adl + 100);
+                                                                                        } else {
+                                                                                            $adl = ($adl + 1);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if ($adl > $SSauto_dial_limit) {
+                                                        $hmm = 1;
+                                                    } else {
+                                                        echo "<option>$adl</option>\n";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                            <small>(0 = off)</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="adaptive_intensity">Adapt Intensity Modifier</label>
+                                            <select id="adaptive_intensity" name="adaptive_intensity" class="form-control">
+                                                <?php
+                                                $n = 40;
+                                                while ($n >= -40) {
+                                                    $dtl = "Balanced";
+                                                    if ($n < 0) {$dtl = "Less Intense";}
+                                                    if ($n > 0) {$dtl = "More Intense";}
+                                                    if ($n == $adaptive_intensity) {
+                                                        echo "<option SELECTED value=\"$n\">$n - $dtl</option>\n";
+                                                    } else {
+                                                        echo "<option value=\"$n\">$n - $dtl</option>\n";
+                                                    }
+                                                    $n--;
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+
+                                <div class="form-group">
+                                    <label for="script_id">Script</label>
+                                    <div class="readonly-field">
+                                        <a href="<?= $PHP_SELF ?>?ADD=3111111&script_id=<?= $script_id ?>"><?= $script_id ?></a>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="get_call_launch">Get Call Launch</label>
+                                    <div class="readonly-field"><?= $get_call_launch ?></div>
+                                </div>
+
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Save Changes
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.reload()">
+                                        <i class="fas fa-undo"></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <?php if ($SSoutbound_autodial_active > 0): ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title"><i class="fas fa-list"></i> Lists Within This Campaign</h2>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><a href="<?= $PHP_SELF ?>?ADD=34&campaign_id=<?= $campaign_id ?>&stage=LISTIDDOWN">LIST ID</a></th>
+                                            <th><a href="<?= $PHP_SELF ?>?ADD=34&campaign_id=<?= $campaign_id ?>&stage=LISTNAMEDOWN">LIST NAME</a></th>
+                                            <th>DESCRIPTION</th>
+                                            <th><a href="<?= $PHP_SELF ?>?ADD=34&campaign_id=<?= $campaign_id ?>&stage=TALLYDOWN">LEADS COUNT</a></th>
+                                            <th><a href="<?= $PHP_SELF ?>?ADD=34&campaign_id=<?= $campaign_id ?>&stage=CALLTIMEDOWN">Call Time</a></th>
+                                            <th colspan="3"><a href="<?= $PHP_SELF ?>?ADD=31&campaign_id=<?= $campaign_id ?>&stage=ACTIVEDOWN">ACTIVE</a></th>
+                                            <th><a href="<?= $PHP_SELF ?>?ADD=34&campaign_id=<?= $campaign_id ?>&stage=CALLDATEDOWN">LAST CALL DATE</a></th>
+                                            <th>MODIFY</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $LISTlink = 'stage=LISTIDDOWN';
+                                        $NAMElink = 'stage=LISTNAMEDOWN';
+                                        $CALLTIMElink = 'stage=CALLTIMEDOWN';
+                                        $TALLYlink = 'stage=TALLYDOWN';
+                                        $ACTIVElink = 'stage=ACTIVEDOWN';
+                                        $CAMPAIGNlink = 'stage=CAMPAIGNDOWN';
+                                        $CALLDATElink = 'stage=CALLDATEDOWN';
+                                        $SQLorder = 'order by list_id';
+                                        
+                                        if (preg_match('/LISTIDUP/i', $stage)) {$SQLorder = 'order by list_id asc'; $LISTlink = 'stage=LISTIDDOWN';}
+                                        if (preg_match('/LISTIDDOWN/i', $stage)) {$SQLorder = 'order by list_id desc'; $LISTlink = 'stage=LISTIDUP';}
+                                        if (preg_match('/LISTNAMEUP/i', $stage)) {$SQLorder = 'order by list_name asc'; $NAMElink = 'stage=LISTNAMEDOWN';}
+                                        if (preg_match('/LISTNAMEDOWN/i', $stage)) {$SQLorder = 'order by list_name desc'; $NAMElink = 'stage=LISTNAMEUP';}
+                                        if (preg_match('/CALLTIMEUP/i', $stage)) {$SQLorder = 'order by local_call_time asc'; $CALLTIMElink = 'stage=CALLTIMEDOWN';}
+                                        if (preg_match('/CALLTIMEDOWN/i', $stage)) {$SQLorder = 'order by local_call_time desc'; $CALLTIMElink = 'stage=CALLTIMEUP';}
+                                        if (preg_match('/TALLYUP/i', $stage)) {$SQLorder = 'order by tally asc'; $TALLYlink = 'stage=TALLYDOWN';}
+                                        if (preg_match('/TALLYDOWN/i', $stage)) {$SQLorder = 'order by tally desc'; $TALLYlink = 'stage=TALLYUP';}
+                                        if (preg_match('/ACTIVEUP/i', $stage)) {$SQLorder = 'order by active asc'; $ACTIVElink = 'stage=ACTIVEDOWN';}
+                                        if (preg_match('/ACTIVEDOWN/i', $stage)) {$SQLorder = 'order by active desc'; $ACTIVElink = 'stage=ACTIVEUP';}
+                                        if (preg_match('/CAMPAIGNUP/i', $stage)) {$SQLorder = 'order by campaign_id asc'; $CAMPAIGNlink = 'stage=CAMPAIGNDOWN';}
+                                        if (preg_match('/CAMPAIGNUP/i', $stage)) {$SQLorder = 'order by campaign_id desc'; $CAMPAIGNlink = 'stage=CAMPAIGNUP';}
+                                        if (preg_match('/CALLDATEUP/i', $stage)) {$SQLorder = 'order by list_lastcalldate asc'; $CALLDATElink = 'stage=CALLDATEDOWN';}
+                                        if (preg_match('/CALLDATEDOWN/i', $stage)) {$SQLorder = 'order by list_lastcalldate desc'; $CALLDATElink = 'stage=CALLDATEUP';}
+                                        
+                                        $stmt = "SELECT vls.list_id,list_name,list_description,count(*) as tally,active,list_lastcalldate,campaign_id,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists vls,vicidial_list vl where vls.list_id=vl.list_id and campaign_id='$campaign_id' $LOGallowed_campaignsSQL group by list_id $SQLorder";
+                                        if ($SSadmin_list_counts < 1) {
+                                            $stmt = "SELECT list_id,list_name,list_description,'X' as tally,active,list_lastcalldate,campaign_id,DATE_FORMAT(expiration_date,'%Y%m%d'),local_call_time from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL $SQLorder";
+                                        }
+                                        $rslt = mysql_to_mysqli($stmt, $link);
+                                        $lists_to_print = mysqli_num_rows($rslt);
+                                        
+                                        $o = 0;
+                                        $last_list_statuses = "";
+                                        $active_lists = 0;
+                                        $inactive_lists = 0;
+                                        $camp_lists = "";
+                                        
+                                        while ($lists_to_print > $o) {
+                                            $row = mysqli_fetch_row($rslt);
+                                            $last_list_statuses .= "$row[0]|$row[4]|";
+                                            $bgcolor = ($o % 2 == 0) ? 'style="background-color: #f9f9f9;"' : '';
+                                            
+                                            if (preg_match('/Y/', $row[4])) {
+                                                $active_lists++;
+                                                $camp_lists .= "'$row[0]',";
+                                                $active_checked = 'checked';
+                                            } else {
+                                                $inactive_lists++;
+                                                $active_checked = '';
+                                            }
+                                            
+                                            echo "<tr $bgcolor>";
+                                            echo "<td><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0]</a></td>";
+                                            echo "<td>$row[1]</td>";
+                                            echo "<td>$row[2]</td>";
+                                            echo "<td>$row[3]</td>";
+                                            if ($row[8] == 'campaign') {
+                                                echo "<td>$row[8]</td>";
+                                            } else {
+                                                echo "<td><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$row[8]\">$row[8]</a></td>";
+                                            }
+                                            echo "<td>" . _QXZ($row[4]) . "</td>";
+                                            echo "<td><input type=\"checkbox\" name=\"list_active_change[]\" value=\"$row[0]\" $active_checked></td>";
+                                            echo "<td>";
+                                            if ($row[7] < $EXPtestdate) {
+                                                echo "<span class=\"status-badge status-expired\">EXP</span>";
+                                            } else {
+                                                echo "&nbsp;";
+                                            }
+                                            echo "</td>";
+                                            echo "<td>$row[5]</td>";
+                                            echo "<td><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" class=\"btn btn-secondary btn-sm\">MODIFY</a></td>";
+                                            echo "</tr>\n";
+                                            $o++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" onclick="submitListChanges()">
+                                    <i class="fas fa-check"></i> Submit Active List Changes
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title"><i class="fas fa-chart-bar"></i> Campaign Statistics</h2>
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $active_lists ?></div>
+                                    <div class="stat-label">Active Lists</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $inactive_lists ?></div>
+                                    <div class="stat-label">Inactive Lists</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value"><?= $hopper_leads ?? 0 ?></div>
+                                    <div class="stat-label">Leads in Hopper</div>
+                                </div>
+                            </div>
+
+                            <div class="btn-group">
+                                <a href="./AST_VICIDIAL_hopperlist.php?group=<?= $campaign_id ?>" class="btn btn-secondary">
+                                    <i class="fas fa-list"></i> View Hopper
+                                </a>
+                                <a href="./AST_VDADstats.php?group=<?= $campaign_id ?>" class="btn btn-secondary">
+                                    <i class="fas fa-chart-line"></i> VDAD Report
+                                </a>
+                                <a href="<?= $PHP_SELF ?>?ADD=81&campaign_id=<?= $campaign_id ?>" class="btn btn-secondary">
+                                    <i class="fas fa-phone"></i> Callback Holds
+                                </a>
+                                <?php if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/", $LOGallowed_reports)) or (preg_match("/ALL REPORTS/", $LOGallowed_reports)))): ?>
+                                <a href="<?= $PHP_SELF ?>?ADD=720000000000000&category=CAMPAIGNS&stage=<?= $campaign_id ?>" class="btn btn-secondary">
+                                    <i class="fas fa-history"></i> Admin Changes
+                                </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title"><i class="fas fa-users"></i> Agent Ranks for This Campaign</h2>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>USER</th>
+                                            <th>RANK</th>
+                                            <th>GRADE</th>
+                                            <th>CALLS TODAY</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $stmt = "SELECT user_group from vicidial_user_groups where ( (allowed_campaigns LIKE \"%-ALL-CAMPAIGNS-%\") or (allowed_campaigns LIKE \"% $campaign_id %\") )  $LOGadmin_viewable_groupsSQL;";
+                                        $rslt = mysql_to_mysqli($stmt, $link);
+                                        $USERgroups_to_print = mysqli_num_rows($rslt);
+                                        $USERgroupsSQL = "''";
+                                        $i = 0;
+                                        while ($i < $USERgroups_to_print) {
+                                            $row = mysqli_fetch_row($rslt);
+                                            $USERgroupsSQL .= ",'$row[0]'";
+                                            $i++;
+                                        }
+
+                                        $stmt = "SELECT user,full_name from vicidial_users where user_group IN($USERgroupsSQL) and active='Y' order by user;";
+                                        $rslt = mysql_to_mysqli($stmt, $link);
+                                        $users_to_print = mysqli_num_rows($rslt);
+                                        $U_user = array();
+                                        $U_full_name = array();
+                                        $i = 0;
+                                        while ($i < $users_to_print) {
+                                            $row = mysqli_fetch_row($rslt);
+                                            $U_user[$i] = $row[0];
+                                            $U_full_name[$i] = $row[1];
+                                            $i++;
+                                        }
+
+                                        $o = 0;
+                                        while ($users_to_print > $o) {
+                                            $temp_user = $U_user[$o];
+                                            $temp_name = $U_full_name[$o];
+                                            $campaign_rank = 'n/a';
+                                            $calls_today = 'n/a';
+                                            $campaign_grade = 'n/a';
+
+                                            $stmt = "SELECT campaign_rank,calls_today,campaign_grade from vicidial_campaign_agents where user='$U_user[$o]' and campaign_id='$campaign_id';";
+                                            $rslt = mysql_to_mysqli($stmt, $link);
+                                            $USERdetails_to_print = mysqli_num_rows($rslt);
+                                            if ($USERdetails_to_print > 0) {
+                                                $row = mysqli_fetch_row($rslt);
+                                                $campaign_rank = $row[0];
+                                                $calls_today = $row[1];
+                                                $campaign_grade = $row[2];
+                                            }
+                                            $o++;
+
+                                            echo "<tr>";
+                                            echo "<td><a href=\"$PHP_SELF?ADD=3&user=$temp_user\">$temp_user</a> - $temp_name</td>";
+                                            echo "<td>$campaign_rank</td>";
+                                            echo "<td>$campaign_grade</td>";
+                                            echo "<td>$calls_today</td>";
+                                            echo "</tr>\n";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="btn-group">
+                                <a href="<?= $PHP_SELF ?>?ADD=52&campaign_id=<?= $campaign_id ?>&DB=<?= $DB ?>" class="btn btn-warning">
+                                    <i class="fas fa-sign-out-alt"></i> Log All Agents Out
+                                </a>
+                                <?php if ($LOGdelete_campaigns > 0): ?>
+                                <a href="<?= $PHP_SELF ?>?ADD=51&campaign_id=<?= $campaign_id ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this campaign?')">
+                                    <i class="fas fa-trash"></i> Delete Campaign
+                                </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function showTab(tabName) {
+                    // Hide all tab contents
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Remove active class from all tabs
+                    const tabs = document.querySelectorAll('.tab');
+                    tabs.forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Show selected tab
+                    document.getElementById(tabName).classList.add('active');
+                    
+                    // Add active class to clicked tab
+                    event.target.closest('.tab').classList.add('active');
+                }
+
+                function validateForm() {
+                    const campaignName = document.getElementById('campaign_name').value;
+                    if (!campaignName) {
+                        alert('Campaign name is required');
+                        return false;
+                    }
+                    return true;
+                }
+
+                function submitListChanges() {
+                    if (confirm('Are you sure you want to submit these changes?')) {
+                        document.querySelector('form').submit();
+                    }
+                }
+
+                // Auto-refresh functionality
+                <?php if (isset($modify_footer_refresh) && $modify_footer_refresh == 1): ?>
+                setTimeout(function() {
+                    window.location.href = '<?= $modify_url ?>';
+                }, 5000);
+                <?php endif; ?>
+            </script>
+        </body>
+        </html>
+        <?php
+    }
+} else {
+    echo _QXZ("You do not have permission to view this page") . "\n";
+    exit;
+}
 
 
 
