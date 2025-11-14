@@ -46194,77 +46194,202 @@ if ($ADD==341111111111111)
 ######################
 # ADD=550 user search form
 ######################
+
 if ($ADD==550)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    ?>
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        
+        <!-- Search Form Section -->
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e8ecf1;">
+                <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("SEARCH FOR A USER"); ?></h1>
+            </div>
 
-	echo "<br>"._QXZ("SEARCH FOR A USER")."<form action=$PHP_SELF method=POST>\n";
-	echo "<input type=hidden name=ADD value=660>\n";
-	echo "<center><TABLE width=$section_width cellspacing=3>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Number").": </td><td align=left><input type=text name=user size=20 maxlength=20></td></tr>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=full_name size=30 maxlength=30></td></tr>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Level").": </td><td align=left><select size=1 name=user_level><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></td></tr>\n";
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Group").": </td><td align=left><select size=1 name=user_group>\n";
+            <form action="<?php echo $PHP_SELF; ?>" method="POST">
+                <input type="hidden" name="ADD" value="660">
+                
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0 15px;">
+                    <tr>
+                        <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; width: 180px;">
+                            <?php echo _QXZ("User Number"); ?>:
+                        </td>
+                        <td style="padding: 8px;">
+                            <input type="text" name="user" size="20" maxlength="20" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 300px; box-sizing: border-box;">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <?php echo _QXZ("Full Name"); ?>:
+                        </td>
+                        <td style="padding: 8px;">
+                            <input type="text" name="full_name" size="30" maxlength="30" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; width: 100%; max-width: 400px; box-sizing: border-box;">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <?php echo _QXZ("User Level"); ?>:
+                        </td>
+                        <td style="padding: 8px;">
+                            <select name="user_level" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 150px; box-sizing: border-box;">
+                                <option selected>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                            </select>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="padding: 8px; text-align: right; font-weight: 600; color: #2c3e50; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px;">
+                            <?php echo _QXZ("User Group"); ?>:
+                        </td>
+                        <td style="padding: 8px;">
+                            <select name="user_group" style="padding: 10px 14px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; background: white; width: 100%; max-width: 400px; box-sizing: border-box;">
+                                <?php
+                                $stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group";
+                                $rslt=mysql_to_mysqli($stmt, $link);
+                                $groups_to_print = mysqli_num_rows($rslt);
+                                $o=0;
+                                $groups_list='';
+                                while ($groups_to_print > $o) 
+                                    {
+                                    $rowx=mysqli_fetch_row($rslt);
+                                    $groups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                                    $o++;
+                                    }
+                                echo "$groups_list";
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding-top: 20px;">
+                            <button type="submit" name="search" style="padding: 12px 32px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#229954'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(39,174,96,0.3)';" onmouseout="this.style.background='#27ae60'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                <?php echo _QXZ("SEARCH"); ?>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-	$stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$groups_to_print = mysqli_num_rows($rslt);
-	$o=0;
-	$groups_list='';
-	while ($groups_to_print > $o) 
-		{
-		$rowx=mysqli_fetch_row($rslt);
-		$groups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-		$o++;
-		}
-	echo "$groups_list</select></td></tr>\n";
-
-	echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=search value='"._QXZ("search")."'></td></tr>\n";
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
 # ADD=660 user search results
 ######################
 if ($ADD==660)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    $SQL = '';
+    if ($user) {$SQL .= " user LIKE \"%$user%\" and";}
+    if ($full_name) {$SQL .= " full_name LIKE \"%$full_name%\" and";}
+    if ($user_level > 0) {$SQL .= " user_level LIKE \"%$user_level%\" and";}
+    if ($user_group) {$SQL .= " user_group = '$user_group' and";}
+    $SQL = preg_replace('/\sand$/i', '', $SQL);
+    if (strlen($SQL)>5) {$SQL = "and $SQL";}
 
-	$SQL = '';
-	if ($user) {$SQL .= " user LIKE \"%$user%\" and";}
-	if ($full_name) {$SQL .= " full_name LIKE \"%$full_name%\" and";}
-	if ($user_level > 0) {$SQL .= " user_level LIKE \"%$user_level%\" and";}
-	if ($user_group) {$SQL .= " user_group = '$user_group' and";}
-	$SQL = preg_replace('/\sand$/i', '', $SQL);
-	if (strlen($SQL)>5) {$SQL = "and $SQL";}
+    $stmt="SELECT user_id,user,pass,full_name,user_level,user_group,phone_login,phone_pass,delete_users,delete_user_groups,delete_lists,delete_campaigns,delete_ingroups,delete_remote_agents,load_leads,campaign_detail,ast_admin_access,ast_delete_phones,delete_scripts,modify_leads,hotkeys_active,change_agent_campaign,agent_choose_ingroups,closer_campaigns,scheduled_callbacks,agentonly_callbacks,agentcall_manual,vicidial_recording,vicidial_transfers,delete_filters,alter_agent_interface_options,closer_default_blended,delete_call_times,modify_call_times,modify_users,modify_campaigns,modify_lists,modify_scripts,modify_filters,modify_ingroups,modify_usergroups,modify_remoteagents,modify_servers,view_reports,vicidial_recording_override,alter_custdata_override,qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit,add_timeclock_log,modify_timeclock_log,delete_timeclock_log,alter_custphone_override,vdc_agent_api_access,modify_inbound_dids,delete_inbound_dids,active,alert_enabled,download_lists,agent_shift_enforcement_override,manager_shift_enforcement_override,shift_override_flag,export_reports,delete_from_dnc,email,user_code,territory,allow_alerts,export_gdpr_leads from vicidial_users where user_level <= $LOGuser_level $LOGadmin_viewable_groupsSQL $SQL order by full_name desc;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $people_to_print = mysqli_num_rows($rslt);
+    ?>
 
-	$stmt="SELECT user_id,user,pass,full_name,user_level,user_group,phone_login,phone_pass,delete_users,delete_user_groups,delete_lists,delete_campaigns,delete_ingroups,delete_remote_agents,load_leads,campaign_detail,ast_admin_access,ast_delete_phones,delete_scripts,modify_leads,hotkeys_active,change_agent_campaign,agent_choose_ingroups,closer_campaigns,scheduled_callbacks,agentonly_callbacks,agentcall_manual,vicidial_recording,vicidial_transfers,delete_filters,alter_agent_interface_options,closer_default_blended,delete_call_times,modify_call_times,modify_users,modify_campaigns,modify_lists,modify_scripts,modify_filters,modify_ingroups,modify_usergroups,modify_remoteagents,modify_servers,view_reports,vicidial_recording_override,alter_custdata_override,qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit,add_timeclock_log,modify_timeclock_log,delete_timeclock_log,alter_custphone_override,vdc_agent_api_access,modify_inbound_dids,delete_inbound_dids,active,alert_enabled,download_lists,agent_shift_enforcement_override,manager_shift_enforcement_override,shift_override_flag,export_reports,delete_from_dnc,email,user_code,territory,allow_alerts,export_gdpr_leads from vicidial_users where user_level <= $LOGuser_level $LOGadmin_viewable_groupsSQL $SQL order by full_name desc;";
-#	echo "\n|$stmt|\n";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$people_to_print = mysqli_num_rows($rslt);
+    <div style="background: white; padding: 5px;">
+    <div style="max-width: 1300px; margin: 0 auto;">
+        
+        <!-- Search Results Section -->
+        <div style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                <img src="images/icon_black_users.png" alt="Users" width="48" height="48" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <h1 style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 28px; color: #2c3e50; font-weight: 700; margin: 0; letter-spacing: -0.5px;"><?php echo _QXZ("SEARCH RESULTS"); ?></h1>
+            </div>
 
-	echo "<br>"._QXZ("SEARCH RESULTS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
+            <!-- Results Table -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                    <thead>
+                        <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                            <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("USER"); ?>
+                            </th>
+                            <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("FULL NAME"); ?>
+                            </th>
+                            <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("LEVEL"); ?>
+                            </th>
+                            <th style="padding: 14px 12px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("GROUP"); ?>
+                            </th>
+                            <th style="padding: 14px 12px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #2c3e50; font-weight: 600; text-transform: uppercase;">
+                                <?php echo _QXZ("ACTIONS"); ?>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $o=0;
+                    while ($people_to_print > $o) 
+                        {
+                        $row=mysqli_fetch_row($rslt);
+                        $bgcolor = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                        ?>
+                        <tr style="background: <?php echo $bgcolor; ?>; border-bottom: 1px solid #e8ecf1; transition: background-color 0.2s ease;" onmouseover="this.style.background='#e3f2fd';" onmouseout="this.style.background='<?php echo $bgcolor; ?>';">
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50; font-weight: 600;">
+                                <?php echo $row[1]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #2c3e50;">
+                                <?php echo $row[3]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo $row[4]; ?>
+                            </td>
+                            <td style="padding: 12px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 14px; color: #7f8c8d;">
+                                <?php echo $row[5]; ?>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <a href="<?php echo $PHP_SELF; ?>?ADD=3&user=<?php echo $row[1]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #3498db; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block; margin: 2px;" onmouseover="this.style.background='#3498db'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3498db';">
+                                    <?php echo _QXZ("MODIFY"); ?>
+                                </a>
+                                <a href="./user_stats.php?user=<?php echo $row[1]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #9b59b6; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block; margin: 2px;" onmouseover="this.style.background='#9b59b6'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#9b59b6';">
+                                    <?php echo _QXZ("STATS"); ?>
+                                </a>
+                                <a href="./user_status.php?user=<?php echo $row[1]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #e67e22; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block; margin: 2px;" onmouseover="this.style.background='#e67e22'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#e67e22';">
+                                    <?php echo _QXZ("STATUS"); ?>
+                                </a>
+                                <a href="./AST_agent_time_sheet.php?agent=<?php echo $row[1]; ?>" style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif; font-size: 13px; color: #16a085; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; display: inline-block; margin: 2px;" onmouseover="this.style.background='#16a085'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#16a085';">
+                                    <?php echo _QXZ("TIME"); ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+                        $o++;
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <?php
+    }
 
-	$o=0;
-	while ($people_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-		else
-			{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-		echo "<tr $bgcolor><td><font size=1>$row[1]</td><td><font size=1>$row[3]</td><td><font size=1>$row[4]</td><td><font size=1>$row[5]</td>";
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=3&user=$row[1]\">"._QXZ("MODIFY")."</a> | <a href=\"./user_stats.php?user=$row[1]\">"._QXZ("STATS")."</a> | <a href=\"./user_status.php?user=$row[1]\">"._QXZ("STATUS")."</a> | <a href=\"./AST_agent_time_sheet.php?agent=$row[1]\">"._QXZ("TIME")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-
-	}
 
 
 ######################################################################################################
