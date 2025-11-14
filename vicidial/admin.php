@@ -46473,8 +46473,9 @@ if ($ADD==82)
     
 if ($ADD=="0A")
 {
+
 ?>
-<div style="background: white; padding: 20px;">
+<div style="background: white; padding: 10px;">
 <div style="max-width: 1400px; margin: 0 auto;">
     
     <!-- Header Section -->
