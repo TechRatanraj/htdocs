@@ -8862,149 +8862,348 @@ if ($ADD=="1A")
 ######################
 # ADD=11 display the ADD NEW CAMPAIGN FORM SCREEN
 ######################
-if ($ADD==11)
-	{
-	if ($LOGmodify_campaigns==1)
-		{
-		##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-		$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_campaigns' and active='1';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$voi_ct = mysqli_num_rows($rslt);
-		if ($voi_ct > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$voi_count = "$row[0]";
-			}
-		##### END ID override optional section #####
 
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_black_campaigns.png\" alt=\"Campaigns\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-		echo "<br>"._QXZ("ADD A NEW CAMPAIGN")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=21>\n";
-		echo "<input type=hidden name=park_ext value=''>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		if ($voi_count > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign ID").": </td><td align=left>"._QXZ("Auto-Generated")." $NWB#campaigns-campaign_id$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign ID").": </td><td align=left><input type=text name=campaign_id size=10 maxlength=8>$NWB#campaigns-campaign_id$NWE</td></tr>\n";
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Name").": </td><td align=left><input type=text name=campaign_name size=40 maxlength=40>$NWB#campaigns-campaign_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Description").": </td><td align=left><input type=text name=campaign_description size=40 maxlength=255>$NWB#campaigns-campaign_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#campaigns-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option></select>$NWB#campaigns-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Park Music-on-Hold").": </td><td align=left><input type=text name=park_file_name id=park_file_name size=20 maxlength=100> <a href=\"javascript:launch_moh_chooser('park_file_name','moh');\">"._QXZ("moh chooser")."</a> $NWB#campaigns-park_ext$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Form").": </td><td align=left><input type=text name=web_form_address size=70 maxlength=9999>$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) {echo " <font color=red><b>"._QXZ("DISABLED")."</b></font>";} echo "</td></tr>\n";
-		if ($SSoutbound_autodial_active > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Closers").": </td><td align=left><select size=1 name=allow_closers><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option></select>$NWB#campaigns-allow_closers$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Minimum Hopper Level").": </td><td align=left><select size=1 name=hopper_level><option>1</option><option>5</option><option>10</option><option>20</option><option>50</option><option>100</option><option>200</option><option>500</option><option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option></select>$NWB#campaigns-hopper_level$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Auto Dial Level").": </td><td align=left><select size=1 name=auto_dial_level><option selected>1</option><option>0</option>\n";
-			$adl=0;
-			while($adl <= $SSauto_dial_limit)
-				{
-				if ($adl < 1)
-					{$adl = ($adl + 1);}
-				else
-					{
-					if ($adl < 3)
-						{$adl = ($adl + 0.1);}
-					else
-						{
-						if ($adl < 4)
-							{$adl = ($adl + 0.25);}
-						else
-							{
-							if ($adl < 5)
-								{$adl = ($adl + 0.5);}
-							else
-								{
-								if ($adl < 20)
-									{$adl = ($adl + 1);}
-								else
-									{
-									if ($adl < 40)
-										{$adl = ($adl + 2);}
-									else
-										{
-										if ($adl < 100)
-											{$adl = ($adl + 5);}
-										else
-											{
-											if ($adl < 200)
-												{$adl = ($adl + 10);}
-											else
-												{
-												if ($adl < 400)
-													{$adl = ($adl + 50);}
-												else
-													{
-													if ($adl < 1000)
-														{$adl = ($adl + 100);}
-													else
-														{$adl = ($adl + 1);}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				if ($adl > $SSauto_dial_limit) {$hmm=1;}
-				else {echo "<option>$adl</option>\n";}
-				}
-			echo "</select>(0 = "._QXZ("off").")$NWB#campaigns-auto_dial_level$NWE</td></tr>\n";
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Next Agent Call").": </td><td align=left><select size=1 name=next_agent_call><option value='random'>"._QXZ("random")."</option><option value='oldest_call_start'>"._QXZ("oldest_call_start")."</option><option value='oldest_call_finish'>"._QXZ("oldest_call_finish")."</option><option value='overall_user_level'>"._QXZ("overall_user_level")."</option><option value='campaign_rank'>"._QXZ("campaign_rank")."</option><option value='campaign_grade_random'>"._QXZ("campaign_grade_random")."</option><option value='fewest_calls'>"._QXZ("fewest_calls")."</option><option value='longest_wait_time'>"._QXZ("longest_wait_time")."</option><option value='overall_user_level_wait_time'>"._QXZ("overall_user_level_wait_time")."</option><option value='campaign_rank_wait_time'>"._QXZ("campaign_rank_wait_time")."</option><option value='fewest_calls_wait_time'>"._QXZ("fewest_calls_wait_time")."</option></select>$NWB#campaigns-next_agent_call$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Local Call Time").": </td><td align=left><select size=1 name=local_call_time>";
-		echo "$call_times_list";
-		echo "</select>$NWB#campaigns-local_call_time$NWE</td></tr>\n";
+if ($ADD == 11) {
+    if ($LOGmodify_campaigns == 1) {
+        
+        // Check ID override configuration
+        $autoGenerateId = false;
+        $voi_count = 0;
+        $stmt = "SELECT COUNT(*) FROM vicidial_override_ids WHERE id_table='vicidial_campaigns' AND active='1'";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        if ($rslt && mysqli_num_rows($rslt) > 0) {
+            $row = mysqli_fetch_row($rslt);
+            $voi_count = intval($row);
+            $autoGenerateId = ($voi_count > 0);
+        }
+        
+        // Build auto dial level options
+        $adl_options = '<option selected>1</option><option>0</option>';
+        $adl = 0;
+        while ($adl <= $SSauto_dial_limit) {
+            if ($adl < 1) {
+                $adl = ($adl + 1);
+            } else {
+                if ($adl < 3) {
+                    $adl = ($adl + 0.1);
+                } elseif ($adl < 4) {
+                    $adl = ($adl + 0.25);
+                } elseif ($adl < 5) {
+                    $adl = ($adl + 0.5);
+                } elseif ($adl < 20) {
+                    $adl = ($adl + 1);
+                } elseif ($adl < 40) {
+                    $adl = ($adl + 2);
+                } elseif ($adl < 100) {
+                    $adl = ($adl + 5);
+                } elseif ($adl < 200) {
+                    $adl = ($adl + 10);
+                } elseif ($adl < 400) {
+                    $adl = ($adl + 50);
+                } elseif ($adl < 1000) {
+                    $adl = ($adl + 100);
+                } else {
+                    $adl = ($adl + 1);
+                }
+            }
+            if ($adl <= $SSauto_dial_limit) {
+                $adl_options .= "<option>$adl</option>";
+            }
+        }
+        
+        // Build extra webform/script options
+        $eswHTML = '';
+        if ($SSenable_second_script > 0) {
+            $eswHTML .= "<option value='SCRIPTTWO'>" . _QXZ("SCRIPTTWO") . "</option>";
+        }
+        if ($SSenable_second_webform > 0) {
+            $eswHTML .= "<option value='WEBFORMTWO'>" . _QXZ("WEBFORMTWO") . "</option>";
+        }
+        if ($SSenable_third_webform > 0) {
+            $eswHTML .= "<option value='WEBFORMTHREE'>" . _QXZ("WEBFORMTHREE") . "</option>";
+        }
+        $cfwHTML = ($SScustom_fields_enabled > 0) ? "<option value='FORM'>" . _QXZ("FORM") . "</option>" : '';
+        $aemHTML = ($SSallow_emails > 0) ? "<option value='EMAIL'>" . _QXZ("EMAIL") . "</option>" : '';
+        $achHTML = ($SSallow_chats > 0) ? "<option value='CHAT'>" . _QXZ("CHAT") . "</option>" : '';
+        ?>
+        
+<style>
+.nc-wrap{max-width:<?php echo $section_width; ?>px;margin:20px auto;font-family:Arial,Helvetica,sans-serif}
+.nc-hdr{display:flex;align-items:center;gap:15px;margin-bottom:0;padding:18px 20px;background:#f8f9fa;border:1px solid #e5e7eb;border-bottom:2px solid #e5e7eb;border-radius:6px 6px 0 0}
+.nc-hdr img{flex-shrink:0}
+.nc-hdr h2{margin:0;font-size:18px;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:0.5px}
+.nc-tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.nc-tbl tr{background-color:#fff;transition:background-color .15s}
+.nc-tbl tr:hover{background-color:#f9fafb}
+.nc-tbl td{padding:14px 20px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+.nc-tbl tr:last-child td{border-bottom:none}
+.nc-lbl{font-weight:600;color:#374151;font-size:13px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
+.nc-inp,.nc-sel{padding:9px 12px;border:1.5px solid #d1d5db;border-radius:4px;font-size:14px;font-family:Arial,Helvetica,sans-serif;transition:all .2s;background-color:#fff;color:#374151}
+.nc-inp:focus,.nc-sel:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.nc-badge{display:inline-block;padding:6px 14px;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;border-radius:4px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
+.nc-btn{background-color:#<?php echo $SSbutton_color; ?>;color:#fff;padding:10px 32px;border:none;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.nc-btn:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.15);opacity:.9}
+.nc-btn:active{transform:translateY(0)}
+.nc-link{color:#3b82f6;text-decoration:none;font-weight:500;font-size:13px}
+.nc-link:hover{text-decoration:underline}
+.nc-disabled{color:#dc2626;font-weight:600;font-size:12px;margin-left:8px}
+@media (max-width:768px){.nc-wrap{margin:10px}.nc-hdr{padding:15px}.nc-tbl td{display:block;width:100%!important;text-align:left!important;padding:12px 15px}.nc-lbl{padding-bottom:5px}}
+</style>
 
-		if ($SSoutbound_autodial_active > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Voicemail").": </td><td align=left><input type=text name=voicemail_ext size=10 maxlength=10 value=\"$voicemail_ext\">$NWB#campaigns-voicemail_ext$NWE</td></tr>\n";
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script").": </td><td align=left><select size=1 name=script_id>\n";
-		echo "$scripts_list";
-		echo "</select>$NWB#campaigns-campaign_script$NWE</td></tr>\n";
-		if ($SSenable_second_script > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script Two").": </td><td align=left><select size=1 name=campaign_script_two>\n";
-			echo "$scripts_list";
-			echo "</select>$NWB#campaigns-campaign_script$NWE</td></tr>\n";
-			}
+<div class="nc-wrap">
+    <div class="nc-hdr">
+        <img src="images/icon_black_campaigns.png" alt="Campaigns" width="42" height="42">
+        <h2><?php echo _QXZ("ADD A NEW CAMPAIGN"); ?></h2>
+    </div>
+    
+    <form action="<?php echo htmlspecialchars($PHP_SELF, ENT_QUOTES, 'UTF-8'); ?>" method="POST" id="ncForm">
+        <input type="hidden" name="ADD" value="21">
+        <input type="hidden" name="park_ext" value="">
+        
+        <table class="nc-tbl" cellspacing="0">
+            
+            <!-- Campaign ID -->
+            <tr>
+                <td align="right" width="30%" class="nc-lbl"><?php echo _QXZ("Campaign ID"); ?>:</td>
+                <td align="left" width="70%">
+                    <?php if ($autoGenerateId): ?>
+                        <span class="nc-badge"><?php echo _QXZ("Auto-Generated"); ?></span>
+                        <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
+                    <?php else: ?>
+                        <input type="text" name="campaign_id" id="ncId" class="nc-inp" size="10" maxlength="8" pattern="[A-Za-z0-9_-]+" required style="max-width:150px">
+                        <?php echo $NWB . "#campaigns-campaign_id" . $NWE; ?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            
+            <!-- Campaign Name -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Campaign Name"); ?>:</td>
+                <td align="left">
+                    <input type="text" name="campaign_name" id="ncName" class="nc-inp" size="40" maxlength="40" required style="max-width:450px">
+                    <?php echo $NWB . "#campaigns-campaign_name" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Campaign Description -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Campaign Description"); ?>:</td>
+                <td align="left">
+                    <input type="text" name="campaign_description" class="nc-inp" size="40" maxlength="255" style="max-width:550px">
+                    <?php echo $NWB . "#campaigns-campaign_description" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Admin User Group -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Admin User Group"); ?>:</td>
+                <td align="left">
+                    <select name="user_group" class="nc-sel" style="max-width:300px">
+                        <?php echo $UUgroups_list; ?>
+                        <option selected value="---ALL---"><?php echo _QXZ("All Admin User Groups"); ?></option>
+                    </select>
+                    <?php echo $NWB . "#campaigns-user_group" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Active -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Active"); ?>:</td>
+                <td align="left">
+                    <select name="active" class="nc-sel" style="max-width:120px">
+                        <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                        <option value="N"><?php echo _QXZ("N"); ?></option>
+                    </select>
+                    <?php echo $NWB . "#campaigns-active" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Park Music-on-Hold -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Park Music-on-Hold"); ?>:</td>
+                <td align="left">
+                    <input type="text" name="park_file_name" id="park_file_name" class="nc-inp" size="20" maxlength="100" style="max-width:250px">
+                    <a href="javascript:launch_moh_chooser('park_file_name','moh');" class="nc-link"><?php echo _QXZ("moh chooser"); ?></a>
+                    <?php echo $NWB . "#campaigns-park_ext" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Web Form -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Web Form"); ?>:</td>
+                <td align="left">
+                    <input type="text" name="web_form_address" class="nc-inp" size="70" maxlength="9999" style="max-width:600px">
+                    <?php echo $NWB . "#campaigns-web_form_address" . $NWE; ?>
+                    <?php if ($SSenable_first_webform < 1): ?>
+                        <span class="nc-disabled"><?php echo _QXZ("DISABLED"); ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            
+            <?php if ($SSoutbound_autodial_active > 0): ?>
+            
+            <!-- Allow Closers -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Allow Closers"); ?>:</td>
+                <td align="left">
+                    <select name="allow_closers" class="nc-sel" style="max-width:120px">
+                        <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                        <option value="N"><?php echo _QXZ("N"); ?></option>
+                    </select>
+                    <?php echo $NWB . "#campaigns-allow_closers" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Minimum Hopper Level -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Minimum Hopper Level"); ?>:</td>
+                <td align="left">
+                    <select name="hopper_level" class="nc-sel" style="max-width:150px">
+                        <option>1</option>
+                        <option>5</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>200</option>
+                        <option>500</option>
+                        <option>1000</option>
+                        <option>2000</option>
+                        <option>3000</option>
+                        <option>4000</option>
+                        <option>5000</option>
+                    </select>
+                    <?php echo $NWB . "#campaigns-hopper_level" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Auto Dial Level -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Auto Dial Level"); ?>:</td>
+                <td align="left">
+                    <select name="auto_dial_level" class="nc-sel" style="max-width:150px">
+                        <?php echo $adl_options; ?>
+                    </select>
+                    <span style="color:#6b7280;font-size:13px;margin-left:8px">(0 = <?php echo _QXZ("off"); ?>)</span>
+                    <?php echo $NWB . "#campaigns-auto_dial_level" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <?php endif; ?>
+            
+            <!-- Next Agent Call -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Next Agent Call"); ?>:</td>
+                <td align="left">
+                    <select name="next_agent_call" class="nc-sel" style="max-width:300px">
+                        <option value="random"><?php echo _QXZ("random"); ?></option>
+                        <option value="oldest_call_start"><?php echo _QXZ("oldest_call_start"); ?></option>
+                        <option value="oldest_call_finish"><?php echo _QXZ("oldest_call_finish"); ?></option>
+                        <option value="overall_user_level"><?php echo _QXZ("overall_user_level"); ?></option>
+                        <option value="campaign_rank"><?php echo _QXZ("campaign_rank"); ?></option>
+                        <option value="campaign_grade_random"><?php echo _QXZ("campaign_grade_random"); ?></option>
+                        <option value="fewest_calls"><?php echo _QXZ("fewest_calls"); ?></option>
+                        <option value="longest_wait_time"><?php echo _QXZ("longest_wait_time"); ?></option>
+                        <option value="overall_user_level_wait_time"><?php echo _QXZ("overall_user_level_wait_time"); ?></option>
+                        <option value="campaign_rank_wait_time"><?php echo _QXZ("campaign_rank_wait_time"); ?></option>
+                        <option value="fewest_calls_wait_time"><?php echo _QXZ("fewest_calls_wait_time"); ?></option>
+                    </select>
+                    <?php echo $NWB . "#campaigns-next_agent_call" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Local Call Time -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Local Call Time"); ?>:</td>
+                <td align="left">
+                    <select name="local_call_time" class="nc-sel" style="max-width:300px">
+                        <?php echo $call_times_list; ?>
+                    </select>
+                    <?php echo $NWB . "#campaigns-local_call_time" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <?php if ($SSoutbound_autodial_active > 0): ?>
+            
+            <!-- Voicemail -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Voicemail"); ?>:</td>
+                <td align="left">
+                    <input type="text" name="voicemail_ext" class="nc-inp" size="10" maxlength="10" value="<?php echo htmlspecialchars($voicemail_ext, ENT_QUOTES, 'UTF-8'); ?>" style="max-width:150px">
+                    <?php echo $NWB . "#campaigns-voicemail_ext" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <?php endif; ?>
+            
+            <!-- Script -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Script"); ?>:</td>
+                <td align="left">
+                    <select name="script_id" class="nc-sel" style="max-width:350px">
+                        <?php echo $scripts_list; ?>
+                    </select>
+                    <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <?php if ($SSenable_second_script > 0): ?>
+            
+            <!-- Script Two -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Script Two"); ?>:</td>
+                <td align="left">
+                    <select name="campaign_script_two" class="nc-sel" style="max-width:350px">
+                        <?php echo $scripts_list; ?>
+                    </select>
+                    <?php echo $NWB . "#campaigns-campaign_script" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <?php endif; ?>
+            
+            <!-- Get Call Launch -->
+            <tr>
+                <td align="right" class="nc-lbl"><?php echo _QXZ("Get Call Launch"); ?>:</td>
+                <td align="left">
+                    <select name="get_call_launch" class="nc-sel" style="max-width:250px">
+                        <option selected value="NONE"><?php echo _QXZ("NONE"); ?></option>
+                        <option value="SCRIPT"><?php echo _QXZ("SCRIPT"); ?></option>
+                        <option value="WEBFORM"><?php echo _QXZ("WEBFORM"); ?></option>
+                        <?php echo $eswHTML . $cfwHTML . $aemHTML . $achHTML; ?>
+                    </select>
+                    <?php echo $NWB . "#campaigns-get_call_launch" . $NWE; ?>
+                </td>
+            </tr>
+            
+            <!-- Submit Button -->
+            <tr>
+                <td align="center" colspan="2" style="padding:20px;background:#fafafa;border-top:1px solid #f3f4f6">
+                    <input type="submit" name="SUBMIT" value="<?php echo _QXZ("SUBMIT"); ?>" class="nc-btn">
+                </td>
+            </tr>
+            
+        </table>
+    </form>
+</div>
 
-		$eswHTML=''; $cfwHTML=''; $aemHTML=''; $achHTML='';
-		if ($SSenable_second_script > 0)
-			{$eswHTML .= "<option value='SCRIPTTWO'>"._QXZ("SCRIPTTWO")."</option>";}
-		if ($SSenable_second_webform > 0)
-			{$eswHTML .= "<option value='WEBFORMTWO'>"._QXZ("WEBFORMTWO")."</option>";}
-		if ($SSenable_third_webform > 0)
-			{$eswHTML .= "<option value='WEBFORMTHREE'>"._QXZ("WEBFORMTHREE")."</option>";}
-		if ($SScustom_fields_enabled > 0)
-			{$cfwHTML .= "<option value='FORM'>"._QXZ("FORM")."</option>";}
-		if ($SSallow_emails > 0)
-			{$aemHTML .= "<option value='EMAIL'>"._QXZ("EMAIL")."</option>";}
-		if ($SSallow_chats > 0)
-			{$achHTML .= "<option value='CHAT'>"._QXZ("CHAT")."</option>";}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Get Call Launch").": </td><td align=left><select size=1 name=get_call_launch><option selected value='NONE'>"._QXZ("NONE")."</option><option value='SCRIPT'>"._QXZ("SCRIPT")."</option><option value='WEBFORM'>"._QXZ("WEBFORM")."</option>$eswHTML$cfwHTML$aemHTML$achHTML</select>$NWB#campaigns-get_call_launch$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+<script>
+(function(){var f=document.getElementById('ncForm');if(!f)return;f.addEventListener('submit',function(e){var id=document.getElementById('ncId'),nm=document.getElementById('ncName'),btn=this.querySelector('input[type="submit"]');if(id&&!id.disabled){var v=id.value.trim();if(v.length===0){alert('<?php echo _QXZ("Campaign ID is required"); ?>');id.focus();e.preventDefault();return false}if(!/^[A-Za-z0-9_-]+$/.test(v)){alert('<?php echo _QXZ("Campaign ID can only contain letters, numbers, hyphens, and underscores"); ?>');id.focus();e.preventDefault();return false}}if(nm&&nm.value.trim().length===0){alert('<?php echo _QXZ("Campaign Name is required"); ?>');nm.focus();e.preventDefault();return false}if(btn){btn.disabled=true;btn.value='<?php echo _QXZ("Processing..."); ?>';btn.style.opacity='0.6'}return true});var idInp=document.getElementById('ncId');if(idInp){idInp.addEventListener('input',function(){var v=this.value;if(v&&!/^[A-Za-z0-9_-]*$/.test(v)){this.style.borderColor='#dc3545';this.setCustomValidity('<?php echo _QXZ("Only letters, numbers, hyphens, and underscores allowed"); ?>')}else{this.style.borderColor='#d1d5db';this.setCustomValidity('')}})}})();
+</script>
+
+        <?php
+    } else {
+        ?>
+<style>.nc-err{max-width:600px;margin:40px auto;padding:20px 24px;background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #dc2626;border-radius:4px;font-family:Arial,Helvetica,sans-serif}.nc-err h3{margin:0 0 10px 0;color:#991b1b;font-size:16px;font-weight:600}.nc-err p{margin:0;color:#991b1b;font-size:14px}</style>
+<div class="nc-err">
+    <h3>⛔ <?php echo _QXZ("Access Denied"); ?></h3>
+    <p><?php echo _QXZ("You do not have permission to view this page"); ?></p>
+</div>
+        <?php
+        exit;
+    }
+}
 
 
 ######################
