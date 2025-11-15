@@ -27765,345 +27765,210 @@ echo "<table><tr><td>
 echo "<center>\n";
 
 
-	
-if ($SUB < 1) {
-    echo "<form action=\"$PHP_SELF\" method=\"POST\" style=\"margin:0;padding:0;width:100%;\">";
-    echo "<input type=\"hidden\" name=\"ADD\" value=\"41\">";
-    echo "<input type=\"hidden\" name=\"DB\" value=\"$DB\">";
-    echo "<input type=\"hidden\" name=\"campaign_id\" value=\"$campaign_id\">";
-    echo "<input type=\"hidden\" name=\"park_ext\" value=\"$park_ext\">";
-    echo "<input type=\"hidden\" name=\"old_campaign_allow_inbound\" value=\"$campaign_allow_inbound\">";
-    echo "<input type=\"hidden\" name=\"agent_extended_alt_dial\" value=\"$agent_extended_alt_dial\">";
+	if ($SUB < 1)
+		{
+		echo "<form action=$PHP_SELF method=POST>\n";
+		echo "<input type=hidden name=ADD value=41>\n";
+		echo "<input type=hidden name=DB value=\"$DB\">\n";
+		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+		echo "<input type=hidden name=park_ext value=\"$park_ext\">\n";
+		echo "<input type=hidden name=old_campaign_allow_inbound value=\"$campaign_allow_inbound\">\n";
+		echo "<input type=hidden name=agent_extended_alt_dial value=\"$agent_extended_alt_dial\">\n";
+		echo "<TABLE width=910 cellspacing=3>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign ID").": </td><td align=left><b>$campaign_id</b>$NWB#campaigns-campaign_id$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Name").": </td><td align=left><input type=text name=campaign_name size=40 maxlength=40 value=\"$campaign_name\">$NWB#campaigns-campaign_name$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Description").": </td><td align=left><input type=text name=campaign_description size=40 maxlength=255 value=\"$campaign_description\">$NWB#campaigns-campaign_description$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Change Date").": </td><td align=left>$campaign_changedate &nbsp; $NWB#campaigns-campaign_changedate$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Login Date").": </td><td align=left>$campaign_logindate &nbsp; $NWB#campaigns-campaign_logindate$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Call Date").": </td><td align=left>$campaign_calldate &nbsp; $NWB#campaigns-campaign_calldate$NWE</td></tr>\n";
 
-    // ========== Campaign Information Section ==========
-    echo "<div style='max-width:1300px; margin:34px auto 18px auto; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3;'>";
-    echo "<div style='font-size:22px; font-weight:bold; padding:22px 30px 8px 30px; color:#222;'><span style='margin-right:11px;'>📌</span>Campaign Information</div>";
-    echo "<hr style='border:0; border-top:2px solid #2685ec; margin:0 30px 22px 30px;'>";
-    echo "<div style='display:flex; flex-wrap:wrap; gap:22px; padding:0 30px 28px 30px;'>";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>\n";
+			$temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
+			horizontal_bar_chart($campaign_id,'8','campaign',$link,'total_calls','call count',1,'','',$temp_chart_title);
+		echo "</td></tr>\n";
 
-    // LEFT COLUMN
-    echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
-    
-    // Campaign ID
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>CAMPAIGN ID</div>";
-    echo "<div style='font-size:20px; font-weight:600; color:#222; margin-top:10px;'>$campaign_id $NWB#campaigns-campaign_id$NWE</div>";
-    echo "</div>";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$campaign_active\" SELECTED>"._QXZ("$campaign_active")."</option></select>$NWB#campaigns-active$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
+		echo "$UUgroups_list";
+		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
+		echo "</select>$NWB#campaigns-user_group$NWE</td></tr>\n";
 
-    // Campaign Description
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ffc107; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>CAMPAIGN DESCRIPTION</div>";
-    echo "<input type='text' name='campaign_description' maxlength='255' value=\"$campaign_description\" style='width:95%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>";
-    echo "$NWB#campaigns-campaign_description$NWE";
-    echo "</div>";
-
-    // Campaign Change Date
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #dc3545; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>CAMPAIGN CHANGE DATE</div>";
-    echo "<div style='font-size:17px; font-weight:500; color:#2d2939; margin-top:10px;'>$campaign_changedate $NWB#campaigns-campaign_changedate$NWE</div>";
-    echo "</div>";
-
-    echo "</div>"; // end left column
-
-    // RIGHT COLUMN
-    echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
-
-    // Campaign Name
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>CAMPAIGN NAME</div>";
-    echo "<input type='text' name='campaign_name' maxlength='40' value=\"$campaign_name\" style='width:95%; font-size:18px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>";
-    echo "$NWB#campaigns-campaign_name$NWE";
-    echo "</div>";
-
-    // Campaign Login Date
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ae41e8; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>CAMPAIGN LOGIN DATE</div>";
-    echo "<div style='font-size:17px; font-weight:500; color:#2d2939; margin-top:10px;'>$campaign_logindate $NWB#campaigns-campaign_logindate$NWE</div>";
-    echo "</div>";
-
-    // Campaign Call Date
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #dc3545; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>CAMPAIGN CALL DATE</div>";
-    echo "<div style='font-size:17px; font-weight:500; color:#2d2939; margin-top:10px;'>$campaign_calldate $NWB#campaigns-campaign_calldate$NWE</div>";
-    echo "</div>";
-
-    echo "</div>"; // end right column
-    echo "</div>"; // end grid
-    
-    // Chart Section - Full Width
-    echo "<div style='padding:0 30px 28px 30px;'>";
-    echo "<div style='background:#fff; border-radius:12px; box-shadow:0 2px 7px rgba(28,35,46,0.06); padding:24px; text-align:center;'>";
-    $temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
-    horizontal_bar_chart($campaign_id,'8','campaign',$link,'total_calls','call count',1,'','',$temp_chart_title);
-    echo "</div>";
-    echo "</div>";
-    
-    echo "</div>"; // end Campaign Information card
-
-    // ========== Campaign Settings Section ==========
-    echo "<div style='max-width:1300px; margin:24px auto 28px auto; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3;'>";
-    echo "<div style='font-size:22px; font-weight:bold; padding:22px 30px 8px 30px; color:#222;'><span style='margin-right:12px;'>🛠️</span>Campaign Settings</div>";
-    echo "<hr style='border:0; border-top:2px solid #f84c4c; margin:0 30px 18px 30px;'>";
-    echo "<div style='display:flex; flex-wrap:wrap; gap:22px; padding:0 30px 28px 30px;'>";
-
-    // LEFT COLUMN
-    echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
-
-    // Active
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>ACTIVE</div>";
-    echo "<select name='active' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value=\"$campaign_active\" selected>"._QXZ("$campaign_active")."</option>";
-    echo "</select> $NWB#campaigns-active$NWE";
-    echo "</div>";
-
-    // Admin User Group
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>ADMIN USER GROUP</div>";
-    echo "<select name='user_group' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-    echo "$UUgroups_list";
-    echo "<option selected value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>";
-    echo "</select> $NWB#campaigns-user_group$NWE";
-    echo "</div>";
-
-    // Park Music-on-Hold
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ffc107; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>PARK MUSIC-ON-HOLD</div>";
-    echo "<input type='text' name='park_file_name' id='park_file_name' maxlength='100' value=\"$park_file_name\" style='width:60%; font-size:17px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; margin-top:8px; color:#232529; background:#f8fafe;'>";
-    echo " <a href=\"javascript:launch_moh_chooser('park_file_name','moh');\" style=\"color:#2685ec; font-size:15px; font-weight:600; margin-left:8px;\">"._QXZ("moh chooser")."</a> $NWB#campaigns-park_ext$NWE";
-    echo "</div>";
-
-    // Web Form
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #31cbe8; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>WEB FORM</div>";
-    echo "<input type='text' name='web_form_address' maxlength='9999' value=\"$web_form_address\" style='width:95%; font-size:17px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; margin-top:8px; color:#232529; background:#f8fafe;'>";
-    echo "$NWB#campaigns-web_form_address$NWE";
-    if ($SSenable_first_webform < 1) { echo " <span style='color:#f84041;font-weight:bold;margin-left:8px;'>"._QXZ("DISABLED")."</span>"; }
-    echo "</div>";
-
-    // Web Form Two (conditional)
-    if ($SSenable_second_webform > 0) {
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #31cbe8; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>WEB FORM TWO</div>";
-        echo "<input type='text' name='web_form_address_two' maxlength='9999' value=\"$web_form_address_two\" style='width:95%; font-size:17px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; margin-top:8px; color:#232529; background:#f8fafe;'>";
-        echo "$NWB#campaigns-web_form_address$NWE";
-        echo "</div>";
-    }
-
-    // Web Form Three (conditional)
-    if ($SSenable_third_webform > 0) {
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #31cbe8; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>WEB FORM THREE</div>";
-        echo "<input type='text' name='web_form_address_three' maxlength='9999' value=\"$web_form_address_three\" style='width:95%; font-size:17px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; margin-top:8px; color:#232529; background:#f8fafe;'>";
-        echo "$NWB#campaigns-web_form_address$NWE";
-        echo "</div>";
-    }
-
-    // Web Form Target
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #31cbe8; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>WEB FORM TARGET</div>";
-    echo "<input type='text' name='web_form_target' maxlength='255' value=\"$web_form_target\" style='width:55%; font-size:17px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; margin-top:8px; color:#232529; background:#f8fafe;'>";
-    echo "$NWB#campaigns-web_form_target$NWE";
-    echo "</div>";
-
-    // Allow Closers
-    echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
-    echo "<div style='font-size:15px; font-weight:700; color:#666;'>ALLOW CLOSERS</div>";
-    echo "<select name='allow_closers' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value=\"$allow_closers\" selected>"._QXZ("$allow_closers")."</option>";
-    echo "</select> $NWB#campaigns-allow_closers$NWE";
-    echo "</div>";
-
-    // Allow Emails (conditional)
-    if ($SSallow_emails > 0) {
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>ALLOW EMAILS</div>";
-        echo "<select name='allow_emails' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-        echo "<option value='Y'>"._QXZ("Y")."</option>";
-        echo "<option value='N'>"._QXZ("N")."</option>";
-        echo "<option value=\"$allow_emails\" selected>"._QXZ("$allow_emails")."</option>";
-        echo "</select> $NWB#campaigns-allow_emails$NWE";
-        echo "</div>";
-    } else {
-        echo "<input type='hidden' name='allow_emails' value=\"$allow_emails\">";
-    }
-
-    // Allow Chats (conditional)
-    if ($SSallow_chats > 0) {
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ffc107; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>ALLOW CHATS</div>";
-        echo "<select name='allow_chats' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-        echo "<option value='Y'>"._QXZ("Y")."</option>";
-        echo "<option value='N'>"._QXZ("N")."</option>";
-        echo "<option value=\"$allow_chats\" selected>"._QXZ("$allow_chats")."</option>";
-        echo "</select> $NWB#campaigns-allow_chats$NWE";
-        echo "</div>";
-    } else {
-        echo "<input type='hidden' name='allow_chats' value=\"$allow_chats\">";
-    }
-
-    echo "</div>"; // end left column
-
-    // RIGHT COLUMN
-    echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
-
-    // Allow Inbound and Blended (if autodial active)
-    if ($SSoutbound_autodial_active > 0) {
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ae41e8; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>ALLOW INBOUND AND BLENDED</div>";
-        echo "<select name='campaign_allow_inbound' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-        echo "<option value='Y'>"._QXZ("Y")."</option>";
-        echo "<option value='N'>"._QXZ("N")."</option>";
-        echo "<option value=\"$campaign_allow_inbound\" selected>"._QXZ("$campaign_allow_inbound")."</option>";
-        echo "</select> $NWB#campaigns-campaign_allow_inbound$NWE";
-        echo "</div>";
-
-        // Dial Status list
-        $o = 0;
-        while ($Ds_to_print > $o) {
-            $o++;
-            $Dstatus = $Dstatuses[$o];
-            echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #dc3545; padding:18px 24px;'>";
-            echo "<div style='font-size:15px; font-weight:700; color:#666;'>DIAL STATUS $o</div>";
-            if ($DEFstatusDISABLED > 0) {
-                echo "<div style='margin-top:10px; color:#999; text-decoration:line-through;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] <span style='font-size:13px;'>REMOVE</span></div>";
-            } else {
-                echo "<div style='margin-top:10px;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] <a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\" style='color:#f84041; font-weight:600; margin-left:12px;'>"._QXZ("REMOVE")."</a></div>";
-            }
-            echo "</div>";
-        }
-
-        // Add Dial Status
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>ADD A DIAL STATUS TO CALL</div>";
-        echo "<select name='dial_status' $DEFlistDISABLE style='width:65%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-        echo "<option value=\"\"> - "._QXZ("NONE")." - </option>";
-        echo "$dial_statuses_list";
-        echo "</select>";
-        echo " <input type='submit' name='submit' value='"._QXZ("ADD")."' style='background-color:#{$SSbutton_color}; color:#fff; border:none; padding:8px 18px; border-radius:6px; font-weight:bold; cursor:pointer; margin-left:8px;'>";
-        echo " $NWB#campaigns-dial_status$NWE";
-        echo "</div>";
-
-        // List Order
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>LIST ORDER</div>";
-        if ($ALTmultiDISABLE > 0) {
-            echo "<input type='hidden' name='lead_order' value=\"$lead_order\"> $ALTmultiLINK";
-        } else {
-            if (file_exists('options.php')) { require('options.php'); }
-            if ($camp_lead_order_random > 0) {
-                echo "<select name='lead_order' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-                echo "<option value=\"$lead_order\" selected>"._QXZ("$lead_order")."</option>";
-                echo "<option value='DOWN'>"._QXZ("DOWN")."</option>";
-                echo "<option value='UP'>"._QXZ("UP")."</option>";
-                echo "<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>";
-                echo "<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>";
-                echo "<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>";
-                echo "<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>";
-                echo "<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>";
-                echo "<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>";
-                echo "<option value='RANDOM'>"._QXZ("RANDOM")."</option>";
-                echo "<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>";
-                echo "<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>";
-                echo "<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>";
-                echo "<option value='UP RANK'>"._QXZ("UP RANK")."</option>";
-                echo "<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>";
-                echo "<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>";
-                echo "<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>";
-                echo "<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>";
-                echo "<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
-                echo "<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>";
-                echo "<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>";
-                echo "<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>";
-                echo "<option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>";
-                echo "<option value='UP 2nd NEW'>"._QXZ("UP 2nd NEW")."</option>";
-                echo "<option value='UP 3rd NEW'>"._QXZ("UP 3rd NEW")."</option>";
-                echo "<option value='UP 4th NEW'>"._QXZ("UP 4th NEW")."</option>";
-                echo "<option value='UP 5th NEW'>"._QXZ("UP 5th NEW")."</option>";
-                echo "<option value='UP 6th NEW'>"._QXZ("UP 6th NEW")."</option>";
-                // Add all remaining options from your original code...
-                echo "</select>";
-                echo "$NWB#campaigns-lead_order$NWE";
-            } else {
-                echo "<select name='lead_order' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-                echo "<option value=\"$lead_order\" selected>"._QXZ("$lead_order")."</option>";
-                echo "<option value='DOWN'>"._QXZ("DOWN")."</option>";
-                echo "<option value='UP'>"._QXZ("UP")."</option>";
-                // Add all remaining options from your original code...
-                echo "</select>";
-                echo "$NWB#campaigns-lead_order$NWE";
-            }
-        }
-        echo "</div>";
-
-        // List Order Randomize
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ffc107; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>LIST ORDER RANDOMIZE</div>";
-        if ($ALTmultiDISABLE > 0) {
-            echo "<input type='hidden' name='lead_order_randomize' value=\"$lead_order_randomize\"> $ALTmultiLINK";
-        } else {
-            echo "<select name='lead_order_randomize' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-            echo "<option value='Y'>"._QXZ("Y")."</option>";
-            echo "<option value='N'>"._QXZ("N")."</option>";
-            echo "<option value=\"$lead_order_randomize\" selected>"._QXZ("$lead_order_randomize")."</option>";
-            echo "</select> $NWB#campaigns-lead_order_randomize$NWE";
-        }
-        echo "</div>";
-
-        // List Order Secondary
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #ae41e8; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'>LIST ORDER SECONDARY</div>";
-        if ($ALTmultiDISABLE > 0) {
-            echo "<input type='hidden' name='lead_order_secondary' value=\"$lead_order_secondary\"> $ALTmultiLINK";
-        } else {
-            echo "<select name='lead_order_secondary' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-            echo "<option value='LEAD_ASCEND'>"._QXZ("LEAD_ASCEND")."</option>";
-            echo "<option value='LEAD_DESCEND'>"._QXZ("LEAD_DESCEND")."</option>";
-            echo "<option value='CALLTIME_ASCEND'>"._QXZ("CALLTIME_ASCEND")."</option>";
-            echo "<option value='CALLTIME_DESCEND'>"._QXZ("CALLTIME_DESCEND")."</option>";
-            echo "<option value='VENDOR_ASCEND'>"._QXZ("VENDOR_ASCEND")."</option>";
-            echo "<option value='VENDOR_DESCEND'>"._QXZ("VENDOR_DESCEND")."</option>";
-            echo "<option value=\"$lead_order_secondary\" selected>"._QXZ("$lead_order_secondary")."</option>";
-            echo "</select> $NWB#campaigns-lead_order_secondary$NWE";
-        }
-        echo "</div>";
-
-        // List Mix
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #31cbe8; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\" style='color:#666; text-decoration:none;'>LIST MIX</a></div>";
-        if ($ALTmultiDISABLE > 0) {
-            echo "<input type='hidden' name='list_order_mix' value=\"$list_order_mix\"> $ALTmultiLINK";
-        } else {
-            echo "<select name='list_order_mix' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-            echo "$mixes_list";
-            if (preg_match('/DISABLED/', $list_order_mix)) {
-                echo "<option selected value=\"$list_order_mix\">"._QXZ("$list_order_mix")." - "._QXZ("$mixname_list[$list_order_mix]")."</option>";
-            } else {
-                echo "<option selected value=\"ACTIVE\">"._QXZ("ACTIVE")." ($mixname_list[ACTIVE])</option>";
-            }
-            echo "</select> $NWB#campaigns-list_order_mix$NWE";
-        }
-        echo "</div>";
-
-        // Lead Filter
-        echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#666;'><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\" style='color:#666; text-decoration:none;'>LEAD FILTER</a></div>";
-        if ($ALTmultiDISABLE > 0) {
-            echo "<input type='hidden' name='lead_filter_id' value=\"$lead_filter_id\"> $ALTmultiLINK";
-        } else {
-            echo "<select name='lead_filter_id' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-            echo "$filters_list";
-            echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>";
-            echo "</select> $NWB#campaigns-lead_filter_id$NWE";
-        
-       	 echo "</div>";
-    
-	
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Park Music-on-Hold").": </td><td align=left><input type=text name=park_file_name id=park_file_name size=20 maxlength=100 value=\"$park_file_name\"> <a href=\"javascript:launch_moh_chooser('park_file_name','moh');\">"._QXZ("moh chooser")."</a> $NWB#campaigns-park_ext$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Form").": </td><td align=left><input type=text name=web_form_address size=70 maxlength=9999 value=\"$web_form_address\">$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) {echo " <font color=red><b>"._QXZ("DISABLED")."</b></font>";} echo "</td></tr>\n";
+		if ($SSenable_second_webform > 0)
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Form Two").": </td><td align=left><input type=text name=web_form_address_two size=70 maxlength=9999 value=\"$web_form_address_two\">$NWB#campaigns-web_form_address$NWE</td></tr>\n";
 			}
+		if ($SSenable_third_webform > 0)
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Form Three").": </td><td align=left><input type=text name=web_form_address_three size=70 maxlength=9999 value=\"$web_form_address_three\">$NWB#campaigns-web_form_address$NWE</td></tr>\n";
+			}
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Form Target").": </td><td align=left><input type=text name=web_form_target size=25 maxlength=255 value=\"$web_form_target\">$NWB#campaigns-web_form_target$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Closers").": </td><td align=left><select size=1 name=allow_closers><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$allow_closers' SELECTED>"._QXZ("$allow_closers")."</option></select>$NWB#campaigns-allow_closers$NWE</td></tr>\n";
+		if ($SSallow_emails > 0) 
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Emails").": </td><td align=left><select size=1 name=allow_emails><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$allow_emails' SELECTED>"._QXZ("$allow_emails")."</option></select>$NWB#campaigns-allow_emails$NWE</td></tr>\n";
+			}
+		else
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right></td><td align=left><input type=hidden name=allow_emails value=$allow_emails></td></tr>\n";
+			}
+		if ($SSallow_chats > 0) 
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Chats").": </td><td align=left><select size=1 name=allow_chats><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$allow_chats\" SELECTED>"._QXZ("$allow_chats")."</option></select>$NWB#campaigns-allow_chats$NWE</td></tr>\n";
+			}
+		else
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right></td><td align=left><input type=hidden name=allow_chats value=$allow_chats></td></tr>\n";
+			}
+		if ($SSoutbound_autodial_active > 0)
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Inbound and Blended").": </td><td align=left><select size=1 name=campaign_allow_inbound><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$campaign_allow_inbound' SELECTED>"._QXZ("$campaign_allow_inbound")."</option></select>$NWB#campaigns-campaign_allow_inbound$NWE</td></tr>\n";
+
+			$o=0;
+			while ($Ds_to_print > $o) 
+				{
+				$o++;
+				$Dstatus = $Dstatuses[$o];
+
+				echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Dial Status")." $o: </td><td align=left> \n";
+
+				if ($DEFstatusDISABLED > 0)
+					{
+					echo "<font color=grey><DEL><b>$Dstatus</b> - $statname_list[$Dstatus] &nbsp; &nbsp; &nbsp; &nbsp; <font size=2>\n";
+					echo "REMOVE</DEL></td></tr>\n";
+					}
+				else
+					{
+					echo "<b>$Dstatus</b> - $statname_list[$Dstatus] &nbsp; &nbsp; &nbsp; &nbsp; <font size=2>\n";
+					echo "<a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\">"._QXZ("REMOVE")."</a></td></tr>\n";
+					}
+				}
+
+			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Add A Dial Status to Call").": </td><td align=left><select size=1 name=dial_status $DEFlistDISABLE>\n";
+			echo "<option value=\"\"> - "._QXZ("NONE")." - </option>\n";
+
+			echo "$dial_statuses_list";
+			echo "</select> &nbsp; \n";
+			echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'> &nbsp; &nbsp; $NWB#campaigns-dial_status$NWE</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order").": </td><td align=left>";
+			if ($ALTmultiDISABLE > 0)
+				{
+				echo "<input type=hidden name=lead_order value=\"$lead_order\"> $ALTmultiLINK";
+				}
+			else
+				{
+				if (file_exists('options.php'))
+					{require('options.php');}
+				if ($camp_lead_order_random > 0)
+					{
+					echo "<select size=1 name=lead_order>
+					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
+					<option value='DOWN'>"._QXZ("DOWN")."</option>
+					<option value='UP'>"._QXZ("UP")."</option>
+					<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>
+					<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>
+					<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>
+					<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>
+					<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>
+					<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>
+					<option value='RANDOM'>"._QXZ("RANDOM")."</option>
+					<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>
+					<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>
+					<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>
+					<option value='UP RANK'>"._QXZ("UP RANK")."</option>
+					<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>
+					<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>
+					<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>
+					<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>
+					<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>
+					<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>
+					<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>
+					<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>
+					<option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>
+					<option value='UP 2nd NEW'>"._QXZ("UP 2nd NEW")."</option>
+					<option value='UP 3rd NEW'>"._QXZ("UP 3rd NEW")."</option>
+					<option value='UP 4th NEW'>"._QXZ("UP 4th NEW")."</option>
+					<option value='UP 5th NEW'>"._QXZ("UP 5th NEW")."</option>
+					<option value='UP 6th NEW'>"._QXZ("UP 6th NEW")."</option>
+					<option value='DOWN PHONE 2nd NEW'>"._QXZ("DOWN PHONE 2nd NEW")."</option>
+					<option value='DOWN PHONE 3rd NEW'>"._QXZ("DOWN PHONE 3rd NEW")."</option>
+					<option value='DOWN PHONE 4th NEW'>"._QXZ("DOWN PHONE 4th NEW")."</option>
+					<option value='DOWN PHONE 5th NEW'>"._QXZ("DOWN PHONE 5th NEW")."</option>
+					<option value='DOWN PHONE 6th NEW'>"._QXZ("DOWN PHONE 6th NEW")."</option>
+					<option value='UP PHONE 2nd NEW'>"._QXZ("UP PHONE 2nd NEW")."</option>
+					<option value='UP PHONE 3rd NEW'>"._QXZ("UP PHONE 3rd NEW")."</option>
+					<option value='UP PHONE 4th NEW'>"._QXZ("UP PHONE 4th NEW")."</option>
+					<option value='UP PHONE 5th NEW'>"._QXZ("UP PHONE 5th NEW")."</option>
+					<option value='UP PHONE 6th NEW'>"._QXZ("UP PHONE 6th NEW")."</option>
+					<option value='DOWN LAST NAME 2nd NEW'>"._QXZ("DOWN LAST NAME 2nd NEW")."</option>
+					<option value='DOWN LAST NAME 3rd NEW'>"._QXZ("DOWN LAST NAME 3rd NEW")."</option>
+					<option value='DOWN LAST NAME 4th NEW'>"._QXZ("DOWN LAST NAME 4th NEW")."</option>
+					<option value='DOWN LAST NAME 5th NEW'>"._QXZ("DOWN LAST NAME 5th NEW")."</option>
+					<option value='DOWN LAST NAME 6th NEW'>"._QXZ("DOWN LAST NAME 6th NEW")."</option>
+					<option value='UP LAST NAME 2nd NEW'>"._QXZ("UP LAST NAME 2nd NEW")."</option>
+					<option value='UP LAST NAME 3rd NEW'>"._QXZ("UP LAST NAME 3rd NEW")."</option>
+					<option value='UP LAST NAME 4th NEW'>"._QXZ("UP LAST NAME 4th NEW")."</option>
+					<option value='UP LAST NAME 5th NEW'>"._QXZ("UP LAST NAME 5th NEW")."</option>
+					<option value='UP LAST NAME 6th NEW'>"._QXZ("UP LAST NAME 6th NEW")."</option>
+					<option value='DOWN COUNT 2nd NEW'>"._QXZ("DOWN COUNT 2nd NEW")."</option>
+					<option value='DOWN COUNT 3rd NEW'>"._QXZ("DOWN COUNT 3rd NEW")."</option>
+					<option value='DOWN COUNT 4th NEW'>"._QXZ("DOWN COUNT 4th NEW")."</option>
+					<option value='DOWN COUNT 5th NEW'>"._QXZ("DOWN COUNT 5th NEW")."</option>
+					<option value='DOWN COUNT 6th NEW'>"._QXZ("DOWN COUNT 6th NEW")."</option>
+					<option value='UP COUNT 2nd NEW'>"._QXZ("UP COUNT 2nd NEW")."</option>
+					<option value='UP COUNT 3rd NEW'>"._QXZ("UP COUNT 3rd NEW")."</option>
+					<option value='UP COUNT 4th NEW'>"._QXZ("UP COUNT 4th NEW")."</option>
+					<option value='UP COUNT 5th NEW'>"._QXZ("UP COUNT 5th NEW")."</option>
+					<option value='UP COUNT 6th NEW'>"._QXZ("UP COUNT 6th NEW")."</option>
+					<option value='RANDOM 2nd NEW'>"._QXZ("RANDOM 2nd NEW")."</option>
+					<option value='RANDOM 3rd NEW'>"._QXZ("RANDOM 3rd NEW")."</option>
+					<option value='RANDOM 4th NEW'>"._QXZ("RANDOM 4th NEW")."</option>
+					<option value='RANDOM 5th NEW'>"._QXZ("RANDOM 5th NEW")."</option>
+					<option value='RANDOM 6th NEW'>"._QXZ("RANDOM 6th NEW")."</option>
+					<option value='DOWN LAST CALL TIME 2nd NEW'>"._QXZ("DOWN LAST CALL TIME 2nd NEW")."</option>
+					<option value='DOWN LAST CALL TIME 3rd NEW'>"._QXZ("DOWN LAST CALL TIME 3rd NEW")."</option>
+					<option value='DOWN LAST CALL TIME 4th NEW'>"._QXZ("DOWN LAST CALL TIME 4th NEW")."</option>
+					<option value='DOWN LAST CALL TIME 5th NEW'>"._QXZ("DOWN LAST CALL TIME 5th NEW")."</option>
+					<option value='DOWN LAST CALL TIME 6th NEW'>"._QXZ("DOWN LAST CALL TIME 6th NEW")."</option>
+					<option value='UP LAST CALL TIME 2nd NEW'>"._QXZ("UP LAST CALL TIME 2nd NEW")."</option>
+					<option value='UP LAST CALL TIME 3rd NEW'>"._QXZ("UP LAST CALL TIME 3rd NEW")."</option>
+					<option value='UP LAST CALL TIME 4th NEW'>"._QXZ("UP LAST CALL TIME 4th NEW")."</option>
+					<option value='UP LAST CALL TIME 5th NEW'>"._QXZ("UP LAST CALL TIME 5th NEW")."</option>
+					<option value='UP LAST CALL TIME 6th NEW'>"._QXZ("UP LAST CALL TIME 6th NEW")."</option>
+					<option value='DOWN RANK 2nd NEW'>"._QXZ("DOWN RANK 2nd NEW")."</option>
+					<option value='DOWN RANK 3rd NEW'>"._QXZ("DOWN RANK 3rd NEW")."</option>
+					<option value='DOWN RANK 4th NEW'>"._QXZ("DOWN RANK 4th NEW")."</option>
+					<option value='DOWN RANK 5th NEW'>"._QXZ("DOWN RANK 5th NEW")."</option>
+					<option value='DOWN RANK 6th NEW'>"._QXZ("DOWN RANK 6th NEW")."</option>
+					<option value='UP RANK 2nd NEW'>"._QXZ("UP RANK 2nd NEW")."</option>
+					<option value='UP RANK 3rd NEW'>"._QXZ("UP RANK 3rd NEW")."</option>
+					<option value='UP RANK 4th NEW'>"._QXZ("UP RANK 4th NEW")."</option>
+					<option value='UP RANK 5th NEW'>"._QXZ("UP RANK 5th NEW")."</option>
+					<option value='UP RANK 6th NEW'>"._QXZ("UP RANK 6th NEW")."</option>
+					<option value='DOWN OWNER 2nd NEW'>"._QXZ("DOWN OWNER 2nd NEW")."</option>
+					<option value='DOWN OWNER 3rd NEW'>"._QXZ("DOWN OWNER 3rd NEW")."</option>
+					<option value='DOWN OWNER 4th NEW'>"._QXZ("DOWN OWNER 4th NEW")."</option>
+					<option value='DOWN OWNER 5th NEW'>"._QXZ("DOWN OWNER 5th NEW")."</option>
+					<option value='DOWN OWNER 6th NEW'>"._QXZ("DOWN OWNER 6th NEW")."</option>
+					<option value='UP OWNER 2nd NEW'>"._QXZ("UP OWNER 2nd NEW")."</option>
+					<option value='UP OWNER 3rd NEW'>"._QXZ("UP OWNER 3rd NEW")."</option>
+					<option value='UP OWNER 4th NEW'>"._QXZ("UP OWNER 4th NEW")."</option>
+					<option value='UP OWNER 5th NEW'>"._QXZ("UP OWNER 5th NEW")."</option>
+					<option value='UP OWNER 6th NEW'>"._QXZ("UP OWNER 6th NEW")."</option>
+					<option value='DOWN TIMEZONE 2nd NEW'>"._QXZ("DOWN TIMEZONE 2nd NEW")."</option>
+					<option value='DOWN TIMEZONE 3rd NEW'>"._QXZ("DOWN TIMEZONE 3rd NEW")."</option>
+					<option value='DOWN TIMEZONE 4th NEW'>"._QXZ("DOWN TIMEZONE 4th NEW")."</option>
+					<option value='DOWN TIMEZONE 5th NEW'>"._QXZ("DOWN TIMEZONE 5th NEW")."</option>
+					<option value='DOWN TIMEZONE 6th NEW'>"._QXZ("DOWN TIMEZONE 6th NEW")."</option>
+					<option value='UP TIMEZONE 2nd NEW'>"._QXZ("UP TIMEZONE 2nd NEW")."</option>
+					<option value='UP TIMEZONE 3rd NEW'>"._QXZ("UP TIMEZONE 3rd NEW")."</option>
+					<option value='UP TIMEZONE 4th NEW'>"._QXZ("UP TIMEZONE 4th NEW")."</option>
+					<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</option>
+					<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>
+					</select>$NWB#campaigns-lead_order$NWE\n";
+					}
 				else
 					{
 					echo "<select size=1 name=lead_order>
