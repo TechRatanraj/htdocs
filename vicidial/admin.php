@@ -27760,11 +27760,13 @@ if ($SSoutbound_autodial_active < 1) {
 echo "<td style=\"flex: 1; min-width: 90px; text-align: center; padding: 12px 8px; background-color: {$campaigns_color}; transition: all 0.3s ease;\">
     <a href=\"./realtime_report.php?RR=4&DB=0&group={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Real-Time") ."</a>
 </td>";
-echo "<div style=\"text-align: center; margin-top: 20px;\">
-    <div style=\"font-family: Arial, Helvetica, sans-serif; color: black; font-size: 14px;\">";
+
 echo "</tr>
     </table>
 </nav>";
+
+
+
 
 	if ($SUB < 1)
 		{
