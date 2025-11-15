@@ -28241,6 +28241,8 @@ $camp_accid_color = ($SUB == 202) ? $subcamp_color : $campaigns_color;
             </div>
         <?php endif; 
 	
+						}}
+						
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
 			if ($ALTmultiDISABLE > 0)
 				{
