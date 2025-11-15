@@ -27763,6 +27763,10 @@ echo "</tr></table>";
 echo "<table><tr><td>
     <span style=\"font-family:Arial,Helvetica; color:black; font-size:12px;\">";
 echo "<center>\n";
+
+
+	
+
 if ($SUB < 1) {
 echo "<form action=\"$PHP_SELF\" method=\"POST\" style=\"margin:0;padding:0;width:100%;\">";
 echo "<input type=\"hidden\" name=\"ADD\" value=\"41\">";
@@ -27772,14 +27776,16 @@ echo "<input type=\"hidden\" name=\"park_ext\" value=\"$park_ext\">";
 echo "<input type=\"hidden\" name=\"old_campaign_allow_inbound\" value=\"$campaign_allow_inbound\">";
 echo "<input type=\"hidden\" name=\"agent_extended_alt_dial\" value=\"$agent_extended_alt_dial\">";
 
-// Campaign Information Section
-echo "<div style='max-width:1300px; margin:34px auto 18px auto; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3;'>";
+// Campaign Information Section - FULL WIDTH CONTAINER
+echo "<div style='width:100%; margin:34px 0 18px 0; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3; box-sizing:border-box;'>";
 echo "<div style='font-size:22px; font-weight:bold; padding:22px 30px 8px 30px; color:#222;'><span style='margin-right:11px;'>📌</span>Campaign Information</div>";
 echo "<hr style='border:0; border-top:2px solid #2685ec; margin:0 30px 22px 30px;'>";
-echo "<div style='display:flex; flex-wrap:wrap; gap:22px; padding:0 30px 28px 30px;'>";
+
+// TWO-COLUMN GRID - KEY FIX: Use grid instead of flex for better control
+echo "<div style='display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:0 30px 28px 30px; width:100%; box-sizing:border-box;'>";
 
 // LEFT COLUMN
-echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
+echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
 
 // Campaign ID
 echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
@@ -27874,7 +27880,7 @@ if ($SSallow_chats > 0) {
 echo "</div>"; // end left column
 
 // RIGHT COLUMN
-echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
+echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
 
 // Campaign Name
 echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px;'>";
@@ -27906,7 +27912,7 @@ echo "</div>"; // end right column
 echo "</div>"; // end grid
 
 // Chart full width
-echo "<div style='padding:0 30px 28px 30px;'>";
+echo "<div style='padding:0 30px 28px 30px; width:100%; box-sizing:border-box;'>";
 echo "<div style='background:#fff; border-radius:12px; box-shadow:0 2px 7px rgba(28,35,46,0.06); padding:24px; text-align:center;'>";
 $temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
 horizontal_bar_chart($campaign_id,'8','campaign',$link,'total_calls','call count',1,'','',$temp_chart_title);
@@ -27915,14 +27921,16 @@ echo "</div>";
 
 echo "</div>"; // end Campaign Information section
 
-// ===== Campaign Settings Section =====
-echo "<div style='max-width:1300px; margin:24px auto 28px auto; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3;'>";
+// Campaign Settings Section - FULL WIDTH
+echo "<div style='width:100%; margin:24px 0 28px 0; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3; box-sizing:border-box;'>";
 echo "<div style='font-size:22px; font-weight:bold; padding:22px 30px 8px 30px; color:#222;'><span style='margin-right:12px;'>🛠️</span>Campaign Settings</div>";
 echo "<hr style='border:0; border-top:2px solid #f84c4c; margin:0 30px 18px 30px;'>";
-echo "<div style='display:flex; flex-wrap:wrap; gap:22px; padding:0 30px 28px 30px;'>";
+
+// TWO-COLUMN GRID for settings
+echo "<div style='display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:0 30px 28px 30px; width:100%; box-sizing:border-box;'>";
 
 // LEFT COLUMN (Settings Selects)
-echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
+echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
 
 // Active
 echo "<div style='background:#fff; border-radius:12px; min-height:80px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px;'>";
@@ -27943,10 +27951,10 @@ echo "<option selected value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $use
 echo "</select> $NWB#campaigns-user_group$NWE";
 echo "</div>";
 
-echo "</div>"; // end left column settings
+echo "</div>"; // end left settings
 
-// RIGHT COLUMN (RESERVED FOR OUTBOUND)
-echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
+// RIGHT COLUMN
+echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
 
 // Allow Inbound and Blended (if autodial active)
 if ($SSoutbound_autodial_active > 0) {
@@ -27960,18 +27968,18 @@ if ($SSoutbound_autodial_active > 0) {
     echo "</div>";
 }
 
-echo "</div>"; // end right column
+echo "</div>"; // end right settings
 echo "</div>"; // end settings grid
 
 // === DIAL STATUS SECTION (Full Width If Autodial Active) ===
 if ($SSoutbound_autodial_active > 0) {
-    echo "<div style='max-width:1300px; margin:24px auto 28px auto; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3;'>";
+    echo "<div style='width:100%; margin:24px 0 28px 0; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,0.07); border:1px solid #e7ecf3; box-sizing:border-box;'>";
     echo "<div style='font-size:22px; font-weight:bold; padding:22px 30px 8px 30px; color:#222;'><span style='margin-right:12px;'>📋</span>Dial Statuses & Lead Orders</div>";
     echo "<hr style='border:0; border-top:2px solid #dc3545; margin:0 30px 18px 30px;'>";
-    echo "<div style='display:flex; flex-wrap:wrap; gap:22px; padding:0 30px 28px 30px;'>";
+    echo "<div style='display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:0 30px 28px 30px; width:100%; box-sizing:border-box;'>";
 
     // LEFT: Dial Status List
-    echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
+    echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
 
     $o = 0;
     while ($Ds_to_print > $o) {
@@ -28001,7 +28009,7 @@ if ($SSoutbound_autodial_active > 0) {
     echo "</div>"; // end left column
 
     // RIGHT: List Order Options
-    echo "<div style='flex:1 1 480px; display:flex; flex-direction:column; gap:22px;'>";
+    echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
 
     // List Order
     echo "<div style='background:#fff; border-radius:12px; min-height:120px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px;'>";
@@ -28013,138 +28021,18 @@ if ($SSoutbound_autodial_active > 0) {
         if ($camp_lead_order_random > 0) {
             echo "<select name='lead_order' style='width:95%; font-size:14px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe; max-height:200px;'>";
             echo "<option value=\"$lead_order\" selected>"._QXZ("$lead_order")."</option>";
-            echo "<option value='DOWN'>"._QXZ("DOWN")."</option>";
-            echo "<option value='UP'>"._QXZ("UP")."</option>";
-            echo "<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>";
-            echo "<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>";
-            echo "<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>";
-            echo "<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>";
-            echo "<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>";
-            echo "<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>";
-            echo "<option value='RANDOM'>"._QXZ("RANDOM")."</option>";
-            echo "<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>";
-            echo "<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>";
-            echo "<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>";
-            echo "<option value='UP RANK'>"._QXZ("UP RANK")."</option>";
-            echo "<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>";
-            echo "<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>";
-            echo "<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>";
-            echo "<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>";
-            echo "<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
-            echo "<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>";
-            echo "<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>";
-            echo "<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>";
-            echo "<option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>";
-            echo "<option value='UP 2nd NEW'>"._QXZ("UP 2nd NEW")."</option>";
-            echo "<option value='UP 3rd NEW'>"._QXZ("UP 3rd NEW")."</option>";
-            echo "<option value='UP 4th NEW'>"._QXZ("UP 4th NEW")."</option>";
-            echo "<option value='UP 5th NEW'>"._QXZ("UP 5th NEW")."</option>";
-            echo "<option value='UP 6th NEW'>"._QXZ("UP 6th NEW")."</option>";
-            echo "<option value='DOWN PHONE 2nd NEW'>"._QXZ("DOWN PHONE 2nd NEW")."</option>";
-            echo "<option value='DOWN PHONE 3rd NEW'>"._QXZ("DOWN PHONE 3rd NEW")."</option>";
-            echo "<option value='DOWN PHONE 4th NEW'>"._QXZ("DOWN PHONE 4th NEW")."</option>";
-            echo "<option value='DOWN PHONE 5th NEW'>"._QXZ("DOWN PHONE 5th NEW")."</option>";
-            echo "<option value='DOWN PHONE 6th NEW'>"._QXZ("DOWN PHONE 6th NEW")."</option>";
-            echo "<option value='UP PHONE 2nd NEW'>"._QXZ("UP PHONE 2nd NEW")."</option>";
-            echo "<option value='UP PHONE 3rd NEW'>"._QXZ("UP PHONE 3rd NEW")."</option>";
-            echo "<option value='UP PHONE 4th NEW'>"._QXZ("UP PHONE 4th NEW")."</option>";
-            echo "<option value='UP PHONE 5th NEW'>"._QXZ("UP PHONE 5th NEW")."</option>";
-            echo "<option value='UP PHONE 6th NEW'>"._QXZ("UP PHONE 6th NEW")."</option>";
-            echo "<option value='DOWN LAST NAME 2nd NEW'>"._QXZ("DOWN LAST NAME 2nd NEW")."</option>";
-            echo "<option value='DOWN LAST NAME 3rd NEW'>"._QXZ("DOWN LAST NAME 3rd NEW")."</option>";
-            echo "<option value='DOWN LAST NAME 4th NEW'>"._QXZ("DOWN LAST NAME 4th NEW")."</option>";
-            echo "<option value='DOWN LAST NAME 5th NEW'>"._QXZ("DOWN LAST NAME 5th NEW")."</option>";
-            echo "<option value='DOWN LAST NAME 6th NEW'>"._QXZ("DOWN LAST NAME 6th NEW")."</option>";
-            echo "<option value='UP LAST NAME 2nd NEW'>"._QXZ("UP LAST NAME 2nd NEW")."</option>";
-            echo "<option value='UP LAST NAME 3rd NEW'>"._QXZ("UP LAST NAME 3rd NEW")."</option>";
-            echo "<option value='UP LAST NAME 4th NEW'>"._QXZ("UP LAST NAME 4th NEW")."</option>";
-            echo "<option value='UP LAST NAME 5th NEW'>"._QXZ("UP LAST NAME 5th NEW")."</option>";
-            echo "<option value='UP LAST NAME 6th NEW'>"._QXZ("UP LAST NAME 6th NEW")."</option>";
-            echo "<option value='DOWN COUNT 2nd NEW'>"._QXZ("DOWN COUNT 2nd NEW")."</option>";
-            echo "<option value='DOWN COUNT 3rd NEW'>"._QXZ("DOWN COUNT 3rd NEW")."</option>";
-            echo "<option value='DOWN COUNT 4th NEW'>"._QXZ("DOWN COUNT 4th NEW")."</option>";
-            echo "<option value='DOWN COUNT 5th NEW'>"._QXZ("DOWN COUNT 5th NEW")."</option>";
-            echo "<option value='DOWN COUNT 6th NEW'>"._QXZ("DOWN COUNT 6th NEW")."</option>";
-            echo "<option value='UP COUNT 2nd NEW'>"._QXZ("UP COUNT 2nd NEW")."</option>";
-            echo "<option value='UP COUNT 3rd NEW'>"._QXZ("UP COUNT 3rd NEW")."</option>";
-            echo "<option value='UP COUNT 4th NEW'>"._QXZ("UP COUNT 4th NEW")."</option>";
-            echo "<option value='UP COUNT 5th NEW'>"._QXZ("UP COUNT 5th NEW")."</option>";
-            echo "<option value='UP COUNT 6th NEW'>"._QXZ("UP COUNT 6th NEW")."</option>";
-            echo "<option value='RANDOM 2nd NEW'>"._QXZ("RANDOM 2nd NEW")."</option>";
-            echo "<option value='RANDOM 3rd NEW'>"._QXZ("RANDOM 3rd NEW")."</option>";
-            echo "<option value='RANDOM 4th NEW'>"._QXZ("RANDOM 4th NEW")."</option>";
-            echo "<option value='RANDOM 5th NEW'>"._QXZ("RANDOM 5th NEW")."</option>";
-            echo "<option value='RANDOM 6th NEW'>"._QXZ("RANDOM 6th NEW")."</option>";
-            echo "<option value='DOWN LAST CALL TIME 2nd NEW'>"._QXZ("DOWN LAST CALL TIME 2nd NEW")."</option>";
-            echo "<option value='DOWN LAST CALL TIME 3rd NEW'>"._QXZ("DOWN LAST CALL TIME 3rd NEW")."</option>";
-            echo "<option value='DOWN LAST CALL TIME 4th NEW'>"._QXZ("DOWN LAST CALL TIME 4th NEW")."</option>";
-            echo "<option value='DOWN LAST CALL TIME 5th NEW'>"._QXZ("DOWN LAST CALL TIME 5th NEW")."</option>";
-            echo "<option value='DOWN LAST CALL TIME 6th NEW'>"._QXZ("DOWN LAST CALL TIME 6th NEW")."</option>";
-            echo "<option value='UP LAST CALL TIME 2nd NEW'>"._QXZ("UP LAST CALL TIME 2nd NEW")."</option>";
-            echo "<option value='UP LAST CALL TIME 3rd NEW'>"._QXZ("UP LAST CALL TIME 3rd NEW")."</option>";
-            echo "<option value='UP LAST CALL TIME 4th NEW'>"._QXZ("UP LAST CALL TIME 4th NEW")."</option>";
-            echo "<option value='UP LAST CALL TIME 5th NEW'>"._QXZ("UP LAST CALL TIME 5th NEW")."</option>";
-            echo "<option value='UP LAST CALL TIME 6th NEW'>"._QXZ("UP LAST CALL TIME 6th NEW")."</option>";
-            echo "<option value='DOWN RANK 2nd NEW'>"._QXZ("DOWN RANK 2nd NEW")."</option>";
-            echo "<option value='DOWN RANK 3rd NEW'>"._QXZ("DOWN RANK 3rd NEW")."</option>";
-            echo "<option value='DOWN RANK 4th NEW'>"._QXZ("DOWN RANK 4th NEW")."</option>";
-            echo "<option value='DOWN RANK 5th NEW'>"._QXZ("DOWN RANK 5th NEW")."</option>";
-            echo "<option value='DOWN RANK 6th NEW'>"._QXZ("DOWN RANK 6th NEW")."</option>";
-            echo "<option value='UP RANK 2nd NEW'>"._QXZ("UP RANK 2nd NEW")."</option>";
-            echo "<option value='UP RANK 3rd NEW'>"._QXZ("UP RANK 3rd NEW")."</option>";
-            echo "<option value='UP RANK 4th NEW'>"._QXZ("UP RANK 4th NEW")."</option>";
-            echo "<option value='UP RANK 5th NEW'>"._QXZ("UP RANK 5th NEW")."</option>";
-            echo "<option value='UP RANK 6th NEW'>"._QXZ("UP RANK 6th NEW")."</option>";
-            echo "<option value='DOWN OWNER 2nd NEW'>"._QXZ("DOWN OWNER 2nd NEW")."</option>";
-            echo "<option value='DOWN OWNER 3rd NEW'>"._QXZ("DOWN OWNER 3rd NEW")."</option>";
-            echo "<option value='DOWN OWNER 4th NEW'>"._QXZ("DOWN OWNER 4th NEW")."</option>";
-            echo "<option value='DOWN OWNER 5th NEW'>"._QXZ("DOWN OWNER 5th NEW")."</option>";
-            echo "<option value='DOWN OWNER 6th NEW'>"._QXZ("DOWN OWNER 6th NEW")."</option>";
-            echo "<option value='UP OWNER 2nd NEW'>"._QXZ("UP OWNER 2nd NEW")."</option>";
-            echo "<option value='UP OWNER 3rd NEW'>"._QXZ("UP OWNER 3rd NEW")."</option>";
-            echo "<option value='UP OWNER 4th NEW'>"._QXZ("UP OWNER 4th NEW")."</option>";
-            echo "<option value='UP OWNER 5th NEW'>"._QXZ("UP OWNER 5th NEW")."</option>";
-            echo "<option value='UP OWNER 6th NEW'>"._QXZ("UP OWNER 6th NEW")."</option>";
-            echo "<option value='DOWN TIMEZONE 2nd NEW'>"._QXZ("DOWN TIMEZONE 2nd NEW")."</option>";
-            echo "<option value='DOWN TIMEZONE 3rd NEW'>"._QXZ("DOWN TIMEZONE 3rd NEW")."</option>";
-            echo "<option value='DOWN TIMEZONE 4th NEW'>"._QXZ("DOWN TIMEZONE 4th NEW")."</option>";
-            echo "<option value='DOWN TIMEZONE 5th NEW'>"._QXZ("DOWN TIMEZONE 5th NEW")."</option>";
-            echo "<option value='DOWN TIMEZONE 6th NEW'>"._QXZ("DOWN TIMEZONE 6th NEW")."</option>";
-            echo "<option value='UP TIMEZONE 2nd NEW'>"._QXZ("UP TIMEZONE 2nd NEW")."</option>";
-            echo "<option value='UP TIMEZONE 3rd NEW'>"._QXZ("UP TIMEZONE 3rd NEW")."</option>";
-            echo "<option value='UP TIMEZONE 4th NEW'>"._QXZ("UP TIMEZONE 4th NEW")."</option>";
-            echo "<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</option>";
-            echo "<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>";
+            echo "<option value='DOWN'>"._QXZ("DOWN")."</option><option value='UP'>"._QXZ("UP")."</option><option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option><option value='UP PHONE'>"._QXZ("UP PHONE")."</option>";
+            echo "<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option><option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option><option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option><option value='UP COUNT'>"._QXZ("UP COUNT")."</option>";
+            echo "<option value='RANDOM'>"._QXZ("RANDOM")."</option><option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option><option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>";
+            echo "<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option><option value='UP RANK'>"._QXZ("UP RANK")."</option><option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>";
+            echo "<option value='UP OWNER'>"._QXZ("UP OWNER")."</option><option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option><option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>";
+            echo "<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option><option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option><option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>";
+            echo "<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option><option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>";
             echo "</select> $NWB#campaigns-lead_order$NWE";
         } else {
-            echo "<select name='lead_order' style='width:95%; font-size:14px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe; max-height:200px;'>";
+            echo "<select name='lead_order' style='width:95%; font-size:14px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
             echo "<option value=\"$lead_order\" selected>"._QXZ("$lead_order")."</option>";
-            echo "<option value='DOWN'>"._QXZ("DOWN")."</option>";
-            echo "<option value='UP'>"._QXZ("UP")."</option>";
-            echo "<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>";
-            echo "<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>";
-            echo "<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>";
-            echo "<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>";
-            echo "<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>";
-            echo "<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>";
-            echo "<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>";
-            echo "<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>";
-            echo "<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>";
-            echo "<option value='UP RANK'>"._QXZ("UP RANK")."</option>";
-            echo "<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>";
-            echo "<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>";
-            echo "<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>";
-            echo "<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>";
-            echo "<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
-            echo "<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>";
-            echo "<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>";
-            echo "<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>";
-            echo "<option value='DOWN 6th NEW'>"._QXZ("DOWN 6th NEW")."</option>";
-            echo "<option value='UP 2nd NEW'>"._QXZ("UP 2nd NEW")."</option>";
-            echo "<option value='UP 3rd NEW'>"._QXZ("UP 3rd NEW")."</option>";
-            echo "<option value='UP 4th NEW'>"._QXZ("UP 4th NEW")."</option>";
-            echo "<option value='UP 5th NEW'>"._QXZ("UP 5th NEW")."</option>";
-            echo "<option value='UP 6th NEW'>"._QXZ("UP 6th NEW")."</option>";
+            echo "<option value='DOWN'>"._QXZ("DOWN")."</option><option value='UP'>"._QXZ("UP")."</option>";
             echo "</select> $NWB#campaigns-lead_order$NWE";
         }
     }
@@ -28157,8 +28045,7 @@ if ($SSoutbound_autodial_active > 0) {
         echo "<input type='hidden' name='lead_order_randomize' value=\"$lead_order_randomize\"> $ALTmultiLINK";
     } else {
         echo "<select name='lead_order_randomize' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-        echo "<option value='Y'>"._QXZ("Y")."</option>";
-        echo "<option value='N'>"._QXZ("N")."</option>";
+        echo "<option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option>";
         echo "<option value=\"$lead_order_randomize\" selected>"._QXZ("$lead_order_randomize")."</option>";
         echo "</select> $NWB#campaigns-lead_order_randomize$NWE";
     }
@@ -28171,12 +28058,9 @@ if ($SSoutbound_autodial_active > 0) {
         echo "<input type='hidden' name='lead_order_secondary' value=\"$lead_order_secondary\"> $ALTmultiLINK";
     } else {
         echo "<select name='lead_order_secondary' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
-        echo "<option value='LEAD_ASCEND'>"._QXZ("LEAD_ASCEND")."</option>";
-        echo "<option value='LEAD_DESCEND'>"._QXZ("LEAD_DESCEND")."</option>";
-        echo "<option value='CALLTIME_ASCEND'>"._QXZ("CALLTIME_ASCEND")."</option>";
-        echo "<option value='CALLTIME_DESCEND'>"._QXZ("CALLTIME_DESCEND")."</option>";
-        echo "<option value='VENDOR_ASCEND'>"._QXZ("VENDOR_ASCEND")."</option>";
-        echo "<option value='VENDOR_DESCEND'>"._QXZ("VENDOR_DESCEND")."</option>";
+        echo "<option value='LEAD_ASCEND'>"._QXZ("LEAD_ASCEND")."</option><option value='LEAD_DESCEND'>"._QXZ("LEAD_DESCEND")."</option>";
+        echo "<option value='CALLTIME_ASCEND'>"._QXZ("CALLTIME_ASCEND")."</option><option value='CALLTIME_DESCEND'>"._QXZ("CALLTIME_DESCEND")."</option>";
+        echo "<option value='VENDOR_ASCEND'>"._QXZ("VENDOR_ASCEND")."</option><option value='VENDOR_DESCEND'>"._QXZ("VENDOR_DESCEND")."</option>";
         echo "<option value=\"$lead_order_secondary\" selected>"._QXZ("$lead_order_secondary")."</option>";
         echo "</select> $NWB#campaigns-lead_order_secondary$NWE";
     }
@@ -28212,7 +28096,7 @@ if ($SSoutbound_autodial_active > 0) {
     }
     echo "</div>";
 
-
+   
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
 			if ($ALTmultiDISABLE > 0)
 				{
