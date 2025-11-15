@@ -27651,121 +27651,118 @@ if ($ADD==31)
 		$o++;
 		}
 
-	$stmt = "SELECT COUNT(*) FROM servers WHERE active='Y' AND active_agent_login_server='Y'";
-if ($DB) { echo "|$stmt|\n"; }
+	
+$stmt = "SELECT count(*) from servers where active='Y' and active_agent_login_server='Y';";
+if ($DB) {echo "|$stmt|\n";}
 $rslt = mysql_to_mysqli($stmt, $link);
 $row = mysqli_fetch_row($rslt);
 $agent_servers_count = $row[0];
 
-$stmt = "SELECT COUNT(*) FROM phones_alias $whereLOGadmin_viewable_groupsSQL";
-if ($DB) { echo "|$stmt|\n"; }
+$stmt = "SELECT count(*) from phones_alias $whereLOGadmin_viewable_groupsSQL;";
+if ($DB) {echo "|$stmt|\n";}
 $rslt = mysql_to_mysqli($stmt, $link);
 $row = mysqli_fetch_row($rslt);
 $phones_alias_count = $row[0];
 
-// Color assignment using modern ternary operators
-$camp_detail_color = ($SUB < 1) ? $subcamp_color : $campaigns_color;
-$camp_statuses_color = ($SUB == 22) ? $subcamp_color : $campaigns_color;
-$camp_hotkeys_color = ($SUB == 23) ? $subcamp_color : $campaigns_color;
-$camp_recycle_color = ($SUB == 25) ? $subcamp_color : $campaigns_color;
-$camp_autoalt_color = ($SUB == 26) ? $subcamp_color : $campaigns_color;
-$camp_pause_color = ($SUB == 27) ? $subcamp_color : $campaigns_color;
-$camp_qc_color = ($SUB == 28) ? $subcamp_color : $campaigns_color;
-$camp_listmix_color = ($SUB == 29) ? $subcamp_color : $campaigns_color;
-$camp_survey_color = ($SUB == '20A') ? $subcamp_color : $campaigns_color;
-$camp_preset_color = ($SUB == 201) ? $subcamp_color : $campaigns_color;
-$camp_accid_color = ($SUB == 202) ? $subcamp_color : $campaigns_color;
+// Colors
+$camp_detail_color   = ($SUB<1)      ? $subcamp_color : $campaigns_color;
+$camp_statuses_color = ($SUB==22)    ? $subcamp_color : $campaigns_color;
+$camp_hotkeys_color  = ($SUB==23)    ? $subcamp_color : $campaigns_color;
+$camp_recycle_color  = ($SUB==25)    ? $subcamp_color : $campaigns_color;
+$camp_autoalt_color  = ($SUB==26)    ? $subcamp_color : $campaigns_color;
+$camp_pause_color    = ($SUB==27)    ? $subcamp_color : $campaigns_color;
+$camp_qc_color       = ($SUB==28)    ? $subcamp_color : $campaigns_color;
+$camp_listmix_color  = ($SUB==29)    ? $subcamp_color : $campaigns_color;
+$camp_survey_color   = ($SUB=='20A') ? $subcamp_color : $campaigns_color;
+$camp_preset_color   = ($SUB==201)   ? $subcamp_color : $campaigns_color;
+$camp_accid_color    = ($SUB==202)   ? $subcamp_color : $campaigns_color;
 
-// Modern HTML5 navigation structure with inline styles
-echo "<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: {$subcamp_font}; font-weight: bold; margin-bottom: 8px;\">{$campaign_id}:</div>";
+// Determine active tab
+function activeTab($tab,$sub) {
+    $map = [
+        'Basic'         => ['ADD'=>34],
+        'Detail'        => ['ADD'=>31, 'SUB'=>null],
+        'Statuses'      => ['ADD'=>31, 'SUB'=>22],
+        'HotKeys'       => ['ADD'=>31, 'SUB'=>23],
+        'Lead Recycling'=> ['ADD'=>31, 'SUB'=>25],
+        'Auto Alt Dial' => ['ADD'=>31, 'SUB'=>26],
+        'List Mix'      => ['ADD'=>31, 'SUB'=>29],
+        'Survey'        => ['ADD'=>31, 'SUB'=>'20A'],
+        'Pause Codes'   => ['ADD'=>31, 'SUB'=>27],
+        'Presets'       => ['ADD'=>31, 'SUB'=>201],
+        'AC-CID'        => ['ADD'=>31, 'SUB'=>202],
+        'QC'            => ['ADD'=>31, 'SUB'=>28],
+        'Real-Time'     => ['RT'=>true],
+    ];
+    foreach($map as $name=>$keys) {
+        if (
+            (isset($keys['RT']) && isset($_GET['RR'])) ||
+            ((isset($keys['ADD']) && $_GET['ADD'] == $keys['ADD']) &&
+             (!isset($keys['SUB']) || $_GET['SUB'] == $keys['SUB']))
+        ) return $name;
+    }
+    return '';
+}
+$active_tab = activeTab($PHP_SELF,$_GET['SUB']);
 
-echo "<nav style=\"width: 930px; margin: 0 auto;\">
-    <table style=\"width: 100%; border-collapse: collapse; border-spacing: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">
-        <tr style=\"display: flex; flex-wrap: wrap;\">";
+// Font and header
+echo "<div style=\"font-family:Arial,Helvetica,sans-serif; font-size:13px; color:$subcamp_font; font-weight:bold; margin-bottom:3px;\">
+    $campaign_id:
+</div>";
 
-// Basic tab
-echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$campaigns_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-    <a href=\"{$PHP_SELF}?ADD=34&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Basic") ."</a>
-</td>";
+// Header tabs simplified: 12px font, 30px tab height, each tab 110px wide
+echo "<table style='width:930px; border-collapse:collapse; margin:0 auto; background:#f8f9fa;'><tr>";
+function tabCell($label, $url, $bg, $active_tab, $name) {
+    $is_active = ($active_tab == $name);
+    $style = "width:110px;
+        height:30px;
+        text-align:center;
+        background:".($is_active ? "#e5e7eb": $bg).";
+        font-family:Arial,Helvetica,sans-serif;
+        font-size:12px;
+        font-weight:".($is_active ? "bold":"normal").";
+        color:#151517;
+        border:none;
+        border-bottom:".($is_active?"2px solid #a3aab4":"none").";
+        box-shadow:".($is_active?"0 2px 10px rgba(0,0,0,0.04)":"none").";
+        cursor:pointer;";
+    echo "<td style='$style'><a href='$url' style='text-decoration:none;color:inherit;display:block;padding:4px 0;'>$label</a></td>";
+}
+// Render tabs
+tabCell(_QXZ("Basic"),      "$PHP_SELF?ADD=34&campaign_id=$campaign_id",       $campaigns_color,   $active_tab, 'Basic');
+tabCell(_QXZ("Detail"),     "$PHP_SELF?ADD=31&campaign_id=$campaign_id",       $camp_detail_color, $active_tab, 'Detail');
+tabCell(_QXZ("Statuses"),   "$PHP_SELF?ADD=31&SUB=22&campaign_id=$campaign_id",$camp_statuses_color,$active_tab,'Statuses');
+tabCell(_QXZ("HotKeys"),    "$PHP_SELF?ADD=31&SUB=23&campaign_id=$campaign_id",$camp_hotkeys_color, $active_tab,'HotKeys');
 
-// Detail tab
-echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_detail_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-    <a href=\"{$PHP_SELF}?ADD=31&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Detail") ."</a>
-</td>";
-
-// Statuses tab
-echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_statuses_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-    <a href=\"{$PHP_SELF}?ADD=31&SUB=22&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Statuses") ."</a>
-</td>";
-
-// HotKeys tab
-echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_hotkeys_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-    <a href=\"{$PHP_SELF}?ADD=31&SUB=23&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("HotKeys") ."</a>
-</td>";
-
-// Conditional tabs for outbound autodial
 if ($SSoutbound_autodial_active > 0) {
-    echo "<td style=\"flex: 1; min-width: 100px; text-align: center; padding: 12px 8px; background-color: {$camp_recycle_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=25&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Lead Recycling") ."</a>
-    </td>";
-    
-    echo "<td style=\"flex: 1; min-width: 100px; text-align: center; padding: 12px 8px; background-color: {$camp_autoalt_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=26&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Auto Alt Dial") ."</a>
-    </td>";
-    
-    echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_listmix_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=29&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("List Mix") ."</a>
-    </td>";
-    
-    echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_survey_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=20A&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Survey") ."</a>
-    </td>";
+    tabCell(_QXZ("Lead Recycling"),"$PHP_SELF?ADD=31&SUB=25&campaign_id=$campaign_id",$camp_recycle_color,$active_tab,'Lead Recycling');
+    tabCell(_QXZ("Auto Alt Dial"), "$PHP_SELF?ADD=31&SUB=26&campaign_id=$campaign_id",$camp_autoalt_color,$active_tab,'Auto Alt Dial');
+    tabCell(_QXZ("List Mix"),      "$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id",$camp_listmix_color, $active_tab,'List Mix');
+    tabCell(_QXZ("Survey"),        "$PHP_SELF?ADD=31&SUB=20A&campaign_id=$campaign_id",$camp_survey_color, $active_tab,'Survey');
 }
-
-// Pause Codes tab
-echo "<td style=\"flex: 1; min-width: 90px; text-align: center; padding: 12px 8px; background-color: {$camp_pause_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-    <a href=\"{$PHP_SELF}?ADD=31&SUB=27&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Pause Codes") ."</a>
-</td>";
-
-// Presets tab (conditional)
-if ($enable_xfer_presets == 'ENABLED' || $enable_xfer_presets == 'STAGING') {
-    echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_preset_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=201&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Presets") ."</a>
-    </td>";
+tabCell(_QXZ("Pause Codes"),"$PHP_SELF?ADD=31&SUB=27&campaign_id=$campaign_id",$camp_pause_color,$active_tab,'Pause Codes');
+if ( ($enable_xfer_presets == 'ENABLED') or ($enable_xfer_presets == 'STAGING') ) {
+    tabCell(_QXZ("Presets"),      "$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaign_id",$camp_preset_color, $active_tab,'Presets');
 }
-
-// AC-CID tab (conditional)
 if ($SScampaign_cid_areacodes_enabled == '1') {
-    echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_accid_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=202&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("AC-CID") ."</a>
-    </td>";
+    tabCell(_QXZ("AC-CID"), "$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaign_id",$camp_accid_color,$active_tab,'AC-CID');
 }
-
-// QC tab (conditional)
 if ($SSqc_features_active > 0) {
-    echo "<td style=\"flex: 1; min-width: 80px; text-align: center; padding: 12px 8px; background-color: {$camp_qc_color}; border-right: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;\">
-        <a href=\"{$PHP_SELF}?ADD=31&SUB=28&campaign_id={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("QC") ."</a>
-    </td>";
+    tabCell(_QXZ("QC"), "$PHP_SELF?ADD=31&SUB=28&campaign_id=$campaign_id",$camp_qc_color,$active_tab,'QC');
 }
-
-// Spacer cells if outbound autodial is not active
 if ($SSoutbound_autodial_active < 1) {
-    echo "<td style=\"flex: 1; min-width: 80px;\"></td>
-          <td style=\"flex: 1; min-width: 80px;\"></td>
-          <td style=\"flex: 1; min-width: 80px;\"></td>
-          <td style=\"flex: 1; min-width: 80px;\"></td>";
+    echo "<td style='width:110px;height:30px;'></td>
+          <td style='width:110px;height:30px;'></td>
+          <td style='width:110px;height:30px;'></td>
+          <td style='width:110px;height:30px;'></td>";
 }
+tabCell(_QXZ("Real-Time"), "./realtime_report.php?RR=4&DB=0&group=$campaign_id",$campaigns_color,$active_tab,'Real-Time');
+echo "</tr></table>";
 
-// Real-Time tab
-echo "<td style=\"flex: 1; min-width: 90px; text-align: center; padding: 12px 8px; background-color: {$campaigns_color}; transition: all 0.3s ease;\">
-    <a href=\"./realtime_report.php?RR=4&DB=0&group={$campaign_id}\" style=\"text-decoration: none; color: inherit; display: block; font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: 600;\">". _QXZ("Real-Time") ."</a>
-</td>";
-
-echo "</tr>
-    </table>
-</nav>";
-
-
+// Remaining legacy output unchanged
+echo "<table><tr><td>
+    <span style=\"font-family:Arial,Helvetica; color:black; font-size:12px;\">";
+echo "<center>\n";
 
 
 	if ($SUB < 1)
