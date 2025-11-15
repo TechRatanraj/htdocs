@@ -49520,7 +49520,7 @@ if ($ADD==196000000000)
 	echo "</TABLE></center>\n";
 	}
 
-
+	}
 ######################
 # ADD=197000000000 display all VM Message group entries
 ######################
