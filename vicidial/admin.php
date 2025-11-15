@@ -28216,7 +28216,7 @@ if ($SSoutbound_autodial_active > 0) {
     echo "</div>"; // end grid
     echo "</div>"; // end Dial Status section
 
-
+}
 
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
 			if ($ALTmultiDISABLE > 0)
