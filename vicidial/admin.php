@@ -27686,6 +27686,9 @@ if ($ADD==31)
 		else		{$camp_preset_color=$campaigns_color;}
 	if ($SUB==202)	{$camp_accid_color=$subcamp_color;}
 		else		{$camp_accid_color=$campaigns_color;}
+
+echo "<div style='max-width: 1400px; margin: 0 auto; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;'>";
+
 // Campaign Info Header
 echo "<font size=2 color=$subcamp_font face=\"ARIAL,HELVETICA\"> <B>$campaign_id</B>: </font><BR>";
 
