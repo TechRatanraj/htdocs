@@ -28125,7 +28125,7 @@ if ($SUB < 1) {
             echo "<select name=\"lead_filter_id\" style=\"min-width:160px; padding:6px; border:1px solid #b1b1b1; border-radius:4px; font-size:13px;\">$filters_list<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option></select> $NWB#campaigns-lead_filter_id$NWE";
         }
         echo "</td></tr>";
-    }
+  
 
 			if ($SScall_quota_lead_ranking > 0)
 				{
