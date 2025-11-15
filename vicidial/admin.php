@@ -28099,11 +28099,12 @@ if ($SUB < 1) {
             echo "$filters_list";
             echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>";
             echo "</select> $NWB#campaigns-lead_filter_id$NWE";
-        }
-       			 echo "</div>";
+        
+       	 echo "</div>";
     
-
-		else
+	
+			}
+				else
 					{
 					echo "<select size=1 name=lead_order>
 					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
