@@ -27714,8 +27714,8 @@ echo "<div style=\"font-family:Arial,Helvetica,sans-serif; font-size:13px; color
 echo "<table style='width:930px; border-collapse:collapse; margin:0 auto; background:#f8f9fa;'><tr>";
 function tabCell($label, $url, $bg, $active_tab, $name) {
     $is_active = ($active_tab == $name);
-    $style = "width:110px;
-        height:30px;
+    $style = "width:150px;
+        height:50px;
         text-align:center;
         background:".($is_active ? "#e5e7eb": $bg).";
         font-family:Arial,Helvetica,sans-serif;
