@@ -27686,103 +27686,44 @@ if ($ADD==31)
 		else		{$camp_preset_color=$campaigns_color;}
 	if ($SUB==202)	{$camp_accid_color=$subcamp_color;}
 		else		{$camp_accid_color=$campaigns_color;}
-<?php
-// Campaign title
-echo '<p style="font-size: 0.875rem; color: ' . $subcamp_font . '; font-family: Arial, Helvetica, sans-serif; margin: 0 0 4px 0;">';
-echo '  <strong>' . htmlspecialchars($campaign_id, ENT_QUOTES, 'UTF-8') . ':</strong>';
-echo '</p>';
+	echo "<font size=2 color=$subcamp_font face=\"ARIAL,HELVETICA\"> <B>$campaign_id</B>: </font><BR>";
+	echo "<TABLE WIDTH=930 CELLPADDING=2 CELLSPACING=0><TR BGCOLOR=\"$campaigns_color\">\n";
+	echo "<TD ALIGN=CENTER><font size=0> &nbsp; <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Basic")."</font></a></TD>";
+	echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_detail_color\"> <a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Detail")." </font></a> </TD>";
+	echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_statuses_color\"><a href=\"$PHP_SELF?ADD=31&SUB=22&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Statuses")."</font></a></TD>";
+	echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_hotkeys_color\"><a href=\"$PHP_SELF?ADD=31&SUB=23&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("HotKeys")."</font></a></TD>";
 
-// Top navigation table
-echo '<table style="width: 930px; border-collapse: collapse; margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 0.75rem;">';
-echo '  <tr style="background-color: ' . $campaigns_color . ';">';
+	if ($SSoutbound_autodial_active > 0)
+		{
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_recycle_color\"><a href=\"$PHP_SELF?ADD=31&SUB=25&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Lead Recycling")."</font></a></TD>";
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_autoalt_color\"><a href=\"$PHP_SELF?ADD=31&SUB=26&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Auto Alt Dial")."</font></a></TD>";
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_listmix_color\"><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("List Mix")."</font></a></TD>";
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_survey_color\"><a href=\"$PHP_SELF?ADD=31&SUB=20A&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Survey")."</font></a></TD>";
+		}
+	echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_pause_color\"><a href=\"$PHP_SELF?ADD=31&SUB=27&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Pause Codes")."</font></a></TD>";
+	if ( ($enable_xfer_presets == 'ENABLED') or ($enable_xfer_presets == 'STAGING') )
+		{
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_preset_color\"><a href=\"$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Presets")."</font></a></TD>";
+		}
+	if ($SScampaign_cid_areacodes_enabled == '1')
+		{
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_accid_color\"><a href=\"$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("AC-CID")."</font></a></TD>";
+		}
+	if ($SSqc_features_active > 0)
+		{
+		echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_qc_color\"><a href=\"$PHP_SELF?ADD=31&SUB=28&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("QC")."</font></a></TD>";
+		}
+	if ($SSoutbound_autodial_active < 1)
+		{
+		echo "<TD></TD><TD></TD><TD></TD><TD></TD>\n";
+		}
+	echo "<TD ALIGN=CENTER> <a href=\"./realtime_report.php?RR=4&DB=0&group=$campaign_id\" STYLE=\"text-decoration:none;\"><font class=\"sub_sub_head_links\">"._QXZ("Real-Time")."</font></a></TD>\n";
+	echo "</TR></TABLE>\n";
 
-// Basic
-echo '    <td style="text-align: center; padding: 2px;">';
-echo '      <a href="' . $PHP_SELF . '?ADD=34&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Basic") . '</a>';
-echo '    </td>';
+	echo "<TABLE><TR><TD>\n";
+	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-// Detail
-echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_detail_color . ';">';
-echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Detail") . '</a>';
-echo '    </td>';
-
-// Statuses
-echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_statuses_color . ';">';
-echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=22&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Statuses") . '</a>';
-echo '    </td>';
-
-// HotKeys
-echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_hotkeys_color . ';">';
-echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=23&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("HotKeys") . '</a>';
-echo '    </td>';
-
-if ($SSoutbound_autodial_active > 0) {
-    // Lead Recycling
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_recycle_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=25&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Lead Recycling") . '</a>';
-    echo '    </td>';
-
-    // Auto Alt Dial
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_autoalt_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=26&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Auto Alt Dial") . '</a>';
-    echo '    </td>';
-
-    // List Mix
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_listmix_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=29&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("List Mix") . '</a>';
-    echo '    </td>';
-
-    // Survey
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_survey_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=20A&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Survey") . '</a>';
-    echo '    </td>';
-}
-
-// Pause Codes
-echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_pause_color . ';">';
-echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=27&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Pause Codes") . '</a>';
-echo '    </td>';
-
-if ($enable_xfer_presets === 'ENABLED' || $enable_xfer_presets === 'STAGING') {
-    // Presets
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_preset_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=201&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Presets") . '</a>';
-    echo '    </td>';
-}
-
-if ($SScampaign_cid_areacodes_enabled == '1') {
-    // AC-CID
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_accid_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=202&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("AC-CID") . '</a>';
-    echo '    </td>';
-}
-
-if ($SSqc_features_active > 0) {
-    // QC
-    echo '    <td style="text-align: center; padding: 2px; background-color: ' . $camp_qc_color . ';">';
-    echo '      <a href="' . $PHP_SELF . '?ADD=31&amp;SUB=28&amp;campaign_id=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("QC") . '</a>';
-    echo '    </td>';
-}
-
-if ($SSoutbound_autodial_active < 1) {
-    // Empty cells to keep layout if needed
-    echo '    <td></td><td></td><td></td><td></td>';
-}
-
-// Real-Time
-echo '    <td style="text-align: center; padding: 2px;">';
-echo '      <a href="./realtime_report.php?RR=4&amp;DB=0&amp;group=' . urlencode($campaign_id) . '" class="sub_sub_head_links" style="text-decoration: none;">' . _QXZ("Real-Time") . '</a>';
-echo '    </td>';
-
-echo '  </tr>';
-echo '</table>';
-
-// Content wrapper instead of <FONT> and <center>
-echo '<table>';
-echo '  <tr>';
-echo '    <td>';
-echo '<div style="font-family: Arial, Helvetica, sans-serif; color: #000; font-size: 0.875rem; text-align: center;">';
-
+	echo "<center>\n";
 
 	if ($SUB < 1)
 		{
