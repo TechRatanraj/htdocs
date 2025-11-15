@@ -28239,10 +28239,11 @@ $camp_accid_color = ($SUB == 202) ? $subcamp_color : $campaigns_color;
                 <?php endif; ?>
                 <span style="font-size:11px; color:#a0aec0; display:block; margin-top:8px;"><?php echo $NWB; ?>#campaigns-lead_order<?php echo $NWE; ?></span>
             </div>
-        <?php endif; 
-	
-						}}
 						
+        <?php endif; 
+		}
+					
+
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
 			if ($ALTmultiDISABLE > 0)
 				{
