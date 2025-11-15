@@ -27930,7 +27930,13 @@ if ($SUB < 1) {
             echo "</div>";
         }
     }
-
+    echo "</div></div>"; // End flex grid
+    // Submit button
+    echo "<div style=\"width:910px; text-align:center; margin-top:18px;\">
+        <input type=\"submit\" name=\"submit\" value=\""._QXZ("Save Changes")."\" style=\"padding:10px 38px; background-color:#{$SSbutton_color}; border:none; border-radius:6px; color:#fff; font-size:16px; font-weight:bold; cursor:pointer;\">
+    </div>";
+    echo "</form>";
+}
 			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Add A Dial Status to Call").": </td><td align=left><select size=1 name=dial_status $DEFlistDISABLE>\n";
 			echo "<option value=\"\"> - "._QXZ("NONE")." - </option>\n";
 
