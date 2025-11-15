@@ -27772,7 +27772,7 @@ echo "</TR></TABLE>\n";
 echo "<TABLE><TR><TD>\n";
 echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 echo "<center>\n";
-
+		}
 
 	if ($SUB < 1)
 		{
