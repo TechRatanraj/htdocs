@@ -27931,7 +27931,7 @@ if ($SUB < 1) {
         }
     }
 
-    
+}
 
 			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Add A Dial Status to Call").": </td><td align=left><select size=1 name=dial_status $DEFlistDISABLE>\n";
 			echo "<option value=\"\"> - "._QXZ("NONE")." - </option>\n";
