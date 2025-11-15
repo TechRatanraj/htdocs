@@ -29466,7 +29466,7 @@ echo "</TD></TR></TABLE>\n";
 		}
 		echo "\t<option value='" . htmlspecialchars($manual_dial_filter) . "' SELECTED>" . _QXZ(htmlspecialchars($manual_dial_filter)) . "</option>\n";
 		echo "</select>$NWB#campaigns-manual_dial_filter$NWE</td></tr>\n";
-<
+
 
 		// ===== Manual Preview Dial =====
 		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>" . _QXZ("Manual Preview Dial") . ": </td><td align=left><select size=1 name=manual_preview_dial style=\"padding:4px 6px;border:1px solid #BDC3C7;border-radius:3px;font-family:Arial,Helvetica;\"><option value='DISABLED'>" . _QXZ("DISABLED") . "</option><option value='PREVIEW_AND_SKIP'>" . _QXZ("PREVIEW_AND_SKIP") . "</option><option value='PREVIEW_ONLY'>" . _QXZ("PREVIEW_ONLY") . "</option><option value='" . htmlspecialchars($manual_preview_dial) . "' SELECTED>" . _QXZ(htmlspecialchars($manual_preview_dial)) . "</option></select>$NWB#campaigns-manual_preview_dial$NWE</td></tr>\n";
