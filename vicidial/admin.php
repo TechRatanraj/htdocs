@@ -28173,6 +28173,21 @@ if ($SUB < 1) {
         echo "</div>";
     }
     
+	    // Form Submit Buttons
+    echo "<div style='display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e8eaed;'>";
+    echo "<button type='reset' style='padding: 10px 16px; background: #f8f9fa; color: #5f6368; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer;'>"._QXZ("Reset")."</button>";
+    echo "<button type='submit' style='padding: 10px 16px; background: #1a73e8; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer;'>"._QXZ("Save Changes")."</button>";
+    echo "</div>";
+    
+    echo "</div>";
+    echo "</div>";
+    
+    echo "</form>";
+}
+
+echo "</div>";
+
+
 			if ($SScall_quota_lead_ranking > 0)
 				{
 				##### get container listings for dynamic call quota lead ranking pulldown menu
