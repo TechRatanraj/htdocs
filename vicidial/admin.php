@@ -27686,93 +27686,94 @@ if ($ADD==31)
 		else		{$camp_preset_color=$campaigns_color;}
 	if ($SUB==202)	{$camp_accid_color=$subcamp_color;}
 		else		{$camp_accid_color=$campaigns_color;}
-// Header campaign id row
+// Campaign Info Header
 echo "<font size=2 color=$subcamp_font face=\"ARIAL,HELVETICA\"> <B>$campaign_id</B>: </font><BR>";
 
-// Navigation Table
+// Campaign Navigation Table
 echo "<TABLE WIDTH=930 CELLPADDING=2 CELLSPACING=0><TR BGCOLOR=\"$campaigns_color\">\n";
 
-// Basic tab
-echo "<TD ALIGN=CENTER>";
-echo "<font size=0> &nbsp; <a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Basic])."</font></a></TD>";
+// Basic
+echo "<TD ALIGN=CENTER><font size=0> &nbsp; 
+<a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+<font class=\"sub_sub_head_links\">"._QXZ('Basic')."</font></a></TD>";
 
-// Detail tab
-echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_detail_color\">";
-echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Detail])."</font></a> </TD>";
+// Detail
+echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_detail_color\">
+<a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+<font class=\"sub_sub_head_links\">"._QXZ('Detail')."</font></a></TD>";
 
-// Statuses tab
-echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_statuses_color\">";
-echo "<a href=\"$PHP_SELF?ADD=31&SUB=22&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Statuses])."</font></a></TD>";
+// Statuses
+echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_statuses_color\">
+<a href=\"$PHP_SELF?ADD=31&SUB=22&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+<font class=\"sub_sub_head_links\">"._QXZ('Statuses')."</font></a></TD>";
 
-// HotKeys tab
-echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_hotkeys_color\">";
-echo "<a href=\"$PHP_SELF?ADD=31&SUB=23&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:HotKeys])."</font></a></TD>";
+// HotKeys
+echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_hotkeys_color\">
+<a href=\"$PHP_SELF?ADD=31&SUB=23&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+<font class=\"sub_sub_head_links\">"._QXZ('HotKeys')."</font></a></TD>";
 
-// Outbound dial features
+// Outbound-only Tabs
 if ($SSoutbound_autodial_active > 0) {
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_recycle_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=25&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Lead Recycling])."</font></a></TD>";
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_recycle_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=25&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('Lead Recycling')."</font></a></TD>";
 
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_autoalt_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=26&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Auto Alt Dial])."</font></a></TD>";
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_autoalt_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=26&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('Auto Alt Dial')."</font></a></TD>";
 
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_listmix_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:List Mix])."</font></a></TD>";
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_listmix_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('List Mix')."</font></a></TD>";
 
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_survey_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=20A&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Survey])."</font></a></TD>";
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_survey_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=20A&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('Survey')."</font></a></TD>";
 }
 
-// Pause Codes tab
-echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_pause_color\">";
-echo "<a href=\"$PHP_SELF?ADD=31&SUB=27&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Pause Codes])."</font></a></TD>";
+// Pause Codes
+echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_pause_color\">
+<a href=\"$PHP_SELF?ADD=31&SUB=27&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+<font class=\"sub_sub_head_links\">"._QXZ('Pause Codes')."</font></a></TD>";
 
-// Presets tab (conditional by feature)
-if ($enable_xfer_presets == 'ENABLED' || $enable_xfer_presets == 'STAGING') {
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_preset_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Presets])."</font></a></TD>";
+// Presets (conditional)
+if ($enable_xfer_presets === 'ENABLED' || $enable_xfer_presets === 'STAGING') {
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_preset_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('Presets')."</font></a></TD>";
 }
 
-// AC-CID tab (conditional by feature)
-if ($SScampaign_cid_areacodes_enabled == '1') {
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_accid_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:AC-CID])."</font></a></TD>";
+// AC-CID (conditional)
+if ($SScampaign_cid_areacodes_enabled === '1') {
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_accid_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('AC-CID')."</font></a></TD>";
 }
 
-// QC tab (conditional by feature)
+// QC (conditional)
 if ($SSqc_features_active > 0) {
-    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_qc_color\">";
-    echo "<a href=\"$PHP_SELF?ADD=31&SUB=28&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">";
-    echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:QC])."</font></a></TD>";
+    echo "<TD ALIGN=CENTER BGCOLOR=\"$camp_qc_color\">
+    <a href=\"$PHP_SELF?ADD=31&SUB=28&campaign_id=$campaign_id\" STYLE=\"text-decoration:none;\">
+    <font class=\"sub_sub_head_links\">"._QXZ('QC')."</font></a></TD>";
 }
 
-// Padding for non-autodial scenarios
+// Padding for plain inbound
 if ($SSoutbound_autodial_active < 1) {
     echo "<TD></TD><TD></TD><TD></TD><TD></TD>\n";
 }
 
-// Real-Time tab (always last)
-echo "<TD ALIGN=CENTER>";
-echo "<a href=\"./realtime_report.php?RR=4&DB=0&group=$campaign_id\" STYLE=\"text-decoration:none;\">";
-echo "<font class=\"sub_sub_head_links\">"._QXZ([translate:Real-Time])."</font></a></TD>\n";
+// Real-Time
+echo "<TD ALIGN=CENTER>
+<a href=\"./realtime_report.php?RR=4&DB=0&group=$campaign_id\" STYLE=\"text-decoration:none;\">
+<font class=\"sub_sub_head_links\">"._QXZ('Real-Time')."</font></a></TD>\n";
+
 echo "</TR></TABLE>\n";
 
-// Optional: Output for following content
+// Subsequent classic content blocks
 echo "<TABLE><TR><TD>\n";
-echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>\n";
 echo "<center>\n";
-		}
+
 
 	if ($SUB < 1)
 		{
