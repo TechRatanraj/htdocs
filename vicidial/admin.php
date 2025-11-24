@@ -27664,104 +27664,136 @@ $rslt = mysql_to_mysqli($stmt, $link);
 $row = mysqli_fetch_row($rslt);
 $phones_alias_count = $row[0];
 
-// Colors
-$camp_detail_color   = ($SUB<1)      ? $subcamp_color : $campaigns_color;
-$camp_statuses_color = ($SUB==22)    ? $subcamp_color : $campaigns_color;
-$camp_hotkeys_color  = ($SUB==23)    ? $subcamp_color : $campaigns_color;
-$camp_recycle_color  = ($SUB==25)    ? $subcamp_color : $campaigns_color;
-$camp_autoalt_color  = ($SUB==26)    ? $subcamp_color : $campaigns_color;
-$camp_pause_color    = ($SUB==27)    ? $subcamp_color : $campaigns_color;
-$camp_qc_color       = ($SUB==28)    ? $subcamp_color : $campaigns_color;
-$camp_listmix_color  = ($SUB==29)    ? $subcamp_color : $campaigns_color;
-$camp_survey_color   = ($SUB=='20A') ? $subcamp_color : $campaigns_color;
-$camp_preset_color   = ($SUB==201)   ? $subcamp_color : $campaigns_color;
-$camp_accid_color    = ($SUB==202)   ? $subcamp_color : $campaigns_color;
 
-// Determine active tab
-function activeTab($tab,$sub) {
-    $map = [
-        'Basic'         => ['ADD'=>34],
-        'Detail'        => ['ADD'=>31, 'SUB'=>null],
-        'Statuses'      => ['ADD'=>31, 'SUB'=>22],
-        'HotKeys'       => ['ADD'=>31, 'SUB'=>23],
-        'Lead Recycling'=> ['ADD'=>31, 'SUB'=>25],
-        'Auto Alt Dial' => ['ADD'=>31, 'SUB'=>26],
-        'List Mix'      => ['ADD'=>31, 'SUB'=>29],
-        'Survey'        => ['ADD'=>31, 'SUB'=>'20A'],
-        'Pause Codes'   => ['ADD'=>31, 'SUB'=>27],
-        'Presets'       => ['ADD'=>31, 'SUB'=>201],
-        'AC-CID'        => ['ADD'=>31, 'SUB'=>202],
-        'QC'            => ['ADD'=>31, 'SUB'=>28],
-        'Real-Time'     => ['RT'=>true],
-    ];
-    foreach($map as $name=>$keys) {
-        if (
-            (isset($keys['RT']) && isset($_GET['RR'])) ||
-            ((isset($keys['ADD']) && $_GET['ADD'] == $keys['ADD']) &&
-             (!isset($keys['SUB']) || $_GET['SUB'] == $keys['SUB']))
-        ) return $name;
-    }
-    return '';
-}
-$active_tab = activeTab($PHP_SELF,$_GET['SUB']);
 
-// Font and header
-echo "<div style=\"font-family:Arial,Helvetica,sans-serif; font-size:13px; color:$subcamp_font; font-weight:bold; margin-bottom:3px;\">
-    $campaign_id:
-</div>";
+   
+// Color determination logic - streamlined
+$tab_colors = [
+    'detail' => ($SUB < 1) ? $subcamp_color : $campaigns_color,
+    'statuses' => ($SUB == 22) ? $subcamp_color : $campaigns_color,
+    'hotkeys' => ($SUB == 23) ? $subcamp_color : $campaigns_color,
+    'recycle' => ($SUB == 25) ? $subcamp_color : $campaigns_color,
+    'autoalt' => ($SUB == 26) ? $subcamp_color : $campaigns_color,
+    'pause' => ($SUB == 27) ? $subcamp_color : $campaigns_color,
+    'qc' => ($SUB == 28) ? $subcamp_color : $campaigns_color,
+    'listmix' => ($SUB == 29) ? $subcamp_color : $campaigns_color,
+    'survey' => ($SUB == '20A') ? $subcamp_color : $campaigns_color,
+    'preset' => ($SUB == 201) ? $subcamp_color : $campaigns_color,
+    'accid' => ($SUB == 202) ? $subcamp_color : $campaigns_color
+];
 
-// Header tabs simplified: 12px font, 30px tab height, each tab 110px wide
-echo "<table style='width:930px; border-collapse:collapse; margin:0 auto; background:#f8f9fa;'><tr>";
-function tabCell($label, $url, $bg, $active_tab, $name) {
-    $is_active = ($active_tab == $name);
-    $style = "width:180px;
-        height:50px;
-        text-align:center;
-        background:".($is_active ? "#e5e7eb": $bg).";
-        font-family:Arial,Helvetica,sans-serif;
-        font-size:12px;
-        font-weight:".($is_active ? "bold":"normal").";
-        color:#151517;
-        border:none;
-        border-bottom:".($is_active?"2px solid #a3aab4":"none").";
-        box-shadow:".($is_active?"0 2px 10px rgba(0,0,0,0.04)":"none").";
-        cursor:pointer;";
-    echo "<td style='$style'><a href='$url' style='text-decoration:none;color:inherit;display:block;padding:4px 0;'>$label</a></td>";
-}
-// Render tabs
-tabCell(_QXZ("Basic"),      "$PHP_SELF?ADD=34&campaign_id=$campaign_id",       $campaigns_color,   $active_tab, 'Basic');
-tabCell(_QXZ("Detail"),     "$PHP_SELF?ADD=31&campaign_id=$campaign_id",       $camp_detail_color, $active_tab, 'Detail');
-tabCell(_QXZ("Statuses"),   "$PHP_SELF?ADD=31&SUB=22&campaign_id=$campaign_id",$camp_statuses_color,$active_tab,'Statuses');
-tabCell(_QXZ("HotKeys"),    "$PHP_SELF?ADD=31&SUB=23&campaign_id=$campaign_id",$camp_hotkeys_color, $active_tab,'HotKeys');
+// Campaign Information Section
+echo '<div style="background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-20); margin-bottom: var(--space-20); border: 1px solid var(--color-card-border);">';
+echo '<div style="display: flex; align-items: center; gap: var(--space-12); margin-bottom: var(--space-20); padding-bottom: var(--space-16); border-bottom: 2px solid var(--color-primary);">';
+echo '<span style="font-size: 24px;">📌</span>';
+echo '<h2 style="margin: 0; font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--color-text);">' . _QXZ("Campaign Information") . '</h2>';
+echo '</div>';
 
-if ($SSoutbound_autodial_active > 0) {
-    tabCell(_QXZ("Lead Recycling"),"$PHP_SELF?ADD=31&SUB=25&campaign_id=$campaign_id",$camp_recycle_color,$active_tab,'Lead Recycling');
-    tabCell(_QXZ("Auto Alt Dial"), "$PHP_SELF?ADD=31&SUB=26&campaign_id=$campaign_id",$camp_autoalt_color,$active_tab,'Auto Alt Dial');
-    tabCell(_QXZ("List Mix"),      "$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id",$camp_listmix_color, $active_tab,'List Mix');
-    tabCell(_QXZ("Survey"),        "$PHP_SELF?ADD=31&SUB=20A&campaign_id=$campaign_id",$camp_survey_color, $active_tab,'Survey');
-}
-tabCell(_QXZ("Pause Codes"),"$PHP_SELF?ADD=31&SUB=27&campaign_id=$campaign_id",$camp_pause_color,$active_tab,'Pause Codes');
-if ( ($enable_xfer_presets == 'ENABLED') or ($enable_xfer_presets == 'STAGING') ) {
-    tabCell(_QXZ("Presets"),      "$PHP_SELF?ADD=31&SUB=201&campaign_id=$campaign_id",$camp_preset_color, $active_tab,'Presets');
-}
-if ($SScampaign_cid_areacodes_enabled == '1') {
-    tabCell(_QXZ("AC-CID"), "$PHP_SELF?ADD=31&SUB=202&campaign_id=$campaign_id",$camp_accid_color,$active_tab,'AC-CID');
-}
-if ($SSqc_features_active > 0) {
-    tabCell(_QXZ("QC"), "$PHP_SELF?ADD=31&SUB=28&campaign_id=$campaign_id",$camp_qc_color,$active_tab,'QC');
-}
-if ($SSoutbound_autodial_active < 1) {
-    echo "<td style='width:110px;height:30px;'></td>
-          <td style='width:110px;height:30px;'></td>
-          <td style='width:110px;height:30px;'></td>
-          <td style='width:110px;height:30px;'></td>";
-}
-tabCell(_QXZ("Real-Time"), "./realtime_report.php?RR=4&DB=0&group=$campaign_id",$campaigns_color,$active_tab,'Real-Time');
-echo "</tr></table>";
+echo '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-16);">';
 
-// Remaining legacy output unchanged
-echo "<table><tr><td>
-    <span style=\"font-family:Arial,Helvetica; color:black; font-size:12px;\">";
+// Campaign ID - Green
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #22c55e; background: rgba(34, 197, 94, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("CAMPAIGN ID") . '</div>';
+echo '<div style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); color: var(--color-text);">' . htmlspecialchars($campaign_id) . '</div>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+// Campaign Name - Blue
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #3b82f6; background: rgba(59, 130, 246, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("CAMPAIGN NAME") . '</div>';
+echo '<input type="text" value="' . htmlspecialchars($campaign_name) . '" style="display: block; width: 100%; padding: var(--space-8) var(--space-12); font-size: var(--font-size-md); line-height: 1.5; color: var(--color-text); background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-base);" />';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+// Campaign Description - Yellow (full width)
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05); grid-column: span 2;">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("CAMPAIGN DESCRIPTION") . '</div>';
+echo '<textarea style="display: block; width: 100%; padding: var(--space-8) var(--space-12); font-size: var(--font-size-base); font-family: var(--font-family-base); line-height: 1.5; color: var(--color-text); background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-base); min-height: 80px;"></textarea>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+// Campaign Change Date - Red
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("CAMPAIGN CHANGE DATE") . '</div>';
+echo '<div style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); color: var(--color-text);">' . htmlspecialchars($change_date) . '</div>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+// Campaign Login Date - Purple
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #a855f7; background: rgba(168, 85, 247, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("CAMPAIGN LOGIN DATE") . '</div>';
+echo '<div style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); color: var(--color-text);">' . htmlspecialchars($login_date) . '</div>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+echo '</div>'; // End info-grid
+echo '</div>'; // End campaign-info-section
+
+// Campaign Settings Section
+echo '<div style="background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-20); margin-bottom: var(--space-20); border: 1px solid var(--color-card-border);">';
+echo '<div style="display: flex; align-items: center; gap: var(--space-12); margin-bottom: var(--space-20); padding-bottom: var(--space-16); border-bottom: 2px solid var(--color-primary);">';
+echo '<span style="font-size: 24px;">⚙️</span>';
+echo '<h2 style="margin: 0; font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--color-text);">' . _QXZ("Campaign Settings") . '</h2>';
+echo '</div>';
+
+echo '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-16);">';
+
+// Active - Green
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #22c55e; background: rgba(34, 197, 94, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("ACTIVE") . '</div>';
+echo '<select style="display: block; width: 100%; padding: var(--space-8) var(--space-12); font-size: var(--font-size-md); line-height: 1.5; color: var(--color-text); background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-base); -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: var(--select-caret-light); background-repeat: no-repeat; background-position: right var(--space-12) center; background-size: 16px; padding-right: var(--space-32);">';
+echo '<option value="N">N</option>';
+echo '<option value="Y">Y</option>';
+echo '</select>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+// Admin User Group - Blue
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #3b82f6; background: rgba(59, 130, 246, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("ADMIN USER GROUP") . '</div>';
+echo '<div style="font-size: var(--font-size-base); font-weight: var(--font-weight-medium); color: var(--color-text);">---ALL---</div>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+// Park Music on Hold - Yellow
+echo '<div style="position: relative; padding: var(--space-16); border-radius: var(--radius-md); border-left: 4px solid #f59e0b; background: rgba(245, 158, 11, 0.05);">';
+echo '<div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-8);">' . _QXZ("PARK MUSIC-ON-HOLD") . '</div>';
+echo '<span style="position: absolute; top: var(--space-12); right: var(--space-12); width: 20px; height: 20px; background: var(--color-secondary); color: var(--color-text-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); cursor: help;">?</span>';
+echo '</div>';
+
+echo '</div>'; // End settings-grid
+echo '</div>'; // End campaign-settings-section
+
+// Navigation Tabs
+echo '<div style="background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-4); border: 1px solid var(--color-card-border); margin-bottom: var(--space-20);">';
+echo '<div style="display: flex; gap: var(--space-4); overflow-x: auto;">';
+
+// Basic Tab
+$basic_active = ($ADD == 34) ? 'background: var(--color-primary); color: var(--color-btn-primary-text);' : '';
+echo '<a href="' . $PHP_SELF . '?ADD=34&campaign_id=' . $campaign_id . '" style="display: flex; align-items: center; gap: var(--space-8); padding: var(--space-12) var(--space-20); border-radius: var(--radius-base); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); text-decoration: none; transition: all var(--duration-fast) var(--ease-standard); white-space: nowrap; ' . $basic_active . '">';
+echo '<span style="font-size: 16px;">📊</span> ' . _QXZ("Basic View");
+echo '</a>';
+
+// Detail Tab
+$detail_active = ($SUB < 1 && $ADD == 31) ? 'background: var(--color-primary); color: var(--color-btn-primary-text);' : '';
+echo '<a href="' . $PHP_SELF . '?ADD=31&campaign_id=' . $campaign_id . '" style="display: flex; align-items: center; gap: var(--space-8); padding: var(--space-12) var(--space-20); border-radius: var(--radius-base); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); text-decoration: none; transition: all var(--duration-fast) var(--ease-standard); white-space: nowrap; ' . $detail_active . '">';
+echo '<span style="font-size: 16px;">📋</span> ' . _QXZ("Detail View");
+echo '</a>';
+
+// List Mix Tab
+$listmix_active = ($SUB == 29) ? 'background: var(--color-primary); color: var(--color-btn-primary-text);' : '';
+echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=29&campaign_id=' . $campaign_id . '" style="display: flex; align-items: center; gap: var(--space-8); padding: var(--space-12) var(--space-20); border-radius: var(--radius-base); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); text-decoration: none; transition: all var(--duration-fast) var(--ease-standard); white-space: nowrap; ' . $listmix_active . '">';
+echo '<span style="font-size: 16px;">📝</span> ' . _QXZ("List Mix");
+echo '</a>';
+
+// Real-Time Tab
+echo '<a href="./realtime_report.php?RR=4&DB=0&group=' . $campaign_id . '" style="display: flex; align-items: center; gap: var(--space-8); padding: var(--space-12) var(--space-20); border-radius: var(--radius-base); font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); text-decoration: none; transition: all var(--duration-fast) var(--ease-standard); white-space: nowrap;">';
+echo '<span style="font-size: 16px;">📺</span> ' . _QXZ("Real-Time Screen");
+echo '</a>';
+
+echo '</div>'; // End tabs
+echo '</div>'; // End tabs container
+
 echo "<center>\n";
 
 
