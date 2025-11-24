@@ -27842,11 +27842,7 @@ echo '</div>'; // End tabs container
 
 
 
-
 echo "<center>\n";
-
-
-	
 
 if ($SUB < 1) {
 echo "<form action=\"$PHP_SELF\" method=\"POST\" style=\"margin:0;padding:0;width:100%;\">";
@@ -27957,8 +27953,6 @@ if ($SSallow_chats > 0) {
 } else {
     echo "<input type='hidden' name='allow_chats' value=\"$allow_chats\">";
 }
-
-echo "</div>"; // end left column
 
 // RIGHT COLUMN
 echo "<div style='display:flex; flex-direction:column; gap:22px;'>";
