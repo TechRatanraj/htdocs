@@ -27939,25 +27939,26 @@ if ($SSoutbound_autodial_active > 0) {
     echo "<select name='dial_status' $DEFlistDISABLE style='width:70%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value=\"\"> - "._QXZ("NONE")." - </option>$dial_statuses_list</select>";
 
 
+// Add Dial Status (card layout)
+echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #28a745; padding:18px 24px; margin-top:16px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#666;'>ADD A DIAL STATUS TO CALL</div>";
+echo "<select name='dial_status' $DEFlistDISABLE style='width:70%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
+echo "<option value=\"\"> - "._QXZ("NONE")." - </option>";
+echo $dial_statuses_list;
+echo "</select> ";
+echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:10px 24px; border-radius:7px; font-weight:600; cursor:pointer; margin-left:10px;' type='submit' name='submit' value='"._QXZ("ADD")."'>";
+echo " $NWB#campaigns-dial_status$NWE";
+echo "</div>";
 
-
-			echo "$dial_statuses_list";
-			echo "</select> &nbsp; \n";
-			echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'> &nbsp; &nbsp; $NWB#campaigns-dial_status$NWE</td></tr>\n";
-
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order").": </td><td align=left>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_order value=\"$lead_order\"> $ALTmultiLINK";
-				}
-			else
-				{
-				if (file_exists('options.php'))
-					{require('options.php');}
-				if ($camp_lead_order_random > 0)
-					{
-					echo "<select size=1 name=lead_order>
-					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
+// List Order (card layout)
+echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(28,35,46,0.06); border-left:6px solid #2685ec; padding:18px 24px; margin-top:16px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#666;'>LIST ORDER</div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='lead_order' value=\"$lead_order\"> $ALTmultiLINK";
+} else {
+    if (file_exists('options.php')) { require('options.php'); }
+    echo "<select name='lead_order' style='width:90%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
+<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
 					<option value='DOWN'>"._QXZ("DOWN")."</option>
 					<option value='UP'>"._QXZ("UP")."</option>
 					<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>
@@ -28166,7 +28167,10 @@ if ($SSoutbound_autodial_active > 0) {
 					}
 				}
 
-			echo "</td></tr>\n";
+				echo "</div>";
+
+	
+
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
 			if ($ALTmultiDISABLE > 0)
 				{
