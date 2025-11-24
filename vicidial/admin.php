@@ -27742,36 +27742,99 @@ echo '<span style="font-size: 18px; font-weight: 600; color: #ffffff; font-famil
 echo '</div>';
 echo '</div>';
 
-// Main navigation tabs - modern clean design
+// Main navigation tabs - modern clean design with ALL tabs
 echo '<div style="background: #f5f5f5; padding: 0; border-bottom: 2px solid #e0e0e0;">';
-echo '<div style="display: flex; align-items: center; gap: 0; background: #ffffff; padding: 0 16px;">';
+echo '<div style="display: flex; align-items: center; gap: 0; background: #ffffff; padding: 0 16px; overflow-x: auto;">';
 
 // Determine active tab styling
 $basic_active = ($ADD == 34) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
 $detail_active = ($ADD == 31 && $SUB < 1) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$statuses_active = ($SUB == 22) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$hotkeys_active = ($SUB == 23) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$recycle_active = ($SUB == 25) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$autoalt_active = ($SUB == 26) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
 $listmix_active = ($SUB == 29) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$survey_active = ($SUB == '20A') ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$pause_active = ($SUB == 27) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$preset_active = ($SUB == 201) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$accid_active = ($SUB == 202) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$qc_active = ($SUB == 28) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
 $realtime_active = 'border-bottom: 3px solid transparent; color: #5f6368;';
 
 // Basic View Tab
-echo '<a href="' . $PHP_SELF . '?ADD=34&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $basic_active . '">';
+echo '<a href="' . $PHP_SELF . '?ADD=34&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $basic_active . '">';
 echo '<span style="font-size: 16px;">📊</span>';
 echo '<span>Basic View</span>';
 echo '</a>';
 
 // Detail View Tab
-echo '<a href="' . $PHP_SELF . '?ADD=31&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $detail_active . '">';
+echo '<a href="' . $PHP_SELF . '?ADD=31&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $detail_active . '">';
 echo '<span style="font-size: 16px;">📋</span>';
 echo '<span>Detail View</span>';
 echo '</a>';
 
-// List Mix Tab
-echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=29&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $listmix_active . '">';
-echo '<span style="font-size: 16px;">📝</span>';
-echo '<span>List Mix</span>';
+// Statuses Tab
+echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=22&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $statuses_active . '">';
+echo '<span>Statuses</span>';
 echo '</a>';
 
+// HotKeys Tab
+echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=23&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $hotkeys_active . '">';
+echo '<span>HotKeys</span>';
+echo '</a>';
+
+// Conditional tabs for outbound autodial
+if ($SSoutbound_autodial_active > 0) {
+    // Lead Recycling Tab
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=25&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $recycle_active . '">';
+    echo '<span>Lead Recycling</span>';
+    echo '</a>';
+    
+    // Auto Alt Dial Tab
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=26&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $autoalt_active . '">';
+    echo '<span>Auto Alt Dial</span>';
+    echo '</a>';
+    
+    // List Mix Tab
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=29&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $listmix_active . '">';
+    echo '<span style="font-size: 16px;">📝</span>';
+    echo '<span>List Mix</span>';
+    echo '</a>';
+    
+    // Survey Tab
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=20A&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $survey_active . '">';
+    echo '<span>Survey</span>';
+    echo '</a>';
+}
+
+// Pause Codes Tab
+echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=27&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $pause_active . '">';
+echo '<span>Pause Codes</span>';
+echo '</a>';
+
+// Presets Tab (conditional)
+if (($enable_xfer_presets == 'ENABLED') || ($enable_xfer_presets == 'STAGING')) {
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=201&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $preset_active . '">';
+    echo '<span>Presets</span>';
+    echo '</a>';
+}
+
+// AC-CID Tab (conditional)
+if ($SScampaign_cid_areacodes_enabled == '1') {
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=202&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $accid_active . '">';
+    echo '<span>AC-CID</span>';
+    echo '</a>';
+}
+
+// QC Tab (conditional)
+if ($SSqc_features_active > 0) {
+    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=28&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $qc_active . '">';
+    echo '<span>QC</span>';
+    echo '</a>';
+}
+
 // Real-Time Screen Tab
-echo '<a href="./realtime_report.php?RR=4&DB=0&group=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $realtime_active . '">';
+echo '<a href="./realtime_report.php?RR=4&DB=0&group=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; white-space: nowrap; ' . $realtime_active . '">';
 echo '<span style="font-size: 16px;">📺</span>';
 echo '<span>Real-Time Screen</span>';
 echo '</a>';
