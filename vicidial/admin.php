@@ -27668,7 +27668,6 @@ $phones_alias_count = $row[0];
 
 
 
-// Color determination logic for active tabs
 if ($SUB < 1) {
     $camp_detail_color = $subcamp_color;
 } else {
@@ -27735,88 +27734,49 @@ if ($SUB == 202) {
     $camp_accid_color = $campaigns_color;
 }
 
-// Campaign ID display
-echo '<div style="font-size: 16px; color: #000; font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-bottom: 4px; padding: 4px 0;">';
-echo htmlspecialchars($campaign_id);
+// Campaign ID header - dark background
+echo '<div style="background: #3e4a5c; padding: 16px 24px; margin-bottom: 0;">';
+echo '<div style="display: flex; align-items: center; gap: 12px;">';
+echo '<span style="font-size: 20px; color: #8a94a6;">📁</span>';
+echo '<span style="font-size: 18px; font-weight: 600; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif;">' . htmlspecialchars($campaign_id) . '</span>';
+echo '</div>';
 echo '</div>';
 
-// Main navigation tabs - single row, no spacing between tabs
-echo '<div style="display: flex; align-items: center; background: #fff; border: 1px solid #ccc; overflow-x: auto;">';
+// Main navigation tabs - modern clean design
+echo '<div style="background: #f5f5f5; padding: 0; border-bottom: 2px solid #e0e0e0;">';
+echo '<div style="display: flex; align-items: center; gap: 0; background: #ffffff; padding: 0 16px;">';
 
-// Basic View Tab (with icon)
-echo '<a href="' . $PHP_SELF . '?ADD=34&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; padding: 6px 12px; background: ' . $campaigns_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-echo '<span style="margin-right: 4px;">📊</span>' . _QXZ("Basic");
+// Determine active tab styling
+$basic_active = ($ADD == 34) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$detail_active = ($ADD == 31 && $SUB < 1) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$listmix_active = ($SUB == 29) ? 'border-bottom: 3px solid #1a73e8; color: #1a73e8; font-weight: 600;' : 'border-bottom: 3px solid transparent; color: #5f6368;';
+$realtime_active = 'border-bottom: 3px solid transparent; color: #5f6368;';
+
+// Basic View Tab
+echo '<a href="' . $PHP_SELF . '?ADD=34&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $basic_active . '">';
+echo '<span style="font-size: 16px;">📊</span>';
+echo '<span>Basic View</span>';
 echo '</a>';
 
-// Detail View Tab (with checkbox icon)
-echo '<a href="' . $PHP_SELF . '?ADD=31&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; padding: 6px 12px; background: ' . $camp_detail_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-echo '<span style="margin-right: 4px;">☑</span>' . _QXZ("Detail");
+// Detail View Tab
+echo '<a href="' . $PHP_SELF . '?ADD=31&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $detail_active . '">';
+echo '<span style="font-size: 16px;">📋</span>';
+echo '<span>Detail View</span>';
 echo '</a>';
 
-// Statuses Tab
-echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=22&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_statuses_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-echo _QXZ("Statuses");
+// List Mix Tab
+echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=29&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $listmix_active . '">';
+echo '<span style="font-size: 16px;">📝</span>';
+echo '<span>List Mix</span>';
 echo '</a>';
 
-// HotKeys Tab
-echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=23&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_hotkeys_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-echo _QXZ("HotKeys");
+// Real-Time Screen Tab
+echo '<a href="./realtime_report.php?RR=4&DB=0&group=' . $campaign_id . '" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; text-decoration: none; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; transition: all 0.2s ease; ' . $realtime_active . '">';
+echo '<span style="font-size: 16px;">📺</span>';
+echo '<span>Real-Time Screen</span>';
 echo '</a>';
 
-// Conditional tabs for outbound autodial
-if ($SSoutbound_autodial_active > 0) {
-    // Lead Recycling Tab
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=25&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_recycle_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-    echo _QXZ("Lead Recycling");
-    echo '</a>';
-    
-    // Auto Alt Dial Tab
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=26&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_autoalt_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-    echo _QXZ("Auto Alt Dial");
-    echo '</a>';
-    
-    // List Mix Tab (with icon)
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=29&campaign_id=' . $campaign_id . '" style="display: inline-flex; align-items: center; padding: 6px 12px; background: ' . $camp_listmix_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-    echo '<span style="margin-right: 4px;">📝</span>' . _QXZ("List Mix");
-    echo '</a>';
-    
-    // Survey Tab
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=20A&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_survey_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-    echo _QXZ("Survey");
-    echo '</a>';
-}
-
-// Pause Codes Tab
-echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=27&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_pause_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-echo _QXZ("Pause Codes");
-echo '</a>';
-
-// Presets Tab (conditional)
-if (($enable_xfer_presets == 'ENABLED') || ($enable_xfer_presets == 'STAGING')) {
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=201&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_preset_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-    echo _QXZ("Presets");
-    echo '</a>';
-}
-
-// AC-CID Tab (conditional)
-if ($SScampaign_cid_areacodes_enabled == '1') {
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=202&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_accid_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-right: 1px solid #ccc; white-space: nowrap;">';
-    echo _QXZ("AC-CID");
-    echo '</a>';
-}
-
-// Real-Time Screen Tab (with icon)
-echo '<a href="./realtime_report.php?RR=4&DB=0&group=' . $campaign_id . '" style="display: inline-flex; align-items: center; padding: 6px 12px; background: ' . $campaigns_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; white-space: nowrap;">';
-echo '<span style="margin-right: 4px;">📺</span>' . _QXZ("Real-Time Scren");
-echo '</a>';
-
-// QC Tab (conditional) - appears at the end if needed
-if ($SSqc_features_active > 0) {
-    echo '<a href="' . $PHP_SELF . '?ADD=31&SUB=28&campaign_id=' . $campaign_id . '" style="display: inline-block; padding: 6px 12px; background: ' . $camp_qc_color . '; color: #000; text-decoration: none; font-size: 13px; font-family: Arial, Helvetica, sans-serif; border-left: 1px solid #ccc; white-space: nowrap;">';
-    echo _QXZ("QC");
-    echo '</a>';
-}
-
+echo '</div>'; // End flex container
 echo '</div>'; // End tabs container
 
 
