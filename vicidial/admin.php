@@ -27938,43 +27938,43 @@ if ($SSoutbound_autodial_active > 0) {
     echo "<div style='$card_style;border-left:6px solid #28a745;'><div style='font-size:15px;font-weight:700;color:#666;'>ADD A DIAL STATUS TO CALL</div>";
     echo "<select name='dial_status' $DEFlistDISABLE style='width:70%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value=\"\"> - "._QXZ("NONE")." - </option>$dial_statuses_list</select>";
 
+	// Add Dial Status (modern card)
+echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(40,167,69,0.09); border-left:6px solid #28a745; padding:18px 24px; margin-bottom:16px;'>";
+echo "<div style='font-size:16px; font-weight:700; color:#317c42;'>ADD A DIAL STATUS TO CALL</div>";
+echo "<select name='dial_status' $DEFlistDISABLE style='width:80%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
+echo $dial_statuses_list;
+echo "</select>";
+echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:10px 24px; border-radius:7px; font-weight:600; cursor:pointer; margin-left:12px;' type='submit' name='submit' value='"._QXZ("ADD")."'>";
+echo " $NWB#campaigns-dial_status$NWE";
+echo "</div>";
 
-
-			echo "$dial_statuses_list";
-			echo "</select> &nbsp; \n";
-			echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'> &nbsp; &nbsp; $NWB#campaigns-dial_status$NWE</td></tr>\n";
-
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order").": </td><td align=left>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_order value=\"$lead_order\"> $ALTmultiLINK";
-				}
-			else
-				{
-				if (file_exists('options.php'))
-					{require('options.php');}
-				if ($camp_lead_order_random > 0)
-					{
-					echo "<select size=1 name=lead_order>
-					<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>
-					<option value='DOWN'>"._QXZ("DOWN")."</option>
-					<option value='UP'>"._QXZ("UP")."</option>
-					<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>
-					<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>
-					<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>
-					<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>
-					<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>
-					<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>
-					<option value='RANDOM'>"._QXZ("RANDOM")."</option>
-					<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>
-					<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>
-					<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>
-					<option value='UP RANK'>"._QXZ("UP RANK")."</option>
-					<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>
-					<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>
-					<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>
-					<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>
-					<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>
+// List Order (modern card)
+echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(38,133,236,0.09); border-left:6px solid #2685ec; padding:18px 24px; margin-bottom:16px;'>";
+echo "<div style='font-size:16px; font-weight:700; color:#2a4f91;'>LIST ORDER</div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='lead_order' value=\"$lead_order\"> $ALTmultiLINK";
+} else {
+    if (file_exists('options.php')) {require('options.php');}
+    echo "<select name='lead_order' style='width:100%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
+    echo "<option value='$lead_order' SELECTED>"._QXZ("$lead_order")."</option>";
+    echo "<option value='DOWN'>"._QXZ("DOWN")."</option>";
+    echo "<option value='UP'>"._QXZ("UP")."</option>";
+    echo "<option value='DOWN PHONE'>"._QXZ("DOWN PHONE")."</option>";
+    echo "<option value='UP PHONE'>"._QXZ("UP PHONE")."</option>";
+    echo "<option value='DOWN LAST NAME'>"._QXZ("DOWN LAST NAME")."</option>";
+    echo "<option value='UP LAST NAME'>"._QXZ("UP LAST NAME")."</option>";
+    echo "<option value='DOWN COUNT'>"._QXZ("DOWN COUNT")."</option>";
+    echo "<option value='UP COUNT'>"._QXZ("UP COUNT")."</option>";
+    echo "<option value='RANDOM'>"._QXZ("RANDOM")."</option>";
+    echo "<option value='DOWN LAST CALL TIME'>"._QXZ("DOWN LAST CALL TIME")."</option>";
+    echo "<option value='UP LAST CALL TIME'>"._QXZ("UP LAST CALL TIME")."</option>";
+    echo "<option value='DOWN RANK'>"._QXZ("DOWN RANK")."</option>";
+    echo "<option value='UP RANK'>"._QXZ("UP RANK")."</option>";
+    echo "<option value='DOWN OWNER'>"._QXZ("DOWN OWNER")."</option>";
+    echo "<option value='UP OWNER'>"._QXZ("UP OWNER")."</option>";
+    echo "<option value='DOWN TIMEZONE'>"._QXZ("DOWN TIMEZONE")."</option>";
+    echo "<option value='UP TIMEZONE'>"._QXZ("UP TIMEZONE")."</option>";
+   <option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>
 					<option value='DOWN 3rd NEW'>"._QXZ("DOWN 3rd NEW")."</option>
 					<option value='DOWN 4th NEW'>"._QXZ("DOWN 4th NEW")."</option>
 					<option value='DOWN 5th NEW'>"._QXZ("DOWN 5th NEW")."</option>
@@ -28161,9 +28161,10 @@ if ($SSoutbound_autodial_active > 0) {
 					<option value='UP TIMEZONE 4th NEW'>"._QXZ("UP TIMEZONE 4th NEW")."</option>
 					<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</option>
 					<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>
-					</select>$NWB#campaigns-lead_order$NWE\n";
-					}
-				}
+             echo "</select>";
+}
+echo " $NWB#campaigns-lead_order$NWE";
+echo "</div>";
 
 			echo "</td></tr>\n";
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
