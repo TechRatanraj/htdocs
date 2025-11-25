@@ -28059,7 +28059,7 @@ if ($SSoutbound_autodial_active > 0) {
         }
         echo "</div>";
     }
-}
+
 
 // Add Dial Status (modern card)
 echo "<div style='grid-column:span 2; background:#fff; border-radius:12px; box-shadow:0 2px 7px rgba(40,167,69,0.09); border-left:6px solid #28a745; padding:20px 24px; margin-top:10px; position:relative;'>";
