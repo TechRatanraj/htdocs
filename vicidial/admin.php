@@ -27950,7 +27950,7 @@ if ($SSoutbound_autodial_active > 0) {
     echo " $NWB#campaigns-dial_status$NWE";
     echo "</div>";
  // end if SSoutbound_autodial_active
-
+}
 // close grid and outer container & form
 echo "</div>"; // end grid
 echo "</div>"; // end campaign information container
