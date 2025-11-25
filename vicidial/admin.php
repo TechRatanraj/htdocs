@@ -27842,7 +27842,7 @@ echo '</div>'; // End tabs container
 
 echo "<center>\n";
 
-
+	
     ##### get container listings for demographic quotas pulldown menu
     $stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='DEMOGRAPHIC_QUOTAS' $LOGadmin_viewable_groupsSQL order by container_id;";
     $rslt=mysql_to_mysqli($stmt, $link);
@@ -30158,7 +30158,7 @@ echo "</select>$NWB#campaigns-inbound_queue_no_dial$NWE</td></tr>";
 			echo "<br><br><a href=\"campaign_debug.php?group=$campaign_id\">"._QXZ("Click here to see the debug report for this campaign")."</a></FONT>\n";
 			}
 		echo "</b></center>\n";
-		}
+		
 
 
 	##### CAMPAIGN CUSTOM STATUSES #####
