@@ -28528,7 +28528,10 @@ if ($SScall_limit_24hour > 0)
 
 			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Latest Server Time").": </td><td align=left><input type=text name=adaptive_latest_server_time size=6 maxlength=4 value=\"$adaptive_latest_server_time\"><i>4 "._QXZ("digits only")."</i> $NWB#campaigns-adaptive_latest_server_time$NWE</td></tr>\n";
 
-			
+			}
+}
+		}
+				
 
 ######################
 # ADD=34 modify campaign info in the system - Basic View
