@@ -27949,12 +27949,13 @@ if ($SSoutbound_autodial_active > 0) {
     echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:10px 24px; border-radius:7px; font-weight:600; cursor:pointer; margin-left:12px;' type='submit' name='submit' value='"._QXZ("ADD")."'>";
     echo " $NWB#campaigns-dial_status$NWE";
     echo "</div>";
-} // end if SSoutbound_autodial_active
+ // end if SSoutbound_autodial_active
 
 // close grid and outer container & form
 echo "</div>"; // end grid
 echo "</div>"; // end campaign information container
 
+}
 
 // List Order (modern card)
 echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(38,133,236,0.09); border-left:6px solid #2685ec; padding:18px 24px; margin-bottom:16px;'>";
