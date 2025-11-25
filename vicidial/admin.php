@@ -28076,7 +28076,7 @@ echo"<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
 echo " $NWB#campaigns-lead_order$NWE";
 echo "</div>";
 }
-}
+
 echo "</td></tr>\n";
 
 			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
