@@ -27844,7 +27844,6 @@ echo '</div>'; // End tabs container
 
 echo "<center>\n";
 
-
 if ($SUB < 1) {
 echo "<form action=\"$PHP_SELF\" method=\"POST\" style=\"margin:0;padding:0;width:100%;\">";
 echo "<input type=\"hidden\" name=\"ADD\" value=\"41\">";
@@ -27861,222 +27860,93 @@ echo "<hr style='border:0; border-top:2px solid #2685ec; margin:0 30px 22px 30px
 
 // Grid - cards per item
 echo "<div style='display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:0 30px 28px 30px;'>";
-
-// Define modern card style
- $card_style = "background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:18px 24px;position:relative;overflow:hidden;transition:transform 0.2s ease, box-shadow 0.2s ease;";
- $card_style_hover = "transform:translateY(-2px);box-shadow:0 4px 12px rgba(28,35,46,0.12);";
- $label_style = "font-size:14px;font-weight:700;color:#6c757d;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;";
- $value_style = "font-size:18px;font-weight:600;color:#212529;";
- $input_style = "width:95%;font-size:16px;border:none;outline:none;background:transparent;color:#212529;padding:6px 0;border-bottom:1px solid transparent;transition:border-color 0.2s ease;";
- $input_focus = "border-bottom:1px solid #2685ec;";
+$card_style = "background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:18px 24px;";
 
 // Campaign ID
-echo "<div style='$card_style;border-left:6px solid #28a745;cursor:default;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>CAMPAIGN ID</div>";
-echo "<div style='$value_style'>$campaign_id $NWB#campaigns-campaign_id$NWE</div>";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(40,167,69,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#28a745;font-size:16px;'>#</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #28a745;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN ID</div><div style='font-size:20px;font-weight:600;color:#222;margin-top:10px;'>$campaign_id $NWB#campaigns-campaign_id$NWE</div></div>";
 
 // Campaign Name
-echo "<div style='$card_style;border-left:6px solid #2685ec;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>CAMPAIGN NAME</div>";
-echo "<input type='text' name='campaign_name' size='40' maxlength='40' value=\"$campaign_name\" style='$input_style' onfocus=\"this.style='$input_style$input_focus'\" onblur=\"this.style='$input_style'\">$NWB#campaigns-campaign_name$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(38,133,236,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#2685ec;font-size:16px;'>📝</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #2685ec;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN NAME</div><input type='text' name='campaign_name' size='40' maxlength='40' value=\"$campaign_name\" style='width:95%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'>$NWB#campaigns-campaign_name$NWE</div>";
 
 // Campaign Description
-echo "<div style='$card_style;border-left:6px solid #ffc107;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>CAMPAIGN DESCRIPTION</div>";
-echo "<input type='text' name='campaign_description' size='40' maxlength='255' value=\"$campaign_description\" style='$input_style' onfocus=\"this.style='$input_style$input_focus'\" onblur=\"this.style='$input_style'\">$NWB#campaigns-campaign_description$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(255,193,7,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#ffc107;font-size:16px;'>📄</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #ffc107;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN DESCRIPTION</div><input type='text' name='campaign_description' size='40' maxlength='255' value=\"$campaign_description\" style='width:95%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'>$NWB#campaigns-campaign_description$NWE</div>";
 
 // Campaign Change Date
-echo "<div style='$card_style;border-left:6px solid #dc3545;cursor:default;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>CAMPAIGN CHANGE DATE</div>";
-echo "<div style='$value_style'>$campaign_changedate $NWB#campaigns-campaign_changedate$NWE</div>";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(220,53,69,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#dc3545;font-size:16px;'>📅</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #dc3545;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN CHANGE DATE</div><div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_changedate $NWB#campaigns-campaign_changedate$NWE</div></div>";
 
 // Campaign Login Date
-echo "<div style='$card_style;border-left:6px solid #ae41e8;cursor:default;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>CAMPAIGN LOGIN DATE</div>";
-echo "<div style='$value_style'>$campaign_logindate $NWB#campaigns-campaign_logindate$NWE</div>";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(174,65,232,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#ae41e8;font-size:16px;'>🔑</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #ae41e8;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN LOGIN DATE</div><div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_logindate $NWB#campaigns-campaign_logindate$NWE</div></div>";
 
 // Campaign Call Date
-echo "<div style='$card_style;border-left:6px solid #dc3545;cursor:default;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>CAMPAIGN CALL DATE</div>";
-echo "<div style='$value_style'>$campaign_calldate $NWB#campaigns-campaign_calldate$NWE</div>";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(220,53,69,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#dc3545;font-size:16px;'>📞</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #dc3545;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN CALL DATE</div><div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_calldate $NWB#campaigns-campaign_calldate$NWE</div></div>";
 
 // Chart Section (Full width)
-echo "<div style='grid-column:span 2;'>";
-echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:24px;text-align:center;position:relative;'>";
-echo "<div style='position:absolute;left:20px;top:20px;font-size:14px;font-weight:700;color:#6c757d;text-transform:uppercase;letter-spacing:0.5px;'>Campaign Statistics</div>";
- $temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
+echo "<div style='grid-column:span 2;'> <div style='background:#fff;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:24px;text-align:center;'>";
+$temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
 horizontal_bar_chart($campaign_id,'8','campaign',$link,'total_calls','call count',1,'','',$temp_chart_title);
-echo "</div>";
-echo "</div>";
+echo "</div></div>";
 
-// Active Status
-echo "<div style='$card_style;border-left:6px solid #28a745;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>ACTIVE STATUS</div>";
-echo "<select name='active' style='width:95%;font-size:16px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:10px 14px;color:#232529;background:#f8fafe;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer;'>";
-echo "<option value='Y'>"._QXZ("Y")."</option>";
-echo "<option value='N'>"._QXZ("N")."</option>";
-echo "<option value='$campaign_active' SELECTED>"._QXZ("$campaign_active")."</option>";
-echo "</select>$NWB#campaigns-active$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(40,167,69,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#28a745;font-size:16px;'>✓</span></div>";
-echo "</div>";
+// Active
+echo "<div style='$card_style;border-left:6px solid #28a745;'><div style='font-size:15px;font-weight:700;color:#666;'>ACTIVE</div><select name='active' style='width:95%;font-size:17px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;color:#232529;background:#f8fafe;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$campaign_active' SELECTED>"._QXZ("$campaign_active")."</option></select>$NWB#campaigns-active$NWE</div>";
 
 // Admin User Group
-echo "<div style='$card_style;border-left:6px solid #2685ec;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>ADMIN USER GROUP</div>";
-echo "<select name='user_group' style='width:95%;font-size:16px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:10px 14px;color:#232529;background:#f8fafe;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer;'>";
-echo "$UUgroups_list";
-echo "<option SELECTED value=\"$user_group\">" . (preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group) . "</option>";
-echo "</select>$NWB#campaigns-user_group$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(38,133,236,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#2685ec;font-size:16px;'>👥</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #2685ec;'><div style='font-size:15px;font-weight:700;color:#666;'>ADMIN USER GROUP</div><select name='user_group' style='width:95%;font-size:17px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;color:#232529;background:#f8fafe;'>$UUgroups_list<option SELECTED value=\"$user_group\">" . (preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group) . "</option></select>$NWB#campaigns-user_group$NWE</div>";
 
 // Park Music-on-Hold
-echo "<div style='$card_style;border-left:6px solid #ffc107;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>PARK MUSIC-ON-HOLD</div>";
-echo "<div style='display:flex;align-items:center;margin-top:8px;'>";
-echo "<input type='text' name='park_file_name' id='park_file_name' size='20' maxlength='100' value=\"$park_file_name\" style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;' onfocus=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid #ffc107;transition:border-color 0.2s ease;padding:6px 0;'\" onblur=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;'\">";
-echo "<a href=\"javascript:launch_moh_chooser('park_file_name','moh');\" style=\"color:#2685ec;font-size:14px;font-weight:600;margin-left:12px;display:flex;align-items:center;justify-content:center;width:32px;height:32px;background-color:rgba(38,133,236,0.1);border-radius:50%;text-decoration:none;transition:background-color 0.2s ease;\" onmouseover=\"this.style.backgroundColor='rgba(38,133,236,0.2)'\" onmouseout=\"this.style.backgroundColor='rgba(38,133,236,0.1)'\"><span style='font-size:16px;'>🎵</span></a>";
-echo "</div>";
-echo "$NWB#campaigns-park_ext$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(255,193,7,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#ffc107;font-size:16px;'>🎶</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #ffc107;'><div style='font-size:15px;font-weight:700;color:#666;'>PARK MUSIC-ON-HOLD</div><input type='text' name='park_file_name' id='park_file_name' size='20' maxlength='100' value=\"$park_file_name\" style='width:80%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'> <a href=\"javascript:launch_moh_chooser('park_file_name','moh');\" style=\"color:#2685ec;font-size:15px;font-weight:600;margin-left:8px;\">"._QXZ("moh chooser")."</a> $NWB#campaigns-park_ext$NWE</div>";
 
 // Web Form
-echo "<div style='$card_style;border-left:6px solid #31cbe8;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>WEB FORM</div>";
-echo "<div style='display:flex;align-items:center;margin-top:8px;'>";
-echo "<input type='text' name='web_form_address' size='70' maxlength='9999' value=\"$web_form_address\" style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;' onfocus=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid #31cbe8;transition:border-color 0.2s ease;padding:6px 0;'\" onblur=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;'\">";
-echo "</div>";
-echo "$NWB#campaigns-web_form_address$NWE";
-if ($SSenable_first_webform < 1) {
-    echo "<div style='color:#f84041;font-size:12px;font-weight:500;margin-top:6px;padding:4px 8px;background-color:rgba(248,64,65,0.1);border-radius:4px;display:inline-block;'>"._QXZ("DISABLED")."</div>";
-}
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(49,203,232,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#31cbe8;font-size:16px;'>🌐</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM</div><input type='text' name='web_form_address' size='70' maxlength='9999' value=\"$web_form_address\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) { echo " <span style='color:#f84041;font-weight:bold;margin-left:8px;'>"._QXZ("DISABLED")."</span>"; } echo "</div>";
 
 if ($SSenable_second_webform > 0) {
-    echo "<div style='$card_style;border-left:6px solid #31cbe8;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-    echo "<div style='$label_style'>WEB FORM TWO</div>";
-    echo "<div style='display:flex;align-items:center;margin-top:8px;'>";
-    echo "<input type='text' name='web_form_address_two' size='70' maxlength='9999' value=\"$web_form_address_two\" style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;' onfocus=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid #31cbe8;transition:border-color 0.2s ease;padding:6px 0;'\" onblur=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;'\">";
-    echo "</div>";
-    echo "$NWB#campaigns-web_form_address_two$NWE";
-    echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(49,203,232,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#31cbe8;font-size:16px;'>🌐</span></div>";
-    echo "</div>";
+    echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM TWO</div><input type='text' name='web_form_address_two' size='70' maxlength='9999' value=\"$web_form_address_two\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE</div>";
 }
 if ($SSenable_third_webform > 0) {
-    echo "<div style='$card_style;border-left:6px solid #31cbe8;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-    echo "<div style='$label_style'>WEB FORM THREE</div>";
-    echo "<div style='display:flex;align-items:center;margin-top:8px;'>";
-    echo "<input type='text' name='web_form_address_three' size='70' maxlength='9999' value=\"$web_form_address_three\" style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;' onfocus=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid #31cbe8;transition:border-color 0.2s ease;padding:6px 0;'\" onblur=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;'\">";
-    echo "</div>";
-    echo "$NWB#campaigns-web_form_address_three$NWE";
-    echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(49,203,232,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#31cbe8;font-size:16px;'>🌐</span></div>";
-    echo "</div>";
+    echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM THREE</div><input type='text' name='web_form_address_three' size='70' maxlength='9999' value=\"$web_form_address_three\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE</div>";
 }
 
 // Web Form Target
-echo "<div style='$card_style;border-left:6px solid #31cbe8;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>WEB FORM TARGET</div>";
-echo "<div style='display:flex;align-items:center;margin-top:8px;'>";
-echo "<input type='text' name='web_form_target' size='25' maxlength='255' value=\"$web_form_target\" style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;' onfocus=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid #31cbe8;transition:border-color 0.2s ease;padding:6px 0;'\" onblur=\"this.style='flex:1;font-size:16px;border:none;outline:none;background:transparent;color:#212529;border-bottom:1px solid transparent;transition:border-color 0.2s ease;padding:6px 0;'\">";
-echo "</div>";
-echo "$NWB#campaigns-web_form_target$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(49,203,232,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#31cbe8;font-size:16px;'>🎯</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM TARGET</div><input type='text' name='web_form_target' size='25' maxlength='255' value=\"$web_form_target\" style='width:55%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_target$NWE</div>";
 
 // Allow Closers
-echo "<div style='$card_style;border-left:6px solid #28a745;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-echo "<div style='$label_style'>ALLOW CLOSERS</div>";
-echo "<select name='allow_closers' style='width:95%;font-size:16px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:10px 14px;color:#232529;background:#f8fafe;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer;'>";
-echo "<option value='Y'>"._QXZ("Y")."</option>";
-echo "<option value='N'>"._QXZ("N")."</option>";
-echo "<option value='$allow_closers' SELECTED>"._QXZ("$allow_closers")."</option>";
-echo "</select>$NWB#campaigns-allow_closers$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(40,167,69,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#28a745;font-size:16px;'>🔐</span></div>";
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #28a745;'><div style='font-size:15px;font-weight:700;color:#666;'>ALLOW CLOSERS</div><select name='allow_closers' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$allow_closers' SELECTED>"._QXZ("$allow_closers")."</option></select>$NWB#campaigns-allow_closers$NWE</div>";
 
 if ($SSallow_emails > 0) {
-    echo "<div style='$card_style;border-left:6px solid #2685ec;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-    echo "<div style='$label_style'>ALLOW EMAILS</div>";
-    echo "<select name='allow_emails' style='width:95%;font-size:16px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:10px 14px;color:#232529;background:#f8fafe;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value='$allow_emails' SELECTED>"._QXZ("$allow_emails")."</option>";
-    echo "</select>$NWB#campaigns-allow_emails$NWE";
-    echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(38,133,236,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#2685ec;font-size:16px;'>📧</span></div>";
-    echo "</div>";
+    echo "<div style='$card_style;border-left:6px solid #2685ec;'><div style='font-size:15px;font-weight:700;color:#666;'>ALLOW EMAILS</div><select name='allow_emails' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$allow_emails' SELECTED>"._QXZ("$allow_emails")."</option></select>$NWB#campaigns-allow_emails$NWE</div>";
 } else {
     echo "<input type='hidden' name='allow_emails' value='$allow_emails'>";
 }
 if ($SSallow_chats > 0) {
-    echo "<div style='$card_style;border-left:6px solid #ffc107;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-    echo "<div style='$label_style'>ALLOW CHATS</div>";
-    echo "<select name='allow_chats' style='width:95%;font-size:16px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:10px 14px;color:#232529;background:#f8fafe;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value=\"$allow_chats\" SELECTED>"._QXZ("$allow_chats")."</option>";
-    echo "</select>$NWB#campaigns-allow_chats$NWE";
-    echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(255,193,7,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#ffc107;font-size:16px;'>💬</span></div>";
-    echo "</div>";
+    echo "<div style='$card_style;border-left:6px solid #ffc107;'><div style='font-size:15px;font-weight:700;color:#666;'>ALLOW CHATS</div><select name='allow_chats' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$allow_chats\" SELECTED>"._QXZ("$allow_chats")."</option></select>$NWB#campaigns-allow_chats$NWE</div>";
 } else {
     echo "<input type='hidden' name='allow_chats' value='$allow_chats'>";
 }
 
 if ($SSoutbound_autodial_active > 0) {
-    echo "<div style='$card_style;border-left:6px solid #ae41e8;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-    echo "<div style='$label_style'>ALLOW INBOUND AND BLENDED</div>";
-    echo "<select name='campaign_allow_inbound' style='width:95%;font-size:16px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:10px 14px;color:#232529;background:#f8fafe;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;cursor:pointer;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value='$campaign_allow_inbound' SELECTED>"._QXZ("$campaign_allow_inbound")."</option>";
-    echo "</select>$NWB#campaigns-campaign_allow_inbound$NWE";
-    echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(174,65,232,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#ae41e8;font-size:16px;'>🔄</span></div>";
-    echo "</div>";
-    
+    echo "<div style='$card_style;border-left:6px solid #ae41e8;'><div style='font-size:15px;font-weight:700;color:#666;'>ALLOW INBOUND AND BLENDED</div><select name='campaign_allow_inbound' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$campaign_allow_inbound' SELECTED>"._QXZ("$campaign_allow_inbound")."</option></select>$NWB#campaigns-campaign_allow_inbound$NWE</div>";
     $o=0;
     while ($Ds_to_print > $o) {
         $o++;
         $Dstatus = $Dstatuses[$o];
-        echo "<div style='$card_style;border-left:6px solid #dc3545;' onmouseover=\"this.style='$card_style$card_style_hover'\" onmouseout=\"this.style='$card_style'\">";
-        echo "<div style='$label_style'>DIAL STATUS $o</div>";
+        echo "<div style='$card_style;border-left:6px solid #dc3545;'><div style='font-size:15px;font-weight:700;color:#666;'>DIAL STATUS $o</div>";
         if ($DEFstatusDISABLED > 0) {
-            echo "<div style='margin-top:10px; color:#999; text-decoration:line-through;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] &nbsp;&nbsp;REMOVE</div>";
+            echo "<div style='margin-top:10px; color:#999; text-decoration:line-through;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] &nbsp;&nbsp;REMOVE</div></div>";
         } else {
-            echo "<div style='margin-top:10px;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] &nbsp;&nbsp;<a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\" style='color:#f84041; font-weight:600; margin-left:12px;'>"._QXZ("REMOVE")."</a></div>";
+            echo "<div style='margin-top:10px;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] &nbsp;&nbsp;<a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\" style='color:#f84041; font-weight:600; margin-left:12px;'>"._QXZ("REMOVE")."</a></div></div>";
         }
-        echo "</div>";
     }
+    echo "<div style='$card_style;border-left:6px solid #28a745;'><div style='font-size:15px;font-weight:700;color:#666;'>ADD A DIAL STATUS TO CALL</div>";
+    echo "<select name='dial_status' $DEFlistDISABLE style='width:70%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value=\"\"> - "._QXZ("NONE")." - </option>$dial_statuses_list</select>";
 
 // Add Dial Status (modern card)
-echo "<div style='grid-column:span 2; background:#fff; border-radius:12px; box-shadow:0 2px 7px rgba(40,167,69,0.09); border-left:6px solid #28a745; padding:20px 24px; margin-top:10px; position:relative;'>";
-echo "<div style='font-size:16px; font-weight:700; color:#317c42; margin-bottom:15px; display:flex; align-items:center;'><span style='margin-right:10px;'>➕</span>ADD A DIAL STATUS TO CALL</div>";
-echo "<div style='display:flex; align-items:center; gap:15px;'>";
-echo "<select name='dial_status' $DEFlistDISABLE style='flex:1; font-size:16px; border-radius:7px; border:1.3px solid #d2d6e2; padding:12px 14px; background:#f8fafe; appearance:none; background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; cursor:pointer;'>";
-echo "<option value=\"\"> - "._QXZ("NONE")." - </option>";
+echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(40,167,69,0.09); border-left:6px solid #28a745; padding:18px 24px; margin-bottom:16px;'>";
+echo "<div style='font-size:16px; font-weight:700; color:#317c42;'>ADD A DIAL STATUS TO CALL</div>";
+echo "<select name='dial_status' $DEFlistDISABLE style='width:80%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
 echo $dial_statuses_list;
 echo "</select>";
-echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:12px 24px; border-radius:7px; font-weight:600; cursor:pointer; font-size:15px; transition:background-color 0.2s ease;' type='submit' name='submit' value='"._QXZ("ADD")."' onmouseover=\"this.style.backgroundColor='#" . adjustBrightness($SSbutton_color, -20) . "'\" onmouseout=\"this.style.backgroundColor='#$SSbutton_color'\">";
-echo "</div>";
+echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:10px 24px; border-radius:7px; font-weight:600; cursor:pointer; margin-left:12px;' type='submit' name='submit' value='"._QXZ("ADD")."'>";
 echo " $NWB#campaigns-dial_status$NWE";
-echo "<div style='position:absolute;right:20px;top:20px;width:30px;height:30px;background-color:rgba(40,167,69,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;'><span style='color:#28a745;font-size:16px;'>📞</span></div>";
 echo "</div>";
-
-echo "</div>"; // End grid
-echo "</div>"; // End Campaign Information Section
-
 
 // List Order (modern card)
 echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(38,133,236,0.09); border-left:6px solid #2685ec; padding:18px 24px; margin-bottom:16px;'>";
