@@ -28370,7 +28370,7 @@ if ($SScall_limit_24hour > 0)
     echo "<td align=left style='padding:18px 24px;'>";
     echo "<input type=text name=call_limit_24hour size=4 maxlength=5 value=\"$call_limit_24hour\" style='padding:6px 10px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;'> $NWB#campaigns-call_limit_24hour$NWE";
     echo "</td></tr>\n";
-}
+
 
 				##### get container listings for 24-hour call limit override pulldown menu
 				$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='CALL_LIMITS_OVERRIDE' $LOGadmin_viewable_groupsSQL order by container_id;";
