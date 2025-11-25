@@ -28567,10 +28567,6 @@ if ($SScall_limit_24hour > 0) {
 
     echo "</div>"; // End grid container
     echo "</div>"; // End section container
-} else {
-    echo "<input type=hidden name=call_limit_24hour_method value='$call_limit_24hour_method'>";
-    echo "<input type=hidden name=call_limit_24hour_scope value='$call_limit_24hour_scope'>";
-    echo "<input type=hidden name=call_limit_24hour value='$call_limit_24hour'>";
 
 // to be started here 
 
