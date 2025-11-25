@@ -28169,7 +28169,7 @@ if ($SScall_quota_lead_ranking > 0) {
     echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
 }
 
-echo "</div>"; // close grid
+
 
 		
 			if ($SSdemographic_quotas > 0)
