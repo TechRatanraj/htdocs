@@ -28076,100 +28076,102 @@ echo"<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
 echo " $NWB#campaigns-lead_order$NWE";
 echo "</div>";
 }
-
 echo "</td></tr>\n";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Randomize").": </td><td align=left>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_order_randomize value=\"$lead_order_randomize\"> $ALTmultiLINK";
-				}
-			else
-				{
-				echo "<select size=1 name=lead_order_randomize><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$lead_order_randomize' SELECTED>"._QXZ("$lead_order_randomize")."</option></select>$NWB#campaigns-lead_order_randomize$NWE";
-				}
-			echo "</td></tr>\n";
+echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px 0;'>";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Order Secondary").": </td><td align=left>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_order_secondary value=\"$lead_order_secondary\"> $ALTmultiLINK";
-				}
-			else
-				{
-				echo "<select size=1 name=lead_order_secondary><option value='LEAD_ASCEND'>"._QXZ("LEAD_ASCEND")."</option><option value='LEAD_DESCEND'>"._QXZ("LEAD_DESCEND")."</option><option value='CALLTIME_ASCEND'>"._QXZ("CALLTIME_ASCEND")."</option><option value='CALLTIME_DESCEND'>"._QXZ("CALLTIME_DESCEND")."</option><option value='VENDOR_ASCEND'>"._QXZ("VENDOR_ASCEND")."</option><option value='VENDOR_DESCEND'>"._QXZ("VENDOR_DESCEND")."</option><option value='$lead_order_secondary' SELECTED>"._QXZ("$lead_order_secondary")."</option></select>$NWB#campaigns-lead_order_secondary$NWE";
-				}
-			echo "</td></tr>\n";
+// List Order Randomize
+echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(255,193,7,0.12);border-left:6px solid #ffc107;padding:18px 24px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#7a630a;'>"._QXZ("List Order Randomize")."</div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='lead_order_randomize' value=\"$lead_order_randomize\"> $ALTmultiLINK";
+} else {
+    echo "<select name='lead_order_randomize' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
+    echo "<option value='Y'>"._QXZ("Y")."</option>";
+    echo "<option value='N'>"._QXZ("N")."</option>";
+    echo "<option value='$lead_order_randomize' SELECTED>"._QXZ("$lead_order_randomize")."</option>";
+    echo "</select>$NWB#campaigns-lead_order_randomize$NWE";
+}
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\">"._QXZ("List Mix")."</a>: </td><td align=left>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=list_order_mix value=\"$list_order_mix\"> $ALTmultiLINK";
-				}
-			else
-				{
-				echo "<select size=1 name=list_order_mix>\n";
-				echo "$mixes_list";
-				if (preg_match('/DISABLED/', $list_order_mix))
-					{echo "<option selected value=\"$list_order_mix\">"._QXZ("$list_order_mix")." - "._QXZ("$mixname_list[$list_order_mix]")."</option>\n";}
-				else
-					{echo "<option selected value=\"ACTIVE\">"._QXZ("ACTIVE")." ($mixname_list[ACTIVE])</option>\n";}
-				echo "</select>$NWB#campaigns-list_order_mix$NWE";
-				}
-			echo "</td></tr>\n";
+// List Order Secondary
+echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(174,65,232,0.10);border-left:6px solid #ae41e8;padding:18px 24px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#7a63b5;'>"._QXZ("List Order Secondary")."</div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='lead_order_secondary' value=\"$lead_order_secondary\"> $ALTmultiLINK";
+} else {
+    echo "<select name='lead_order_secondary' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
+    echo "<option value='LEAD_ASCEND'>"._QXZ("LEAD_ASCEND")."</option>";
+    echo "<option value='LEAD_DESCEND'>"._QXZ("LEAD_DESCEND")."</option>";
+    echo "<option value='CALLTIME_ASCEND'>"._QXZ("CALLTIME_ASCEND")."</option>";
+    echo "<option value='CALLTIME_DESCEND'>"._QXZ("CALLTIME_DESCEND")."</option>";
+    echo "<option value='VENDOR_ASCEND'>"._QXZ("VENDOR_ASCEND")."</option>";
+    echo "<option value='VENDOR_DESCEND'>"._QXZ("VENDOR_DESCEND")."</option>";
+    echo "<option value='$lead_order_secondary' SELECTED>"._QXZ("$lead_order_secondary")."</option>";
+    echo "</select>$NWB#campaigns-lead_order_secondary$NWE";
+}
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\">"._QXZ("Lead Filter")."</a>: </td><td align=left>";
-			if ($ALTmultiDISABLE > 0)
-				{
-				echo "<input type=hidden name=lead_filter_id value=\"$lead_filter_id\"> $ALTmultiLINK";
-				}
-			else
-				{
-				echo "<select size=1 name=lead_filter_id>\n";
-				echo "$filters_list";
-				echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>\n";
-				echo "</select>$NWB#campaigns-lead_filter_id$NWE";
-				}
-			echo "</td></tr>\n";
+// List Mix
+echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(49,203,232,0.14);border-left:6px solid #31cbe8;padding:18px 24px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#18718d;'><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\" style='color:inherit;text-decoration:none;'>"._QXZ("List Mix")."</a></div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='list_order_mix' value=\"$list_order_mix\"> $ALTmultiLINK";
+} else {
+    echo "<select name='list_order_mix' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
+    echo $mixes_list;
+    if (preg_match('/DISABLED/', $list_order_mix)) {
+        echo "<option selected value=\"$list_order_mix\">"._QXZ("$list_order_mix")." - "._QXZ("$mixname_list[$list_order_mix]")."</option>";
+    } else {
+        echo "<option selected value=\"ACTIVE\">"._QXZ("ACTIVE")." ($mixname_list[ACTIVE])</option>";
+    }
+    echo "</select>$NWB#campaigns-list_order_mix$NWE";
+}
+echo "</div>";
 
-			if ($SScall_quota_lead_ranking > 0)
-				{
-				##### get container listings for dynamic call quota lead ranking pulldown menu
-				$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='CALL_QUOTA' $LOGadmin_viewable_groupsSQL order by container_id;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$cqlr_to_print = mysqli_num_rows($rslt);
-				$call_quota_container_menu='';
-				$cqlr_selected=0;
-				$o=0;
-				while ($cqlr_to_print > $o) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					if (mb_strlen($rowx[1],'utf-8')>40)
-						{$rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';}
-					$call_quota_container_menu .= "<option ";
-					if ($call_quota_lead_ranking == "$rowx[0]") 
-						{
-						$call_quota_container_menu .= "SELECTED ";
-						$cqlr_selected++;
-						}
-					$call_quota_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-					$o++;
-					}
+// Lead Filter
+echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(40,167,69,0.09);border-left:6px solid #28a745;padding:18px 24px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\" style='color:inherit;text-decoration:none;'>"._QXZ("Lead Filter")."</a></div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='lead_filter_id' value=\"$lead_filter_id\"> $ALTmultiLINK";
+} else {
+    echo "<select name='lead_filter_id' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
+    echo $filters_list;
+    echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>";
+    echo "</select>$NWB#campaigns-lead_filter_id$NWE";
+}
+echo "</div>";
 
-				echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Auto Active List New").": </td><td align=left><select size=1 name=auto_active_list_new><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='$auto_active_list_new' SELECTED>"._QXZ("$auto_active_list_new")."</option><option>1</option><option>5</option><option>10</option><option>25</option><option>50</option><option>75</option><option>100</option><option>150</option><option>200</option><option>250</option><option>300</option><option>350</option><option>400</option><option>450</option><option>500</option><option>550</option><option>600</option><option>650</option><option>700</option><option>750</option><option>800</option><option>850</option><option>900</option><option>950</option><option>1000</option><option>1100</option><option>1200</option><option>1300</option><option>1400</option><option>1500</option><option>1600</option><option>1700</option><option>1800</option><option>1900</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option>6000</option><option>7000</option><option>8000</option><option>9000</option><option>10000</option><option>15000</option><option>20000</option><option>30000</option><option>40000</option><option>50000</option><option>60000</option><option>70000</option><option>80000</option><option>90000</option><option>100000</option></select>$NWB#campaigns-auto_active_list_new$NWE</td></tr>\n";
+// Dynamic Call Quota Lead Ranking
+if ($SScall_quota_lead_ranking > 0) {
+    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#222;'>"._QXZ("Auto Active List New")."</div>";
+    echo "<select name='auto_active_list_new' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
+    echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
+    echo "<option value='$auto_active_list_new' SELECTED>"._QXZ("$auto_active_list_new")."</option>";
+    echo "<option>1</option><option>5</option><option>10</option><option>25</option><option>50</option><option>75</option><option>100</option><option>150</option><option>200</option><option>250</option><option>300</option><option>350</option><option>400</option><option>450</option><option>500</option><option>550</option><option>600</option><option>650</option><option>700</option><option>750</option><option>800</option><option>850</option><option>900</option><option>950</option><option>1000</option><option>1100</option><option>1200</option><option>1300</option><option>1400</option><option>1500</option><option>1600</option><option>1700</option><option>1800</option><option>1900</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option>6000</option><option>7000</option><option>8000</option><option>9000</option><option>10000</option><option>15000</option><option>20000</option><option>30000</option><option>40000</option><option>50000</option><option>60000</option><option>70000</option><option>80000</option><option>90000</option><option>100000</option>";
+    echo "</select>$NWB#campaigns-auto_active_list_new$NWE";
+    echo "</div>";
 
-				echo "<tr bgcolor=#$SSstd_row3_background><td align=right>";
-				if ($cqlr_selected > 0)
-					{echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_quota_lead_ranking\">"._QXZ("Call Quota Lead Ranking")."</a>";}
-				else
-					{echo _QXZ("Call Quota Lead Ranking");}
-				echo ": </td><td align=left><select size=1 name=call_quota_lead_ranking><option value='DISABLED'>"._QXZ("DISABLED")."</option>$call_quota_container_menu</select>$NWB#campaigns-call_quota_lead_ranking$NWE</td></tr>\n";
-				}
-			else
-				{
-				echo "<tr bgcolor=#$SSstd_row4_background><td colspan=2><input type=hidden name=auto_active_list_new value='$auto_active_list_new'><input type=hidden name=call_quota_lead_ranking value='$call_quota_lead_ranking'></td></tr>\n";
-				}
+    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#222;'>";
+    if ($cqlr_selected > 0) {
+        echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_quota_lead_ranking\">"._QXZ("Call Quota Lead Ranking")."</a>";
+    } else {echo _QXZ("Call Quota Lead Ranking");}
+    echo "</div>";
+    echo "<select name='call_quota_lead_ranking' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
+    echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
+    echo $call_quota_container_menu;
+    echo "</select>$NWB#campaigns-call_quota_lead_ranking$NWE";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='auto_active_list_new' value='$auto_active_list_new'>";
+    echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
+}
 
+echo "</div>"; // close grid
+
+		
 			if ($SSdemographic_quotas > 0)
 				{
 				##### get container listings for demographic quotas pulldown menu
