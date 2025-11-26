@@ -29655,8 +29655,7 @@ echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-get_
 echo "</div>";
 
 // CLOSE GRID AND SECTION
-//echo "</div></div>";
-	
+echo "</div></div>";
 // Agent Browser Call Alert Sound (if browser_call_alerts is enabled)
 if ($SSbrowser_call_alerts > 0) {
     // Build browser alert sounds list
@@ -30238,6 +30237,7 @@ echo "</div>";
 
 // CLOSE GRID AND SECTION
 echo "</div></div>";
+	
 
 
 ##### get container listings for dynamic phone number list container for three_way_record_stop_exception pulldown menu
