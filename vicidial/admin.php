@@ -28341,7 +28341,6 @@ echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Call 
 echo "<input type='text' name='call_count_limit' size='4' maxlength='5' value=\"$call_count_limit\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_count_limit$NWE</div>";
 echo "</div>";
-
 // Call Count Target
 echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Call Count Target") . "</div>";
@@ -28415,23 +28414,7 @@ if ($SScall_limit_24hour > 0) {
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour$NWE</div>";
     echo "</div>";
 
-    // DON'T CLOSE THE GRID YET - KEEP IT OPEN!
-    // Continue with 24-hour override...
-// ============================================================================
-// SECTION: HOPPER SETTINGS & AUTO DIAL CONFIGURATION  
-// ============================================================================
-
-// Create a new section for Hopper & Auto Dial
-echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
-echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>🎯</span>Hopper Settings & Auto Dial Configuration</div>";
-echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
-
-// START GRID
-echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
-
-// 24-Hour Call Limit Override (if enabled)
-if ($SScall_limit_24hour > 0) {
-    ##### get container listings for 24-hour call limit override pulldown menu
+    // Get container listings for 24-hour call limit override pulldown menu
     $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='CALL_LIMITS_OVERRIDE' $LOGadmin_viewable_groupsSQL order by container_id;";
     $rslt = mysql_to_mysqli($stmt, $link);
     $clo_to_print = mysqli_num_rows($rslt);
@@ -28452,6 +28435,7 @@ if ($SScall_limit_24hour > 0) {
         $o++;
     }
 
+    // 24-Hour Called Count Limit Override - AS A CARD
     echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>";
     if ($clo_selected > 0) {
@@ -28473,7 +28457,7 @@ if ($SScall_limit_24hour > 0) {
     echo "<input type='hidden' name='call_limit_24hour_override' value='$call_limit_24hour_override'>";
 }
 
-// Minimum Hopper Level
+// Minimum Hopper Level - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #28a745;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Minimum Hopper Level") . "</div>";
 echo "<select name='hopper_level' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28482,7 +28466,7 @@ echo "<option SELECTED>$hopper_level</option></select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-hopper_level$NWE</div>";
 echo "</div>";
 
-// Automatic Hopper Level
+// Automatic Hopper Level - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #28a745;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Automatic Hopper Level") . "</div>";
 echo "<select name='use_auto_hopper' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28493,7 +28477,7 @@ echo "</select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-use_auto_hopper$NWE</div>";
 echo "</div>";
 
-// Automatic Hopper Multiplier
+// Automatic Hopper Multiplier - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #28a745;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Automatic Hopper Multiplier") . "</div>";
 echo "<select name='auto_hopper_multi' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28502,7 +28486,7 @@ echo "<option SELECTED>$auto_hopper_multi</option></select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-auto_hopper_multi$NWE</div>";
 echo "</div>";
 
-// Auto Trim Hopper
+// Auto Trim Hopper - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Auto Trim Hopper") . "</div>";
 echo "<select name='auto_trim_hopper' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28513,7 +28497,7 @@ echo "</select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-auto_trim_hopper$NWE</div>";
 echo "</div>";
 
-// Hopper VLC Dup Check
+// Hopper VLC Dup Check - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Hopper VLC Dup Check") . "</div>";
 echo "<select name='hopper_vlc_dup_check' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28524,7 +28508,7 @@ echo "</select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-hopper_vlc_dup_check$NWE</div>";
 echo "</div>";
 
-// Manual Dial Hopper Check
+// Manual Dial Hopper Check - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Manual Dial Hopper Check") . "</div>";
 echo "<select name='manual_dial_hopper_check' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28535,7 +28519,7 @@ echo "</select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-manual_dial_hopper_check$NWE</div>";
 echo "</div>";
 
-// Force Reset of Hopper
+// Force Reset of Hopper - AS A CARD
 echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Force Reset of Hopper") . "</div>";
 echo "<select name='reset_hopper' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
@@ -28545,25 +28529,23 @@ echo "</select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-force_reset_hopper$NWE</div>";
 echo "</div>";
 
-// CLOSE GRID
-echo "</div>";
+// Hopper Hold Inserts
+if ($SShopper_hold_inserts > 0) {
+    echo "<div style='$card_style;border-left:6px solid #0dcaf0;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#128099;'>" . _QXZ("Hopper Hold Inserts") . "</div>";
+    echo "<select name='hopper_hold_inserts' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+    echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+    if ($SShopper_hold_inserts > 1) {
+        echo "<option value='AUTONEXT'>" . _QXZ("AUTONEXT") . "</option>";
+    }
+    echo "<option value='$hopper_hold_inserts' SELECTED>" . _QXZ("$hopper_hold_inserts") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-hopper_hold_inserts$NWE</div>";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='hopper_hold_inserts' value='$hopper_hold_inserts'>";
 }
-// CLOSE SECTION
-echo "</div>";
-
-			if ($SShopper_hold_inserts > 0)
-				{
-				echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Hopper Hold Inserts").": </td><td align=left><select size=1 name=hopper_hold_inserts><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option>";
-				if ($SShopper_hold_inserts > 1)
-					{
-					echo "<option value='AUTONEXT'>"._QXZ("AUTONEXT")."</option>";
-					}
-				echo "<option value='$hopper_hold_inserts' SELECTED>"._QXZ("$hopper_hold_inserts")."</option></select>$NWB#campaigns-hopper_hold_inserts$NWE</td></tr>\n";
-				}
-			else
-				{
-				echo "<tr bgcolor=#$SSstd_row3_background><td colspan=2><input type=hidden name=hopper_hold_inserts value='$hopper_hold_inserts'></td></tr>\n";
-				}
 
 			if ( (preg_match("/RATIO|ADAPT/",$dial_method)) and ($SSdisable_auto_dial > 0) )
 				{
