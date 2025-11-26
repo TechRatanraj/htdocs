@@ -28044,6 +28044,8 @@ if ($SUB < 1) {
         echo "<option selected value=\"$lead_filter_id\">"._QXZ("$lead_filter_id")." - $filtername_list[$lead_filter_id]</option>";
         echo "</select>$NWB#campaigns-lead_filter_id$NWE";
     }
+}
+		}
     echo "</div>";
 
     // You can continue adding more config cards in this grid as needed...
