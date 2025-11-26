@@ -27970,7 +27970,7 @@ if ($SUB < 1) {
         echo "<input type='hidden' name='auto_active_list_new' value='$auto_active_list_new'>";
         echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
     }
-}
+
     echo "</div>"; // END unified grid
     echo "</div>"; // END section
 
@@ -31060,7 +31060,7 @@ if ($SScall_limit_24hour > 0)
 	echo _QXZ("You do not have permission to view this page")."\n";
 	exit;
 	}
-}
+
 
 
 ######################
