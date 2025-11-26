@@ -33526,346 +33526,639 @@ if ($SUB == 23) {
 }
 
 
-		echo "<br>"._QXZ("ADD NEW CUSTOM CAMPAIGN HOT KEY")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=23>\n";
-		echo "<input type=hidden name=selectable value=Y>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Hotkey").": <select size=1 name=hotkey>\n";
-		echo "<option>1</option>\n";
-		echo "<option>2</option>\n";
-		echo "<option>3</option>\n";
-		echo "<option>4</option>\n";
-		echo "<option>5</option>\n";
-		echo "<option>6</option>\n";
-		echo "<option>7</option>\n";
-		echo "<option>8</option>\n";
-		echo "<option>9</option>\n";
-		echo "</select> &nbsp; \n";
-		echo _QXZ("Status").": <select size=1 name=HKstatus>\n";
-		echo "$HKstatuses_list\n";
-		echo "<option value=\"ALTPH2-----"._QXZ("Alternate Phone Hot Dial")."\">ALTPH2 - "._QXZ("Alternate Phone Hot Dial")."</option>\n";
-		echo "<option value=\"ADDR3-----"._QXZ("Address3 Hot Dial")."\">ADDR3 - "._QXZ("Address3 Hot Dial")."</option>\n";
-		echo "<option value=\"LTMG-----"._QXZ("Send to Answering Machine Msg")."\">LTMG - "._QXZ("Send to Answering Machine Msg")."</option>\n";
-		echo "<option value=\"XFTAMM-----"._QXZ("Send to Answering Machine Msg")."\">XFTAMM - "._QXZ("Send to Answering Machine Msg")."</option>\n";
-		echo "<option value=\"LTMGAD-----"._QXZ("Send to AM Message and Dispo")."\">LTMGAD - "._QXZ("Send to AM Message and Dispo")."</option>\n";
-		echo "<option value=\"XAMMAD-----"._QXZ("Send to AM Message and Dispo")."\">XAMMAD - "._QXZ("Send to AM Message and Dispo")."</option>\n";
-		echo "</select> &nbsp; \n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-		echo "</form><BR>\n";
-		}
+		
+if ($SUB == 23) {
+    // Previous hotkeys table code here...
+    
+    // Add New Hotkey Form
+    echo "<div style='background:white;margin-top:24px;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);border-left:6px solid #667eea;'>";
+    echo "<div style='font-size:18px;font-weight:700;color:#5a52d5;margin-bottom:20px;'>➕ " . _QXZ("ADD NEW CUSTOM CAMPAIGN HOT KEY") . "</div>";
+    
+    echo "<form action=$PHP_SELF method=POST>\n";
+    echo "<input type=hidden name=ADD value=23>\n";
+    echo "<input type=hidden name=selectable value=Y>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    
+    echo "<div style='display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;max-width:600px;'>";
+    
+    // Hotkey Selection
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("Hotkey") . ":</div>";
+    echo "<div><select size='1' name='hotkey' style='width:100px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:16px;'>\n";
+    for ($i = 1; $i <= 9; $i++) {
+        echo "<option>$i</option>\n";
+    }
+    echo "</select></div>\n";
+    
+    // Status Selection
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("Status") . ":</div>";
+    echo "<div><select size='1' name='HKstatus' style='width:100%;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>\n";
+    echo "$HKstatuses_list\n";
+    echo "<option value=\"ALTPH2-----" . _QXZ("Alternate Phone Hot Dial") . "\">ALTPH2 - " . _QXZ("Alternate Phone Hot Dial") . "</option>\n";
+    echo "<option value=\"ADDR3-----" . _QXZ("Address3 Hot Dial") . "\">ADDR3 - " . _QXZ("Address3 Hot Dial") . "</option>\n";
+    echo "<option value=\"LTMG-----" . _QXZ("Send to Answering Machine Msg") . "\">LTMG - " . _QXZ("Send to Answering Machine Msg") . "</option>\n";
+    echo "<option value=\"XFTAMM-----" . _QXZ("Send to Answering Machine Msg") . "\">XFTAMM - " . _QXZ("Send to Answering Machine Msg") . "</option>\n";
+    echo "<option value=\"LTMGAD-----" . _QXZ("Send to AM Message and Dispo") . "\">LTMGAD - " . _QXZ("Send to AM Message and Dispo") . "</option>\n";
+    echo "<option value=\"XAMMAD-----" . _QXZ("Send to AM Message and Dispo") . "\">XAMMAD - " . _QXZ("Send to AM Message and Dispo") . "</option>\n";
+    echo "</select></div>\n";
+    
+    echo "</div>";
+    
+    echo "<div style='margin-top:24px;'>";
+    echo "<input style='background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:12px 32px;font-size:16px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(102,126,234,0.3);' type='submit' name='submit' value='" . _QXZ("ADD") . "'>";
+    echo "</div>";
+    
+    echo "</form>";
+    echo "</div>";
+    
+    echo "</div></div>";
+}
 
-	##### CAMPAIGN LEAD RECYCLING #####
-	if ($SUB==25)
-		{
-		### display counts on leads that have hit the limit in this campaign
-		$stmt="SELECT list_id,active,list_name from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-		$camp_lists='';
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if (preg_match('/Y/', $rowx[1])) {$camp_lists .= "'$rowx[0]',";}
-			$o++;
-			}
-		$camp_lists = preg_replace('/.$/i','',$camp_lists);
+// ============================================================================
+// CAMPAIGN LEAD RECYCLING SECTION
+// ============================================================================
 
-		$stmt="SELECT recycle_id,campaign_id,status,attempt_delay,attempt_maximum,active from vicidial_lead_recycle where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$recycle_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($recycle_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$RECYCLE_status[$o] =	$rowx[2];
-			$RECYCLE_delay[$o] =	$rowx[3];
-			$RECYCLE_attempt[$o] =	$rowx[4];
-			$RECYCLE_active[$o] =	$rowx[5];
-			$RECYCLE_count[$o] = "'Y','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
-			if ($RECYCLE_attempt[$o]==1) {$RECYCLE_count[$o] = "'Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==2) {$RECYCLE_count[$o] = "'Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==3) {$RECYCLE_count[$o] = "'Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==4) {$RECYCLE_count[$o] = "'Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==5) {$RECYCLE_count[$o] = "'Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==6) {$RECYCLE_count[$o] = "'Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==7) {$RECYCLE_count[$o] = "'Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==8) {$RECYCLE_count[$o] = "'Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==9) {$RECYCLE_count[$o] = "'Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]>9) {$RECYCLE_count[$o] = "'Y10'";}
-			$o++;
-			}
-		$o=0;
+if ($SUB == 25) {
+    // Get campaign lists
+    $stmt = "SELECT list_id,active,list_name from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $lists_to_print = mysqli_num_rows($rslt);
+    $camp_lists = '';
+    $o = 0;
+    while ($lists_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        if (preg_match('/Y/', $rowx[1])) {
+            $camp_lists .= "'$rowx[0]',";
+        }
+        $o++;
+    }
+    $camp_lists = preg_replace('/.$/i', '', $camp_lists);
 
-		echo "<br><br><b>"._QXZ("LEAD RECYCLING WITHIN THIS CAMPAIGN").": &nbsp; $NWB#lead_recycle$NWE</b><br>\n";
-		echo "<TABLE width=700 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("STATUS")."</td><td>"._QXZ("ATTEMPT DELAY")."</td><td>"._QXZ("ATTEMPT MAXIMUM")."</td><td>"._QXZ("LEADS AT LIMIT")."</td><td>"._QXZ("ACTIVE")."</td><td> </td><td>"._QXZ("DELETE")."</td></tr>\n";
+    // Get recycle settings
+    $stmt = "SELECT recycle_id,campaign_id,status,attempt_delay,attempt_maximum,active from vicidial_lead_recycle where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $recycle_to_print = mysqli_num_rows($rslt);
+    $o = 0;
+    while ($recycle_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $RECYCLE_status[$o] = $rowx[2];
+        $RECYCLE_delay[$o] = $rowx[3];
+        $RECYCLE_attempt[$o] = $rowx[4];
+        $RECYCLE_active[$o] = $rowx[5];
+        $RECYCLE_count[$o] = "'Y','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
+        if ($RECYCLE_attempt[$o] == 1) {
+            $RECYCLE_count[$o] = "'Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 2) {
+            $RECYCLE_count[$o] = "'Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 3) {
+            $RECYCLE_count[$o] = "'Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 4) {
+            $RECYCLE_count[$o] = "'Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 5) {
+            $RECYCLE_count[$o] = "'Y5','Y6','Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 6) {
+            $RECYCLE_count[$o] = "'Y6','Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 7) {
+            $RECYCLE_count[$o] = "'Y7','Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 8) {
+            $RECYCLE_count[$o] = "'Y8','Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] == 9) {
+            $RECYCLE_count[$o] = "'Y9','Y10'";
+        }
+        if ($RECYCLE_attempt[$o] > 9) {
+            $RECYCLE_count[$o] = "'Y10'";
+        }
+        $o++;
+    }
+    $o = 0;
 
-		while ($recycle_to_print > $o) 
-			{
-			$recycle_limit=0;
-			if (strlen($camp_lists) > 2)
-				{
-				$stmt="SELECT count(*) from vicidial_list where status='$RECYCLE_status[$o]' and list_id IN($camp_lists) and called_since_last_reset IN($RECYCLE_count[$o]);";
-				if ($DB) {echo "|$stmt|\n";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$counts_to_print = mysqli_num_rows($rslt);
-				if ($counts_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$recycle_limit = $rowx[0];
-					}
-				}
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>♻️</span>Lead Recycling <span style='font-size:11px;color:#666;'>$NWB#lead_recycle$NWE</span></div>";
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='padding:0 30px 28px 30px;'>";
 
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+    // Recycling table
+    echo "<div style='background:white;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>";
 
-			echo "<tr $bgcolor><td><font size=2> &nbsp; $RECYCLE_status[$o]<form action=$PHP_SELF method=POST>\n";
-			echo "<input type=hidden name=status value=\"$RECYCLE_status[$o]\">\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo "<input type=hidden name=ADD value=45></td>\n";
-			echo "<td><font size=1><input type=text size=7 maxlength=5 name=attempt_delay value=\"$RECYCLE_delay[$o]\"></td>\n";
-			echo "<td><font size=1><input type=text size=5 maxlength=3 name=attempt_maximum value=\"$RECYCLE_attempt[$o]\"></td>\n";
-			echo "<td align=right><font size=2>$recycle_limit &nbsp; </td>\n";
-			echo "<td><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$RECYCLE_active[$o]' SELECTED>"._QXZ("$RECYCLE_active[$o]")."</option></select></td>\n";
-			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'></form></td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=65&campaign_id=$campaign_id&status=$RECYCLE_status[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
-			$o++;
-			}
+    // Table header
+    echo "<thead>";
+    echo "<tr style='background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white;'>";
+    echo "<th style='padding:14px 18px;text-align:left;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("STATUS") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("ATTEMPT DELAY") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("ATTEMPT MAXIMUM") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:right;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("LEADS AT LIMIT") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("ACTIVE") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("ACTIONS") . "</th>";
+    echo "</tr>";
+    echo "</thead>";
 
-		echo "</table>\n";
+    echo "<tbody>";
 
-		echo "<br>"._QXZ("ADD NEW CAMPAIGN LEAD RECYCLE")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=25>\n";
-		echo "<input type=hidden name=active value=\"N\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Status").": <select size=1 name=status>\n";
-		echo "$LRstatuses_list\n";
-		echo "</select> &nbsp; \n";
-		echo _QXZ("Attempt Delay").": <input type=text size=7 maxlength=5 name=attempt_delay>\n";
-		echo _QXZ("Attempt Maximum").": <input type=text size=5 maxlength=3 name=attempt_maximum>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
+    while ($recycle_to_print > $o) {
+        $recycle_limit = 0;
+        if (strlen($camp_lists) > 2) {
+            $stmt = "SELECT count(*) from vicidial_list where status='$RECYCLE_status[$o]' and list_id IN($camp_lists) and called_since_last_reset IN($RECYCLE_count[$o]);";
+            if ($DB) {
+                echo "|$stmt|\n";
+            }
+            $rslt = mysql_to_mysqli($stmt, $link);
+            $counts_to_print = mysqli_num_rows($rslt);
+            if ($counts_to_print > 0) {
+                $rowx = mysqli_fetch_row($rslt);
+                $recycle_limit = $rowx[0];
+            }
+        }
 
-		echo "</FORM><br>\n";
-		echo "<br>\n";
-		echo "* "._QXZ("Lead counts taken from active lists in the campaign only").".\n";
-		}
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+            $row_bg = 'background:#f9fafb;';
+        } else {
+            $row_bg = 'background:white;';
+        }
 
-	##### CAMPAIGN AUTO-ALT-NUMBER DIALING #####
-	if ($SUB==26)
-		{
-		echo "<br><br><b>"._QXZ("AUTO ALT NUMBER DIALING FOR THIS CAMPAIGN").": &nbsp; $NWB#auto_alt_dial_statuses$NWE</b><br>\n";
-		echo "<TABLE width=500 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("STATUSES")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
+        echo "<tr style='$row_bg border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:12px 18px;'>";
+        echo "<form action=$PHP_SELF method=POST style='margin:0;display:contents;'>\n";
+        echo "<input type=hidden name=status value=\"$RECYCLE_status[$o]\">\n";
+        echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+        echo "<input type=hidden name=ADD value=45>\n";
+        echo "<span style='font-weight:700;color:#1f2937;'>$RECYCLE_status[$o]</span>";
+        echo "</td>\n";
 
-		$auto_alt_dial_statuses = preg_replace("/ -$/","",$auto_alt_dial_statuses);
-		$AADstatuses = explode(" ", $auto_alt_dial_statuses);
-		$AADs_to_print = (count($AADstatuses) -1);
+        echo "<td style='padding:12px 18px;text-align:center;'><input type='text' size='7' maxlength='5' name='attempt_delay' value=\"$RECYCLE_delay[$o]\" style='width:80px;padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:14px;text-align:center;'></td>\n";
+        echo "<td style='padding:12px 18px;text-align:center;'><input type='text' size='5' maxlength='3' name='attempt_maximum' value=\"$RECYCLE_attempt[$o]\" style='width:60px;padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:14px;text-align:center;'></td>\n";
+        echo "<td style='padding:12px 18px;text-align:right;'><span style='display:inline-block;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;font-weight:600;'>$recycle_limit</span></td>\n";
+        
+        echo "<td style='padding:12px 18px;text-align:center;'>";
+        echo "<select size='1' name='active' style='padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;'>";
+        echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+        echo "<option value='N'>" . _QXZ("N") . "</option>";
+        echo "<option value='$RECYCLE_active[$o]' SELECTED>" . _QXZ("$RECYCLE_active[$o]") . "</option>";
+        echo "</select>";
+        echo "</td>\n";
+        
+        echo "<td style='padding:12px 18px;text-align:center;white-space:nowrap;'>";
+        echo "<input style='background:#3b82f6;color:white;padding:6px 14px;border:none;border-radius:4px;cursor:pointer;font-size:12px;margin-right:6px;' type='submit' name='submit' value='" . _QXZ("MODIFY") . "'>";
+        echo "</form>";
+        echo "<a href=\"$PHP_SELF?ADD=65&campaign_id=$campaign_id&status=$RECYCLE_status[$o]\" style='color:#ef4444;text-decoration:none;font-size:12px;font-weight:600;'>🗑️ " . _QXZ("DELETE") . "</a>";
+        echo "</td></tr>\n";
+        
+        $o++;
+    }
 
-		$o=0;
-		while ($AADs_to_print > $o) 
-			{
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-			$o++;
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
 
-			echo "<tr $bgcolor><td><font size=1>$AADstatuses[$o]</td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=66&campaign_id=$campaign_id&status=$AADstatuses[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
-			}
+    // Add New Recycle Form
+    echo "<div style='background:white;margin-top:24px;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);border-left:6px solid #10b981;'>";
+    echo "<div style='font-size:18px;font-weight:700;color:#047857;margin-bottom:20px;'>➕ " . _QXZ("ADD NEW CAMPAIGN LEAD RECYCLE") . "</div>";
+    
+    echo "<form action=$PHP_SELF method=POST>\n";
+    echo "<input type=hidden name=ADD value=25>\n";
+    echo "<input type=hidden name=active value='N'>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    
+    echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;'>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Status") . "</label>";
+    echo "<select size='1' name='status' style='width:100%;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>\n";
+    echo "$LRstatuses_list\n";
+    echo "</select>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Attempt Delay") . "</label>";
+    echo "<input type='text' size='7' maxlength='5' name='attempt_delay' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Attempt Maximum") . "</label>";
+    echo "<input type='text' size='5' maxlength='3' name='attempt_maximum' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "</div>";
+    
+    echo "<div style='margin-top:20px;'>";
+    echo "<input style='background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white;padding:12px 32px;font-size:16px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);' type='submit' name='submit' value='" . _QXZ("ADD") . "'>";
+    echo "</div>";
+    
+    echo "</form>";
+    echo "</div>";
 
-		echo "</table>\n";
+    echo "<div style='margin-top:20px;padding:14px 20px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;'>";
+    echo "<div style='font-size:13px;color:#92400e;'><strong>ℹ️</strong> " . _QXZ("Lead counts taken from active lists in the campaign only") . ".</div>";
+    echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW AUTO ALT NUMBER DIALING STATUS")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=26>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Status").": <select size=1 name=status>\n";
-		echo "$LRstatuses_list\n";
-		echo "</select> &nbsp; \n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
+    echo "</div></div>";
+}
 
-		echo "</FORM><br>\n";
-		}
+// ============================================================================
+// CAMPAIGN AUTO-ALT-NUMBER DIALING SECTION
+// ============================================================================
 
-	##### CAMPAIGN PAUSE CODES #####
-	if ($SUB==27)
-		{
-		echo "<br><br><b>"._QXZ("AGENT PAUSE CODES FOR THIS CAMPAIGN").": &nbsp; $NWB#pause_codes$NWE</b><br>\n";
-		echo "<TABLE width=700 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("PAUSE CODES")."</td><td>"._QXZ("BILLABLE")."</td>";
-		if ($SSenable_pause_code_limits > 0)
-			{
-			echo "<td>"._QXZ("TIME LIMIT")."</td>";
-			}
-		echo "<td>"._QXZ("MGR APPROVAL")."</td><td>"._QXZ("MODIFY")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
+if ($SUB == 26) {
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📱</span>Auto Alt Number Dialing <span style='font-size:11px;color:#666;'>$NWB#auto_alt_dial_statuses$NWE</span></div>";
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='padding:0 30px 28px 30px;'>";
 
-		$stmt="SELECT pause_code,pause_code_name,billable,campaign_id,time_limit,require_mgr_approval from vicidial_pause_codes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by pause_code;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$pause_codes_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($pause_codes_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$o++;
+    $auto_alt_dial_statuses = preg_replace("/ -$/", "", $auto_alt_dial_statuses);
+    $AADstatuses = explode(" ", $auto_alt_dial_statuses);
+    $AADs_to_print = (count($AADstatuses) - 1);
 
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+    echo "<div style='background:white;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);overflow:hidden;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>";
 
-			echo "<tr $bgcolor><td><form action=$PHP_SELF method=POST><font size=1>$rowx[0]\n";
-			echo "<input type=hidden name=ADD value=47>\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo "<input type=hidden name=pause_code value=\"$rowx[0]\"> &nbsp;\n";
-			if ($SSenable_pause_code_limits < 1)
-				{echo "<input type=hidden name=time_limit value=\"$rowx[4]\">\n";}
-			echo "<input type=text size=20 maxlength=30 name=pause_code_name value=\"$rowx[1]\"></td>\n";
-			echo "<td><select size=1 name=billable><option value='YES'>"._QXZ("YES")."</option><option value='NO'>"._QXZ("NO")."</option><option value='HALF'>"._QXZ("HALF")."</option><option value='$rowx[2]' SELECTED>"._QXZ("$rowx[2]")."</option></select></td>\n";
-			if ($SSenable_pause_code_limits > 0)
-				{
-				echo "<td><input type=text size=5 maxlength=5 name=time_limit value=\"$rowx[4]\"></td>\n";
-				}
-			echo "<td><select size=1 name=require_mgr_approval><option value='YES'>"._QXZ("YES")."</option><option value='NO'>"._QXZ("NO")."</option><option value='$rowx[5]' SELECTED>"._QXZ("$rowx[5]")."</option></select></td>\n";
-			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'></form></td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=67&campaign_id=$campaign_id&pause_code=$rowx[0]\">"._QXZ("DELETE")."</a></td>\n";
-			echo "</tr>\n";
-			}
+    echo "<thead>";
+    echo "<tr style='background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:white;'>";
+    echo "<th style='padding:14px 18px;text-align:left;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("STATUSES") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("DELETE") . "</th>";
+    echo "</tr>";
+    echo "</thead>";
 
-		echo "</table>\n";
+    echo "<tbody>";
 
-		echo "<br>"._QXZ("ADD NEW AGENT PAUSE CODE")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=27>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Pause Code").": <input type=text size=8 maxlength=6 name=pause_code>\n";
-		echo " &nbsp; "._QXZ("Name").": <input type=text size=20 maxlength=30 name=pause_code_name>\n";
-		echo " &nbsp; "._QXZ("Billable").": <select size=1 name=billable><option value='YES'>"._QXZ("YES")."</option><option value='NO'>"._QXZ("NO")."</option><option value='HALF'>"._QXZ("HALF")."</option></select><BR>\n";
-		echo " &nbsp; "._QXZ("Mgr Approve").": <select size=1 name=require_mgr_approval><option value='YES'>"._QXZ("YES")."</option><option SELECTED value='NO'>"._QXZ("NO")."</option></select>\n";
-		if ($SSenable_pause_code_limits > 0)
-			{
-			echo " &nbsp; "._QXZ("Time Limit").": <input type=text size=5 maxlength=5 name=time_limit>\n";
-			}
-		echo "<BR><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
+    $o = 0;
+    while ($AADs_to_print > $o) {
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+            $row_bg = 'background:#f9fafb;';
+        } else {
+            $row_bg = 'background:white;';
+        }
+        $o++;
 
-		echo "</center></FORM><br>\n";
-		}
+        echo "<tr style='$row_bg border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:12px 18px;font-weight:600;color:#1f2937;'>$AADstatuses[$o]</td>\n";
+        echo "<td style='padding:12px 18px;text-align:center;'><a href=\"$PHP_SELF?ADD=66&campaign_id=$campaign_id&status=$AADstatuses[$o]\" style='color:#ef4444;text-decoration:none;font-weight:600;font-size:13px;'>🗑️ " . _QXZ("DELETE") . "</a></td></tr>\n";
+    }
 
-	##### CAMPAIGN QC SETTINGS #####
-	if ( ($SUB==28) and ($SSqc_features_active > 0) )
-		{
-		$stmt="SELECT list_id,list_name,active from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-		$qc_lists_list='';
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
 
-		$p=0;
-		while ($lists_to_print > $p) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$qc_lists_list .= "<input type=\"checkbox\" name=\"qc_lists[]\" value=\"$rowx[0]\"";
-			$r=0;
-			while ($r < $QCL_to_print)
-				{
-				if ($rowx[0] == $QClists[$r]) 
-					{
-					$qc_lists_list .= " CHECKED";
-					}
-				$r++;
-				}
-			$qc_lists_list .= "> $rowx[0] - $rowx[1] - $rowx[2]<BR>\n";
+    // Add New Status Form
+    echo "<div style='background:white;margin-top:24px;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);border-left:6px solid #f59e0b;'>";
+    echo "<div style='font-size:18px;font-weight:700;color:#d97706;margin-bottom:20px;'>➕ " . _QXZ("ADD NEW AUTO ALT NUMBER DIALING STATUS") . "</div>";
+    
+    echo "<form action=$PHP_SELF method=POST>\n";
+    echo "<input type=hidden name=ADD value=26>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    
+    echo "<div style='display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;max-width:500px;'>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Status") . "</label>";
+    echo "<select size='1' name='status' style='width:100%;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>\n";
+    echo "$LRstatuses_list\n";
+    echo "</select>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<input style='background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:white;padding:10px 28px;font-size:15px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);' type='submit' name='submit' value='" . _QXZ("ADD") . "'>";
+    echo "</div>";
+    
+    echo "</div>";
+    
+    echo "</form>";
+    echo "</div>";
 
-			$p++;
-			}
+    echo "</div></div>";
+}
 
-		##### get QC status container listings for pulldown
-		$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='QC_TEMPLATE' order by container_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$containers_to_print = mysqli_num_rows($rslt);
-		$QCcontainers_list="<option value=\"\">NONE</option>";
-		$o=0;
-		while ($containers_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$QCcontainers_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$qc_containers_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-			}
-		##### get scorecards listings for pulldown
-		$stmt="SELECT qc_scorecard_id,scorecard_name from quality_control_scorecards where active='Y' order by qc_scorecard_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$scorecards_to_print = mysqli_num_rows($rslt);
-		$QCscorecards_list="<option value=\"\">NONE</option>";
-		$o=0;
-		while ($scorecards_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$QCscorecards_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$scorecardname_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-			}
-		##### get scripts listings for pulldown
-		$stmt="SELECT script_id,script_name from vicidial_scripts $whereLOGadmin_viewable_groupsSQL order by script_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$scripts_to_print = mysqli_num_rows($rslt);
-		$QCscripts_list="";
-		$o=0;
-		while ($scripts_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$QCscripts_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$scriptname_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-			}
-		##### get shifts listings for pulldown
-		$stmt="SELECT shift_id,shift_name from vicidial_shifts $whereLOGadmin_viewable_groupsSQL order by shift_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$shifts_to_print = mysqli_num_rows($rslt);
-		$QCshifts_list="";
-		$o=0;
-		while ($shifts_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$QCshifts_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$shiftname_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-			}
+// ============================================================================
+// CAMPAIGN PAUSE CODES SECTION
+// ============================================================================
 
-		echo "<br><br><b>"._QXZ("QC SETTINGS FOR THIS CAMPAIGN").":</b><br>\n";
-		echo "<form action=$PHP_SELF method=POST><center><TABLE width=800 cellspacing=3>\n";
-#		echo "<tr bgcolor=#$SSstd_row2_background>\n";
-#		echo "<td align=right>"._QXZ("QC Enabled").": </td><td><select size=1 name=qc_enabled><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$qc_enabled' SELECTED>"._QXZ("$qc_enabled")."</option></select> $NWB#campaigns-qc_enabled$NWE</td></tr>\n";
-#		echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("QC Statuses").": <BR> $NWB#campaigns-qc_statuses$NWE</td><td>$qc_statuses_list</td></tr>\n";
-#		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>QC Lists: <BR> $NWB#campaigns-qc_lists$NWE</td><td>$qc_lists_list</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><input type=hidden name=ADD value=48>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">"._QXZ("QC Statuses").": </td><td align=left><select size=1 name=qc_statuses_id>";
-		echo "<option selected value=\"$qc_statuses_id\">".(!$qc_statuses_id ? "NONE" : "$qc_statuses_id - $qc_containers_list[$qc_statuses_id]")."</option>\n";
-		echo "$QCcontainers_list";
-		echo "</select>$NWB#campaigns-qc_statuses_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("QC Scorecard").": </td><td align=left><select size=1 name=qc_scorecard_id>";
-		echo "<option selected value=\"$qc_scorecard_id\">".(!$qc_scorecard_id ? "NONE" : "$qc_scorecard_id - $scorecardname_list[$qc_scorecard_id]")."</option>\n";
-		echo "$QCscorecards_list";
-		echo "</select>$NWB#campaigns-qc_scorecard$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("QC WebForm").": </td><td align=left><input type=text name=qc_web_form_address size=70 maxlength=255 value=\"$qc_web_form_address\">$NWB#campaigns-qc_web_form_address$NWE</td></tr>\n";
+if ($SUB == 27) {
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>⏸️</span>Agent Pause Codes <span style='font-size:11px;color:#666;'>$NWB#pause_codes$NWE</span></div>";
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='padding:0 30px 28px 30px;'>";
 
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><a href=\"$PHP_SELF?ADD=3111111&script_id=$script_id\">"._QXZ("QC Script")."</a>: </td><td align=left><select size=1 name=qc_script>\n";
-		echo "$QCscripts_list";
-		echo "<option selected value=\"$qc_script\">$qc_script - $scriptname_list[$qc_script]</option>\n";
-		echo "</select>$NWB#campaigns-qc_script$NWE</td></tr>\n";
+    echo "<div style='background:white;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>";
 
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><a href=\"$PHP_SELF?ADD=331111111&shift_id=$qc_shift_id\">"._QXZ("QC Shift")."</a>: </td><td align=left><select size=1 name=qc_shift_id>\n";
-		echo "$QCshifts_list";
-		echo "<option selected value=\"$qc_shift_id\">$qc_shift_id - $shiftname_list[$qc_shift_id]</option>\n";
-		echo "</select>$NWB#campaigns-qc_shift_id$NWE</td></tr>\n";
+    echo "<thead>";
+    echo "<tr style='background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);color:white;'>";
+    echo "<th style='padding:14px 18px;text-align:left;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("PAUSE CODES") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("BILLABLE") . "</th>";
+    if ($SSenable_pause_code_limits > 0) {
+        echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("TIME LIMIT") . "</th>";
+    }
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("MGR APPROVAL") . "</th>";
+    echo "<th style='padding:14px 18px;text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;'>" . _QXZ("ACTIONS") . "</th>";
+    echo "</tr>";
+    echo "</thead>";
 
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("QC Get Record Launch").": </td><td><select size=1 name=qc_get_record_launch><option value='NONE'>"._QXZ("NONE")."</option><option value='SCRIPT'>"._QXZ("SCRIPT")."</option><option value='WEBFORM'>"._QXZ("WEBFORM")."</option><option value='QCSCRIPT'>"._QXZ("QCSCRIPT")."</option><option value='QCWEBFORM'>"._QXZ("QCWEBFORM")."</option><option value='$qc_get_record_launch' SELECTED>"._QXZ("$qc_get_record_launch")."</option></select> $NWB#campaigns-qc_get_record_launch$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("QC Show Recording").": </td><td><select size=1 name=qc_show_recording><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$qc_show_recording' SELECTED>"._QXZ("$qc_show_recording")."</option></select> $NWB#campaigns-qc_show_recording$NWE</td></tr>\n";
+    echo "<tbody>";
 
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</table>\n";
-		echo "<BR></center></FORM><br>\n";
-		}
+    $stmt = "SELECT pause_code,pause_code_name,billable,campaign_id,time_limit,require_mgr_approval from vicidial_pause_codes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by pause_code;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $pause_codes_to_print = mysqli_num_rows($rslt);
+    $o = 0;
+    
+    while ($pause_codes_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $o++;
+
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+            $row_bg = 'background:#f9fafb;';
+        } else {
+            $row_bg = 'background:white;';
+        }
+
+        echo "<tr style='$row_bg border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:12px 18px;'>";
+        echo "<form action=$PHP_SELF method=POST style='margin:0;display:contents;'>\n";
+        echo "<input type=hidden name=ADD value=47>\n";
+        echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+        echo "<input type=hidden name=pause_code value=\"$rowx[0]\">\n";
+        if ($SSenable_pause_code_limits < 1) {
+            echo "<input type=hidden name=time_limit value=\"$rowx[4]\">\n";
+        }
+        echo "<div style='display:flex;align-items:center;gap:10px;'>";
+        echo "<span style='font-weight:700;color:#1f2937;min-width:80px;'>$rowx[0]</span>";
+        echo "<input type='text' size='20' maxlength='30' name='pause_code_name' value=\"$rowx[1]\" style='flex:1;padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:14px;'>";
+        echo "</div>";
+        echo "</td>\n";
+
+        echo "<td style='padding:12px 18px;text-align:center;'>";
+        echo "<select size='1' name='billable' style='padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;'>";
+        echo "<option value='YES'>" . _QXZ("YES") . "</option>";
+        echo "<option value='NO'>" . _QXZ("NO") . "</option>";
+        echo "<option value='HALF'>" . _QXZ("HALF") . "</option>";
+        echo "<option value='$rowx[2]' SELECTED>" . _QXZ("$rowx[2]") . "</option>";
+        echo "</select>";
+        echo "</td>\n";
+
+        if ($SSenable_pause_code_limits > 0) {
+            echo "<td style='padding:12px 18px;text-align:center;'>";
+            echo "<input type='text' size='5' maxlength='5' name='time_limit' value=\"$rowx[4]\" style='width:70px;padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:14px;text-align:center;'>";
+            echo "</td>\n";
+        }
+
+        echo "<td style='padding:12px 18px;text-align:center;'>";
+        echo "<select size='1' name='require_mgr_approval' style='padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;'>";
+        echo "<option value='YES'>" . _QXZ("YES") . "</option>";
+        echo "<option value='NO'>" . _QXZ("NO") . "</option>";
+        echo "<option value='$rowx[5]' SELECTED>" . _QXZ("$rowx[5]") . "</option>";
+        echo "</select>";
+        echo "</td>\n";
+
+        echo "<td style='padding:12px 18px;text-align:center;white-space:nowrap;'>";
+        echo "<input style='background:#3b82f6;color:white;padding:6px 14px;border:none;border-radius:4px;cursor:pointer;font-size:12px;margin-right:6px;' type='submit' name='submit' value='" . _QXZ("MODIFY") . "'>";
+        echo "</form>";
+        echo "<a href=\"$PHP_SELF?ADD=67&campaign_id=$campaign_id&pause_code=$rowx[0]\" style='color:#ef4444;text-decoration:none;font-size:12px;font-weight:600;'>🗑️ " . _QXZ("DELETE") . "</a>";
+        echo "</td></tr>\n";
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+
+    // Add New Pause Code Form
+    echo "<div style='background:white;margin-top:24px;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);border-left:6px solid #8b5cf6;'>";
+    echo "<div style='font-size:18px;font-weight:700;color:#7c3aed;margin-bottom:20px;'>➕ " . _QXZ("ADD NEW AGENT PAUSE CODE") . "</div>";
+    
+    echo "<form action=$PHP_SELF method=POST>\n";
+    echo "<input type=hidden name=ADD value=27>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    
+    echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;'>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Pause Code") . "</label>";
+    echo "<input type='text' size='8' maxlength='6' name='pause_code' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Name") . "</label>";
+    echo "<input type='text' size='20' maxlength='30' name='pause_code_name' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Billable") . "</label>";
+    echo "<select size='1' name='billable' style='width:100%;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>";
+    echo "<option value='YES'>" . _QXZ("YES") . "</option>";
+    echo "<option value='NO'>" . _QXZ("NO") . "</option>";
+    echo "<option value='HALF'>" . _QXZ("HALF") . "</option>";
+    echo "</select>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Mgr Approve") . "</label>";
+    echo "<select size='1' name='require_mgr_approval' style='width:100%;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>";
+    echo "<option value='YES'>" . _QXZ("YES") . "</option>";
+    echo "<option SELECTED value='NO'>" . _QXZ("NO") . "</option>";
+    echo "</select>";
+    echo "</div>";
+    
+    if ($SSenable_pause_code_limits > 0) {
+        echo "<div>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Time Limit") . "</label>";
+        echo "<input type='text' size='5' maxlength='5' name='time_limit' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    
+    echo "<div style='margin-top:20px;'>";
+    echo "<input style='background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);color:white;padding:12px 32px;font-size:16px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(139,92,246,0.3);' type='submit' name='submit' value='" . _QXZ("ADD") . "'>";
+    echo "</div>";
+    
+    echo "</form>";
+    echo "</div>";
+
+    echo "</div></div>";
+}
+
+// ============================================================================
+// CAMPAIGN QC SETTINGS SECTION
+// ============================================================================
+
+if (($SUB == 28) and ($SSqc_features_active > 0)) {
+    // Get lists for QC
+    $stmt = "SELECT list_id,list_name,active from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $lists_to_print = mysqli_num_rows($rslt);
+    $qc_lists_list = '';
+
+    $p = 0;
+    while ($lists_to_print > $p) {
+        $rowx = mysqli_fetch_row($rslt);
+        $qc_lists_list .= "<div style='padding:8px 0;'><input type=\"checkbox\" name=\"qc_lists[]\" value=\"$rowx[0]\" style='margin-right:8px;'";
+        $r = 0;
+        while ($r < $QCL_to_print) {
+            if ($rowx[0] == $QClists[$r]) {
+                $qc_lists_list .= " CHECKED";
+            }
+            $r++;
+        }
+        $qc_lists_list .= "><span style='font-size:14px;color:#374151;'>$rowx[0] - $rowx[1] - $rowx[2]</span></div>\n";
+        $p++;
+    }
+
+    // Get QC status container listings
+    $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='QC_TEMPLATE' order by container_id;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $containers_to_print = mysqli_num_rows($rslt);
+    $QCcontainers_list = "<option value=\"\">NONE</option>";
+    $o = 0;
+    while ($containers_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $QCcontainers_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $qc_containers_list["$rowx[0]"] = "$rowx[1]";
+        $o++;
+    }
+
+    // Get scorecards listings
+    $stmt = "SELECT qc_scorecard_id,scorecard_name from quality_control_scorecards where active='Y' order by qc_scorecard_id;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $scorecards_to_print = mysqli_num_rows($rslt);
+    $QCscorecards_list = "<option value=\"\">NONE</option>";
+    $o = 0;
+    while ($scorecards_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $QCscorecards_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $scorecardname_list["$rowx[0]"] = "$rowx[1]";
+        $o++;
+    }
+
+    // Get scripts listings
+    $stmt = "SELECT script_id,script_name from vicidial_scripts $whereLOGadmin_viewable_groupsSQL order by script_id;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $scripts_to_print = mysqli_num_rows($rslt);
+    $QCscripts_list = "";
+    $o = 0;
+    while ($scripts_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $QCscripts_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $scriptname_list["$rowx[0]"] = "$rowx[1]";
+        $o++;
+    }
+
+    // Get shifts listings
+    $stmt = "SELECT shift_id,shift_name from vicidial_shifts $whereLOGadmin_viewable_groupsSQL order by shift_id;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $shifts_to_print = mysqli_num_rows($rslt);
+    $QCshifts_list = "";
+    $o = 0;
+    while ($shifts_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $QCshifts_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $shiftname_list["$rowx[0]"] = "$rowx[1]";
+        $o++;
+    }
+
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>✅</span>QC Settings for Campaign</div>";
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='padding:0 30px 28px 30px;'>";
+
+    echo "<form action=$PHP_SELF method=POST>";
+    echo "<input type=hidden name=ADD value=48>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+
+    echo "<div style='background:white;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);'>";
+    echo "<div style='display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;'>";
+
+    // QC Statuses ID
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("QC Statuses") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='qc_statuses_id' style='width:100%;max-width:400px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>";
+    echo "<option selected value=\"$qc_statuses_id\">" . (!$qc_statuses_id ? "NONE" : "$qc_statuses_id - $qc_containers_list[$qc_statuses_id]") . "</option>\n";
+    echo "$QCcontainers_list";
+    echo "</select>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_statuses_id$NWE</span>";
+    echo "</div>";
+
+    // QC Scorecard
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("QC Scorecard") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='qc_scorecard_id' style='width:100%;max-width:400px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>";
+    echo "<option selected value=\"$qc_scorecard_id\">" . (!$qc_scorecard_id ? "NONE" : "$qc_scorecard_id - $scorecardname_list[$qc_scorecard_id]") . "</option>\n";
+    echo "$QCscorecards_list";
+    echo "</select>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_scorecard$NWE</span>";
+    echo "</div>";
+
+    // QC WebForm
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("QC WebForm") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' name='qc_web_form_address' size='70' maxlength='255' value=\"$qc_web_form_address\" style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_web_form_address$NWE</span>";
+    echo "</div>";
+
+    // QC Script
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>";
+    echo "<a href=\"$PHP_SELF?ADD=3111111&script_id=$script_id\" style='color:inherit;text-decoration:none;'>" . _QXZ("QC Script") . "</a>:";
+    echo "</div>";
+    echo "<div>";
+    echo "<select size='1' name='qc_script' style='width:100%;max-width:400px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>\n";
+    echo "$QCscripts_list";
+    echo "<option selected value=\"$qc_script\">$qc_script - $scriptname_list[$qc_script]</option>\n";
+    echo "</select>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_script$NWE</span>";
+    echo "</div>";
+
+    // QC Shift
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>";
+    echo "<a href=\"$PHP_SELF?ADD=331111111&shift_id=$qc_shift_id\" style='color:inherit;text-decoration:none;'>" . _QXZ("QC Shift") . "</a>:";
+    echo "</div>";
+    echo "<div>";
+    echo "<select size='1' name='qc_shift_id' style='width:100%;max-width:400px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>\n";
+    echo "$QCshifts_list";
+    echo "<option selected value=\"$qc_shift_id\">$qc_shift_id - $shiftname_list[$qc_shift_id]</option>\n";
+    echo "</select>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_shift_id$NWE</span>";
+    echo "</div>";
+
+    // QC Get Record Launch
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("QC Get Record Launch") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='qc_get_record_launch' style='width:100%;max-width:400px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>";
+    echo "<option value='NONE'>" . _QXZ("NONE") . "</option>";
+    echo "<option value='SCRIPT'>" . _QXZ("SCRIPT") . "</option>";
+    echo "<option value='WEBFORM'>" . _QXZ("WEBFORM") . "</option>";
+    echo "<option value='QCSCRIPT'>" . _QXZ("QCSCRIPT") . "</option>";
+    echo "<option value='QCWEBFORM'>" . _QXZ("QCWEBFORM") . "</option>";
+    echo "<option value='$qc_get_record_launch' SELECTED>" . _QXZ("$qc_get_record_launch") . "</option>";
+    echo "</select>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_get_record_launch$NWE</span>";
+    echo "</div>";
+
+    // QC Show Recording
+    echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("QC Show Recording") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='qc_show_recording' style='width:100%;max-width:200px;padding:8px 14px;border-radius:7px;border:1.3px solid #d2d6e2;background:#f8fafe;cursor:pointer;font-size:14px;'>";
+    echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+    echo "<option value='N'>" . _QXZ("N") . "</option>";
+    echo "<option value='$qc_show_recording' SELECTED>" . _QXZ("$qc_show_recording") . "</option>";
+    echo "</select>";
+    echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-qc_show_recording$NWE</span>";
+    echo "</div>";
+
+    echo "</div>";
+
+    echo "<div style='margin-top:30px;text-align:center;'>";
+    echo "<input style='background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white;padding:14px 48px;font-size:18px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);' type='submit' name='submit' value='" . _QXZ("SUBMIT") . "'>";
+    echo "</div>";
+
+    echo "</div>";
+    echo "</form>";
+
+    echo "</div></div>";
+}
+
 
 	##### CAMPAIGN SURVEY SETTINGS #####
 	if ($SUB=='20A')
