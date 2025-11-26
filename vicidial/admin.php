@@ -34159,7 +34159,7 @@ if (($SUB == 28) and ($SSqc_features_active > 0)) {
     echo "</div></div>";
 }
 
-
+}
 	##### CAMPAIGN SURVEY SETTINGS #####
 	if ($SUB=='20A')
 		{
