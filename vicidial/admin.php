@@ -28172,6 +28172,13 @@ echo "<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</optio
 echo "<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>";
 
 echo"<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
+//To be start from here 
+ echo "</select>";
+echo " $NWB#campaigns-lead_order$NWE";
+echo "</div>";
+}
+echo "</td></tr>\n";
+
 
 // After previous cards, start a new grid container for List Order and Lead Filtering
 echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px 0;'>";
@@ -28268,6 +28275,7 @@ if ($SScall_quota_lead_ranking > 0) {
 }
 
 echo "</div>"; // end grid
+
 
 
 			if ($SSdemographic_quotas > 0)
