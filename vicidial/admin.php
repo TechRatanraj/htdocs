@@ -34713,7 +34713,7 @@ if ($SUB < 1) {
     echo "</div>";
 }
 
-
+}
 
 
 	#	echo "<a href=\"$PHP_SELF?ADD=53&campaign_id=$campaign_id&DB=$DB\">EMERGENCY VDAC CLEAR FOR THIS CAMPAIGN</a><BR><BR>\n";
