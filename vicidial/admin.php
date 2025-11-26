@@ -29655,213 +29655,592 @@ echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-get_
 echo "</div>";
 
 // CLOSE GRID AND SECTION
+//echo "</div></div>";
+	
+// Agent Browser Call Alert Sound (if browser_call_alerts is enabled)
+if ($SSbrowser_call_alerts > 0) {
+    // Build browser alert sounds list
+    $browser_alert_sounds_listARY = explode(',', $browser_alert_sounds_list);
+    $browser_alert_sounds_listARY_ct = count($browser_alert_sounds_listARY);
+    $bas = 0;
+    $bas_output = '';
+    while ($browser_alert_sounds_listARY_ct > $bas) {
+        $bas_output .= "<option value='$browser_alert_sounds_listARY[$bas]'>" . _QXZ("$browser_alert_sounds_listARY[$bas]") . "</option>";
+        $bas++;
+    }
+
+    // Open new section for Browser & VM Settings
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>🔔</span>Browser Alerts & VM Settings</div>";
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
+
+    // Agent Browser Call Alert Sound (Full width)
+    echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #ffc107;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#7a630a;margin-bottom:12px;'>" . _QXZ("Agent Browser Call Alert Sound") . "</div>";
+    echo "<div style='display:grid;grid-template-columns:2fr 1fr auto;gap:16px;align-items:center;'>";
+    echo "<div>";
+    echo "<select name='browser_alert_sound' id='browser_alert_sound' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
+    echo "$bas_output";
+    echo "<option value='---NONE---'>---" . _QXZ("NONE") . "---</option>";
+    echo "<option value='$browser_alert_sound' selected>" . _QXZ("$browser_alert_sound") . "</option>";
+    echo "</select>";
+    echo "</div>";
+    echo "<div>";
+    echo "<label style='font-size:13px;color:#666;margin-bottom:4px;display:block;'>" . _QXZ("volume") . "</label>";
+    echo "<select name='browser_alert_volume' id='browser_alert_volume' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    $bav = 100;
+    while ($bav >= 0) {
+        echo "<option>$bav</option>";
+        $bav = ($bav - 5);
+    }
+    echo "<option selected>$browser_alert_volume</option></select>";
+    echo "</div>";
+    echo "<div>";
+    echo "<a href='#' onclick=\"play_browser_sound('browser_alert_sound','browser_alert_volume');return false;\" style='display:inline-block;padding:8px 16px;background:#2563eb;color:white;border-radius:6px;text-decoration:none;font-size:14px;'>" . _QXZ("play selected sound") . "</a>";
+    echo "</div>";
+    echo "</div>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-browser_alert_sound$NWE</div>";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='browser_alert_sound' value=\"$browser_alert_sound\">";
+    echo "<input type='hidden' name='browser_alert_volume' value=\"$browser_alert_volume\">";
+    
+    // Still open the section for other fields
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📞</span>VM & Transfer Settings</div>";
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
+}
+
+// Show Confetti
+echo "<div style='$card_style;border-left:6px solid #e83e8c;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#a71d5d;'>" . _QXZ("Show Confetti") . "</div>";
+echo "<select name='show_confetti' id='show_confetti' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
+echo "<option selected value=\"$show_confetti\">" . _QXZ("$show_confetti") . "</option>\n";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='SALES'>" . _QXZ("SALES") . "</option>";
+echo "<option value='CALLBACKS'>" . _QXZ("CALLBACKS") . "</option>";
+echo "<option value='SALES_AND_CALLBACKS'>" . _QXZ("SALES_AND_CALLBACKS") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-show_confetti$NWE</div>";
+echo "</div>";
+
+// Answering Machine Message (Full width with audio chooser)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;margin-bottom:12px;'>" . _QXZ("Answering Machine Message") . "</div>";
+echo "<div style='display:flex;gap:12px;align-items:center;'>";
+echo "<input type='text' size='50' maxlength='100' name='am_message_exten' id='am_message_exten' value=\"$am_message_exten\" style='flex:1;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;'>";
+echo "<a href=\"javascript:launch_chooser('am_message_exten','date');\" style='display:inline-block;padding:8px 16px;background:#17a2b8;color:white;border-radius:6px;text-decoration:none;font-size:14px;white-space:nowrap;'>" . _QXZ("audio chooser") . "</a>";
+echo "</div>";
+
+// Check for list override
+$stmt = "SELECT count(*) from vicidial_lists where campaign_id='$campaign_id' and am_message_exten_override != '' and active='Y' $LOGallowed_campaignsSQL;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$rowx = mysqli_fetch_row($rslt);
+if ($rowx[0] > 0) {
+    echo "<div style='margin-top:8px;font-size:13px;color:#dc3545;font-weight:600;'>" . _QXZ("LIST OVERRIDE ACTIVE") . "</div>";
+}
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-am_message_exten$NWE</div>";
+echo "</div>";
+
+// Voicemail Message Daily Limit
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Voicemail Message Daily Limit") . "</div>";
+echo "<input type='text' name='vmm_daily_limit' size='4' maxlength='3' value=\"$vmm_daily_limit\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-vmm_daily_limit$NWE</div>";
+echo "</div>";
+
+// WaitForSilence Options
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("WaitForSilence Options") . "</div>";
+echo "<input type='text' name='waitforsilence_options' size='20' maxlength='25' value=\"$waitforsilence_options\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-waitforsilence_options$NWE</div>";
+echo "</div>";
+
+// Manual VM Status Updates
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Manual VM Status Updates") . "</div>";
+echo "<select name='manual_vm_status_updates' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='$manual_vm_status_updates' SELECTED>" . _QXZ("$manual_vm_status_updates") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-manual_vm_status_updates$NWE</div>";
+echo "</div>";
+
+// AM Message Wildcards
+if ($am_message_wildcards == 'Y') {
+    $vam_count = 0;
+    $stmt = "SELECT count(*) from vicidial_amm_multi where campaign_id='$campaign_id' and entry_type='campaign';";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $vam_to_print = mysqli_num_rows($rslt);
+    if ($vam_to_print > 0) {
+        $rowx = mysqli_fetch_row($rslt);
+        $vam_count = $rowx[0];
+    }
+
+    echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("AM Message Wildcards") . "</div>";
+    echo "<select name='am_message_wildcards' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+    echo "<option value='N'>" . _QXZ("N") . "</option>";
+    echo "<option selected>" . _QXZ("$am_message_wildcards") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:13px;'>";
+    echo "<a href='admin_amm_multi.php?DB=$DB&campaign_id=$campaign_id&entry_type=campaign' style='color:#2563eb;text-decoration:none;font-weight:600;'>" . _QXZ("AM Message Wildcards Defined") . ": <span style='color:#dc3545;'>$vam_count</span></a>";
+    echo "</div>";
+    echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-am_message_wildcards$NWE</div>";
+    echo "</div>";
+} else {
+    echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("AM Message Wildcards") . "</div>";
+    echo "<select name='am_message_wildcards' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+    echo "<option value='N'>" . _QXZ("N") . "</option>";
+    echo "<option value='$am_message_wildcards' selected>" . _QXZ("$am_message_wildcards") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-am_message_wildcards$NWE</div>";
+    echo "</div>";
+}
+
+// AMD Settings (if outbound_autodial_active)
+if ($SSoutbound_autodial_active > 0) {
+    // AMD Type
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>" . _QXZ("AMD Type") . "</div>";
+    echo "<select name='amd_type' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='AMD'>" . _QXZ("AMD built-in") . "</option>";
+    echo "<option value='KHOMP'>" . _QXZ("KHOMP Gateway") . "</option>";
+    echo "<option value='CPD'>" . _QXZ("Sangoma CPD") . "</option>";
+    echo "<option value='$amd_type' SELECTED>" . _QXZ("$amd_type") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-amd_type$NWE</div>";
+    echo "</div>";
+
+    // AMD send to Action
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>" . _QXZ("AMD send to Action") . "</div>";
+    echo "<select name='amd_send_to_vmx' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+    echo "<option value='N'>" . _QXZ("N") . "</option>";
+    echo "<option value='$amd_send_to_vmx' SELECTED>" . _QXZ("$amd_send_to_vmx") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-amd_send_to_vmx$NWE</div>";
+    echo "</div>";
+
+    // AMD Agent Route Options
+    $amdaro_B = '';
+    $amdaro_E = '';
+    if (($amd_agent_route_options == 'ENABLED') or ($amd_agent_route_options == 'PENDING')) {
+        $amdaro_B = "<a href=\"$PHP_SELF?ADD=392111111111&container_id=AMD_AGENT_OPT_$campaign_id\" style='color:inherit;text-decoration:none;'>";
+        $amdaro_E = "</a>";
+    }
+    
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>";
+    echo $amdaro_B . _QXZ("AMD Agent Route Options") . $amdaro_E;
+    echo "</div>";
+    echo "<select name='amd_agent_route_options' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+    echo "<option value='PENDING'>" . _QXZ("PENDING") . "</option>";
+    echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+    echo "<option value='$amd_agent_route_options' SELECTED>" . _QXZ("$amd_agent_route_options") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-amd_agent_route_options$NWE</div>";
+    echo "</div>";
+
+    // CPD AMD Action
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>" . _QXZ("CPD AMD Action") . "</div>";
+    echo "<select name='cpd_amd_action' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+    echo "<option value='DISPO'>" . _QXZ("DISPO") . "</option>";
+    echo "<option value='MESSAGE'>" . _QXZ("MESSAGE") . "</option>";
+    echo "<option value='INGROUP'>" . _QXZ("INGROUP") . "</option>";
+    echo "<option value='CALLMENU'>" . _QXZ("CALLMENU") . "</option>";
+    echo "<option value='$cpd_amd_action' SELECTED>" . _QXZ("$cpd_amd_action") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-cpd_amd_action$NWE</div>";
+    echo "</div>";
+
+    // CPD Unknown Action
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>" . _QXZ("CPD Unknown Action") . "</div>";
+    echo "<select name='cpd_unknown_action' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+    echo "<option value='DISPO'>" . _QXZ("DISPO") . "</option>";
+    echo "<option value='MESSAGE'>" . _QXZ("MESSAGE") . "</option>";
+    echo "<option value='INGROUP'>" . _QXZ("INGROUP") . "</option>";
+    echo "<option value='CALLMENU'>" . _QXZ("CALLMENU") . "</option>";
+    echo "<option value='$cpd_unknown_action' SELECTED>" . _QXZ("$cpd_unknown_action") . "</option>";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-cpd_unknown_action$NWE</div>";
+    echo "</div>";
+
+    // AMD Inbound Group
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>" . _QXZ("AMD Inbound Group") . "</div>";
+    echo "<select name='amd_inbound_group' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "$AMDgroups_menu";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-amd_inbound_group$NWE</div>";
+    echo "</div>";
+
+    // AMD Call Menu
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>";
+    echo "<a href=\"$PHP_SELF?ADD=3511&menu_id=$amd_callmenu\" style='color:inherit;text-decoration:none;'>" . _QXZ("AMD Call Menu") . "</a>";
+    echo "</div>";
+    echo "<select name='amd_callmenu' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "$AMDmenus_menu";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-amd_callmenu$NWE</div>";
+    echo "</div>";
+
+    // KHOMP Settings (if KHOMP is enabled)
+    if ($KHOMP_enabled > 0) {
+        ##### get container listings for dynamic khomp settings container
+        $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='KHOMP_SETTINGS' $LOGadmin_viewable_groupsSQL order by container_id;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $twrse_to_print = mysqli_num_rows($rslt);
+        $khomp_settings_menu = '';
+        $twrse_selected = 0;
+        $o = 0;
+        while ($twrse_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            if (mb_strlen($rowx[1], 'utf-8') > 40) {
+                $rowx[1] = mb_substr($rowx[1], 0, 40, 'utf-8') . '...';
+            }
+            $khomp_settings_menu .= "<option ";
+            if ($khomp_settings_container == "$rowx[0]") {
+                $khomp_settings_menu .= "SELECTED ";
+                $twrse_selected++;
+            }
+            $khomp_settings_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+        }
+
+        echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
+        echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>";
+        if ($twrse_selected > 0) {
+            echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$khomp_settings_container\" style='color:inherit;text-decoration:none;'>" . _QXZ("KHOMP Settings") . "</a>";
+        } else {
+            echo _QXZ("KHOMP Settings");
+        }
+        echo "</div>";
+        echo "<select name='khomp_settings_container' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+        echo "<option value='KHOMPSETTINGS'>" . _QXZ("KHOMPSETTINGS") . "</option>$khomp_settings_menu";
+        echo "</select>";
+        echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-khomp_settings_container$NWE</div>";
+        echo "</div>";
+    } else {
+        echo "<input type='hidden' name='khomp_settings_container' value=\"$khomp_settings_container\">";
+    }
+}
+
+// VM Message Group
+echo "<div style='$card_style;border-left:6px solid #0dcaf0;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#128099;'>";
+echo "<a href=\"$PHP_SELF?ADD=397111111111&leave_vm_message_group_id=$leave_vm_message_group_id\" style='color:inherit;text-decoration:none;'>" . _QXZ("VM Message Group") . "</a>";
+echo "</div>";
+echo "<select name='leave_vm_message_group_id' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "$VMMGmenus_menu";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-leave_vm_message_group_id$NWE</div>";
+echo "</div>";
+
+// Leave VM No Dispo
+echo "<div style='$card_style;border-left:6px solid #0dcaf0;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#128099;'>" . _QXZ("Leave VM No Dispo") . "</div>";
+echo "<select name='leave_vm_no_dispo' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='$leave_vm_no_dispo' SELECTED>" . _QXZ("$leave_vm_no_dispo") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-leave_vm_no_dispo$NWE</div>";
+echo "</div>";
+
+// CLOSE GRID AND SECTION
 echo "</div></div>";
 
-		
+// ============================================================================
+// SECTION: TRANSFER & CONFERENCE SETTINGS
+// ============================================================================
 
-if ($SSbrowser_call_alerts > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Browser Call Alert Sound").": </td><td align=left><select size=1 name='browser_alert_sound' id='browser_alert_sound'>\n";
-			$browser_alert_sounds_listARY = explode(',',$browser_alert_sounds_list);
-			$browser_alert_sounds_listARY_ct = count($browser_alert_sounds_listARY);
-			$bas=0;   $bas_output='';
-			while ($browser_alert_sounds_listARY_ct > $bas)
-				{
-				$bas_output .= "<option value='$browser_alert_sounds_listARY[$bas]'>"._QXZ("$browser_alert_sounds_listARY[$bas]")."</option>";
-				$bas++;
-				}
-			echo "$bas_output";
-			echo "<option value='---NONE---'>---"._QXZ("NONE")."---</option>";
-			echo "<option value='$browser_alert_sound' selected>"._QXZ("$browser_alert_sound")."</option>";
-			echo "</select> &nbsp; \n";
-			echo " "._QXZ("volume").": <select size=1 name='browser_alert_volume' id='browser_alert_volume'>";
-			$bav=100;
-			while ($bav >= 0)
-				{
-				echo "<option>$bav</option>";
-				$bav = ($bav - 5);
-				}
-			echo "<option selected>$browser_alert_volume</option></select> &nbsp; ";
-			echo "<a href=\"#\" onclick=\"play_browser_sound('browser_alert_sound','browser_alert_volume');return false;\"><font size=2 color=black>"._QXZ("play selected sound")."</font></a> $NWB#campaigns-browser_alert_sound$NWE &nbsp; </td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right></td><td align=left><input type=hidden name=browser_alert_sound value=\"$browser_alert_sound\"><input type=hidden name=browser_alert_volume value=\"$browser_alert_volume\"></td></tr>\n";
-			}
+echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📲</span>Transfer & Conference Settings</div>";
+echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Show Confetti").": </td><td align=left><select size=1 name='show_confetti' id='show_confetti'>\n";
-		echo "<option selected value=\"$show_confetti\">"._QXZ("$show_confetti")."</option>\n";
-		echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-		echo "<option value='SALES'>"._QXZ("SALES")."</option>";
-		echo "<option value='CALLBACKS'>"._QXZ("CALLBACKS")."</option>";
-		echo "<option value='SALES_AND_CALLBACKS'>"._QXZ("SALES_AND_CALLBACKS")."</option>";
-		echo "</select> $NWB#campaigns-show_confetti$NWE</td></tr>";
+// Transfer-Conf DTMF 1
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf DTMF") . " 1</div>";
+echo "<input type='text' name='xferconf_a_dtmf' size='20' maxlength='50' value=\"$xferconf_a_dtmf\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Answering Machine Message").": </td><td><input type=text size=50 maxlength=100 name=am_message_exten id=am_message_exten value=\"$am_message_exten\"> <a href=\"javascript:launch_chooser('am_message_exten','date');\">"._QXZ("audio chooser")."</a>  $NWB#campaigns-am_message_exten$NWE\n";
-		$stmt="SELECT count(*) from vicidial_lists where campaign_id='$campaign_id' and am_message_exten_override != '' and active='Y' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rowx=mysqli_fetch_row($rslt);
-		if ($rowx[0] > 0) 
-			{echo " <font color=red>"._QXZ("LIST OVERRIDE ACTIVE")."</font>";}
-		echo "</td></tr>\n";
+// Transfer-Conf Number 1
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf Number") . " 1</div>";
+echo "<input type='text' name='xferconf_a_number' size='20' maxlength='50' value=\"$xferconf_a_number\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Voicemail Message Daily Limit").": </td><td align=left><input type=text name=vmm_daily_limit size=4 maxlength=3 value=\"$vmm_daily_limit\">$NWB#campaigns-vmm_daily_limit$NWE</td></tr>\n";
+// Transfer-Conf DTMF 2
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf DTMF") . " 2</div>";
+echo "<input type='text' name='xferconf_b_dtmf' size='20' maxlength='50' value=\"$xferconf_b_dtmf\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("WaitForSilence Options").": </td><td align=left><input type=text name=waitforsilence_options size=20 maxlength=25 value=\"$waitforsilence_options\">$NWB#campaigns-waitforsilence_options$NWE</td></tr>\n";
+// Transfer-Conf Number 2
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf Number") . " 2</div>";
+echo "<input type='text' name='xferconf_b_number' size='20' maxlength='50' value=\"$xferconf_b_number\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Manual VM Status Updates").": </td><td align=left><select size=1 name=manual_vm_status_updates><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='$manual_vm_status_updates' SELECTED>"._QXZ("$manual_vm_status_updates")."</option></select>$NWB#campaigns-manual_vm_status_updates$NWE</td></tr>\n";
+// Transfer-Conf Numbers 3, 4, 5
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf Number") . " 3</div>";
+echo "<input type='text' name='xferconf_c_number' size='20' maxlength='50' value=\"$xferconf_c_number\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-		if ($am_message_wildcards == 'Y')
-			{
-			$vam_count=0;
-			$stmt="SELECT count(*) from vicidial_amm_multi where campaign_id='$campaign_id' and entry_type='campaign';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$vam_to_print = mysqli_num_rows($rslt);
-			if ($vam_to_print > 0) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$vam_count = $rowx[0]; 
-				}
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf Number") . " 4</div>";
+echo "<input type='text' name='xferconf_d_number' size='20' maxlength='50' value=\"$xferconf_d_number\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("AM Message Wildcards").": </td><td align=left><select size=1 name=am_message_wildcards><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected>"._QXZ("$am_message_wildcards")."</option></select>$NWB#campaigns-am_message_wildcards$NWE <a href=\"admin_amm_multi.php?DB=$DB&campaign_id=$campaign_id&entry_type=campaign\"> "._QXZ("AM Message Wildcards Defined").": $vam_count</a></td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("AM Message Wildcards").": </td><td align=left><select size=1 name=am_message_wildcards><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$am_message_wildcards' selected>"._QXZ("$am_message_wildcards")."</option></select>$NWB#campaigns-am_message_wildcards$NWE</td></tr>\n";
-			}
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Transfer-Conf Number") . " 5</div>";
+echo "<input type='text' name='xferconf_e_number' size='20' maxlength='50' value=\"$xferconf_e_number\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-xferconf_a_dtmf$NWE</div>";
+echo "</div>";
 
-		if ($SSoutbound_autodial_active > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("AMD Type").": </td><td align=left><select size=1 name=amd_type><option value='AMD'>"._QXZ("AMD built-in")."</option><option value='KHOMP'>"._QXZ("KHOMP Gateway")."</option><option value='CPD'>"._QXZ("Sangoma CPD")."</option><option value='$amd_type' SELECTED>"._QXZ("$amd_type")."</option></select>$NWB#campaigns-amd_type$NWE</td></tr>\n";
+// Enable Transfer Presets
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>" . _QXZ("Enable Transfer Presets") . "</div>";
+echo "<select name='enable_xfer_presets' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='STAGING'>" . _QXZ("STAGING") . "</option>";
+echo "<option value='CONTACTS'>" . _QXZ("CONTACTS") . "</option>";
+echo "<option value='$enable_xfer_presets' SELECTED>" . _QXZ("$enable_xfer_presets") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-enable_xfer_presets$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("AMD send to Action").": </td><td align=left><select size=1 name=amd_send_to_vmx><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$amd_send_to_vmx' SELECTED>"._QXZ("$amd_send_to_vmx")."</option></select>$NWB#campaigns-amd_send_to_vmx$NWE</td></tr>\n";
+// Hide Transfer Number to Dial
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>" . _QXZ("Hide Transfer Number to Dial") . "</div>";
+echo "<select name='hide_xfer_number_to_dial' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='$hide_xfer_number_to_dial' SELECTED>" . _QXZ("$hide_xfer_number_to_dial") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-hide_xfer_number_to_dial$NWE</div>";
+echo "</div>";
 
-			$amdaro_B='';   $amdaro_E='';
-			if ( ($amd_agent_route_options == 'ENABLED') or ($amd_agent_route_options == 'PENDING') )
-				{
-				$amdaro_B="<a href=\"$PHP_SELF?ADD=392111111111&container_id=AMD_AGENT_OPT_$campaign_id\">";
-				$amdaro_E="</a>";
-				}
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>$amdaro_B"._QXZ("AMD Agent Route Options")."$amdaro_E: </td><td align=left><select size=1 name=amd_agent_route_options><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='PENDING'>"._QXZ("PENDING")."</option><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='$amd_agent_route_options' SELECTED>"._QXZ("$amd_agent_route_options")."</option></select>$NWB#campaigns-amd_agent_route_options$NWE</td></tr>\n";
+// PrePopulate Transfer Preset
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>" . _QXZ("PrePopulate Transfer Preset") . "</div>";
+echo "<select name='prepopulate_transfer_preset' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='N'>" . _QXZ("N") . "</option>";
+echo "<option value='PRESET_1'>" . _QXZ("PRESET_1") . "</option>";
+echo "<option value='PRESET_2'>" . _QXZ("PRESET_2") . "</option>";
+echo "<option value='PRESET_3'>" . _QXZ("PRESET_3") . "</option>";
+echo "<option value='PRESET_4'>" . _QXZ("PRESET_4") . "</option>";
+echo "<option value='PRESET_5'>" . _QXZ("PRESET_5") . "</option>";
+echo "<option value='$prepopulate_transfer_preset' SELECTED>" . _QXZ("$prepopulate_transfer_preset") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-prepopulate_transfer_preset$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("CPD AMD Action").": </td><td align=left><select size=1 name=cpd_amd_action><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='DISPO'>"._QXZ("DISPO")."</option><option value='MESSAGE'>"._QXZ("MESSAGE")."</option><option value='INGROUP'>"._QXZ("INGROUP")."</option><option value='CALLMENU'>"._QXZ("CALLMENU")."</option><option value='$cpd_amd_action' SELECTED>"._QXZ("$cpd_amd_action")."</option></select>$NWB#campaigns-cpd_amd_action$NWE</td></tr>\n";
+// Quick Transfer Button (Full width due to many options)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #ffc107;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#7a630a;'>" . _QXZ("Quick Transfer Button") . "</div>";
+echo "<select name='quick_transfer_button' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='N'>" . _QXZ("N") . "</option>";
+echo "<option value='IN_GROUP'>" . _QXZ("IN_GROUP") . "</option>";
+echo "<option value='PRESET_1'>" . _QXZ("PRESET_1") . "</option>";
+echo "<option value='PRESET_2'>" . _QXZ("PRESET_2") . "</option>";
+echo "<option value='PRESET_3'>" . _QXZ("PRESET_3") . "</option>";
+echo "<option value='PRESET_4'>" . _QXZ("PRESET_4") . "</option>";
+echo "<option value='PRESET_5'>" . _QXZ("PRESET_5") . "</option>";
+echo "<option value='$quick_transfer_button' SELECTED>" . _QXZ("$quick_transfer_button") . "</option>";
+echo "<option value='LOCKED_IN_GROUP'>" . _QXZ("LOCKED_IN_GROUP") . "</option>";
+echo "<option value='LOCKED_PRESET_1'>" . _QXZ("LOCKED_PRESET_1") . "</option>";
+echo "<option value='LOCKED_PRESET_2'>" . _QXZ("LOCKED_PRESET_2") . "</option>";
+echo "<option value='LOCKED_PRESET_3'>" . _QXZ("LOCKED_PRESET_3") . "</option>";
+echo "<option value='LOCKED_PRESET_4'>" . _QXZ("LOCKED_PRESET_4") . "</option>";
+echo "<option value='LOCKED_PRESET_5'>" . _QXZ("LOCKED_PRESET_5") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-quick_transfer_button$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("CPD Unknown Action").": </td><td align=left><select size=1 name=cpd_unknown_action><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='DISPO'>"._QXZ("DISPO")."</option><option value='MESSAGE'>"._QXZ("MESSAGE")."</option><option value='INGROUP'>"._QXZ("INGROUP")."</option><option value='CALLMENU'>"._QXZ("CALLMENU")."</option><option value='$cpd_unknown_action' SELECTED>"._QXZ("$cpd_unknown_action")."</option></select>$NWB#campaigns-cpd_unknown_action$NWE</td></tr>\n";
+// Transfer-Conf Button Launch
+$eswHTML = '';
+$cfwHTML = '';
+if ($SSenable_second_script > 0) {
+    $eswHTML .= "<option value='SCRIPTTWO'>" . _QXZ("SCRIPTTWO") . "</option>";
+}
+if ($SSenable_second_webform > 0) {
+    $eswHTML .= '<option value="WEBFORMTWO">' . _QXZ("WEBFORMTWO") . '</option>';
+}
+if ($SSenable_third_webform > 0) {
+    $eswHTML .= "<option value='WEBFORMTHREE'>" . _QXZ("WEBFORMTHREE") . "</option>";
+}
+if ($SScustom_fields_enabled > 0) {
+    $cfwHTML .= '<option value="FORM">' . _QXZ("FORM") . '</option>';
+}
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("AMD Inbound Group").": </td><td align=left><select size=1 name=amd_inbound_group>";
-			echo "$AMDgroups_menu";
-			echo "</select>$NWB#campaigns-amd_inbound_group$NWE\n";
-			echo "</td></tr>\n";
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Transfer-Conf Button Launch") . "</div>";
+echo "<select name='transfer_button_launch' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='NONE' selected>" . _QXZ("NONE") . "</option>";
+echo "<option value='SCRIPT'>" . _QXZ("SCRIPT") . "</option>";
+echo "<option value='WEBFORM'>" . _QXZ("WEBFORM") . "</option>";
+echo "$eswHTML$cfwHTML";
+echo "<option value='$transfer_button_launch' selected>" . _QXZ("$transfer_button_launch") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-transfer_button_launch$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right><a href=\"$PHP_SELF?ADD=3511&menu_id=$amd_callmenu\">"._QXZ("AMD Call Menu")."</a>: </td><td align=left><select size=1 name=amd_callmenu>";
-			echo "$AMDmenus_menu";
-			echo "</select>$NWB#campaigns-amd_callmenu$NWE\n";
-			echo "</td></tr>\n";
+// Transfer No Dispo (Full width)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Transfer No Dispo") . "</div>";
+echo "<select name='transfer_no_dispo' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='EXTERNAL_ONLY'>" . _QXZ("EXTERNAL_ONLY") . "</option>";
+echo "<option value='LOCAL_ONLY'>" . _QXZ("LOCAL_ONLY") . "</option>";
+echo "<option value='LEAVE3WAY_ONLY'>" . _QXZ("LEAVE3WAY_ONLY") . "</option>";
+echo "<option value='LOCAL_AND_EXTERNAL'>" . _QXZ("LOCAL_AND_EXTERNAL") . "</option>";
+echo "<option value='LOCAL_AND_LEAVE3WAY'>" . _QXZ("LOCAL_AND_LEAVE3WAY") . "</option>";
+echo "<option value='LEAVE3WAY_AND_EXTERNAL'>" . _QXZ("LEAVE3WAY_AND_EXTERNAL") . "</option>";
+echo "<option value='LOCAL_AND_EXTERNAL_AND_LEAVE3WAY'>" . _QXZ("LOCAL_AND_EXTERNAL_AND_LEAVE3WAY") . "</option>";
+echo "<option value='$transfer_no_dispo' SELECTED>" . _QXZ("$transfer_no_dispo") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-transfer_no_dispo$NWE</div>";
+echo "</div>";
 
-			if ($KHOMP_enabled > 0)
-				{
-				##### get container listings for dynamic khomp settings container for khomp_settings_container pulldown menu
-				$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='KHOMP_SETTINGS' $LOGadmin_viewable_groupsSQL order by container_id;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$twrse_to_print = mysqli_num_rows($rslt);
-				$khomp_settings_menu='';
-				$twrse_selected=0;
-				$o=0;
-				while ($twrse_to_print > $o) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					if (mb_strlen($rowx[1],'utf-8')>40)
-						{$rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';}
-					$khomp_settings_menu .= "<option ";
-					if ($khomp_settings_container == "$rowx[0]") 
-						{
-						$khomp_settings_menu .= "SELECTED ";
-						$twrse_selected++;
-						}
-					$khomp_settings_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-					$o++;
-					}
+// Custom 3-Way Button Transfer (Full width)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Custom 3-Way Button Transfer") . "</div>";
+echo "<select name='custom_3way_button_transfer' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='PRESET_1'>" . _QXZ("PRESET_1") . "</option>";
+echo "<option value='PRESET_2'>" . _QXZ("PRESET_2") . "</option>";
+echo "<option value='PRESET_3'>" . _QXZ("PRESET_3") . "</option>";
+echo "<option value='PRESET_4'>" . _QXZ("PRESET_4") . "</option>";
+echo "<option value='PRESET_5'>" . _QXZ("PRESET_5") . "</option>";
+echo "<option value='FIELD_address3'>" . _QXZ("FIELD_address3") . "</option>";
+echo "<option value='FIELD_province'>" . _QXZ("FIELD_province") . "</option>";
+echo "<option value='FIELD_security_phrase'>" . _QXZ("FIELD_security_phrase") . "</option>";
+echo "<option value='FIELD_vendor_lead_code'>" . _QXZ("FIELD_vendor_lead_code") . "</option>";
+echo "<option value='FIELD_email'>" . _QXZ("FIELD_email") . "</option>";
+echo "<option value='FIELD_owner'>" . _QXZ("FIELD_owner") . "</option>";
+echo "<option value='PARK_PRESET_1'>" . _QXZ("PARK_PRESET_1") . "</option>";
+echo "<option value='PARK_PRESET_2'>" . _QXZ("PARK_PRESET_2") . "</option>";
+echo "<option value='PARK_PRESET_3'>" . _QXZ("PARK_PRESET_3") . "</option>";
+echo "<option value='PARK_PRESET_4'>" . _QXZ("PARK_PRESET_4") . "</option>";
+echo "<option value='PARK_PRESET_5'>" . _QXZ("PARK_PRESET_5") . "</option>";
+echo "<option value='PARK_FIELD_address3'>" . _QXZ("PARK_FIELD_address3") . "</option>";
+echo "<option value='PARK_FIELD_province'>" . _QXZ("PARK_FIELD_province") . "</option>";
+echo "<option value='PARK_FIELD_security_phrase'>" . _QXZ("PARK_FIELD_security_phrase") . "</option>";
+echo "<option value='PARK_FIELD_vendor_lead_code'>" . _QXZ("PARK_FIELD_vendor_lead_code") . "</option>";
+echo "<option value='PARK_FIELD_email'>" . _QXZ("PARK_FIELD_email") . "</option>";
+echo "<option value='PARK_FIELD_owner'>" . _QXZ("PARK_FIELD_owner") . "</option>";
+echo "<option value='VIEW_PRESET'>" . _QXZ("VIEW_PRESET") . "</option>";
+echo "<option value='VIEW_CONTACTS'>" . _QXZ("VIEW_CONTACTS") . "</option>";
+echo "<option value='$custom_3way_button_transfer' SELECTED>" . _QXZ("$custom_3way_button_transfer") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-custom_3way_button_transfer$NWE</div>";
+echo "</div>";
 
-				echo "<tr bgcolor=#$SSstd_row3_background><td align=right>";
-				if ($twrse_selected > 0)
-					{echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$khomp_settings_container\">"._QXZ("KHOMP Settings")."</a>";}
-				else
-					{echo _QXZ("KHOMP Settings");}
-				echo ": </td><td align=left><select size=1 name=khomp_settings_container><option value='KHOMPSETTINGS'>"._QXZ("KHOMPSETTINGS")."</option>$khomp_settings_menu</select>$NWB#campaigns-khomp_settings_container$NWE</td></tr>\n";
-				}
-			else
-				{echo "<tr bgcolor=#$SSstd_row3_background><td colspan=2><input type=hidden name=khomp_settings_container value=\"$khomp_settings_container\"></td></tr>\n";}
-			}
+// 3-Way Call Outbound CallerID
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("3-Way Call Outbound CallerID") . "</div>";
+echo "<select name='three_way_call_cid' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='CAMPAIGN'>" . _QXZ("CAMPAIGN") . "</option>";
+echo "<option value='CUSTOMER'>" . _QXZ("CUSTOMER") . "</option>";
+echo "<option value='AGENT_PHONE'>" . _QXZ("AGENT_PHONE") . "</option>";
+echo "<option value='AGENT_CHOOSE'>" . _QXZ("AGENT_CHOOSE") . "</option>";
+echo "<option value='CUSTOM_CID'>" . _QXZ("CUSTOM_CID") . "</option>";
+echo "<option value='$three_way_call_cid' SELECTED>" . _QXZ("$three_way_call_cid") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-three_way_call_cid$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right><a href=\"$PHP_SELF?ADD=397111111111&leave_vm_message_group_id=$leave_vm_message_group_id\">"._QXZ("VM Message Group")."</a>: </td><td align=left><select size=1 name=leave_vm_message_group_id>";
-		echo "$VMMGmenus_menu";
-		echo "</select>$NWB#campaigns-leave_vm_message_group_id$NWE\n";
-		echo "</td></tr>\n";
+// 3-Way Call Dial Prefix (if LOGmodify_dial_prefix is allowed)
+if ($LOGmodify_dial_prefix > 0) {
+    echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("3-Way Call Dial Prefix") . "</div>";
+    echo "<input type='text' name='three_way_dial_prefix' size='15' maxlength='20' value=\"$three_way_dial_prefix\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-three_way_dial_prefix$NWE</div>";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='three_way_dial_prefix' value=\"$three_way_dial_prefix\">";
+}
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Leave VM No Dispo")."</a>: </td><td align=left><select size=1 name=leave_vm_no_dispo>";
-		echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='$leave_vm_no_dispo' SELECTED>"._QXZ("$leave_vm_no_dispo")."</option>";
-		echo "</select>$NWB#campaigns-leave_vm_no_dispo$NWE\n";
-		echo "</td></tr>\n";
+// 3-Way Volume Buttons
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("3-Way Volume Buttons") . "</div>";
+echo "<select name='three_way_volume_buttons' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='$three_way_volume_buttons' SELECTED>" . _QXZ("$three_way_volume_buttons") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-three_way_volume_buttons$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf DTMF")." 1: </td><td align=left><input type=text name=xferconf_a_dtmf size=20 maxlength=50 value=\"$xferconf_a_dtmf\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
+// Customer 3-Way Hangup Logging
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Customer 3-Way Hangup Logging") . "</div>";
+echo "<select name='customer_3way_hangup_logging' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='$customer_3way_hangup_logging' SELECTED>" . _QXZ("$customer_3way_hangup_logging") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-customer_3way_hangup_logging$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf Number")." 1: </td><td align=left><input type=text name=xferconf_a_number size=20 maxlength=50 value=\"$xferconf_a_number\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
+// Customer 3-Way Hangup Seconds
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Customer 3-Way Hangup Seconds") . "</div>";
+echo "<input type='text' name='customer_3way_hangup_seconds' size='5' maxlength='5' value=\"$customer_3way_hangup_seconds\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-customer_3way_hangup_seconds$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf DTMF")." 2: </td><td align=left><input type=text name=xferconf_b_dtmf size=20 maxlength=50 value=\"$xferconf_b_dtmf\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
+// Customer 3-Way Hangup Action
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Customer 3-Way Hangup Action") . "</div>";
+echo "<select name='customer_3way_hangup_action' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='NONE'>" . _QXZ("NONE") . "</option>";
+echo "<option value='DISPO'>" . _QXZ("DISPO") . "</option>";
+echo "<option value='$customer_3way_hangup_action' SELECTED>" . _QXZ("$customer_3way_hangup_action") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-customer_3way_hangup_action$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf Number")." 2: </td><td align=left><input type=text name=xferconf_b_number size=20 maxlength=50 value=\"$xferconf_b_number\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
+// 3-Way Recording Stop
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("3-Way Recording Stop") . "</div>";
+echo "<select name='three_way_record_stop' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='N'>" . _QXZ("N") . "</option>";
+echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+echo "<option value='$three_way_record_stop' SELECTED>" . _QXZ("$three_way_record_stop") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-three_way_record_stop$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf Number")." 3: </td><td align=left><input type=text name=xferconf_c_number size=20 maxlength=50 value=\"$xferconf_c_number\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
+// CLOSE GRID AND SECTION
+echo "</div></div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf Number")." 4: </td><td align=left><input type=text name=xferconf_d_number size=20 maxlength=50 value=\"$xferconf_d_number\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf Number")." 5: </td><td align=left><input type=text name=xferconf_e_number size=20 maxlength=50 value=\"$xferconf_e_number\">$NWB#campaigns-xferconf_a_dtmf$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Enable Transfer Presets").": </td><td align=left><select size=1 name=enable_xfer_presets><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='STAGING'>"._QXZ("STAGING")."</option><option value='CONTACTS'>"._QXZ("CONTACTS")."</option><option value='$enable_xfer_presets' SELECTED>"._QXZ("$enable_xfer_presets")."</option></select>$NWB#campaigns-enable_xfer_presets$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Hide Transfer Number to Dial").": </td><td align=left><select size=1 name=hide_xfer_number_to_dial><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='$hide_xfer_number_to_dial' SELECTED>"._QXZ("$hide_xfer_number_to_dial")."</option></select>$NWB#campaigns-hide_xfer_number_to_dial$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("PrePopulate Transfer Preset").": </td><td align=left><select size=1 name=prepopulate_transfer_preset><option value='N'>"._QXZ("N")."</option><option value='PRESET_1'>"._QXZ("PRESET_1")."</option><option value='PRESET_2'>"._QXZ("PRESET_2")."</option><option value='PRESET_3'>"._QXZ("PRESET_3")."</option><option value='PRESET_4'>"._QXZ("PRESET_4")."</option><option value='PRESET_5'>"._QXZ("PRESET_5")."</option><option value='$prepopulate_transfer_preset' SELECTED>"._QXZ("$prepopulate_transfer_preset")."</option></select>$NWB#campaigns-prepopulate_transfer_preset$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Quick Transfer Button").": </td><td align=left><select size=1 name=quick_transfer_button><option value='N'>"._QXZ("N")."</option><option value='IN_GROUP'>"._QXZ("IN_GROUP")."</option><option value='PRESET_1'>"._QXZ("PRESET_1")."</option><option value='PRESET_2'>"._QXZ("PRESET_2")."</option><option value='PRESET_3'>"._QXZ("PRESET_3")."</option><option value='PRESET_4'>"._QXZ("PRESET_4")."</option><option value='PRESET_5'>"._QXZ("PRESET_5")."</option><option value='$quick_transfer_button' SELECTED>"._QXZ("$quick_transfer_button")."</option><option value='LOCKED_IN_GROUP'>"._QXZ("LOCKED_IN_GROUP")."</option><option value='LOCKED_PRESET_1'>"._QXZ("LOCKED_PRESET_1")."</option><option value='LOCKED_PRESET_2'>"._QXZ("LOCKED_PRESET_2")."</option><option value='LOCKED_PRESET_3'>"._QXZ("LOCKED_PRESET_3")."</option><option value='LOCKED_PRESET_4'>"._QXZ("LOCKED_PRESET_4")."</option><option value='LOCKED_PRESET_5'>"._QXZ("LOCKED_PRESET_5")."</option></select>$NWB#campaigns-quick_transfer_button$NWE</td></tr>\n";
-
-		$eswHTML=''; $cfwHTML='';
-		if ($SSenable_second_script > 0)
-			{$eswHTML .= "<option value='SCRIPTTWO'>"._QXZ("SCRIPTTWO")."</option>";}
-		if ($SSenable_second_webform > 0)
-			{$eswHTML .= '<option value="WEBFORMTWO">'._QXZ("WEBFORMTWO").'</option>';}
-		if ($SSenable_third_webform > 0)
-			{$eswHTML .= "<option value='WEBFORMTHREE'>"._QXZ("WEBFORMTHREE")."</option>";}
-		if ($SScustom_fields_enabled > 0)
-			{$cfwHTML .= '<option value="FORM">'._QXZ("FORM").'</option>';}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer-Conf Button Launch").": </td><td align=left><select size=1 name=transfer_button_launch><option value='NONE' selected>"._QXZ("NONE")."</option><option value='SCRIPT'>"._QXZ("SCRIPT")."</option><option value='WEBFORM'>"._QXZ("WEBFORM")."</option>$eswHTML$cfwHTML<option value='$transfer_button_launch' selected>"._QXZ("$transfer_button_launch")."</option></select>$NWB#campaigns-transfer_button_launch$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Transfer No Dispo").": </td><td align=left><select size=1 name=transfer_no_dispo><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='EXTERNAL_ONLY'>"._QXZ("EXTERNAL_ONLY")."</option><option value='LOCAL_ONLY'>"._QXZ("LOCAL_ONLY")."</option><option value='LEAVE3WAY_ONLY'>"._QXZ("LEAVE3WAY_ONLY")."</option><option value='LOCAL_AND_EXTERNAL'>"._QXZ("LOCAL_AND_EXTERNAL")."</option><option value='LOCAL_AND_LEAVE3WAY'>"._QXZ("LOCAL_AND_LEAVE3WAY")."</option><option value='LEAVE3WAY_AND_EXTERNAL'>"._QXZ("LEAVE3WAY_AND_EXTERNAL")."</option><option value='LOCAL_AND_EXTERNAL_AND_LEAVE3WAY'>"._QXZ("LOCAL_AND_EXTERNAL_AND_LEAVE3WAY")."</option><option value='$transfer_no_dispo' SELECTED>"._QXZ("$transfer_no_dispo")."</option></select>$NWB#campaigns-transfer_no_dispo$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Custom 3-Way Button Transfer").": </td><td align=left><select size=1 name=custom_3way_button_transfer><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='PRESET_1'>"._QXZ("PRESET_1")."</option><option value='PRESET_2'>"._QXZ("PRESET_2")."</option><option value='PRESET_3'>"._QXZ("PRESET_3")."</option><option value='PRESET_4'>"._QXZ("PRESET_4")."</option><option value='PRESET_5'>"._QXZ("PRESET_5")."</option><option value='FIELD_address3'>"._QXZ("FIELD_address3")."</option><option value='FIELD_province'>"._QXZ("FIELD_province")."</option><option value='FIELD_security_phrase'>"._QXZ("FIELD_security_phrase")."</option><option value='FIELD_vendor_lead_code'>"._QXZ("FIELD_vendor_lead_code")."</option><option value='FIELD_email'>"._QXZ("FIELD_email")."</option><option value='FIELD_owner'>"._QXZ("FIELD_owner")."</option><option value='PARK_PRESET_1'>"._QXZ("PARK_PRESET_1")."</option><option value='PARK_PRESET_2'>"._QXZ("PARK_PRESET_2")."</option><option value='PARK_PRESET_3'>"._QXZ("PARK_PRESET_3")."</option><option value='PARK_PRESET_4'>"._QXZ("PARK_PRESET_4")."</option><option value='PARK_PRESET_5'>"._QXZ("PARK_PRESET_5")."</option><option value='PARK_FIELD_address3'>"._QXZ("PARK_FIELD_address3")."</option><option value='PARK_FIELD_province'>"._QXZ("PARK_FIELD_province")."</option><option value='PARK_FIELD_security_phrase'>"._QXZ("PARK_FIELD_security_phrase")."</option><option value='PARK_FIELD_vendor_lead_code'>"._QXZ("PARK_FIELD_vendor_lead_code")."</option><option value='PARK_FIELD_email'>"._QXZ("PARK_FIELD_email")."</option><option value='PARK_FIELD_owner'>"._QXZ("PARK_FIELD_owner")."</option><option value='VIEW_PRESET'>"._QXZ("VIEW_PRESET")."</option><option value='VIEW_CONTACTS'>"._QXZ("VIEW_CONTACTS")."</option><option value='$custom_3way_button_transfer' SELECTED>"._QXZ("$custom_3way_button_transfer")."</option></select>$NWB#campaigns-custom_3way_button_transfer$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("3-Way Call Outbound CallerID").": </td><td align=left><select size=1 name=three_way_call_cid><option value='CAMPAIGN'>"._QXZ("CAMPAIGN")."</option><option value='CUSTOMER'>"._QXZ("CUSTOMER")."</option><option value='AGENT_PHONE'>"._QXZ("AGENT_PHONE")."</option><option value='AGENT_CHOOSE'>"._QXZ("AGENT_CHOOSE")."</option><option value='CUSTOM_CID'>"._QXZ("CUSTOM_CID")."</option><option value='$three_way_call_cid' SELECTED>"._QXZ("$three_way_call_cid")."</option></select>$NWB#campaigns-three_way_call_cid$NWE</td></tr>\n";
-
-		if ($LOGmodify_dial_prefix > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("3-Way Call Dial Prefix").": </td><td align=left><input type=text name=three_way_dial_prefix size=15 maxlength=20 value=\"$three_way_dial_prefix\">$NWB#campaigns-three_way_dial_prefix$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right><input type=hidden name=three_way_dial_prefix value=\"$three_way_dial_prefix\"></td></tr>";
-			}
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("3-Way Volume Buttons").": </td><td align=left><select size=1 name=three_way_volume_buttons><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='$three_way_volume_buttons' SELECTED>"._QXZ("$three_way_volume_buttons")."</option></select>$NWB#campaigns-three_way_volume_buttons$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Customer 3-Way Hangup Logging").": </td><td align=left><select size=1 name=customer_3way_hangup_logging><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='$customer_3way_hangup_logging' SELECTED>"._QXZ("$customer_3way_hangup_logging")."</option></select>$NWB#campaigns-customer_3way_hangup_logging$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Customer 3-Way Hangup Seconds").": </td><td align=left><input type=text name=customer_3way_hangup_seconds size=5 maxlength=5 value=\"$customer_3way_hangup_seconds\">$NWB#campaigns-customer_3way_hangup_seconds$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Customer 3-Way Hangup Action").": </td><td align=left><select size=1 name=customer_3way_hangup_action><option value='NONE'>"._QXZ("NONE")."</option><option value='DISPO'>"._QXZ("DISPO")."</option><option value='$customer_3way_hangup_action' SELECTED>"._QXZ("$customer_3way_hangup_action")."</option></select>$NWB#campaigns-customer_3way_hangup_action$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("3-Way Recording Stop").": </td><td align=left><select size=1 name=three_way_record_stop><option value='N'>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option><option value='$three_way_record_stop' SELECTED>"._QXZ("$three_way_record_stop")."</option></select>$NWB#campaigns-three_way_record_stop$NWE</td></tr>\n";
-
-		##### get container listings for dynamic phone number list container for three_way_record_stop_exception pulldown menu
+##### get container listings for dynamic phone number list container for three_way_record_stop_exception pulldown menu
 		$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='PHONE_NUMBERS' $LOGadmin_viewable_groupsSQL order by container_id;";
 		$rslt=mysql_to_mysqli($stmt, $link);
 		$twrse_to_print = mysqli_num_rows($rslt);
