@@ -34720,15 +34720,15 @@ if ($SUB < 1) {
 			{
 			echo "<br><br><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\">"._QXZ("DELETE THIS CAMPAIGN")."</a>\n";
 			}
-		}
-	}
+		
+	
 	else
 	{
 	echo _QXZ("You do not have permission to view this page")."\n";
 	exit;
 	}
 }
-
+		}
 
 ######################
 # ADD=34 modify campaign info in the system - Basic View
