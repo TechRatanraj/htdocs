@@ -28415,19 +28415,14 @@ if ($SScall_limit_24hour > 0) {
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour$NWE</div>";
     echo "</div>";
 
-echo "</div></div>"; // End grid and Demographic Quotas section
 
-// ============================================================================
-// SECTION 5: HOPPER SETTINGS & AUTO DIAL CONFIGURATION
-// ============================================================================
 
-echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
-echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>🎯</span>Hopper Settings & Auto Dial Configuration</div>";
-echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+//echo "</div></div>"; // End grid and Demographic Quotas section
 
-echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
 
-// 24-Hour Call Limit Override (if enabled)
+// to be started here 
+
+	// 24-Hour Call Limit Override (if enabled)
 if ($SScall_limit_24hour > 0) {
     ##### get container listings for 24-hour call limit override pulldown menu
     $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='CALL_LIMITS_OVERRIDE' $LOGadmin_viewable_groupsSQL order by container_id;";
@@ -28868,12 +28863,8 @@ if ($SSallow_shared_dial > 0) {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
 }
 }
-echo "</div></div>"; // End grid and Hopper Settings section
 
-// to be started here 
-
-				
-
+  
 			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Multiple Campaign Drop Rate Group").": </td><td align=left><select size=1 name=drop_rate_group>";
 			##### get list_mix listings for dynamic pulldown
 			$stmt="SELECT group_id from vicidial_drop_rate_groups;";
