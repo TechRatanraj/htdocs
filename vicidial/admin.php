@@ -27844,41 +27844,144 @@ echo '</div>'; // End tabs container
 
 echo "<center>\n";
 
-if ($SUB < 1) {
-    $form_attrs = [
-        'action' => $PHP_SELF,
-        'method' => 'POST',
-        'style'  => 'margin:0;padding:0;width:100%;',
-    ];
-    echo "<form " . http_build_query($form_attrs, '', ' ') . ">";
 
-    $hidden_inputs = [
+if ($SUB < 1) {
+    // Main form and hidden fields
+    echo "<form action=\"$PHP_SELF\" method=\"POST\" style=\"margin:0;padding:0;width:100%;\">";
+    foreach ([
         'ADD' => '41',
         'DB' => $DB,
         'campaign_id' => $campaign_id,
         'park_ext' => $park_ext,
         'old_campaign_allow_inbound' => $campaign_allow_inbound,
         'agent_extended_alt_dial' => $agent_extended_alt_dial,
-    ];
-    foreach ($hidden_inputs as $name => $value) {
-        echo "<input type=\"hidden\" name=\"$name\" value=\"$value\">";
+    ] as $name => $value) {
+        echo "<input type='hidden' name='$name' value='$value'>";
     }
 
+    // Card/grid styles
     $card_style = "background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:18px 24px;";
     $section_style = "width:100%; margin:34px 0 18px 0; background:#f6f7fb; border-radius:16px; box-shadow:0 2px 12px rgba(28,35,46,.07); border:1px solid #e7ecf3;";
     $grid_style = "display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:0 30px 28px 30px;";
 
+    // Section container
     echo "<div style='$section_style'>";
     echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📌</span>Campaign Information</div>";
     echo "<hr style='border:0; border-top:2px solid #2685ec; margin:0 30px 22px 30px;'>";
 
-    // START OF UNIFIED GRID
+    // Unified grid for all cards
     echo "<div style='$grid_style'>";
 
-    // -- Your campaign info cards here (not repeated in this snippet for brevity) --
+    // Campaign info cards
+    $campaign_items = [
+        ['title'=>'CAMPAIGN ID','content'=>"<div style='font-size:20px;font-weight:600;color:#222;margin-top:10px;'>$campaign_id $NWB#campaigns-campaign_id$NWE</div>",'border_color'=>'#28a745'],
+        ['title'=>'CAMPAIGN NAME','content'=>"<input type='text' name='campaign_name' size='40' maxlength='40' value=\"$campaign_name\" style='width:95%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'>$NWB#campaigns-campaign_name$NWE",'border_color'=>'#2685ec'],
+        ['title'=>'CAMPAIGN DESCRIPTION','content'=>"<input type='text' name='campaign_description' size='40' maxlength='255' value=\"$campaign_description\" style='width:95%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'>$NWB#campaigns-campaign_description$NWE",'border_color'=>'#ffc107'],
+        ['title'=>'CHANGE DATE','content'=>"<div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_changedate $NWB#campaigns-campaign_changedate$NWE</div>",'border_color'=>'#dc3545'],
+        ['title'=>'LOGIN DATE','content'=>"<div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_logindate $NWB#campaigns-campaign_logindate$NWE</div>",'border_color'=>'#ae41e8'],
+        ['title'=>'CALL DATE','content'=>"<div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_calldate $NWB#campaigns-campaign_calldate$NWE</div>",'border_color'=>'#dc3545'],
+    ];
+    foreach ($campaign_items as $item) {
+        echo "<div style='$card_style;border-left:6px solid {$item['border_color']}'>";
+        echo "<div style='font-size:15px;font-weight:700;color:#666;'>{$item['title']}</div>";
+        echo $item['content'];
+        echo "</div>";
+    }
 
-    // ---------- START NEW CONFIG GRID SECTION, all cards in one grid ----------
+    // Chart card (spans both columns)
+    echo "<div style='grid-column:span 2;'><div style='background:#fff;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:24px;text-align:center;'>";
+    $temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
+    horizontal_bar_chart($campaign_id,'8','campaign',$link,'total_calls','call count',1,'','',$temp_chart_title);
+    echo "</div></div>";
 
+    // ACTIVE select
+    echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#666;'>ACTIVE</div>";
+    echo "<select name='active' style='width:95%;font-size:17px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;color:#232529;background:#f8fafe;'>";
+    echo "<option value='Y'>"._QXZ('Y')."</option>";
+    echo "<option value='N'>"._QXZ('N')."</option>";
+    echo "<option value='$campaign_active' SELECTED>"._QXZ("$campaign_active")."</option>";
+    echo "</select>$NWB#campaigns-active$NWE";
+    echo "</div>";
+
+    // ADMIN USER GROUP select
+    echo "<div style='$card_style;border-left:6px solid #2685ec;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#666;'>ADMIN USER GROUP</div>";
+    echo "<select name='user_group' style='width:95%;font-size:17px;margin-top:8px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;color:#232529;background:#f8fafe;'>";
+    echo $UUgroups_list;
+    $user_group_label = preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ($user_group) : $user_group;
+    echo "<option SELECTED value=\"$user_group\">$user_group_label</option>";
+    echo "</select>$NWB#campaigns-user_group$NWE";
+    echo "</div>";
+
+    // Park Music-on-Hold
+    echo "<div style='$card_style;border-left:6px solid #ffc107;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#666;'>PARK MUSIC-ON-HOLD</div>";
+    echo "<input type='text' name='park_file_name' id='park_file_name' size='20' maxlength='100' value=\"$park_file_name\" style='width:80%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'> ";
+    echo "<a href=\"javascript:launch_moh_chooser('park_file_name','moh');\" style=\"color:#2685ec;font-size:15px;font-weight:600;margin-left:8px;\">"._QXZ("moh chooser")."</a> $NWB#campaigns-park_ext$NWE";
+    echo "</div>";
+
+    // Web Forms
+    $web_form_fields = [
+        ['name' => 'web_form_address', 'value' => $web_form_address, 'label' => 'WEB FORM', 'maxlength' => 9999],
+    ];
+    if ($SSenable_second_webform > 0)
+        $web_form_fields[] = ['name' => 'web_form_address_two', 'value' => $web_form_address_two, 'label' => 'WEB FORM TWO', 'maxlength' => 9999];
+    if ($SSenable_third_webform > 0)
+        $web_form_fields[] = ['name' => 'web_form_address_three', 'value' => $web_form_address_three, 'label' => 'WEB FORM THREE', 'maxlength' => 9999];
+
+    foreach ($web_form_fields as $field) {
+        echo "<div style='$card_style;border-left:6px solid #31cbe8;'>";
+        echo "<div style='font-size:15px;font-weight:700;color:#666;'>{$field['label']}</div>";
+        echo "<input type='text' name='{$field['name']}' size='70' maxlength='{$field['maxlength']}' value=\"{$field['value']}\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE";
+        if ($field['name'] === 'web_form_address' && $SSenable_first_webform < 1)
+            echo " <span style='color:#f84041;font-weight:bold;margin-left:8px;'>"._QXZ("DISABLED")."</span>";
+        echo "</div>";
+    }
+
+    // Web Form Target
+    echo "<div style='$card_style;border-left:6px solid #31cbe8;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM TARGET</div>";
+    echo "<input type='text' name='web_form_target' size='25' maxlength='255' value=\"$web_form_target\" style='width:55%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_target$NWE";
+    echo "</div>";
+
+    // Allow Closers
+    echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#666;'>ALLOW CLOSERS</div>";
+    echo "<select name='allow_closers' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
+    echo "<option value='Y'>"._QXZ("Y")."</option>";
+    echo "<option value='N'>"._QXZ("N")."</option>";
+    echo "<option value='$allow_closers' SELECTED>"._QXZ("$allow_closers")."</option>";
+    echo "</select>$NWB#campaigns-allow_closers$NWE";
+    echo "</div>";
+
+    // Allow Emails
+    if ($SSallow_emails > 0) {
+        echo "<div style='$card_style;border-left:6px solid #2685ec;'>";
+        echo "<div style='font-size:15px;font-weight:700;color:#666;'>ALLOW EMAILS</div>";
+        echo "<select name='allow_emails' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
+        echo "<option value='Y'>"._QXZ("Y")."</option>";
+        echo "<option value='N'>"._QXZ("N")."</option>";
+        echo "<option value='$allow_emails' SELECTED>"._QXZ("$allow_emails")."</option>";
+        echo "</select>$NWB#campaigns-allow_emails$NWE";
+        echo "</div>";
+    } else {
+        echo "<input type='hidden' name='allow_emails' value='$allow_emails'>";
+    }
+
+    // Allow Chats
+    if ($SSallow_chats > 0) {
+        echo "<div style='$card_style;border-left:6px solid #ffc107;'>";
+        echo "<div style='font-size:15px;font-weight:700;color:#666;'>ALLOW CHATS</div>";
+        echo "<select name='allow_chats' style='width:95%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'>";
+        echo "<option value='Y'>"._QXZ("Y")."</option>";
+        echo "<option value='N'>"._QXZ("N")."</option>";
+        echo "<option value='$allow_chats' SELECTED>"._QXZ("$allow_chats")."</option>";
+        echo "</select>$NWB#campaigns-allow_chats$NWE";
+        echo "</div>";
+    } else {
+        echo "<input type='hidden' name='allow_chats' value='$allow_chats'>";
+    }
 
     // List Order Randomize
     echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(255,193,7,0.12); border-left:6px solid #ffc107; padding:18px 24px;'>";
@@ -27943,36 +28046,43 @@ if ($SUB < 1) {
     }
     echo "</div>";
 
-    // Dynamic Call Quota Lead Ranking
-    if ($SScall_quota_lead_ranking > 0) {
-        echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(67,69,91,0.11); border-left:6px solid #6c757d; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#222; margin-bottom:8px;'>"._QXZ('Auto Active List New')."</div>";
-        echo "<select name='auto_active_list_new' style='width:100%; font-size:17px; margin-bottom:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
-        echo "<option value='DISABLED'>"._QXZ('DISABLED')."</option>";
-        echo "<option value='$auto_active_list_new' SELECTED>"._QXZ("$auto_active_list_new")."</option>";
-        // ... List all quota options as before
-        echo "<option>1</option><option>5</option><option>10</option><option>25</option><option>50</option><option>75</option><option>100</option><option>150</option><option>200</option><option>250</option><option>300</option><option>350</option><option>400</option><option>450</option><option>500</option><option>550</option><option>600</option><option>650</option><option>700</option><option>750</option><option>800</option><option>850</option><option>900</option><option>950</option><option>1000</option><option>1100</option><option>1200</option><option>1300</option><option>1400</option><option>1500</option><option>1600</option><option>1700</option><option>1800</option><option>1900</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option>6000</option><option>7000</option><option>8000</option><option>9000</option><option>10000</option><option>15000</option><option>20000</option><option>30000</option><option>40000</option><option>50000</option><option>60000</option><option>70000</option><option>80000</option><option>90000</option><option>100000</option>";
-        echo "</select>$NWB#campaigns-auto_active_list_new$NWE";
-        echo "</div>";
+    // You can continue adding more config cards in this grid as needed...
 
-        echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(67,69,91,0.11); border-left:6px solid #6c757d; padding:18px 24px;'>";
-        echo "<div style='font-size:15px; font-weight:700; color:#222; margin-bottom:8px;'>";
-        if ($cqlr_selected > 0) {
-            echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_quota_lead_ranking\">"._QXZ('Call Quota Lead Ranking')."</a>";
-        } else {echo _QXZ('Call Quota Lead Ranking');}
-        echo "</div>";
-        echo "<select name='call_quota_lead_ranking' style='width:100%; font-size:17px; margin-bottom:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
-        echo "<option value='DISABLED'>"._QXZ('DISABLED')."</option>";
-        echo $call_quota_container_menu;
-        echo "</select>$NWB#campaigns-call_quota_lead_ranking$NWE";
-        echo "</div>";
-    } else {
-        echo "<input type='hidden' name='auto_active_list_new' value='$auto_active_list_new'>";
-        echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
-    }
+    echo "</div>"; // end grid
+    echo "</div>"; // end section
+    echo "</form>";
+}
 
-    echo "</div>"; // END unified grid
-    echo "</div>"; // END section
+
+// Dynamic Call Quota Lead Ranking
+if ($SScall_quota_lead_ranking > 0) {
+    echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(67,69,91,0.11); border-left:6px solid #6c757d; padding:18px 24px;'>";
+    echo "<div style='font-size:15px; font-weight:700; color:#222; margin-bottom:8px;'>"._QXZ("Auto Active List New")."</div>";
+    echo "<select name='auto_active_list_new' style='width:100%; font-size:17px; margin-bottom:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
+    echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
+    echo "<option value='$auto_active_list_new' SELECTED>"._QXZ("$auto_active_list_new")."</option>";
+    echo "<option>1</option><option>5</option><option>10</option><option>25</option><option>50</option><option>75</option><option>100</option><option>150</option><option>200</option><option>250</option><option>300</option><option>350</option><option>400</option><option>450</option><option>500</option><option>550</option><option>600</option><option>650</option><option>700</option><option>750</option><option>800</option><option>850</option><option>900</option><option>950</option><option>1000</option><option>1100</option><option>1200</option><option>1300</option><option>1400</option><option>1500</option><option>1600</option><option>1700</option><option>1800</option><option>1900</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option>6000</option><option>7000</option><option>8000</option><option>9000</option><option>10000</option><option>15000</option><option>20000</option><option>30000</option><option>40000</option><option>50000</option><option>60000</option><option>70000</option><option>80000</option><option>90000</option><option>100000</option>";
+    echo "</select>$NWB#campaigns-auto_active_list_new$NWE";
+    echo "</div>";
+
+    echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(67,69,91,0.11); border-left:6px solid #6c757d; padding:18px 24px;'>";
+    echo "<div style='font-size:15px; font-weight:700; color:#222; margin-bottom:8px;'>";
+    if ($cqlr_selected > 0) {
+        echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_quota_lead_ranking\">"._QXZ("Call Quota Lead Ranking")."</a>";
+    } else {echo _QXZ("Call Quota Lead Ranking");}
+    echo "</div>";
+    echo "<select name='call_quota_lead_ranking' style='width:100%; font-size:17px; margin-bottom:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
+    echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
+    echo $call_quota_container_menu;
+    echo "</select>$NWB#campaigns-call_quota_lead_ranking$NWE";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='auto_active_list_new' value='$auto_active_list_new'>";
+    echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
+}
+
+echo "</div>"; // end grid
+
 
 
 
@@ -31060,7 +31170,7 @@ if ($SScall_limit_24hour > 0)
 	echo _QXZ("You do not have permission to view this page")."\n";
 	exit;
 	}
-
+}
 
 
 ######################
