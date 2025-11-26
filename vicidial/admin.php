@@ -28415,7 +28415,6 @@ if ($SScall_limit_24hour > 0) {
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour$NWE</div>";
     echo "</div>";
 
-
 echo "</div></div>"; // End grid and Demographic Quotas section
 
 // ============================================================================
@@ -28563,7 +28562,7 @@ if ($SShopper_hold_inserts > 0) {
 }
 
 // Auto-dialing disabled warning (Full width if applicable)
-if ((preg_match("/RATIO|ADAPT/", $dial_method)) and ($SSdisable_auto_dial > 0)) {
+if (preg_match("/RATIO|ADAPT/", $dial_method) and ($SSdisable_auto_dial > 0)) {
     echo "<div style='grid-column:span 2;background:#fff3cd;border-radius:12px;box-shadow:0 2px 7px rgba(255,193,7,0.2);padding:18px 24px;border-left:6px solid #ffc107;'>";
     echo "<div style='color:#856404;font-size:16px;font-weight:bold;text-align:center;'>" . _QXZ("Auto-dialing has been disabled on this system") . "</div>";
     echo "</div>";
@@ -28865,18 +28864,15 @@ if ($SSallow_shared_dial > 0) {
     echo "</select>";
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-shared_dial_rank$NWE</div>";
     echo "</div>";
-else {
+} else {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
 }
 
 echo "</div></div>"; // End grid and Hopper Settings section
 
-
-
-
-
 // to be started here 
 
+				
 
 			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Multiple Campaign Drop Rate Group").": </td><td align=left><select size=1 name=drop_rate_group>";
 			##### get list_mix listings for dynamic pulldown
