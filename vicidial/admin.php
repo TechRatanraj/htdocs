@@ -33116,7 +33116,7 @@ echo "</div></div>";
 
 	}
 
-
+}
 		
 		if ($SSoutbound_autodial_active > 0)
 			{
