@@ -28175,9 +28175,8 @@ echo"<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
 //To be start from here 
  echo "</select>";
 echo " $NWB#campaigns-lead_order$NWE";
-
+echo "</div>";
 }
-echo "</td></tr>\n";
 
 echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px 0;'>";
 
