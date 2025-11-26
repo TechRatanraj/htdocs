@@ -34530,15 +34530,15 @@ if ($SUB == 201) {
         echo "</form>";
         echo "<a href=\"$PHP_SELF?ADD=601&campaign_id=$campaign_id&preset_name=$rowx[0]\" style='color:#ef4444;text-decoration:none;font-size:12px;font-weight:600;'>🗑️ " . _QXZ("DELETE") . "</a>";
         echo "</td></tr>\n";
-    
+    }
 
     echo "</tbody>";
     echo "</table>";
     echo "</div>";
 
     echo "</div></div>";
-
-
+}
+}
 	##### CAMPAIGN AREACODE CID #####
 	if ($SUB==202)
 		{
