@@ -28417,7 +28417,7 @@ if ($SScall_limit_24hour > 0) {
 
 
 
-//echo "</div></div>"; // End grid and Demographic Quotas section
+echo "</div></div>"; // End grid and Demographic Quotas section
 
 
 // to be started here 
