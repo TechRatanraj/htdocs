@@ -28852,183 +28852,335 @@ if ($SSallow_shared_dial > 0) {
 echo "</div></div>"; // Close grid and Demographic Quotas section
 	
 
+// ============================================================================
+// SECTION: DIALING RULES & ROUTING CONFIGURATION
+// ============================================================================
+
+echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📞</span>Dialing Rules & Routing Configuration</div>";
+echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+
+// START NEW GRID
+echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
+
+// Multiple Campaign Drop Rate Group
 ##### get list_mix listings for dynamic pulldown
-			$stmt="SELECT group_id from vicidial_drop_rate_groups;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$DRgroups_to_print = mysqli_num_rows($rslt);
-			$DRgroups_list="<option value=\"DISABLED\">"._QXZ("DISABLED")."</option>\n";
+$stmt = "SELECT group_id from vicidial_drop_rate_groups;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$DRgroups_to_print = mysqli_num_rows($rslt);
+$DRgroups_list = "<option value=\"DISABLED\">" . _QXZ("DISABLED") . "</option>\n";
 
-			$o=0;
-			while ($DRgroups_to_print > $o)
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$DRgroups[$o] = "$rowx[0]";
-				$o++;
-				}
+$o = 0;
+while ($DRgroups_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    $DRgroups[$o] = "$rowx[0]";
+    $o++;
+}
 
-			$o=0;
-			while ($DRgroups_to_print > $o)
-				{
-				$DRcampaigns='';
-				$stmt="SELECT campaign_id from vicidial_campaigns where drop_rate_group='$DRgroups[$o]' $LOGallowed_campaignsSQL;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$DRcampaigns_to_print = mysqli_num_rows($rslt);
-				$p=0;
-				while ($DRcampaigns_to_print > $p)
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$DRcampaigns .= "$rowx[0] ";
-					$p++;
-					}
-				if (strlen($DRcampaigns)<2)
-					{$DRcampaigns='-'._QXZ("EMPTY").'- ';}
-				while(mb_strlen($DRcampaigns,'utf-8') > 45) {$DRcampaigns = mb_substr("$DRcampaigns", 0, -1,'utf-8');}
-				if(mb_strlen($DRcampaigns,'utf-8') > 42) {$DRcampaigns = "$DRcampaigns...";}
+$o = 0;
+while ($DRgroups_to_print > $o) {
+    $DRcampaigns = '';
+    $stmt = "SELECT campaign_id from vicidial_campaigns where drop_rate_group='$DRgroups[$o]' $LOGallowed_campaignsSQL;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $DRcampaigns_to_print = mysqli_num_rows($rslt);
+    $p = 0;
+    while ($DRcampaigns_to_print > $p) {
+        $rowx = mysqli_fetch_row($rslt);
+        $DRcampaigns .= "$rowx[0] ";
+        $p++;
+    }
+    if (strlen($DRcampaigns) < 2) {
+        $DRcampaigns = '-' . _QXZ("EMPTY") . '- ';
+    }
+    while (mb_strlen($DRcampaigns, 'utf-8') > 45) {
+        $DRcampaigns = mb_substr("$DRcampaigns", 0, -1, 'utf-8');
+    }
+    if (mb_strlen($DRcampaigns, 'utf-8') > 42) {
+        $DRcampaigns = "$DRcampaigns...";
+    }
 
-				$DRgroups_list .= "<option value=\"$DRgroups[$o]\">$DRgroups[$o] ( $DRcampaigns)</option>\n";
-				$o++;
-				}
-			echo "$DRgroups_list<option value=\"$drop_rate_group\" SELECTED>"._QXZ("$drop_rate_group")."</option></select>$NWB#campaigns-drop_rate_group$NWE</td></tr>\n";
+    $DRgroups_list .= "<option value=\"$DRgroups[$o]\">$DRgroups[$o] ( $DRcampaigns)</option>\n";
+    $o++;
+}
 
-			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Inbound Queue No Dial").": </td><td align=left><select size=1 name=inbound_queue_no_dial><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='ALL_SERVERS'>"._QXZ("ALL_SERVERS")."</option><option value='ENABLED_WITH_CHAT'>"._QXZ("ENABLED_WITH_CHAT")."</option><option value='ALL_SERVERS_WITH_CHAT'>"._QXZ("ALL_SERVERS_WITH_CHAT")."</option><option value='$inbound_queue_no_dial' SELECTED>"._QXZ("$inbound_queue_no_dial")."</option></select>$NWB#campaigns-inbound_queue_no_dial$NWE</td></tr>\n";
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Multiple Campaign Drop Rate Group") . "</div>";
+echo "<select name='drop_rate_group' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "$DRgroups_list<option value=\"$drop_rate_group\" SELECTED>" . _QXZ("$drop_rate_group") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-drop_rate_group$NWE</div>";
+echo "</div>";
 
-			##### get container listings for dynamic in-group list pulldown menu
-			$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='INGROUP_LIST' $LOGadmin_viewable_groupsSQL order by container_id;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$inand_to_print = mysqli_num_rows($rslt);
-			$inbound_no_agents_no_dial_container_menu='';
-			$inand_selected=0;
-			$o=0;
-			while ($inand_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				if (mb_strlen($rowx[1],'utf-8')>40)
-					{$rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';}
-				$inbound_no_agents_no_dial_container_menu .= "<option ";
-				if ($inbound_no_agents_no_dial_container == "$rowx[0]") 
-					{
-					$inbound_no_agents_no_dial_container_menu .= "SELECTED ";
-					$inand_selected++;
-					}
-				$inbound_no_agents_no_dial_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-				$o++;
-				}
+// Inbound Queue No Dial
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Inbound Queue No Dial") . "</div>";
+echo "<select name='inbound_queue_no_dial' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+echo "<option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
+echo "<option value='ALL_SERVERS'>" . _QXZ("ALL_SERVERS") . "</option>";
+echo "<option value='ENABLED_WITH_CHAT'>" . _QXZ("ENABLED_WITH_CHAT") . "</option>";
+echo "<option value='ALL_SERVERS_WITH_CHAT'>" . _QXZ("ALL_SERVERS_WITH_CHAT") . "</option>";
+echo "<option value='$inbound_queue_no_dial' SELECTED>" . _QXZ("$inbound_queue_no_dial") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-inbound_queue_no_dial$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>";
-			if ($inand_selected > 0)
-				{echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$inbound_no_agents_no_dial_container\">"._QXZ("Inbound No-Agents No-Dial")."</a>";}
-			else
-				{echo _QXZ("Inbound No-Agents No-Dial");}
-			echo ": </td><td align=left><select size=1 name=inbound_no_agents_no_dial_container>";
-			echo "<option value=\"\">---"._QXZ("DISABLED")."---</option>";
-			echo "$inbound_no_agents_no_dial_container_menu";
-			echo "</select>$NWB#campaigns-inbound_no_agents_no_dial_container$NWE</td></tr>\n";
+// Inbound No-Agents No-Dial Container
+##### get container listings for dynamic in-group list pulldown menu
+$stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='INGROUP_LIST' $LOGadmin_viewable_groupsSQL order by container_id;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$inand_to_print = mysqli_num_rows($rslt);
+$inbound_no_agents_no_dial_container_menu = '';
+$inand_selected = 0;
+$o = 0;
+while ($inand_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    if (mb_strlen($rowx[1], 'utf-8') > 40) {
+        $rowx[1] = mb_substr($rowx[1], 0, 40, 'utf-8') . '...';
+    }
+    $inbound_no_agents_no_dial_container_menu .= "<option ";
+    if ($inbound_no_agents_no_dial_container == "$rowx[0]") {
+        $inbound_no_agents_no_dial_container_menu .= "SELECTED ";
+        $inand_selected++;
+    }
+    $inbound_no_agents_no_dial_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+    $o++;
+}
 
-			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Inbound No-Agents No-Dial Threshold").": </td><td align=left><input type=text name=inbound_no_agents_no_dial_threshold size=3 maxlength=3 value=\"$inbound_no_agents_no_dial_threshold\"><i>"._QXZ("number only")."</i> $NWB#campaigns-inbound_no_agents_no_dial_threshold$NWE</td></tr>\n";
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#495057;'>";
+if ($inand_selected > 0) {
+    echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$inbound_no_agents_no_dial_container\" style='color:inherit;text-decoration:none;'>" . _QXZ("Inbound No-Agents No-Dial") . "</a>";
+} else {
+    echo _QXZ("Inbound No-Agents No-Dial");
+}
+echo "</div>";
+echo "<select name='inbound_no_agents_no_dial_container' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value=''>---" . _QXZ("DISABLED") . "---</option>";
+echo "$inbound_no_agents_no_dial_container_menu";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-inbound_no_agents_no_dial_container$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Auto Alt-Number Dialing").": </td><td align=left><select size=1 name=auto_alt_dial><option value='NONE'>"._QXZ("NONE")."</option><option value='ALT_ONLY'>"._QXZ("ALT_ONLY")."</option><option value='ADDR3_ONLY'>"._QXZ("ADDR3_ONLY")."</option><option value='ALT_AND_ADDR3'>"._QXZ("ALT_AND_ADDR3")."</option><option value='ALT_AND_EXTENDED'>"._QXZ("ALT_AND_EXTENDED")."</option><option value='ALT_AND_ADDR3_AND_EXTENDED'>"._QXZ("ALT_AND_ADDR3_AND_EXTENDED")."</option><option value='EXTENDED_ONLY'>"._QXZ("EXTENDED_ONLY")."</option><option value='MULTI_LEAD'>"._QXZ("MULTI_LEAD")."</option><option value='$auto_alt_dial' SELECTED>"._QXZ("$auto_alt_dial")."</option></select>$NWB#campaigns-auto_alt_dial$NWE $ALTmultiLINK</td></tr>\n";
+// Inbound No-Agents No-Dial Threshold
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Inbound No-Agents No-Dial Threshold") . "</div>";
+echo "<input type='text' name='inbound_no_agents_no_dial_threshold' size='3' maxlength='3' value=\"$inbound_no_agents_no_dial_threshold\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:12px;color:#666;font-style:italic;'>" . _QXZ("number only") . "</div>";
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-inbound_no_agents_no_dial_threshold$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Auto Alt-Number Dialing Threshold").": </td><td align=left><input type=text name=auto_alt_threshold size=3 maxlength=3 value=\"$auto_alt_threshold\"><i>"._QXZ("number only")."</i> $NWB#campaigns-auto_alt_threshold$NWE</td></tr>\n";
-			}
+// Auto Alt-Number Dialing
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Auto Alt-Number Dialing") . "</div>";
+echo "<select name='auto_alt_dial' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='NONE'>" . _QXZ("NONE") . "</option>";
+echo "<option value='ALT_ONLY'>" . _QXZ("ALT_ONLY") . "</option>";
+echo "<option value='ADDR3_ONLY'>" . _QXZ("ADDR3_ONLY") . "</option>";
+echo "<option value='ALT_AND_ADDR3'>" . _QXZ("ALT_AND_ADDR3") . "</option>";
+echo "<option value='ALT_AND_EXTENDED'>" . _QXZ("ALT_AND_EXTENDED") . "</option>";
+echo "<option value='ALT_AND_ADDR3_AND_EXTENDED'>" . _QXZ("ALT_AND_ADDR3_AND_EXTENDED") . "</option>";
+echo "<option value='EXTENDED_ONLY'>" . _QXZ("EXTENDED_ONLY") . "</option>";
+echo "<option value='MULTI_LEAD'>" . _QXZ("MULTI_LEAD") . "</option>";
+echo "<option value='$auto_alt_dial' SELECTED>" . _QXZ("$auto_alt_dial") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-auto_alt_dial$NWE $ALTmultiLINK</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Next Agent Call").": </td><td align=left><select size=1 name=next_agent_call><option value='random'>"._QXZ("random")."</option><option value='oldest_call_start'>"._QXZ("oldest_call_start")."</option><option value='oldest_call_finish'>"._QXZ("oldest_call_finish")."</option><option value='overall_user_level'>"._QXZ("overall_user_level")."</option><option value='campaign_rank'>"._QXZ("campaign_rank")."</option><option value='campaign_grade_random'>"._QXZ("campaign_grade_random")."</option><option value='fewest_calls'>"._QXZ("fewest_calls")."</option><option value='longest_wait_time'>"._QXZ("longest_wait_time")."</option><option value='overall_user_level_wait_time'>"._QXZ("overall_user_level_wait_time")."</option><option value='campaign_rank_wait_time'>"._QXZ("campaign_rank_wait_time")."</option><option value='fewest_calls_wait_time'>"._QXZ("fewest_calls_wait_time")."</option><option value='$next_agent_call' SELECTED>"._QXZ("$next_agent_call")."</option></select>$NWB#campaigns-next_agent_call$NWE</td></tr>\n";
+// Auto Alt-Number Dialing Threshold
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Auto Alt-Number Dialing Threshold") . "</div>";
+echo "<input type='text' name='auto_alt_threshold' size='3' maxlength='3' value=\"$auto_alt_threshold\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:12px;color:#666;font-style:italic;'>" . _QXZ("number only") . "</div>";
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-auto_alt_threshold$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$local_call_time\">"._QXZ("Local Call Time").": </a></td><td align=left><select size=1 name=local_call_time>\n";
-		echo "$call_times_list";
-		echo "<option selected value=\"$local_call_time\">$local_call_time - $call_timename_list[$local_call_time]</option>\n";
-		echo "</select>$NWB#campaigns-local_call_time$NWE</td></tr>\n";
+// Next Agent Call
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Next Agent Call") . "</div>";
+echo "<select name='next_agent_call' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='random'>" . _QXZ("random") . "</option>";
+echo "<option value='oldest_call_start'>" . _QXZ("oldest_call_start") . "</option>";
+echo "<option value='oldest_call_finish'>" . _QXZ("oldest_call_finish") . "</option>";
+echo "<option value='overall_user_level'>" . _QXZ("overall_user_level") . "</option>";
+echo "<option value='campaign_rank'>" . _QXZ("campaign_rank") . "</option>";
+echo "<option value='campaign_grade_random'>" . _QXZ("campaign_grade_random") . "</option>";
+echo "<option value='fewest_calls'>" . _QXZ("fewest_calls") . "</option>";
+echo "<option value='longest_wait_time'>" . _QXZ("longest_wait_time") . "</option>";
+echo "<option value='overall_user_level_wait_time'>" . _QXZ("overall_user_level_wait_time") . "</option>";
+echo "<option value='campaign_rank_wait_time'>" . _QXZ("campaign_rank_wait_time") . "</option>";
+echo "<option value='fewest_calls_wait_time'>" . _QXZ("fewest_calls_wait_time") . "</option>";
+echo "<option value='$next_agent_call' SELECTED>" . _QXZ("$next_agent_call") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-next_agent_call$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>\n";
-		$stmt="SELECT ct_state_call_times,ct_holidays from vicidial_call_times where call_time_id='$local_call_time';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$call_times_to_print = mysqli_num_rows($rslt);
-		if ($call_times_to_print > 0) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$ct_state_call_times =	$rowx[0];
-			$ct_holidays =			$rowx[1];
-			$state_rules = explode('|',$ct_state_call_times);
-			$holidays = explode('|',$ct_holidays);
-			$ct_srs = ((count($state_rules)) - 2);
-			$ct_hld = ((count($holidays)) - 2);
-			if ($ct_srs < 0) {$ct_srs=0;}
-			if ($ct_hld < 0) {$ct_hld=0;}
-			echo "<font size=2>"._QXZ("State rules defined for this call time").": $ct_srs &nbsp; &nbsp; "._QXZ("Holidays defined for this call time").": $ct_hld\n";
-			}
-		else
-			{echo "<BLINK><B><font color=red>"._QXZ("Call time not found")."!: $local_call_time</font></B></BLINK>\n";}
-		echo "</td></tr>\n";
+// Local Call Time (Full width)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #ffc107;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#7a630a;margin-bottom:12px;'>";
+echo "<a href=\"$PHP_SELF?ADD=311111111&call_time_id=$local_call_time\" style='color:inherit;text-decoration:none;'>" . _QXZ("Local Call Time") . "</a>";
+echo "</div>";
+echo "<select name='local_call_time' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
+echo "$call_times_list";
+echo "<option selected value=\"$local_call_time\">$local_call_time - $call_timename_list[$local_call_time]</option>\n";
+echo "</select>";
 
-		if ($SSoutbound_autodial_active > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Dial Timeout").": </td><td align=left><input type=text name=dial_timeout size=3 maxlength=3 value=\"$dial_timeout\"> <i>"._QXZ("in seconds")."</i>$NWB#campaigns-dial_timeout$NWE</td></tr>\n";
-			}
+// Call time stats
+$stmt = "SELECT ct_state_call_times,ct_holidays from vicidial_call_times where call_time_id='$local_call_time';";
+$rslt = mysql_to_mysqli($stmt, $link);
+$call_times_to_print = mysqli_num_rows($rslt);
+if ($call_times_to_print > 0) {
+    $rowx = mysqli_fetch_row($rslt);
+    $ct_state_call_times = $rowx[0];
+    $ct_holidays = $rowx[1];
+    $state_rules = explode('|', $ct_state_call_times);
+    $holidays = explode('|', $ct_holidays);
+    $ct_srs = ((count($state_rules)) - 2);
+    $ct_hld = ((count($holidays)) - 2);
+    if ($ct_srs < 0) {
+        $ct_srs = 0;
+    }
+    if ($ct_hld < 0) {
+        $ct_hld = 0;
+    }
+    echo "<div style='margin-top:12px;font-size:13px;color:#666;'>";
+    echo "<span style='font-weight:600;'>" . _QXZ("State rules defined for this call time") . ":</span> <span style='color:#dc3545;'>$ct_srs</span> &nbsp; &nbsp; ";
+    echo "<span style='font-weight:600;'>" . _QXZ("Holidays defined for this call time") . ":</span> <span style='color:#dc3545;'>$ct_hld</span>";
+    echo "</div>";
+} else {
+    echo "<div style='margin-top:12px;font-size:14px;color:#dc3545;font-weight:bold;'>" . _QXZ("Call time not found") . "!: $local_call_time</div>";
+}
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-local_call_time$NWE</div>";
+echo "</div>";
 
-		##### get container listings for dynamic dial timeout lead container pulldown menu
-		$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='DIAL_TIMEOUTS' $LOGadmin_viewable_groupsSQL order by container_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$dtlc_to_print = mysqli_num_rows($rslt);
-		$dial_timeout_lead_container_menu='';
-		$dtlc_selected=0;
-		$o=0;
-		while ($dtlc_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if (mb_strlen($rowx[1],'utf-8')>40)
-				{$rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';}
-			$dial_timeout_lead_container_menu .= "<option ";
-			if ($dial_timeout_lead_container == "$rowx[0]") 
-				{
-				$dial_timeout_lead_container_menu .= "SELECTED ";
-				$dtlc_selected++;
-				}
-			$dial_timeout_lead_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
+// Dial Timeout (if autodial is active)
+if ($SSoutbound_autodial_active > 0) {
+    echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Dial Timeout") . "</div>";
+    echo "<div style='display:flex;gap:16px;align-items:center;margin-top:12px;'>";
+    echo "<input type='text' name='dial_timeout' size='3' maxlength='3' value=\"$dial_timeout\" style='width:120px;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;'>";
+    echo "<span style='font-size:14px;color:#666;font-style:italic;'>" . _QXZ("in seconds") . "</span>";
+    echo "</div>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-dial_timeout$NWE</div>";
+    echo "</div>";
+}
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>";
-		if ($dtlc_selected > 0)
-			{echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$dial_timeout_lead_container\">"._QXZ("Dial Timeout Lead Container")."</a>";}
-		else
-			{echo _QXZ("Dial Timeout Lead Container");}
-		echo ": </td><td align=left><select size=1 name=dial_timeout_lead_container><option value='DISABLED'>"._QXZ("DISABLED")."</option>$dial_timeout_lead_container_menu</select>$NWB#campaigns-dial_timeout_lead_container$NWE</td></tr>\n";
+// Dial Timeout Lead Container
+##### get container listings for dynamic dial timeout lead container pulldown menu
+$stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='DIAL_TIMEOUTS' $LOGadmin_viewable_groupsSQL order by container_id;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$dtlc_to_print = mysqli_num_rows($rslt);
+$dial_timeout_lead_container_menu = '';
+$dtlc_selected = 0;
+$o = 0;
+while ($dtlc_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    if (mb_strlen($rowx[1], 'utf-8') > 40) {
+        $rowx[1] = mb_substr($rowx[1], 0, 40, 'utf-8') . '...';
+    }
+    $dial_timeout_lead_container_menu .= "<option ";
+    if ($dial_timeout_lead_container == "$rowx[0]") {
+        $dial_timeout_lead_container_menu .= "SELECTED ";
+        $dtlc_selected++;
+    }
+    $dial_timeout_lead_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+    $o++;
+}
 
-		if ($LOGmodify_dial_prefix > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Dial Prefix").": </td><td align=left><input type=text name=dial_prefix size=20 maxlength=20 value=\"$dial_prefix\"> <font size=1>"._QXZ("for")." 91NXXNXXXXXX "._QXZ("value would be 9, for no dial prefix use X")."</font>$NWB#campaigns-dial_prefix$NWE</td></tr>\n";
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>";
+if ($dtlc_selected > 0) {
+    echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$dial_timeout_lead_container\" style='color:inherit;text-decoration:none;'>" . _QXZ("Dial Timeout Lead Container") . "</a>";
+} else {
+    echo _QXZ("Dial Timeout Lead Container");
+}
+echo "</div>";
+echo "<select name='dial_timeout_lead_container' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>$dial_timeout_lead_container_menu";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-dial_timeout_lead_container$NWE</div>";
+echo "</div>";
 
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manual Dial Prefix").": </td><td align=left><input type=text name=manual_dial_prefix size=20 maxlength=20 value=\"$manual_dial_prefix\"> $NWB#campaigns-manual_dial_prefix$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><input type=hidden name=dial_prefix value=\"$dial_prefix\"><input type=hidden name=manual_dial_prefix value=\"$manual_dial_prefix\"></td></tr>";
-			}
+// Dial Prefix (if modify_dial_prefix is allowed)
+if ($LOGmodify_dial_prefix > 0) {
+    echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Dial Prefix") . "</div>";
+    echo "<input type='text' name='dial_prefix' size='20' maxlength='20' value=\"$dial_prefix\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+    echo "<div style='margin-top:8px;font-size:12px;color:#666;'>" . _QXZ("for") . " 91NXXNXXXXXX " . _QXZ("value would be 9, for no dial prefix use X") . "</div>";
+    echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-dial_prefix$NWE</div>";
+    echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Omit Phone Code").": </td><td align=left><select size=1 name=omit_phone_code><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$omit_phone_code' SELECTED>"._QXZ("$omit_phone_code")."</option></select>$NWB#campaigns-omit_phone_code$NWE</td></tr>\n";
+    // Manual Dial Prefix
+    echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Manual Dial Prefix") . "</div>";
+    echo "<input type='text' name='manual_dial_prefix' size='20' maxlength='20' value=\"$manual_dial_prefix\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-manual_dial_prefix$NWE</div>";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='dial_prefix' value=\"$dial_prefix\">";
+    echo "<input type='hidden' name='manual_dial_prefix' value=\"$manual_dial_prefix\">";
+}
 
-		$DID_edit_link_BEGIN='';
-		$DID_edit_link_END='';
-		if (strlen($campaign_cid) > 0)
-			{
-			$stmt="SELECT did_id from vicidial_inbound_dids where did_pattern='$campaign_cid' $LOGadmin_viewable_groupsSQL limit 1;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$dids_to_print = mysqli_num_rows($rslt);
-			if ($dids_to_print > 0) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\">";
-				$DID_edit_link_END='</a>';
-				}
-			}
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>$DID_edit_link_BEGIN"._QXZ("Campaign CallerID")."$DID_edit_link_END: </td><td align=left><input type=text name=campaign_cid size=20 maxlength=20 value=\"$campaign_cid\">$NWB#campaigns-campaign_cid$NWE\n";
-		$stmt="SELECT count(*) from vicidial_lists where campaign_id='$campaign_id' and campaign_cid_override != '' and active='Y' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$rowx=mysqli_fetch_row($rslt);
-		if ($rowx[0] > 0) 
-			{echo " <font color=red>"._QXZ("LIST OVERRIDE ACTIVE")."</font>";}
-		echo "</td></tr>\n";
+// Omit Phone Code
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Omit Phone Code") . "</div>";
+echo "<select name='omit_phone_code' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+echo "<option value='N'>" . _QXZ("N") . "</option>";
+echo "<option value='$omit_phone_code' SELECTED>" . _QXZ("$omit_phone_code") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-omit_phone_code$NWE</div>";
+echo "</div>";
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Custom CallerID").": </td><td align=left><select size=1 name=use_custom_cid><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='AREACODE'>"._QXZ("AREACODE")."</option><option value='USER_CUSTOM_1'>"._QXZ("USER_CUSTOM_1")."</option><option value='USER_CUSTOM_2'>"._QXZ("USER_CUSTOM_2")."</option><option value='USER_CUSTOM_3'>"._QXZ("USER_CUSTOM_3")."</option><option value='USER_CUSTOM_4'>"._QXZ("USER_CUSTOM_4")."</option><option value='USER_CUSTOM_5'>"._QXZ("USER_CUSTOM_5")."</option><option value='$use_custom_cid' SELECTED>"._QXZ("$use_custom_cid")."</option></select>$NWB#campaigns-use_custom_cid$NWE</td></tr>\n";
+// Campaign CallerID
+$DID_edit_link_BEGIN = '';
+$DID_edit_link_END = '';
+if (strlen($campaign_cid) > 0) {
+    $stmt = "SELECT did_id from vicidial_inbound_dids where did_pattern='$campaign_cid' $LOGadmin_viewable_groupsSQL limit 1;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $dids_to_print = mysqli_num_rows($rslt);
+    if ($dids_to_print > 0) {
+        $rowx = mysqli_fetch_row($rslt);
+        $DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\" style='color:inherit;text-decoration:none;'>";
+        $DID_edit_link_END = '</a>';
+    }
+}
+
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>";
+echo $DID_edit_link_BEGIN . _QXZ("Campaign CallerID") . $DID_edit_link_END;
+echo "</div>";
+echo "<input type='text' name='campaign_cid' size='20' maxlength='20' value=\"$campaign_cid\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+
+// Check for list override
+$stmt = "SELECT count(*) from vicidial_lists where campaign_id='$campaign_id' and campaign_cid_override != '' and active='Y' $LOGallowed_campaignsSQL;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$rowx = mysqli_fetch_row($rslt);
+if ($rowx[0] > 0) {
+    echo "<div style='margin-top:8px;font-size:13px;color:#dc3545;font-weight:600;'>" . _QXZ("LIST OVERRIDE ACTIVE") . "</div>";
+}
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-campaign_cid$NWE</div>";
+echo "</div>";
+
+// Custom CallerID
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>" . _QXZ("Custom CallerID") . "</div>";
+echo "<select name='use_custom_cid' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+echo "<option value='N'>" . _QXZ("N") . "</option>";
+echo "<option value='AREACODE'>" . _QXZ("AREACODE") . "</option>";
+echo "<option value='USER_CUSTOM_1'>" . _QXZ("USER_CUSTOM_1") . "</option>";
+echo "<option value='USER_CUSTOM_2'>" . _QXZ("USER_CUSTOM_2") . "</option>";
+echo "<option value='USER_CUSTOM_3'>" . _QXZ("USER_CUSTOM_3") . "</option>";
+echo "<option value='USER_CUSTOM_4'>" . _QXZ("USER_CUSTOM_4") . "</option>";
+echo "<option value='USER_CUSTOM_5'>" . _QXZ("USER_CUSTOM_5") . "</option>";
+echo "<option value='$use_custom_cid' SELECTED>" . _QXZ("$use_custom_cid") . "</option>";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-use_custom_cid$NWE</div>";
+echo "</div>";
+
+// CLOSE GRID AND SECTION
+echo "</div></div>";
 
 		if ($SScampaign_cid_areacodes_enabled == '1')
 			{
