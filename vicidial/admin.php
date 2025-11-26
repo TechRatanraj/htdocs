@@ -28872,8 +28872,9 @@ if ($SSallow_shared_dial > 0) {
 } else {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
 }
+}
 
-echo "</div></div>"; // End grid and Hopper Settings section
+//echo "</div></div>"; // End grid and Hopper Settings section
 
 
 
