@@ -28818,10 +28818,10 @@ if ($SSallow_shared_dial > 0) {
 } else {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
 }
-
+}
 // ========== CLOSE GRID CONTAINER ==========
 echo "</div>";
-}
+
 // ========== CLOSE SECTION ==========
 echo "</div>";
 
