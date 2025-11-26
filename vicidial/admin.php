@@ -29179,6 +29179,8 @@ echo "</select>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-use_custom_cid$NWE</div>";
 echo "</div>";
 
+	}
+
 // CLOSE GRID AND SECTION
 echo "</div></div>";
 
