@@ -28347,8 +28347,7 @@ echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Call Count Target") . "</div>";
 echo "<input type='text' name='call_count_target' size='4' maxlength='5' value=\"$call_count_target\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_count_target$NWE</div>";
-
-echo "</div></div>";
+echo "</div>";
 
 // Continue with daily limits and 24-hour limits...
 if ($SSdaily_call_count_limit > 0) {
@@ -28416,12 +28415,8 @@ if ($SScall_limit_24hour > 0) {
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour$NWE</div>";
     echo "</div>";
 
-// End grid and Demographic Quotas section
-
-		
-
-
-// to be started here 
+    // DON'T CLOSE THE GRID YET - KEEP IT OPEN!
+    // Continue with 24-hour override...
 
 ##### get container listings for 24-hour call limit override pulldown menu
 $stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='CALL_LIMITS_OVERRIDE' $LOGadmin_viewable_groupsSQL order by container_id;";
