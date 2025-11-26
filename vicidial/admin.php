@@ -28547,7 +28547,7 @@ echo "</div>";
 
 // CLOSE GRID
 echo "</div>";
-
+}
 // CLOSE SECTION
 echo "</div>";
 
