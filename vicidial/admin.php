@@ -28346,7 +28346,7 @@ if ($SScall_limit_24hour > 0) {
     echo "<input type='text' name='call_limit_24hour' size='4' maxlength='5' value=\"$call_limit_24hour\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
     echo "$NWB#campaigns-call_limit_24hour$NWE";
     echo "</div>";
-}
+
 
 echo "</div></div>"; // End grid and section
 
