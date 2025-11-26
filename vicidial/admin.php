@@ -28821,7 +28821,7 @@ if ($SSallow_shared_dial > 0) {
 
 // ========== CLOSE GRID CONTAINER ==========
 echo "</div>";
-
+}
 // ========== CLOSE SECTION ==========
 echo "</div>";
 
