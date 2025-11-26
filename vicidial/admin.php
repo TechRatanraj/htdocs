@@ -28053,7 +28053,7 @@ if ($SUB < 1) {
         // List Order (modern card) - incomplete in given snippet, stopping here as per original
         echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(38,133,236,0.09); border-left:6px solid #2685ec; padding:18px 24px; margin-bottom:16px;'>";
         echo "<div style='font-size:16px; font-weight:700; color:#2a4f91;'>LIST ORDER</div>";
-    }
+    
 
 if ($ALTmultiDISABLE > 0) {
     echo "<input type='hidden' name='lead_order' value=\"$lead_order\"> $ALTmultiLINK";
