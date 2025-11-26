@@ -34159,9 +34159,10 @@ if (($SUB == 28) and ($SSqc_features_active > 0)) {
     echo "</div></div>";
 
 
+
 if ($SUB == '20A') {
     echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
-    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📋</span>" . _QXZ("Survey Settings for This Campaign") . "</div>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📋</span>" . _QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN") . "</div>";
     echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
     echo "<div style='padding:0 30px 28px 30px;'>";
 
@@ -34180,7 +34181,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("Survey First Audio File") . ":</div>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_first_audio_file' id='survey_first_audio_file' value=\"$survey_first_audio_file\" style='flex:1;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_first_audio_file','date');\" style='padding:8px 16px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap;font-weight:600;'>" . _QXZ("audio chooser") . "</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_first_audio_file','date');\" style='padding:8px 16px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap;font-weight:600;'>🎵 " . _QXZ("audio chooser") . "</a>";
     echo "<span style='font-size:11px;color:#6b7280;white-space:nowrap;'>$NWB#campaigns-survey_first_audio_file$NWE</span>";
     echo "</div>";
 
@@ -34209,7 +34210,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("Survey Opt-in Audio File") . ":</div>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_opt_in_audio_file' id='survey_opt_in_audio_file' value=\"$survey_opt_in_audio_file\" style='flex:1;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\" style='padding:8px 16px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap;font-weight:600;'>" . _QXZ("audio chooser") . "</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\" style='padding:8px 16px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap;font-weight:600;'>🎵 " . _QXZ("audio chooser") . "</a>";
     echo "<span style='font-size:11px;color:#6b7280;white-space:nowrap;'>$NWB#campaigns-survey_opt_in_audio_file$NWE</span>";
     echo "</div>";
 
@@ -34217,7 +34218,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:14px;font-weight:600;color:#374151;'>" . _QXZ("Survey Not Interested Audio File") . ":</div>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_ni_audio_file' id='survey_ni_audio_file' value=\"$survey_ni_audio_file\" style='flex:1;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\" style='padding:8px 16px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap;font-weight:600;'>" . _QXZ("audio chooser") . "</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\" style='padding:8px 16px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap;font-weight:600;'>🎵 " . _QXZ("audio chooser") . "</a>";
     echo "<span style='font-size:11px;color:#6b7280;white-space:nowrap;'>$NWB#campaigns-survey_ni_audio_file$NWE</span>";
     echo "</div>";
 
@@ -34272,7 +34273,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:13px;font-weight:600;color:#374151;'>" . _QXZ("Survey Third Audio File") . ":</div>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_third_audio_file' id='survey_third_audio_file' value=\"$survey_third_audio_file\" style='flex:1;padding:6px 10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:13px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_third_audio_file','date');\" style='padding:6px 12px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:12px;white-space:nowrap;font-weight:600;'>" . _QXZ("chooser") . "</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_third_audio_file','date');\" style='padding:6px 12px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:12px;white-space:nowrap;font-weight:600;'>🎵 " . _QXZ("chooser") . "</a>";
     echo "<span style='font-size:11px;color:#6b7280;white-space:nowrap;'>$NWB#campaigns-survey_third_audio_file$NWE</span>";
     echo "</div>";
 
@@ -34304,7 +34305,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:13px;font-weight:600;color:#374151;'>" . _QXZ("Survey Fourth Audio File") . ":</div>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_fourth_audio_file' id='survey_fourth_audio_file' value=\"$survey_fourth_audio_file\" style='flex:1;padding:6px 10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:13px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\" style='padding:6px 12px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:12px;white-space:nowrap;font-weight:600;'>" . _QXZ("chooser") . "</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\" style='padding:6px 12px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:12px;white-space:nowrap;font-weight:600;'>🎵 " . _QXZ("chooser") . "</a>";
     echo "<span style='font-size:11px;color:#6b7280;white-space:nowrap;'>$NWB#campaigns-survey_fourth_audio_file$NWE</span>";
     echo "</div>";
 
@@ -34333,7 +34334,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:11px;color:#6b7280;margin-top:4px;'>$NWB#campaigns-survey_response_digit_map$NWE</div>";
     echo "</div>";
 
-    echo "<div style='font-size:13px;font-weight:600;color:#374151;'>" . _QXZ("Survey Xfer Extension") . ":</div>";
+    echo "<div style='font-size:13px;font-weight:600;color:#374151;'>" . _QXZ("Survey Survey Xfer Extension") . ":</div>";
     echo "<div>";
     echo "<input type='text' size='12' maxlength='20' name='survey_xfer_exten' value=\"$survey_xfer_exten\" style='width:180px;padding:6px 10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
     echo "<span style='margin-left:10px;font-size:11px;color:#6b7280;'>$NWB#campaigns-survey_xfer_exten$NWE</span>";
@@ -34348,7 +34349,7 @@ if ($SUB == '20A') {
     echo "<div style='font-size:13px;font-weight:600;color:#374151;'>" . _QXZ("Voicemail") . ":</div>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='12' maxlength='10' name='voicemail_ext' id='voicemail_ext' value=\"$voicemail_ext\" style='width:150px;padding:6px 10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\" style='padding:6px 12px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:12px;white-space:nowrap;font-weight:600;'>" . _QXZ("voicemail chooser") . "</a>";
+    echo "<a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\" style='padding:6px 12px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;font-size:12px;white-space:nowrap;font-weight:600;'>📧 " . _QXZ("voicemail chooser") . "</a>";
     echo "<span style='font-size:11px;color:#6b7280;white-space:nowrap;'>$NWB#campaigns-voicemail_ext$NWE</span>";
     echo "</div>";
 
@@ -34530,129 +34531,191 @@ if ($SUB == 201) {
         echo "</form>";
         echo "<a href=\"$PHP_SELF?ADD=601&campaign_id=$campaign_id&preset_name=$rowx[0]\" style='color:#ef4444;text-decoration:none;font-size:12px;font-weight:600;'>🗑️ " . _QXZ("DELETE") . "</a>";
         echo "</td></tr>\n";
-    
+    }
 
     echo "</tbody>";
     echo "</table>";
     echo "</div>";
 
     echo "</div></div>";
+}
+
+// ============================================================================
+// CAMPAIGN AREACODE CID SECTION (Modern Card Design)
+// ============================================================================
+
+if ($SUB == 202) {
+    $checkbox_list = '';
+    $checkbox_count = 0;
+
+    echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+    echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>📞</span>" . _QXZ("AREACODE CIDS FOR THIS CAMPAIGN") . " <span style='font-size:11px;color:#666;'>$NWB#campaign_cid_areacodes$NWE</span></div>";
+    
+    if ($use_custom_cid != 'AREACODE') {
+        echo "<div style='padding:10px 30px;'>";
+        echo "<div style='background:#fee2e2;border:1px solid #ef4444;color:#991b1b;padding:12px 20px;border-radius:8px;font-weight:600;'>";
+        echo "⚠️ " . _QXZ("The campaign setting Custom CallerID is not set to AREACODE") . "!";
+        echo "</div>";
+        echo "</div>";
+    }
+    
+    echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+    echo "<div style='padding:0 30px 28px 30px;'>";
+
+    $stmt = "SELECT areacode,outbound_cid,active,cid_description,call_count_today from vicidial_campaign_cid_areacodes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by areacode,outbound_cid;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $accids_to_print = mysqli_num_rows($rslt);
+    $o = 0;
+    while ($accids_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $Xareacode[$o] = $rowx[0];
+        $Xoutbound_cid[$o] = $rowx[1];
+        $Xactive[$o] = $rowx[2];
+        $Xcid_description[$o] = $rowx[3];
+        $Xcall_count_today[$o] = $rowx[4];
+        $checkbox_list .= "|active_$Xareacode[$o]_$Xoutbound_cid[$o]";
+        $o++;
+        $checkbox_count++;
+    }
+
+    echo "<form action=$PHP_SELF method=POST>";
+    echo "<input type=hidden name=ADD value=202>\n";
+    echo "<input type=hidden name=stage value=MODIFY>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+
+    // Table
+    echo "<div style='background:white;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);overflow-x:auto;margin-bottom:24px;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>";
+
+    echo "<thead>";
+    echo "<tr style='background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:white;'>";
+    echo "<th style='padding:14px 12px;text-align:left;font-size:12px;font-weight:600;'>#</th>";
+    echo "<th style='padding:14px 12px;text-align:left;font-size:12px;font-weight:600;'>" . _QXZ("AREACODE") . "</th>";
+    echo "<th style='padding:14px 12px;text-align:left;font-size:12px;font-weight:600;'>" . _QXZ("CID NUMBER") . "</th>";
+    echo "<th style='padding:14px 12px;text-align:left;font-size:12px;font-weight:600;'>" . _QXZ("DESCRIPTION") . "</th>";
+    echo "<th style='padding:14px 12px;text-align:center;font-size:12px;font-weight:600;'>" . _QXZ("ACTIVE") . "<br><span id=ACCID_link><a href=\"#\" onclick=\"FORM_selectall('$checkbox_count','$checkbox_list','on','ACCID_link');return false;\" style='color:white;font-weight:normal;'><font size=1>" . _QXZ("select all") . "</font></a></span></th>";
+    echo "<th style='padding:14px 12px;text-align:center;font-size:12px;font-weight:600;'>" . _QXZ("CALLS") . "</th>";
+    echo "<th style='padding:14px 12px;text-align:center;font-size:12px;font-weight:600;'>" . _QXZ("DELETE") . "</th>";
+    echo "</tr>";
+    echo "</thead>";
+
+    echo "<tbody>";
+
+    $o = 0;
+    $bgct = 0;
+    while ($accids_to_print > $o) {
+        $ct = ($o + 1);
+        if ($ct == '1') {
+            $bgcolor = 'background:white;';
+            $bgac = $Xareacode[$o];
+        } else {
+            if ($Xareacode[$o] != $bgac) {
+                if (preg_match("/1$|3$|5$|7$|9$/i", $bgct)) {
+                    $bgcolor = 'background:white;';
+                } else {
+                    $bgcolor = 'background:#f9fafb;';
+                }
+                $bgct++;
+                $bgac = $Xareacode[$o];
+            }
+        }
+
+        $DID_edit_link_BEGIN = '';
+        $DID_edit_link_END = '';
+        if (strlen($Xoutbound_cid[$o]) > 0) {
+            $stmt2 = "SELECT did_id from vicidial_inbound_dids where did_pattern='$Xoutbound_cid[$o]' $LOGadmin_viewable_groupsSQL limit 1;";
+            $rslt2 = mysql_to_mysqli($stmt2, $link);
+            $dids_to_print = mysqli_num_rows($rslt2);
+            if ($dids_to_print > 0) {
+                $rowx = mysqli_fetch_row($rslt2);
+                $DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\" style='color:#2563eb;text-decoration:none;font-weight:600;'>";
+                $DID_edit_link_END = '</a>';
+            }
+        }
+
+        echo "<tr style='$bgcolor border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:12px;color:#6b7280;'>$ct</td>\n";
+        echo "<td style='padding:12px;font-weight:600;color:#1f2937;'>$Xareacode[$o]</td>\n";
+        echo "<td style='padding:12px;'>$DID_edit_link_BEGIN$Xoutbound_cid[$o]$DID_edit_link_END</td>\n";
+        echo "<td style='padding:12px;'><input type='text' size='30' maxlength='100' name='cid_description_$Xareacode[$o]_$Xoutbound_cid[$o]' value=\"$Xcid_description[$o]\" style='width:100%;padding:6px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;'></td>\n";
+        echo "<td style='padding:12px;text-align:center;'>\n";
+        if ($Xactive[$o] == 'Y') {
+            echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\" CHECKED>";
+        } else {
+            echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\">";
+        }
+        echo "</td>\n";
+        echo "<td style='padding:12px;text-align:center;'><span style='background:#dbeafe;color:#1e40af;padding:4px 10px;border-radius:6px;font-weight:600;font-size:13px;'>$Xcall_count_today[$o]</span></td>\n";
+        echo "<td style='padding:12px;text-align:center;'><a href=\"$PHP_SELF?ADD=202&stage=DELETE&campaign_id=$campaign_id&areacode=$Xareacode[$o]&outbound_cid=$Xoutbound_cid[$o]\" style='color:#ef4444;text-decoration:none;font-weight:600;font-size:12px;'>🗑️ " . _QXZ("DELETE") . "</a></td></tr>\n";
+        $o++;
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+
+    echo "<div style='text-align:center;margin-bottom:24px;'>";
+    echo "<input style='background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white;padding:12px 40px;font-size:16px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);' type='submit' name='submit' value=\"" . _QXZ("SUBMIT CHANGES") . "\">";
+    echo "</div>";
+    echo "</form>";
+
+    // Add New Areacode CID Form
+    echo "<div style='background:white;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.08);border-left:6px solid #f59e0b;'>";
+    echo "<div style='font-size:18px;font-weight:700;color:#d97706;margin-bottom:20px;'>➕ " . _QXZ("ADD NEW AREACODE CID") . "</div>";
+    
+    echo "<form action=$PHP_SELF method=POST>";
+    echo "<input type=hidden name=ADD value=202>\n";
+    echo "<input type=hidden name=stage value=ADD>\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    
+    echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;'>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Areacode") . "</label>";
+    echo "<input type='text' size='7' maxlength='5' name='areacode' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Outbound CID") . "</label>";
+    echo "<input type='text' size='20' maxlength='20' name='outbound_cid' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;'>" . _QXZ("Description") . "</label>";
+    echo "<input type='text' size='50' maxlength='100' name='cid_description' style='width:100%;padding:8px 12px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+    echo "</div>";
+    
+    echo "</div>";
+    
+    echo "<div style='margin-top:20px;'>";
+    echo "<input style='background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:white;padding:12px 32px;font-size:16px;font-weight:bold;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,0.3);' type='submit' name='submit' value='" . _QXZ("ADD") . "'>";
+    echo "</div>";
+    
+    echo "</form>";
+    echo "</div>";
+
+    if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/", $LOGallowed_reports)) or (preg_match("/ALL REPORTS/", $LOGallowed_reports)))) {
+        echo "<div style='margin-top:24px;padding:16px 20px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;'>";
+        echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\" style='color:#2563eb;text-decoration:none;font-weight:600;font-size:14px;'>📝 " . _QXZ("Click here to see Admin changes to this campaign") . " AC-CID</a>";
+        echo "</div>";
+    }
+
+    echo "</div></div>";
+}
+
+// ============================================================================
+// CAMPAIGN MANAGEMENT ACTIONS (Modern Buttons)
+// ============================================================================
+
+if ($SUB < 1) {
+    echo "<div style='margin:30px 0;text-align:center;'>";
+    echo "<a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\" style='display:inline-block;padding:12px 24px;background:#ef4444;color:white;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 2px 8px rgba(239,68,68,0.3);transition:all 0.3s ease;' onmouseover=\"this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.transform='translateY(0)';\">" . _QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN") . "</a>";
+    echo "</div>";
+}
 
 
 
-	##### CAMPAIGN AREACODE CID #####
-	if ($SUB==202)
-		{
-		$checkbox_list='';
-		$checkbox_count=0;
-		echo "<br><br><b>"._QXZ("AREACODE CIDS FOR THIS CAMPAIGN").": &nbsp; $NWB#campaign_cid_areacodes$NWE</b><br>\n";
-		if ($use_custom_cid != 'AREACODE')
-			{echo "<br><B><font color=red>"._QXZ("The campaign setting Custom CallerID is not set to AREACODE")."! </font></B><BR>";}
-		echo "<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=202>\n";
-		echo "<input type=hidden name=stage value=MODIFY>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<center><TABLE width=700 cellspacing=2>\n";
 
-		$stmt="SELECT areacode,outbound_cid,active,cid_description,call_count_today from vicidial_campaign_cid_areacodes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by areacode,outbound_cid;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$accids_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($accids_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$Xareacode[$o] =			$rowx[0];
-			$Xoutbound_cid[$o] =		$rowx[1];
-			$Xactive[$o] =				$rowx[2];
-			$Xcid_description[$o] =		$rowx[3];
-			$Xcall_count_today[$o] =	$rowx[4];
-			$checkbox_list .= "|active_$Xareacode[$o]_$Xoutbound_cid[$o]";
-			$o++;
-			$checkbox_count++;
-			}
-
-		echo "<tr><td>#</td><td>"._QXZ("AREACODE")."</td><td>"._QXZ("CID NUMBER")."</td><td>"._QXZ("DESCRIPTION")."</td><td>"._QXZ("ACTIVE")."<br><span id=ACCID_link><a href=\"#\" onclick=\"FORM_selectall('$checkbox_count','$checkbox_list','on','ACCID_link');return false;\"><font size=1>"._QXZ("select all")."</font></a></span></td><td>"._QXZ("CALLS")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
-
-		$o=0;
-		while ($accids_to_print > $o) 
-			{
-			$ct = ($o + 1);
-			if ($ct == '1')
-				{
-				$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';
-				$bgac = $Xareacode[$o];
-				} 
-			else
-				{
-				if ($Xareacode[$o] != $bgac)
-					{
-					if (preg_match("/1$|3$|5$|7$|9$/i", $bgct))
-						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';} 
-					else
-						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
-					$bgct++;
-					$bgac = $Xareacode[$o];
-					}
-				}
-
-			$DID_edit_link_BEGIN='';
-			$DID_edit_link_END='';
-			if (strlen($Xoutbound_cid[$o]) > 0)
-				{
-				$stmt="SELECT did_id from vicidial_inbound_dids where did_pattern='$Xoutbound_cid[$o]' $LOGadmin_viewable_groupsSQL limit 1;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$dids_to_print = mysqli_num_rows($rslt);
-				if ($dids_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\">";
-					$DID_edit_link_END='</a>';
-					}
-				}
-			echo "<tr $bgcolor><td><font size=2> &nbsp; $ct</font></td>\n";
-			echo "<td><font size=2> &nbsp; $Xareacode[$o]</font></td>\n";
-			echo "<td><font size=2> &nbsp; $DID_edit_link_BEGIN$Xoutbound_cid[$o]$DID_edit_link_END</font></td>\n";
-			echo "<td><input type=text size=30 maxlength=100 name=cid_description_$Xareacode[$o]_$Xoutbound_cid[$o] value=\"$Xcid_description[$o]\" style=\"font-family: sans-serif; font-size: 10px;\"></td>\n";
-			echo "<td>\n";
-			if ($Xactive[$o] == 'Y')
-				{
-				echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\" CHECKED>";
-				}
-			else
-				{
-				echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\">";
-				}
-			echo "</td>\n";
-			echo "<td><font size=2> &nbsp; $Xcall_count_today[$o]</font></td>\n";
-			echo "<td><font size=1> &nbsp; <a href=\"$PHP_SELF?ADD=202&stage=DELETE&campaign_id=$campaign_id&areacode=$Xareacode[$o]&outbound_cid=$Xoutbound_cid[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
-			$o++;
-			}
-
-		echo "</table>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value=\""._QXZ("SUBMIT CHANGES")."\"></form><br><br>\n";
-
-		echo "<br>"._QXZ("ADD NEW AREACODE CID")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=202>\n";
-		echo "<input type=hidden name=stage value=ADD>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Areacode").": <input type=text size=7 maxlength=5 name=areacode>\n";
-		echo _QXZ("Outbound CID").": <input type=text size=20 maxlength=20 name=outbound_cid><BR>\n";
-		echo _QXZ("Description").": <input type=text size=50 maxlength=100 name=cid_description>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-
-		echo "</center></FORM><br>\n";
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\">"._QXZ("Click here to see Admin changes to this campaign")." AC-CID</a></FONT>\n";
-			}
-		echo "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0><TR><TD>\n";
-		}
-
-
-	if ($SUB < 1)
-		{
-		echo "<BR><BR>\n";
-		echo "<a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\">"._QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN")."</a><BR><BR>\n";
 	#	echo "<a href=\"$PHP_SELF?ADD=53&campaign_id=$campaign_id&DB=$DB\">EMERGENCY VDAC CLEAR FOR THIS CAMPAIGN</a><BR><BR>\n";
 
 		if ($LOGdelete_campaigns > 0)
