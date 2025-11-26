@@ -34713,37 +34713,23 @@ if ($SUB < 1) {
     echo "</div>";
 }
 
-    #   echo "<a href=\"$PHP_SELF?ADD=53&campaign_id=$campaign_id&DB=$DB\" style='display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:white;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 2px 8px rgba(245,158,11,0.3);transition:all 0.3s ease;margin:20px 0;'>" . _QXZ("EMERGENCY VDAC CLEAR FOR THIS CAMPAIGN") . "</a><BR><BR>\n";
-
-
-        if ($LOGdelete_campaigns > 0)
-            {
-            echo "<div style='margin:30px 0;text-align:center;'>";
-            echo "<div style='display:inline-block;max-width:500px;background:white;padding:24px;border-radius:12px;box-shadow:0 2px 12px rgba(220,38,38,0.15);border:2px solid #fca5a5;'>";
-            echo "<div style='font-size:48px;margin-bottom:12px;'>🗑️</div>";
-            echo "<div style='font-size:18px;font-weight:700;color:#991b1b;margin-bottom:8px;'>" . _QXZ("Danger Zone") . "</div>";
-            echo "<div style='background:#fee2e2;border-left:4px solid #dc2626;padding:12px;margin-bottom:16px;border-radius:6px;'>";
-            echo "<div style='font-size:13px;color:#991b1b;font-weight:600;'>⚠️ " . _QXZ("Warning: This action cannot be undone!") . "</div>";
-            echo "</div>";
-            echo "<a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\" onclick=\"return confirm('" . _QXZ("Are you ABSOLUTELY SURE you want to DELETE this campaign? This action CANNOT be undone!") . "');\" style='display:inline-block;padding:12px 32px;background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);color:white;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(220,38,38,0.3);transition:all 0.3s ease;'>" . _QXZ("DELETE THIS CAMPAIGN") . "</a>";
-            echo "</div></div>\n";
-            }
-        }
-    }
-    else
-    {
-    echo "<div style='min-height:60vh;display:flex;align-items:center;justify-content:center;'>";
-    echo "<div style='max-width:500px;text-align:center;background:white;padding:40px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);'>";
-    echo "<div style='font-size:64px;margin-bottom:16px;'>🔒</div>";
-    echo "<div style='font-size:24px;font-weight:700;color:#1f2937;margin-bottom:12px;'>" . _QXZ("Access Denied") . "</div>";
-    echo "<div style='font-size:16px;color:#6b7280;margin-bottom:24px;'>" . _QXZ("You do not have permission to view this page") . "</div>";
-    echo "<div style='padding:12px 20px;background:#fee2e2;border-radius:8px;display:inline-block;'>";
-    echo "<div style='font-size:13px;color:#991b1b;font-weight:600;'>⚠️ " . _QXZ("Insufficient privileges") . "</div>";
-    echo "</div></div></div>\n";
-    exit;
-    }
 }
-	
+	#	echo "<a href=\"$PHP_SELF?ADD=53&campaign_id=$campaign_id&DB=$DB\">EMERGENCY VDAC CLEAR FOR THIS CAMPAIGN</a><BR><BR>\n";
+
+		if ($LOGdelete_campaigns > 0)
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\">"._QXZ("DELETE THIS CAMPAIGN")."</a>\n";
+			}
+		}
+	}
+	else
+	{
+	echo _QXZ("You do not have permission to view this page")."\n";
+	exit;
+	}
+}
+
+
 ######################
 # ADD=34 modify campaign info in the system - Basic View
 ######################
