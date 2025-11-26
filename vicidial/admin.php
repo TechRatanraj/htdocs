@@ -28865,9 +28865,9 @@ if ($SSallow_shared_dial > 0) {
     echo "</select>";
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-shared_dial_rank$NWE</div>";
     echo "</div>";
- else {
+}else {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
-}
+
 
 echo "</div></div>"; // End grid and Hopper Settings section
 
