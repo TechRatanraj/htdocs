@@ -28131,6 +28131,71 @@ if ($SUB < 1) {
             echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
         }
         
+// Continue from the previous grid - DON'T close it yet!
+// These should be added to the existing List Order & Lead Management section
+
+// List Mix (add this to the existing grid in List Order section)
+echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(49,203,232,0.14);border-left:6px solid #31cbe8;padding:18px 24px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#18718d;'><a href=\"$PHP_SELF?ADD=31&SUB=29&campaign_id=$campaign_id&vcl_id=$list_order_mix\" style='color:inherit;text-decoration:none;'>" . _QXZ("List Mix") . "</a></div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='list_order_mix' value=\"$list_order_mix\"> $ALTmultiLINK";
+} else {
+    echo "<select name='list_order_mix' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo $mixes_list;
+    if (preg_match('/DISABLED/', $list_order_mix)) {
+        echo "<option selected value=\"$list_order_mix\">" . _QXZ("$list_order_mix") . " - " . _QXZ("$mixname_list[$list_order_mix]") . "</option>";
+    } else {
+        echo "<option selected value=\"ACTIVE\">" . _QXZ("ACTIVE") . " ($mixname_list[ACTIVE])</option>";
+    }
+    echo "</select>$NWB#campaigns-list_order_mix$NWE";
+}
+echo "</div>";
+
+// Lead Filter (add this to the existing grid)
+echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(40,167,69,0.09);border-left:6px solid #28a745;padding:18px 24px;'>";
+echo "<div style='font-size:15px;font-weight:700;color:#347c42;'><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\" style='color:inherit;text-decoration:none;'>" . _QXZ("Lead Filter") . "</a></div>";
+if ($ALTmultiDISABLE > 0) {
+    echo "<input type='hidden' name='lead_filter_id' value=\"$lead_filter_id\"> $ALTmultiLINK";
+} else {
+    echo "<select name='lead_filter_id' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo $filters_list;
+    echo "<option selected value=\"$lead_filter_id\">" . _QXZ("$lead_filter_id") . " - $filtername_list[$lead_filter_id]</option>";
+    echo "</select>$NWB#campaigns-lead_filter_id$NWE";
+}
+echo "</div>";
+
+// Dynamic Call Quota Lead Ranking fields
+if ($SScall_quota_lead_ranking > 0) {
+    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#222;'>" . _QXZ("Auto Active List New") . "</div>";
+    echo "<select name='auto_active_list_new' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+    echo "<option value='$auto_active_list_new' SELECTED>" . _QXZ("$auto_active_list_new") . "</option>";
+    echo "<option>1</option><option>5</option><option>10</option><option>25</option><option>50</option><option>75</option><option>100</option><option>150</option><option>200</option><option>250</option><option>300</option><option>350</option><option>400</option><option>450</option><option>500</option><option>550</option><option>600</option><option>650</option><option>700</option><option>750</option><option>800</option><option>850</option><option>900</option><option>950</option><option>1000</option><option>1100</option><option>1200</option><option>1300</option><option>1400</option><option>1500</option><option>1600</option><option>1700</option><option>1800</option><option>1900</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option>6000</option><option>7000</option><option>8000</option><option>9000</option><option>10000</option><option>15000</option><option>20000</option><option>30000</option><option>40000</option><option>50000</option><option>60000</option><option>70000</option><option>80000</option><option>90000</option><option>100000</option>";
+    echo "</select>$NWB#campaigns-auto_active_list_new$NWE";
+    echo "</div>";
+
+    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+    echo "<div style='font-size:15px;font-weight:700;color:#222;'>";
+    if ($cqlr_selected > 0) {
+        echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_quota_lead_ranking\">" . _QXZ("Call Quota Lead Ranking") . "</a>";
+    } else {
+        echo _QXZ("Call Quota Lead Ranking");
+    }
+    echo "</div>";
+    echo "<select name='call_quota_lead_ranking' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+    echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option>";
+    echo $call_quota_container_menu;
+    echo "</select>$NWB#campaigns-call_quota_lead_ranking$NWE";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='auto_active_list_new' value='$auto_active_list_new'>";
+    echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
+}
+
+echo "</div>"; // End 2x2 grid for List Order section
+echo "</div></div>"; // End padding and List Order section
+
 // ============================================================================
 // SECTION 4: DEMOGRAPHIC QUOTAS & CALL LIMITS
 // ============================================================================
@@ -28140,7 +28205,6 @@ echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;col
 echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
 
 echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
-$card_style = "background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:18px 24px;";
 
 if ($SSdemographic_quotas > 0) {
     ##### get container listings for demographic quotas pulldown menu
@@ -28181,11 +28245,11 @@ if ($SSdemographic_quotas > 0) {
     echo "<option value='$demographic_quotas' SELECTED>" . _QXZ("$demographic_quotas") . "</option>";
     echo "</select>$NWB#campaigns-demographic_quotas$NWE";
     if ($DQdebug) {
-        echo "<div style='margin-top:8px;font-size:13px;'>$DQdebug</div>";
+        echo "<div style='margin-top:8px;font-size:12px;'>$DQdebug</div>";
     }
     echo "</div>";
 
-    // Complete message if applicable
+    // Complete message if applicable (Full width)
     if ($demographic_quotas == 'COMPLETE') {
         echo "<div style='grid-column:span 2;background:#fff;border-radius:12px;box-shadow:0 2px 7px rgba(220,53,69,0.12);padding:18px 24px;border-left:6px solid #dc3545;'>";
         echo "<div style='color:red;font-size:16px;font-weight:bold;text-align:center;'>" . _QXZ("All Demographic Quota goals have been filled for this campaign") . "</div>";
@@ -28203,7 +28267,7 @@ if ($SSdemographic_quotas > 0) {
     echo "<option value='NOW_HOUR'>" . _QXZ("NOW_HOUR") . "</option>";
     echo "<option value='$demographic_quotas_rerank' SELECTED>" . _QXZ("$demographic_quotas_rerank") . "</option>";
     echo "</select>$NWB#campaigns-demographic_quotas_rerank$NWE";
-    echo "<div style='margin-top:8px;font-size:13px;font-style:italic;color:#666;'>" . _QXZ("last re-rank") . ": $demographic_quotas_last_rerank</div>";
+    echo "<div style='margin-top:8px;font-size:12px;font-style:italic;color:#666;'>" . _QXZ("last re-rank") . ": $demographic_quotas_last_rerank</div>";
     echo "</div>";
 
     // Demographic Quotas List Resets
@@ -28240,20 +28304,20 @@ if ($SSdemographic_quotas > 0) {
 // Hopper Drop-Run Trigger
 echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Hopper Drop-Run Trigger") . "</div>";
-echo "<div style='margin-top:12px;'>";
-echo "<label style='display:inline-flex;align-items:center;margin-right:20px;cursor:pointer;'>";
-echo "<input type='checkbox' name='hopper_drop_run_trigger' value='Y' style='margin-right:6px;'> " . _QXZ("Enable") . "</label>";
+echo "<div style='margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;'>";
 echo "<label style='display:inline-flex;align-items:center;cursor:pointer;'>";
-echo "<input type='checkbox' name='hopper_drop_run_trigger_all' value='A' style='margin-right:6px;'> " . _QXZ("All Drops") . "</label>";
-echo "$NWB#campaigns-hopper_drop_run_trigger$NWE";
+echo "<input type='checkbox' name='hopper_drop_run_trigger' value='Y' style='margin-right:6px;width:16px;height:16px;cursor:pointer;'> <span style='font-size:14px;'>" . _QXZ("Enable") . "</span></label>";
+echo "<label style='display:inline-flex;align-items:center;cursor:pointer;'>";
+echo "<input type='checkbox' name='hopper_drop_run_trigger_all' value='A' style='margin-right:6px;width:16px;height:16px;cursor:pointer;'> <span style='font-size:14px;'>" . _QXZ("All Drops") . "</span></label>";
 echo "</div>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-hopper_drop_run_trigger$NWE</div>";
 echo "</div>";
 
 // Drop Lockout Time
 echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Drop Lockout Time") . "</div>";
 echo "<input type='text' name='drop_lockout_time' size='6' maxlength='6' value=\"$drop_lockout_time\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
-echo "$NWB#campaigns-drop_lockout_time$NWE";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-drop_lockout_time$NWE</div>";
 echo "</div>";
 
 // UK OFCOM Drop Calculation
@@ -28264,7 +28328,8 @@ if ($SSofcom_uk_drop_calc > 0) {
     echo "<option value='Y'>" . _QXZ("Y") . "</option>";
     echo "<option value='N'>" . _QXZ("N") . "</option>";
     echo "<option value='$ofcom_uk_drop_calc' SELECTED>" . _QXZ("$ofcom_uk_drop_calc") . "</option>";
-    echo "</select>$NWB#settings-ofcom_uk_drop_calc$NWE";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#settings-ofcom_uk_drop_calc$NWE</div>";
     echo "</div>";
 } else {
     echo "<input type='hidden' name='ofcom_uk_drop_calc' value='$ofcom_uk_drop_calc'>";
@@ -28274,23 +28339,23 @@ if ($SSofcom_uk_drop_calc > 0) {
 echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Call Count Limit") . "</div>";
 echo "<input type='text' name='call_count_limit' size='4' maxlength='5' value=\"$call_count_limit\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
-echo "$NWB#campaigns-call_count_limit$NWE";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_count_limit$NWE</div>";
 echo "</div>";
 
 // Call Count Target
 echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Call Count Target") . "</div>";
 echo "<input type='text' name='call_count_target' size='4' maxlength='5' value=\"$call_count_target\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
-echo "$NWB#campaigns-call_count_target$NWE";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_count_target$NWE</div>";
 echo "</div>";
 
-// Daily Call Count Limit Section
+// Continue with daily limits and 24-hour limits...
 if ($SSdaily_call_count_limit > 0) {
     // Daily Call Count Limit
     echo "<div style='$card_style;border-left:6px solid #0d6efd;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#0d6efd;'>" . _QXZ("Daily Call Count Limit") . "</div>";
     echo "<input type='text' name='daily_call_count_limit' size='4' maxlength='5' value=\"$daily_call_count_limit\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
-    echo "$NWB#campaigns-daily_call_count_limit$NWE";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-daily_call_count_limit$NWE</div>";
     echo "</div>";
 
     // Daily Call Limit Manual
@@ -28302,14 +28367,15 @@ if ($SSdaily_call_count_limit > 0) {
     echo "<option value='RESTRICT_ONLY'>" . _QXZ("RESTRICT_ONLY") . "</option>";
     echo "<option value='COUNT_AND_RESTRICT'>" . _QXZ("COUNT_AND_RESTRICT") . "</option>";
     echo "<option value='$daily_limit_manual' SELECTED>" . _QXZ("$daily_limit_manual") . "</option>";
-    echo "</select>$NWB#settings-daily_limit_manual$NWE";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#settings-daily_limit_manual$NWE</div>";
     echo "</div>";
 
     // Daily Phone Number Call Limit
     echo "<div style='$card_style;border-left:6px solid #0d6efd;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#0d6efd;'>" . _QXZ("Daily Phone Number Call Limit System-wide") . "</div>";
     echo "<input type='text' name='daily_phone_number_call_limit' size='4' maxlength='5' value=\"$daily_phone_number_call_limit\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
-    echo "$NWB#campaigns-daily_phone_number_call_limit$NWE";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-daily_phone_number_call_limit$NWE</div>";
     echo "</div>";
 } else {
     echo "<input type='hidden' name='daily_call_count_limit' value='$daily_call_count_limit'>";
@@ -28327,7 +28393,8 @@ if ($SScall_limit_24hour > 0) {
     echo "<option value='PHONE_NUMBER'>" . _QXZ("PHONE_NUMBER") . "</option>";
     echo "<option value='LEAD'>" . _QXZ("LEAD") . "</option>";
     echo "<option value='$call_limit_24hour_method' SELECTED>" . _QXZ("$call_limit_24hour_method") . "</option>";
-    echo "</select>$NWB#campaigns-call_limit_24hour_method$NWE";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour_method$NWE</div>";
     echo "</div>";
 
     // 24-Hour Called Count Limit Scope
@@ -28337,17 +28404,19 @@ if ($SScall_limit_24hour > 0) {
     echo "<option value='SYSTEM_WIDE'>" . _QXZ("SYSTEM_WIDE") . "</option>";
     echo "<option value='CAMPAIGN_LISTS'>" . _QXZ("CAMPAIGN_LISTS") . "</option>";
     echo "<option value='$call_limit_24hour_scope' SELECTED>" . _QXZ("$call_limit_24hour_scope") . "</option>";
-    echo "</select>$NWB#campaigns-call_limit_24hour_scope$NWE";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour_scope$NWE</div>";
     echo "</div>";
 
     // 24-Hour Called Count Limit
     echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>" . _QXZ("24-Hour Called Count Limit") . "</div>";
     echo "<input type='text' name='call_limit_24hour' size='4' maxlength='5' value=\"$call_limit_24hour\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
-    echo "$NWB#campaigns-call_limit_24hour$NWE";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour$NWE</div>";
     echo "</div>";
+}
 
-
+echo "</div></div>"; // End grid and Demographic Quotas section
 
 
 // to be started here 
