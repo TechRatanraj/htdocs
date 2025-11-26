@@ -28348,6 +28348,7 @@ echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Call 
 echo "<input type='text' name='call_count_target' size='4' maxlength='5' value=\"$call_count_target\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
 echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_count_target$NWE</div>";
 
+echo "</div></div>";
 
 // Continue with daily limits and 24-hour limits...
 if ($SSdaily_call_count_limit > 0) {
