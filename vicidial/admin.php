@@ -27880,10 +27880,10 @@ echo "<div style='$card_style;border-left:6px solid #ae41e8;'><div style='font-s
 // Campaign Call Date
 echo "<div style='$card_style;border-left:6px solid #dc3545;'><div style='font-size:15px;font-weight:700;color:#666;'>CAMPAIGN CALL DATE</div><div style='font-size:17px;font-weight:500;color:#2d2939;margin-top:10px;'>$campaign_calldate $NWB#campaigns-campaign_calldate$NWE</div></div>";
 
-// Chart Section (Full width) — structure-only: show uploaded image as placeholder
-echo "<div style='grid-column:span 2;'><div style='background:#fff;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:24px;text-align:center;'>";
-echo "<div style='font-size:15px;font-weight:700;color:#444;margin-bottom:12px;'>8 Day outbound call count for this campaign</div>";
-echo "<div style='display:flex;align-items:center;justify-content:center;'><img src=\"/mnt/data/88c9de33-5762-44a6-b334-c995e8347e57.png\" alt='chart' style='max-width:100%;border-radius:8px;border:1px solid #eef2fb;'></div>";
+// Chart Section (Full width)
+echo "<div style='grid-column:span 2;'> <div style='background:#fff;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:24px;text-align:center;'>";
+$temp_chart_title = _QXZ("8 Day outbound call count for this campaign");
+horizontal_bar_chart($campaign_id,'8','campaign',$link,'total_calls','call count',1,'','',$temp_chart_title);
 echo "</div></div>";
 
 // Active
@@ -27896,9 +27896,7 @@ echo "<div style='$card_style;border-left:6px solid #2685ec;'><div style='font-s
 echo "<div style='$card_style;border-left:6px solid #ffc107;'><div style='font-size:15px;font-weight:700;color:#666;'>PARK MUSIC-ON-HOLD</div><input type='text' name='park_file_name' id='park_file_name' size='20' maxlength='100' value=\"$park_file_name\" style='width:80%;font-size:17px;border:none;outline:none;margin-top:10px;background:transparent;color:#212529;'> <a href=\"javascript:launch_moh_chooser('park_file_name','moh');\" style=\"color:#2685ec;font-size:15px;font-weight:600;margin-left:8px;\">"._QXZ("moh chooser")."</a> $NWB#campaigns-park_ext$NWE</div>";
 
 // Web Form
-echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM</div><input type='text' name='web_form_address' size='70' maxlength='9999' value=\"$web_form_address\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE";
-if ($SSenable_first_webform < 1) { echo " <span style='color:#f84041;font-weight:bold;margin-left:8px;'>"._QXZ("DISABLED")."</span>"; }
-echo "</div>";
+echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM</div><input type='text' name='web_form_address' size='70' maxlength='9999' value=\"$web_form_address\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE"; if ($SSenable_first_webform < 1) { echo " <span style='color:#f84041;font-weight:bold;margin-left:8px;'>"._QXZ("DISABLED")."</span>"; } echo "</div>";
 
 if ($SSenable_second_webform > 0) {
     echo "<div style='$card_style;border-left:6px solid #31cbe8;'><div style='font-size:15px;font-weight:700;color:#666;'>WEB FORM TWO</div><input type='text' name='web_form_address_two' size='70' maxlength='9999' value=\"$web_form_address_two\" style='width:92%; font-size:17px; border:none; outline:none; margin-top:10px; background:transparent;color:#212529;'>$NWB#campaigns-web_form_address$NWE</div>";
@@ -27937,25 +27935,18 @@ if ($SSoutbound_autodial_active > 0) {
             echo "<div style='margin-top:10px;'><span style='font-weight:bold;'>$Dstatus</span> - $statname_list[$Dstatus] &nbsp;&nbsp;<a href=\"$PHP_SELF?ADD=68&campaign_id=$campaign_id&status=$Dstatuses[$o]\" style='color:#f84041; font-weight:600; margin-left:12px;'>"._QXZ("REMOVE")."</a></div></div>";
         }
     }
-    // Add Dial Status (modern card)
     echo "<div style='$card_style;border-left:6px solid #28a745;'><div style='font-size:15px;font-weight:700;color:#666;'>ADD A DIAL STATUS TO CALL</div>";
     echo "<select name='dial_status' $DEFlistDISABLE style='width:70%; font-size:17px; margin-top:8px; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; color:#232529; background:#f8fafe;'><option value=\"\"> - "._QXZ("NONE")." - </option>$dial_statuses_list</select>";
 
-    echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(40,167,69,0.09); border-left:6px solid #28a745; padding:18px 24px; margin-top:12px; margin-bottom:16px;'>";
-    echo "<div style='font-size:16px; font-weight:700; color:#317c42;'>ADD A DIAL STATUS TO CALL</div>";
-    echo "<select name='dial_status' $DEFlistDISABLE style='width:80%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
-    echo $dial_statuses_list;
-    echo "</select>";
-    echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:10px 24px; border-radius:7px; font-weight:600; cursor:pointer; margin-left:12px;' type='submit' name='submit' value='"._QXZ("ADD")."'>";
-    echo " $NWB#campaigns-dial_status$NWE";
-    echo "</div>";
- // end if SSoutbound_autodial_active
-}
-// close grid and outer container & form
-echo "</div>"; // end grid
-echo "</div>"; // end campaign information container
-
-}
+	// Add Dial Status (modern card)
+echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(40,167,69,0.09); border-left:6px solid #28a745; padding:18px 24px; margin-bottom:16px;'>";
+echo "<div style='font-size:16px; font-weight:700; color:#317c42;'>ADD A DIAL STATUS TO CALL</div>";
+echo "<select name='dial_status' $DEFlistDISABLE style='width:80%; font-size:17px; margin:10px 0; border-radius:7px; border:1.3px solid #d2d6e2; padding:8px 14px; background:#f8fafe;'>";
+echo $dial_statuses_list;
+echo "</select>";
+echo "<input style='background-color:#$SSbutton_color; color:#fff; border:none; padding:10px 24px; border-radius:7px; font-weight:600; cursor:pointer; margin-left:12px;' type='submit' name='submit' value='"._QXZ("ADD")."'>";
+echo " $NWB#campaigns-dial_status$NWE";
+echo "</div>";
 
 // List Order (modern card)
 echo "<div style='background:#fff; min-height:80px; border-radius:12px; box-shadow:0 2px 7px rgba(38,133,236,0.09); border-left:6px solid #2685ec; padding:18px 24px; margin-bottom:16px;'>";
