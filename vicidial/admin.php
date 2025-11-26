@@ -34728,7 +34728,7 @@ if ($SUB < 1) {
 	exit;
 	}
 }
-		}
+		
 
 ######################
 # ADD=34 modify campaign info in the system - Basic View
