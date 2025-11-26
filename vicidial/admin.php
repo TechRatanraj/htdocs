@@ -32823,8 +32823,8 @@ if ($SSoutbound_autodial_active > 0) {
         echo " - <font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=hide_leadscount\">" . _QXZ("HIDE") . "</a></font><BR>";
         
         // Continue with status display logic...
-    }
-}
+    
+
 
 
 				if ($SSexpanded_list_stats > 0)
