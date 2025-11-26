@@ -28443,10 +28443,43 @@ $stmt="SELECT container_id,container_notes from vicidial_settings_containers whe
 					$o++;
 					}
 
-		
+				// ============================================================================
+// SECTION: HOPPER SETTINGS & AUTO DIAL CONFIGURATION
+// ============================================================================
+
+$card_style = "background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(28,35,46,0.06);padding:18px 24px;";
+
+echo "<div style='width:100%;margin:34px 0 18px 0;background:#f6f7fb;border-radius:16px;box-shadow:0 2px 12px rgba(28,35,46,.07);border:1px solid #e7ecf3;'>";
+echo "<div style='font-size:22px;font-weight:bold;padding:22px 30px 8px 30px;color:#222;'><span style='margin-right:11px;'>🎯</span>Hopper Settings & Auto Dial Configuration</div>";
+echo "<hr style='border:0;border-top:2px solid #2685ec;margin:0 30px 22px 30px;'>";
+
+// ========== START GRID CONTAINER ==========
+echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0 30px 28px 30px;'>";
+
 // 24-Hour Call Limit Override (if enabled)
 if ($SScall_limit_24hour > 0) {
-    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(111,66,193,0.09);border-left:6px solid #6f42c1;padding:18px 24px;'>";
+    ##### get container listings for 24-hour call limit override pulldown menu
+    $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='CALL_LIMITS_OVERRIDE' $LOGadmin_viewable_groupsSQL order by container_id;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $clo_to_print = mysqli_num_rows($rslt);
+    $call_limit_24hour_override_container_menu = '';
+    $clo_selected = 0;
+    $o = 0;
+    while ($clo_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        if (mb_strlen($rowx[1], 'utf-8') > 40) {
+            $rowx[1] = mb_substr($rowx[1], 0, 40, 'utf-8') . '...';
+        }
+        $call_limit_24hour_override_container_menu .= "<option ";
+        if ($call_limit_24hour_override == "$rowx[0]") {
+            $call_limit_24hour_override_container_menu .= "SELECTED ";
+            $clo_selected++;
+        }
+        $call_limit_24hour_override_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $o++;
+    }
+
+    echo "<div style='$card_style;border-left:6px solid #6f42c1;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#6f42c1;'>";
     if ($clo_selected > 0) {
         echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_limit_24hour_override\" style='color:inherit;text-decoration:none;'>" . _QXZ("24-Hour Called Count Limit Override") . "</a>";
@@ -28467,49 +28500,49 @@ if ($SScall_limit_24hour > 0) {
 }
 
 // Minimum Hopper Level
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(40,167,69,0.09);border-left:6px solid #28a745;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Minimum Hopper Level") . "</div>";
 echo "<select name='hopper_level' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option>1</option><option>5</option><option>10</option><option>20</option><option>50</option><option>100</option><option>200</option><option>500</option><option>700</option><option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option><option SELECTED>$hopper_level</option></select>$NWB#campaigns-hopper_level$NWE";
 echo "</div>";
 
 // Automatic Hopper Level
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(40,167,69,0.09);border-left:6px solid #28a745;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Automatic Hopper Level") . "</div>";
 echo "<select name='use_auto_hopper' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$use_auto_hopper' SELECTED>" . _QXZ("$use_auto_hopper") . "</option></select>$NWB#campaigns-use_auto_hopper$NWE";
 echo "</div>";
 
 // Automatic Hopper Multiplier
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(40,167,69,0.09);border-left:6px solid #28a745;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #28a745;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#347c42;'>" . _QXZ("Automatic Hopper Multiplier") . "</div>";
 echo "<select name='auto_hopper_multi' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option>0.1</option><option>0.2</option><option>0.3</option><option>0.4</option><option>0.5</option><option>0.6</option><option>0.7</option><option>0.8</option><option>0.9</option><option>1.0</option><option>1.1</option><option>1.2</option><option>1.3</option><option>1.4</option><option>1.5</option><option>1.6</option><option>1.7</option><option>1.8</option><option>1.9</option><option>2.0</option><option>2.2</option><option>2.4</option><option>2.6</option><option>2.8</option><option>3.0</option><option>3.5</option><option>4.0</option><option SELECTED>$auto_hopper_multi</option></select>$NWB#campaigns-auto_hopper_multi$NWE";
 echo "</div>";
 
 // Auto Trim Hopper
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Auto Trim Hopper") . "</div>";
 echo "<select name='auto_trim_hopper' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$auto_trim_hopper' SELECTED>" . _QXZ("$auto_trim_hopper") . "</option></select>$NWB#campaigns-auto_trim_hopper$NWE";
 echo "</div>";
 
 // Hopper VLC Dup Check
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Hopper VLC Dup Check") . "</div>";
 echo "<select name='hopper_vlc_dup_check' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$hopper_vlc_dup_check' SELECTED>" . _QXZ("$hopper_vlc_dup_check") . "</option></select>$NWB#campaigns-hopper_vlc_dup_check$NWE";
 echo "</div>";
 
 // Manual Dial Hopper Check
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Manual Dial Hopper Check") . "</div>";
 echo "<select name='manual_dial_hopper_check' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$manual_dial_hopper_check' SELECTED>" . _QXZ("$manual_dial_hopper_check") . "</option></select>$NWB#campaigns-manual_dial_hopper_check$NWE";
 echo "</div>";
 
 // Force Reset of Hopper
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(220,53,69,0.12);border-left:6px solid #dc3545;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Force Reset of Hopper") . "</div>";
 echo "<select name='reset_hopper' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='Y'>" . _QXZ("Y") . "</option><option value='N' SELECTED>" . _QXZ("N") . "</option></select>$NWB#campaigns-force_reset_hopper$NWE";
@@ -28517,7 +28550,7 @@ echo "</div>";
 
 // Hopper Hold Inserts
 if ($SShopper_hold_inserts > 0) {
-    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(13,202,240,0.12);border-left:6px solid #0dcaf0;padding:18px 24px;'>";
+    echo "<div style='$card_style;border-left:6px solid #0dcaf0;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#128099;'>" . _QXZ("Hopper Hold Inserts") . "</div>";
     echo "<select name='hopper_hold_inserts' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
     echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option><option value='ENABLED'>" . _QXZ("ENABLED") . "</option>";
@@ -28530,9 +28563,9 @@ if ($SShopper_hold_inserts > 0) {
     echo "<input type='hidden' name='hopper_hold_inserts' value='$hopper_hold_inserts'>";
 }
 
-// Auto-dialing disabled warning
+// Auto-dialing disabled warning (Full width)
 if (preg_match("/RATIO|ADAPT/", $dial_method) and ($SSdisable_auto_dial > 0)) {
-    echo "<div style='background:#fff3cd;border-radius:12px;box-shadow:0 2px 7px rgba(255,193,7,0.2);padding:18px 24px;border-left:6px solid #ffc107;text-align:center;'>";
+    echo "<div style='grid-column:span 2;background:#fff3cd;border-radius:12px;box-shadow:0 2px 7px rgba(255,193,7,0.2);padding:18px 24px;border-left:6px solid #ffc107;text-align:center;'>";
     echo "<b style='color:#856404;font-size:16px;'>" . _QXZ("Auto-dialing has been disabled on this system") . "</b>";
     echo "</div>";
 }
@@ -28544,14 +28577,14 @@ if ($SSallow_shared_dial > 0) {
 }
 
 // Dial Method
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(38,133,236,0.09);border-left:6px solid #2563eb;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>" . _QXZ("Dial Method") . "</div>";
 echo "<select name='dial_method' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='MANUAL'>" . _QXZ("MANUAL") . "</option><option value='RATIO'>" . _QXZ("RATIO") . "</option><option value='ADAPT_HARD_LIMIT'>" . _QXZ("ADAPT_HARD_LIMIT") . "</option><option value='ADAPT_TAPERED'>" . _QXZ("ADAPT_TAPERED") . "</option><option value='ADAPT_AVERAGE'>" . _QXZ("ADAPT_AVERAGE") . "</option><option value='INBOUND_MAN'>" . _QXZ("INBOUND_MAN") . "</option>$shared_options<option value='$dial_method' SELECTED>" . _QXZ("$dial_method") . "</option></select>$NWB#campaigns-dial_method$NWE";
 echo "</div>";
 
 // Auto Dial Level
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(38,133,236,0.09);border-left:6px solid #2563eb;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #2563eb;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#1e40af;'>" . _QXZ("Auto Dial Level") . "</div>";
 echo "<select name='auto_dial_level' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option selected>$auto_dial_level</option><option>0</option>\n";
@@ -28605,42 +28638,46 @@ while ($adl <= $SSauto_dial_limit) {
     }
 }
 echo "</select>";
-echo "<div style='margin-top:12px;font-size:13px;color:#666;'>(0 = " . _QXZ("off") . ")$NWB#campaigns-auto_dial_level$NWE &nbsp; &nbsp; <input type='checkbox' name='dial_level_override' value='1' style='margin-right:6px;'>" . _QXZ("ADAPT OVERRIDE") . "</div>";
+echo "<div style='margin-top:12px;font-size:13px;color:#666;'>(0 = " . _QXZ("off") . ")$NWB#campaigns-auto_dial_level$NWE &nbsp; &nbsp; <label style='cursor:pointer;'><input type='checkbox' name='dial_level_override' value='1' style='margin-right:6px;'>" . _QXZ("ADAPT OVERRIDE") . "</label></div>";
 echo "</div>";
 
-// Auto Dial Level Threshold
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(38,133,236,0.09);border-left:6px solid #2563eb;padding:18px 24px;'>";
+// Auto Dial Level Threshold (Full width - two columns inside)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #2563eb;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#1e40af;margin-bottom:12px;'>" . _QXZ("Auto Dial Level Threshold") . "</div>";
-echo "<select name='dial_level_threshold' style='width:100%;font-size:17px;margin-bottom:12px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
-echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option><option value='LOGGED-IN_AGENTS'>" . _QXZ("LOGGED-IN_AGENTS") . "</option><option value='NON-PAUSED_AGENTS'>" . _QXZ("NON-PAUSED_AGENTS") . "</option><option value='WAITING_AGENTS'>" . _QXZ("WAITING_AGENTS") . "</option><option value='$dial_level_threshold' SELECTED>" . _QXZ("$dial_level_threshold") . "</option></select>$NWB#campaigns-dial_level_threshold$NWE<br>";
-echo "<div style='margin-top:8px;'><span style='font-size:14px;color:#666;'>" . _QXZ("agents") . ": </span><select name='dial_level_threshold_agents' style='width:auto;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<div style='display:grid;grid-template-columns:2fr 1fr;gap:16px;'>";
+echo "<div><select name='dial_level_threshold' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option><option value='LOGGED-IN_AGENTS'>" . _QXZ("LOGGED-IN_AGENTS") . "</option><option value='NON-PAUSED_AGENTS'>" . _QXZ("NON-PAUSED_AGENTS") . "</option><option value='WAITING_AGENTS'>" . _QXZ("WAITING_AGENTS") . "</option><option value='$dial_level_threshold' SELECTED>" . _QXZ("$dial_level_threshold") . "</option></select>$NWB#campaigns-dial_level_threshold$NWE</div>";
+echo "<div><label style='font-size:13px;color:#666;margin-bottom:4px;display:block;'>" . _QXZ("agents") . "</label><select name='dial_level_threshold_agents' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option SELECTED>$dial_level_threshold_agents</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>50</option></select></div>";
-echo "</div>";
+echo "</div></div>";
 
-// Available Only Tally
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(23,162,184,0.12);border-left:6px solid #17a2b8;padding:18px 24px;'>";
+// Available Only Ratio Tally
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Available Only Tally") . "</div>";
 echo "<select name='available_only_ratio_tally' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$available_only_ratio_tally' SELECTED>" . _QXZ("$available_only_ratio_tally") . "</option></select>$NWB#campaigns-available_only_ratio_tally$NWE";
 echo "</div>";
 
-// Available Only Tally Threshold
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(23,162,184,0.12);border-left:6px solid #17a2b8;padding:18px 24px;'>";
+// Available Only Tally Threshold (Full width - two columns inside)
+echo "<div style='grid-column:span 2;$card_style;border-left:6px solid #17a2b8;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#117a8b;margin-bottom:12px;'>" . _QXZ("Available Only Tally Threshold") . "</div>";
-echo "<select name='available_only_tally_threshold' style='width:100%;font-size:17px;margin-bottom:12px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
-echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option><option value='LOGGED-IN_AGENTS'>" . _QXZ("LOGGED-IN_AGENTS") . "</option><option value='NON-PAUSED_AGENTS'>" . _QXZ("NON-PAUSED_AGENTS") . "</option><option value='WAITING_AGENTS'>" . _QXZ("WAITING_AGENTS") . "</option><option value='$available_only_tally_threshold' SELECTED>" . _QXZ("$available_only_tally_threshold") . "</option></select>$NWB#campaigns-available_only_tally_threshold$NWE<br>";
-echo "<div style='margin-top:8px;'><span style='font-size:14px;color:#666;'>" . _QXZ("agents") . ": </span><select name='available_only_tally_threshold_agents' style='width:auto;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<div style='display:grid;grid-template-columns:2fr 1fr;gap:16px;'>";
+echo "<div><select name='available_only_tally_threshold' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
+echo "<option value='DISABLED'>" . _QXZ("DISABLED") . "</option><option value='LOGGED-IN_AGENTS'>" . _QXZ("LOGGED-IN_AGENTS") . "</option><option value='NON-PAUSED_AGENTS'>" . _QXZ("NON-PAUSED_AGENTS") . "</option><option value='WAITING_AGENTS'>" . _QXZ("WAITING_AGENTS") . "</option><option value='$available_only_tally_threshold' SELECTED>" . _QXZ("$available_only_tally_threshold") . "</option></select>$NWB#campaigns-available_only_tally_threshold$NWE</div>";
+echo "<div><label style='font-size:13px;color:#666;margin-bottom:4px;display:block;'>" . _QXZ("agents") . "</label><select name='available_only_tally_threshold_agents' style='width:100%;font-size:17px;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
 echo "<option SELECTED>$available_only_tally_threshold_agents</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>25</option><option>30</option><option>35</option><option>40</option><option>50</option></select></div>";
-echo "</div>";
+echo "</div></div>";
 
 // Agent In-Call Tally Seconds Threshold
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(23,162,184,0.12);border-left:6px solid #17a2b8;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #17a2b8;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#117a8b;'>" . _QXZ("Agent In-Call Tally Seconds Threshold") . "</div>";
-echo "<input type='text' name='incall_tally_threshold_seconds' size='6' maxlength='4' value=\"$incall_tally_threshold_seconds\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'><i style='font-size:13px;color:#666;margin-left:8px;'>" . _QXZ("digits only") . "</i> $NWB#campaigns-incall_tally_threshold_seconds$NWE";
+echo "<input type='text' name='incall_tally_threshold_seconds' size='6' maxlength='4' value=\"$incall_tally_threshold_seconds\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:12px;color:#666;font-style:italic;'>" . _QXZ("digits only") . "</div>";
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-incall_tally_threshold_seconds$NWE</div>";
 echo "</div>";
 
 // Drop Percentage Limit
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(220,53,69,0.12);border-left:6px solid #dc3545;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #dc3545;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#dc3545;'>" . _QXZ("Drop Percentage Limit") . "</div>";
 echo "<select name='adaptive_dropped_percentage' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
 $n = 101;
@@ -28652,23 +28689,28 @@ while ($n >= 0.1) {
     }
     echo "<option>$n</option>\n";
 }
-echo "<option SELECTED>$adaptive_dropped_percentage</option></select><span style='font-size:14px;color:#666;margin-left:4px;'>%</span> $NWB#campaigns-adaptive_dropped_percentage$NWE";
+echo "<option SELECTED>$adaptive_dropped_percentage</option></select>";
+echo "<div style='margin-top:8px;font-size:13px;color:#666;'>% $NWB#campaigns-adaptive_dropped_percentage$NWE</div>";
 echo "</div>";
 
 // Maximum Adapt Dial Level
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(255,193,7,0.12);border-left:6px solid #ffc107;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #ffc107;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#7a630a;'>" . _QXZ("Maximum Adapt Dial Level") . "</div>";
-echo "<input type='text' name='adaptive_maximum_level' size='6' maxlength='6' value=\"$adaptive_maximum_level\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'><i style='font-size:13px;color:#666;margin-left:8px;'>" . _QXZ("number only") . "</i> $NWB#campaigns-adaptive_maximum_level$NWE";
+echo "<input type='text' name='adaptive_maximum_level' size='6' maxlength='6' value=\"$adaptive_maximum_level\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:12px;color:#666;font-style:italic;'>" . _QXZ("number only") . "</div>";
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-adaptive_maximum_level$NWE</div>";
 echo "</div>";
 
 // Latest Server Time
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(255,193,7,0.12);border-left:6px solid #ffc107;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #ffc107;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#7a630a;'>" . _QXZ("Latest Server Time") . "</div>";
-echo "<input type='text' name='adaptive_latest_server_time' size='6' maxlength='4' value=\"$adaptive_latest_server_time\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'><i style='font-size:13px;color:#666;margin-left:8px;'>4 " . _QXZ("digits only") . "</i> $NWB#campaigns-adaptive_latest_server_time$NWE";
+echo "<input type='text' name='adaptive_latest_server_time' size='6' maxlength='4' value=\"$adaptive_latest_server_time\" style='width:100%;padding:8px 12px;font-size:16px;border:1.5px solid #d2d6e2;border-radius:6px;margin-top:12px;'>";
+echo "<div style='margin-top:8px;font-size:12px;color:#666;font-style:italic;'>4 " . _QXZ("digits only") . "</div>";
+echo "<div style='margin-top:4px;font-size:11px;color:#666;'>$NWB#campaigns-adaptive_latest_server_time$NWE</div>";
 echo "</div>";
 
 // Adapt Intensity Modifier
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(174,65,232,0.12);border-left:6px solid #ae41e8;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #ae41e8;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#7a63b5;'>" . _QXZ("Adapt Intensity Modifier") . "</div>";
 echo "<select name='adaptive_intensity' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
 $n = 40;
@@ -28687,11 +28729,12 @@ while ($n >= -40) {
     }
     $n--;
 }
-echo "</select> $NWB#campaigns-adaptive_intensity$NWE";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-adaptive_intensity$NWE</div>";
 echo "</div>";
 
 // Dial Level Difference Target
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(174,65,232,0.12);border-left:6px solid #ae41e8;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #ae41e8;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#7a63b5;'>" . _QXZ("Dial Level Difference Target") . "</div>";
 echo "<select name='adaptive_dl_diff_target' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
 $n = 40;
@@ -28711,25 +28754,28 @@ while ($n >= -40) {
     }
     $n--;
 }
-echo "</select> $NWB#campaigns-adaptive_dl_diff_target$NWE";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-adaptive_dl_diff_target$NWE</div>";
 echo "</div>";
 
 // Dial Level Difference Target Method
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(174,65,232,0.12);border-left:6px solid #ae41e8;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #ae41e8;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#7a63b5;'>" . _QXZ("Dial Level Difference Target Method") . "</div>";
 echo "<select name='dl_diff_target_method' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
-echo "<option value='ADAPT_CALC_ONLY'>" . _QXZ("ADAPT_CALC_ONLY") . "</option><option value='CALLS_PLACED'>" . _QXZ("CALLS_PLACED") . "</option><option value='$dl_diff_target_method' SELECTED>" . _QXZ("$dl_diff_target_method") . "</option></select>$NWB#campaigns-dl_diff_target_method$NWE";
+echo "<option value='ADAPT_CALC_ONLY'>" . _QXZ("ADAPT_CALC_ONLY") . "</option><option value='CALLS_PLACED'>" . _QXZ("CALLS_PLACED") . "</option><option value='$dl_diff_target_method' SELECTED>" . _QXZ("$dl_diff_target_method") . "</option></select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-dl_diff_target_method$NWE</div>";
 echo "</div>";
 
 // Concurrent Transfers
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(13,202,240,0.12);border-left:6px solid #0dcaf0;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #0dcaf0;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#128099;'>" . _QXZ("Concurrent Transfers") . "</div>";
 echo "<select name='concurrent_transfers' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>";
-echo "<option value='AUTO'>" . _QXZ("AUTO") . "</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>40</option><option>50</option><option>60</option><option>80</option><option>100</option><option>1000</option><option>10000</option><option value=\"$concurrent_transfers\" SELECTED>" . _QXZ("$concurrent_transfers") . "</option></select>$NWB#campaigns-concurrent_transfers$NWE";
+echo "<option value='AUTO'>" . _QXZ("AUTO") . "</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option><option>40</option><option>50</option><option>60</option><option>80</option><option>100</option><option>1000</option><option>10000</option><option value=\"$concurrent_transfers\" SELECTED>" . _QXZ("$concurrent_transfers") . "</option></select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-concurrent_transfers$NWE</div>";
 echo "</div>";
 
 // Queue Priority
-echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
 echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Queue Priority") . "</div>";
 echo "<select name='queue_priority' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
 $n = 99;
@@ -28748,12 +28794,13 @@ while ($n >= -99) {
     }
     $n--;
 }
-echo "</select> $NWB#campaigns-queue_priority$NWE";
+echo "</select>";
+echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-queue_priority$NWE</div>";
 echo "</div>";
 
-// Shared Dial Rank
+// Shared Dial Rank (if enabled)
 if ($SSallow_shared_dial > 0) {
-    echo "<div style='background:#fff;min-height:80px;border-radius:12px;box-shadow:0 2px 7px rgba(67,69,91,0.11);border-left:6px solid #6c757d;padding:18px 24px;'>";
+    echo "<div style='$card_style;border-left:6px solid #6c757d;'>";
     echo "<div style='font-size:15px;font-weight:700;color:#495057;'>" . _QXZ("Shared Dial Rank") . "</div>";
     echo "<select name='shared_dial_rank' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;cursor:pointer;'>\n";
     $n = 0;
@@ -28765,12 +28812,18 @@ if ($SSallow_shared_dial > 0) {
         }
         $n++;
     }
-    echo "</select> $NWB#campaigns-shared_dial_rank$NWE";
+    echo "</select>";
+    echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-shared_dial_rank$NWE</div>";
     echo "</div>";
 } else {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
 }
-}
+
+// ========== CLOSE GRID CONTAINER ==========
+echo "</div>";
+
+// ========== CLOSE SECTION ==========
+echo "</div>";
 
 			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Multiple Campaign Drop Rate Group").": </td><td align=left><select size=1 name=drop_rate_group>";
 			##### get list_mix listings for dynamic pulldown
