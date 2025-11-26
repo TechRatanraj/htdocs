@@ -28416,7 +28416,7 @@ if ($SScall_limit_24hour > 0) {
     echo "<div style='margin-top:8px;font-size:11px;color:#666;'>$NWB#campaigns-call_limit_24hour$NWE</div>";
     echo "</div>";
 
-echo "</div></div>"; // End grid and Demographic Quotas section
+// End grid and Demographic Quotas section
 
 		
 
