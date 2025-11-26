@@ -28172,12 +28172,8 @@ echo "<option value='UP TIMEZONE 5th NEW'>"._QXZ("UP TIMEZONE 5th NEW")."</optio
 echo "<option value='UP TIMEZONE 6th NEW'>"._QXZ("UP TIMEZONE 6th NEW")."</option>";
 
 echo"<option value='DOWN 2nd NEW'>"._QXZ("DOWN 2nd NEW")."</option>";
-//To be start from here 
- echo "</select>";
-echo " $NWB#campaigns-lead_order$NWE";
-echo "</div>";
-}
 
+// After previous cards, start a new grid container for List Order and Lead Filtering
 echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px 0;'>";
 
 // List Order Randomize
@@ -28257,7 +28253,9 @@ if ($SScall_quota_lead_ranking > 0) {
     echo "<div style='font-size:15px;font-weight:700;color:#222;'>";
     if ($cqlr_selected > 0) {
         echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$call_quota_lead_ranking\">"._QXZ("Call Quota Lead Ranking")."</a>";
-    } else {echo _QXZ("Call Quota Lead Ranking");}
+    } else {
+        echo _QXZ("Call Quota Lead Ranking");
+    }
     echo "</div>";
     echo "<select name='call_quota_lead_ranking' style='width:100%;font-size:17px;margin:12px 0;border-radius:7px;border:1.3px solid #d2d6e2;padding:8px 14px;background:#f8fafe;'>";
     echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
@@ -28268,6 +28266,8 @@ if ($SScall_quota_lead_ranking > 0) {
     echo "<input type='hidden' name='auto_active_list_new' value='$auto_active_list_new'>";
     echo "<input type='hidden' name='call_quota_lead_ranking' value='$call_quota_lead_ranking'>";
 }
+
+echo "</div>"; // end grid
 
 
 			if ($SSdemographic_quotas > 0)
