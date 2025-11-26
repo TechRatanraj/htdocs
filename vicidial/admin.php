@@ -28348,7 +28348,8 @@ if ($SScall_limit_24hour > 0) {
     echo "</div>";
 }
 
-echo "</div></div>"; // End grid and section
+	}
+
 
 
 // to be started here 
