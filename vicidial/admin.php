@@ -28770,7 +28770,7 @@ if ($SSallow_shared_dial > 0) {
 } else {
     echo "<input type='hidden' name='shared_dial_rank' value=\"$shared_dial_rank\">";
 }
-
+}
 
 			echo "<tr bgcolor=#$SSalt_row1_background><td align=right>"._QXZ("Multiple Campaign Drop Rate Group").": </td><td align=left><select size=1 name=drop_rate_group>";
 			##### get list_mix listings for dynamic pulldown
