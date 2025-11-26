@@ -28051,7 +28051,6 @@ if ($SUB < 1) {
     echo "</div>"; // end grid
     echo "</div>"; // end section
     echo "</form>";
-}
 
 
 // Dynamic Call Quota Lead Ranking
