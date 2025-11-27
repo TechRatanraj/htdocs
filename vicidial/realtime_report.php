@@ -1995,7 +1995,6 @@ if ($RS_hide_CUST_info < 1)
 
 
 </script>
-
 <STYLE type="text/css">
 :root {
   /* Modern Color Palette */
@@ -2029,6 +2028,24 @@ if ($RS_hide_CUST_info < 1)
   --kpi-yellow-medium: #ffecb3;
   --kpi-yellow-dark: #ffdf80;
   --kpi-yellow-text: #856404;
+  
+  /* Additional KPI Colors */
+  --kpi-purple-light: #f3e5f5;
+  --kpi-purple-medium: #e1bee7;
+  --kpi-purple-dark: #ce93d8;
+  --kpi-purple-text: #6a1b9a;
+  --kpi-orange-light: #fff4e6;
+  --kpi-orange-medium: #ffe0b2;
+  --kpi-orange-dark: #ffab40;
+  --kpi-orange-text: #873600;
+  --kpi-teal-light: #e0f2f1;
+  --kpi-teal-medium: #b2dfdb;
+  --kpi-teal-dark: #80cbc4;
+  --kpi-teal-text: #004d40;
+  --kpi-pink-light: #fce4ec;
+  --kpi-pink-medium: #f8bbd9;
+  --kpi-pink-dark: #f48fb1;
+  --kpi-pink-text: #880e4f;
   
   /* Original Colors (Modernized) */
   --blank-color: #ffffff;
@@ -2192,8 +2209,8 @@ body {
 }
 
 .purple { 
-  color: white; 
-  background-color: var(--purple-color);
+  color: var(--kpi-purple-text); 
+  background-color: var(--kpi-purple-light);
   border-radius: var(--border-radius);
   padding: 2px 4px;
   transition: var(--transition);
@@ -2202,6 +2219,9 @@ body {
   white-space: nowrap;
   vertical-align: baseline;
   line-height: 1.2;
+}
+.purple:hover {
+  background-color: var(--kpi-purple-medium);
 }
 
 .violet { 
@@ -2312,8 +2332,8 @@ body {
 }
 
 .orange { 
-  color: var(--dark-color); 
-  background-color: var(--orange-color);
+  color: var(--kpi-orange-text); 
+  background-color: var(--kpi-orange-light);
   border-radius: var(--border-radius);
   padding: 2px 4px;
   transition: var(--transition);
@@ -2322,6 +2342,9 @@ body {
   white-space: nowrap;
   vertical-align: baseline;
   line-height: 1.2;
+}
+.orange:hover {
+  background-color: var(--kpi-orange-medium);
 }
 
 .black { 
@@ -2363,10 +2386,45 @@ body {
   line-height: 1.2;
 }
 
+/* Teal Color Class */
+.teal { 
+  color: var(--kpi-teal-text); 
+  background-color: var(--kpi-teal-light);
+  border-radius: var(--border-radius);
+  padding: 2px 4px;
+  transition: var(--transition);
+  display: inline-block;
+  margin: 0;
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 1.2;
+}
+.teal:hover {
+  background-color: var(--kpi-teal-medium);
+}
+
+/* Pink Color Class */
+.pink { 
+  color: var(--kpi-pink-text); 
+  background-color: var(--kpi-pink-light);
+  border-radius: var(--border-radius);
+  padding: 2px 4px;
+  transition: var(--transition);
+  display: inline-block;
+  margin: 0;
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 1.2;
+}
+.pink:hover {
+  background-color: var(--kpi-pink-medium);
+}
+
 /* Header Styles - Fixed Overlap */
 .Hblank, .Hgreen, .Hred, .Hlightblue, .Hrust, .Hblue, .Hmidnightblue, 
 .Hpurple, .Hviolet, .Hthistle, .Holive, .Hdarkolivegreen, .Hsaddlebrown, 
-.Hlime, .Hyellow, .Hkhaki, .Horange, .Hblack, .Hsalmon, .Hdarkred {
+.Hlime, .Hyellow, .Hkhaki, .Horange, .Hblack, .Hsalmon, .Hdarkred,
+.Hteal, .Hpink {
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -2387,7 +2445,7 @@ body {
 .Hrust { color: var(--dark-color); background-color: var(--rust-color); }
 .Hblue { color: white; background-color: var(--blue-color); }
 .Hmidnightblue { color: white; background-color: var(--midnightblue-color); }
-.Hpurple { color: white; background-color: var(--purple-color); }
+.Hpurple { color: var(--kpi-purple-text); background-color: var(--kpi-purple-light); }
 .Hviolet { color: var(--dark-color); background-color: var(--violet-color); }
 .Hthistle { color: var(--dark-color); background-color: var(--thistle-color); }
 .Holive { color: white; background-color: var(--olive-color); }
@@ -2396,16 +2454,19 @@ body {
 .Hlime { color: white; background-color: var(--lime-color); }
 .Hyellow { color: var(--kpi-yellow-text); background-color: var(--kpi-yellow-light); }
 .Hkhaki { color: var(--dark-color); background-color: var(--khaki-color); }
-.Horange { color: var(--dark-color); background-color: var(--orange-color); }
+.Horange { color: var(--kpi-orange-text); background-color: var(--kpi-orange-light); }
 .Hblack { color: white; background-color: var(--black-color); }
 .Hsalmon { color: white; background-color: var(--salmon-color); }
 .Hdarkred { color: white; background-color: var(--darkred-color); }
+.Hteal { color: var(--kpi-teal-text); background-color: var(--kpi-teal-light); }
+.Hpink { color: var(--kpi-pink-text); background-color: var(--kpi-pink-light); }
 
 /* Table Row Styles - Fixed Overlap */
 tr.TRblank, tr.TRgreen, tr.TRred, tr.TRlightblue, tr.TRrust, tr.TRblue, 
 tr.TRmidnightblue, tr.TRpurple, tr.TRviolet, tr.TRthistle, tr.TRolive, 
 tr.TRdarkolivegreen, tr.TRsaddlebrown, tr.TRlime, tr.TRyellow, tr.TRkhaki, 
-tr.TRorange, tr.TRblack, tr.TRsalmon, tr.TRdarkred {
+tr.TRorange, tr.TRblack, tr.TRsalmon, tr.TRdarkred,
+tr.TRteal, tr.TRpink {
   transition: var(--transition);
 }
 
@@ -2416,7 +2477,7 @@ tr.TRlightblue { background-color: var(--kpi-blue-light); }
 tr.TRrust { background-color: var(--rust-color); }
 tr.TRblue { background-color: var(--blue-color); }
 tr.TRmidnightblue { background-color: var(--midnightblue-color); }
-tr.TRpurple { background-color: var(--purple-color); }
+tr.TRpurple { background-color: var(--kpi-purple-light); }
 tr.TRviolet { background-color: var(--violet-color); }
 tr.TRthistle { background-color: var(--thistle-color); }
 tr.TRolive { background-color: var(--olive-color); }
@@ -2425,10 +2486,12 @@ tr.TRsaddlebrown { background-color: var(--saddlebrown-color); }
 tr.TRlime { background-color: var(--lime-color); }
 tr.TRyellow { background-color: var(--kpi-yellow-light); }
 tr.TRkhaki { background-color: var(--khaki-color); }
-tr.TRorange { background-color: var(--orange-color); }
+tr.TRorange { background-color: var(--kpi-orange-light); }
 tr.TRblack { background-color: var(--black-color); }
 tr.TRsalmon { background-color: var(--salmon-color); }
 tr.TRdarkred { color: white; background-color: var(--darkred-color); }
+tr.TRteal { background-color: var(--kpi-teal-light); }
+tr.TRpink { background-color: var(--kpi-pink-light); }
 
 /* Red Color Scale - Fixed Overlap */
 .r1, .r2, .r3, .r4 {
@@ -2467,7 +2530,7 @@ tr.TRdarkred { color: white; background-color: var(--darkred-color); }
 /* Special Header Styles - Fixed Overlap */
 .Hfb1, .Hfr1, .Hfr2, .Hfr3, .Hfr4 {
   font-family: var(--font-family);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   padding: 4px 8px;
   border-radius: var(--border-radius);
@@ -2606,7 +2669,7 @@ tr.TRdarkred { color: white; background-color: var(--darkred-color); }
   max-width: 780px;
 }
 
-/* KPI Card Styles */
+/* KPI Card Styles with Additional Colors */
 .kpi-card {
   background-color: white;
   border-radius: var(--border-radius);
@@ -2640,6 +2703,22 @@ tr.TRdarkred { color: white; background-color: var(--darkred-color); }
   border-left-color: var(--kpi-blue-medium);
 }
 
+.kpi-card.purple {
+  border-left-color: var(--kpi-purple-medium);
+}
+
+.kpi-card.teal {
+  border-left-color: var(--kpi-teal-medium);
+}
+
+.kpi-card.orange {
+  border-left-color: var(--kpi-orange-medium);
+}
+
+.kpi-card.pink {
+  border-left-color: var(--kpi-pink-medium);
+}
+
 .kpi-title {
   font-size: var(--font-size-sm);
   color: var(--gray-color);
@@ -2665,6 +2744,48 @@ tr.TRdarkred { color: white; background-color: var(--darkred-color); }
 
 .kpi-change.negative {
   color: var(--red-color);
+}
+
+/* KPI Color Indicators */
+.kpi-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.kpi-indicator.green {
+  background-color: var(--kpi-green-medium);
+}
+
+.kpi-indicator.blue {
+  background-color: var(--kpi-blue-medium);
+}
+
+.kpi-indicator.yellow {
+  background-color: var(--kpi-yellow-medium);
+}
+
+.kpi-indicator.purple {
+  background-color: var(--kpi-purple-medium);
+}
+
+.kpi-indicator.teal {
+  background-color: var(--kpi-teal-medium);
+}
+
+.kpi-indicator.orange {
+  background-color: var(--kpi-orange-medium);
+}
+
+.kpi-indicator.pink {
+  background-color: var(--kpi-pink-medium);
+}
+
+.kpi-indicator.red {
+  background-color: var(--red-color);
 }
 
 /* Modern Table Styles */
@@ -2895,6 +3016,7 @@ if ($INgroups_to_print > 0)
   clear: both;
 }
 </STYLE>
+
 
 <?php
  $stmt = "select count(*) from vicidial_campaigns where active='Y' and campaign_allow_inbound='Y' $group_SQLand;";
