@@ -33082,103 +33082,304 @@ if ($SUB==25)
 	
 
 	##### CAMPAIGN AUTO-ALT-NUMBER DIALING #####
-	if ($SUB==26)
+if ($SUB==26)
+{
+	echo "<div style='margin:30px auto 22px auto;max-width:800px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+
+	// Header
+	echo "<div style='font-size:20px;font-weight:800;color:#111827;display:flex;align-items:center;gap:10px;margin-bottom:6px;'>
+			<span>📞</span>"._QXZ("Auto Alt Number Dialing for this Campaign").": &nbsp; $NWB#auto_alt_dial_statuses$NWE
+		  </div>";
+	echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:18px;'></div>";
+
+	// Card: current auto-alt statuses
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 10px rgba(15,23,42,0.08);padding:16px 18px;margin-bottom:20px;'>";
+
+	echo "<table cellspacing='0' cellpadding='8' style='width:100%;border-collapse:collapse;font-size:13px;'>";
+	echo "<tr style='background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#475569;text-transform:uppercase;font-size:11px;letter-spacing:.4px;'>";
+	echo "<th style='padding:8px 6px;text-align:left;font-weight:700;'>"._QXZ("Statuses")."</th>";
+	echo "<th style='padding:8px 6px;text-align:center;font-weight:700;width:100px;'>"._QXZ("Delete")."</th>";
+	echo "</tr>";
+
+	$auto_alt_dial_statuses = preg_replace("/ -$/","",$auto_alt_dial_statuses);
+	$AADstatuses = explode(" ", $auto_alt_dial_statuses);
+	$AADs_to_print = (count($AADstatuses) -1);
+
+	$o=0;
+	while ($AADs_to_print > $o) 
+	{
+		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+			{$row_bg = "#$SSstd_row2_background";}
+		else
+			{$row_bg = "#$SSstd_row1_background";}
+		$o++;
+
+		echo "<tr style='background:$row_bg;border-bottom:1px solid #e5e7eb;'>";
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+				<span style='display:inline-flex;align-items:center;justify-content:center;min-width:52px;padding:4px 10px;border-radius:999px;border:1px solid #d1d5db;background:#f9fafb;font-weight:600;'>$AADstatuses[$o]</span>
+			  </td>";
+		echo "<td style='padding:8px 6px;text-align:center;'>
+				<a href=\"$PHP_SELF?ADD=66&campaign_id=$campaign_id&status=$AADstatuses[$o]\"
+				   style='display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#b91c1c;text-decoration:none;padding:5px 12px;border-radius:999px;border:1px solid #fecaca;background:#fef2f2;'>"
+					._QXZ("DELETE").
+				"</a>
+			  </td>";
+		echo "</tr>\n";
+	}
+
+	if ($AADs_to_print < 1)
+	{
+		echo "<tr><td colspan='2' style='padding:10px 6px;font-size:12px;color:#6b7280;text-align:center;'>"._QXZ("No auto-alt dialing statuses defined for this campaign.")."</td></tr>";
+	}
+
+	echo "</table>";
+	echo "</div>"; // end card
+
+	// Card: add new auto-alt status
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 10px rgba(15,23,42,0.08);padding:18px 20px;'>";
+
+	echo "<div style='font-size:16px;font-weight:700;color:#111827;display:flex;align-items:center;gap:8px;margin-bottom:10px;'>
+			<span>➕</span>"._QXZ("Add New Auto Alt Number Dialing Status")."
+		  </div>";
+
+	echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
+
+	echo "<input type='hidden' name='ADD' value='26'>\n";
+	echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">\n";
+
+	echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:end;'>";
+
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Status")."</label>
+			<select name='status'
+					style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#f9fafb;font-size:13px;'>
+				$LRstatuses_list
+			</select>
+		  </div>";
+
+	echo "<div style='text-align:right;'>
+			<input type='submit' name='submit' value='"._QXZ("ADD")."'
+				   style='background-color:#28a745;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;padding:9px 26px;cursor:pointer;box-shadow:0 2px 6px rgba(25,135,84,0.35);'>
+		  </div>";
+
+	echo "</div>"; // grid
+
+	echo "</form>";
+	echo "</div>"; // add card
+
+	echo "</div>"; // outer wrapper
+}
+
+##### CAMPAIGN PAUSE CODES #####
+if ($SUB==27)
+{
+	echo "<div style='margin:30px auto 22px auto;max-width:1100px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+
+	// Header
+	echo "<div style='font-size:20px;font-weight:800;color:#111827;display:flex;align-items:center;gap:10px;margin-bottom:6px;'>
+			<span>⏸️</span>"._QXZ("Agent Pause Codes for this Campaign").": &nbsp; $NWB#pause_codes$NWE
+		  </div>";
+	echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:18px;'></div>";
+
+	// Card: existing pause codes
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 12px rgba(15,23,42,0.08);padding:18px 20px;margin-bottom:22px;'>";
+
+	echo "<table cellspacing='0' cellpadding='8' style='width:100%;border-collapse:collapse;font-size:13px;'>";
+
+	echo "<tr style='background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#475569;text-transform:uppercase;font-size:11px;letter-spacing:.4px;'>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:130px;'>"._QXZ("Pause Codes")."</th>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:150px;'>"._QXZ("Billable")."</th>";
+	if ($SSenable_pause_code_limits > 0)
+	{
+		echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:120px;'>"._QXZ("Time Limit")."</th>";
+	}
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:150px;'>"._QXZ("Mgr Approval")."</th>";
+	echo "<th style='padding:10px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Modify")."</th>";
+	echo "<th style='padding:10px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Delete")."</th>";
+	echo "</tr>";
+
+	$stmt="SELECT pause_code,pause_code_name,billable,campaign_id,time_limit,require_mgr_approval from vicidial_pause_codes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by pause_code;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$pause_codes_to_print = mysqli_num_rows($rslt);
+	$o=0;
+	while ($pause_codes_to_print > $o) 
+	{
+		$rowx=mysqli_fetch_row($rslt);
+		$o++;
+
+		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+			{$row_bg = "#$SSstd_row2_background";}
+		else
+			{$row_bg = "#$SSstd_row1_background";}
+
+		echo "<tr style='background:$row_bg;border-bottom:1px solid #e5e7eb;'>";
+
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+				<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;display:flex;flex-direction:column;gap:4px;'>
+					<div style='font-weight:700;'>".htmlspecialchars($rowx[0])."</div>
+					<input type='hidden' name='ADD' value='47'>
+					<input type='hidden' name='campaign_id' value=\"$campaign_id\">
+					<input type='hidden' name='pause_code' value=\"".htmlspecialchars($rowx[0])."\">";
+		if ($SSenable_pause_code_limits < 1)
 		{
-		echo "<br><br><b>"._QXZ("AUTO ALT NUMBER DIALING FOR THIS CAMPAIGN").": &nbsp; $NWB#auto_alt_dial_statuses$NWE</b><br>\n";
-		echo "<TABLE width=500 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("STATUSES")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
+			echo "<input type='hidden' name='time_limit' value=\"".htmlspecialchars($rowx[4])."\">";
+		}
+		echo "		<input type='text' name='pause_code_name' value=\"".htmlspecialchars($rowx[1])."\"
+						 style='margin-top:2px;width:100%;max-width:220px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fbfdff;font-size:12px;'>
+				</form>
+			  </td>";
 
-		$auto_alt_dial_statuses = preg_replace("/ -$/","",$auto_alt_dial_statuses);
-		$AADstatuses = explode(" ", $auto_alt_dial_statuses);
-		$AADs_to_print = (count($AADstatuses) -1);
+		// Billable
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+				<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>
+					<input type='hidden' name='ADD' value='47'>
+					<input type='hidden' name='campaign_id' value=\"$campaign_id\">
+					<input type='hidden' name='pause_code' value=\"".htmlspecialchars($rowx[0])."\">";
+		if ($SSenable_pause_code_limits < 1)
+		{
+			echo "<input type='hidden' name='time_limit' value=\"".htmlspecialchars($rowx[4])."\">";
+		}
+		echo "		<select name='billable'
+						 style='width:100%;max-width:130px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#f9fafb;font-size:12px;'>
+						<option value='YES'>"._QXZ("YES")."</option>
+						<option value='NO'>"._QXZ("NO")."</option>
+						<option value='HALF'>"._QXZ("HALF")."</option>
+						<option value=\"".htmlspecialchars($rowx[2])."\" SELECTED>"._QXZ($rowx[2])."</option>
+					</select>
+			  </td>";
 
-		$o=0;
-		while ($AADs_to_print > $o) 
-			{
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-			$o++;
-
-			echo "<tr $bgcolor><td><font size=1>$AADstatuses[$o]</td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=66&campaign_id=$campaign_id&status=$AADstatuses[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
-			}
-
-		echo "</table>\n";
-
-		echo "<br>"._QXZ("ADD NEW AUTO ALT NUMBER DIALING STATUS")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=26>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Status").": <select size=1 name=status>\n";
-		echo "$LRstatuses_list\n";
-		echo "</select> &nbsp; \n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-
-		echo "</FORM><br>\n";
+		// Time limit (optional)
+		if ($SSenable_pause_code_limits > 0)
+		{
+			echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+					<input type='text' name='time_limit' value=\"".htmlspecialchars($rowx[4])."\" size='5' maxlength='5'
+						   style='width:100%;max-width:70px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#fbfdff;font-size:12px;'>
+				  </td>";
 		}
 
-	##### CAMPAIGN PAUSE CODES #####
-	if ($SUB==27)
+		// Manager approval
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+				<select name='require_mgr_approval'
+						style='width:100%;max-width:130px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#f9fafb;font-size:12px;'>
+					<option value='YES'>"._QXZ("YES")."</option>
+					<option value='NO'>"._QXZ("NO")."</option>
+					<option value=\"".htmlspecialchars($rowx[5])."\" SELECTED>"._QXZ($rowx[5])."</option>
+				</select>
+			  </td>";
+
+		// Modify button (needs all inputs in one form; so wrap modify separately)
+		echo "<td style='padding:8px 6px;text-align:center;'>
+				<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>
+					<input type='hidden' name='ADD' value='47'>
+					<input type='hidden' name='campaign_id' value=\"$campaign_id\">
+					<input type='hidden' name='pause_code' value=\"".htmlspecialchars($rowx[0])."\">";
+		if ($SSenable_pause_code_limits > 0)
 		{
-		echo "<br><br><b>"._QXZ("AGENT PAUSE CODES FOR THIS CAMPAIGN").": &nbsp; $NWB#pause_codes$NWE</b><br>\n";
-		echo "<TABLE width=700 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("PAUSE CODES")."</td><td>"._QXZ("BILLABLE")."</td>";
-		if ($SSenable_pause_code_limits > 0)
-			{
-			echo "<td>"._QXZ("TIME LIMIT")."</td>";
-			}
-		echo "<td>"._QXZ("MGR APPROVAL")."</td><td>"._QXZ("MODIFY")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
-
-		$stmt="SELECT pause_code,pause_code_name,billable,campaign_id,time_limit,require_mgr_approval from vicidial_pause_codes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by pause_code;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$pause_codes_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($pause_codes_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$o++;
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><form action=$PHP_SELF method=POST><font size=1>$rowx[0]\n";
-			echo "<input type=hidden name=ADD value=47>\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo "<input type=hidden name=pause_code value=\"$rowx[0]\"> &nbsp;\n";
-			if ($SSenable_pause_code_limits < 1)
-				{echo "<input type=hidden name=time_limit value=\"$rowx[4]\">\n";}
-			echo "<input type=text size=20 maxlength=30 name=pause_code_name value=\"$rowx[1]\"></td>\n";
-			echo "<td><select size=1 name=billable><option value='YES'>"._QXZ("YES")."</option><option value='NO'>"._QXZ("NO")."</option><option value='HALF'>"._QXZ("HALF")."</option><option value='$rowx[2]' SELECTED>"._QXZ("$rowx[2]")."</option></select></td>\n";
-			if ($SSenable_pause_code_limits > 0)
-				{
-				echo "<td><input type=text size=5 maxlength=5 name=time_limit value=\"$rowx[4]\"></td>\n";
-				}
-			echo "<td><select size=1 name=require_mgr_approval><option value='YES'>"._QXZ("YES")."</option><option value='NO'>"._QXZ("NO")."</option><option value='$rowx[5]' SELECTED>"._QXZ("$rowx[5]")."</option></select></td>\n";
-			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'></form></td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=67&campaign_id=$campaign_id&pause_code=$rowx[0]\">"._QXZ("DELETE")."</a></td>\n";
-			echo "</tr>\n";
-			}
-
-		echo "</table>\n";
-
-		echo "<br>"._QXZ("ADD NEW AGENT PAUSE CODE")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=27>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Pause Code").": <input type=text size=8 maxlength=6 name=pause_code>\n";
-		echo " &nbsp; "._QXZ("Name").": <input type=text size=20 maxlength=30 name=pause_code_name>\n";
-		echo " &nbsp; "._QXZ("Billable").": <select size=1 name=billable><option value='YES'>"._QXZ("YES")."</option><option value='NO'>"._QXZ("NO")."</option><option value='HALF'>"._QXZ("HALF")."</option></select><BR>\n";
-		echo " &nbsp; "._QXZ("Mgr Approve").": <select size=1 name=require_mgr_approval><option value='YES'>"._QXZ("YES")."</option><option SELECTED value='NO'>"._QXZ("NO")."</option></select>\n";
-		if ($SSenable_pause_code_limits > 0)
-			{
-			echo " &nbsp; "._QXZ("Time Limit").": <input type=text size=5 maxlength=5 name=time_limit>\n";
-			}
-		echo "<BR><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-
-		echo "</center></FORM><br>\n";
+			echo "<input type='hidden' name='time_limit' value=\"".htmlspecialchars($rowx[4])."\">";
 		}
+		echo "		<input type='submit' name='submit' value='"._QXZ("MODIFY")."'
+						   style='background-color:#28a745;color:#fff;border:none;border-radius:999px;font-size:11px;font-weight:700;padding:6px 16px;cursor:pointer;box-shadow:0 2px 5px rgba(25,135,84,0.35);'>
+				</form>
+			  </td>";
+
+		// Delete link
+		echo "<td style='padding:8px 6px;text-align:center;'>
+				<a href=\"$PHP_SELF?ADD=67&campaign_id=$campaign_id&pause_code=".urlencode($rowx[0])."\"
+				   style='display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#b91c1c;text-decoration:none;padding:5px 12px;border-radius:999px;border:1px solid #fecaca;background:#fef2f2;'>"
+					._QXZ("DELETE").
+				"</a>
+			  </td>";
+
+		echo "</tr>";
+	}
+
+	if ($pause_codes_to_print < 1)
+	{
+		echo "<tr><td colspan='6' style='padding:10px 6px;font-size:12px;color:#6b7280;text-align:center;'>"._QXZ("No pause codes defined for this campaign.")."</td></tr>";
+	}
+
+	echo "</table>";
+	echo "</div>"; // card list
+
+	// Card: add new pause code
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 12px rgba(15,23,42,0.08);padding:18px 20px;'>";
+
+	echo "<div style='font-size:16px;font-weight:700;color:#111827;display:flex;align-items:center;gap:8px;margin-bottom:10px;'>
+			<span>➕</span>"._QXZ("Add New Agent Pause Code")."
+		  </div>";
+
+	echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
+
+	echo "<input type='hidden' name='ADD' value='27'>\n";
+	echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">\n";
+
+	echo "<div style='display:grid;grid-template-columns:150px 1.4fr 160px;gap:18px;align-items:end;margin-bottom:10px;'>";
+
+	// Pause code
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Pause Code")."</label>
+			<input type='text' name='pause_code' size='8' maxlength='6'
+				   style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fbfdff;font-size:13px;'>
+		  </div>";
+
+	// Name
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Name")."</label>
+			<input type='text' name='pause_code_name' size='20' maxlength='30'
+				   style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fbfdff;font-size:13px;'>
+		  </div>";
+
+	// Billable
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Billable")."</label>
+			<select name='billable'
+					style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#f9fafb;font-size:13px;'>
+				<option value='YES'>"._QXZ("YES")."</option>
+				<option value='NO'>"._QXZ("NO")."</option>
+				<option value='HALF'>"._QXZ("HALF")."</option>
+			</select>
+		  </div>";
+
+	echo "</div>"; // first grid row
+
+	// Second row: Mgr Approve + Time limit (optional) + button
+	echo "<div style='display:grid;grid-template-columns:200px 200px 1fr;gap:18px;align-items:end;'>";
+
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Mgr Approve")."</label>
+			<select name='require_mgr_approval'
+					style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#f9fafb;font-size:13px;'>
+				<option value='YES'>"._QXZ("YES")."</option>
+				<option value='NO' selected>"._QXZ("NO")."</option>
+			</select>
+		  </div>";
+
+	if ($SSenable_pause_code_limits > 0)
+	{
+		echo "<div>
+				<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Time Limit")."</label>
+				<input type='text' name='time_limit' size='5' maxlength='5'
+					   style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fbfdff;font-size:13px;'>
+			  </div>";
+	}
+	else
+	{
+		echo "<div></div>";
+	}
+
+	echo "<div style='text-align:right;'>
+			<input type='submit' name='submit' value='"._QXZ("ADD")."'
+				   style='background-color:#28a745;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;padding:9px 26px;cursor:pointer;box-shadow:0 2px 6px rgba(25,135,84,0.35);'>
+		  </div>";
+
+	echo "</div>"; // second grid row
+
+	echo "</form>";
+	echo "</div>"; // add card
+
+	echo "</div>"; // outer wrapper
+}
+
 
 	##### CAMPAIGN QC SETTINGS #####
 	if ( ($SUB==28) and ($SSqc_features_active > 0) )
