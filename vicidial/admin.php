@@ -32323,193 +32323,168 @@ echo "<center><b>\n";
 echo "</center></div>\n";
 
 
+			if ($display_dialable_count == 'Y')
+				{
+				### call function to calculate and print dialable leads
+				$single_status=0;
+				$only_return=0;
+				$dial_statuses = $dial_statuses_original;
+				dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);
+				echo " - <font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=hide_dialable\">"._QXZ("HIDE")."</a></font><BR><BR>";
+				}
+			else
+				{
+				echo "<a href=\"$PHP_SELF?ADD=73&campaign_id=$campaign_id\" target=\"_blank\">"._QXZ("Popup Dialable Leads Count")."</a>";
+				echo " - <font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_dialable\">"._QXZ("SHOW")."</a></font><BR><BR>";
+				}
 
-if ($display_dialable_count == 'Y') {
-    ### call function to calculate and print dialable leads
-    $single_status = 0;
-    $only_return = 0;
-    $dial_statuses = $dial_statuses_original;
-    
-    echo "<div style='max-width:900px;margin:20px auto;background:#fff;border-radius:10px;padding:20px 25px;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
-    dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);
-    echo "<div style='text-align:right;margin-top:15px;'><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=hide_dialable\" style='background:#e74c3c;color:#fff;padding:7px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px;box-shadow:0 2px 6px rgba(231,76,60,0.3);'>"._QXZ("HIDE")."</a></div>";
-    echo "</div><BR>";
-} else {
-    echo "<div style='max-width:900px;margin:20px auto;background:#fff;border-radius:10px;padding:20px 25px;box-shadow:0 2px 10px rgba(0,0,0,0.08);text-align:center;'>";
-    echo "<a href=\"$PHP_SELF?ADD=73&campaign_id=$campaign_id\" target=\"_blank\" style='color:#3498db;font-size:16px;text-decoration:none;font-weight:600;'>"._QXZ("Popup Dialable Leads Count")."</a>";
-    echo " <span style='color:#bdc3c7;margin:0 10px;'>|</span> ";
-    echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_dialable\" style='color:#27ae60;font-size:14px;text-decoration:none;font-weight:600;'>"._QXZ("SHOW")."</a>";
-    echo "</div><BR>";
-}
+			$stmt="SELECT count(*) FROM vicidial_hopper where campaign_id='$campaign_id' $LOGallowed_campaignsSQL and status IN('READY','RHOLD','RQUEUE');";
+			if ($DB) {echo "$stmt\n";}
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$rowx=mysqli_fetch_row($rslt);
+			$hopper_leads = "$rowx[0]";
 
-$stmt = "SELECT count(*) FROM vicidial_hopper where campaign_id='$campaign_id' $LOGallowed_campaignsSQL and status IN('READY','RHOLD','RQUEUE');";
-if ($DB) {echo "$stmt\n";}
-$rslt = mysql_to_mysqli($stmt, $link);
-$rowx = mysqli_fetch_row($rslt);
-$hopper_leads = "$rowx[0]";
+			echo _QXZ("This campaign has")." $hopper_leads "._QXZ("leads in the dial hopper")."<br><br>\n";
+			echo "<a href=\"./AST_VICIDIAL_hopperlist.php?group=$campaign_id\">"._QXZ("Click here to see what leads are in the hopper right now")."</a><br><br>\n";
+			echo "<a href=\"./AST_VDADstats.php?group=$campaign_id\">"._QXZ("Click here to see a VDAD report for this campaign")."</a><BR><BR>\n";
+			}
+		echo "<a href=\"$PHP_SELF?ADD=81&campaign_id=$campaign_id\">"._QXZ("Click here to see all CallBack Holds in this campaign")."</a><BR><BR>\n";
 
-// Modern hopper info card
-echo "<div style='max-width:900px;margin:20px auto;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);border-radius:12px;padding:25px;box-shadow:0 6px 20px rgba(102,126,234,0.25);'>";
-echo "<div style='color:#fff;font-size:20px;font-weight:bold;margin-bottom:8px;'>"._QXZ("Dial Hopper Status")."</div>";
-echo "<div style='color:#f5f5f5;font-size:16px;margin-bottom:20px;'>"._QXZ("This campaign has")." <span style='background:rgba(255,255,255,0.25);padding:4px 14px;border-radius:20px;font-weight:700;'>$hopper_leads</span> "._QXZ("leads in the dial hopper")."</div>";
-echo "<div style='display:flex;gap:15px;flex-wrap:wrap;'>";
-echo "<a href=\"./AST_VICIDIAL_hopperlist.php?group=$campaign_id\" style='flex:1;min-width:250px;background:rgba(255,255,255,0.15);color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;text-align:center;border:1px solid rgba(255,255,255,0.2);transition:all 0.3s;' onmouseover=\"this.style.background='rgba(255,255,255,0.25)'\" onmouseout=\"this.style.background='rgba(255,255,255,0.15)'\">"._QXZ("Click here to see what leads are in the hopper right now")."</a>";
-echo "<a href=\"./AST_VDADstats.php?group=$campaign_id\" style='flex:1;min-width:250px;background:rgba(255,255,255,0.15);color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;text-align:center;border:1px solid rgba(255,255,255,0.2);transition:all 0.3s;' onmouseover=\"this.style.background='rgba(255,255,255,0.25)'\" onmouseout=\"this.style.background='rgba(255,255,255,0.15)'\">"._QXZ("Click here to see a VDAD report for this campaign")."</a>";
-echo "</div></div>";
+		if ($SSoutbound_autodial_active > 0)
+			{
+			if ( ($SStest_campaign_calls > 0) and ($campaign_active == 'Y') )
+				{
+				##### get list of active asterisk server for dynamic pulldown list menu
+				$stmt="SELECT server_id,server_ip from servers where active='Y' and active_asterisk_server='Y' $LOGadmin_viewable_groupsSQL order by server_id;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$servers_to_print = mysqli_num_rows($rslt);
+				$servers_menu="<option SELECTED value=\"$SSactive_voicemail_server\">"._QXZ("DEFAULT")." - $SSactive_voicemail_server</option>\n";
+				$os=0;
+				while ($servers_to_print > $os) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$servers_menu .= "<option value=\"$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
+					$os++;
+					}
+				echo "<form action=$PHP_SELF method=POST>\n";
+				echo "<input type=hidden name=ADD value=41>\n";
+				echo "<input type=hidden name=DB value=$DB>\n";
+				echo "<input type=hidden name=stage value=test_call>\n";
+				echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+				echo "<input type=hidden name=manual_dial_list_id value=\"$manual_dial_list_id\">\n";
+				echo "<input type=hidden name=dial_timeout value=\"$dial_timeout\">\n";
+				echo "<input type=hidden name=dial_prefix value=\"$dial_prefix\">\n";
+				echo "<input type=hidden name=campaign_cid value=\"$campaign_cid\">\n";
+				echo "<input type=hidden name=campaign_vdad_exten value=\"$campaign_vdad_exten\">\n";
+				echo "<input type=hidden name=omit_phone_code value=\"$omit_phone_code\">\n";
+				echo _QXZ("Test Outbound Call").": ";
+				echo _QXZ("code").": <input type=text name=phone_code id=phone_code size=2 maxlength=10 value=\"\"> &nbsp; ";
+				echo _QXZ("number").": <input type=text name=phone_number id=phone_number size=14 maxlength=20 value=\"\"> &nbsp; ";
+				echo _QXZ("server").": <select size=1 name=old_server_ip>$servers_menu</select> &nbsp; ";
+				echo "<input style='background-color:#$SSbutton_color' type=submit value=\""._QXZ("PLACE TEST CALL")."\"> &nbsp; $NWB#settings-test_campaign_calls$NWE</form><br><br>\n";
+				}
+			else
+				{
+				echo _QXZ("Test calling disabled")."<br><br>\n";
+				}
+			}
 
-echo "<div style='max-width:900px;margin:20px auto;text-align:center;'>";
-echo "<a href=\"$PHP_SELF?ADD=81&campaign_id=$campaign_id\" style='color:#3498db;font-size:15px;text-decoration:none;font-weight:600;'>"._QXZ("Click here to see all CallBack Holds in this campaign")."</a>";
-echo "</div><BR>";
+		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGNS&stage=$campaign_id\">"._QXZ("Click here to see Admin changes to this campaign")."</a>\n";
 
-if ($SSoutbound_autodial_active > 0) {
-    if (($SStest_campaign_calls > 0) and ($campaign_active == 'Y')) {
-        ##### get list of active asterisk server for dynamic pulldown list menu
-        $stmt = "SELECT server_id,server_ip from servers where active='Y' and active_asterisk_server='Y' $LOGadmin_viewable_groupsSQL order by server_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $servers_to_print = mysqli_num_rows($rslt);
-        $servers_menu = "<option SELECTED value=\"$SSactive_voicemail_server\">"._QXZ("DEFAULT")." - $SSactive_voicemail_server</option>\n";
-        $os = 0;
-        while ($servers_to_print > $os) {
-            $rowx = mysqli_fetch_row($rslt);
-            $servers_menu .= "<option value=\"$rowx[1]\">$rowx[0] - $rowx[1]</option>\n";
-            $os++;
-        }
-        
-        // Modern test call form
-        echo "<div style='max-width:900px;margin:20px auto;background:#fff;border-radius:12px;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);border-left:6px solid #27ae60;'>";
-        echo "<form action=$PHP_SELF method=POST>\n";
-        echo "<input type=hidden name=ADD value=41>\n";
-        echo "<input type=hidden name=DB value=$DB>\n";
-        echo "<input type=hidden name=stage value=test_call>\n";
-        echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-        echo "<input type=hidden name=manual_dial_list_id value=\"$manual_dial_list_id\">\n";
-        echo "<input type=hidden name=dial_timeout value=\"$dial_timeout\">\n";
-        echo "<input type=hidden name=dial_prefix value=\"$dial_prefix\">\n";
-        echo "<input type=hidden name=campaign_cid value=\"$campaign_cid\">\n";
-        echo "<input type=hidden name=campaign_vdad_exten value=\"$campaign_vdad_exten\">\n";
-        echo "<input type=hidden name=omit_phone_code value=\"$omit_phone_code\">\n";
-        echo "<div style='font-size:18px;font-weight:bold;color:#2c3e50;margin-bottom:20px;'>"._QXZ("Test Outbound Call")."</div>";
-        echo "<div style='display:flex;gap:15px;flex-wrap:wrap;align-items:flex-end;'>";
-        echo "<div style='flex:0 0 80px;'><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:5px;'>"._QXZ("code")."</label><input type=text name=phone_code id=phone_code size=2 maxlength=10 value=\"\" style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'></div>";
-        echo "<div style='flex:1;min-width:180px;'><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:5px;'>"._QXZ("number")."</label><input type=text name=phone_number id=phone_number size=14 maxlength=20 value=\"\" style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'></div>";
-        echo "<div style='flex:1;min-width:200px;'><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:5px;'>"._QXZ("server")."</label><select size=1 name=old_server_ip style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'>$servers_menu</select></div>";
-        echo "<div style='flex:0 0 auto;'><input style='background:#27ae60;color:#fff;border:none;padding:12px 30px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 3px 8px rgba(39,174,96,0.3);' type=submit value=\""._QXZ("PLACE TEST CALL")."\"></div>";
-        echo "</div>";
-        echo "<div style='margin-top:10px;font-size:12px;color:#888;'>$NWB#settings-test_campaign_calls$NWE</div>";
-        echo "</form></div><br>\n";
-    } else {
-        echo "<div style='max-width:900px;margin:20px auto;background:#f8d7da;border-radius:10px;padding:18px 25px;color:#721c24;font-weight:600;text-align:center;border-left:6px solid #f5c6cb;'>"._QXZ("Test calling disabled")."</div><br>\n";
-    }
-}
+			echo "<br><br><a href=\"campaign_debug.php?group=$campaign_id\">"._QXZ("Click here to see the debug report for this campaign")."</a></FONT>\n";
+			}
+		echo "</b></center>\n";
+		}
 
-if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)))) {
-    echo "<div style='max-width:900px;margin:20px auto;background:#fff;border-radius:10px;padding:20px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
-    echo "<div style='display:flex;gap:15px;justify-content:center;flex-wrap:wrap;'>";
-    echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGNS&stage=$campaign_id\" style='color:#3498db;font-size:15px;text-decoration:none;font-weight:600;'>"._QXZ("Click here to see Admin changes to this campaign")."</a>";
-    echo "<span style='color:#bdc3c7;'>|</span>";
-    echo "<a href=\"campaign_debug.php?group=$campaign_id\" style='color:#e67e22;font-size:15px;text-decoration:none;font-weight:600;'>"._QXZ("Click here to see the debug report for this campaign")."</a>";
-    echo "</div></div>\n";
-}
-echo "</b></center>\n";
-}
 
-##### CAMPAIGN CUSTOM STATUSES #####
-if ($SUB==22) {
-    ##### get status category listings for dynamic pulldown
-    $stmt = "SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
-    $rslt = mysql_to_mysqli($stmt, $link);
-    $cats_to_print = mysqli_num_rows($rslt);
-    $cats_list = "";
-    
-    $o = 0;
-    while ($cats_to_print > $o) {
-        $rowx = mysqli_fetch_row($rslt);
-        $cats_list .= "<option value=\"$rowx[0]\">$rowx[0] - " . substr($rowx[1],0,20) . "</option>\n";
-        $catsname_list["$rowx[0]"] = substr($rowx[1],0,20);
-        $o++;
-    }
-    
-    $status_group_overrides_OUTPUT = '';
-    $status_group_overrides_OUTPUT .= "<div style='max-width:900px;margin:20px auto;background:#fff3cd;border-radius:10px;padding:20px;border-left:6px solid #ffc107;'>";
-    $status_group_overrides_OUTPUT .= "<div style='font-size:16px;font-weight:bold;color:#856404;margin-bottom:15px;'>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE")."</div>";
-    $status_group_overrides_OUTPUT .= "<table style='width:100%;border-collapse:collapse;'>";
-    
-    $stmt = "SELECT closer_campaigns from vicidial_campaigns where campaign_id='$campaign_id';";
-    $rslt = mysql_to_mysqli($stmt, $link);
-    $cg_to_print = mysqli_num_rows($rslt);
-    if ($cg_to_print > 0) {
-        $row = mysqli_fetch_row($rslt);
-        $closer_campaigns = $row[0];
-        $closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
-        $closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
-    }
-    
-    $stmt = "SELECT group_id,group_name from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
-    $rslt = mysql_to_mysqli($stmt, $link);
-    $ig_to_print = mysqli_num_rows($rslt);
-    $sgo_ig = 0;
-    while ($ig_to_print > $sgo_ig) {
-        $row = mysqli_fetch_row($rslt);
-        $status_group_overrides_OUTPUT .= "<tr style='border-bottom:1px solid #e9ecef;'><td style='padding:10px;'><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\" style='color:#3498db;text-decoration:none;font-weight:600;'>$row[0]</a></td><td style='padding:10px;color:#555;'>$row[1]</td></tr>\n";
-        $sgo_ig++;
-    }
-    $status_group_overrides_OUTPUT .= "</table>";
-    
-    $status_group_overrides_OUTPUT .= "<div style='font-size:16px;font-weight:bold;color:#856404;margin:20px 0 15px 0;'>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE")."</div>";
-    $status_group_overrides_OUTPUT .= "<table style='width:100%;border-collapse:collapse;'>";
-    
-    $stmt = "SELECT list_id,list_name from vicidial_lists where status_group_id NOT IN('','NONE') and campaign_id='$campaign_id';";
-    $rslt = mysql_to_mysqli($stmt, $link);
-    $list_to_print = mysqli_num_rows($rslt);
-    $sgo_li = 0;
-    while ($list_to_print > $sgo_li) {
-        $row = mysqli_fetch_row($rslt);
-        $status_group_overrides_OUTPUT .= "<tr style='border-bottom:1px solid #e9ecef;'><td style='padding:10px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#3498db;text-decoration:none;font-weight:600;'>$row[0]</a></td><td style='padding:10px;color:#555;'>$row[1]</td></tr>\n";
-        $sgo_li++;
-    }
-    $status_group_overrides_OUTPUT .= "</table></div>";
-    
-    $sgo_total = ($sgo_ig + $sgo_li);
-    $sgo_message = '';
-    if ($sgo_total > 0) {
-        $sgo_message = "<div style='background:#f8d7da;color:#721c24;padding:12px 20px;border-radius:8px;font-weight:600;border-left:4px solid #f5c6cb;margin-top:15px;'>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</div>";
-    }
-    
-    echo "<center>\n";
-    echo "<div style='max-width:1200px;margin:30px auto;'>";
-    echo "<div style='background:#fff;border-radius:12px;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);margin-bottom:20px;'>";
-    echo "<div style='font-size:22px;font-weight:bold;color:#2c3e50;margin-bottom:5px;'>"._QXZ("CUSTOM STATUSES WITHIN THIS CAMPAIGN")."</div>";
-    echo "<div style='font-size:12px;color:#888;margin-bottom:10px;'>$NWB#campaign_statuses$NWE</div>";
-    if ($sgo_message) {
-        echo $sgo_message;
-    }
-    echo "</div>";
-    
-    // Modern table with vertical headers
-    echo "<div style='overflow-x:auto;'>";
-    echo "<table style='width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>\n";
-    echo "<thead><tr style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;'>";
-    echo "<th style='padding:15px 12px;text-align:center;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,0.1);min-width:80px;'>"._QXZ("STATUS")."</th>";
-    echo "<th style='padding:15px 12px;text-align:center;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,0.1);min-width:150px;'>"._QXZ("DESCRIPTION")."</th>";
-    echo "<th style='padding:15px 12px;text-align:center;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,0.1);min-width:100px;'>"._QXZ("CATEGORY")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("AGENT SELECTABLE")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("HUMAN ANSWER")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("SALE")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("DNC")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("CUSTOMER CONTACT")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("NOT INTERESTED")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("UNWORKABLE")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("SCHEDULED CALLBACK")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("COMPLETED")."</th>";
-    echo "<th style='padding:40px 8px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);writing-mode:vertical-rl;transform:rotate(180deg);min-width:35px;'>"._QXZ("ANSWERING MACHINE")."</th>";
-    echo "<th style='padding:15px 8px;text-align:center;font-weight:600;font-size:11px;border-right:1px solid rgba(255,255,255,0.1);min-width:50px;'>"._QXZ("MIN SEC")."</th>";
-    echo "<th style='padding:15px 8px;text-align:center;font-weight:600;font-size:11px;border-right:1px solid rgba(255,255,255,0.1);min-width:50px;'>"._QXZ("MAX SEC")."</th>";
-    echo "<th style='padding:15px 12px;text-align:center;font-weight:600;font-size:13px;min-width:120px;'>"._QXZ("MODIFY/DELETE")."</th>";
-    echo "</tr></thead>\n";
-    echo "<tbody>\n";
+	##### CAMPAIGN CUSTOM STATUSES #####
+	if ($SUB==22)
+		{
+		##### get status category listings for dynamic pulldown
+		$stmt="SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$cats_to_print = mysqli_num_rows($rslt);
+		$cats_list="";
 
-}
-	
+		$o=0;
+		while ($cats_to_print > $o)
+			{
+			$rowx=mysqli_fetch_row($rslt);
+			$cats_list .= "<option value=\"$rowx[0]\">$rowx[0] - " . substr($rowx[1],0,20) . "</option>\n";
+			$catsname_list["$rowx[0]"] = substr($rowx[1],0,20);
+			$o++;
+			}
+
+		$status_group_overrides_OUTPUT='';
+		$status_group_overrides_OUTPUT .= "<B>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE").":</B><BR>\n";
+		$status_group_overrides_OUTPUT .= "<TABLE>\n";
+
+		$stmt="SELECT closer_campaigns from vicidial_campaigns where campaign_id='$campaign_id';";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$cg_to_print = mysqli_num_rows($rslt);
+		if ($cg_to_print > 0) 
+			{
+			$row=mysqli_fetch_row($rslt);
+			$closer_campaigns =	$row[0];
+			$closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
+			$closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
+			}
+
+		$stmt="SELECT group_id,group_name from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$ig_to_print = mysqli_num_rows($rslt);
+		$sgo_ig=0;
+		while ($ig_to_print > $sgo_ig) 
+			{
+			$row=mysqli_fetch_row($rslt);
+			$status_group_overrides_OUTPUT .= "<TR><TD><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
+			$sgo_ig++;
+			}
+		$status_group_overrides_OUTPUT .= "</TABLE><BR>\n";
+
+		$status_group_overrides_OUTPUT .= "<B>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE").":</B><BR>\n";
+		$status_group_overrides_OUTPUT .= "<TABLE>\n";
+
+		$stmt="SELECT list_id,list_name from vicidial_lists where status_group_id NOT IN('','NONE') and campaign_id='$campaign_id';";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$list_to_print = mysqli_num_rows($rslt);
+		$sgo_li=0;
+		while ($list_to_print > $sgo_li) 
+			{
+			$row=mysqli_fetch_row($rslt);
+			$status_group_overrides_OUTPUT .= "<TR><TD><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
+			$sgo_li++;
+			}
+		$status_group_overrides_OUTPUT .= "</TABLE><BR>\n";
+		$sgo_total = ($sgo_ig + $sgo_li);
+		$sgo_message='';
+		if ($sgo_total > 0)
+			{$sgo_message = "<font color=red><b>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</b></font>";}
+
+		echo "<center>\n";
+		echo "<br><b>"._QXZ("CUSTOM STATUSES WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_statuses$NWE</b> &nbsp; $sgo_message<br>\n";
+
+		echo "<TABLE width=700 cellspacing=3>\n";
+		echo "<tr height='250'><td align=center valign=bottom><font size=2><b>"._QXZ("STATUS")."</b></font></td>\n";
+		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("DESCRIPTION")."</td>\n";
+		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("CATEGORY")."</td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("AGENT SELECTABLE")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("HUMAN ANSWER")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("SALE")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("DNC")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("CUSTOMER CONTACT")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("NOT INTERESTED")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("UNWORKABLE")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("SCHEDULED CALLBACK")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("COMPLETED")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("ANSWERING MACHINE")."</B></font></td>\n";
+		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MIN SEC")."</td>\n";
+		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MAX SEC")."</td>\n";
+		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("MODIFY/DELETE")."</td>\n";
+		echo "</tr>\n";
+
 		##### get status category listings for dynamic pulldown
 		$stmt="SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
 		$rslt=mysql_to_mysqli($stmt, $link);
