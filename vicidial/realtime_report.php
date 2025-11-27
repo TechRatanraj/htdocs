@@ -2087,19 +2087,41 @@ if ($RS_hide_CUST_info < 1)
     .top_head_val {color: black; font-family: HELVETICA; font-size: 12;}
 
 
-    .realtime_img_icon {width: 42px; height: 42px;}
-    .realtime_img_text {font-family:HELVETICA; font-size:11; color:white; font-weight:bold;}
-    .realtime_table {width: 990px; max-width: 990px; }
-    .realtime_calls_table {width: 890px; max-width: 960px; }
-    .realtime_settings_table {width: 790px; max-width: 790px; }
+  .realtime_img_icon {
+    width: 56px;
+    height: 56px;
+}
+
+.realtime_img_text {
+    font-family: HELVETICA;
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+}
+
+.realtime_table {
+    width: 1100px;
+    max-width: 1100px;
+}
+
+.realtime_calls_table {
+    width: 1020px;
+    max-width: 1020px;
+}
+
+.realtime_settings_table {
+    width: 900px;
+    max-width: 900px;
+}
+
 
     /* FORCE DARK GREY KPI CARDS - Override inline styles */
     table[bgcolor="#D9E6FE"],
-    table[bgcolor="#7E7E02"],
+    table[bgcolor=""#D9E6FE""],
     table[bgcolor="black"] {
-        background-color: #2c3e50 !important;
+        background-color: "#D9E6FE" !important;
         border-radius: 8px !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+        box-shadow: 0 2px 6px "#D9E6FE"(0,0,0,0.15) !important;
     }
 
     /* Modern top stats table styling */
