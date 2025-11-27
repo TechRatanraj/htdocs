@@ -27166,8 +27166,7 @@ echo "<option SELECTED>$max_inbound_filter_enabled</option>";
 echo "</select>$NWB#users-max_inbound_filter_enabled$NWE";
 echo "<small>"._QXZ("inbound filtered calls today").": $USER_inbound_calls_today_filtered</small>";
 echo "</div>";
-
-                
+           
 echo "<div class='form-group'>";
 echo "<label>"._QXZ("Max Manual Dial Hopper Calls").":</label>";
 echo "<input type=text name=max_hopper_calls class='form-control form-control-sm' value=\"$max_hopper_calls\">$NWB#users-max_hopper_calls$NWE";
@@ -27843,7 +27842,7 @@ echo "</div>";
 echo "</div>";
 
 // Level 9 Admin Options
-if ( ($LOGmodify_same_user_level > 0) or ($LOGalter_admin_interface > 0) ) and ($LOGuser_level > 8) )
+if ( ($LOGmodify_same_user_level > 0) or (($LOGalter_admin_interface > 0) ) and ($LOGuser_level > 8) )
     {
     echo "<div class='form-section'>";
     echo "<h2 class='section-title'>"._QXZ("LEVEL 9 ADMIN OPTIONS")."</h2>";
