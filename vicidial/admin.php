@@ -32090,198 +32090,238 @@ if ($SSoutbound_autodial_active > 0) {
     echo "</center><BR></FORM>\n";
 
 
-			$filterSQL = $filtersql_list[$lead_filter_id];
-			$filterSQL = preg_replace("/\\\\/","",$filterSQL);
-			$filterSQL = preg_replace('/^and|and$|^or|or$/i', '',$filterSQL);
-			if (strlen($filterSQL)>4)
-				{$fSQL = "and ($filterSQL)";}
-			else
-				{$fSQL = '';}
 
-			$camp_lists = preg_replace('/.$/i','',$camp_lists);
-			echo "<center><B>"._QXZ("This campaign has")." $active_lists "._QXZ("active lists and")." $inactive_lists "._QXZ("inactive lists")."</B><br><br>\n";
+			
+$filterSQL = $filtersql_list[$lead_filter_id];
+$filterSQL = preg_replace("/\\\\/","",$filterSQL);
+$filterSQL = preg_replace('/^and|and$|^or|or$/i', '',$filterSQL);
+if (strlen($filterSQL)>4) {
+    $fSQL = "and ($filterSQL)";
+} else {
+    $fSQL = '';
+}
 
-			$dial_statuses_original = $dial_statuses;
+$camp_lists = preg_replace('/.$/i','',$camp_lists);
 
-			if ( ($display_leads_count == 'Y') and (strlen($camp_lists) > 3) )
-				{
-				# grab names of global statuses and statuses in the selected campaign
-				$stmt="SELECT status,status_name,completed from vicidial_statuses order by status;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$statuses_to_print = mysqli_num_rows($rslt);
+// Modern styled summary banner
+echo "<center>";
+echo "<div style='max-width:900px;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);border-radius:12px;padding:25px;margin:30px auto 30px auto;box-shadow:0 6px 20px rgba(102,126,234,0.25);'>";
+echo "<div style='color:#fff;font-size:22px;font-weight:bold;margin-bottom:8px;'>"._QXZ("Campaign Lists Summary")."</div>";
+echo "<div style='color:#f5f5f5;font-size:16px;'>"._QXZ("This campaign has")." <strong style='background:rgba(255,255,255,0.25);padding:3px 14px;border-radius:20px;'>$active_lists</strong> "._QXZ("active lists and")." <strong style='background:rgba(255,255,255,0.25);padding:3px 14px;border-radius:20px;'>$inactive_lists</strong> "._QXZ("inactive lists")."</div>";
+echo "</div>";
 
-				$o=0;
-				while ($statuses_to_print > $o) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$statuses_name_list["$rowx[0]"] = "$rowx[1]";
-					$statuses_complete_list["$rowx[0]"] = "$rowx[2]";
-					$o++;
-					}
+$dial_statuses_original = $dial_statuses;
 
-				$stmt="SELECT status,status_name,completed from vicidial_campaign_statuses where campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL order by status;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$Cstatuses_to_print = mysqli_num_rows($rslt);
+if (($display_leads_count == 'Y') and (strlen($camp_lists) > 3)) {
+    # grab names of global statuses and statuses in the selected campaign
+    $stmt = "SELECT status,status_name,completed from vicidial_statuses order by status;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $statuses_to_print = mysqli_num_rows($rslt);
+    
+    $o = 0;
+    while ($statuses_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $statuses_name_list["$rowx[0]"] = "$rowx[1]";
+        $statuses_complete_list["$rowx[0]"] = "$rowx[2]";
+        $o++;
+    }
+    
+    $stmt = "SELECT status,status_name,completed from vicidial_campaign_statuses where campaign_id IN($camp_status_groups'$campaign_id') $LOGallowed_campaignsSQL order by status;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $Cstatuses_to_print = mysqli_num_rows($rslt);
+    
+    $o = 0;
+    while ($Cstatuses_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $statuses_name_list["$rowx[0]"] = "$rowx[1]";
+        $statuses_complete_list["$rowx[0]"] = "$rowx[2]";
+        $o++;
+    }
+    # end grab status names
+    
+    // Modern section header
+    echo "<div style='max-width:900px;margin:0 auto 20px auto;background:#fff;border-radius:10px;padding:18px 25px;box-shadow:0 2px 10px rgba(0,0,0,0.08);display:flex;justify-content:space-between;align-items:center;'>";
+    echo "<div style='font-size:19px;font-weight:bold;color:#2c3e50;'>"._QXZ("STATUSES WITHIN THE ACTIVE LISTS FOR THIS CAMPAIGN")."</div>";
+    echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=hide_leadscount\" style='background:#e74c3c;color:#fff;padding:7px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px;box-shadow:0 2px 6px rgba(231,76,60,0.3);'>"._QXZ("HIDE")."</a>";
+    echo "</div>";
+    
+    if ($SSexpanded_list_stats > 0) {
+        $dialable_total = 0;
+        $complete_total = 0;
+        $fSQL = '';
+        
+        $stmt = "SELECT lead_filter_sql from vicidial_lead_filters where lead_filter_id='$lead_filter_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $filters_to_print = mysqli_num_rows($rslt);
+        if ($filters_to_print > 0) {
+            $rowx = mysqli_fetch_row($rslt);
+            $filterSQL = $rowx[0];
+            $filterSQL = preg_replace("/\\\\/","",$filterSQL);
+            $filterSQL = preg_replace('/^and|and$|^or|or$/i', '',$filterSQL);
+            if (strlen($filterSQL)>4) {
+                $fSQL = "and ($filterSQL)";
+            } else {
+                $fSQL = '';
+            }
+        }
+        
+        // Modern styled table with expanded stats
+        echo "<TABLE style='max-width:900px;margin:0 auto;border-collapse:separate;border-spacing:0;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>\n";
+        echo "<thead><tr style='background:linear-gradient(135deg, #3498db 0%, #2980b9 100%);color:#fff;'>";
+        echo "<th style='padding:14px 16px;text-align:left;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("STATUS")."</th>";
+        echo "<th style='padding:14px 16px;text-align:left;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("STATUS NAME")."</th>";
+        echo "<th style='padding:14px 16px;text-align:center;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("CALLED")."</th>";
+        echo "<th style='padding:14px 16px;text-align:center;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("NOT CALLED")."</th>";
+        echo "<th style='padding:14px 16px;text-align:center;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("DIALABLE")."</th>";
+        echo "<th style='padding:14px 16px;text-align:right;font-weight:600;font-size:14px;'>"._QXZ("PENETRATION")."</th>";
+        echo "</tr></thead>\n";
+        echo "<tbody>\n";
+    } else {
+        // Modern styled table - basic stats
+        echo "<TABLE style='max-width:700px;margin:0 auto;border-collapse:separate;border-spacing:0;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>\n";
+        echo "<thead><tr style='background:linear-gradient(135deg, #3498db 0%, #2980b9 100%);color:#fff;'>";
+        echo "<th style='padding:14px 16px;text-align:left;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("STATUS")."</th>";
+        echo "<th style='padding:14px 16px;text-align:left;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("STATUS NAME")."</th>";
+        echo "<th style='padding:14px 16px;text-align:center;font-weight:600;font-size:14px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("CALLED")."</th>";
+        echo "<th style='padding:14px 16px;text-align:center;font-weight:600;font-size:14px;'>"._QXZ("NOT CALLED")."</th>";
+        echo "</tr></thead>\n";
+        echo "<tbody>\n";
+    }
+    
+    $leads_in_list = 0;
+    $leads_in_list_N = 0;
+    $leads_in_list_Y = 0;
+    $stmt = "SELECT status,called_since_last_reset,count(*) from vicidial_list where list_id IN($camp_lists) group by status,called_since_last_reset order by status,called_since_last_reset;";
+    if ($DB) {echo "$stmt\n";}
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $statuses_to_print = mysqli_num_rows($rslt);
+    
+    $o = 0;
+    $lead_list['count'] = 0;
+    $lead_list['Y_count'] = 0;
+    $lead_list['N_count'] = 0;
+    while ($statuses_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        
+        $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
+        if ($rowx[1] == 'N') {
+            $since_reset = 'N';
+            $since_resetX = 'Y';
+        } else {
+            $since_reset = 'Y';
+            $since_resetX = 'N';
+        } 
+        $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
+        $lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
+        #If opposite side is not set, it may not in the future so give it a value of zero
+        if (!isset($lead_list[$since_resetX][$rowx[0]])) {
+            $lead_list[$since_resetX][$rowx[0]] = 0;
+        }
+        $o++;
+    }
+ 
+    $o = 0;
+    if ($lead_list['count'] > 0) {
+        foreach($lead_list[$since_reset] as $dispo => $blank) {
+            if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+                $row_style = "background:#f8f9fa;";
+            } else {
+                $row_style = "background:#ffffff;";
+            }
+            
+            if ($dispo == 'CBHOLD') {
+                $CLB = "<a href=\"$PHP_SELF?ADD=811&list_id=$list_id\" style='color:#3498db;text-decoration:none;font-weight:600;'>";
+                $CLE = "</a>";
+            } else {
+                $CLB = '';
+                $CLE = '';
+            }
+            
+            if ($SSexpanded_list_stats > 0) {
+                ### call function to calculate dialable leads
+                $single_status = 1;
+                $only_return = 0;
+                $dial_statuses = " $dispo -";
+                if ($statuses_complete_list[$dispo] == 'Y') {
+                    $Xdialable_count = 0;
+                } else {
+                    $Xdialable_count = dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);
+                }
+                $dialable_total = ($dialable_total + $Xdialable_count);
+                
+                ### get number of complete calls of this status for penetration calculations
+                $Xcomplete_count = complete_leads($DB,$link,$dial_statuses,$camp_lists,$call_count_limit,$single_status,$campaign_id);
+                $complete_total = ($complete_total + $Xcomplete_count);
+                $dispo_total = ($lead_list['Y'][$dispo] + $lead_list['N'][$dispo]);
+                if (($Xcomplete_count < 1) or ($dispo_total < 1)) {
+                    $complete_pct = "0";
+                } else {
+                    $complete_pct = intval(($Xcomplete_count / $dispo_total) * 100);
+                }
+                
+                echo "<tr style='$row_style border-bottom:1px solid #e9ecef;transition:background 0.2s;' onmouseover=\"this.style.background='#e3f2fd'\" onmouseout=\"this.style.background='".($o%2==0?"#ffffff":"#f8f9fa")."'\">";
+                echo "<td style='padding:12px 16px;font-size:13px;font-weight:600;color:#2c3e50;'>$CLB$dispo$CLE</td>";
+                echo "<td style='padding:12px 16px;font-size:13px;color:#555;'>$statuses_name_list[$dispo]</td>";
+                echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:600;color:#27ae60;'>".$lead_list['Y'][$dispo]."</td>";
+                echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:600;color:#e67e22;'>".$lead_list['N'][$dispo]."</td>";
+                echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:600;color:#3498db;'>$Xdialable_count</td>";
+                echo "<td style='padding:12px 16px;text-align:right;font-size:13px;'><span style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;padding:4px 12px;border-radius:12px;font-weight:600;'>$complete_pct%</span></td>";
+                echo "</tr>\n";
+            } else {
+                echo "<tr style='$row_style border-bottom:1px solid #e9ecef;transition:background 0.2s;' onmouseover=\"this.style.background='#e3f2fd'\" onmouseout=\"this.style.background='".($o%2==0?"#ffffff":"#f8f9fa")."'\">";
+                echo "<td style='padding:12px 16px;font-size:13px;font-weight:600;color:#2c3e50;'>$CLB$dispo$CLE</td>";
+                echo "<td style='padding:12px 16px;font-size:13px;color:#555;'>$statuses_name_list[$dispo]</td>";
+                echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:600;color:#27ae60;'>".$lead_list['Y'][$dispo]."</td>";
+                echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:600;color:#e67e22;'>".$lead_list['N'][$dispo]."</td>";
+                echo "</tr>\n";
+            }
+            $o++;
+        }
+    }
+    
+    // Totals row with modern styling
+    if ($SSexpanded_list_stats > 0) {
+        if (($complete_total < 1) or ($lead_list['count'] < 1)) {
+            $total_complete_pct = "0";
+        } else {
+            $total_complete_pct = intval(($complete_total / $lead_list['count']) * 100);
+        }
+        echo "<tr style='background:#ecf0f1;border-top:2px solid #bdc3c7;'>";
+        echo "<td colspan=2 style='padding:12px 16px;font-size:13px;font-weight:700;color:#34495e;'>"._QXZ("SUBTOTALS")."</td>";
+        echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#27ae60;'>$lead_list[Y_count]</td>";
+        echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#e67e22;'>$lead_list[N_count]</td>";
+        echo "<td style='padding:12px 16px;text-align:center;font-size:13px;'>&nbsp;</td>";
+        echo "<td style='padding:12px 16px;text-align:right;font-size:13px;'>&nbsp;</td>";
+        echo "</tr>\n";
+        echo "<tr style='background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;'>";
+        echo "<td style='padding:14px 16px;font-size:14px;font-weight:bold;'>"._QXZ("TOTAL")."</td>";
+        echo "<td colspan=3 style='padding:14px 16px;text-align:center;font-size:14px;font-weight:bold;'>$lead_list[count]</td>";
+        echo "<td style='padding:14px 16px;text-align:center;font-size:14px;font-weight:bold;'>$dialable_total</td>";
+        echo "<td style='padding:14px 16px;text-align:right;font-size:14px;'><span style='background:rgba(255,255,255,0.2);padding:5px 14px;border-radius:14px;font-weight:bold;'>$total_complete_pct%</span></td>";
+        echo "</tr>\n";
+    } else {
+        echo "<tr style='background:#ecf0f1;border-top:2px solid #bdc3c7;'>";
+        echo "<td colspan=2 style='padding:12px 16px;font-size:13px;font-weight:700;color:#34495e;'>"._QXZ("SUBTOTALS")."</td>";
+        echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#27ae60;'>$lead_list[Y_count]</td>";
+        echo "<td style='padding:12px 16px;text-align:center;font-size:13px;font-weight:700;color:#e67e22;'>$lead_list[N_count]</td>";
+        echo "</tr>\n";
+        echo "<tr style='background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;'>";
+        echo "<td style='padding:14px 16px;font-size:14px;font-weight:bold;'>"._QXZ("TOTAL")."</td>";
+        echo "<td colspan=3 style='padding:14px 16px;text-align:center;font-size:14px;font-weight:bold;'>$lead_list[count]</td>";
+        echo "</tr>\n";
+    }
+    
+    echo "</tbody></TABLE><br><br>\n";
+    unset($lead_list);
+} else {
+    echo "<div style='max-width:700px;margin:0 auto;background:#fff;border-radius:10px;padding:20px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
+    echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_leadscount\" style='color:#3498db;font-size:15px;text-decoration:none;font-weight:600;'>"._QXZ("SHOW LEAD STATUSES IN THIS CAMPAIGN")."</a>";
+    echo "</div><BR><BR>";
+}
 
-				$o=0;
-				while ($Cstatuses_to_print > $o) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$statuses_name_list["$rowx[0]"] = "$rowx[1]";
-					$statuses_complete_list["$rowx[0]"] = "$rowx[2]";
-					$o++;
-					}
-				# end grab status names
+echo "<center><b>\n";
+echo "</center></div>\n";
 
-				echo "<br><b>"._QXZ("STATUSES WITHIN THE ACTIVE LISTS FOR THIS CAMPAIGN").":</b>\n";
-				echo " - <font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=hide_leadscount\">"._QXZ("HIDE")."</a></font><BR>";
-
-				if ($SSexpanded_list_stats > 0)
-					{
-					echo "<TABLE width=700 cellspacing=3>\n";
-					$dialable_total=0;
-					$complete_total=0;
-					$fSQL = '';
-
-					$stmt="SELECT lead_filter_sql from vicidial_lead_filters where lead_filter_id='$lead_filter_id' $LOGadmin_viewable_groupsSQL;";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$filters_to_print = mysqli_num_rows($rslt);
-					if ($filters_to_print > 0) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						$filterSQL = $rowx[0];
-						$filterSQL = preg_replace("/\\\\/","",$filterSQL);
-						$filterSQL = preg_replace('/^and|and$|^or|or$/i', '',$filterSQL);
-						if (strlen($filterSQL)>4)
-							{$fSQL = "and ($filterSQL)";}
-						else
-							{$fSQL = '';}
-						}
-					echo "<tr><td>"._QXZ("STATUS")."</td><td>"._QXZ("STATUS NAME")."</td><td>"._QXZ("CALLED")."</td><td>"._QXZ("NOT CALLED")."</td><td>"._QXZ("DIALABLE")."</td><td>"._QXZ("PENETRATION")."</td></tr>\n";
-					}
-				else
-					{
-					echo "<TABLE width=500 cellspacing=3>\n";
-					echo "<tr><td>"._QXZ("STATUS")."</td><td>"._QXZ("STATUS NAME")."</td><td>"._QXZ("CALLED")."</td><td>"._QXZ("NOT CALLED")."</td></tr>\n";
-					}
-
-				$leads_in_list = 0;
-				$leads_in_list_N = 0;
-				$leads_in_list_Y = 0;
-				$stmt="SELECT status,called_since_last_reset,count(*) from vicidial_list where list_id IN($camp_lists) group by status,called_since_last_reset order by status,called_since_last_reset;";
-				if ($DB) {echo "$stmt\n";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$statuses_to_print = mysqli_num_rows($rslt);
-
-				$o=0;
-				$lead_list['count'] = 0;
-				$lead_list['Y_count'] = 0;
-				$lead_list['N_count'] = 0;
-				while ($statuses_to_print > $o) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					
-					$lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-					if ($rowx[1] == 'N') 
-						{
-						$since_reset = 'N';
-						$since_resetX = 'Y';
-						}
-					else 
-						{
-						$since_reset = 'Y';
-						$since_resetX = 'N';
-						} 
-					$lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-					$lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
-					#If opposite side is not set, it may not in the future so give it a value of zero
-					if (!isset($lead_list[$since_resetX][$rowx[0]])) 
-						{
-						$lead_list[$since_resetX][$rowx[0]]=0;
-						}
-					$o++;
-					}
-			 
-				$o=0;
-				if ($lead_list['count'] > 0)
-					{
-#					while (list($dispo,) = each($lead_list[$since_reset]))
-					foreach($lead_list[$since_reset] as $dispo => $blank)
-						{
-						if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-							{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-						else
-							{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-						if ($dispo == 'CBHOLD')
-							{
-							$CLB="<a href=\"$PHP_SELF?ADD=811&list_id=$list_id\">";
-							$CLE="</a>";
-							}
-						else
-							{
-							$CLB='';
-							$CLE='';
-							}
-						if ($SSexpanded_list_stats > 0)
-							{
-							### call function to calculate dialable leads
-							$single_status=1;
-							$only_return=0;
-							$dial_statuses=" $dispo -";
-							if ($statuses_complete_list[$dispo] == 'Y')
-								{$Xdialable_count=0;}
-							else
-								{$Xdialable_count = dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);}
-							$dialable_total = ($dialable_total + $Xdialable_count);
-
-							### get number of complete calls of this status for penetration calculations
-							$Xcomplete_count = complete_leads($DB,$link,$dial_statuses,$camp_lists,$call_count_limit,$single_status,$campaign_id);
-							$complete_total = ($complete_total + $Xcomplete_count);
-							$dispo_total = ($lead_list['Y'][$dispo] + $lead_list['N'][$dispo]);
-							if ( ($Xcomplete_count < 1) or ($dispo_total < 1) )
-								{$complete_pct = "0";}
-							else
-								{
-								$complete_pct = intval(($Xcomplete_count / $dispo_total) * 100);
-								}
-
-							echo "<tr $bgcolor><td><font size=1>$CLB$dispo$CLE</td><td><font size=1>$statuses_name_list[$dispo]</td><td><font size=1>".$lead_list['Y'][$dispo]."</td><td><font size=1>".$lead_list['N'][$dispo]." </td><td><font size=1>$Xdialable_count </td><td align=right><font size=1>$complete_pct% &nbsp; </td></tr>\n";
-							}
-						else
-							{
-							echo "<tr $bgcolor><td><font size=1>$CLB$dispo$CLE</td><td><font size=1>$statuses_name_list[$dispo]</td><td><font size=1>".$lead_list['Y'][$dispo]."</td><td><font size=1>".$lead_list['N'][$dispo]." </td></tr>\n";
-							}
-						$o++;
-						}
-					}
-
-				if ($SSexpanded_list_stats > 0)
-					{
-					if ( ($complete_total < 1) or ($lead_list['count'] < 1) )
-						{$total_complete_pct = "0";}
-					else
-						{$total_complete_pct = intval(($complete_total / $lead_list['count']) * 100);}
-					echo "<tr><td colspan=2><font size=1>"._QXZ("SUBTOTALS")."</td><td><font size=1>$lead_list[Y_count]</td><td><font size=1>$lead_list[N_count]</td><td><font size=1> &nbsp; </td><td><font size=1> &nbsp; </td></tr>\n";
-					echo "<tr bgcolor=\"#$SSstd_row1_background\"><td><font size=1>"._QXZ("TOTAL")."</td><td colspan=3 align=center><font size=1>$lead_list[count]</td><td><font size=1>$dialable_total</td><td align=right><font size=1> $total_complete_pct% &nbsp; </td></tr>\n";
-					}
-				else
-					{
-					echo "<tr><td colspan=2><font size=1>"._QXZ("SUBTOTALS")."</td><td><font size=1>$lead_list[Y_count]</td><td><font size=1>$lead_list[N_count]</td></tr>\n";
-					echo "<tr bgcolor=\"#$SSstd_row1_background\"><td><font size=1>"._QXZ("TOTAL")."</td><td colspan=3 align=center><font size=1>$lead_list[count]</td></tr>\n";
-					}
-
-				echo "</table></center><br>\n";
-				unset($lead_list);
-				}
-			else
-				{
-				echo "<font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$campaign_id&stage=show_leadscount\">"._QXZ("SHOW LEAD STATUSES IN THIS CAMPAIGN")."</a></font><BR><BR>";
-				}
-
-
-
-			echo "<center><b>\n";
 
 			if ($display_dialable_count == 'Y')
 				{
