@@ -32488,355 +32488,331 @@ echo "</center></div>\n";
 		}
 
 
-	##### CAMPAIGN CUSTOM STATUSES #####
-	if ($SUB==22)
-		{
-		##### get status category listings for dynamic pulldown
-		$stmt="SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$cats_to_print = mysqli_num_rows($rslt);
-		$cats_list="";
-
-		$o=0;
-		while ($cats_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$cats_list .= "<option value=\"$rowx[0]\">$rowx[0] - " . substr($rowx[1],0,20) . "</option>\n";
-			$catsname_list["$rowx[0]"] = substr($rowx[1],0,20);
-			$o++;
-			}
-
-		$status_group_overrides_OUTPUT='';
-		$status_group_overrides_OUTPUT .= "<B>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE").":</B><BR>\n";
-		$status_group_overrides_OUTPUT .= "<TABLE>\n";
-
-		$stmt="SELECT closer_campaigns from vicidial_campaigns where campaign_id='$campaign_id';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$cg_to_print = mysqli_num_rows($rslt);
-		if ($cg_to_print > 0) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			$closer_campaigns =	$row[0];
-			$closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
-			$closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
-			}
-
-		$stmt="SELECT group_id,group_name from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$ig_to_print = mysqli_num_rows($rslt);
-		$sgo_ig=0;
-		while ($ig_to_print > $sgo_ig) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			$status_group_overrides_OUTPUT .= "<TR><TD><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$sgo_ig++;
-			}
-		$status_group_overrides_OUTPUT .= "</TABLE><BR>\n";
-
-		$status_group_overrides_OUTPUT .= "<B>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE").":</B><BR>\n";
-		$status_group_overrides_OUTPUT .= "<TABLE>\n";
-
-		$stmt="SELECT list_id,list_name from vicidial_lists where status_group_id NOT IN('','NONE') and campaign_id='$campaign_id';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$list_to_print = mysqli_num_rows($rslt);
-		$sgo_li=0;
-		while ($list_to_print > $sgo_li) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			$status_group_overrides_OUTPUT .= "<TR><TD><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$sgo_li++;
-			}
-		$status_group_overrides_OUTPUT .= "</TABLE><BR>\n";
-		$sgo_total = ($sgo_ig + $sgo_li);
-		$sgo_message='';
-		if ($sgo_total > 0)
-			{$sgo_message = "<font color=red><b>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</b></font>";}
-
-		echo "<center>\n";
-	echo "<div style='margin:28px 0 14px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
-
-echo "<div style='font-size:22px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
-        <span>📋</span>"._QXZ("Custom Statuses Within This Campaign")."
-      </div>";
-
-if (!empty($sgo_message)) {
-    echo "<div style='margin-top:6px;font-size:13px;color:#555;'>$sgo_message</div>";
+	
+##### CAMPAIGN CUSTOM STATUSES #####
+if ($SUB==22) {
+    ##### get status category listings for dynamic pulldown
+    $stmt = "SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $cats_to_print = mysqli_num_rows($rslt);
+    $cats_list = "";
+    
+    $o = 0;
+    while ($cats_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $cats_list .= "<option value=\"$rowx[0]\">$rowx[0] - " . substr($rowx[1],0,20) . "</option>\n";
+        $catsname_list["$rowx[0]"] = substr($rowx[1],0,20);
+        $o++;
+    }
+    
+    $status_group_overrides_OUTPUT = '';
+    $status_group_overrides_OUTPUT .= "<B>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE").":</B><BR>\n";
+    $status_group_overrides_OUTPUT .= "<TABLE>\n";
+    
+    $stmt = "SELECT closer_campaigns from vicidial_campaigns where campaign_id='$campaign_id';";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $cg_to_print = mysqli_num_rows($rslt);
+    if ($cg_to_print > 0) {
+        $row = mysqli_fetch_row($rslt);
+        $closer_campaigns = $row[0];
+        $closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
+        $closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
+    }
+    
+    $stmt = "SELECT group_id,group_name from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $ig_to_print = mysqli_num_rows($rslt);
+    $sgo_ig = 0;
+    while ($ig_to_print > $sgo_ig) {
+        $row = mysqli_fetch_row($rslt);
+        $status_group_overrides_OUTPUT .= "<TR><TD><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
+        $sgo_ig++;
+    }
+    $status_group_overrides_OUTPUT .= "</TABLE><BR>\n";
+    
+    $status_group_overrides_OUTPUT .= "<B>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE").":</B><BR>\n";
+    $status_group_overrides_OUTPUT .= "<TABLE>\n";
+    
+    $stmt = "SELECT list_id,list_name from vicidial_lists where status_group_id NOT IN('','NONE') and campaign_id='$campaign_id';";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $list_to_print = mysqli_num_rows($rslt);
+    $sgo_li = 0;
+    while ($list_to_print > $sgo_li) {
+        $row = mysqli_fetch_row($rslt);
+        $status_group_overrides_OUTPUT .= "<TR><TD><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
+        $sgo_li++;
+    }
+    $status_group_overrides_OUTPUT .= "</TABLE><BR>\n";
+    $sgo_total = ($sgo_ig + $sgo_li);
+    $sgo_message = '';
+    if ($sgo_total > 0) {
+        $sgo_message = "<font color=red><b>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</b></font>";
+    }
+    
+    echo "<center>\n";
+    echo "<div style='margin:28px 0 14px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+    
+    echo "<div style='font-size:22px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
+            <span>📋</span>"._QXZ("Custom Statuses Within This Campaign")."
+          </div>";
+    
+    if (!empty($sgo_message)) {
+        echo "<div style='margin-top:6px;font-size:13px;color:#555;'>$sgo_message</div>";
+    }
+    
+    echo "<div style='width:100%;margin-top:18px;background:#ffffff;border-radius:14px;
+                box-shadow:0 3px 12px rgba(0,0,0,0.06);padding:0;overflow:hidden;'>";
+    
+    echo "<table cellspacing='0' cellpadding='10' style='width:100%;border-collapse:collapse;font-size:13px;'>";
+    
+    // Header row
+    echo "<tr style='background:#f1f5f9;border-bottom:1px solid #e2e8f0;text-transform:uppercase;font-size:11px;letter-spacing:0.4px;color:#475569;'>";
+    
+    echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Status")."</th>";
+    echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Description")."</th>";
+    echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Category")."</th>";
+    
+    $headerStyleBlue  = "padding:12px 6px;text-align:center;background:#e0f7ff;font-weight:700;";
+    $headerStyleGreen = "padding:12px 6px;text-align:center;background:#d6fbe3;font-weight:700;";
+    
+    echo "<th style='$headerStyleBlue'>"._QXZ("Agent Selectable")."</th>";
+    echo "<th style='$headerStyleGreen'>"._QXZ("Human Answer")."</th>";
+    echo "<th style='$headerStyleBlue'>"._QXZ("Sale")."</th>";
+    echo "<th style='$headerStyleGreen'>"._QXZ("DNC")."</th>";
+    echo "<th style='$headerStyleBlue'>"._QXZ("Customer Contact")."</th>";
+    echo "<th style='$headerStyleGreen'>"._QXZ("Not Interested")."</th>";
+    echo "<th style='$headerStyleBlue'>"._QXZ("Unworkable")."</th>";
+    echo "<th style='$headerStyleGreen'>"._QXZ("Scheduled Callback")."</th>";
+    echo "<th style='$headerStyleBlue'>"._QXZ("Completed")."</th>";
+    echo "<th style='$headerStyleGreen'>"._QXZ("Answering Machine")."</th>";
+    
+    echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Min Sec")."</th>";
+    echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Max Sec")."</th>";
+    echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Modify / Delete")."</th>";
+    
+    echo "</tr>";
+    
+    // Data rows
+    $stmt = "SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $statuses_to_print = mysqli_num_rows($rslt);
+    $o = 0;
+    while ($statuses_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $AScategory = $rowx[4];
+        $o++;
+        
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+            $bgcolor = 'style="background:#f8f9fa;"';
+        } else {
+            $bgcolor = 'style="background:#ffffff;"';
+        }
+        
+        echo "<tr $bgcolor><td><form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=42>\n";
+        echo "<input type=hidden name=stage value=modify>\n";
+        echo "<input type=hidden name=status value=\"$rowx[0]\">\n";
+        echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+        echo "<font size=2><B>$rowx[0]</B></td>\n";
+        echo "<td><input type=text name=status_name size=20 maxlength=30 value=\"$rowx[1]\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'></td>\n";
+        echo "<td>\n";
+        echo "<select size=1 name=category class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;background:#f8fafe;'>\n";
+        echo "$cats_list";
+        $cat_display = '';
+        if (isset($catsname_list[$AScategory])) {
+            $cat_display = $catsname_list[$AScategory];
+        }
+        echo "<option selected value=\"$AScategory\">$AScategory - $cat_display</option>\n";
+        echo "</select>\n";
+        echo "\n";
+        echo "</td><td style='background:#e0f7ff;'><select size=1 name=selectable class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[2]")."' selected>"._QXZ("$rowx[2]")."</option></select>\n";
+        echo "</td><td style='background:#d6fbe3;'><select size=1 name=human_answered class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[3]")."' selected>"._QXZ("$rowx[3]")."</option></select>\n";
+        echo "</td><td style='background:#e0f7ff;'><select size=1 name=sale class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[5]")."' selected>"._QXZ("$rowx[5]")."</option></select>\n";
+        echo "</td><td style='background:#d6fbe3;'><select size=1 name=dnc class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[6]")."' selected>"._QXZ("$rowx[6]")."</option></select>\n";
+        echo "</td><td style='background:#e0f7ff;'><select size=1 name=customer_contact class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[7]")."' selected>"._QXZ("$rowx[7]")."</option></select>\n";
+        echo "</td><td style='background:#d6fbe3;'><select size=1 name=not_interested class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[8]")."' selected>"._QXZ("$rowx[8]")."</option></select>\n";
+        echo "</td><td style='background:#e0f7ff;'><select size=1 name=unworkable class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[9]")."' selected>"._QXZ("$rowx[9]")."</option></select>\n";
+        echo "</td><td style='background:#d6fbe3;'><select size=1 name=scheduled_callbacks class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[10]")."' selected>"._QXZ("$rowx[10]")."</option></select>\n";
+        echo "</td><td style='background:#e0f7ff;'><select size=1 name=completed class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[11]")."' selected>"._QXZ("$rowx[11]")."</option></select>\n";
+        echo "</td><td style='background:#d6fbe3;'><select size=1 name=answering_machine class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[14]")."' selected>"._QXZ("$rowx[14]")."</option></select>\n";
+        echo "</td>\n";
+        echo "<td><input type=text name=min_sec size=3 maxlength=5 value=\"$rowx[12]\" class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'></td>\n";
+        echo "<td><input type=text name=max_sec size=3 maxlength=5 value=\"$rowx[13]\" class=\"cust_form\" style='padding:6px;border:1px solid #d2d6e2;border-radius:6px;'></td>\n";
+        echo "</td><td align=center nowrap><font size=1><input style='background-color:#$SSbutton_color;color:#fff;padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-weight:600;' type=submit name=submit value='"._QXZ("MODIFY")."'> &nbsp; \n";
+        
+        if (preg_match("/^B$|^NA$|^DNC$|^NA$|^DROP$|^INCALL$|^QUEUE$|^NEW$/i",$rowx[0])) {
+            echo "<span style='color:#ccc;text-decoration:line-through;'>"._QXZ("DELETE")."</span>\n";
+        } else {
+            echo "<a href=\"$PHP_SELF?ADD=42&campaign_id=$campaign_id&status=$rowx[0]&stage=delete\" style='color:#e74c3c;text-decoration:none;font-weight:600;'>"._QXZ("DELETE")."</a>\n";
+        }
+        echo "</form></td></tr>\n";
+    }
+    
+    echo "</table></div></div>\n";
+    
+    // Add New Status Form
+    echo "<div style='margin:30px 0 20px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+    
+    echo "<div style='max-width:1100px;margin:0 auto;background:#ffffff;border-radius:16px;
+                box-shadow:0 3px 12px rgba(0,0,0,0.08);padding:24px 28px;'>";
+    
+    // Title
+    echo "<div style='font-size:20px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
+            <span>➕</span>"._QXZ("Add New Custom Campaign Status")."
+          </div>";
+    
+    echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:6px;margin-bottom:20px;'></div>";
+    
+    // Form start
+    echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
+    
+    echo "<input type='hidden' name='ADD' value='22'>";
+    echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
+    
+    // GRID 1 (Status, Description, Selectable, Human Answer)
+    echo "<div style='display:grid;grid-template-columns:150px 1fr 150px 150px;gap:18px;margin-bottom:16px;'>";
+    
+    // Status
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Status")."</label>
+            <input type='text' name='status_id' size='8' maxlength='6'
+                   style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                          border:1px solid #d2d6e2;background:#fbfdff;font-size:14px;'>
+          </div>";
+    
+    // Description
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Description")."</label>
+            <input type='text' name='status_name' size='20' maxlength='30'
+                   style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                          border:1px solid #d2d6e2;background:#fbfdff;font-size:14px;'>
+          </div>";
+    
+    // Selectable
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Selectable")."</label>
+            <select name='selectable'
+                   style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                          border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N'>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    // Human Answer
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Human Answer")."</label>
+            <select name='human_answered'
+                   style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                          border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "</div>"; // end grid 1
+    
+    // GRID 2 (Sale, DNC, Customer Contact, Not Interested)
+    echo "<div style='display:grid;grid-template-columns:150px 150px 180px 180px;gap:18px;margin-bottom:16px;'>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Sale")."</label>
+            <select name='sale' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("DNC")."</label>
+            <select name='dnc' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Customer Contact")."</label>
+            <select name='customer_contact' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Not Interested")."</label>
+            <select name='not_interested' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "</div>"; // end grid 2
+    
+    // GRID 3 (Unworkable, Callback, Completed, Answering Machine, Category)
+    echo "<div style='display:grid;grid-template-columns:150px 150px 150px 180px 1fr;gap:18px;margin-bottom:16px;'>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Unworkable")."</label>
+            <select name='unworkable' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Callback")."</label>
+            <select name='scheduled_callbacks' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Completed")."</label>
+            <select name='completed' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Answering Machine")."</label>
+            <select name='answering_machine' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='Y'>"._QXZ("Y")."</option>
+                <option value='N' selected>"._QXZ("N")."</option>
+            </select>
+          </div>";
+    
+    // Category
+    echo "<div>
+            <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Category")."</label>
+            <select name='category'
+                    style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                           border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+                <option value='-'>-</option>
+                $cats_list
+            </select>
+          </div>";
+    
+    echo "</div>"; // end grid 3
+    
+    // Submit Button
+    echo "<div style='text-align:right;margin-top:10px;'>
+            <input type='submit' name='submit' value='"._QXZ("ADD")."'
+                   style='background-color:#$SSbutton_color;color:#fff;padding:10px 30px;
+                          border:none;border-radius:8px;font-size:14px;font-weight:700;
+                          cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+          </div>";
+    
+    echo "</form>";
+    
+    echo "</div>"; // card
+    echo "</div>"; // container
+    
+    echo "$status_group_overrides_OUTPUT";
+    echo "</center>\n";
 }
-
-echo "<div style='width:100%;margin-top:18px;background:#ffffff;border-radius:14px;
-            box-shadow:0 3px 12px rgba(0,0,0,0.06);padding:0;overflow:hidden;'>";
-
-echo "<table cellspacing='0' cellpadding='10' style='width:100%;border-collapse:collapse;font-size:13px;'>";
-
-// Header row
-echo "<tr style='background:#f1f5f9;border-bottom:1px solid #e2e8f0;text-transform:uppercase;font-size:11px;letter-spacing:0.4px;color:#475569;'>";
-
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Status")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Description")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Category")."</th>";
-
-$headerStyleBlue  = "padding:12px 6px;text-align:center;background:#e0f7ff;font-weight:700;";
-$headerStyleGreen = "padding:12px 6px;text-align:center;background:#d6fbe3;font-weight:700;";
-
-echo "<th style='$headerStyleBlue'>"._QXZ("Agent Selectable")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Human Answer")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Sale")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("DNC")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Customer Contact")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Not Interested")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Unworkable")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Scheduled Callback")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Completed")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Answering Machine")."</th>";
-
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Min Sec")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Max Sec")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Modify / Delete")."</th>";
-
-echo "</tr>";
-
-//Done till here Bottom lines are pending 
-
-		##### get status category listings for dynamic pulldown
-		$stmt="SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$cats_to_print = mysqli_num_rows($rslt);
-		$cats_list="";
-
-		$o=0;
-		while ($cats_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$cats_list .= "<option value=\"$rowx[0]\">$rowx[0] - " . substr($rowx[1],0,20) . "</option>\n";
-			$catsname_list["$rowx[0]"] = substr($rowx[1],0,20);
-			$o++;
-			}
-
-		$stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$statuses_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($statuses_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$AScategory = $rowx[4];
-			$o++;
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><form action=$PHP_SELF method=POST>\n";
-			echo "<input type=hidden name=ADD value=42>\n";
-			echo "<input type=hidden name=stage value=modify>\n";
-			echo "<input type=hidden name=status value=\"$rowx[0]\">\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo "<font size=2><B>$rowx[0]</B></td>\n";
-			echo "<td><input type=text name=status_name size=20 maxlength=30 value=\"$rowx[1]\"></td>\n";
-			echo "<td>\n";
-			echo "<select size=1 name=category class=\"cust_form\">\n";
-			echo "$cats_list";
-			echo "<option selected value=\"$AScategory\">$AScategory - $catsname_list[$AScategory]</option>\n";
-			echo "</select>\n";
-			echo "\n";
-			echo "</td><td bgcolor=\"#ccffff\"><select size=1 name=selectable class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[2]")."' selected>"._QXZ("$rowx[2]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#99ffcc\"><select size=1 name=human_answered class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[3]")."' selected>"._QXZ("$rowx[3]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#ccffff\"><select size=1 name=sale class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[5]")."' selected>"._QXZ("$rowx[5]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#99ffcc\"><select size=1 name=dnc class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[6]")."' selected>"._QXZ("$rowx[6]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#ccffff\"><select size=1 name=customer_contact class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[7]")."' selected>"._QXZ("$rowx[7]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#99ffcc\"><select size=1 name=not_interested class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[8]")."' selected>"._QXZ("$rowx[8]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#ccffff\"><select size=1 name=unworkable class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[9]")."' selected>"._QXZ("$rowx[9]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#99ffcc\"><select size=1 name=scheduled_callbacks class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[10]")."' selected>"._QXZ("$rowx[10]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#ccffff\"><select size=1 name=completed class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[11]")."' selected>"._QXZ("$rowx[11]")."</option></select>\n";
-			echo "</td><td bgcolor=\"#99ffcc\"><select size=1 name=answering_machine class=\"cust_form\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='"._QXZ("$rowx[14]")."' selected>"._QXZ("$rowx[14]")."</option></select>\n";
-			echo "</td>\n";
-			echo "<td><input type=text name=min_sec size=3 maxlength=5 value=\"$rowx[12]\" class=\"cust_form\"></td>\n";
-			echo "<td><input type=text name=max_sec size=3 maxlength=5 value=\"$rowx[13]\" class=\"cust_form\"></td>\n";
-			echo "</td><td align=center nowrap><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'> &nbsp; &nbsp; &nbsp; &nbsp; \n";
-			echo " &nbsp; \n";
-			
-			if (preg_match("/^B$|^NA$|^DNC$|^NA$|^DROP$|^INCALL$|^QUEUE$|^NEW$/i",$rowx[0]))
-				{
-				echo "<DEL>"._QXZ("DELETE")."</DEL>\n";
-				}
-			else
-				{
-				echo "<a href=\"$PHP_SELF?ADD=42&campaign_id=$campaign_id&status=$rowx[0]&stage=delete\">"._QXZ("DELETE")."</a>\n";
-				}
-			echo "</form></td></tr>\n";
-			}
-
-		echo "</table>\n";
-
-
-		echo "<div style='margin:30px 0 20px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
-
-echo "<div style='max-width:1100px;margin:0 auto;background:#ffffff;border-radius:16px;
-            box-shadow:0 3px 12px rgba(0,0,0,0.08);padding:24px 28px;'>";
-
-// Title
-echo "<div style='font-size:20px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
-        <span>➕</span>"._QXZ("Add New Custom Campaign Status")."
-      </div>";
-
-echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:6px;margin-bottom:20px;'></div>";
-
-// Form start
-echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
-
-echo "<input type='hidden' name='ADD' value='22'>";
-echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
-
-// GRID 1 (Status, Description, Selectable, Human Answer)
-echo "<div style='display:grid;grid-template-columns:150px 1fr 150px 150px;gap:18px;margin-bottom:16px;'>";
-
-// Status
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Status")."</label>
-        <input type='text' name='status_id' size='8' maxlength='6'
-               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
-                      border:1px solid #d2d6e2;background:#fbfdff;font-size:14px;'>
-      </div>";
-
-// Description
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Description")."</label>
-        <input type='text' name='status_name' size='20' maxlength='30'
-               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
-                      border:1px solid #d2d6e2;background:#fbfdff;font-size:14px;'>
-      </div>";
-
-// Selectable
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Selectable")."</label>
-        <select name='selectable'
-               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
-                      border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N'>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-// Human Answer
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Human Answer")."</label>
-        <select name='human_answered'
-               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
-                      border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "</div>"; // end grid 1
-
-
-
-// GRID 2 (Sale, DNC, Customer Contact, Not Interested)
-echo "<div style='display:grid;grid-template-columns:150px 150px 180px 180px;gap:18px;margin-bottom:16px;'>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Sale")."</label>
-        <select name='sale' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("DNC")."</label>
-        <select name='dnc' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Customer Contact")."</label>
-        <select name='customer_contact' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Not Interested")."</label>
-        <select name='not_interested' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "</div>"; // end grid 2
-
-
-
-// GRID 3 (Unworkable, Callback, Completed, Answering Machine, Category)
-echo "<div style='display:grid;grid-template-columns:150px 150px 150px 180px 1fr;gap:18px;margin-bottom:16px;'>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Unworkable")."</label>
-        <select name='unworkable' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Callback")."</label>
-        <select name='scheduled_callbacks' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Completed")."</label>
-        <select name='completed' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Answering Machine")."</label>
-        <select name='answering_machine' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            <option value='Y'>"._QXZ("Y")."</option>
-            <option value='N' selected>"._QXZ("N")."</option>
-        </select>
-      </div>";
-
-// Category
-echo "<div>
-        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Category")."</label>
-        <select name='category'
-                style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
-                       border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
-            $cats_list
-            <option selected value=\"$AScategory\">$AScategory - $catsname_list[$AScategory]</option>
-        </select>
-      </div>";
-
-echo "</div>"; // end grid 3
-
-
-
-// Submit Button
-echo "<div style='text-align:right;margin-top:10px;'>
-        <input type='submit' name='submit' value='"._QXZ("ADD")."'
-               style='background-color:#$SSbutton_color;color:#fff;padding:10px 30px;
-                      border:none;border-radius:8px;font-size:14px;font-weight:700;
-                      cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
-      </div>";
-
-echo "</form>";
-
-echo "</div>"; // card
-echo "</div>"; // container
-
-echo "$status_group_overrides_OUTPUT";
-		}
 
 	##### CAMPAIGN HOTKEYS #####
 if ($SUB==23)
