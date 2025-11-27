@@ -2115,14 +2115,13 @@ if ($RS_hide_CUST_info < 1)
 }
 
 
-    /* FORCE DARK GREY KPI CARDS - Override inline styles */
-    table[bgcolor="#D9E6FE"],
-    table[bgcolor=""#D9E6FE""],
-    table[bgcolor="black"] {
-        background-color: "#D9E6FE" !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 6px "#D9E6FE"(0,0,0,0.15) !important;
-    }
+table[bgcolor="#D9E6FE"],
+table[bgcolor="#D9E6FE"],
+table[bgcolor="black"] {
+    background-color: #D9E6FE !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 50, 0.25) !important;
+}
 
     /* Modern top stats table styling */
     table[bgcolor="#D9E6FE"],
