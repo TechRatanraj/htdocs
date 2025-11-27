@@ -2089,9 +2089,9 @@ if ($RS_hide_CUST_info < 1)
 
     .realtime_img_icon {width: 42px; height: 42px;}
     .realtime_img_text {font-family:HELVETICA; font-size:11; color:white; font-weight:bold;}
-    .realtime_table {width: 960px; max-width: 960px; }
-    .realtime_calls_table {width: 860px; max-width: 860px; }
-    .realtime_settings_table {width: 780px; max-width: 780px; }
+    .realtime_table {width: 990px; max-width: 990px; }
+    .realtime_calls_table {width: 890px; max-width: 960px; }
+    .realtime_settings_table {width: 790px; max-width: 790px; }
 
     /* FORCE DARK GREY KPI CARDS - Override inline styles */
     table[bgcolor="#015b91"],
