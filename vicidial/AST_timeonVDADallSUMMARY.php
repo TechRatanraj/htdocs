@@ -1045,7 +1045,7 @@ if ($DB) {$MAIN.="$stmt\n";}
         header ("Content-type: text/html; charset=utf-8");
 
         echo $HEADER;
-        require("admin_header.php");
+        //require("admin_header.php");
         echo $MAIN;
     }
 
