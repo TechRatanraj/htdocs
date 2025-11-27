@@ -28030,9 +28030,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (firstContent) { firstContent.classList.add('active'); }
 });
 </script>";
-
-// FIRST permission check fail
-}
+			
+// FIRST permission check fail}
 else
 {
     echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
