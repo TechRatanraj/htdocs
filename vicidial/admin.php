@@ -35010,7 +35010,7 @@ while ($listmixes > $o)
 
 	// table rows for the mix continue with your existing code after this line
 
-	}
+	
 	
 echo "</div>"; // closing outer wrapper for List Mixes section
 
