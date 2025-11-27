@@ -26116,7 +26116,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div></div></div>\n";
 } else {
     // Modern Form Card with Grey Header
-    echo "<div style='max-width:100%;margin:30px auto;'>";
+    echo "<div style='width:100%;margin:0;padding:0;box-sizing:border-box;'>";
     
     // Grey Header
     echo "<div style='background:linear-gradient(135deg,#495057 0%,#343a40 100%);border-radius:12px 12px 0 0;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>";
@@ -26125,7 +26125,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div>";
     
     // Form Container
-    echo "<div style='background:#fff;border-radius:0 0 12px 12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);'>";
+    echo "<div style='background:#fff;border-radius:0 0 12px 12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);box-sizing:border-box;'>";
     echo "<form action='$PHP_SELF' method='POST'>\n";
     
     if (($LOGuser_level > 8) and ($LOGalter_admin_interface > 0)) {
@@ -26146,22 +26146,22 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "<input type='hidden' name='DB' value='$DB'>\n";
     
     // User Number (Full Width)
-    echo "<div style='background:#f8f9fa;padding:15px;border-radius:8px;border-left:4px solid #495057;margin-bottom:20px;'>";
+    echo "<div style='background:#f8f9fa;padding:15px;border-radius:8px;border-left:4px solid #495057;margin-bottom:20px;box-sizing:border-box;'>";
     echo "<div style='font-size:12px;font-weight:600;color:#6c757d;margin-bottom:5px;'>"._QXZ("User Number")."</div>";
     echo "<div style='font-size:16px;font-weight:bold;color:#2c3e50;'>$user $NWB#users-user$NWE</div>";
     echo "</div>";
     
     // Password Section (Full Width)
     if ($SSpass_hash_enabled > 0) {
-        echo "<div style='background:#fff3cd;padding:15px;border-radius:8px;border-left:4px solid #ffc107;margin-bottom:20px;'>";
+        echo "<div style='background:#fff3cd;padding:15px;border-radius:8px;border-left:4px solid #ffc107;margin-bottom:20px;box-sizing:border-box;'>";
         echo "<div style='color:#856404;font-weight:600;font-size:14px;'>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</div>";
         echo "</div>";
     }
     
-    echo "<div style='margin-bottom:20px;'>";
+    echo "<div style='margin-bottom:20px;box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Password")."</label>";
-    echo "<div style='display:flex;align-items:center;gap:10px;'>";
-    echo "<input type='text' id='reg_pass' name='pass' maxlength='100' value='$pass' onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\" style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;width:100%;box-sizing:border-box;'>";
+    echo "<div style='display:flex;align-items:center;gap:10px;box-sizing:border-box;'>";
+    echo "<input type='text' id='reg_pass' name='pass' maxlength='100' value='$pass' onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\" style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;min-width:0;'>";
     echo "$NWB#users-pass$NWE";
     echo "<span style='font-size:11px;color:#6c757d;white-space:nowrap;'>"._QXZ("Strength").":</span>";
     echo "<img id='reg_pass_img' src='images/pixel.gif' style='vertical-align:middle;' onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">";
@@ -26169,7 +26169,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div></div>";
     
     // Last Login Info (Full Width)
-    echo "<div style='background:#e7f3ff;padding:15px;border-radius:8px;border-left:4px solid #495057;margin-bottom:20px;'>";
+    echo "<div style='background:#e7f3ff;padding:15px;border-radius:8px;border-left:4px solid #495057;margin-bottom:20px;box-sizing:border-box;'>";
     echo "<div style='font-size:12px;font-weight:600;color:#004085;margin-bottom:5px;'>"._QXZ("Last Login Info")."</div>";
     echo "<div style='font-size:13px;color:#004085;'><strong>$last_login_date - $failed_login_count - $last_ip $last_auth</strong> $NWB#users-last_login_date$NWE</div>";
     if ($LOGuser_level > 8) {
@@ -26181,11 +26181,11 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     }
     echo "</div>";
     
-    // TWO COLUMN GRID - Full width fields
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;'>";
+    // TWO COLUMN GRID - Fixed Layout
+    echo "<div style='display:grid;grid-template-columns:repeat(2,1fr);gap:20px;box-sizing:border-box;'>";
     
     // Force Change Password
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Force Change Password")."</label>";
     echo "<select size='1' name='force_change_password' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
@@ -26195,13 +26195,13 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div>";
     
     // Full Name
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Full Name")."</label>";
     echo "<input type='text' name='full_name' maxlength='30' value='$full_name' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>$NWB#users-full_name$NWE";
     echo "</div>";
     
     // User Level
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User Level")."</label>";
     echo "<select size='1' name='user_level' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
     $h=1;
@@ -26218,7 +26218,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div>";
     
     // User Group
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=311111&user_group=$user_group' style='color:#495057;text-decoration:none;'>"._QXZ("User Group")."</a></label>";
     echo "<select size='1' name='user_group' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>\n";
     
@@ -26238,13 +26238,13 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div>";
     
     // Phone Login
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Phone Login")."</label>";
     echo "<input type='text' name='phone_login' maxlength='20' value='$phone_login' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>$NWB#users-phone_login$NWE";
     echo "</div>";
     
     // Phone Pass
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Phone Pass")."</label>";
     echo "<input type='text' name='phone_pass' maxlength='100' value='$phone_pass' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>$NWB#users-phone_pass$NWE";
     if (($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS')) {
@@ -26253,7 +26253,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div>";
     
     // Active
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Active")."</label>";
     echo "<select size='1' name='active' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
@@ -26263,22 +26263,22 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</div>";
     
     // Voicemail ID
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Voicemail ID")."</label>";
-    echo "<div style='display:flex;gap:10px;align-items:center;width:100%;'>";
-    echo "<input type='text' name='voicemail_id' id='voicemail_id' maxlength='10' value='$voicemail_id' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("chooser")."</a>";
+    echo "<div style='display:flex;gap:10px;align-items:center;box-sizing:border-box;'>";
+    echo "<input type='text' name='voicemail_id' id='voicemail_id' maxlength='10' value='$voicemail_id' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;min-width:0;'>";
+    echo "<a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;flex-shrink:0;'>"._QXZ("chooser")."</a>";
     echo "</div>$NWB#users-voicemail_id$NWE";
     echo "</div>";
     
     // Email
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Email")."</label>";
     echo "<input type='text' name='email' maxlength='100' value='$email' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>$NWB#users-email$NWE";
     echo "</div>";
     
     // Mobile Number
-    echo "<div style='width:100%;'>";
+    echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Mobile Number")."</label>";
     echo "<input type='text' name='mobile_number' maxlength='20' value='$mobile_number' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>$NWB#users-mobile_number$NWE";
     echo "</div>";
@@ -26332,17 +26332,17 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
             $user_code_container_menu .= "<option SELECTED value='$user_code'>$user_code</option>\n";
         }
         
-        echo "<div style='width:100%;'>";
+        echo "<div style='box-sizing:border-box;'>";
         echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User Code")."</label>";
         if ($LOGuser_level >= 9) {
             echo "<select size='1' name='user_code' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>$user_code_container_menu</select>$NWB#users-optional$NWE";
         } else {
             echo "<input type='hidden' name='user_code' value='$user_code'>";
-            echo "<div style='padding:10px;background:#f8f9fa;border-radius:8px;font-size:14px;color:#495057;width:100%;box-sizing:border-box;'>$user_code</div> $NWB#users-optional$NWE";
+            echo "<div style='padding:10px;background:#f8f9fa;border-radius:8px;font-size:14px;color:#495057;box-sizing:border-box;'>$user_code</div> $NWB#users-optional$NWE";
         }
         echo "</div>";
     } else {
-        echo "<div style='width:100%;'>";
+        echo "<div style='box-sizing:border-box;'>";
         echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User Code")."</label>";
         echo "<input type='text' name='user_code' maxlength='100' value='$user_code' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>$NWB#users-optional$NWE";
         echo "</div>";
