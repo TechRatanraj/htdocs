@@ -34875,238 +34875,263 @@ echo "</div>";
 	}
 
 ######################
+
 # ADD=31 or 34 and SUB=29 for list mixes
 ######################
 if ( ( ($ADD==34) or ($ADD==31) ) and ( (!preg_match("/$campaign_id/i", $LOGallowed_campaigns)) and (!preg_match("/ALL-CAMPAIGNS/i",$LOGallowed_campaigns)) ) ) 
-	{$ADD=30;}	# send to not allowed screen if not in vicidial_user_groups allowed_campaigns list
+    {$ADD=30;}  # send to not allowed screen if not in vicidial_user_groups allowed_campaigns list
 
 if ( ($ADD==34) or ($ADD==31) )
 {
-	if ($LOGmodify_campaigns==1)
-	{
-	##### CAMPAIGN LIST MIX SETTINGS #####
-	if ($SUB==29)
-		{
-		##### get list_id listings for dynamic pulldown
-		$stmt="SELECT list_id,list_name from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by list_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$mixlists_to_print = mysqli_num_rows($rslt);
-		$mixlists_list="";
-
-		$o=0;
-		while ($mixlists_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$mixlists_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$mixlistsname_list["$rowx[0]"] = "$rowx[1]";
-			$o++;
-			}
-
-
-		echo "<br><br><b>"._QXZ("LIST MIXES FOR THIS CAMPAIGN").": &nbsp; $NWB#campaigns-list_order_mix$NWE</b><br>\n";
-
-		echo "<br><b>"._QXZ("WARNING, we only recommend List Mix for advanced users, Please read the Manager Manual")."</b><br>\n";
-
-		$stmt="SELECT dial_statuses from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$statuses = mysqli_num_rows($rslt);
-		if ($statuses > 0) 
-			{
-			$rowy=mysqli_fetch_row($rslt);
-			$LMdial_statuses=$rowy[0];
-			}
-
-		$stmt="SELECT vcl_id,vcl_name,campaign_id,list_mix_container,mix_method,status from vicidial_campaigns_list_mix where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status, vcl_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$listmixes = mysqli_num_rows($rslt);
-		$o=0;
-		while ($listmixes > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$vcl_id=$rowx[0];
-			$o++;
-
-			if ($o < 2)
-				{$tablecolor='bgcolor="#'. $SSalt_row2_background .'"';   $bgcolor='bgcolor="#'. $SSalt_row2_background .'"';}
-			else
-				{
-				if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-					{$tablecolor='bgcolor="#'. $SSstd_row2_background .'"';   $bgcolor='bgcolor="#'. $SSstd_row1_background .'"';} 
-				else
-					{$tablecolor='bgcolor="#'. $SSstd_row1_background .'"';   $bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
-				}
-			echo "<a name=\"LINK_$vcl_id\"><BR>\n";
-			echo "<span id=\"LISTMIX$US$vcl_id$US$o\">";
-			echo "<TABLE width=740 cellspacing=3 $tablecolor>\n";
-			echo "<tr><td colspan=6>\n";
-			echo "<form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST name=$vcl_id id=$vcl_id>\n";
-			echo "<input type=hidden name=ADD value=49>\n";
-			echo "<input type=hidden name=SUB value=29>\n";
-			echo "<input type=hidden name=stage value=\"MODIFY\">\n";
-			echo "<input type=hidden name=vcl_id value=\"$vcl_id\">\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo "<input type=hidden name=list_mix_container$US$vcl_id id=list_mix_container$US$vcl_id value=\"\">\n";
-			echo "<B>$vcl_id:</B>\n";
-			echo "<input type=text size=40 maxlength=50 name=vcl_name$US$vcl_id id=vcl_name$US$vcl_id value=\"$rowx[1]\">\n";
-			echo " &nbsp; &nbsp; <a href=\"$PHP_SELF?ADD=49&SUB=29&stage=DELMIX&campaign_id=$campaign_id&vcl_id=$vcl_id\">"._QXZ("DELETE LIST MIX")."</a></td></tr>\n";
-			echo "<tr><td colspan=3>"._QXZ("Status").": \n";
-			if ($rowx[5]=='INACTIVE')
-				{
-				echo "<B>"._QXZ("$rowx[5]")."</B>\n";
-				echo "<a href=\"$PHP_SELF?ADD=49&SUB=29&stage=SETACTIVE&campaign_id=$campaign_id&vcl_id=$vcl_id\"><font size=1>"._QXZ("SET TO ACTIVE")."</font></a></td>\n";
-				}
-			else
-				{echo "<B>"._QXZ("$rowx[5]")."</B></td>\n";}
-			echo "<td colspan=3>"._QXZ("Method").":\n";
-			echo "<select size=1 name=mix_method$US$vcl_id id=method$US$vcl_id><option value=\"EVEN_MIX\">"._QXZ("EVEN_MIX")."</option><option value=\"IN_ORDER\">"._QXZ("IN_ORDER")."</option><option value=\"RANDOM\">"._QXZ("RANDOM")."</option><option value='$rowx[4]' SELECTED value=\"$rowx[4]\">"._QXZ("$rowx[4]")."</option></select></td></tr>\n";
-			echo "<tr><td>"._QXZ("LIST ID")."</td><td>"._QXZ("PRIORITY")."</td><td>"._QXZ("% MIX")."</td><td>"._QXZ("STATUSES")."</td><td>"._QXZ("")."</td></tr>\n";
-
-# list_id|order|percent|statuses|:list_id|order|percent|statuses|:...
-# 101|1|40| A B NA -|:102|2|25| NEW -|:103|3|30| DROP CALLBK -|:101|4|5| DROP -|
-# INSERT INTO vicidial_campaigns_list_mix values('TESTMIX','TESTCAMP List Mix','TESTCAMP','101|1|40| A B NA -|:102|2|25| NEW -|:103|3|30| DROP CALLBK -|:101|4|5| DROP -|','IN_ORDER','ACTIVE');
-# INSERT INTO vicidial_campaigns_list_mix values('TESTMIX2','TESTCAMP List Mix2','TESTCAMP','101|1|20| A B -|:102|2|45| NEW -|:103|3|30| DROP CALLBK -|:101|4|5| DROP -|','IN_ORDER','ACTIVE');
-# INSERT INTO vicidial_campaigns_list_mix values('TESTMIX3','TESTCAMP List Mix3','TESTCAMP','101|1|30| A NA -|:102|2|35| NEW -|:103|3|30| DROP CALLBK -|:101|4|5| DROP -|','IN_ORDER','ACTIVE');
-
-			$MIXentries = $MT;
-			$MIXentries = explode(":", $rowx[3]);
-			$Ms_to_print = (count($MIXentries) - 0);
-			$q=0;
-			while ($Ms_to_print > $q) 
-				{
-				$MIXdetails = explode('|', $MIXentries[$q]);
-				$MIXdetailsLIST = $MIXdetails[0];
-
-				$dial_statuses = preg_replace("/ -$/","",$dial_statuses);
-				$Dstatuses = explode(" ", $dial_statuses);
-				$Ds_to_print = (count($Dstatuses) - 0);
-				$Dsql = '';
-				$r=0;
-				while ($Ds_to_print > $r) 
-					{
-					$r++;
-					$Dsql .= "'$Dstatuses[$r]',";
-					}
-				$Dsql = preg_replace("/,$/","",$Dsql);
-
-				echo "<tr $bgcolor><td NOWRAP><font size=3>\n";
-				echo "<input type=hidden name=list_id$US$q$US$vcl_id id=list_id$US$q$US$vcl_id value=$MIXdetailsLIST>\n";
-				echo "<a href=\"$PHP_SELF?ADD=311&list_id=$MIXdetailsLIST\">"._QXZ("List")."</a>: $MIXdetailsLIST &nbsp; <font size=1><a href=\"$PHP_SELF?ADD=49&SUB=29&stage=REMOVE&campaign_id=$campaign_id&vcl_id=$vcl_id&mix_container_item=$q&list_id=$MIXdetailsLIST#LINK_$vcl_id\">"._QXZ("REMOVE")."</a></font></td>\n";
-
-				echo "<td><select size=1 name=priority$US$q$US$vcl_id id=priority$US$q$US$vcl_id>\n";
-				$n=40;
-				while ($n>=1)
-					{
-					echo "<option value=\"$n\">$n</option>\n";
-					$n = ($n-1);
-					}
-				echo "<option SELECTED value=\"$MIXdetails[1]\">$MIXdetails[1]</option></select></td>\n";
-
-				echo "<td><select size=1 name=\"percentage$US$q$US$vcl_id\" id=\"percentage$US$q$US$vcl_id\" onChange=\"mod_mix_percent('$vcl_id','$Ms_to_print')\">\n";
-				$n=100;
-				while ($n>=0)
-					{
-					echo "<option value=\"$n\">$n</option>\n";
-					$n = ($n-1);
-					}
-				echo "<option SELECTED value=\"$MIXdetails[2]\">$MIXdetails[2]</option></select></td>\n";
-
-				
-				echo "<td><input type=hidden name=status$US$q$US$vcl_id id=status$US$q$US$vcl_id value=\"$MIXdetails[3]\"><input type=text size=20 maxlength=255 name=ROstatus$US$q$US$vcl_id id=ROstatus$US$q$US$vcl_id value=\"$MIXdetails[3]\" READONLY></td>\n";
-				echo "<td NOWRAP>\n";
-
-
-
-				echo "<select size=1 name=dial_status$US$q$US$vcl_id id=dial_status$US$q$US$vcl_id>\n";
-				echo "<option value=\"\"> - "._QXZ("Select A Status")." - </option>\n";
-
-				echo "$dial_statuses_list";
-				echo "</select> <font size=2><B>\n";
-				echo "<a href=\"#\" onclick=\"mod_mix_status('ADD','$vcl_id','$q');return false;\">"._QXZ("ADD")."</a> &nbsp; \n";
-				echo "<a href=\"#\" onclick=\"mod_mix_status('REMOVE','$vcl_id','$q');return false;\">"._QXZ("REMOVE")."</a>\n";
-				echo "</font></B></td></tr>\n";
-
-
-				echo "</td></tr>\n";
-
-
-				$q++;
-
-				}
-
-
-
-			
-			echo "<tr $bgcolor><td colspan=3 align=right><font size=2>\n";
-			echo _QXZ("Difference")." %: <input type=text size=4 name=PCT_DIFF_$vcl_id id=PCT_DIFF_$vcl_id value=0 readonly>\n";
-			echo "</td>\n";
-
-			echo "<td colspan=2><input style='background-color:#$SSbutton_color' type=button name=submit_$vcl_id id=submit_$vcl_id value=\""._QXZ("SUBMIT")."\" onClick=\"submit_mix('$vcl_id','$Ms_to_print')\"> &nbsp; \n";
-			echo "<span id=ERROR_$vcl_id></span>\n";
-			echo "</form></td></tr>\n";
-
-
-			echo "<tr $bgcolor><td colspan=3 align=center VALIGN=BOTTOM><font size=2>\n";
-			echo "<form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST name=ADD_$vcl_id id=ADD_$vcl_id>\n";
-			echo "<input type=hidden name=ADD value=49>\n";
-			echo "<input type=hidden name=SUB value=29>\n";
-			echo "<input type=hidden name=stage value=\"ADD\">\n";
-			echo "<input type=hidden name=vcl_id value=\"$vcl_id\">\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo _QXZ("List").": <select size=1 name=list_id>\n";
-			echo "$mixlists_list";
-			echo "<option selected value=\"\">"._QXZ("ADD ANOTHER ENTRY")."</option>\n";
-			echo "</select>\n";
-			
-			if ($q > 39) {$AE_disabled = 'DISABLED';}
-			else {$AE_disabled = '';}
-			echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value=\""._QXZ("ADD ENTRY")."\" $AE_disabled>\n";
-			echo "</form></td>\n";
-
-			$X='X';
-			echo "<td NOWRAP VALIGN=BOTTOM>\n";
-			echo "<form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST name=DEFAULT_$vcl_id id=DEFAULT_$vcl_id>\n";
-			echo "<input type=hidden name=status$US$X$US$vcl_id id=status$US$X$US$vcl_id value=\"\"><input type=text size=20 maxlength=255 name=ROstatus$US$X$US$vcl_id id=ROstatus$US$X$US$vcl_id value=\"$LMdial_statuses\" READONLY>\n";
-			echo "<BR><font size=2><B>"._QXZ("CHANGE").": \n";
-			echo "<a href=\"#\" onclick=\"mod_mix_status('ALL','$vcl_id','$q');return false;\">"._QXZ("ALL")."</a> &nbsp; \n";
-			echo "<a href=\"#\" onclick=\"mod_mix_status('EMPTY','$vcl_id','$q');return false;\">"._QXZ("EMPTY")."</a>\n";
-			echo "</td><td NOWRAP VALIGN=MIDDLE>\n";
-			echo "<select size=1 name=dial_status$US$X$US$vcl_id id=dial_status$US$X$US$vcl_id>\n";
-			echo "<option value=\"\"> - "._QXZ("Select A Status")." - </option>\n";
-			echo "$dial_statuses_list";
-			echo "</select> <font size=2><B>\n";
-			echo "<a href=\"#\" onclick=\"mod_mix_status('ADD','$vcl_id','X');return false;\">"._QXZ("ADD")."</a> &nbsp; \n";
-			echo "<a href=\"#\" onclick=\"mod_mix_status('REMOVE','$vcl_id','X');return false;\">"._QXZ("REMOVE")."</a>\n";
-			echo "</form></td></tr>\n";
-			echo "</table></span>\n";
-			}
-
-
-		echo "<br><br><B>"._QXZ("ADD NEW LIST MIX")."</B><BR><form action=$PHP_SELF method=POST>\n";
-		echo "<table border=0>\n";
-		echo "<tr $bgcolor><td><form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST>\n";
-		echo "<input type=hidden name=ADD value=49>\n";
-		echo "<input type=hidden name=SUB value=29>\n";
-		echo "<input type=hidden name=stage value=\"NEWMIX\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Mix ID").": <input type=text size=20 maxlength=20 name=vcl_id value=\"\"></td>\n";
-		echo "<td>"._QXZ("Mix Name").": <input type=text size=30 maxlength=50 name=vcl_name value=\"\"></td>\n";
-		echo "<td>"._QXZ("Mix Method").": ";
-		echo "<select size=1 name=mix_method><option value=\"EVEN_MIX\">"._QXZ("EVEN_MIX")."</option><option value=\"IN_ORDER\">"._QXZ("IN_ORDER")."</option><option value=\"RANDOM\">"._QXZ("RANDOM")."</option></select></td></tr>\n";
-		echo "<tr $bgcolor><td>"._QXZ("List").": <select size=1 name=list_id>\n";
-		echo "$mixlists_list";
-		echo "</select></td>\n";
-		echo "<td>"._QXZ("Dial Status").": <select size=1 name=status>\n";
-		echo "$dial_statuses_list";
-		echo "</select></td>\n";
-		echo "<td> &nbsp; <input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'></form></td>\n";
-		echo "</tr>\n";
-		echo "</table>\n";
-
-		echo "<br>\n";
-
-		}
-	}
-	echo "</TD></TR></TABLE></center>\n";
+    if ($LOGmodify_campaigns==1)
+    {
+    ##### CAMPAIGN LIST MIX SETTINGS #####
+    if ($SUB==29)
+        {
+        ##### get list_id listings for dynamic pulldown
+        $stmt = "SELECT list_id,list_name from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by list_id;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $mixlists_to_print = mysqli_num_rows($rslt);
+        $mixlists_list = "";
+        
+        $o = 0;
+        while ($mixlists_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            $mixlists_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $mixlistsname_list["$rowx[0]"] = "$rowx[1]";
+            $o++;
+        }
+        
+        echo "<div style='max-width:1400px;margin:30px auto;'>";
+        echo "<div style='background:#fff;border-radius:12px;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);margin-bottom:20px;'>";
+        echo "<div style='font-size:22px;font-weight:bold;color:#2c3e50;margin-bottom:5px;'>"._QXZ("LIST MIXES FOR THIS CAMPAIGN")."</div>";
+        echo "<div style='font-size:12px;color:#888;'>$NWB#campaigns-list_order_mix$NWE</div>";
+        echo "</div>";
+        
+        echo "<div style='background:#fff3cd;border-radius:10px;padding:18px 25px;margin-bottom:25px;border-left:6px solid #ffc107;'>";
+        echo "<div style='display:flex;align-items:center;gap:12px;'>";
+        echo "<div style='font-size:28px;'>⚠️</div>";
+        echo "<div style='color:#856404;font-weight:600;'>"._QXZ("WARNING, we only recommend List Mix for advanced users, Please read the Manager Manual")."</div>";
+        echo "</div></div>";
+        
+        $stmt = "SELECT dial_statuses from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $statuses = mysqli_num_rows($rslt);
+        if ($statuses > 0) {
+            $rowy = mysqli_fetch_row($rslt);
+            $LMdial_statuses = $rowy[0];
+        }
+        
+        $stmt = "SELECT vcl_id,vcl_name,campaign_id,list_mix_container,mix_method,status from vicidial_campaigns_list_mix where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status, vcl_id;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $listmixes = mysqli_num_rows($rslt);
+        $o = 0;
+        while ($listmixes > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            $vcl_id = $rowx[0];
+            $o++;
+            
+            if ($o < 2) {
+                $card_bg = '#f0f4ff';
+            } else {
+                if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+                    $card_bg = '#f8f9fa';
+                } else {
+                    $card_bg = '#ffffff';
+                }
+            }
+            
+            echo "<a name=\"LINK_$vcl_id\"></a>";
+            echo "<span id=\"LISTMIX$US$vcl_id$US$o\">";
+            echo "<div style='background:$card_bg;border-radius:12px;padding:25px;margin-bottom:25px;box-shadow:0 2px 10px rgba(0,0,0,0.08);border-left:6px solid #3498db;'>";
+            
+            echo "<form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST name=$vcl_id id=$vcl_id>\n";
+            echo "<input type=hidden name=ADD value=49>\n";
+            echo "<input type=hidden name=SUB value=29>\n";
+            echo "<input type=hidden name=stage value=\"MODIFY\">\n";
+            echo "<input type=hidden name=vcl_id value=\"$vcl_id\">\n";
+            echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+            echo "<input type=hidden name=list_mix_container$US$vcl_id id=list_mix_container$US$vcl_id value=\"\">\n";
+            
+            echo "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:15px;'>";
+            echo "<div style='flex:1;min-width:300px;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'><B>Mix ID: $vcl_id</B></label>";
+            echo "<input type=text size=40 maxlength=50 name=vcl_name$US$vcl_id id=vcl_name$US$vcl_id value=\"$rowx[1]\" style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'>";
+            echo "</div>";
+            echo "<div><a href=\"$PHP_SELF?ADD=49&SUB=29&stage=DELMIX&campaign_id=$campaign_id&vcl_id=$vcl_id\" style='background:#e74c3c;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px;'>"._QXZ("DELETE LIST MIX")."</a></div>";
+            echo "</div>";
+            
+            echo "<div style='display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap;'>";
+            echo "<div style='flex:1;min-width:200px;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Status")."</label>";
+            if ($rowx[5]=='INACTIVE') {
+                echo "<div style='background:#f8d7da;color:#721c24;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;'>"._QXZ("$rowx[5]")."</div> ";
+                echo "<a href=\"$PHP_SELF?ADD=49&SUB=29&stage=SETACTIVE&campaign_id=$campaign_id&vcl_id=$vcl_id\" style='color:#28a745;font-size:12px;text-decoration:none;font-weight:600;'>"._QXZ("SET TO ACTIVE")."</a>";
+            } else {
+                echo "<div style='background:#d4edda;color:#155724;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;'>"._QXZ("$rowx[5]")."</div>";
+            }
+            echo "</div>";
+            
+            echo "<div style='flex:1;min-width:200px;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Method")."</label>";
+            echo "<select size=1 name=mix_method$US$vcl_id id=method$US$vcl_id style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value=\"EVEN_MIX\">"._QXZ("EVEN_MIX")."</option><option value=\"IN_ORDER\">"._QXZ("IN_ORDER")."</option><option value=\"RANDOM\">"._QXZ("RANDOM")."</option><option value='$rowx[4]' SELECTED>"._QXZ("$rowx[4]")."</option></select>";
+            echo "</div>";
+            echo "</div>";
+            
+            echo "<div style='overflow-x:auto;'>";
+            echo "<table style='width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:8px;overflow:hidden;'>";
+            echo "<thead><tr style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;'>";
+            echo "<th style='padding:12px;text-align:left;font-weight:600;font-size:13px;'>"._QXZ("LIST ID")."</th>";
+            echo "<th style='padding:12px;text-align:center;font-weight:600;font-size:13px;'>"._QXZ("PRIORITY")."</th>";
+            echo "<th style='padding:12px;text-align:center;font-weight:600;font-size:13px;'>"._QXZ("% MIX")."</th>";
+            echo "<th style='padding:12px;text-align:left;font-weight:600;font-size:13px;'>"._QXZ("STATUSES")."</th>";
+            echo "<th style='padding:12px;text-align:center;font-weight:600;font-size:13px;'>"._QXZ("ACTIONS")."</th>";
+            echo "</tr></thead><tbody>";
+            
+            $MIXentries = $MT;
+            $MIXentries = explode(":", $rowx[3]);
+            $Ms_to_print = (count($MIXentries) - 0);
+            $q = 0;
+            while ($Ms_to_print > $q) {
+                $MIXdetails = explode('|', $MIXentries[$q]);
+                $MIXdetailsLIST = $MIXdetails[0];
+                
+                $dial_statuses = preg_replace("/ -$/","",$dial_statuses);
+                $Dstatuses = explode(" ", $dial_statuses);
+                $Ds_to_print = (count($Dstatuses) - 0);
+                $Dsql = '';
+                $r = 0;
+                while ($Ds_to_print > $r) {
+                    $r++;
+                    $Dsql .= "'$Dstatuses[$r]',";
+                }
+                $Dsql = preg_replace("/,$/","",$Dsql);
+                
+                $row_bg = ($q % 2 == 0) ? '#ffffff' : '#f8f9fa';
+                echo "<tr style='background:$row_bg;border-bottom:1px solid #e9ecef;'>";
+                echo "<td style='padding:12px;'>";
+                echo "<input type=hidden name=list_id$US$q$US$vcl_id id=list_id$US$q$US$vcl_id value=$MIXdetailsLIST>\n";
+                echo "<a href=\"$PHP_SELF?ADD=311&list_id=$MIXdetailsLIST\" style='color:#3498db;text-decoration:none;font-weight:600;'>"._QXZ("List").": $MIXdetailsLIST</a> ";
+                echo "<a href=\"$PHP_SELF?ADD=49&SUB=29&stage=REMOVE&campaign_id=$campaign_id&vcl_id=$vcl_id&mix_container_item=$q&list_id=$MIXdetailsLIST#LINK_$vcl_id\" style='color:#e74c3c;font-size:11px;text-decoration:none;'>"._QXZ("REMOVE")."</a>";
+                echo "</td>";
+                
+                echo "<td style='padding:12px;text-align:center;'><select size=1 name=priority$US$q$US$vcl_id id=priority$US$q$US$vcl_id style='padding:6px 10px;border:1px solid #d2d6e2;border-radius:4px;'>\n";
+                $n = 40;
+                while ($n >= 1) {
+                    echo "<option value=\"$n\">$n</option>\n";
+                    $n = ($n - 1);
+                }
+                echo "<option SELECTED value=\"$MIXdetails[1]\">$MIXdetails[1]</option></select></td>\n";
+                
+                echo "<td style='padding:12px;text-align:center;'><select size=1 name=\"percentage$US$q$US$vcl_id\" id=\"percentage$US$q$US$vcl_id\" onChange=\"mod_mix_percent('$vcl_id','$Ms_to_print')\" style='padding:6px 10px;border:1px solid #d2d6e2;border-radius:4px;'>\n";
+                $n = 100;
+                while ($n >= 0) {
+                    echo "<option value=\"$n\">$n</option>\n";
+                    $n = ($n - 1);
+                }
+                echo "<option SELECTED value=\"$MIXdetails[2]\">$MIXdetails[2]</option></select></td>\n";
+                
+                echo "<td style='padding:12px;'><input type=hidden name=status$US$q$US$vcl_id id=status$US$q$US$vcl_id value=\"$MIXdetails[3]\"><input type=text size=20 maxlength=255 name=ROstatus$US$q$US$vcl_id id=ROstatus$US$q$US$vcl_id value=\"$MIXdetails[3]\" READONLY style='width:100%;padding:6px;border:1px solid #d2d6e2;border-radius:4px;background:#f8f9fa;'></td>\n";
+                
+                echo "<td style='padding:12px;text-align:center;'>";
+                echo "<select size=1 name=dial_status$US$q$US$vcl_id id=dial_status$US$q$US$vcl_id style='padding:6px 10px;border:1px solid #d2d6e2;border-radius:4px;margin-bottom:5px;'>\n";
+                echo "<option value=\"\"> - "._QXZ("Select A Status")." - </option>\n";
+                echo "$dial_statuses_list";
+                echo "</select><br>";
+                echo "<a href=\"#\" onclick=\"mod_mix_status('ADD','$vcl_id','$q');return false;\" style='color:#28a745;font-size:12px;text-decoration:none;font-weight:600;margin-right:8px;'>"._QXZ("ADD")."</a>";
+                echo "<a href=\"#\" onclick=\"mod_mix_status('REMOVE','$vcl_id','$q');return false;\" style='color:#e74c3c;font-size:12px;text-decoration:none;font-weight:600;'>"._QXZ("REMOVE")."</a>";
+                echo "</td></tr>\n";
+                
+                $q++;
+            }
+            
+            echo "</tbody></table></div>";
+            
+            echo "<div style='display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:15px;'>";
+            echo "<div style='font-size:14px;font-weight:600;color:#555;'>";
+            echo _QXZ("Difference")." %: <input type=text size=4 name=PCT_DIFF_$vcl_id id=PCT_DIFF_$vcl_id value=0 readonly style='padding:6px 10px;border:1px solid #d2d6e2;border-radius:4px;background:#f8f9fa;font-weight:bold;'>";
+            echo "</div>";
+            echo "<div>";
+            echo "<input style='background:#28a745;color:#fff;border:none;padding:10px 30px;border-radius:6px;font-weight:600;cursor:pointer;box-shadow:0 2px 6px rgba(40,167,69,0.3);' type=button name=submit_$vcl_id id=submit_$vcl_id value=\""._QXZ("SUBMIT")."\" onClick=\"submit_mix('$vcl_id','$Ms_to_print')\">";
+            echo "<span id=ERROR_$vcl_id style='color:#e74c3c;margin-left:10px;font-weight:600;'></span>";
+            echo "</div>";
+            echo "</div>";
+            echo "</form>";
+            
+            echo "<div style='margin-top:20px;padding-top:20px;border-top:2px solid #e9ecef;'>";
+            echo "<form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST name=ADD_$vcl_id id=ADD_$vcl_id style='display:flex;gap:15px;align-items:flex-end;flex-wrap:wrap;'>\n";
+            echo "<input type=hidden name=ADD value=49>\n";
+            echo "<input type=hidden name=SUB value=29>\n";
+            echo "<input type=hidden name=stage value=\"ADD\">\n";
+            echo "<input type=hidden name=vcl_id value=\"$vcl_id\">\n";
+            echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+            echo "<div style='flex:1;min-width:200px;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("List")."</label>";
+            echo "<select size=1 name=list_id style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'>\n";
+            echo "$mixlists_list";
+            echo "<option selected value=\"\">"._QXZ("ADD ANOTHER ENTRY")."</option>\n";
+            echo "</select></div>\n";
+            
+            if ($q > 39) {$AE_disabled = 'DISABLED';} else {$AE_disabled = '';}
+            echo "<div><input style='background:#3498db;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-weight:600;cursor:pointer;box-shadow:0 2px 6px rgba(52,152,219,0.3);' type=submit name=submit value=\""._QXZ("ADD ENTRY")."\" $AE_disabled></div>\n";
+            echo "</form>";
+            
+            $X = 'X';
+            echo "<div style='margin-top:15px;padding:15px;background:#f8f9fa;border-radius:8px;'>";
+            echo "<form action=\"$PHP_SELF#LINK_$vcl_id\" method=POST name=DEFAULT_$vcl_id id=DEFAULT_$vcl_id style='display:flex;gap:15px;align-items:center;flex-wrap:wrap;'>\n";
+            echo "<div style='flex:1;min-width:200px;'>";
+            echo "<input type=hidden name=status$US$X$US$vcl_id id=status$US$X$US$vcl_id value=\"\"><input type=text size=20 maxlength=255 name=ROstatus$US$X$US$vcl_id id=ROstatus$US$X$US$vcl_id value=\"$LMdial_statuses\" READONLY style='width:100%;padding:8px;border:1px solid #d2d6e2;border-radius:4px;background:#fff;'>";
+            echo "</div>";
+            echo "<div>";
+            echo "<label style='display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("CHANGE").": ";
+            echo "<a href=\"#\" onclick=\"mod_mix_status('ALL','$vcl_id','$q');return false;\" style='color:#3498db;text-decoration:none;margin-right:8px;'>"._QXZ("ALL")."</a>";
+            echo "<a href=\"#\" onclick=\"mod_mix_status('EMPTY','$vcl_id','$q');return false;\" style='color:#e74c3c;text-decoration:none;'>"._QXZ("EMPTY")."</a></label>";
+            echo "<select size=1 name=dial_status$US$X$US$vcl_id id=dial_status$US$X$US$vcl_id style='padding:8px 12px;border:1px solid #d2d6e2;border-radius:4px;'>\n";
+            echo "<option value=\"\"> - "._QXZ("Select A Status")." - </option>\n";
+            echo "$dial_statuses_list";
+            echo "</select>";
+            echo "</div>";
+            echo "<div>";
+            echo "<a href=\"#\" onclick=\"mod_mix_status('ADD','$vcl_id','X');return false;\" style='background:#28a745;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;font-size:12px;margin-right:8px;display:inline-block;'>"._QXZ("ADD")."</a>";
+            echo "<a href=\"#\" onclick=\"mod_mix_status('REMOVE','$vcl_id','X');return false;\" style='background:#e74c3c;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;font-size:12px;display:inline-block;'>"._QXZ("REMOVE")."</a>";
+            echo "</div>";
+            echo "</form></div>";
+            echo "</div>";
+            
+            echo "</div></span>\n";
+        }
+        
+        echo "<div style='background:#fff;border-radius:12px;padding:30px;margin-top:30px;box-shadow:0 3px 12px rgba(0,0,0,0.1);border-top:4px solid #28a745;'>";
+        echo "<div style='font-size:20px;font-weight:bold;color:#2c3e50;margin-bottom:25px;'>"._QXZ("ADD NEW LIST MIX")."</div>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=49>\n";
+        echo "<input type=hidden name=SUB value=29>\n";
+        echo "<input type=hidden name=stage value=\"NEWMIX\">\n";
+        echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+        echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:20px;'>";
+        
+        echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Mix ID")."</label><input type=text size=20 maxlength=20 name=vcl_id value=\"\" style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'></div>\n";
+        
+        echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Mix Name")."</label><input type=text size=30 maxlength=50 name=vcl_name value=\"\" style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'></div>\n";
+        
+        echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Mix Method")."</label><select size=1 name=mix_method style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value=\"EVEN_MIX\">"._QXZ("EVEN_MIX")."</option><option value=\"IN_ORDER\">"._QXZ("IN_ORDER")."</option><option value=\"RANDOM\">"._QXZ("RANDOM")."</option></select></div>\n";
+        
+        echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("List")."</label><select size=1 name=list_id style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'>\n";
+        echo "$mixlists_list";
+        echo "</select></div>\n";
+        
+        echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Dial Status")."</label><select size=1 name=status style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'>\n";
+        echo "$dial_statuses_list";
+        echo "</select></div>\n";
+        
+        echo "</div>";
+        echo "<div style='text-align:center;'><input style='background:#28a745;color:#fff;border:none;padding:12px 40px;border-radius:8px;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 3px 8px rgba(40,167,69,0.3);' type=submit name=submit value='"._QXZ("SUBMIT")."'></div>";
+        echo "</form></div>";
+        
+        echo "</div>";
+        }
+    }
+    echo "</TD></TR></TABLE></center>\n";
 }
 
 
