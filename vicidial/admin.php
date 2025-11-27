@@ -13489,9 +13489,14 @@ if ($SUB==22) {
             $bgcolor = 'bgcolor="#'. $SSstd_row1_background .'"';
         }
         
+        $cat_display = '';
+        if (isset($catsname_list[$row[4]])) {
+            $cat_display = $catsname_list[$row[4]];
+        }
+        
         echo "<tr $bgcolor><td><font size=2> $row[0] </td>";
         echo "<td><font size=2> $row[1] </td>";
-        echo "<td><font size=2> $catsname_list[$row[4]] </td>";
+        echo "<td><font size=2> $cat_display </td>";
         echo "<td align=center bgcolor=\"#ccffff\"><font size=2> $row[2] </td>";
         echo "<td align=center bgcolor=\"#99ffcc\"><font size=2> $row[3] </td>";
         echo "<td align=center bgcolor=\"#ccffff\"><font size=2> $row[5] </td>";
