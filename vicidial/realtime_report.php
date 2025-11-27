@@ -899,328 +899,606 @@ while ($i < $ingroups_to_print)
 	$i++;
 	}
 
+<?php
 require("screen_colors.php");
 
-if (!isset($RR))   {$RR=4;}
+if (!isset($RR)) {$RR=4;}
 
-$NFB = '<b><font size=6 face="courier">';
-$NFE = '</font></b>';
-$F=''; $FG=''; $B=''; $BG='';
+// Modern CSS variables and styling
+echo "<style>
+:root {
+  --primary-color: #4361ee;
+  --primary-dark: #3f37c9;
+  --primary-light: #eef2ff;
+  --secondary-color: #06ffa5;
+  --secondary-dark: #04cc82;
+  --accent-color: #ff006e;
+  --accent-light: #ffeef2;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --gray-color: #6c757d;
+  --gray-light: #e9ecef;
+  --gray-dark: #343a40;
+  
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+  
+  --font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
 
-$select_list = "<TABLE class='realtime_settings_table' CELLPADDING=5 BGCOLOR='#D9E6FE'><TR><TD VALIGN=TOP>"._QXZ("Select Campaigns").": <BR>";
-$select_list .= "<SELECT SIZE=8 NAME=groups[] ID=groups[] multiple>";
-$o=0;
-while ($groups_to_print > $o)
-	{
-	if (preg_match("/\|$LISTgroups[$o]\|/",$group_string)) 
-		{$select_list .= "<option selected value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";}
-	else
-		{$select_list .= "<option value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";}
-	$o++;
-	}
-$select_list .= "</SELECT>";
-$select_list .= "<BR><font class='top_settings_val'>("._QXZ("To select more than 1 campaign, hold down the Ctrl key and click").")</font>";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-$select_list .= "<BR><BR>"._QXZ("Select User Groups").": <BR>";
-$select_list .= "<SELECT SIZE=8 NAME=user_group_filter[] ID=user_group_filter[] multiple>";
-$o=0;
-while ($o < $usergroups_to_print)
-	{
-	if (preg_match("/\|$usergroups[$o]\|/",$user_group_string))
-		{$select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
-	else
-		{
-		if ( ($user_group_none > 0) and ($usergroups[$o] == 'ALL-GROUPS') )
-			{$select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
-		else
-			{$select_list .= "<option value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
-		}
-	$o++;
-	}
-$select_list .= "</SELECT>";
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--dark-color);
+  background-color: var(--light-color);
+}
 
-$select_list .= "<BR><BR>"._QXZ("Select In-Groups").": <BR>";
-$select_list .= "<SELECT SIZE=8 NAME=ingroup_filter[] ID=ingroup_filter[] multiple>";
-$o=0;
-while ($o < $ingroups_to_print)
-	{
-	if (preg_match("/\|$LISTingroups[$o]\|/",$ingroup_string))
-		{$select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";}
-	else
-		{
-		if ( ($in_group_none > 0) and ($LISTingroups[$o] == 'ALL-INGROUPS') )
-			{$select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";}
-		else
-			{$select_list .= "<option value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")."- "._QXZ("$LISTingroup_names[$o]")."</option>";}
-		}
-	$o++;
-	}
-$select_list .= "</SELECT>";
+.settings-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-$select_list .= "</TD><TD VALIGN=TOP ALIGN=CENTER>";
-$select_list .= "<a href='#' onclick=\\\"hideDiv('campaign_select_list');\\\">"._QXZ("Close Panel")."</a><BR><BR>";
-$select_list .= "<TABLE CELLPADDING=2 CELLSPACING=2 BORDER=0>";
+.settings-card {
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Screen Refresh Rate").":  </TD><TD align=left><SELECT SIZE=1 NAME=RR ID=RR>";
-$select_list .= "<option value='4'";   if ($RR < 5) {$select_list .= " selected";}    $select_list .= ">4 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='10'";   if ( ($RR >= 5) and ($RR <=10) ) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='20'";   if ( ($RR >= 11) and ($RR <=20) ) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='30'";   if ( ($RR >= 21) and ($RR <=30) ) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='40'";   if ( ($RR >= 31) and ($RR <=40) ) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='60'";   if ( ($RR >= 41) and ($RR <=60) ) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='120'";   if ( ($RR >= 61) and ($RR <=120) ) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='300'";   if ( ($RR >= 121) and ($RR <=300) ) {$select_list .= " selected";}    $select_list .= ">5 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='600'";   if ( ($RR >= 301) and ($RR <=600) ) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='1200'";   if ( ($RR >= 601) and ($RR <=1200) ) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='1800'";   if ( ($RR >= 1201) and ($RR <=1800) ) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='2400'";   if ( ($RR >= 1801) and ($RR <=2400) ) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='3600'";   if ( ($RR >= 2401) and ($RR <=3600) ) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='7200'";   if ( ($RR >= 3601) and ($RR <=7200) ) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("hours")."</option>";
-$select_list .= "<option value='63072000'";   if ($RR >= 7201) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("years")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.settings-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px 20px;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Inbound").":  </TD><TD align=left><SELECT SIZE=1 NAME=with_inbound ID=with_inbound>";
-$select_list .= "<option value='N'";
-	if ($with_inbound=='N') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("No")."</option>";
-$select_list .= "<option value='Y'";
-	if ($with_inbound=='Y') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("Yes")."</option>";
-$select_list .= "<option value='O'";
-	if ($with_inbound=='O') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("Only")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.settings-header i {
+  font-size: 24px;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Monitor").":  </TD><TD align=left><SELECT SIZE=1 NAME=monitor_active ID=monitor_active>";
-$select_list .= "<option value=''";
-	if (strlen($monitor_active) < 2) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NONE")."</option>";
-if (preg_match("/MONITOR/",$RS_ListenBarge) )
-	{
-	$select_list .= "<option value='MONITOR'";
-		if ($monitor_active=='MONITOR') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("MONITOR")."</option>";
-	}
-if (preg_match("/BARGE/",$RS_ListenBarge) )
-	{
-	$select_list .= "<option value='BARGE'";
-		if ($monitor_active=='BARGE') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("BARGE")."</option>";
-	}
-if ( ($agent_whisper_enabled == '1') and (preg_match("/WHISPER/",$RS_ListenBarge) ) )
-	{
-	$select_list .= "<option value='WHISPER'";
-		if ($monitor_active=='WHISPER') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("WHISPER")."</option>";
-	}
-#$select_list .= "<option value='HIJACK'";
-#	if ($monitor_active=='HIJACK') {$select_list .= " selected";} 
-#$select_list .= ">HIJACK</option>";
-$select_list .= "</SELECT></TD></TR>";
+.settings-body {
+  padding: 24px;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Phone").":  </TD><TD align=left>";
-$select_list .= "<INPUT type=text size=10 maxlength=20 NAME=monitor_phone ID=monitor_phone VALUE='$monitor_phone'>";
-$select_list .= "</TD></TR>";
-$select_list .= "<TR><TD align=center COLSPAN=2> &nbsp; </TD></TR>";
+.settings-section {
+  margin-bottom: 24px;
+}
 
-if ($UGdisplay > 0)
-	{
-	$select_list .= "<TR><TD align=right>";
-	$select_list .= _QXZ("Select User Group").":  </TD><TD align=left>";
-	$select_list .= "<SELECT SIZE=1 NAME=usergroup ID=usergroup>";
-	$select_list .= "<option value=''>"._QXZ("ALL USER GROUPS")."</option>";
-	$o=0;
-	while ($usergroups_to_print > $o)
-		{
-		if ($usergroups[$o] == $usergroup) {$select_list .= "<option selected value='$usergroups[$o]'>$usergroups[$o]</option>";}
-		else {$select_list .= "<option value='$usergroups[$o]'>$usergroups[$o]</option>";}
-		$o++;
-		}
-	$select_list .= "</SELECT></TD></TR>";
-	}
+.settings-section:last-child {
+  margin-bottom: 0;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Dialable Leads Alert").":  </TD><TD align=left><SELECT SIZE=1 NAME=NOLEADSalert ID=NOLEADSalert>";
-$select_list .= "<option value=''";
-	if (strlen($NOLEADSalert) < 2) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='YES'";
-	if ($NOLEADSalert=='YES') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-color);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-light);
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Show Drop In-Group Row").":  </TD><TD align=left><SELECT SIZE=1 NAME=DROPINGROUPstats ID=DROPINGROUPstats>";
-$select_list .= "<option value='0'";
-	if ($DROPINGROUPstats < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($DROPINGROUPstats=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.form-group {
+  margin-bottom: 16px;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Inbound SLA Stats").":  </TD><TD align=left><SELECT SIZE=1 NAME=SLAinSTATS ID=SLAinSTATS>";
-$select_list .= "<option value='0'";
-	if ($SLAinSTATS < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($SLAinSTATS=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "<option value='2'";
-	if ($SLAinSTATS=='2') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("TMA")."</option>";
-$select_list .= "<option value='3'";
-	if ($SLAinSTATS=='2') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("SLA 1 ONLY")."</option>";
-$select_list .= "<option value='4'";
-	if ($SLAinSTATS=='2') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("SLA 2 ONLY")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.form-group:last-child {
+  margin-bottom: 0;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Show Cust. Phone Code").":  </TD><TD align=left><SELECT SIZE=1 NAME=ShowCustPhoneCode ID=ShowCustPhoneCode>";
-$select_list .= "<option value='0'";
-	if ($ShowCustPhoneCode < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($ShowCustPhoneCode=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Show Carrier Stats").":  </TD><TD align=left><SELECT SIZE=1 NAME=CARRIERstats ID=CARRIERstats>";
-$select_list .= "<option value='0'";
-	if ($CARRIERstats < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($CARRIERstats=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+.form-row:last-child {
+  margin-bottom: 0;
+}
 
-## find if any selected campaigns have presets enabled
-$presets_enabled=0;
-$stmt="select count(*) from vicidial_campaigns where enable_xfer_presets='ENABLED' $group_SQLand;";
-$rslt=mysql_to_mysqli($stmt, $link);
+.form-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--dark-color);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-light);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  background-color: white;
+  transition: var(--transition);
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.form-select:hover {
+  border-color: var(--gray-color);
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-light);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  transition: var(--transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.help-text {
+  font-size: var(--font-size-sm);
+  color: var(--gray-color);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--gray-light);
+  color: var(--dark-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-color);
+  color: white;
+}
+
+.btn-close {
+  background-color: var(--gray-light);
+  color: var(--dark-color);
+  margin-left: 10px;
+}
+
+.btn-close:hover {
+  background-color: var(--gray-color);
+  color: white;
+}
+
+.version-info {
+  text-align: right;
+  font-size: var(--font-size-sm);
+  color: var(--gray-color);
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gray-light);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 10px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .settings-body {
+    padding: 16px;
+  }
+}
+</style>";
+
+// Start of the settings form
+echo "<div class='settings-container'>";
+
+// Settings Card Header
+echo "<div class='settings-card'>";
+echo "<div class='settings-header'>";
+echo "<i class='fas fa-cog'></i>";
+echo "<span>"._QXZ("Screen Settings")."</span>";
+echo "</div>";
+
+// Settings Card Body
+echo "<div class='settings-body'>";
+
+// Campaign Selection Section
+echo "<div class='settings-section'>";
+echo "<h3 class='section-title'>"._QXZ("Campaign Selection")."</h3>";
+
+echo "<div class='form-group'>";
+echo "<label class='form-label'>"._QXZ("Select Campaigns")."</label>";
+echo "<select class='form-select' name='groups[]' id='groups[]' multiple>";
+
+ $o=0;
+while ($groups_to_print > $o) {
+    if (preg_match("/\|$LISTgroups[$o]\|/",$group_string)) {
+        echo "<option selected value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";
+    } else {
+        echo "<option value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";
+    }
+    $o++;
+}
+
+echo "</select>";
+echo "<p class='help-text'>"._QXZ("To select more than 1 campaign, hold down the Ctrl key and click")."</p>";
+echo "</div>";
+
+echo "<div class='form-group'>";
+echo "<label class='form-label'>"._QXZ("Select User Groups")."</label>";
+echo "<select class='form-select' name='user_group_filter[]' id='user_group_filter[]' multiple>";
+
+ $o=0;
+while ($o < $usergroups_to_print) {
+    if (preg_match("/\|$usergroups[$o]\|/",$user_group_string)) {
+        echo "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
+    } else {
+        if (($user_group_none > 0) and ($usergroups[$o] == 'ALL-GROUPS')) {
+            echo "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
+        } else {
+            echo "<option value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
+        }
+    }
+    $o++;
+}
+
+echo "</select>";
+echo "</div>";
+
+echo "<div class='form-group'>";
+echo "<label class='form-label'>"._QXZ("Select In-Groups")."</label>";
+echo "<select class='form-select' name='ingroup_filter[]' id='ingroup_filter[]' multiple>";
+
+ $o=0;
+while ($o < $ingroups_to_print) {
+    if (preg_match("/\|$LISTingroups[$o]\|/",$ingroup_string)) {
+        echo "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
+    } else {
+        if (($in_group_none > 0) and ($LISTingroups[$o] == 'ALL-INGROUPS')) {
+            echo "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
+        } else {
+            echo "<option value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
+        }
+    }
+    $o++;
+}
+
+echo "</select>";
+echo "</div>";
+
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Screen Refresh Rate")."</label>";
+echo "<select class='form-select' name='RR' id='RR'>";
+echo "<option value='4'";   if ($RR < 5) {echo " selected";}    echo ">4 "._QXZ("seconds")."</option>";
+echo "<option value='10'";   if (($RR >= 5) and ($RR <=10) ) {echo " selected";}    echo ">10 "._QXZ("seconds")."</option>";
+echo "<option value='20'";   if (($RR >= 11) and ($RR <=20) ) {echo " selected";}    echo ">20 "._QXZ("seconds")."</option>";
+echo "<option value='30'";   if (($RR >= 21) and ($RR <=30) ) {echo " selected";}    echo ">30 "._QXZ("seconds")."</option>";
+echo "<option value='40'";   if (($RR >= 31) and ($RR <=40) ) {echo " selected";}    echo ">40 "._QXZ("seconds")."</option>";
+echo "<option value='60'";   if (($RR >= 41) and ($RR <=60) ) {echo " selected";}    echo ">60 "._QXZ("seconds")."</option>";
+echo "<option value='120'";   if (($RR >= 61) and ($RR <=120) ) {echo " selected";}    echo ">2 "._QXZ("minutes")."</option>";
+echo "<option value='300'";   if (($RR >= 121) and ($RR <=300) ) {echo " selected";}    echo ">5 "._QXZ("minutes")."</option>";
+echo "<option value='600'";   if (($RR >= 301) and ($RR <=600) ) {echo " selected";}    echo ">10 "._QXZ("minutes")."</option>";
+echo "<option value='1200'";   if (($RR >= 601) and ($RR <=1200) ) {echo " selected";}    echo ">20 "._QXZ("minutes")."</option>";
+echo "<option value='1800'";   if (($RR >= 1201) and ($RR <=1800) ) {echo " selected";}    echo ">30 "._QXZ("minutes")."</option>";
+echo "<option value='2400'";   if (($RR >= 1801) and ($RR <=2400) ) {echo " selected";}    echo ">40 "._QXZ("minutes")."</option>";
+echo "<option value='3600'";   if (($RR >= 2401) and ($RR <=3600) ) {echo " selected";}    echo ">60 "._QXZ("minutes")."</option>";
+echo "<option value='7200'";   if (($RR >= 3601) and ($RR <=7200) ) {echo " selected";}    echo ">2 "._QXZ("hours")."</option>";
+echo "<option value='63072000'";   if (($RR >= 7201) ) {echo " selected";}    echo ">2 "._QXZ("years")."</option>";
+echo "</select>";
+echo "</div>";
+
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Inbound")."</label>";
+echo "<select class='form-select' name='with_inbound' id='with_inbound'>";
+echo "<option value='N'"; if ($with_inbound=='N') {echo " selected";} echo ">"._QXZ("No")."</option>";
+echo "<option value='Y'"; if ($with_inbound=='Y') {echo " selected";} echo ">"._QXZ("Yes")."</option>";
+echo "<option value='O'"; if ($with_inbound=='O') {echo " selected";} echo ">"._QXZ("Only")."</option>";
+echo "</select>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Monitor")."</label>";
+echo "<select class='form-select' name='monitor_active' id='monitor_active'>";
+echo "<option value=''"; if (strlen($monitor_active) < 2) {echo " selected";} echo ">"._QXZ("NONE")."</option>";
+
+if (preg_match("/MONITOR/",$RS_ListenBarge)) {
+    echo "<option value='MONITOR'"; if ($monitor_active=='MONITOR') {echo " selected";} echo ">"._QXZ("MONITOR")."</option>";
+}
+
+if (preg_match("/BARGE/",$RS_ListenBarge)) {
+    echo "<option value='BARGE'"; if ($monitor_active=='BARGE') {echo " selected";} echo ">"._QXZ("BARGE")."</option>";
+}
+
+if ($agent_whisper_enabled == '1') {
+    if (preg_match("/WHISPER/",$RS_ListenBarge)) {
+        echo "<option value='WHISPER'"; if ($monitor_active=='WHISPER') {echo " selected";} echo ">"._QXZ("WHISPER")."</option>";
+    }
+}
+
+echo "</select>";
+echo "</div>";
+
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Phone")."</label>";
+echo "<input type='text' class='form-input' name='monitor_phone' id='monitor_phone' value='$monitor_phone'>";
+echo "</div>";
+echo "</div>";
+
+if ($UGdisplay > 0) {
+    echo "<div class='form-group'>";
+    echo "<label class='form-label'>"._QXZ("Select User Group")."</label>";
+    echo "<select class='form-select' name='usergroup' id='usergroup'>";
+    echo "<option value=''>"._QXZ("ALL USER GROUPS")."</option>";
+    
+    $o=0;
+    while ($usergroups_to_print > $o) {
+        if ($usergroups[$o] == $usergroup) {
+            echo "<option selected value='$usergroups[$o]'>$usergroups[$o]</option>";
+        } else {
+            echo "<option value='$usergroups[$o]'>$usergroups[$o]</option>";
+        }
+        $o++;
+    }
+    echo "</select>";
+    echo "</div>";
+}
+
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Dialable Leads Alert")."</label>";
+echo "<select class='form-select' name='NOLEADSalert' id='NOLEADSalert'>";
+echo "<option value=''"; if (strlen($NOLEADSalert) < 2) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='YES'"; if ($NOLEADSalert=='YES') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "</select>";
+echo "</div>";
+
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Show Drop In-Group Row")."</label>";
+echo "<select class='form-select' name='DROPINGROUPstats' id='DROPINGROUPstats'>";
+echo "<option value='0'"; if ($DROPINGROUPstats < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($DROPINGROUPstats=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "</select>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Inbound SLA Stats")."</label>";
+echo "<select class='form-select' name='SLAinSTATS' id='SLAinSTATS'>";
+echo "<option value='0'"; if ($SLAinSTATS < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($SLAinSTATS=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "<option value='2'"; if ($SLAinSTATS=='2') {echo " selected";} echo ">"._QXZ("TMA")."</option>";
+echo "<option value='3'"; if ($SLAinSTATS=='3') {echo " selected";} echo ">"._QXZ("SLA 1 ONLY")."</option>";
+echo "<option value='4'"; if ($SLAinSTATS=='4') {echo " selected";} echo ">"._QXZ("SLA 2 ONLY")."</option>";
+echo "</select>";
+echo "</div>";
+
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Show Cust. Phone Code")."</label>";
+echo "<select class='form-select' name='ShowCustPhoneCode' id='ShowCustPhoneCode'>";
+echo "<option value='0'"; if ($ShowCustPhoneCode < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($ShowCustPhoneCode=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "</select>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Show Carrier Stats")."</label>";
+echo "<select class='form-select' name='CARRIERstats' id='CARRIERstats'>";
+echo "<option value='0'"; if ($CARRIERstats < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($CARRIERstats=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "</select>";
+echo "</div>";
+
+// Find if any selected campaigns have presets enabled
+ $presets_enabled=0;
+ $stmt="select count(*) from vicidial_campaigns where enable_xfer_presets='ENABLED' $group_SQLand;";
+ $rslt=mysql_to_mysqli($stmt, $link);
 if ($DB) {$OUToutput .= "$stmt\n";}
-$presets_enabled_count = mysqli_num_rows($rslt);
-if ($presets_enabled_count > 0)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$presets_enabled = $row[0];
-	}
-if ($presets_enabled > 0)
-	{
-	$select_list .= "<TR><TD align=right>";
-	$select_list .= _QXZ("Show Presets Stats").":  </TD><TD align=left><SELECT SIZE=1 NAME=PRESETstats ID=PRESETstats>";
-	$select_list .= "<option value='0'";
-		if ($PRESETstats < 1) {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("NO")."</option>";
-	$select_list .= "<option value='1'";
-		if ($PRESETstats=='1') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("YES")."</option>";
-	$select_list .= "</SELECT></TD></TR>";
-	}
-else
-	{
-	$select_list .= "<INPUT TYPE=HIDDEN NAME=PRESETstats ID=PRESETstats value=0>";
-	}
+ $presets_enabled_count = mysqli_num_rows($rslt);
+if ($presets_enabled_count > 0) {
+    $row=mysqli_fetch_row($rslt);
+    $presets_enabled = $row[0];
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Agent Time Stats").":  </TD><TD align=left><SELECT SIZE=1 NAME=AGENTtimeSTATS ID=AGENTtimeSTATS>";
-$select_list .= "<option value='0'";
-	if ($AGENTtimeSTATS < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($AGENTtimeSTATS=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+if ($presets_enabled > 0) {
+    echo "<div class='form-group' style='flex: 1;'>";
+    echo "<label class='form-label'>"._QXZ("Show Presets Stats")."</label>";
+    echo "<select class='form-select' name='PRESETstats' id='PRESETstats'>";
+    echo "<option value='0'"; if ($PRESETstats < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+    echo "<option value='1'"; if ($PRESETstats=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+    echo "</select>";
+    echo "</div>";
+} else {
+    echo "<input type='hidden' name='PRESETstats' id='PRESETstats' value=0>";
+}
 
-$select_list .= "<TR><TD align=right>";
-if ($RS_UGlatencyALLOWED > 0)
-	{
-	$select_list .= _QXZ("Agent Latency").":  </TD><TD align=left><SELECT SIZE=1 NAME=AGENTlatency ID=AGENTlatency>";
-	$select_list .= "<option value='0'";
-		if ($AGENTlatency < 1) {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("NO")."</option>";
-	$select_list .= "<option value='1'";
-		if ($AGENTlatency=='1') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("YES")."</option>";
-	$select_list .= "<option value='2'";
-		if ($AGENTlatency=='2') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("ALL")."</option>";
-	$select_list .= "<option value='3'";
-		if ($AGENTlatency=='3') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("DAY")."</option>";
-	$select_list .= "<option value='4'";
-		if ($AGENTlatency=='4') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("NOW")."</option>";
-	$select_list .= "</SELECT></TD></TR>";
-	}
+echo "</div>";
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Parked Call Stats").":  </TD><TD align=left><SELECT SIZE=1 NAME=parkSTATS ID=parkSTATS>";
-$select_list .= "<option value='0'";
-	if ($parkSTATS < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($parkSTATS=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "<option value='2'";
-	if ($parkSTATS=='2') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("LIMITED")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Agent Time Stats")."</label>";
+echo "<select class='form-select' name='AGENTtimeSTATS' id='AGENTtimeSTATS'>";
+echo "<option value='0'"; if ($AGENTtimeSTATS < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($AGENTtimeSTATS=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "</select>";
+echo "</div>";
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("In-group color override").":  </TD><TD align=left><SELECT SIZE=1 NAME=INGROUPcolorOVERRIDE ID=INGROUPcolorOVERRIDE>";
-$select_list .= "<option value='0'";
-	if ($INGROUPcolorOVERRIDE < 1) {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("NO")."</option>";
-$select_list .= "<option value='1'";
-	if ($INGROUPcolorOVERRIDE=='1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("YES")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+if ($RS_UGlatencyALLOWED > 0) {
+    echo "<div class='form-group' style='flex: 1;'>";
+    echo "<label class='form-label'>"._QXZ("Agent Latency")."</label>";
+    echo "<select class='form-select' name='AGENTlatency' id='AGENTlatency'>";
+    echo "<option value='0'"; if ($AGENTlatency < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+    echo "<option value='1'"; if ($AGENTlatency=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+    echo "<option value='2'"; if ($AGENTlatency=='2') {echo " selected";} echo ">"._QXZ("ALL")."</option>";
+    echo "<option value='3'"; if ($AGENTlatency=='3') {echo " selected";} echo ">"._QXZ("DAY")."</option>";
+    echo "<option value='4'"; if ($AGENTlatency=='4') {echo " selected";} echo ">"._QXZ("NOW")."</option>";
+    echo "</select>";
+    echo "</div>";
+}
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Display as").":  </TD><TD align=left><SELECT SIZE=1 NAME=report_display_type ID=report_display_type>";
-$select_list .= "<option value='TEXT'";
-	if ($report_display_type=='TEXT') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("TEXT")."</option>";
-$select_list .= "<option value='HTML'";
-	if ($report_display_type=='HTML') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("HTML")."</option>";
-$select_list .= "<option value='WALL_1'";
-	if ($report_display_type=='WALL_1') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("WALL_1")."</option>";
-$select_list .= "<option value='WALL_2'";
-	if ($report_display_type=='WALL_2') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("WALL_2")."</option>";
-$select_list .= "<option value='WALL_3'";
-	if ($report_display_type=='WALL_3') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("WALL_3")."</option>";
-$select_list .= "<option value='WALL_4'";
-	if ($report_display_type=='WALL_4') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("WALL_4")."</option>";
-$select_list .= "<option value='LIMITED'";
-	if ($report_display_type=='LIMITED') {$select_list .= " selected";} 
-$select_list .= ">"._QXZ("LIMITED")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+echo "</div>";
 
+echo "<div class='form-row'>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("Parked Call Stats")."</label>";
+echo "<select class='form-select' name='parkSTATS' id='parkSTATS'>";
+echo "<option value='0'"; if ($parkSTATS < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($parkSTATS=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "<option value='2'"; if ($parkSTATS=='2') {echo " selected";} echo ">"._QXZ("LIMITED")."</option>";
+echo "</select>";
+echo "</div>";
 
-$select_list .= "</TABLE><BR>";
-$select_list .= "<INPUT type=hidden name=droppedOFtotal value='$droppedOFtotal'>";
-$select_list .= "<INPUT style='background-color:#$SSbutton_color' type=button VALUE='"._QXZ("SUBMIT")."' onclick=\\\"update_variables('form_submit','');\\\"><FONT FACE='ARIAL,HELVETICA' COLOR=BLACK SIZE=2> &nbsp; &nbsp; &nbsp; &nbsp; ";
-$select_list .= "</TD></TR>";
-$select_list .= "<TR><TD ALIGN=CENTER>";
-$select_list .= "<font class='top_settings_val'> &nbsp; </font>";
-$select_list .= "</TD>";
-$select_list .= "<TD NOWRAP align=right>";
-$select_list .= "<font class='top_settings_val'>"._QXZ("VERSION").": $version &nbsp; "._QXZ("BUILD").": $build</font>";
-$select_list .= "</TD></TR></TABLE>";
+echo "<div class='form-group' style='flex: 1;'>";
+echo "<label class='form-label'>"._QXZ("In-group color override")."</label>";
+echo "<select class='form-select' name='INGROUPcolorOVERRIDE' id='INGROUPcolorOVERRIDE'>";
+echo "<option value='0'"; if ($INGROUPcolorOVERRIDE < 1) {echo " selected";} echo ">"._QXZ("NO")."</option>";
+echo "<option value='1'"; if ($INGROUPcolorOVERRIDE=='1') {echo " selected";} echo ">"._QXZ("YES")."</option>";
+echo "</select>";
+echo "</div>";
+echo "</div>";
+
+echo "<div class='form-group'>";
+echo "<label class='form-label'>"._QXZ("Display as")."</label>";
+echo "<select class='form-select' name='report_display_type' id='report_display_type'>";
+echo "<option value='TEXT'"; if ($report_display_type=='TEXT') {echo " selected";} echo ">"._QXZ("TEXT")."</option>";
+echo "<option value='HTML'"; if ($report_display_type=='HTML') {echo " selected";} echo ">"._QXZ("HTML")."</option>";
+echo "<option value='WALL_1'"; if ($report_display_type=='WALL_1') {echo " selected";} echo ">"._QXZ("WALL_1")."</option>";
+echo "<option value='WALL_2'"; if ($report_display_type=='WALL_2') {echo " selected";} echo ">"._QXZ("WALL_2")."</option>";
+echo "<option value='WALL_3'"; if ($report_display_type=='WALL_3') {echo " selected";} echo ">"._QXZ("WALL_3")."</option>";
+echo "<option value='WALL_4'"; if ($report_display_type=='WALL_4') {echo " selected";} echo ">"._QXZ("WALL_4")."</option>";
+echo "<option value='LIMITED'"; if ($report_display_type=='LIMITED') {echo " selected";} echo ">"._QXZ("LIMITED")."</option>";
+echo "</select>";
+echo "</div>";
+
+echo "<input type='hidden' name='droppedOFtotal' value='$droppedOFtotal'>";
+
+echo "<div class='form-row' style='justify-content: center; margin-top: 24px;'>";
+echo "<button type='button' class='btn btn-primary' onclick=\"update_variables('form_submit','');\">"._QXZ("SUBMIT")."</button>";
+echo "</div>";
+
+echo "</div>"; // End of settings-body
+echo "</div>"; // End of settings-card
+
+// Version Info
+echo "<div class='version-info'>";
+echo "<span>"._QXZ("VERSION").": $version &nbsp; "._QXZ("BUILD").": $build</span>";
+echo "</div>";
+
+echo "</div>"; // End of settings-container
+
+// JavaScript for form interactions
+echo "<script>
+// Function to close the panel
+function hideDiv(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+// Function to update variables
+function update_variables(action, value, submit) {
+    if (action === 'form_submit' && submit === 'YES') {
+        document.getElementById('settings-form').submit();
+    }
+}
+
+// Initialize form
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listeners for dynamic interactions
+    const selects = document.querySelectorAll('.form-select');
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            // Handle select changes if needed
+        });
+    });
+});
+</script>";
+
+// Wrap the entire form in a form element
+echo "<form id='settings-form' action='$PHP_SELF' method='POST'>";
+echo "<input type='hidden' name='droppedOFtotal' value='$droppedOFtotal'>";
+echo "</form>";
 
 $open_list = '<TABLE WIDTH=250 CELLPADDING=0 CELLSPACING=0 BGCOLOR=\'#D9E6FE\'><TR><TD ALIGN=CENTER><a href=\'#\' onclick=\\"showDiv(\'campaign_select_list\');\\"><font class=\'top_settings_val\'>'._QXZ("Choose Report Display Options").'</a></TD></TR></TABLE>';
 
