@@ -2391,7 +2391,7 @@ echo "<body>\n";
 if (preg_match("/LIMITED/",$report_display_type)) {
     $short_header=1;
     $no_header=1;
-    require("admin_header.php");
+    //require("admin_header.php");
     
     echo "<div class=\"container\">\n";
     echo "<header>\n";
