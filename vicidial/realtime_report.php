@@ -1996,277 +1996,181 @@ if ($RS_hide_CUST_info < 1)
 
 </script>
 
-<style>
-/* =====================================================
-   MODERN VICIDIAL REALTIME REPORT STYLES
-   ===================================================== */
+<STYLE type="text/css">
+/* --- Modern colors and spacing for tables and KPIs --- */
 
-/* ===== Base Color Classes ===== */
-.blank { color: #000; background-color: #fff; }
-.green { color: #fff; background-color: #28a745; }
-.red { color: #fff; background-color: #dc3545; }
-.lightblue { color: #000; background-color: #add8e6; }
-.rust { color: #000; background-color: #f47442; }
-.blue { color: #fff; background-color: #007bff; }
-.midnightblue { color: #fff; background-color: #191970; }
-.purple { color: #fff; background-color: #6f42c1; }
-.violet { color: #000; background-color: #ee82ee; }
-.thistle { color: #000; background-color: #d8bfd8; }
-.olive { color: #fff; background-color: #808000; }
-.darkolivegreen { color: #fff; background-color: #556b2f; }
-.saddlebrown { color: #fff; background-color: #8b4513; }
-.lime { color: #fff; background-color: #006600; }
-.yellow { color: #000; background-color: #ffc107; }
-.khaki { color: #000; background-color: #f0e68c; }
-.orange { color: #000; background-color: #fd7e14; }
-.black { color: #fff; background-color: #000; }
-.salmon { color: #fff; background-color: #fa8072; }
-.darkred { color: #fff; background-color: #990000; }
-
-/* ===== Header Variants (with font-size) ===== */
-.Hblank { color: #000; background-color: #fff; font-size: 11px; padding: 6px 10px; }
-.Hgreen { color: #fff; background-color: #28a745; font-size: 11px; padding: 6px 10px; }
-.Hred { color: #fff; background-color: #dc3545; font-size: 11px; padding: 6px 10px; }
-.Hlightblue { color: #000; background-color: #add8e6; font-size: 11px; padding: 6px 10px; }
-.Hrust { color: #000; background-color: #f47442; font-size: 11px; padding: 6px 10px; }
-.Hblue { color: #fff; background-color: #007bff; font-size: 11px; padding: 6px 10px; }
-.Hmidnightblue { color: #fff; background-color: #191970; font-size: 11px; padding: 6px 10px; }
-.Hpurple { color: #fff; background-color: #6f42c1; font-size: 11px; padding: 6px 10px; }
-.Hviolet { color: #000; background-color: #ee82ee; font-size: 11px; padding: 6px 10px; }
-.Hthistle { color: #000; background-color: #d8bfd8; font-size: 11px; padding: 6px 10px; }
-.Holive { color: #fff; background-color: #808000; font-size: 11px; padding: 6px 10px; }
-.Hdarkolivegreen { color: #fff; background-color: #556b2f; font-size: 11px; padding: 6px 10px; }
-.Hsaddlebrown { color: #fff; background-color: #8b4513; font-size: 11px; padding: 6px 10px; }
-.Hlime { color: #fff; background-color: #006600; font-size: 11px; padding: 6px 10px; }
-.Hyellow { color: #000; background-color: #ffc107; font-size: 11px; padding: 6px 10px; }
-.Hkhaki { color: #000; background-color: #f0e68c; font-size: 11px; padding: 6px 10px; }
-.Horange { color: #000; background-color: #fd7e14; font-size: 11px; padding: 6px 10px; }
-.Hblack { color: #fff; background-color: #000; font-size: 11px; padding: 6px 10px; }
-.Hsalmon { color: #fff; background-color: #fa8072; font-size: 11px; padding: 6px 10px; }
-.Hdarkred { color: #fff; background-color: #990000; font-size: 11px; padding: 6px 10px; }
-
-/* ===== Table Row Color Classes ===== */
-tr.TRblank { background-color: #fff; }
-tr.TRgreen { background-color: #28a745; color: #fff; }
-tr.TRred { background-color: #dc3545; color: #fff; }
-tr.TRlightblue { background-color: #add8e6; }
-tr.TRrust { background-color: #f47442; }
-tr.TRblue { background-color: #007bff; color: #fff; }
-tr.TRmidnightblue { background-color: #191970; color: #fff; }
-tr.TRpurple { background-color: #6f42c1; color: #fff; }
-tr.TRviolet { background-color: #ee82ee; }
-tr.TRthistle { background-color: #d8bfd8; }
-tr.TRolive { background-color: #808000; color: #fff; }
-tr.TRdarkolivegreen { background-color: #556b2f; color: #fff; }
-tr.TRsaddlebrown { background-color: #8b4513; color: #fff; }
-tr.TRlime { background-color: #006600; color: #fff; }
-tr.TRyellow { background-color: #ffc107; }
-tr.TRkhaki { background-color: #f0e68c; }
-tr.TRorange { background-color: #fd7e14; }
-tr.TRblack { background-color: #000; color: #fff; }
-tr.TRsalmon { background-color: #fa8072; color: #fff; }
-tr.TRdarkred { background-color: #990000; color: #fff; }
-
-/* ===== Red Gradient Scale (r1-r4) ===== */
-.r1 { color: #000; background-color: #ffcccc; }
-.r2 { color: #000; background-color: #ff9999; }
-.r3 { color: #000; background-color: #ff6666; }
-.r4 { color: #fff; background-color: #ff0000; font-weight: 600; }
-
-/* ===== Blue Gradient Scale (b1-b4) ===== */
-.b1 { color: #000; background-color: #ccccff; }
-.b2 { color: #000; background-color: #9999ff; }
-.b3 { color: #000; background-color: #6666ff; }
-.b4 { color: #fff; background-color: #0000ff; font-weight: 600; }
-
-/* ===== Header Font Styles (Helvetica Bold) ===== */
-.Hfb1 { 
-    color: #fff; 
-    background-color: #015b91; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 18px; 
-    font-weight: 700;
-    padding: 10px 15px;
-    border-radius: 6px;
-}
-
-.Hfr1 { 
-    color: #000; 
-    background-color: #ffcccc; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 18px; 
-    font-weight: 700;
-    padding: 10px 15px;
-    border-radius: 6px;
-}
-
-.Hfr2 { 
-    color: #000; 
-    background-color: #ff9999; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 18px; 
-    font-weight: 700;
-    padding: 10px 15px;
-    border-radius: 6px;
-}
-
-.Hfr3 { 
-    color: #000; 
-    background-color: #ff6666; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 18px; 
-    font-weight: 700;
-    padding: 10px 15px;
-    border-radius: 6px;
-}
-
-.Hfr4 { 
-    color: #fff; 
-    background-color: #ff0000; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 18px; 
-    font-weight: 700;
-    padding: 10px 15px;
-    border-radius: 6px;
-}
-
-/* ===== Top Settings Styles ===== */
-.top_settings_key { 
-    color: #2c3e50; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 11px; 
-    font-weight: 700;
-}
-
-.top_settings_val { 
-    color: #495057; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 11px;
-}
-
-.top_head_key { 
-    color: #2c3e50; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 12px; 
-    font-weight: 700;
-}
-
-.top_head_val { 
-    color: #495057; 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 12px;
-}
-
-/* ===== Realtime Component Styles ===== */
-.realtime_img_icon { 
-    width: 42px; 
-    height: 42px;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.realtime_img_text { 
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    font-size: 11px; 
-    color: #fff; 
-    font-weight: 700;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.realtime_table { 
-    width: 100%; 
-    max-width: 960px;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 8px;
+/* Modern Campaign Stats Table */
+.campaign-stats-table {
+    width: 100%;
+    max-width: 1400px;
+    margin: 24px auto 0 auto;
+    background: #fff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
-
-.realtime_calls_table { 
-    width: 100%; 
-    max-width: 860px;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.campaign-stats-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
 }
-
-.realtime_settings_table { 
-    width: 100%; 
-    max-width: 780px;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f8f9fa;
+.campaign-stats-table th, .campaign-stats-table td {
+    padding: 12px 20px;
 }
-
-/* ===== Dynamic In-Group Color Classes (Generated from Database) ===== */
-<?php
-$stmt = "select group_id,group_color from vicidial_inbound_groups;";
-$rslt = mysql_to_mysqli($stmt, $link);
-if ($DB) {
-    echo "$stmt\n";
-}
-$INgroups_to_print = mysqli_num_rows($rslt);
-
-if ($INgroups_to_print > 0) {
-    $g = 0;
-    while ($g < $INgroups_to_print) {
-        $row = mysqli_fetch_row($rslt);
-        $group_id[$g] = $row[0];
-        $group_color[$g] = $row[1];
-        
-        // Generate CSS classes for each ingroup
-        echo ".csc$group_id[$g] { \n";
-        echo "    color: #000; \n";
-        echo "    background-color: $group_color[$g]; \n";
-        echo "    padding: 6px 10px; \n";
-        echo "    border-radius: 4px; \n";
-        echo "}\n\n";
-        
-        echo "tr.csc$group_id[$g] { \n";
-        echo "    background-color: $group_color[$g]; \n";
-        echo "}\n\n";
-        
-        $g++;
-    }
-}
-?>
-
-/* ===== Global Table Enhancements ===== */
-table {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-table td, table th {
-    padding: 8px 12px;
-}
-
-table th {
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 11px;
+.campaign-stats-table th {
+    background: #23272B;
+    color: #fff;
+    font-weight: bold;
+    text-align: left;
     letter-spacing: 0.5px;
 }
-
-/* ===== Responsive Adjustments ===== */
-@media (max-width: 768px) {
-    .realtime_table,
-    .realtime_calls_table,
-    .realtime_settings_table {
-        max-width: 100%;
-        font-size: 12px;
-    }
-    
-    .Hfb1, .Hfr1, .Hfr2, .Hfr3, .Hfr4 {
-        font-size: 16px;
-        padding: 8px 12px;
-    }
+.campaign-stats-table tr {
+    border-bottom: 1px solid #ececec;
 }
-</style>
+.campaign-stats-table tr:nth-child(even) {
+    background: #f6f8fa;
+}
+.campaign-stats-table tr:last-child {
+    border-bottom: none;
+}
+
+/* --- Improved KPI Card --- */
+.kpi-card {
+    background: #23272B;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    margin: 0 8px 14px 8px !important;
+    display: inline-block;
+    vertical-align: top;
+    padding: 18px 14px 12px 14px;
+    font-size: 17px;
+    width: 160px;
+    min-height: 120px;
+    text-align: center;
+    transition: box-shadow .15s;
+    position: relative;
+}
+.kpi-card-dark { /* For special KPIs (dead calls, paused, dispo etc.) */
+    background: #35363A;
+    color: #fff;
+}
+.kpi-card h3 {
+    font-size: 15px;
+    margin: 0 0 16px 0;
+    font-weight: 600;
+    color: #e2e5ea;
+    letter-spacing: 0.3px;
+}
+.kpi-card .kpi-value {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+/* Remove gaps/extra space under cards section */
+.kpi-row {
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+}
+
+/* Header/Stat Colors (improved palette) */
+.blank { color: black; background: white; }
+.green { color: white; background: #28a745;}
+.red { color: white; background: #dc3545;}
+.blue { color: white; background: #007bff;}
+.lightblue { color: black; background: #ADD8E6;}
+.rust { color: black; background: #F47442;}
+.midnightblue { color: white; background: #191970;}
+.purple { color: white; background: purple;}
+.violet { color: black; background: #EE82EE;}
+.thistle { color: black; background: #D8BFD8;}
+.olive { color: white; background: #808000;}
+.darkolivegreen { color: white; background: #556B2F;}
+.saddlebrown { color: white; background: #8B4513;}
+.lime { color: white; background: #006600;}
+.yellow { color: black; background: #F9F871;}
+.khaki { color: black; background: #F0E68C;}
+.orange { color: black; background: #FFA726;}
+.black { color: white; background: #222;}
+.salmon { color: white; background: #FA8072;}
+.darkred { color: white; background: #990000;}
+
+.Hblank, .Hgreen, .Hred, .Hlightblue, .Hrust, .Hblue, .Hmidnightblue, .Hpurple, .Hviolet, .Hthistle, .Holive, .Hdarkolivegreen, .Hsaddlebrown, .Hlime, .Hyellow, .Hkhaki, .Horange, .Hblack, .Hsalmon, .Hdarkred {
+    font-size: 11px !important; padding: 5px 10px !important;
+}
+
+/* Table Rows */
+tr.TRblank { background: #fff; }
+tr.TRgreen { background: #28a745; color: #fff; }
+tr.TRred { background: #dc3545; color: #fff; }
+tr.TRblue { background: #007bff; color: #fff; }
+tr.TRlightblue { background: #ADD8E6;}
+tr.TRrust { background: #F47442;}
+tr.TRmidnightblue { background: #191970; color: #fff;}
+tr.TRpurple { background: purple; color: #fff;}
+tr.TRviolet { background: #EE82EE;}
+tr.TRthistle { background: #D8BFD8;}
+tr.TRolive { background: #808000; color: #fff;}
+tr.TRdarkolivegreen { background: #556B2F; color: #fff;}
+tr.TRsaddlebrown { background: #8B4513; color: #fff;}
+tr.TRlime { background: #006600; color: #fff;}
+tr.TRyellow { background: #F9F871;}
+tr.TRkhaki { background: #F0E68C;}
+tr.TRorange { background: #FFA726;}
+tr.TRblack { background: #222; color: #fff;}
+tr.TRsalmon { background: #FA8072; color: #fff;}
+tr.TRdarkred { background: #990000; color: #fff;}
+
+/* Modern Table Responsive */
+@media (max-width: 900px) {
+    .campaign-stats-table {max-width:100%!important;}
+    .campaign-stats-table table {font-size:12px;}
+    .kpi-card {width:120px;min-height:80px;padding:12px 4px;}
+}
+
+/* Remove unwanted vertical spacing */
+body, td, th, tr {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.kpi-row, .campaign-stats-table, table {margin-top:0!important;}
+
+/* Top settings & realtime styles preserved */
+.top_settings_key {color: #222; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold;}
+.top_settings_val {color: #333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;}
+.top_head_key {color: #222; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold;}
+.top_head_val {color: #222; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;}
+
+/* Dynamic ingroup colors (unchanged) */
+<?php
+    $stmt="select group_id,group_color from vicidial_inbound_groups;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    if ($DB) {echo "$stmt\n";}
+    $INgroups_to_print = mysqli_num_rows($rslt);
+        if ($INgroups_to_print > 0)
+        {
+        $g=0;
+        while ($g < $INgroups_to_print)
+            {
+            $row=mysqli_fetch_row($rslt);
+            $group_id[$g] = $row[0];
+            $group_color[$g] = $row[1];
+            echo "   .csc$group_id[$g] {color: black; background-color: $group_color[$g};}\n";
+            echo "   tr.csc$group_id[$g] {background-color: $group_color[$g];}\n";
+            $g++;
+            }
+        }
+?>
+</STYLE>
 
 
 <?php
