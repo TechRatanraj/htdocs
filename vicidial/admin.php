@@ -32750,59 +32750,125 @@ echo "$status_group_overrides_OUTPUT";
 		}
 
 	##### CAMPAIGN HOTKEYS #####
-	if ($SUB==23)
-		{
-		echo "<br><b>"._QXZ("CUSTOM HOT KEYS WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_hotkeys$NWE</b><br>\n";
-		echo "<TABLE width=400 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("HOT KEY")."</td><td>"._QXZ("STATUS")."</td><td>"._QXZ("DESCRIPTION")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
+if ($SUB==23)
+{
+	echo "<div style='margin:28px auto;max-width:900px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
 
-		$stmt="SELECT status,hotkey,status_name,selectable,campaign_id from vicidial_campaign_hotkeys where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by hotkey;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$statuses_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($statuses_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$o++;
+	// Header
+	echo "<div style='font-size:20px;font-weight:800;color:#222;display:flex;align-items:center;gap:8px;margin-bottom:8px;'>
+			<span>🔥</span>"._QXZ("Custom Hot Keys Within This Campaign").": &nbsp; $NWB#campaign_hotkeys$NWE
+		  </div>";
+	echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:16px;'></div>";
 
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+	// Card: existing hotkeys table
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 10px rgba(15,23,42,0.06);padding:16px 18px;margin-bottom:24px;'>";
 
-			echo "<tr $bgcolor><td><font size=1>$rowx[1]</td><td><font size=1>$rowx[0]</td><td><font size=1>$rowx[2]</td><td><font size=1><a href=\"$PHP_SELF?ADD=43&campaign_id=$campaign_id&status=$rowx[0]&hotkey=$rowx[1]&action=DELETE\">"._QXZ("DELETE")."</a></td></tr>\n";
+	echo "<table cellspacing='0' cellpadding='8' style='width:100%;border-collapse:collapse;font-size:13px;'>";
 
-			}
+	// Header row
+	echo "<tr style='background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#475569;text-transform:uppercase;font-size:11px;letter-spacing:.4px;'>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:70px;'>"._QXZ("Hot Key")."</th>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:90px;'>"._QXZ("Status")."</th>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;'>"._QXZ("Description")."</th>";
+	echo "<th style='padding:10px 6px;text-align:center;font-weight:700;width:90px;'>"._QXZ("Delete")."</th>";
+	echo "</tr>";
 
-		echo "</table>\n";
+	// Data rows
+	$stmt="SELECT status,hotkey,status_name,selectable,campaign_id from vicidial_campaign_hotkeys where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by hotkey;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$statuses_to_print = mysqli_num_rows($rslt);
+	$o=0;
+	while ($statuses_to_print > $o) 
+	{
+		$rowx=mysqli_fetch_row($rslt);
+		$o++;
 
-		echo "<br>"._QXZ("ADD NEW CUSTOM CAMPAIGN HOT KEY")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=23>\n";
-		echo "<input type=hidden name=selectable value=Y>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Hotkey").": <select size=1 name=hotkey>\n";
-		echo "<option>1</option>\n";
-		echo "<option>2</option>\n";
-		echo "<option>3</option>\n";
-		echo "<option>4</option>\n";
-		echo "<option>5</option>\n";
-		echo "<option>6</option>\n";
-		echo "<option>7</option>\n";
-		echo "<option>8</option>\n";
-		echo "<option>9</option>\n";
-		echo "</select> &nbsp; \n";
-		echo _QXZ("Status").": <select size=1 name=HKstatus>\n";
-		echo "$HKstatuses_list\n";
-		echo "<option value=\"ALTPH2-----"._QXZ("Alternate Phone Hot Dial")."\">ALTPH2 - "._QXZ("Alternate Phone Hot Dial")."</option>\n";
-		echo "<option value=\"ADDR3-----"._QXZ("Address3 Hot Dial")."\">ADDR3 - "._QXZ("Address3 Hot Dial")."</option>\n";
-		echo "<option value=\"LTMG-----"._QXZ("Send to Answering Machine Msg")."\">LTMG - "._QXZ("Send to Answering Machine Msg")."</option>\n";
-		echo "<option value=\"XFTAMM-----"._QXZ("Send to Answering Machine Msg")."\">XFTAMM - "._QXZ("Send to Answering Machine Msg")."</option>\n";
-		echo "<option value=\"LTMGAD-----"._QXZ("Send to AM Message and Dispo")."\">LTMGAD - "._QXZ("Send to AM Message and Dispo")."</option>\n";
-		echo "<option value=\"XAMMAD-----"._QXZ("Send to AM Message and Dispo")."\">XAMMAD - "._QXZ("Send to AM Message and Dispo")."</option>\n";
-		echo "</select> &nbsp; \n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-		echo "</form><BR>\n";
-		}
+		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+			{$row_bg = "#$SSstd_row2_background";}
+		else
+			{$row_bg = "#$SSstd_row1_background";}
+
+		echo "<tr style='background:$row_bg;border-bottom:1px solid #e5e7eb;'>";
+		echo "<td style='padding:8px 6px;font-size:12px;font-weight:600;color:#111827;'>".htmlspecialchars($rowx[1])."</td>";
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>".htmlspecialchars($rowx[0])."</td>";
+		echo "<td style='padding:8px 6px;font-size:12px;color:#4b5563;'>".htmlspecialchars($rowx[2])."</td>";
+		echo "<td style='padding:8px 6px;text-align:center;'>";
+		echo "<a href=\"$PHP_SELF?ADD=43&campaign_id=$campaign_id&status=$rowx[0]&hotkey=$rowx[1]&action=DELETE\" ".
+			 "style='display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#b91c1c;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid #fecaca;background:#fef2f2;'>"
+			 ._QXZ("DELETE")."</a>";
+		echo "</td>";
+		echo "</tr>\n";
+	}
+
+	if ($statuses_to_print < 1)
+	{
+		echo "<tr><td colspan='4' style='padding:10px 6px;font-size:12px;color:#6b7280;text-align:center;'>"._QXZ("No custom hot keys defined for this campaign.")."</td></tr>";
+	}
+
+	echo "</table>";
+	echo "</div>"; // end hotkeys card
+
+	// Card: Add new hotkey form
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 10px rgba(15,23,42,0.06);padding:18px 20px;'>";
+
+	echo "<div style='font-size:16px;font-weight:700;color:#111827;display:flex;align-items:center;gap:8px;margin-bottom:10px;'>
+			<span>➕</span>"._QXZ("Add New Custom Campaign Hot Key")."
+		  </div>";
+
+	echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
+
+	echo "<input type='hidden' name='ADD' value='23'>\n";
+	echo "<input type='hidden' name='selectable' value='Y'>\n";
+	echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">\n";
+
+	// form layout row
+	echo "<div style='display:grid;grid-template-columns:130px 1.4fr 0.8fr;gap:18px;align-items:end;margin-top:8px;'>";
+
+	// Hotkey select
+	echo "<div>";
+	echo "<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Hotkey")."</label>";
+	echo "<select name='hotkey' ".
+		 "style='width:100%;margin-top:4px;padding:8px 10px;font-size:13px;border-radius:8px;border:1px solid #d1d5db;background:#f9fafb;'>";
+	echo "<option>1</option>\n";
+	echo "<option>2</option>\n";
+	echo "<option>3</option>\n";
+	echo "<option>4</option>\n";
+	echo "<option>5</option>\n";
+	echo "<option>6</option>\n";
+	echo "<option>7</option>\n";
+	echo "<option>8</option>\n";
+	echo "<option>9</option>\n";
+	echo "</select>";
+	echo "</div>";
+
+	// Status select
+	echo "<div>";
+	echo "<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Status")."</label>";
+	echo "<select name='HKstatus' ".
+		 "style='width:100%;margin-top:4px;padding:8px 10px;font-size:13px;border-radius:8px;border:1px solid #d1d5db;background:#f9fafb;'>";
+	echo "$HKstatuses_list\n";
+	echo "<option value=\"ALTPH2-----"._QXZ("Alternate Phone Hot Dial")."\">ALTPH2 - "._QXZ("Alternate Phone Hot Dial")."</option>\n";
+	echo "<option value=\"ADDR3-----"._QXZ("Address3 Hot Dial")."\">ADDR3 - "._QXZ("Address3 Hot Dial")."</option>\n";
+	echo "<option value=\"LTMG-----"._QXZ("Send to Answering Machine Msg")."\">LTMG - "._QXZ("Send to Answering Machine Msg")."</option>\n";
+	echo "<option value=\"XFTAMM-----"._QXZ("Send to Answering Machine Msg")."\">XFTAMM - "._QXZ("Send to Answering Machine Msg")."</option>\n";
+	echo "<option value=\"LTMGAD-----"._QXZ("Send to AM Message and Dispo")."\">LTMGAD - "._QXZ("Send to AM Message and Dispo")."</option>\n";
+	echo "<option value=\"XAMMAD-----"._QXZ("Send to AM Message and Dispo")."\">XAMMAD - "._QXZ("Send to AM Message and Dispo")."</option>\n";
+	echo "</select>";
+	echo "</div>";
+
+	// Submit button
+	echo "<div style='text-align:right;'>";
+	echo "<input type='submit' name='submit' value='"._QXZ("ADD")."' ".
+		 "style='background-color:#$SSbutton_color;color:#fff;padding:9px 24px;border:none;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 6px rgba(37,99,235,0.35);'>";
+	echo "</div>";
+
+	echo "</div>"; // end grid row
+
+	echo "</form>";
+	echo "</div>"; // end add-hotkey card
+
+	echo "</div>"; // outer wrapper
+}
 
 	##### CAMPAIGN LEAD RECYCLING #####
 	if ($SUB==25)
