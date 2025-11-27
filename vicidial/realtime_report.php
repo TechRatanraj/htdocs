@@ -771,254 +771,333 @@ $ingroup_SQL = preg_replace('/,$/i', '', $ingroup_SQL);
 #############################################
 
 
-### if no campaigns selected, display all
-if ( ($group_ct < 1) or (strlen($group_string) < 2) )
-	{
-	$groups[0] = 'ALL-ACTIVE';
-	$group_string = '|ALL-ACTIVE|';
-	$group = 'ALL-ACTIVE';
-	$groupQS .= "&groups[]=ALL-ACTIVE";
-	}
-### if no user groups selected, display all
-$user_group_none=0;
-if ( ($user_group_ct < 1) or (strlen($user_group_string) < 2) )
-	{
-	$user_group_filter[0] = 'ALL-GROUPS';
-	$user_group_string = '|ALL-GROUPS|';
-	$usergroupQS .= "&user_group_filter[]=ALL-GROUPS";
-	$user_group_none=1;
-	}
-### if no ingroups selected, display all
-$ingroup_none=0;
-if ( ($ingroup_ct < 1) or (strlen($ingroup_string) < 2) )
-	{
-	$ingroup_filter[0] = 'ALL-INGROUPS';
-	$ingroup_string = '|ALL-INGROUPS|';
-	$ingroupQS .= "&ingroup_filter[]=ALL-INGROUPS";
-	$ingroup_none=1;
-	}
-
-if ( (preg_match('/\s\-\-NONE\-\-\s/',$group_string) ) or ($group_ct < 1) )
-	{
-	$all_active = 0;
-	$group_SQL = "''";
-	$group_SQLand = "and FALSE";
-	$group_SQLwhere = "where FALSE";
-	}
-elseif ( preg_match('/ALL\-ACTIVE/i',$group_string) )
-	{
-	$all_active = 1;
-	$group_SQL = $allactivecampaigns;
-	$group_SQLand = "and campaign_id IN($allactivecampaigns)";
-	$group_SQLwhere = "where campaign_id IN($allactivecampaigns)";
-	}
-else
-	{
-	$all_active = 0;
-	$group_SQLand = "and campaign_id IN($group_SQL)";
-	$group_SQLwhere = "where campaign_id IN($group_SQL)";
-	}
-
-if ( (preg_match('/\s\-\-NONE\-\-\s/',$user_group_string) ) or ($user_group_ct < 1) )
-	{
-	$all_active_groups = 0;
-	$user_group_SQL = "''";
-#	$user_group_SQLand = "and FALSE";
-#	$user_group_SQLwhere = "where FALSE";
-	}
-elseif ( preg_match('/ALL\-GROUPS/i',$user_group_string) )
-	{
-	$all_active_groups = 1;
-#	$user_group_SQL = '';
-	$user_group_SQL = "'$rawLOGadmin_viewable_groupsSQL'";
-#	$group_SQLand = "and campaign_id IN($allactivecampaigns)";
-#	$group_SQLwhere = "where campaign_id IN($allactivecampaigns)";
-	}
-else
-	{
-	$all_active_groups = 0;
-#	$user_group_SQLand = "and user_group IN($user_group_SQL)";
-#	$user_group_SQLwhere = "where user_group IN($user_group_SQL)";
-	}
 
 
-if ( (preg_match('/\s\-\-NONE\-\-\s/',$ingroup_string) ) or ($ingroup_ct < 1) )
-	{
-	$all_active_ingroups = 0;
-	$ingroup_SQL = "''";
-	}
-elseif ( preg_match('/ALL\-INGROUPS/i',$ingroup_string) )
-	{
-	$all_active_ingroups = 1;
-	$ingroup_SQL = "'$rawLOGadmin_viewable_groupsSQL'";
-	}
-else
-	{
-	$all_active_ingroups = 0;
-	}
+#############################################
+##### BEGIN Campaign, User Group, and In-Group Filter Setup #####
+#############################################
 
+### If no campaigns selected, display all
+if (($group_ct < 1) or (strlen($group_string) < 2)) {
+    $groups[0] = 'ALL-ACTIVE';
+    $group_string = '|ALL-ACTIVE|';
+    $group = 'ALL-ACTIVE';
+    $groupQS .= "&groups[]=ALL-ACTIVE";
+}
 
-$stmt="select user_group, group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
-$rslt=mysql_to_mysqli($stmt, $link);
-if (!isset($DB))   {$DB=0;}
-if ($DB) {echo "$stmt\n";}
+### If no user groups selected, display all
+$user_group_none = 0;
+if (($user_group_ct < 1) or (strlen($user_group_string) < 2)) {
+    $user_group_filter[0] = 'ALL-GROUPS';
+    $user_group_string = '|ALL-GROUPS|';
+    $usergroupQS .= "&user_group_filter[]=ALL-GROUPS";
+    $user_group_none = 1;
+}
+
+### If no ingroups selected, display all
+$ingroup_none = 0;
+if (($ingroup_ct < 1) or (strlen($ingroup_string) < 2)) {
+    $ingroup_filter[0] = 'ALL-INGROUPS';
+    $ingroup_string = '|ALL-INGROUPS|';
+    $ingroupQS .= "&ingroup_filter[]=ALL-INGROUPS";
+    $ingroup_none = 1;
+}
+
+// Build Campaign SQL filters
+if ((preg_match('/\s\-\-NONE\-\-\s/', $group_string)) or ($group_ct < 1)) {
+    $all_active = 0;
+    $group_SQL = "''";
+    $group_SQLand = "and FALSE";
+    $group_SQLwhere = "where FALSE";
+} elseif (preg_match('/ALL\-ACTIVE/i', $group_string)) {
+    $all_active = 1;
+    $group_SQL = $allactivecampaigns;
+    $group_SQLand = "and campaign_id IN($allactivecampaigns)";
+    $group_SQLwhere = "where campaign_id IN($allactivecampaigns)";
+} else {
+    $all_active = 0;
+    $group_SQLand = "and campaign_id IN($group_SQL)";
+    $group_SQLwhere = "where campaign_id IN($group_SQL)";
+}
+
+// Build User Group SQL filters
+if ((preg_match('/\s\-\-NONE\-\-\s/', $user_group_string)) or ($user_group_ct < 1)) {
+    $all_active_groups = 0;
+    $user_group_SQL = "''";
+} elseif (preg_match('/ALL\-GROUPS/i', $user_group_string)) {
+    $all_active_groups = 1;
+    $user_group_SQL = "'$rawLOGadmin_viewable_groupsSQL'";
+} else {
+    $all_active_groups = 0;
+}
+
+// Build In-Group SQL filters
+if ((preg_match('/\s\-\-NONE\-\-\s/', $ingroup_string)) or ($ingroup_ct < 1)) {
+    $all_active_ingroups = 0;
+    $ingroup_SQL = "''";
+} elseif (preg_match('/ALL\-INGROUPS/i', $ingroup_string)) {
+    $all_active_ingroups = 1;
+    $ingroup_SQL = "'$rawLOGadmin_viewable_groupsSQL'";
+} else {
+    $all_active_ingroups = 0;
+}
+
+// Get User Groups
+$stmt = "select user_group, group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
+$rslt = mysql_to_mysqli($stmt, $link);
+if (!isset($DB)) {
+    $DB = 0;
+}
+if ($DB) {
+    echo "$stmt\n";
+}
+
 $usergroups_to_print = mysqli_num_rows($rslt);
-$i=0;
-$usergroups=array();
-$usergroupnames=array();
-$usergroups[$i]='ALL-GROUPS';
+$i = 0;
+$usergroups = array();
+$usergroupnames = array();
+$usergroups[$i] = 'ALL-GROUPS';
 $usergroupnames[$i] = "All user groups";
 $i++;
 $usergroups_to_print++;
-while ($i < $usergroups_to_print)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$usergroups[$i] =$row[0];
-	$usergroupnames[$i] =$row[1];
-	$i++;
-	}
 
-$stmt="select group_id,group_name from vicidial_inbound_groups $whereLOGadmin_viewable_groupsSQL order by group_id;";
-$rslt=mysql_to_mysqli($stmt, $link);
-if ($DB) {$MAIN.="$stmt\n";}
+while ($i < $usergroups_to_print) {
+    $row = mysqli_fetch_row($rslt);
+    $usergroups[$i] = $row[0];
+    $usergroupnames[$i] = $row[1];
+    $i++;
+}
+
+// Get In-Groups
+$stmt = "select group_id,group_name from vicidial_inbound_groups $whereLOGadmin_viewable_groupsSQL order by group_id;";
+$rslt = mysql_to_mysqli($stmt, $link);
+if ($DB) {
+    $MAIN .= "$stmt\n";
+}
+
 $ingroups_to_print = mysqli_num_rows($rslt);
-$i=0;
-$LISTingroups=array();
-$LISTingroup_names=array();
-$LISTingroups[$i]='ALL-INGROUPS';
+$i = 0;
+$LISTingroups = array();
+$LISTingroup_names = array();
+$LISTingroups[$i] = 'ALL-INGROUPS';
 $i++;
 $ingroups_to_print++;
-$ingroups_string='|';
-while ($i < $ingroups_to_print)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$LISTingroups[$i] =		$row[0];
-	$LISTingroup_names[$i] =	$row[1];
-	$ingroups_string .= "$LISTingroups[$i]|";
-	$i++;
-	}
+$ingroups_string = '|';
+
+while ($i < $ingroups_to_print) {
+    $row = mysqli_fetch_row($rslt);
+    $LISTingroups[$i] = $row[0];
+    $LISTingroup_names[$i] = $row[1];
+    $ingroups_string .= "$LISTingroups[$i]|";
+    $i++;
+}
 
 require("screen_colors.php");
 
-if (!isset($RR))   {$RR=4;}
+if (!isset($RR)) {
+    $RR = 4;
+}
 
 $NFB = '<b><font size=6 face="courier">';
 $NFE = '</font></b>';
-$F=''; $FG=''; $B=''; $BG='';
+$F = ''; 
+$FG = ''; 
+$B = ''; 
+$BG = '';
 
-$select_list = "<TABLE class='realtime_settings_table' CELLPADDING=5 BGCOLOR='#D9E6FE'><TR><TD VALIGN=TOP>"._QXZ("Select Campaigns").": <BR>";
-$select_list .= "<SELECT SIZE=8 NAME=groups[] ID=groups[] multiple>";
-$o=0;
-while ($groups_to_print > $o)
-	{
-	if (preg_match("/\|$LISTgroups[$o]\|/",$group_string)) 
-		{$select_list .= "<option selected value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";}
-	else
-		{$select_list .= "<option value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";}
-	$o++;
-	}
+##### END Campaign, User Group, and In-Group Filter Setup #####
+#############################################
+
+#############################################
+##### BEGIN Modern Settings Panel UI #####
+#############################################
+
+$select_list = "<div style='background:#f8f9fa;border-radius:12px;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.08);'>";
+
+$select_list .= "<div style='display:grid;grid-template-columns:1fr 1fr;gap:30px;'>";
+
+// Left Column - Filters
+$select_list .= "<div>";
+
+// Campaigns Section
+$select_list .= "<div style='margin-bottom:25px;'>";
+$select_list .= "<label style='display:block;font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:8px;'>"._QXZ("Select Campaigns")."</label>";
+$select_list .= "<SELECT SIZE=8 NAME='groups[]' ID='groups[]' multiple style='width:100%;padding:8px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:13px;'>";
+$o = 0;
+while ($groups_to_print > $o) {
+    if (preg_match("/\|$LISTgroups[$o]\|/", $group_string)) {
+        $select_list .= "<option selected value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";
+    } else {
+        $select_list .= "<option value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";
+    }
+    $o++;
+}
 $select_list .= "</SELECT>";
-$select_list .= "<BR><font class='top_settings_val'>("._QXZ("To select more than 1 campaign, hold down the Ctrl key and click").")</font>";
+$select_list .= "<div style='font-size:11px;color:#6c757d;margin-top:6px;'>"._QXZ("To select more than 1 campaign, hold down the Ctrl key and click")."</div>";
+$select_list .= "</div>";
 
-$select_list .= "<BR><BR>"._QXZ("Select User Groups").": <BR>";
-$select_list .= "<SELECT SIZE=8 NAME=user_group_filter[] ID=user_group_filter[] multiple>";
-$o=0;
-while ($o < $usergroups_to_print)
-	{
-	if (preg_match("/\|$usergroups[$o]\|/",$user_group_string))
-		{$select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
-	else
-		{
-		if ( ($user_group_none > 0) and ($usergroups[$o] == 'ALL-GROUPS') )
-			{$select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
-		else
-			{$select_list .= "<option value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
-		}
-	$o++;
-	}
+// User Groups Section
+$select_list .= "<div style='margin-bottom:25px;'>";
+$select_list .= "<label style='display:block;font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:8px;'>"._QXZ("Select User Groups")."</label>";
+$select_list .= "<SELECT SIZE=8 NAME='user_group_filter[]' ID='user_group_filter[]' multiple style='width:100%;padding:8px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:13px;'>";
+$o = 0;
+while ($o < $usergroups_to_print) {
+    if (preg_match("/\|$usergroups[$o]\|/", $user_group_string)) {
+        $select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
+    } else {
+        if (($user_group_none > 0) and ($usergroups[$o] == 'ALL-GROUPS')) {
+            $select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
+        } else {
+            $select_list .= "<option value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
+        }
+    }
+    $o++;
+}
 $select_list .= "</SELECT>";
+$select_list .= "</div>";
 
-$select_list .= "<BR><BR>"._QXZ("Select In-Groups").": <BR>";
-$select_list .= "<SELECT SIZE=8 NAME=ingroup_filter[] ID=ingroup_filter[] multiple>";
-$o=0;
-while ($o < $ingroups_to_print)
-	{
-	if (preg_match("/\|$LISTingroups[$o]\|/",$ingroup_string))
-		{$select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";}
-	else
-		{
-		if ( ($in_group_none > 0) and ($LISTingroups[$o] == 'ALL-INGROUPS') )
-			{$select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";}
-		else
-			{$select_list .= "<option value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")."- "._QXZ("$LISTingroup_names[$o]")."</option>";}
-		}
-	$o++;
-	}
+// In-Groups Section
+$select_list .= "<div>";
+$select_list .= "<label style='display:block;font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:8px;'>"._QXZ("Select In-Groups")."</label>";
+$select_list .= "<SELECT SIZE=8 NAME='ingroup_filter[]' ID='ingroup_filter[]' multiple style='width:100%;padding:8px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:13px;'>";
+$o = 0;
+while ($o < $ingroups_to_print) {
+    if (preg_match("/\|$LISTingroups[$o]\|/", $ingroup_string)) {
+        $select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
+    } else {
+        if (($ingroup_none > 0) and ($LISTingroups[$o] == 'ALL-INGROUPS')) {
+            $select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
+        } else {
+            $select_list .= "<option value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
+        }
+    }
+    $o++;
+}
 $select_list .= "</SELECT>";
+$select_list .= "</div>";
 
-$select_list .= "</TD><TD VALIGN=TOP ALIGN=CENTER>";
-$select_list .= "<a href='#' onclick=\\\"hideDiv('campaign_select_list');\\\">"._QXZ("Close Panel")."</a><BR><BR>";
-$select_list .= "<TABLE CELLPADDING=2 CELLSPACING=2 BORDER=0>";
+$select_list .= "</div>"; // End left column
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Screen Refresh Rate").":  </TD><TD align=left><SELECT SIZE=1 NAME=RR ID=RR>";
-$select_list .= "<option value='4'";   if ($RR < 5) {$select_list .= " selected";}    $select_list .= ">4 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='10'";   if ( ($RR >= 5) and ($RR <=10) ) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='20'";   if ( ($RR >= 11) and ($RR <=20) ) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='30'";   if ( ($RR >= 21) and ($RR <=30) ) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='40'";   if ( ($RR >= 31) and ($RR <=40) ) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='60'";   if ( ($RR >= 41) and ($RR <=60) ) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='120'";   if ( ($RR >= 61) and ($RR <=120) ) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='300'";   if ( ($RR >= 121) and ($RR <=300) ) {$select_list .= " selected";}    $select_list .= ">5 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='600'";   if ( ($RR >= 301) and ($RR <=600) ) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='1200'";   if ( ($RR >= 601) and ($RR <=1200) ) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='1800'";   if ( ($RR >= 1201) and ($RR <=1800) ) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='2400'";   if ( ($RR >= 1801) and ($RR <=2400) ) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='3600'";   if ( ($RR >= 2401) and ($RR <=3600) ) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='7200'";   if ( ($RR >= 3601) and ($RR <=7200) ) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("hours")."</option>";
-$select_list .= "<option value='63072000'";   if ($RR >= 7201) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("years")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+// Right Column - Settings
+$select_list .= "<div>";
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Inbound").":  </TD><TD align=left><SELECT SIZE=1 NAME=with_inbound ID=with_inbound>";
+// Close Button
+$select_list .= "<div style='text-align:center;margin-bottom:25px;'>";
+$select_list .= "<a href='#' onclick=\"hideDiv('campaign_select_list');\" style='display:inline-block;background:#6c757d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;'>"._QXZ("Close Panel")."</a>";
+$select_list .= "</div>";
+
+// Settings Card
+$select_list .= "<div style='background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);'>";
+
+// Screen Refresh Rate
+$select_list .= "<div style='margin-bottom:20px;'>";
+$select_list .= "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Screen Refresh Rate")."</label>";
+$select_list .= "<SELECT SIZE=1 NAME=RR ID=RR style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;background:#f8fafe;font-size:14px;'>";
+$select_list .= "<option value='4'";   
+if ($RR < 5) {$select_list .= " selected";}    
+$select_list .= ">4 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='10'";   
+if (($RR >= 5) and ($RR <=10)) {$select_list .= " selected";}    
+$select_list .= ">10 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='20'";   
+if (($RR >= 11) and ($RR <=20)) {$select_list .= " selected";}    
+$select_list .= ">20 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='30'";   
+if (($RR >= 21) and ($RR <=30)) {$select_list .= " selected";}    
+$select_list .= ">30 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='40'";   
+if (($RR >= 31) and ($RR <=40)) {$select_list .= " selected";}    
+$select_list .= ">40 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='60'";   
+if (($RR >= 41) and ($RR <=60)) {$select_list .= " selected";}    
+$select_list .= ">60 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='120'";   
+if (($RR >= 61) and ($RR <=120)) {$select_list .= " selected";}    
+$select_list .= ">2 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='300'";   
+if (($RR >= 121) and ($RR <=300)) {$select_list .= " selected";}    
+$select_list .= ">5 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='600'";   
+if (($RR >= 301) and ($RR <=600)) {$select_list .= " selected";}    
+$select_list .= ">10 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='1200'";   
+if (($RR >= 601) and ($RR <=1200)) {$select_list .= " selected";}    
+$select_list .= ">20 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='1800'";   
+if (($RR >= 1201) and ($RR <=1800)) {$select_list .= " selected";}    
+$select_list .= ">30 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='2400'";   
+if (($RR >= 1801) and ($RR <=2400)) {$select_list .= " selected";}    
+$select_list .= ">40 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='3600'";   
+if (($RR >= 2401) and ($RR <=3600)) {$select_list .= " selected";}    
+$select_list .= ">60 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='7200'";   
+if (($RR >= 3601) and ($RR <=7200)) {$select_list .= " selected";}    
+$select_list .= ">2 "._QXZ("hours")."</option>";
+$select_list .= "<option value='63072000'";   
+if ($RR >= 7201) {$select_list .= " selected";}    
+$select_list .= ">2 "._QXZ("years")."</option>";
+$select_list .= "</SELECT>";
+$select_list .= "</div>";
+
+// Inbound
+$select_list .= "<div style='margin-bottom:20px;'>";
+$select_list .= "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Inbound")."</label>";
+$select_list .= "<SELECT SIZE=1 NAME=with_inbound ID=with_inbound style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;background:#f8fafe;font-size:14px;'>";
 $select_list .= "<option value='N'";
-	if ($with_inbound=='N') {$select_list .= " selected";} 
+if ($with_inbound=='N') {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("No")."</option>";
 $select_list .= "<option value='Y'";
-	if ($with_inbound=='Y') {$select_list .= " selected";} 
+if ($with_inbound=='Y') {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("Yes")."</option>";
 $select_list .= "<option value='O'";
-	if ($with_inbound=='O') {$select_list .= " selected";} 
+if ($with_inbound=='O') {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("Only")."</option>";
-$select_list .= "</SELECT></TD></TR>";
+$select_list .= "</SELECT>";
+$select_list .= "</div>";
 
-$select_list .= "<TR><TD align=right>";
-$select_list .= _QXZ("Monitor").":  </TD><TD align=left><SELECT SIZE=1 NAME=monitor_active ID=monitor_active>";
+// Monitor
+$select_list .= "<div>";
+$select_list .= "<label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Monitor")."</label>";
+$select_list .= "<SELECT SIZE=1 NAME=monitor_active ID=monitor_active style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;background:#f8fafe;font-size:14px;'>";
 $select_list .= "<option value=''";
-	if (strlen($monitor_active) < 2) {$select_list .= " selected";} 
+if (strlen($monitor_active) < 2) {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("NONE")."</option>";
-if (preg_match("/MONITOR/",$RS_ListenBarge) )
-	{
-	$select_list .= "<option value='MONITOR'";
-		if ($monitor_active=='MONITOR') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("MONITOR")."</option>";
-	}
-if (preg_match("/BARGE/",$RS_ListenBarge) )
-	{
-	$select_list .= "<option value='BARGE'";
-		if ($monitor_active=='BARGE') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("BARGE")."</option>";
-	}
-if ( ($agent_whisper_enabled == '1') and (preg_match("/WHISPER/",$RS_ListenBarge) ) )
-	{
-	$select_list .= "<option value='WHISPER'";
-		if ($monitor_active=='WHISPER') {$select_list .= " selected";} 
-	$select_list .= ">"._QXZ("WHISPER")."</option>";
-	}
-#$select_list .= "<option value='HIJACK'";
-#	if ($monitor_active=='HIJACK') {$select_list .= " selected";} 
-#$select_list .= ">HIJACK</option>";
-$select_list .= "</SELECT></TD></TR>";
+
+if (preg_match("/MONITOR/", $RS_ListenBarge)) {
+    $select_list .= "<option value='MONITOR'";
+    if ($monitor_active=='MONITOR') {$select_list .= " selected";} 
+    $select_list .= ">"._QXZ("MONITOR")."</option>";
+}
+
+if (preg_match("/BARGE/", $RS_ListenBarge)) {
+    $select_list .= "<option value='BARGE'";
+    if ($monitor_active=='BARGE') {$select_list .= " selected";} 
+    $select_list .= ">"._QXZ("BARGE")."</option>";
+}
+
+if (($agent_whisper_enabled == '1') and (preg_match("/WHISPER/", $RS_ListenBarge))) {
+    $select_list .= "<option value='WHISPER'";
+    if ($monitor_active=='WHISPER') {$select_list .= " selected";} 
+    $select_list .= ">"._QXZ("WHISPER")."</option>";
+}
+
+$select_list .= "</SELECT>";
+$select_list .= "</div>";
+
+$select_list .= "</div>"; // End settings card
+
+$select_list .= "</div>"; // End right column
+
+$select_list .= "</div>"; // End grid
+
+$select_list .= "</div>"; // End main container
+
+##### END Modern Settings Panel UI #####
+#############################################
+
+
 
 $select_list .= "<TR><TD align=right>";
 $select_list .= _QXZ("Phone").":  </TD><TD align=left>";
