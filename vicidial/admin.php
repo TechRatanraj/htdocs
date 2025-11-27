@@ -13396,97 +13396,58 @@ if ($ADD==20)
 # ADD=22 adds the new campaign status to the system
 ######################
 if ($ADD==22)
-{
-	// outer wrapper for nicer layout
-	echo "<div style='margin:24px auto;max-width:960px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
-
+	{
 	if ($add_copy_disabled > 0)
-	{
-		// permission error
-		echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;align-items:flex-start;gap:10px;'>";
-		echo "<div style='font-size:18px;line-height:1;'>⚠️</div>";
-		echo "<div>";
-		echo "<div style='font-size:14px;font-weight:700;margin-bottom:4px;'>"._QXZ("You do not have permission to add records on this system")."</div>";
-		echo "<div style='font-size:12px;opacity:.8;'>- system_settings -</div>";
-		echo "</div>";
-		echo "</div>";
-	}
+		{
+		echo "<br>"._QXZ("You do not have permission to add records on this system")." -system_settings-\n";
+		}
 	else
-	{
-		// existing campaign status check
+		{
+		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 		$stmt="SELECT count(*) from vicidial_campaign_statuses where campaign_id='$campaign_id' and status='$status_id';";
 		$rslt=mysql_to_mysqli($stmt, $link);
 		$row=mysqli_fetch_row($rslt);
-
 		if ($row[0] > 0)
-		{
-			echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>";
-			echo "<div style='font-size:14px;font-weight:700;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name")."</div>";
-			echo "</div>";
-		}
+			{echo "<br>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name")."\n";}
 		else
-		{
-			// existing global status check
+			{
 			$stmt="SELECT count(*) from vicidial_statuses where status='$status_id';";
 			$rslt=mysql_to_mysqli($stmt, $link);
 			$row=mysqli_fetch_row($rslt);
-
 			if ($row[0] > 0)
-			{
-				echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>";
-				echo "<div style='font-size:14px;font-weight:700;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name")."</div>";
-				echo "</div>";
-			}
+				{echo "<br>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name")."\n";}
 			else
-			{
-				// basic validation
+				{
 				if ( (strlen($campaign_id) < 2) or (strlen($status_id) < 1) or (strlen($status_name) < 2) )
-				{
-					echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>";
-					echo "<div style='font-size:14px;font-weight:700;margin-bottom:6px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - Please look at the data you entered")."</div>";
-					echo "<div style='font-size:13px;line-height:1.5;margin-left:4px;'>";
-					echo "<div>• "._QXZ("status must be between 1 and 8 characters in length")."</div>";
-					echo "<div>• "._QXZ("status name must be between 2 and 30 characters in length")."</div>";
-					echo "</div>";
-					echo "</div>";
-				}
+					{
+					echo "<br>"._QXZ("CAMPAIGN STATUS NOT ADDED - Please go back and look at the data you entered")."\n";
+					echo "<br>"._QXZ("status must be between 1 and 8 characters in length")."\n";
+					echo "<br>"._QXZ("status name must be between 2 and 30 characters in length")."\n";
+					}
 				else
-				{
-					// success message card
-					echo "<div style='background:#ecfdf3;border:1px solid #a3cfbb;color:#0f5132;border-radius:10px;padding:14px 18px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;align-items:flex-start;gap:10px;'>";
-					echo "<div style='font-size:18px;line-height:1;'>✅</div>";
-					echo "<div>";
-					echo "<div style='font-size:14px;font-weight:700;margin-bottom:4px;'>"._QXZ("CAMPAIGN STATUS ADDED").": $campaign_id - $status_id</div>";
-					echo "<div style='font-size:12px;opacity:.85;'>"._QXZ("The new status has been saved and the campaign change date updated.")."</div>";
-					echo "</div>";
-					echo "</div>";
+					{
+					echo "<br><B>"._QXZ("CAMPAIGN STATUS ADDED").": $campaign_id - $status_id</B>\n";
 
-					// INSERT new campaign status
 					$stmt="INSERT INTO vicidial_campaign_statuses (status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine) values('$status_id','$status_name','$selectable','$campaign_id','$human_answered','$category','$sale','$dnc','$customer_contact','$not_interested','$unworkable','$scheduled_callbacks','$completed','$min_sec','$max_sec','$answering_machine');";
 					$rslt=mysql_to_mysqli($stmt, $link);
 
-					// UPDATE campaign change date
 					$stmtB="UPDATE vicidial_campaigns set campaign_changedate='$SQLdate' where campaign_id='$campaign_id';";
 					$rslt=mysql_to_mysqli($stmtB, $link);
 
-					// LOG INSERTION Admin Log Table
+					### LOG INSERTION Admin Log Table ###
 					$SQL_log = "$stmt|$stmtB|";
 					$SQL_log = preg_replace('/;/', '', $SQL_log);
 					$SQL_log = addslashes($SQL_log);
 					$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='CAMPAIGN_STATUS', event_type='ADD', record_id='$campaign_id', event_code='ADMIN ADD CAMPAIGN STATUS', event_sql=\"$SQL_log\", event_notes='Status: $status_id';";
-					if ($DB) {echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>|$stmt|</div>\n";}
+					if ($DB) {echo "|$stmt|\n";}
 					$rslt=mysql_to_mysqli($stmt, $link);
+					}
 				}
 			}
 		}
-	}
-
-	echo "</div>"; // end wrapper
-
 	$SUB=22;
 	$ADD=31;
-}
-
+	}
 
 
 ######################
@@ -32503,26 +32464,48 @@ echo "</center></div>\n";
 			{$sgo_message = "<font color=red><b>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</b></font>";}
 
 		echo "<center>\n";
-		echo "<br><b>"._QXZ("CUSTOM STATUSES WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_statuses$NWE</b> &nbsp; $sgo_message<br>\n";
+		echo "<div style='margin:28px 0 14px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
 
-		echo "<TABLE width=700 cellspacing=3>\n";
-		echo "<tr height='250'><td align=center valign=bottom><font size=2><b>"._QXZ("STATUS")."</b></font></td>\n";
-		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("DESCRIPTION")."</td>\n";
-		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("CATEGORY")."</td>\n";
-		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("AGENT SELECTABLE")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("HUMAN ANSWER")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("SALE")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("DNC")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("CUSTOMER CONTACT")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("NOT INTERESTED")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("UNWORKABLE")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("SCHEDULED CALLBACK")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("COMPLETED")."</B></font></td>\n";
-		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("ANSWERING MACHINE")."</B></font></td>\n";
-		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MIN SEC")."</td>\n";
-		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MAX SEC")."</td>\n";
-		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("MODIFY/DELETE")."</td>\n";
-		echo "</tr>\n";
+echo "<div style='font-size:22px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
+        <span>📋</span>"._QXZ("Custom Statuses Within This Campaign")."
+      </div>";
+
+if (!empty($sgo_message)) {
+    echo "<div style='margin-top:6px;font-size:13px;color:#555;'>$sgo_message</div>";
+}
+
+echo "<div style='width:100%;margin-top:18px;background:#ffffff;border-radius:14px;
+            box-shadow:0 3px 12px rgba(0,0,0,0.06);padding:0;overflow:hidden;'>";
+
+echo "<table cellspacing='0' cellpadding='10' style='width:100%;border-collapse:collapse;font-size:13px;'>";
+
+// Header row
+echo "<tr style='background:#f1f5f9;border-bottom:1px solid #e2e8f0;text-transform:uppercase;font-size:11px;letter-spacing:0.4px;color:#475569;'>";
+
+echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Status")."</th>";
+echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Description")."</th>";
+echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Category")."</th>";
+
+$headerStyleBlue  = "padding:12px 6px;text-align:center;background:#e0f7ff;font-weight:700;";
+$headerStyleGreen = "padding:12px 6px;text-align:center;background:#d6fbe3;font-weight:700;";
+
+echo "<th style='$headerStyleBlue'>"._QXZ("Agent Selectable")."</th>";
+echo "<th style='$headerStyleGreen'>"._QXZ("Human Answer")."</th>";
+echo "<th style='$headerStyleBlue'>"._QXZ("Sale")."</th>";
+echo "<th style='$headerStyleGreen'>"._QXZ("DNC")."</th>";
+echo "<th style='$headerStyleBlue'>"._QXZ("Customer Contact")."</th>";
+echo "<th style='$headerStyleGreen'>"._QXZ("Not Interested")."</th>";
+echo "<th style='$headerStyleBlue'>"._QXZ("Unworkable")."</th>";
+echo "<th style='$headerStyleGreen'>"._QXZ("Scheduled Callback")."</th>";
+echo "<th style='$headerStyleBlue'>"._QXZ("Completed")."</th>";
+echo "<th style='$headerStyleGreen'>"._QXZ("Answering Machine")."</th>";
+
+echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Min Sec")."</th>";
+echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Max Sec")."</th>";
+echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Modify / Delete")."</th>";
+
+echo "</tr>";
+
 //Done till here Bottom lines are pending 
 
 		##### get status category listings for dynamic pulldown
