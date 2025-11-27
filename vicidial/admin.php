@@ -34240,7 +34240,7 @@ if ($SUB==202)
     echo "</div>"; // outer wrapper
 }
 
-
+		}
 ######################
 # ADD=34 modify campaign info in the system - Basic View
 ######################
