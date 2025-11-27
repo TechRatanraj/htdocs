@@ -27155,17 +27155,18 @@ if ($ADD==3)
                 echo "<small>"._QXZ("inbound calls today").": $USER_inbound_calls_today</small>";
                 echo "</div>";
                 
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Max Inbound Calls Filtering Enabled").":</label>";
-                echo "<select name=max_inbound_filter_enabled class='form-control form-control-sm'>";
-                echo "<option>0</option
-                
-                
-                
-            echo "<option>1</option><option SELECTED>$max_inbound_filter_enabled</option>";
+echo "<div class='form-group'>";
+echo "<label>"._QXZ("Max Inbound Calls Filtering Enabled").":</label>";
+echo "<select name='max_inbound_filter_enabled' class='form-control form-control-sm'>";
+
+echo "<option>0</option>";
+echo "<option>1</option>";
+echo "<option SELECTED>$max_inbound_filter_enabled</option>";
+
 echo "</select>$NWB#users-max_inbound_filter_enabled$NWE";
 echo "<small>"._QXZ("inbound filtered calls today").": $USER_inbound_calls_today_filtered</small>";
 echo "</div>";
+
                 
 echo "<div class='form-group'>";
 echo "<label>"._QXZ("Max Manual Dial Hopper Calls").":</label>";
