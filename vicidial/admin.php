@@ -28075,7 +28075,7 @@ echo "<style>
     margin-bottom: 20px;
 }
 </style>";
-			}			
+						
 } // END of main if ($ADD==3) condition
 else
 {
@@ -28084,7 +28084,7 @@ else
 }
 	
 }
-         
+     
 
 		
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
