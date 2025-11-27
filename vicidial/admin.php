@@ -32549,7 +32549,7 @@ if ($SUB==22) {
     $sgo_total = ($sgo_ig + $sgo_li);
     $sgo_message = '';
     if ($sgo_total > 0) {
-        $sgo_message = "<span class='status-override-badge'>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED")."</span>";
+        $sgo_message = "<span style='background-color:#ff6b6b;color:white;padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;box-shadow:0 2px 4px rgba(255, 107, 107, 0.2);display:inline-block;'>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED")."</span>";
     }
     
     // Get campaign statuses
@@ -32581,66 +32581,66 @@ if ($SUB==22) {
         $o++;
     }
     
-    echo "<div class='campaign-statuses-container'>";
+    echo "<div style='font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;max-width:1400px;margin:0 auto;padding:20px;color:#333;'>";
     
     // Header
-    echo "<div class='section-header'>";
-    echo "<h2>"._QXZ("Custom Statuses Within This Campaign")."</h2>";
+    echo "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eaeaea;'>";
+    echo "<h2 style='margin:0;font-size:24px;font-weight:600;color:#2c3e50;display:flex;align-items:center;'><span style='margin-right:10px;font-size:28px;'>📋</span>"._QXZ("Custom Statuses Within This Campaign")."</h2>";
     if (!empty($sgo_message)) {
-        echo "<div class='status-override-notice'>$sgo_message</div>";
+        echo "<div>$sgo_message</div>";
     }
     echo "</div>";
     
     // Statuses Table
-    echo "<div class='card'>";
-    echo "<div class='card-header'>"._QXZ("Current Campaign Statuses")."</div>";
-    echo "<div class='card-body'>";
-    echo "<div class='table-responsive'>";
-    echo "<table class='modern-table' id='statuses-table'>";
+    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
+    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Current Campaign Statuses")."</div>";
+    echo "<div style='padding:20px;'>";
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
     
     // Table Header
     echo "<thead>";
-    echo "<tr>";
-    echo "<th>"._QXZ("Status")."</th>";
-    echo "<th>"._QXZ("Description")."</th>";
-    echo "<th>"._QXZ("Category")."</th>";
-    echo "<th>"._QXZ("Agent Selectable")."</th>";
-    echo "<th>"._QXZ("Human Answer")."</th>";
-    echo "<th>"._QXZ("Sale")."</th>";
-    echo "<th>"._QXZ("DNC")."</th>";
-    echo "<th>"._QXZ("Customer Contact")."</th>";
-    echo "<th>"._QXZ("Not Interested")."</th>";
-    echo "<th>"._QXZ("Unworkable")."</th>";
-    echo "<th>"._QXZ("Scheduled Callback")."</th>";
-    echo "<th>"._QXZ("Completed")."</th>";
-    echo "<th>"._QXZ("Answering Machine")."</th>";
-    echo "<th>"._QXZ("Min Sec")."</th>";
-    echo "<th>"._QXZ("Max Sec")."</th>";
-    echo "<th>"._QXZ("Actions")."</th>";
+    echo "<tr style='background-color:#f8f9fa;'>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Status")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Description")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Category")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Agent Selectable")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Human Answer")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Sale")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("DNC")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Customer Contact")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Not Interested")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Unworkable")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Scheduled Callback")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Completed")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Answering Machine")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Min Sec")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Max Sec")."</th>";
+    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;'>"._QXZ("Actions")."</th>";
     echo "</tr>";
     echo "</thead>";
     
     // Table Body
     echo "<tbody>";
     foreach ($campaign_statuses as $index => $status) {
-        $rowClass = ($index % 2 == 0) ? 'even-row' : 'odd-row';
+        $rowBg = ($index % 2 == 0) ? '#fff' : '#f8f9fa';
         
-        echo "<tr class='$rowClass'>";
-        echo "<td class='status-cell'>";
-        echo "<form action='$PHP_SELF' method='POST' class='status-form'>";
+        echo "<tr style='background-color:$rowBg;'>";
+        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
+        echo "<form action='$PHP_SELF' method='POST' style='display:contents;'>";
         echo "<input type='hidden' name='ADD' value='42'>";
         echo "<input type='hidden' name='stage' value='modify'>";
         echo "<input type='hidden' name='status' value='".$status['status']."'>";
         echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
-        echo "<span class='status-value'>".$status['status']."</span>";
+        echo "<span style='font-weight:600;color:#2c3e50;'>".$status['status']."</span>";
         echo "</td>";
         
-        echo "<td>";
-        echo "<input type='text' name='status_name' value='".$status['status_name']."' class='form-input'>";
+        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
+        echo "<input type='text' name='status_name' value='".$status['status_name']."' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
         echo "</td>";
         
-        echo "<td>";
-        echo "<select name='category' class='form-select'>";
+        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
+        echo "<select name='category' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
         echo "$cats_list";
         $cat_display = isset($catsname_list[$status['category']]) ? $catsname_list[$status['category']] : '';
         echo "<option selected value='".$status['category']."'>".$status['category']." - $cat_display</option>";
@@ -32655,8 +32655,8 @@ if ($SUB==22) {
         ];
         
         foreach ($booleanFields as $field) {
-            echo "<td>";
-            echo "<select name='$field' class='form-select boolean-select'>";
+            echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
+            echo "<select name='$field' style='width:60px;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
             echo "<option value='Y'>"._QXZ("Y")."</option>";
             echo "<option value='N'>"._QXZ("N")."</option>";
             echo "<option value='".$status[$field]."' selected>"._QXZ($status[$field])."</option>";
@@ -32664,20 +32664,20 @@ if ($SUB==22) {
             echo "</td>";
         }
         
-        echo "<td>";
-        echo "<input type='text' name='min_sec' value='".$status['min_sec']."' class='form-input small-input'>";
+        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
+        echo "<input type='text' name='min_sec' value='".$status['min_sec']."' style='width:80px;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
         echo "</td>";
         
-        echo "<td>";
-        echo "<input type='text' name='max_sec' value='".$status['max_sec']."' class='form-input small-input'>";
+        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
+        echo "<input type='text' name='max_sec' value='".$status['max_sec']."' style='width:80px;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
         echo "</td>";
         
-        echo "<td class='actions-cell'>";
-        echo "<button type='submit' class='btn btn-primary'>"._QXZ("MODIFY")."</button>";
+        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;display:flex;gap:8px;'>";
+        echo "<button type='submit' style='display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#5c7cfa;border-color:#5c7cfa;'>"._QXZ("MODIFY")."</button>";
         if ($status['is_protected']) {
-            echo "<button type='button' class='btn btn-disabled' disabled>"._QXZ("DELETE")."</button>";
+            echo "<button type='button' disabled style='display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:not-allowed;text-decoration:line-through;color:#6c757d;background-color:#e9ecef;border-color:#e9ecef;'>"._QXZ("DELETE")."</button>";
         } else {
-            echo "<a href='$PHP_SELF?ADD=42&campaign_id=$campaign_id&status=".$status['status']."&stage=delete' class='btn btn-danger'>"._QXZ("DELETE")."</a>";
+            echo "<a href='$PHP_SELF?ADD=42&campaign_id=$campaign_id&status=".$status['status']."&stage=delete' style='display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#f03e3e;border-color:#f03e3e;'>"._QXZ("DELETE")."</a>";
         }
         echo "</form>";
         echo "</td>";
@@ -32691,112 +32691,112 @@ if ($SUB==22) {
     echo "</div>";
     
     // Add New Status Form
-    echo "<div class='card'>";
-    echo "<div class='card-header'>"._QXZ("Add New Custom Campaign Status")."</div>";
-    echo "<div class='card-body'>";
-    echo "<form action='$PHP_SELF' method='POST' class='add-status-form'>";
+    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
+    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Add New Custom Campaign Status")."</div>";
+    echo "<div style='padding:20px;'>";
+    echo "<form action='$PHP_SELF' method='POST' style='margin-top:10px;'>";
     echo "<input type='hidden' name='ADD' value='22'>";
     echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
     
-    echo "<div class='form-grid'>";
+    echo "<div style='display:grid;grid-template-columns:repeat(4, 1fr);gap:20px;margin-bottom:24px;'>";
     
     // First row
-    echo "<div class='form-group'>";
-    echo "<label for='status_id'>"._QXZ("Status")."</label>";
-    echo "<input type='text' id='status_id' name='status_id' maxlength='6' class='form-input'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Status")."</label>";
+    echo "<input type='text' name='status_id' maxlength='6' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='status_name'>"._QXZ("Description")."</label>";
-    echo "<input type='text' id='status_name' name='status_name' maxlength='30' class='form-input'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Description")."</label>";
+    echo "<input type='text' name='status_name' maxlength='30' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='selectable'>"._QXZ("Selectable")."</label>";
-    echo "<select id='selectable' name='selectable' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Selectable")."</label>";
+    echo "<select name='selectable' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N'>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='human_answered'>"._QXZ("Human Answer")."</label>";
-    echo "<select id='human_answered' name='human_answered' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Human Answer")."</label>";
+    echo "<select name='human_answered' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
     // Second row
-    echo "<div class='form-group'>";
-    echo "<label for='sale'>"._QXZ("Sale")."</label>";
-    echo "<select id='sale' name='sale' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Sale")."</label>";
+    echo "<select name='sale' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='dnc'>"._QXZ("DNC")."</label>";
-    echo "<select id='dnc' name='dnc' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("DNC")."</label>";
+    echo "<select name='dnc' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='customer_contact'>"._QXZ("Customer Contact")."</label>";
-    echo "<select id='customer_contact' name='customer_contact' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Customer Contact")."</label>";
+    echo "<select name='customer_contact' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='not_interested'>"._QXZ("Not Interested")."</label>";
-    echo "<select id='not_interested' name='not_interested' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Not Interested")."</label>";
+    echo "<select name='not_interested' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
     // Third row
-    echo "<div class='form-group'>";
-    echo "<label for='unworkable'>"._QXZ("Unworkable")."</label>";
-    echo "<select id='unworkable' name='unworkable' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Unworkable")."</label>";
+    echo "<select name='unworkable' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='scheduled_callbacks'>"._QXZ("Scheduled Callback")."</label>";
-    echo "<select id='scheduled_callbacks' name='scheduled_callbacks' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Scheduled Callback")."</label>";
+    echo "<select name='scheduled_callbacks' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='completed'>"._QXZ("Completed")."</label>";
-    echo "<select id='completed' name='completed' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Completed")."</label>";
+    echo "<select name='completed' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
-    echo "<div class='form-group'>";
-    echo "<label for='answering_machine'>"._QXZ("Answering Machine")."</label>";
-    echo "<select id='answering_machine' name='answering_machine' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Answering Machine")."</label>";
+    echo "<select name='answering_machine' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='Y'>"._QXZ("Y")."</option>";
     echo "<option value='N' selected>"._QXZ("N")."</option>";
     echo "</select>";
     echo "</div>";
     
     // Fourth row
-    echo "<div class='form-group'>";
-    echo "<label for='category'>"._QXZ("Category")."</label>";
-    echo "<select id='category' name='category' class='form-select'>";
+    echo "<div style='display:flex;flex-direction:column;'>";
+    echo "<label style='margin-bottom:6px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Category")."</label>";
+    echo "<select name='category' style='width:100%;padding:8px 12px;border:1px solid #ced4da;border-radius:4px;font-size:14px;'>";
     echo "<option value='-'>-</option>";
     echo "$cats_list";
     echo "</select>";
@@ -32804,8 +32804,8 @@ if ($SUB==22) {
     
     echo "</div>"; // end form-grid
     
-    echo "<div class='form-actions'>";
-    echo "<button type='submit' name='submit' value='"._QXZ("ADD")."' class='btn btn-primary btn-lg'>"._QXZ("ADD NEW STATUS")."</button>";
+    echo "<div style='display:flex;justify-content:flex-end;margin-top:20px;'>";
+    echo "<button type='submit' name='submit' value='"._QXZ("ADD")."' style='display:inline-block;font-weight:600;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:10px 20px;font-size:16px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#5c7cfa;border-color:#5c7cfa;'>"._QXZ("ADD NEW STATUS")."</button>";
     echo "</div>";
     
     echo "</form>";
@@ -32814,19 +32814,19 @@ if ($SUB==22) {
     
     // Status Group Overrides
     if ($sgo_total > 0) {
-        echo "<div class='card'>";
-        echo "<div class='card-header'>"._QXZ("Status Group Overrides")."</div>";
-        echo "<div class='card-body'>";
+        echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
+        echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Status Group Overrides")."</div>";
+        echo "<div style='padding:20px;'>";
         
         if (!empty($inbound_groups)) {
-            echo "<div class='override-section'>";
-            echo "<h3>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE")."</h3>";
-            echo "<div class='override-list'>";
+            echo "<div style='margin-bottom:24px;'>";
+            echo "<h3 style='font-size:18px;margin-bottom:16px;color:#2c3e50;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE")."</h3>";
+            echo "<div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:12px;'>";
             
             foreach ($inbound_groups as $group) {
-                echo "<div class='override-item'>";
-                echo "<a href='".$group['link']."' class='override-link'>".$group['id']."</a>";
-                echo "<span class='override-name'>".$group['name']."</span>";
+                echo "<div style='display:flex;align-items:center;padding:10px 12px;background-color:#f8f9fa;border-radius:6px;transition:background-color 0.15s ease-in-out;'>";
+                echo "<a href='".$group['link']."' style='font-weight:600;color:#5c7cfa;margin-right:10px;text-decoration:none;'>".$group['id']."</a>";
+                echo "<span style='color:#495057;'>".$group['name']."</span>";
                 echo "</div>";
             }
             
@@ -32835,14 +32835,14 @@ if ($SUB==22) {
         }
         
         if (!empty($campaign_lists)) {
-            echo "<div class='override-section'>";
-            echo "<h3>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE")."</h3>";
-            echo "<div class='override-list'>";
+            echo "<div style='margin-bottom:24px;'>";
+            echo "<h3 style='font-size:18px;margin-bottom:16px;color:#2c3e50;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE")."</h3>";
+            echo "<div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:12px;'>";
             
             foreach ($campaign_lists as $list) {
-                echo "<div class='override-item'>";
-                echo "<a href='".$list['link']."' class='override-link'>".$list['id']."</a>";
-                echo "<span class='override-name'>".$list['name']."</span>";
+                echo "<div style='display:flex;align-items:center;padding:10px 12px;background-color:#f8f9fa;border-radius:6px;transition:background-color 0.15s ease-in-out;'>";
+                echo "<a href='".$list['link']."' style='font-weight:600;color:#5c7cfa;margin-right:10px;text-decoration:none;'>".$list['id']."</a>";
+                echo "<span style='color:#495057;'>".$list['name']."</span>";
                 echo "</div>";
             }
             
@@ -32854,313 +32854,10 @@ if ($SUB==22) {
         echo "</div>";
     }
     
-    echo "</div>"; // campaign-statuses-container
-
-    // CSS Styles
-    echo "<style>
-    .campaign-statuses-container {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px;
-        color: #333;
-    }
-    
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid #eaeaea;
-    }
-    
-    .section-header h2 {
-        margin: 0;
-        font-size: 24px;
-        font-weight: 600;
-        color: #2c3e50;
-        display: flex;
-        align-items: center;
-    }
-    
-    .section-header h2:before {
-        content: '📋';
-        margin-right: 10px;
-        font-size: 28px;
-    }
-    
-    .status-override-notice {
-        display: flex;
-        align-items: center;
-    }
-    
-    .status-override-badge {
-        background-color: #ff6b6b;
-        color: white;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: 600;
-        box-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
-    }
-    
-    .card {
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        margin-bottom: 24px;
-        overflow: hidden;
-        border: 1px solid #eaeaea;
-    }
-    
-    .card-header {
-        background-color: #f8f9fa;
-        padding: 16px 20px;
-        font-weight: 600;
-        font-size: 18px;
-        color: #2c3e50;
-        border-bottom: 1px solid #eaeaea;
-    }
-    
-    .card-body {
-        padding: 20px;
-    }
-    
-    .table-responsive {
-        overflow-x: auto;
-    }
-    
-    .modern-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-    }
-    
-    .modern-table th {
-        background-color: #f8f9fa;
-        padding: 12px 8px;
-        text-align: left;
-        font-weight: 600;
-        color: #495057;
-        border-bottom: 2px solid #eaeaea;
-        white-space: nowrap;
-    }
-    
-    .modern-table td {
-        padding: 12px 8px;
-        border-bottom: 1px solid #eaeaea;
-    }
-    
-    .even-row {
-        background-color: #fff;
-    }
-    
-    .odd-row {
-        background-color: #f8f9fa;
-    }
-    
-    .status-form {
-        display: contents;
-    }
-    
-    .status-value {
-        font-weight: 600;
-        color: #2c3e50;
-    }
-    
-    .form-input, .form-select {
-        width: 100%;
-        padding: 8px 12px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        font-size: 14px;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-    
-    .form-input:focus, .form-select:focus {
-        outline: 0;
-        border-color: #5c7cfa;
-        box-shadow: 0 0 0 0.2rem rgba(92, 124, 250, 0.25);
-    }
-    
-    .small-input {
-        width: 80px;
-    }
-    
-    .boolean-select {
-        width: 60px;
-    }
-    
-    .actions-cell {
-        display: flex;
-        gap: 8px;
-    }
-    
-    .btn {
-        display: inline-block;
-        font-weight: 400;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        user-select: none;
-        border: 1px solid transparent;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.5;
-        border-radius: 4px;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    
-    .btn-primary {
-        color: #fff;
-        background-color: #5c7cfa;
-        border-color: #5c7cfa;
-    }
-    
-    .btn-primary:hover {
-        color: #fff;
-        background-color: #4c6ef5;
-        border-color: #4c6ef5;
-    }
-    
-    .btn-danger {
-        color: #fff;
-        background-color: #f03e3e;
-        border-color: #f03e3e;
-    }
-    
-    .btn-danger:hover {
-        color: #fff;
-        background-color: #e03131;
-        border-color: #e03131;
-    }
-    
-    .btn-disabled {
-        color: #6c757d;
-        background-color: #e9ecef;
-        border-color: #e9ecef;
-        cursor: not-allowed;
-        text-decoration: line-through;
-    }
-    
-    .add-status-form {
-        margin-top: 10px;
-    }
-    
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        margin-bottom: 24px;
-    }
-    
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .form-group label {
-        margin-bottom: 6px;
-        font-weight: 500;
-        color: #495057;
-        font-size: 14px;
-    }
-    
-    .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-    }
-    
-    .btn-lg {
-        padding: 10px 20px;
-        font-size: 16px;
-        font-weight: 600;
-    }
-    
-    .override-section {
-        margin-bottom: 24px;
-    }
-    
-    .override-section:last-child {
-        margin-bottom: 0;
-    }
-    
-    .override-section h3 {
-        font-size: 18px;
-        margin-bottom: 16px;
-        color: #2c3e50;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #eaeaea;
-    }
-    
-    .override-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 12px;
-    }
-    
-    .override-item {
-        display: flex;
-        align-items: center;
-        padding: 10px 12px;
-        background-color: #f8f9fa;
-        border-radius: 6px;
-        transition: background-color 0.15s ease-in-out;
-    }
-    
-    .override-item:hover {
-        background-color: #e9ecef;
-    }
-    
-    .override-link {
-        font-weight: 600;
-        color: #5c7cfa;
-        margin-right: 10px;
-        text-decoration: none;
-    }
-    
-    .override-link:hover {
-        text-decoration: underline;
-    }
-    
-    .override-name {
-        color: #495057;
-    }
-    
-    @media (max-width: 1200px) {
-        .form-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-    
-    @media (max-width: 992px) {
-        .form-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .section-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-        }
-        
-        .override-list {
-            grid-template-columns: 1fr;
-        }
-    }
-    </style>";
+    echo "</div>";
 }
 	
+
 	##### CAMPAIGN HOTKEYS #####
 if ($SUB==23)
 {
