@@ -32581,31 +32581,172 @@ echo "</tr>";
 		echo "</table>\n";
 
 
-		echo "<br>"._QXZ("ADD NEW CUSTOM CAMPAIGN STATUS")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=22>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Status").": <input type=text name=status_id size=8 maxlength=6> &nbsp; \n";
-		echo _QXZ("Description").": <input type=text name=status_name size=20 maxlength=30> &nbsp; \n";
-		echo _QXZ("Selectable").": <select size=1 name=selectable><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Human Answer").": <select size=1 name=human_answered><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; <BR>\n";
-		echo _QXZ("Sale").": <select size=1 name=sale><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("DNC").": <select size=1 name=dnc><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Customer Contact").": <select size=1 name=customer_contact><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Not Interested").": <select size=1 name=not_interested><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp;  <BR>\n";
-		echo _QXZ("Unworkable").": <select size=1 name=unworkable><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Callback").": <select size=1 name=scheduled_callbacks><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Completed").": <select size=1 name=completed><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Answering Machine").": <select size=1 name=answering_machine><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp; \n";
-		echo _QXZ("Category").": \n";
-		echo "<select size=1 name=category>\n";
-		echo "$cats_list";
-		echo "<option selected value=\"$AScategory\">$AScategory - $catsname_list[$AScategory]</option>\n";
-		echo "</select> &nbsp; <BR>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
+		echo "<div style='margin:30px 0 20px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
 
-		echo "</FORM><br><br></center></center>\n";
+echo "<div style='max-width:1100px;margin:0 auto;background:#ffffff;border-radius:16px;
+            box-shadow:0 3px 12px rgba(0,0,0,0.08);padding:24px 28px;'>";
 
-		echo "$status_group_overrides_OUTPUT";
+// Title
+echo "<div style='font-size:20px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
+        <span>➕</span>"._QXZ("Add New Custom Campaign Status")."
+      </div>";
+
+echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:6px;margin-bottom:20px;'></div>";
+
+// Form start
+echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
+
+echo "<input type='hidden' name='ADD' value='22'>";
+echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
+
+// GRID 1 (Status, Description, Selectable, Human Answer)
+echo "<div style='display:grid;grid-template-columns:150px 1fr 150px 150px;gap:18px;margin-bottom:16px;'>";
+
+// Status
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Status")."</label>
+        <input type='text' name='status_id' size='8' maxlength='6'
+               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                      border:1px solid #d2d6e2;background:#fbfdff;font-size:14px;'>
+      </div>";
+
+// Description
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Description")."</label>
+        <input type='text' name='status_name' size='20' maxlength='30'
+               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                      border:1px solid #d2d6e2;background:#fbfdff;font-size:14px;'>
+      </div>";
+
+// Selectable
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Selectable")."</label>
+        <select name='selectable'
+               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                      border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N'>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+// Human Answer
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Human Answer")."</label>
+        <select name='human_answered'
+               style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                      border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "</div>"; // end grid 1
+
+
+
+// GRID 2 (Sale, DNC, Customer Contact, Not Interested)
+echo "<div style='display:grid;grid-template-columns:150px 150px 180px 180px;gap:18px;margin-bottom:16px;'>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Sale")."</label>
+        <select name='sale' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("DNC")."</label>
+        <select name='dnc' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Customer Contact")."</label>
+        <select name='customer_contact' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Not Interested")."</label>
+        <select name='not_interested' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "</div>"; // end grid 2
+
+
+
+// GRID 3 (Unworkable, Callback, Completed, Answering Machine, Category)
+echo "<div style='display:grid;grid-template-columns:150px 150px 150px 180px 1fr;gap:18px;margin-bottom:16px;'>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Unworkable")."</label>
+        <select name='unworkable' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Callback")."</label>
+        <select name='scheduled_callbacks' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Completed")."</label>
+        <select name='completed' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Answering Machine")."</label>
+        <select name='answering_machine' style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            <option value='Y'>"._QXZ("Y")."</option>
+            <option value='N' selected>"._QXZ("N")."</option>
+        </select>
+      </div>";
+
+// Category
+echo "<div>
+        <label style='font-size:12px;font-weight:600;color:#666;'>"._QXZ("Category")."</label>
+        <select name='category'
+                style='width:100%;padding:8px 12px;margin-top:4px;border-radius:8px;
+                       border:1px solid #d2d6e2;background:#f8fafe;font-size:14px;'>
+            $cats_list
+            <option selected value=\"$AScategory\">$AScategory - $catsname_list[$AScategory]</option>
+        </select>
+      </div>";
+
+echo "</div>"; // end grid 3
+
+
+
+// Submit Button
+echo "<div style='text-align:right;margin-top:10px;'>
+        <input type='submit' name='submit' value='"._QXZ("ADD")."'
+               style='background-color:#$SSbutton_color;color:#fff;padding:10px 30px;
+                      border:none;border-radius:8px;font-size:14px;font-weight:700;
+                      cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.1);'>
+      </div>";
+
+echo "</form>";
+
+echo "</div>"; // card
+echo "</div>"; // container
+
+echo "$status_group_overrides_OUTPUT";
 		}
 
 	##### CAMPAIGN HOTKEYS #####
