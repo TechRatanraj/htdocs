@@ -28032,7 +28032,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>";
 
-}
 else
 {
 echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
