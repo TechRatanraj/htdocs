@@ -32464,48 +32464,26 @@ echo "</center></div>\n";
 			{$sgo_message = "<font color=red><b>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</b></font>";}
 
 		echo "<center>\n";
-		echo "<div style='margin:28px 0 14px 0;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+		echo "<br><b>"._QXZ("CUSTOM STATUSES WITHIN THIS CAMPAIGN").": &nbsp; $NWB#campaign_statuses$NWE</b> &nbsp; $sgo_message<br>\n";
 
-echo "<div style='font-size:22px;font-weight:800;color:#222;display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
-        <span>📋</span>"._QXZ("Custom Statuses Within This Campaign")."
-      </div>";
-
-if (!empty($sgo_message)) {
-    echo "<div style='margin-top:6px;font-size:13px;color:#555;'>$sgo_message</div>";
-}
-
-echo "<div style='width:100%;margin-top:18px;background:#ffffff;border-radius:14px;
-            box-shadow:0 3px 12px rgba(0,0,0,0.06);padding:0;overflow:hidden;'>";
-
-echo "<table cellspacing='0' cellpadding='10' style='width:100%;border-collapse:collapse;font-size:13px;'>";
-
-// Header row
-echo "<tr style='background:#f1f5f9;border-bottom:1px solid #e2e8f0;text-transform:uppercase;font-size:11px;letter-spacing:0.4px;color:#475569;'>";
-
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Status")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Description")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;'>"._QXZ("Category")."</th>";
-
-$headerStyleBlue  = "padding:12px 6px;text-align:center;background:#e0f7ff;font-weight:700;";
-$headerStyleGreen = "padding:12px 6px;text-align:center;background:#d6fbe3;font-weight:700;";
-
-echo "<th style='$headerStyleBlue'>"._QXZ("Agent Selectable")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Human Answer")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Sale")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("DNC")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Customer Contact")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Not Interested")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Unworkable")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Scheduled Callback")."</th>";
-echo "<th style='$headerStyleBlue'>"._QXZ("Completed")."</th>";
-echo "<th style='$headerStyleGreen'>"._QXZ("Answering Machine")."</th>";
-
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Min Sec")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:70px;'>"._QXZ("Max Sec")."</th>";
-echo "<th style='padding:12px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Modify / Delete")."</th>";
-
-echo "</tr>";
-
+		echo "<TABLE width=700 cellspacing=3>\n";
+		echo "<tr height='250'><td align=center valign=bottom><font size=2><b>"._QXZ("STATUS")."</b></font></td>\n";
+		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("DESCRIPTION")."</td>\n";
+		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("CATEGORY")."</td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("AGENT SELECTABLE")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("HUMAN ANSWER")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("SALE")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("DNC")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("CUSTOMER CONTACT")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("NOT INTERESTED")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("UNWORKABLE")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("SCHEDULED CALLBACK")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#ccffff\"><font size=2 class='vertical-text'><b>"._QXZ("COMPLETED")."</B></font></td>\n";
+		echo "<td align=center valign=top bgcolor=\"#99ffcc\"><font size=2 class='vertical-text'><b>"._QXZ("ANSWERING MACHINE")."</B></font></td>\n";
+		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MIN SEC")."</td>\n";
+		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MAX SEC")."</td>\n";
+		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("MODIFY/DELETE")."</td>\n";
+		echo "</tr>\n";
 //Done till here Bottom lines are pending 
 
 		##### get status category listings for dynamic pulldown
