@@ -28082,7 +28082,7 @@ else
 echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
 exit;
 }
-}
+
 
 
 
