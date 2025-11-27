@@ -2399,6 +2399,21 @@ body {
   vertical-align: baseline;
   line-height: 1.2;
 }
+
+/* Green Color Class */
+.green { 
+  color: var(--kpi-green-text); 
+  background-color: var(--kpi-green-light);
+  border-radius: var(--border-radius);
+  padding: 2px 4px;
+  transition: var(--transition);
+  display: inline-block;
+  margin: 0;
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 1.2;
+}
+
 .teal:hover {
   background-color: var(--kpi-teal-medium);
 }
