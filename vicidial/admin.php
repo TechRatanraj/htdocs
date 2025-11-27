@@ -13392,93 +13392,213 @@ if ($ADD==20)
 	}
 
 
-######################
 
-# ADD=22 adds the new campaign status to the system
-######################
-if ($ADD==22) {
-    if ($add_copy_disabled > 0) {
-        echo "<div style='max-width:800px;margin:30px auto;background:#f8d7da;border-radius:10px;padding:20px 25px;border-left:6px solid #f5c6cb;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
-        echo "<div style='display:flex;align-items:center;gap:15px;'>";
-        echo "<div style='font-size:40px;color:#721c24;'>⚠️</div>";
-        echo "<div>";
-        echo "<div style='font-size:18px;font-weight:bold;color:#721c24;margin-bottom:5px;'>"._QXZ("Permission Denied")."</div>";
-        echo "<div style='color:#721c24;font-size:14px;'>"._QXZ("You do not have permission to add records on this system")." - system_settings -</div>";
-        echo "</div></div></div>\n";
-    } else {
-        $stmt = "SELECT count(*) from vicidial_campaign_statuses where campaign_id='$campaign_id' and status='$status_id';";
-        $rslt = mysql_to_mysqli($stmt, $link);
+##### CAMPAIGN CUSTOM STATUSES #####
+if ($SUB==22) {
+    ##### get status category listings for dynamic pulldown
+    $stmt = "SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $cats_to_print = mysqli_num_rows($rslt);
+    $cats_list = "";
+    
+    $o = 0;
+    while ($cats_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $cats_list .= "<option value=\"$rowx[0]\">$rowx[0] - " . substr($rowx[1],0,20) . "</option>\n";
+        $catsname_list["$rowx[0]"] = substr($rowx[1],0,20);
+        $o++;
+    }
+    
+    $status_group_overrides_OUTPUT = '';
+    $status_group_overrides_OUTPUT .= "<div style='max-width:1200px;margin:30px auto;background:#fff3cd;border-radius:10px;padding:20px;border-left:6px solid #ffc107;'>";
+    $status_group_overrides_OUTPUT .= "<div style='font-size:16px;font-weight:bold;color:#856404;margin-bottom:15px;'>"._QXZ("ALLOWED IN-GROUPS USING A STATUS GROUP OVERRIDE")."</div>";
+    $status_group_overrides_OUTPUT .= "<table style='width:100%;border-collapse:collapse;'>";
+    
+    $stmt = "SELECT closer_campaigns from vicidial_campaigns where campaign_id='$campaign_id';";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $cg_to_print = mysqli_num_rows($rslt);
+    if ($cg_to_print > 0) {
+        $row = mysqli_fetch_row($rslt);
+        $closer_campaigns = $row[0];
+        $closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
+        $closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
+    }
+    
+    $stmt = "SELECT group_id,group_name from vicidial_inbound_groups where status_group_id NOT IN('','NONE') and group_id IN('$closer_campaigns') $LOGadmin_viewable_groupsSQL;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $ig_to_print = mysqli_num_rows($rslt);
+    $sgo_ig = 0;
+    while ($ig_to_print > $sgo_ig) {
+        $row = mysqli_fetch_row($rslt);
+        $status_group_overrides_OUTPUT .= "<tr style='border-bottom:1px solid #e9ecef;'><td style='padding:10px;'><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\" style='color:#3498db;text-decoration:none;font-weight:600;'>$row[0]</a></td><td style='padding:10px;color:#555;'>$row[1]</td></tr>\n";
+        $sgo_ig++;
+    }
+    $status_group_overrides_OUTPUT .= "</table>";
+    
+    $status_group_overrides_OUTPUT .= "<div style='font-size:16px;font-weight:bold;color:#856404;margin:20px 0 15px 0;'>"._QXZ("CAMPAIGN LISTS USING A STATUS GROUP OVERRIDE")."</div>";
+    $status_group_overrides_OUTPUT .= "<table style='width:100%;border-collapse:collapse;'>";
+    
+    $stmt = "SELECT list_id,list_name from vicidial_lists where status_group_id NOT IN('','NONE') and campaign_id='$campaign_id';";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $list_to_print = mysqli_num_rows($rslt);
+    $sgo_li = 0;
+    while ($list_to_print > $sgo_li) {
+        $row = mysqli_fetch_row($rslt);
+        $status_group_overrides_OUTPUT .= "<tr style='border-bottom:1px solid #e9ecef;'><td style='padding:10px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#3498db;text-decoration:none;font-weight:600;'>$row[0]</a></td><td style='padding:10px;color:#555;'>$row[1]</td></tr>\n";
+        $sgo_li++;
+    }
+    $status_group_overrides_OUTPUT .= "</table></div>";
+    
+    $sgo_total = ($sgo_ig + $sgo_li);
+    $sgo_message = '';
+    if ($sgo_total > 0) {
+        $sgo_message = "<div style='background:#f8d7da;color:#721c24;padding:12px 20px;border-radius:8px;font-weight:600;border-left:4px solid #f5c6cb;margin-top:15px;'>$sgo_total "._QXZ("STATUS GROUP OVERRIDES USED, see list at bottom")."</div>";
+    }
+    
+    echo "<center>\n";
+    echo "<div style='max-width:1400px;margin:30px auto;'>";
+    echo "<div style='background:#fff;border-radius:12px;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);margin-bottom:20px;'>";
+    echo "<div style='display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;'>";
+    echo "<div>";
+    echo "<div style='font-size:22px;font-weight:bold;color:#2c3e50;'>"._QXZ("CUSTOM STATUSES WITHIN THIS CAMPAIGN")."</div>";
+    echo "<div style='font-size:12px;color:#888;margin-top:5px;'>$NWB#campaign_statuses$NWE</div>";
+    echo "</div>";
+    echo "<a href=\"#\" style='text-decoration:none;'><div style='background:#3498db;color:#fff;padding:8px 16px;border-radius:20px;font-size:24px;cursor:help;' title='Help Information'>❓</div></a>";
+    echo "</div>";
+    if ($sgo_message) {
+        echo $sgo_message;
+    }
+    echo "</div>";
+    
+    // Modern horizontal table WITHOUT vertical rotated text
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>\n";
+    echo "<thead><tr style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;'>";
+    echo "<th style='padding:14px 12px;text-align:center;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("STATUS")."</th>";
+    echo "<th style='padding:14px 12px;text-align:center;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("DESCRIPTION")."</th>";
+    echo "<th style='padding:14px 12px;text-align:center;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("CATEGORY")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("AGENT SEL")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("HUMAN")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("SALE")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("DNC")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("CONTACT")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("NOT INT")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("UNWORK")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("CALLBACK")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(227,242,253,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("COMPLETE")."</th>";
+    echo "<th style='padding:14px 10px;text-align:center;font-weight:600;font-size:11px;background:rgba(200,230,201,0.3);border-right:1px solid rgba(0,0,0,0.05);'>"._QXZ("ANS MACH")."</th>";
+    echo "<th style='padding:14px 8px;text-align:center;font-weight:600;font-size:11px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("MIN SEC")."</th>";
+    echo "<th style='padding:14px 8px;text-align:center;font-weight:600;font-size:11px;border-right:1px solid rgba(255,255,255,0.1);'>"._QXZ("MAX SEC")."</th>";
+    echo "<th style='padding:14px 12px;text-align:center;font-weight:600;font-size:13px;'>"._QXZ("MODIFY/DELETE")."</th>";
+    echo "</tr></thead>\n";
+    echo "<tbody>\n";
+    
+    // Fetch and display all custom statuses
+    $stmt = "SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id='$campaign_id' order by status;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $statuses_to_print = mysqli_num_rows($rslt);
+    
+    $o = 0;
+    while ($statuses_to_print > $o) {
         $row = mysqli_fetch_row($rslt);
         
-        if ($row[0] > 0) {
-            echo "<div style='max-width:800px;margin:30px auto;background:#fff3cd;border-radius:10px;padding:20px 25px;border-left:6px solid #ffc107;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
-            echo "<div style='display:flex;align-items:center;gap:15px;'>";
-            echo "<div style='font-size:40px;color:#856404;'>⚠️</div>";
-            echo "<div>";
-            echo "<div style='font-size:18px;font-weight:bold;color:#856404;margin-bottom:5px;'>"._QXZ("Duplicate Status Detected")."</div>";
-            echo "<div style='color:#856404;font-size:14px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name")."</div>";
-            echo "</div></div></div>\n";
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o)) {
+            $row_style = "background:#f8f9fa;";
         } else {
-            $stmt = "SELECT count(*) from vicidial_statuses where status='$status_id';";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $row = mysqli_fetch_row($rslt);
-            
-            if ($row[0] > 0) {
-                echo "<div style='max-width:800px;margin:30px auto;background:#fff3cd;border-radius:10px;padding:20px 25px;border-left:6px solid #ffc107;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
-                echo "<div style='display:flex;align-items:center;gap:15px;'>";
-                echo "<div style='font-size:40px;color:#856404;'>⚠️</div>";
-                echo "<div>";
-                echo "<div style='font-size:18px;font-weight:bold;color:#856404;margin-bottom:5px;'>"._QXZ("Global Status Conflict")."</div>";
-                echo "<div style='color:#856404;font-size:14px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name")."</div>";
-                echo "</div></div></div>\n";
-            } else {
-                if ((strlen($campaign_id) < 2) or (strlen($status_id) < 1) or (strlen($status_name) < 2)) {
-                    echo "<div style='max-width:800px;margin:30px auto;background:#f8d7da;border-radius:10px;padding:25px;border-left:6px solid #f5c6cb;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
-                    echo "<div style='display:flex;align-items:flex-start;gap:15px;'>";
-                    echo "<div style='font-size:40px;color:#721c24;'>❌</div>";
-                    echo "<div style='flex:1;'>";
-                    echo "<div style='font-size:18px;font-weight:bold;color:#721c24;margin-bottom:10px;'>"._QXZ("Validation Error")."</div>";
-                    echo "<div style='color:#721c24;font-size:14px;margin-bottom:8px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - Please go back and look at the data you entered")."</div>";
-                    echo "<ul style='margin:10px 0 0 20px;padding:0;color:#721c24;'>";
-                    echo "<li style='margin:5px 0;'>"._QXZ("status must be between 1 and 8 characters in length")."</li>";
-                    echo "<li style='margin:5px 0;'>"._QXZ("status name must be between 2 and 30 characters in length")."</li>";
-                    echo "</ul>";
-                    echo "</div></div></div>\n";
-                } else {
-                    // Success message with animation
-                    echo "<div style='max-width:800px;margin:30px auto;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);border-radius:12px;padding:30px;box-shadow:0 8px 24px rgba(102,126,234,0.3);animation:slideIn 0.5s ease-out;'>";
-                    echo "<style>@keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}</style>";
-                    echo "<div style='display:flex;align-items:center;gap:20px;'>";
-                    echo "<div style='font-size:50px;'>✅</div>";
-                    echo "<div style='flex:1;'>";
-                    echo "<div style='color:#fff;font-size:24px;font-weight:bold;margin-bottom:8px;'>"._QXZ("CAMPAIGN STATUS ADDED")."</div>";
-                    echo "<div style='background:rgba(255,255,255,0.2);border-radius:8px;padding:12px 18px;display:inline-block;'>";
-                    echo "<span style='color:#f5f5f5;font-size:16px;'><strong style='color:#fff;'>Campaign:</strong> $campaign_id</span>";
-                    echo "<span style='color:#fff;margin:0 10px;'>•</span>";
-                    echo "<span style='color:#f5f5f5;font-size:16px;'><strong style='color:#fff;'>Status:</strong> $status_id</span>";
-                    echo "</div></div></div></div>\n";
-                    
-                    $stmt = "INSERT INTO vicidial_campaign_statuses (status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine) values('$status_id','$status_name','$selectable','$campaign_id','$human_answered','$category','$sale','$dnc','$customer_contact','$not_interested','$unworkable','$scheduled_callbacks','$completed','$min_sec','$max_sec','$answering_machine');";
-                    $rslt = mysql_to_mysqli($stmt, $link);
-                    
-                    $stmtB = "UPDATE vicidial_campaigns set campaign_changedate='$SQLdate' where campaign_id='$campaign_id';";
-                    $rslt = mysql_to_mysqli($stmtB, $link);
-                    
-                    ### LOG INSERTION Admin Log Table ###
-                    $SQL_log = "$stmt|$stmtB|";
-                    $SQL_log = preg_replace('/;/', '', $SQL_log);
-                    $SQL_log = addslashes($SQL_log);
-                    $stmt = "INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='CAMPAIGN_STATUS', event_type='ADD', record_id='$campaign_id', event_code='ADMIN ADD CAMPAIGN STATUS', event_sql=\"$SQL_log\", event_notes='Status: $status_id';";
-                    if ($DB) {echo "|$stmt|\n";}
-                    $rslt = mysql_to_mysqli($stmt, $link);
-                }
-            }
+            $row_style = "background:#ffffff;";
         }
+        
+        echo "<tr style='$row_style border-bottom:1px solid #e9ecef;transition:background 0.2s;' onmouseover=\"this.style.background='#e3f2fd'\" onmouseout=\"this.style.background='".($o%2==0?"#ffffff":"#f8f9fa")."'\">";
+        echo "<td style='padding:12px;text-align:center;font-weight:600;color:#2c3e50;font-size:13px;'>$row[0]</td>";
+        echo "<td style='padding:12px;text-align:left;color:#555;font-size:13px;'>$row[1]</td>";
+        echo "<td style='padding:12px;text-align:center;color:#666;font-size:12px;'>".$catsname_list[$row[4]]."</td>";
+        
+        // Checkmark or X for each attribute
+        $checkmark = "<span style='color:#27ae60;font-size:16px;font-weight:bold;'>✓</span>";
+        $xmark = "<span style='color:#e74c3c;font-size:16px;font-weight:bold;'>✗</span>";
+        
+        echo "<td style='padding:12px;text-align:center;background:rgba(227,242,253,0.15);'>".($row[2]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(200,230,201,0.15);'>".($row[3]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(227,242,253,0.15);'>".($row[5]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(200,230,201,0.15);'>".($row[6]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(227,242,253,0.15);'>".($row[7]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(200,230,201,0.15);'>".($row[8]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(227,242,253,0.15);'>".($row[9]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(200,230,201,0.15);'>".($row[10]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(227,242,253,0.15);'>".($row[11]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;background:rgba(200,230,201,0.15);'>".($row[14]=='Y'?$checkmark:$xmark)."</td>";
+        echo "<td style='padding:12px;text-align:center;font-size:12px;color:#666;'>$row[12]</td>";
+        echo "<td style='padding:12px;text-align:center;font-size:12px;color:#666;'>$row[13]</td>";
+        echo "<td style='padding:12px;text-align:center;'><a href=\"$PHP_SELF?ADD=32&campaign_id=$campaign_id&status_id=$row[0]\" style='background:#3498db;color:#fff;padding:6px 14px;border-radius:6px;text-decoration:none;font-weight:600;font-size:12px;margin-right:5px;'>MODIFY</a><a href=\"$PHP_SELF?ADD=42&campaign_id=$campaign_id&status_id=$row[0]\" style='background:#e74c3c;color:#fff;padding:6px 14px;border-radius:6px;text-decoration:none;font-weight:600;font-size:12px;'>DELETE</a></td>";
+        echo "</tr>\n";
+        
+        $o++;
     }
-    $SUB = 22;
-    $ADD = 31;
+    
+    echo "</tbody></table></div><br>";
+    
+    // Add New Status Form - Modern Card Layout
+    echo "<div style='background:#fff;border-radius:12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.1);border-top:4px solid #28a745;'>";
+    echo "<div style='font-size:20px;font-weight:bold;color:#2c3e50;margin-bottom:25px;'>"._QXZ("ADD NEW CUSTOM CAMPAIGN STATUS")."</div>";
+    echo "<form action=$PHP_SELF method=POST>";
+    echo "<input type=hidden name=ADD value=22>";
+    echo "<input type=hidden name=DB value=$DB>";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">";
+    
+    echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:20px;'>";
+    
+    // Status field
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Status")."</label><input type=text name=status_id size=8 maxlength=8 style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'></div>";
+    
+    // Description field
+    echo "<div style='grid-column:span 2;'><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Description")."</label><input type=text name=status_name size=30 maxlength=30 style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;'></div>";
+    
+    // Selectable
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Selectable")."</label><select name=selectable style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='Y' SELECTED>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option></select></div>";
+    
+    // Human Answer
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Human Answer")."</label><select name=human_answered style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Sale
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Sale")."</label><select name=sale style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // DNC
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("DNC")."</label><select name=dnc style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Customer Contact
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Customer Contact")."</label><select name=customer_contact style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Not Interested
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Not Interested")."</label><select name=not_interested style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Unworkable
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Unworkable")."</label><select name=unworkable style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Callback
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Callback")."</label><select name=scheduled_callbacks style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Completed
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Completed")."</label><select name=completed style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Answering Machine
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Answering Machine")."</label><select name=answering_machine style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='N' SELECTED>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option></select></div>";
+    
+    // Category
+    echo "<div><label style='display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;'>"._QXZ("Category")."</label><select name=category style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:6px;font-size:14px;background:#f8fafe;'><option value='-'>-</option>$cats_list</select></div>";
+    
+    echo "</div>";
+    
+    // Submit button
+    echo "<div style='text-align:center;margin-top:25px;'><input style='background:#28a745;color:#fff;border:none;padding:12px 40px;border-radius:8px;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 3px 8px rgba(40,167,69,0.3);' type=submit name=SUBMIT value='"._QXZ("ADD")."'></div>";
+    echo "</form></div><br><br>";
+    
+    // Display status group overrides if any
+    if ($sgo_total > 0) {
+        echo $status_group_overrides_OUTPUT;
+    }
+    
+    echo "</div></center>\n";
 }
-
 
 
 
