@@ -26352,7 +26352,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "</form>";
     echo "</div>"; // End form container
     echo "</div>"; // End main container
-}
+
 
 
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
