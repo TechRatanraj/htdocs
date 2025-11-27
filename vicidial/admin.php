@@ -32508,7 +32508,7 @@ if ($SUB==22) {
     echo "</tr></thead>\n";
     echo "<tbody>\n";
 
-
+}
 	
 		##### get status category listings for dynamic pulldown
 		$stmt="SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
