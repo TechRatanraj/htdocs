@@ -28076,8 +28076,7 @@ echo "<style>
 }
 </style>";
 
-// FIRST permission check fail
-}
+} // END of main if ($ADD==3) condition
 else
 {
     echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
