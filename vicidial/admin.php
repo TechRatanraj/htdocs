@@ -26104,7 +26104,162 @@ if ($ADD==3)
 			$last_auth = " &nbsp; &nbsp; $auth_exp_date - $auth_stage - $auth_attempts";
 			}
 
-		
+		if ( ( ($user_level >= $LOGuser_level) and ($LOGuser_level < 9) ) or ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) and ($user_level > 8) ) )
+			{
+			echo "<br>"._QXZ("You do not have permissions to modify this user").": $user\n";
+			}
+		else
+			{
+			echo "<br>"._QXZ("MODIFY A USERS RECORD").": $user<form action=$PHP_SELF method=POST>\n";
+			if ( ($LOGuser_level > 8) and ($LOGalter_admin_interface > 0) )
+				{echo "<input type=hidden name=ADD value=4A>\n";}
+			else
+				{
+				if ($LOGalter_agent_interface == "1")
+					{echo "<input type=hidden name=ADD value=4B>\n";}
+				else
+					{echo "<input type=hidden name=ADD value=4>\n";}
+				}
+			if ($SScustom_fields_enabled < 1)
+				{
+				echo "<input type=hidden name=custom_fields_modify value=\"$custom_fields_modify\">\n";
+				}
+
+			echo "<input type=hidden name=user value=\"$user\">\n";
+			echo "<input type=hidden name=DB value=\"$DB\">\n";
+			echo "<center><TABLE width=980 cellspacing=3>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Number").": </td><td align=left><b>$user</b>$NWB#users-user$NWE</td></tr>\n";
+
+			if ($SSpass_hash_enabled > 0)
+				{
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><b>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</b></td></tr>\n";
+				}
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 value=\"$pass\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Force Change Password").": </td><td align=left><select size=1 name=force_change_password><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$force_change_password\" SELECTED>"._QXZ("$force_change_password")."</option></select>$NWB#users-force_change_password$NWE</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Last Login Info").": </td><td align=left><b>$last_login_date - $failed_login_count - $last_ip $last_auth</b>$NWB#users-last_login_date$NWE &nbsp; ";
+			if ($LOGuser_level > 8)
+				{
+				if ($failed_login_attempts_today > 0)
+					{
+					echo "<font size=2> <a href=\"user_logins_report.php?user=$user\">"._QXZ("Failed logins today")."</a>: $failed_login_attempts_today - $failed_login_count_today - $failed_last_ip_today - $failed_last_type_today</font>";
+					}
+				else
+					{
+					echo "<font size=2> <a href=\"user_logins_report.php?user=$user\">"._QXZ("Logins summary")."</a></font>";
+					}
+				}
+			echo "</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=full_name size=30 maxlength=30 value=\"$full_name\">$NWB#users-full_name$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Level").": </td><td align=left><select size=1 name=user_level>";
+			$h=1;
+			$count_user_level=$LOGuser_level;
+			if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
+				{$count_user_level=($LOGuser_level - 1);}
+			while ($h<=$count_user_level)
+				{
+				echo "<option>$h</option>";
+				$h++;
+				}
+			echo "<option SELECTED>$user_level</option></select>$NWB#users-user_level$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><A HREF=\"$PHP_SELF?ADD=311111&user_group=$user_group\">"._QXZ("User Group")."</A>: </td><td align=left><select size=1 name=user_group>\n";
+
+			$stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$Ugroups_to_print = mysqli_num_rows($rslt);
+			$Ugroups_list='';
+			$o=0;
+			while ($Ugroups_to_print > $o) 
+				{
+				$rowx=mysqli_fetch_row($rslt);
+				$Ugroups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+				$o++;
+				}
+			echo "$Ugroups_list";
+			echo "<option SELECTED>$user_group</option>\n";
+			echo "</select>$NWB#users-user_group$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Login").": </td><td align=left><input type=text name=phone_login size=20 maxlength=20 value=\"$phone_login\">$NWB#users-phone_login$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Pass").": </td><td align=left><input type=text name=phone_pass size=40 maxlength=100 value=\"$phone_pass\">$NWB#users-phone_pass$NWE\n";
+			if ( ($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS') )
+				{echo " &nbsp; <a href=\"email_agent_login_link.php?preview=1&agent_id=$user\">"._QXZ("send this user a login link email")."</a>";}
+			echo "</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#users-active$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Voicemail ID").": </td><td align=left><input type=text name=voicemail_id id=voicemail_id size=12 maxlength=10 value=\"$voicemail_id\"> <a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\">"._QXZ("voicemail chooser")."</a>$NWB#users-voicemail_id$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Email").": </td><td align=left><input type=text name=email size=40 maxlength=100 value=\"$email\">$NWB#users-email$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Mobile Number").": </td><td align=left><input type=text name=mobile_number size=20 maxlength=20 value=\"$mobile_number\">$NWB#users-mobile_number$NWE</td></tr>\n";
+
+			if ($SSuser_codes_admin > 0)
+				{
+				$user_codes_ct=0;
+				$raw_user_codes_admin_data="|empty\n";
+				$user_code_container_menu='';
+				$uc_selected=0;
+				if ($SSuser_codes_admin == '2')
+					{
+					if (file_exists('user_codes_admin.txt'))
+					$user_codes_admin_ARY = file('user_codes_admin.txt');
+					}
+				else
+					{
+					$stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_CODES_SYSTEM';";
+					$rslt=mysql_to_mysqli($stmt, $link);
+					$uc_to_print = mysqli_num_rows($rslt);
+					if ($uc_to_print > 0)
+						{
+						$rowx=mysqli_fetch_row($rslt);
+						$raw_user_codes_admin_data = $rowx[0];
+						}
+					$user_codes_admin_ARY = explode("\n",$raw_user_codes_admin_data);
+					}
+				$user_codes_admin_ct = count($user_codes_admin_ARY);
+				$o=0;
+				while ($user_codes_admin_ct > $o) 
+					{
+					if ( (!preg_match("/^;/",$user_codes_admin_ARY[$o])) and (strlen($user_codes_admin_ARY[$o]) > 0) )
+						{
+						$user_codes_ct++;
+
+						$user_code_item_ARY = explode('|',$user_codes_admin_ARY[$o]);
+						$user_code_item_ARY[0] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[0]);
+						$user_code_item_ARY[1] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[1]);
+						if (mb_strlen($user_code_item_ARY[1],'utf-8')>50)
+							{$user_code_item_ARY[1] = mb_substr($user_code_item_ARY[1],0,50,'utf-8') . '...';}
+						$user_code_container_menu .= "<option ";
+						if ($user_code == "$user_code_item_ARY[0]") 
+							{
+							$user_code_container_menu .= "SELECTED ";
+							$uc_selected++;
+							}
+						if (strlen($user_code_item_ARY[1]) > 0)
+							{
+							$user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0] - $user_code_item_ARY[1]</option>\n";
+							}
+						else
+							{
+							$user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0]</option>\n";
+							}
+						}
+					$o++;
+					}
+				if ($uc_selected < 1)
+					{$user_code_container_menu .= "<option SELECTED value=\"$user_code\">$user_code</option>\n";}
+
+				if ($LOGuser_level >= 9)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><select size=1 name=user_code>$user_code_container_menu</select>$NWB#users-optional$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><input type=hidden name=user_code value=\"$user_code\">$user_code &nbsp; $NWB#users-optional$NWE</td></tr>\n";
+					}
+				}
+			else
+				{
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><input type=text name=user_code size=40 maxlength=100 value=\"$user_code\">$NWB#users-optional$NWE</td></tr>\n";
+				}
+
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
 			$raw_location_data=";location|description\n|default\n";
 			$stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_LOCATIONS_SYSTEM';";
@@ -33459,634 +33614,246 @@ if ($SUB==27)
 
 	##### CAMPAIGN SURVEY SETTINGS #####
 	if ($SUB=='20A')
-{
-    echo "<div style='font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;max-width:1400px;margin:0 auto;padding:20px;color:#333;'>";
+		{
 
-    // Header
-    echo "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eaeaea;'>";
-    echo "<h2 style='margin:0;font-size:24px;font-weight:600;color:#2c3e50;display:flex;align-items:center;'><span style='margin-right:10px;font-size:28px;'>📊</span>"._QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN")."</h2>";
-    echo "<span style='background-color:#f1f5f9;color:#475569;padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;'>$NWB#campaigns-survey_settings$NWE</span>";
-    echo "</div>";
-    echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:24px;'></div>";
+		echo "<center><br><b>"._QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN").":</b><br>\n";
+		echo "<form action=$PHP_SELF method=POST name=admin_form id=admin_form><center><TABLE width=850 cellspacing=3>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><input type=hidden name=ADD value=40A>\n";
+		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
 
-    // Main form card
-    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
-    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Survey Configuration")."</div>";
-    echo "<div style='padding:20px;'>";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey First Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_first_audio_file id=survey_first_audio_file value=\"$survey_first_audio_file\"> <a href=\"javascript:launch_chooser('survey_first_audio_file','date');\">"._QXZ("audio chooser")."</a>  $NWB#campaigns-survey_first_audio_file$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey DTMF Digits").": </td><td><input type=text size=16 maxlength=16 name=survey_dtmf_digits value=\"$survey_dtmf_digits\"> $NWB#campaigns-survey_dtmf_digits$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Not Interested Digit").": </td><td><input type=text size=5 maxlength=1 name=survey_ni_digit value=\"$survey_ni_digit\"> $NWB#campaigns-survey_ni_digit$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Wait Seconds").": </td><td><input type=text size=5 maxlength=2 name=survey_wait_sec value=\"$survey_wait_sec\"> $NWB#campaigns-survey_wait_sec$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Opt-in Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_opt_in_audio_file id=survey_opt_in_audio_file value=\"$survey_opt_in_audio_file\"> <a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_opt_in_audio_file$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Not Interested Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_ni_audio_file id=survey_ni_audio_file value=\"$survey_ni_audio_file\"> <a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_ni_audio_file$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Method").": </td><td><select size=1 name=survey_method><option value='AGENT_XFER'>"._QXZ("AGENT_XFER")."</option><option value='VOICEMAIL'>"._QXZ("VOICEMAIL")."</option><option value='VMAIL_NO_INST'>"._QXZ("VMAIL_NO_INST")."</option><option value='EXTENSION'>"._QXZ("EXTENSION")."</option><option value='HANGUP'>"._QXZ("HANGUP")."</option><option value='CAMPREC_60_WAV'>"._QXZ("CAMPREC_60_WAV")."</option><option value='CALLMENU'>"._QXZ("CALLMENU")."</option><option value='$survey_method' SELECTED>"._QXZ("$survey_method")."</option></select> $NWB#campaigns-survey_method$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey No-Response Action").": </td><td><select size=1 name=survey_no_response_action><option value='OPTIN'>"._QXZ("OPTIN")."</option><option value='OPTOUT'>"._QXZ("OPTOUT")."</option><option value='DROP'>"._QXZ("DROP")."</option><option value='$survey_no_response_action' SELECTED>"._QXZ("$survey_no_response_action")."</option></select> $NWB#campaigns-survey_no_response_action$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Not Interested Status").": </td><td><select name=survey_ni_status>$survey_ni_status_list</select> $NWB#campaigns-survey_ni_status$NWE</td></tr>\n";
 
-    echo "<form action='$PHP_SELF' method='POST' name='admin_form' id='admin_form' style='margin:0;padding:0;'>";
-    echo "<input type='hidden' name='ADD' value='40A'>";
-    echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Digit").": </td><td><input type=text size=5 maxlength=1 name=survey_third_digit id=survey_third_digit value=\"$survey_third_digit\"> $NWB#campaigns-survey_third_digit$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_third_audio_file id=survey_third_audio_file value=\"$survey_third_audio_file\"> <a href=\"javascript:launch_chooser('survey_third_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_third_audio_file$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Status").": </td><td><input type=text size=10 maxlength=6 name=survey_third_status value=\"$survey_third_status\"> $NWB#campaigns-survey_third_status$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Extension").": </td><td><input type=text size=20 maxlength=20 name=survey_third_exten value=\"$survey_third_exten\"> $NWB#campaigns-survey_third_exten$NWE</td></tr>\n";
 
-    // Basic Settings Section
-    echo "<div style='margin-bottom:30px;'>";
-    echo "<h3 style='font-size:16px;font-weight:600;color:#2c3e50;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("Basic Settings")."</h3>";
-    
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
-    
-    // Survey First Audio File
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey First Audio File")."</label>";
-    echo "<div style='display:flex;gap:10px;'>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_first_audio_file' id='survey_first_audio_file' value=\"$survey_first_audio_file\" style='flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_first_audio_file','date');\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:6px;background:#5c7cfa;color:#fff;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("audio chooser")."</a>";
-    echo "</div>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_first_audio_file$NWE</span>";
-    echo "</div>";
-    
-    // Survey DTMF Digits
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey DTMF Digits")."</label>";
-    echo "<input type='text' size='16' maxlength='16' name='survey_dtmf_digits' value=\"$survey_dtmf_digits\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_dtmf_digits$NWE</span>";
-    echo "</div>";
-    
-    // Survey Not Interested Digit
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Not Interested Digit")."</label>";
-    echo "<input type='text' size='5' maxlength='1' name='survey_ni_digit' value=\"$survey_ni_digit\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_ni_digit$NWE</span>";
-    echo "</div>";
-    
-    // Survey Wait Seconds
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Wait Seconds")."</label>";
-    echo "<input type='text' size='5' maxlength='2' name='survey_wait_sec' value=\"$survey_wait_sec\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_wait_sec$NWE</span>";
-    echo "</div>";
-    
-    echo "</div>"; // end grid
-    echo "</div>"; // end basic settings section
-    
-    // Audio Files Section
-    echo "<div style='margin-bottom:30px;'>";
-    echo "<h3 style='font-size:16px;font-weight:600;color:#2c3e50;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("Audio Files")."</h3>";
-    
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
-    
-    // Survey Opt-in Audio File
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Opt-in Audio File")."</label>";
-    echo "<div style='display:flex;gap:10px;'>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_opt_in_audio_file' id='survey_opt_in_audio_file' value=\"$survey_opt_in_audio_file\" style='flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:6px;background:#5c7cfa;color:#fff;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("audio chooser")."</a>";
-    echo "</div>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_opt_in_audio_file$NWE</span>";
-    echo "</div>";
-    
-    // Survey Not Interested Audio File
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Not Interested Audio File")."</label>";
-    echo "<div style='display:flex;gap:10px;'>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_ni_audio_file' id='survey_ni_audio_file' value=\"$survey_ni_audio_file\" style='flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:6px;background:#5c7cfa;color:#fff;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("audio chooser")."</a>";
-    echo "</div>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_ni_audio_file$NWE</span>";
-    echo "</div>";
-    
-    echo "</div>"; // end grid
-    echo "</div>"; // end audio files section
-    
-    // Survey Method Section
-    echo "<div style='margin-bottom:30px;'>";
-    echo "<h3 style='font-size:16px;font-weight:600;color:#2c3e50;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("Survey Method & Actions")."</h3>";
-    
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
-    
-    // Survey Method
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Method")."</label>";
-    echo "<select size='1' name='survey_method' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<option value='AGENT_XFER'>"._QXZ("AGENT_XFER")."</option>";
-    echo "<option value='VOICEMAIL'>"._QXZ("VOICEMAIL")."</option>";
-    echo "<option value='VMAIL_NO_INST'>"._QXZ("VMAIL_NO_INST")."</option>";
-    echo "<option value='EXTENSION'>"._QXZ("EXTENSION")."</option>";
-    echo "<option value='HANGUP'>"._QXZ("HANGUP")."</option>";
-    echo "<option value='CAMPREC_60_WAV'>"._QXZ("CAMPREC_60_WAV")."</option>";
-    echo "<option value='CALLMENU'>"._QXZ("CALLMENU")."</option>";
-    echo "<option value='$survey_method' SELECTED>"._QXZ("$survey_method")."</option>";
-    echo "</select>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_method$NWE</span>";
-    echo "</div>";
-    
-    // Survey No-Response Action
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey No-Response Action")."</label>";
-    echo "<select size='1' name='survey_no_response_action' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<option value='OPTIN'>"._QXZ("OPTIN")."</option>";
-    echo "<option value='OPTOUT'>"._QXZ("OPTOUT")."</option>";
-    echo "<option value='DROP'>"._QXZ("DROP")."</option>";
-    echo "<option value='$survey_no_response_action' SELECTED>"._QXZ("$survey_no_response_action")."</option>";
-    echo "</select>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_no_response_action$NWE</span>";
-    echo "</div>";
-    
-    // Survey Not Interested Status
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Not Interested Status")."</label>";
-    echo "<select name='survey_ni_status' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>$survey_ni_status_list</select>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_ni_status$NWE</span>";
-    echo "</div>";
-    
-    // Survey Recording
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Recording")."</label>";
-    echo "<select size='1' name='survey_recording' id='survey_recording' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value='Y_WITH_AMD'>"._QXZ("Y_WITH_AMD")."</option>";
-    echo "<option value='$survey_recording' SELECTED>"._QXZ("$survey_recording")."</option>";
-    echo "</select>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_recording$NWE</span>";
-    echo "</div>";
-    
-    echo "</div>"; // end grid
-    echo "</div>"; // end survey method section
-    
-    // Third Digit Options Section
-    echo "<div style='margin-bottom:30px;'>";
-    echo "<h3 style='font-size:16px;font-weight:600;color:#2c3e50;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("Third Digit Options")."</h3>";
-    
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
-    
-    // Survey Third Digit
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Third Digit")."</label>";
-    echo "<input type='text' size='5' maxlength='1' name='survey_third_digit' id='survey_third_digit' value=\"$survey_third_digit\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_third_digit$NWE</span>";
-    echo "</div>";
-    
-    // Survey Third Status
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Third Status")."</label>";
-    echo "<input type='text' size='10' maxlength='6' name='survey_third_status' value=\"$survey_third_status\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_third_status$NWE</span>";
-    echo "</div>";
-    
-    // Survey Third Audio File
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Third Audio File")."</label>";
-    echo "<div style='display:flex;gap:10px;'>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_third_audio_file' id='survey_third_audio_file' value=\"$survey_third_audio_file\" style='flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_third_audio_file','date');\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:6px;background:#5c7cfa;color:#fff;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("audio chooser")."</a>";
-    echo "</div>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_third_audio_file$NWE</span>";
-    echo "</div>";
-    
-    // Survey Third Extension
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Third Extension")."</label>";
-    echo "<input type='text' size='20' maxlength='20' name='survey_third_exten' value=\"$survey_third_exten\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_third_exten$NWE</span>";
-    echo "</div>";
-    
-    echo "</div>"; // end grid
-    echo "</div>"; // end third digit options section
-    
-    // Fourth Digit Options Section
-    echo "<div style='margin-bottom:30px;'>";
-    echo "<h3 style='font-size:16px;font-weight:600;color:#2c3e50;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("Fourth Digit Options")."</h3>";
-    
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
-    
-    // Survey Fourth Digit
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Fourth Digit")."</label>";
-    echo "<input type='text' size='5' maxlength='1' name='survey_fourth_digit' value=\"$survey_fourth_digit\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_fourth_digit$NWE</span>";
-    echo "</div>";
-    
-    // Survey Fourth Status
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Fourth Status")."</label>";
-    echo "<input type='text' size='10' maxlength='6' name='survey_fourth_status' value=\"$survey_fourth_status\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_fourth_status$NWE</span>";
-    echo "</div>";
-    
-    // Survey Fourth Audio File
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Fourth Audio File")."</label>";
-    echo "<div style='display:flex;gap:10px;'>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_fourth_audio_file' id='survey_fourth_audio_file' value=\"$survey_fourth_audio_file\" style='flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:6px;background:#5c7cfa;color:#fff;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("audio chooser")."</a>";
-    echo "</div>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_fourth_audio_file$NWE</span>";
-    echo "</div>";
-    
-    // Survey Fourth Extension
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Fourth Extension")."</label>";
-    echo "<input type='text' size='20' maxlength='20' name='survey_fourth_exten' value=\"$survey_fourth_exten\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_fourth_exten$NWE</span>";
-    echo "</div>";
-    
-    echo "</div>"; // end grid
-    echo "</div>"; // end fourth digit options section
-    
-    // Additional Settings Section
-    echo "<div style='margin-bottom:30px;'>";
-    echo "<h3 style='font-size:16px;font-weight:600;color:#2c3e50;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #eaeaea;'>"._QXZ("Additional Settings")."</h3>";
-    
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
-    
-    // Survey Response Digit Map
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Response Digit Map")."</label>";
-    echo "<input type='text' size='70' maxlength='100' name='survey_response_digit_map' value=\"$survey_response_digit_map\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_response_digit_map$NWE</span>";
-    echo "</div>";
-    
-    // Survey Xfer Extension
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Xfer Extension")."</label>";
-    echo "<input type='text' size='12' maxlength='20' name='survey_xfer_exten' value=\"$survey_xfer_exten\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_xfer_exten$NWE</span>";
-    echo "</div>";
-    
-    // Survey Campaign Recording Directory
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Survey Campaign Recording Directory")."</label>";
-    echo "<input type='text' size='70' maxlength='255' name='survey_camp_record_dir' value=\"$survey_camp_record_dir\" style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_camp_record_dir$NWE</span>";
-    echo "</div>";
-    
-    // Voicemail Extension
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Voicemail")."</label>";
-    echo "<div style='display:flex;gap:10px;'>";
-    echo "<input type='text' size='12' maxlength='10' name='voicemail_ext' id='voicemail_ext' value=\"$voicemail_ext\" style='flex:1;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:6px;background:#5c7cfa;color:#fff;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("voicemail chooser")."</a>";
-    echo "</div>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-voicemail_ext$NWE</span>";
-    echo "</div>";
-    
-    // Survey Call Menu
-    echo "<div style='margin-bottom:16px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'><a href=\"$PHP_SELF?ADD=3511&menu_id=$survey_menu_id\" style='color:#5c7cfa;text-decoration:none;'>"._QXZ("Survey Call Menu")."</a></label>";
-    echo "<select size='1' name='survey_menu_id' id='survey_menu_id' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>$call_menu_list<option SELECTED>$survey_menu_id</option></select>";
-    echo "<span style='display:block;margin-top:6px;font-size:12px;color:#6c757d;'>$NWB#campaigns-survey_menu_id$NWE</span>";
-    echo "</div>";
-    
-    echo "</div>"; // end grid
-    echo "</div>"; // end additional settings section
-    
-    // Submit button
-    echo "<div style='text-align:right;margin-top:20px;'>";
-    echo "<input type='submit' name='submit' value='"._QXZ("SUBMIT")."' style='display:inline-block;font-weight:600;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:10px 20px;font-size:16px;line-height:1.5;border-radius:6px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#5c7cfa;border-color:#5c7cfa;'>";
-    echo "</div>";
-    
-    echo "</form>";
-    echo "</div>"; // end card content
-    echo "</div>"; // end card
-    echo "</div>"; // outer wrapper
-}
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Digit").": </td><td><input type=text size=5 maxlength=1 name=survey_fourth_digit value=\"$survey_fourth_digit\"> $NWB#campaigns-survey_fourth_digit$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_fourth_audio_file id=survey_fourth_audio_file value=\"$survey_fourth_audio_file\"> <a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_fourth_audio_file$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Status").": </td><td><input type=text size=10 maxlength=6 name=survey_fourth_status value=\"$survey_fourth_status\"> $NWB#campaigns-survey_fourth_status$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Extension").": </td><td><input type=text size=20 maxlength=20 name=survey_fourth_exten value=\"$survey_fourth_exten\"> $NWB#campaigns-survey_fourth_exten$NWE</td></tr>\n";
 
-##### CAMPAIGN PRESETS #####
-if ($SUB==201)
-{
-    $preset_status=_QXZ("set to ").'<font color=purple><b>INACTIVE</b></font>';
-    $stmt="SELECT enable_xfer_presets,campaign_name from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL limit 1;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $campaigns_to_print = mysqli_num_rows($rslt);
-    if ($DB > 0) {echo "DEBUG: |$campaigns_to_print|$stmt|\n";}
-    if ($campaigns_to_print > 0) 
-    {
-        $row=mysqli_fetch_row($rslt);
-        $enable_xfer_presets =		$row[0];
-        $campaign_name =			$row[1];
-        if ($enable_xfer_presets == 'ENABLED') {$preset_status=_QXZ("set to ").'<font color=darkgreen><b>ENABLED</b></font>';}
-        if ($enable_xfer_presets == 'STAGING') {$preset_status=_QXZ("set to ").'<font color=red><b>STAGING</b></font>';}
-        if ($enable_xfer_presets == 'CONTACTS') {$preset_status=_QXZ("set to ").'<font color=red><b>CONTACTS</b></font>';}
-    }
-    else
-    {
-        echo "<br>"._QXZ("CAMPAIGN DOES NOT EXIST")." - $campaign_id<BR>\n";
-        exit;
-    }
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Response Digit Map").": </td><td><input type=text size=70 maxlength=100 name=survey_response_digit_map value=\"$survey_response_digit_map\"> $NWB#campaigns-survey_response_digit_map$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Survey Xfer Extension").": </td><td><input type=text size=12 maxlength=20 name=survey_xfer_exten value=\"$survey_xfer_exten\"> $NWB#campaigns-survey_xfer_exten$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Campaign Recording Directory").": </td><td><input type=text size=70 maxlength=255 name=survey_camp_record_dir value=\"$survey_camp_record_dir\"> $NWB#campaigns-survey_camp_record_dir$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Voicemail").": </td><td><input type=text size=12 maxlength=10 name=voicemail_ext id=voicemail_ext value=\"$voicemail_ext\"> <a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\">"._QXZ("voicemail chooser")."</a> $NWB#campaigns-voicemail_ext$NWE</td></tr>\n";
 
-    $stmt="SELECT preset_name,preset_number,preset_dtmf,preset_hide_number from vicidial_xfer_presets where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by preset_name;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $presets_to_print = mysqli_num_rows($rslt);
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><a href=\"$PHP_SELF?ADD=3511&menu_id=$survey_menu_id\">"._QXZ("Survey Call Menu")."</a>: </td><td align=left><select size=1 name=survey_menu_id id=survey_menu_id>$call_menu_list<option SELECTED>$survey_menu_id</option></select>$NWB#campaigns-survey_menu_id$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Recording").": </td><td align=left><select size=1 name=survey_recording id=survey_recording><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='Y_WITH_AMD'>"._QXZ("Y_WITH_AMD")."</option><option value='$survey_recording' SELECTED>"._QXZ("$survey_recording")."</option></select>$NWB#campaigns-survey_recording$NWE</td></tr>\n";
 
-    echo "<div style='font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;max-width:1400px;margin:0 auto;padding:20px;color:#333;'>";
+		echo "<tr bgcolor=#$SSstd_row2_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'></td></tr>\n";
+		echo "</table>\n";
+		echo "<BR></center></FORM><br>\n";
+		}
 
-    // Header
-    echo "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eaeaea;'>";
-    echo "<h2 style='margin:0;font-size:24px;font-weight:600;color:#2c3e50;display:flex;align-items:center;'><span style='margin-right:10px;font-size:28px;'>📞</span>"._QXZ("PRESETS FOR THIS CAMPAIGN")." ($campaign_id - $campaign_name)</h2>";
-    echo "<span style='background-color:#f1f5f9;color:#475569;padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;'>$preset_status &nbsp; $NWB#xfer_presets$NWE</span>";
-    echo "</div>";
-    echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:24px;'></div>";
 
-    // Add New Preset Card
-    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
-    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Add New Preset")."</div>";
-    echo "<div style='padding:20px;'>";
+	##### CAMPAIGN PRESETS #####
+	if ($SUB==201)
+		{
+		$preset_status=_QXZ("set to ").'<font color=purple><b>INACTIVE</b></font>';
+		$stmt="SELECT enable_xfer_presets,campaign_name from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL limit 1;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$campaigns_to_print = mysqli_num_rows($rslt);
+		if ($DB > 0) {echo "DEBUG: |$campaigns_to_print|$stmt|\n";}
+		if ($campaigns_to_print > 0) 
+			{
+			$row=mysqli_fetch_row($rslt);
+			$enable_xfer_presets =		$row[0];
+			$campaign_name =			$row[1];
+			if ($enable_xfer_presets == 'ENABLED') {$preset_status=_QXZ("set to ").'<font color=darkgreen><b>ENABLED</b></font>';}
+			if ($enable_xfer_presets == 'STAGING') {$preset_status=_QXZ("set to ").'<font color=red><b>STAGING</b></font>';}
+			if ($enable_xfer_presets == 'CONTACTS') {$preset_status=_QXZ("set to ").'<font color=red><b>CONTACTS</b></font>';}
+			}
+		else
+			{
+			echo "<br>"._QXZ("CAMPAIGN DOES NOT EXIST")." - $campaign_id<BR>\n";
+			exit;
+			}
 
-    echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
-    echo "<input type='hidden' name='ADD' value='201'>";
-    echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
+		$stmt="SELECT preset_name,preset_number,preset_dtmf,preset_hide_number from vicidial_xfer_presets where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by preset_name;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$presets_to_print = mysqli_num_rows($rslt);
 
-    echo "<div style='display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px;align-items:end;'>";
+		echo "<br><br><b>$presets_to_print "._QXZ("PRESETS FOR THIS CAMPAIGN")." ($campaign_id - $campaign_name): $preset_status &nbsp; $NWB#xfer_presets$NWE</b><br>\n";
 
-    // Preset Name
-    echo "<div>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Preset Name")."</label>";
-    echo "<input type='text' size='20' maxlength='40' name='preset_name' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "</div>";
+		echo "<br>"._QXZ("ADD NEW PRESET")." -<BR><form action=$PHP_SELF method=POST><font size=2>\n";
+		echo "<input type=hidden name=ADD value=201>\n";
+		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+		echo _QXZ("Preset Name").": <input type=text size=20 maxlength=40 name=preset_name style=\"font-family: sans-serif; font-size: 10px;\">\n";
+		echo " "._QXZ("Number").": <input type=text size=18 maxlength=50 name=preset_number style=\"font-family: sans-serif; font-size: 10px;\">\n";
+		echo " "._QXZ("DTMF").": <input type=text size=5 maxlength=50 name=preset_dtmf style=\"font-family: sans-serif; font-size: 10px;\">\n";
+		echo " &nbsp; "._QXZ("Hide Number").": <select size=1 name=preset_hide_number style=\"font-family: sans-serif; font-size: 10px;\"><option value='Y'>"._QXZ("Y")."</option><option value='N' SELECTED>"._QXZ("N")."</option></select> &nbsp;\n";
+		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."' style=\"font-family: sans-serif; font-size: 10px;\"><BR>\n";
+		echo "</font></center></FORM><br>\n";
 
-    // Number
-    echo "<div>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Number")."</label>";
-    echo "<input type='text' size='18' maxlength='50' name='preset_number' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "</div>";
+		echo "<center><table width=700 cellspacing=3>\n";
+		echo "<tr><td># </td><td>"._QXZ("PRESET NAME")."</td><td>"._QXZ("NUMBER")."</td><td>"._QXZ("DTMF")."</td><td>"._QXZ("HIDE")."</td><td>"._QXZ("MODIFY")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
 
-    // DTMF
-    echo "<div>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("DTMF")."</label>";
-    echo "<input type='text' size='5' maxlength='50' name='preset_dtmf' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "</div>";
+		$o=0;
+		while ($presets_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rslt);
+			$o++;
 
-    // Hide Number
-    echo "<div>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Hide Number")."</label>";
-    echo "<select size='1' name='preset_hide_number' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N' SELECTED>"._QXZ("N")."</option>";
-    echo "</select>";
-    echo "</div>";
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
 
-    echo "</div>"; // end grid
+			echo "<form action=$PHP_SELF method=POST><tr $bgcolor>\n";
+			echo "<td><font size=2>$o </td>\n";
+			echo "<td><font size=2>$rowx[0]\n";
+			echo "<input type=hidden name=ADD value=401>\n";
+			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+			echo "<input type=hidden name=preset_name value=\"$rowx[0]\"> &nbsp;</td>\n";
+			echo "<td><input type=text size=20 maxlength=50 name=preset_number value=\"$rowx[1]\" style=\"font-family: sans-serif; font-size: 10px;\"></td>\n";
+			echo "<td><input type=text size=20 maxlength=50 name=preset_dtmf value=\"$rowx[2]\" style=\"font-family: sans-serif; font-size: 10px;\"></td>\n";
+			echo "<td><select size=1 name=preset_hide_number style=\"font-family: sans-serif; font-size: 10px;\"><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$rowx[3]' SELECTED>"._QXZ("$rowx[3]")."</option></select></td>\n";
+			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."' style=\"font-family: sans-serif; font-size: 10px;\"></td>\n";
+			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=601&campaign_id=$campaign_id&preset_name=$rowx[0]\">"._QXZ("DELETE")."</a></td></tr></form>\n";
+			}
 
-    echo "<div style='text-align:right;margin-top:20px;'>";
-    echo "<input type='submit' name='submit' value='"._QXZ("ADD")."' style='display:inline-block;font-weight:600;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:10px 20px;font-size:16px;line-height:1.5;border-radius:6px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#28a745;border-color:#28a745;'>";
-    echo "</div>";
+		echo "</table>\n";
+		}
 
-    echo "</form>";
-    echo "</div>"; // end card content
-    echo "</div>"; // end card
 
-    // Existing Presets Card
-    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
-    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Existing Presets")." ($presets_to_print)</div>";
-    echo "<div style='padding:20px;'>";
-    echo "<div style='overflow-x:auto;'>";
+	##### CAMPAIGN AREACODE CID #####
+	if ($SUB==202)
+		{
+		$checkbox_list='';
+		$checkbox_count=0;
+		echo "<br><br><b>"._QXZ("AREACODE CIDS FOR THIS CAMPAIGN").": &nbsp; $NWB#campaign_cid_areacodes$NWE</b><br>\n";
+		if ($use_custom_cid != 'AREACODE')
+			{echo "<br><B><font color=red>"._QXZ("The campaign setting Custom CallerID is not set to AREACODE")."! </font></B><BR>";}
+		echo "<form action=$PHP_SELF method=POST>\n";
+		echo "<input type=hidden name=ADD value=202>\n";
+		echo "<input type=hidden name=stage value=MODIFY>\n";
+		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+		echo "<center><TABLE width=700 cellspacing=2>\n";
 
-    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+		$stmt="SELECT areacode,outbound_cid,active,cid_description,call_count_today from vicidial_campaign_cid_areacodes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by areacode,outbound_cid;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$accids_to_print = mysqli_num_rows($rslt);
+		$o=0;
+		while ($accids_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rslt);
+			$Xareacode[$o] =			$rowx[0];
+			$Xoutbound_cid[$o] =		$rowx[1];
+			$Xactive[$o] =				$rowx[2];
+			$Xcid_description[$o] =		$rowx[3];
+			$Xcall_count_today[$o] =	$rowx[4];
+			$checkbox_list .= "|active_$Xareacode[$o]_$Xoutbound_cid[$o]";
+			$o++;
+			$checkbox_count++;
+			}
 
-    // Header row
-    echo "<thead>";
-    echo "<tr style='background-color:#f8f9fa;'>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:50px;'>#</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;'>"._QXZ("PRESET NAME")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;'>"._QXZ("NUMBER")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;'>"._QXZ("DTMF")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:80px;'>"._QXZ("HIDE")."</th>";
-    echo "<th style='padding:12px 8px;text-align:center;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:120px;'>"._QXZ("ACTIONS")."</th>";
-    echo "</tr>";
-    echo "</thead>";
+		echo "<tr><td>#</td><td>"._QXZ("AREACODE")."</td><td>"._QXZ("CID NUMBER")."</td><td>"._QXZ("DESCRIPTION")."</td><td>"._QXZ("ACTIVE")."<br><span id=ACCID_link><a href=\"#\" onclick=\"FORM_selectall('$checkbox_count','$checkbox_list','on','ACCID_link');return false;\"><font size=1>"._QXZ("select all")."</font></a></span></td><td>"._QXZ("CALLS")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
 
-    // Data rows
-    $o=0;
-    echo "<tbody>";
-    while ($presets_to_print > $o) 
-    {
-        $rowx=mysqli_fetch_row($rslt);
-        $rowBg = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
-        $o++;
+		$o=0;
+		while ($accids_to_print > $o) 
+			{
+			$ct = ($o + 1);
+			if ($ct == '1')
+				{
+				$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';
+				$bgac = $Xareacode[$o];
+				} 
+			else
+				{
+				if ($Xareacode[$o] != $bgac)
+					{
+					if (preg_match("/1$|3$|5$|7$|9$/i", $bgct))
+						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';} 
+					else
+						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
+					$bgct++;
+					$bgac = $Xareacode[$o];
+					}
+				}
 
-        echo "<tr style='background-color:$rowBg;'>";
-        echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;display:contents;'>";
-        echo "<input type='hidden' name='ADD' value='401'>";
-        echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
-        echo "<input type='hidden' name='preset_name' value=\"$rowx[0]\">";
+			$DID_edit_link_BEGIN='';
+			$DID_edit_link_END='';
+			if (strlen($Xoutbound_cid[$o]) > 0)
+				{
+				$stmt="SELECT did_id from vicidial_inbound_dids where did_pattern='$Xoutbound_cid[$o]' $LOGadmin_viewable_groupsSQL limit 1;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$dids_to_print = mysqli_num_rows($rslt);
+				if ($dids_to_print > 0) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\">";
+					$DID_edit_link_END='</a>';
+					}
+				}
+			echo "<tr $bgcolor><td><font size=2> &nbsp; $ct</font></td>\n";
+			echo "<td><font size=2> &nbsp; $Xareacode[$o]</font></td>\n";
+			echo "<td><font size=2> &nbsp; $DID_edit_link_BEGIN$Xoutbound_cid[$o]$DID_edit_link_END</font></td>\n";
+			echo "<td><input type=text size=30 maxlength=100 name=cid_description_$Xareacode[$o]_$Xoutbound_cid[$o] value=\"$Xcid_description[$o]\" style=\"font-family: sans-serif; font-size: 10px;\"></td>\n";
+			echo "<td>\n";
+			if ($Xactive[$o] == 'Y')
+				{
+				echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\" CHECKED>";
+				}
+			else
+				{
+				echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\">";
+				}
+			echo "</td>\n";
+			echo "<td><font size=2> &nbsp; $Xcall_count_today[$o]</font></td>\n";
+			echo "<td><font size=1> &nbsp; <a href=\"$PHP_SELF?ADD=202&stage=DELETE&campaign_id=$campaign_id&areacode=$Xareacode[$o]&outbound_cid=$Xoutbound_cid[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
+			$o++;
+			}
 
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;font-weight:600;'>$o</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>$rowx[0]</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'><input type='text' size='20' maxlength='50' name='preset_number' value=\"$rowx[1]\" style='width:100%;padding:6px 8px;border-radius:4px;border:1px solid #ced4da;background:#fff;font-size:14px;'></td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'><input type='text' size='20' maxlength='50' name='preset_dtmf' value=\"$rowx[2]\" style='width:100%;padding:6px 8px;border-radius:4px;border:1px solid #ced4da;background:#fff;font-size:14px;'></td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
-        echo "<select size='1' name='preset_hide_number' style='width:100%;padding:6px 8px;border-radius:4px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-        echo "<option value='Y'>"._QXZ("Y")."</option>";
-        echo "<option value='N'>"._QXZ("N")."</option>";
-        echo "<option value='$rowx[3]' SELECTED>"._QXZ("$rowx[3]")."</option>";
-        echo "</select>";
-        echo "</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;text-align:center;display:flex;gap:8px;justify-content:center;'>";
-        echo "<input type='submit' name='submit' value='"._QXZ("MODIFY")."' style='display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#5c7cfa;border-color:#5c7cfa;'>";
-        echo "</form>";
-        echo "<a href=\"$PHP_SELF?ADD=601&campaign_id=$campaign_id&preset_name=$rowx[0]\" style='display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#f03e3e;border-color:#f03e3e;'>"._QXZ("DELETE")."</a>";
-        echo "</td>";
-        echo "</tr>";
-    }
-    echo "</tbody>";
+		echo "</table>\n";
+		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value=\""._QXZ("SUBMIT CHANGES")."\"></form><br><br>\n";
 
-    echo "</table>";
-    echo "</div>";
-    echo "</div>"; // end card content
-    echo "</div>"; // end card
-    echo "</div>"; // outer wrapper
-}
+		echo "<br>"._QXZ("ADD NEW AREACODE CID")."<BR><form action=$PHP_SELF method=POST>\n";
+		echo "<input type=hidden name=ADD value=202>\n";
+		echo "<input type=hidden name=stage value=ADD>\n";
+		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+		echo _QXZ("Areacode").": <input type=text size=7 maxlength=5 name=areacode>\n";
+		echo _QXZ("Outbound CID").": <input type=text size=20 maxlength=20 name=outbound_cid><BR>\n";
+		echo _QXZ("Description").": <input type=text size=50 maxlength=100 name=cid_description>\n";
+		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
 
-##### CAMPAIGN AREACODE CID #####
-if ($SUB==202)
-{
-    $checkbox_list='';
-    $checkbox_count=0;
-    echo "<div style='font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;max-width:1400px;margin:0 auto;padding:20px;color:#333;'>";
+		echo "</center></FORM><br>\n";
+		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\">"._QXZ("Click here to see Admin changes to this campaign")." AC-CID</a></FONT>\n";
+			}
+		echo "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0><TR><TD>\n";
+		}
 
-    // Header
-    echo "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eaeaea;'>";
-    echo "<h2 style='margin:0;font-size:24px;font-weight:600;color:#2c3e50;display:flex;align-items:center;'><span style='margin-right:10px;font-size:28px;'>📍</span>"._QXZ("AREACODE CIDS FOR THIS CAMPAIGN")."</h2>";
-    echo "<span style='background-color:#f1f5f9;color:#475569;padding:6px 12px;border-radius:20px;font-size:14px;font-weight:600;'>$NWB#campaign_cid_areacodes$NWE</span>";
-    echo "</div>";
-    echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:24px;'></div>";
 
-    if ($use_custom_cid != 'AREACODE')
-    {
-        echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;border-left:4px solid #f03e3e;'>";
-        echo "<div style='padding:16px 20px;'>";
-        echo "<div style='display:flex;align-items:center;'>";
-        echo "<span style='font-size:20px;margin-right:12px;'>⚠️</span>";
-        echo "<div>";
-        echo "<h3 style='margin:0 0 4px 0;font-size:16px;font-weight:600;color:#f03e3e;'>"._QXZ("Important Notice")."</h3>";
-        echo "<p style='margin:0;font-size:14px;color:#495057;'>"._QXZ("The campaign setting Custom CallerID is not set to AREACODE")."!</p>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-    }
+	if ($SUB < 1)
+		{
+		echo "<BR><BR>\n";
+		echo "<a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\">"._QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN")."</a><BR><BR>\n";
+	#	echo "<a href=\"$PHP_SELF?ADD=53&campaign_id=$campaign_id&DB=$DB\">EMERGENCY VDAC CLEAR FOR THIS CAMPAIGN</a><BR><BR>\n";
 
-    // Existing AreaCode CIDs Card
-    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
-    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;display:flex;justify-content:space-between;align-items:center;'>";
-    echo "<span>"._QXZ("Existing AreaCode CIDs")."</span>";
-    echo "<span id='ACCID_link' style='font-size:14px;'><a href=\"#\" onclick=\"FORM_selectall('$checkbox_count','$checkbox_list','on','ACCID_link');return false;\" style='color:#5c7cfa;text-decoration:none;'>"._QXZ("select all")."</a></span>";
-    echo "</div>";
-    echo "<div style='padding:20px;'>";
-    echo "<div style='overflow-x:auto;'>";
-
-    echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
-    echo "<input type='hidden' name='ADD' value='202'>";
-    echo "<input type='hidden' name='stage' value='MODIFY'>";
-    echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
-
-    $stmt="SELECT areacode,outbound_cid,active,cid_description,call_count_today from vicidial_campaign_cid_areacodes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by areacode,outbound_cid;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $accids_to_print = mysqli_num_rows($rslt);
-    $o=0;
-    while ($accids_to_print > $o) 
-    {
-        $rowx=mysqli_fetch_row($rslt);
-        $Xareacode[$o] =			$rowx[0];
-        $Xoutbound_cid[$o] =		$rowx[1];
-        $Xactive[$o] =				$rowx[2];
-        $Xcid_description[$o] =		$rowx[3];
-        $Xcall_count_today[$o] =	$rowx[4];
-        $checkbox_list .= "|active_$Xareacode[$o]_$Xoutbound_cid[$o]";
-        $o++;
-        $checkbox_count++;
-    }
-
-    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
-
-    // Header row
-    echo "<thead>";
-    echo "<tr style='background-color:#f8f9fa;'>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:50px;'>#</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:100px;'>"._QXZ("AREACODE")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;'>"._QXZ("CID NUMBER")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;'>"._QXZ("DESCRIPTION")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:80px;'>"._QXZ("ACTIVE")."</th>";
-    echo "<th style='padding:12px 8px;text-align:left;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:80px;'>"._QXZ("CALLS")."</th>";
-    echo "<th style='padding:12px 8px;text-align:center;font-weight:600;color:#495057;border-bottom:2px solid #eaeaea;white-space:nowrap;width:100px;'>"._QXZ("DELETE")."</th>";
-    echo "</tr>";
-    echo "</thead>";
-
-    // Data rows
-    $o=0;
-    echo "<tbody>";
-    while ($accids_to_print > $o) 
-    {
-        $ct = ($o + 1);
-        if ($ct == '1')
-        {
-            $rowBg = '#fff';
-            $bgac = $Xareacode[$o];
-        } 
-        else
-        {
-            if ($Xareacode[$o] != $bgac)
-            {
-                $rowBg = ($bgct % 2 == 0) ? '#fff' : '#f8f9fa';
-                $bgct++;
-                $bgac = $Xareacode[$o];
-            }
-        }
-
-        $DID_edit_link_BEGIN='';
-        $DID_edit_link_END='';
-        if (strlen($Xoutbound_cid[$o]) > 0)
-        {
-            $stmt="SELECT did_id from vicidial_inbound_dids where did_pattern='$Xoutbound_cid[$o]' $LOGadmin_viewable_groupsSQL limit 1;";
-            $rslt=mysql_to_mysqli($stmt, $link);
-            $dids_to_print = mysqli_num_rows($rslt);
-            if ($dids_to_print > 0) 
-            {
-                $rowx=mysqli_fetch_row($rslt);
-                $DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\" style='color:#5c7cfa;text-decoration:none;'>";
-                $DID_edit_link_END='</a>';
-            }
-        }
-
-        echo "<tr style='background-color:$rowBg;'>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;font-weight:600;'>$ct</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>$Xareacode[$o]</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>$DID_edit_link_BEGIN$Xoutbound_cid[$o]$DID_edit_link_END</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'><input type='text' size='30' maxlength='100' name='cid_description_$Xareacode[$o]_$Xoutbound_cid[$o]' value=\"$Xcid_description[$o]\" style='width:100%;padding:6px 8px;border-radius:4px;border:1px solid #ced4da;background:#fff;font-size:14px;'></td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>";
-        if ($Xactive[$o] == 'Y')
-        {
-            echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\" CHECKED>";
-        }
-        else
-        {
-            echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\">";
-        }
-        echo "</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;'>$Xcall_count_today[$o]</td>";
-        echo "<td style='padding:12px 8px;border-bottom:1px solid #eaeaea;text-align:center;'>";
-        echo "<a href=\"$PHP_SELF?ADD=202&stage=DELETE&campaign_id=$campaign_id&areacode=$Xareacode[$o]&outbound_cid=$Xoutbound_cid[$o]\" style='display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.5;border-radius:4px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#f03e3e;border-color:#f03e3e;'>"._QXZ("DELETE")."</a>";
-        echo "</td>";
-        echo "</tr>";
-        $o++;
-    }
-    echo "</tbody>";
-
-    echo "</table>";
-
-    echo "<div style='text-align:right;margin-top:20px;'>";
-    echo "<input type='submit' name='submit' value=\""._QXZ("SUBMIT CHANGES")."\" style='display:inline-block;font-weight:600;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:10px 20px;font-size:16px;line-height:1.5;border-radius:6px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#5c7cfa;border-color:#5c7cfa;'>";
-    echo "</div>";
-
-    echo "</form>";
-    echo "</div>";
-    echo "</div>"; // end card content
-    echo "</div>"; // end card
-
-    // Add New AreaCode CID Card
-    echo "<div style='background-color:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0, 0, 0, 0.05);margin-bottom:24px;overflow:hidden;border:1px solid #eaeaea;'>";
-    echo "<div style='background-color:#f8f9fa;padding:16px 20px;font-weight:600;font-size:18px;color:#2c3e50;border-bottom:1px solid #eaeaea;'>"._QXZ("Add New AreaCode CID")."</div>";
-    echo "<div style='padding:20px;'>";
-
-    echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
-    echo "<input type='hidden' name='ADD' value='202'>";
-    echo "<input type='hidden' name='stage' value='ADD'>";
-    echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">";
-
-    echo "<div style='display:grid;grid-template-columns:200px 200px 1fr;gap:20px;align-items:end;'>";
-
-    // Areacode
-    echo "<div>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Areacode")."</label>";
-    echo "<input type='text' size='7' maxlength='5' name='areacode' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "</div>";
-
-    // Outbound CID
-    echo "<div>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Outbound CID")."</label>";
-    echo "<input type='text' size='20' maxlength='20' name='outbound_cid' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "</div>";
-
-    // Submit button
-    echo "<div style='text-align:right;'>";
-    echo "<input type='submit' name='submit' value='"._QXZ("ADD")."' style='display:inline-block;font-weight:600;text-align:center;white-space:nowrap;vertical-align:middle;user-select:none;border:1px solid transparent;padding:10px 20px;font-size:16px;line-height:1.5;border-radius:6px;transition:color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;cursor:pointer;text-decoration:none;color:#fff;background-color:#28a745;border-color:#28a745;'>";
-    echo "</div>";
-
-    echo "</div>"; // end grid
-
-    // Description
-    echo "<div style='margin-top:20px;'>";
-    echo "<label style='display:block;margin-bottom:8px;font-weight:500;color:#495057;font-size:14px;'>"._QXZ("Description")."</label>";
-    echo "<input type='text' size='50' maxlength='100' name='cid_description' style='width:100%;padding:10px 12px;border-radius:6px;border:1px solid #ced4da;background:#fff;font-size:14px;'>";
-    echo "</div>";
-
-    echo "</form>";
-    echo "</div>"; // end card content
-    echo "</div>"; // end card
-
-    // Admin Changes Link
-    if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-    {
-        echo "<div style='text-align:center;margin-top:20px;'>";
-        echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\" style='display:inline-flex;align-items:center;justify-content:center;padding:10px 20px;border-radius:6px;background:#f8f9fa;color:#495057;text-decoration:none;font-weight:500;font-size:14px;'>"._QXZ("Click here to see Admin changes to this campaign")." AC-CID</a>";
-        echo "</div>";
-    }
-
-    echo "</div>"; // outer wrapper
-}
-
+		if ($LOGdelete_campaigns > 0)
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\">"._QXZ("DELETE THIS CAMPAIGN")."</a>\n";
+			}
 		}
 	}
+	else
+	{
+	echo _QXZ("You do not have permission to view this page")."\n";
+	exit;
+	}
+}
+
+
 ######################
 # ADD=34 modify campaign info in the system - Basic View
 ######################
