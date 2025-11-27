@@ -28044,18 +28044,51 @@ echo "</div>";
 echo "</div>";
 
 echo "</div>"; // End container
-			
-		
+
+// JavaScript for tab functionality
+echo "<script>
+function showTab(tabId) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => tab.classList.remove('active'));
+    
+    // Remove active class from all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-button');
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    
+    // Show selected tab
+    document.getElementById(tabId).classList.add('active');
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+}
+
+// Initialize first tab as active
+document.addEventListener('DOMContentLoaded', function() {
+    const firstTab = document.querySelector('.tab-button');
+    if (firstTab) {
+        firstTab.classList.add('active');
+    }
+    const firstContent = document.querySelector('.tab-content');
+    if (firstContent) {
+        firstContent.classList.add('active');
+    }
+});
+</script>";
+
+}
 else
 {
 echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
 exit;
 }
-				
-
-
-
-
+}
+else
+{
+echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
+exit;
+}
+	}
 ######################
 # ADD=31 modify campaign info in the system - Detail view
 ######################
