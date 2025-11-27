@@ -1996,46 +1996,29 @@ if ($RS_hide_CUST_info < 1)
 
 </script>
 
-<STYLE type="text/css">
-/* --- Modern colors and spacing for tables and KPIs --- */
+<style>
+/* Improved and production-ready KPI & table styles */
+.blank {color: black; background-color: white;}
+.green {color: white; background-color: #28a745;}
+.red {color: white; background-color: #dc3545;}
+.lightblue {color: black; background-color: #ADD8E6;}
+.rust {color: black; background-color: #F47442;}
+.blue {color: white; background-color: #007bff;}
+.midnightblue {color: white; background-color: #191970;}
+.purple {color: white; background-color: purple;}
+.violet {color: black; background-color: #EE82EE;}
+.thistle {color: black; background-color: #D8BFD8;}
+.olive {color: white; background-color: #808000;}
+.darkolivegreen {color: white; background-color: #556B2F;}
+.saddlebrown {color: white; background-color: #8B4513;}
+.lime {color: white; background-color: #006600;}
+.yellow {color: black; background-color: #F9F871;}
+.khaki {color: black; background-color: #F0E68C;}
+.orange {color: black; background-color: #FFA726;}
+.black {color: white; background-color: #222;}
+.salmon {color: white; background-color: #FA8072;}
+.darkred {color: white; background-color: #990000;}
 
-/* Modern Campaign Stats Table */
-.campaign-stats-table {
-    width: 100%;
-    max-width: 1400px;
-    margin: 24px auto 0 auto;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-}
-.campaign-stats-table table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 14px;
-}
-.campaign-stats-table th, .campaign-stats-table td {
-    padding: 12px 20px;
-}
-.campaign-stats-table th {
-    background: #23272B;
-    color: #fff;
-    font-weight: bold;
-    text-align: left;
-    letter-spacing: 0.5px;
-}
-.campaign-stats-table tr {
-    border-bottom: 1px solid #ececec;
-}
-.campaign-stats-table tr:nth-child(even) {
-    background: #f6f8fa;
-}
-.campaign-stats-table tr:last-child {
-    border-bottom: none;
-}
-
-/* --- Improved KPI Card --- */
 .kpi-card {
     background: #23272B;
     color: #fff;
@@ -2043,16 +2026,14 @@ if ($RS_hide_CUST_info < 1)
     box-shadow: 0 1px 6px rgba(0,0,0,0.07);
     margin: 0 8px 14px 8px !important;
     display: inline-block;
-    vertical-align: top;
     padding: 18px 14px 12px 14px;
     font-size: 17px;
     width: 160px;
     min-height: 120px;
     text-align: center;
-    transition: box-shadow .15s;
     position: relative;
 }
-.kpi-card-dark { /* For special KPIs (dead calls, paused, dispo etc.) */
+.kpi-card-dark {
     background: #35363A;
     color: #fff;
 }
@@ -2061,116 +2042,74 @@ if ($RS_hide_CUST_info < 1)
     margin: 0 0 16px 0;
     font-weight: 600;
     color: #e2e5ea;
-    letter-spacing: 0.3px;
 }
 .kpi-card .kpi-value {
     font-size: 36px;
     font-weight: 700;
-    line-height: 1.2;
     margin-bottom: 8px;
     color: #fff;
 }
-
-/* Remove gaps/extra space under cards section */
-.kpi-row {
-    margin: 0 auto;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0;
+.kpi-row { display: flex; flex-wrap: wrap; justify-content: center; margin: 0 !important; padding: 0; gap: 0; }
+.campaign-stats-table { width:100%;max-width:1400px;margin:24px auto 0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);}
+.campaign-stats-table table { width:100%;border-collapse:collapse;font-family:'Segoe UI',Arial,sans-serif;font-size:14px;}
+.campaign-stats-table th,.campaign-stats-table td { padding:12px 20px; }
+.campaign-stats-table th { background:#23272B;color:#fff;font-weight:bold;text-align:left;letter-spacing:0.5px; }
+.campaign-stats-table tr { border-bottom:1px solid #ececec; }
+.campaign-stats-table tr:nth-child(even) {background:#f6f8fa;}
+.campaign-stats-table tr:last-child {border-bottom:none;}
+body,td,th,tr {margin:0;padding:0;border:none;}
+.Hblank,.Hgreen,.Hred,.Hlightblue,.Hrust,.Hblue,.Hmidnightblue,.Hpurple,.Hviolet,.Hthistle,.Holive,.Hdarkolivegreen,.Hsaddlebrown,.Hlime,.Hyellow,.Hkhaki,.Horange,.Hblack,.Hsalmon,.Hdarkred {font-size:11px!important;padding:5px 10px!important;}
+.top_settings_key {color:#222;font-family:'Segoe UI',Arial,sans-serif;font-size:11px;font-weight:bold;}
+.top_settings_val {color:#333;font-family:'Segoe UI',Arial,sans-serif;font-size:11px;}
+.top_head_key {color:#222;font-family:'Segoe UI',Arial,sans-serif;font-size:12px;font-weight:bold;}
+.top_head_val {color:#222;font-family:'Segoe UI',Arial,sans-serif;font-size:12px;}
+@media (max-width:900px){
+    .campaign-stats-table{max-width:100%!important;}
+    .campaign-stats-table table{font-size:12px;}
+    .kpi-card{width:120px;min-height:80px;padding:12px 4px;}
 }
-
-/* Header/Stat Colors (improved palette) */
-.blank { color: black; background: white; }
-.green { color: white; background: #28a745;}
-.red { color: white; background: #dc3545;}
-.blue { color: white; background: #007bff;}
-.lightblue { color: black; background: #ADD8E6;}
-.rust { color: black; background: #F47442;}
-.midnightblue { color: white; background: #191970;}
-.purple { color: white; background: purple;}
-.violet { color: black; background: #EE82EE;}
-.thistle { color: black; background: #D8BFD8;}
-.olive { color: white; background: #808000;}
-.darkolivegreen { color: white; background: #556B2F;}
-.saddlebrown { color: white; background: #8B4513;}
-.lime { color: white; background: #006600;}
-.yellow { color: black; background: #F9F871;}
-.khaki { color: black; background: #F0E68C;}
-.orange { color: black; background: #FFA726;}
-.black { color: white; background: #222;}
-.salmon { color: white; background: #FA8072;}
-.darkred { color: white; background: #990000;}
-
-.Hblank, .Hgreen, .Hred, .Hlightblue, .Hrust, .Hblue, .Hmidnightblue, .Hpurple, .Hviolet, .Hthistle, .Holive, .Hdarkolivegreen, .Hsaddlebrown, .Hlime, .Hyellow, .Hkhaki, .Horange, .Hblack, .Hsalmon, .Hdarkred {
-    font-size: 11px !important; padding: 5px 10px !important;
-}
-
-/* Table Rows */
-tr.TRblank { background: #fff; }
-tr.TRgreen { background: #28a745; color: #fff; }
-tr.TRred { background: #dc3545; color: #fff; }
-tr.TRblue { background: #007bff; color: #fff; }
-tr.TRlightblue { background: #ADD8E6;}
-tr.TRrust { background: #F47442;}
-tr.TRmidnightblue { background: #191970; color: #fff;}
-tr.TRpurple { background: purple; color: #fff;}
-tr.TRviolet { background: #EE82EE;}
-tr.TRthistle { background: #D8BFD8;}
-tr.TRolive { background: #808000; color: #fff;}
-tr.TRdarkolivegreen { background: #556B2F; color: #fff;}
-tr.TRsaddlebrown { background: #8B4513; color: #fff;}
-tr.TRlime { background: #006600; color: #fff;}
-tr.TRyellow { background: #F9F871;}
-tr.TRkhaki { background: #F0E68C;}
-tr.TRorange { background: #FFA726;}
-tr.TRblack { background: #222; color: #fff;}
-tr.TRsalmon { background: #FA8072; color: #fff;}
-tr.TRdarkred { background: #990000; color: #fff;}
-
-/* Modern Table Responsive */
-@media (max-width: 900px) {
-    .campaign-stats-table {max-width:100%!important;}
-    .campaign-stats-table table {font-size:12px;}
-    .kpi-card {width:120px;min-height:80px;padding:12px 4px;}
-}
-
-/* Remove unwanted vertical spacing */
-body, td, th, tr {
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-.kpi-row, .campaign-stats-table, table {margin-top:0!important;}
-
-/* Top settings & realtime styles preserved */
-.top_settings_key {color: #222; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: bold;}
-.top_settings_val {color: #333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;}
-.top_head_key {color: #222; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: bold;}
-.top_head_val {color: #222; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;}
-
-/* Dynamic ingroup colors (unchanged) */
+/* Table row color classes unchanged as before */
+tr.TRblank {background: #fff;}
+tr.TRgreen {background:#28a745;color:#fff;}
+tr.TRred {background:#dc3545;color:#fff;}
+tr.TRblue {background:#007bff;color:#fff;}
+tr.TRlightblue {background:#ADD8E6;}
+tr.TRrust {background:#F47442;}
+tr.TRmidnightblue {background:#191970;color:#fff;}
+tr.TRpurple {background:purple;color:#fff;}
+tr.TRviolet {background:#EE82EE;}
+tr.TRthistle {background:#D8BFD8;}
+tr.TRolive {background:#808000;color:#fff;}
+tr.TRdarkolivegreen {background:#556B2F;color:#fff;}
+tr.TRsaddlebrown {background:#8B4513;color:#fff;}
+tr.TRlime {background:#006600;color:#fff;}
+tr.TRyellow {background:#F9F871;}
+tr.TRkhaki {background:#F0E68C;}
+tr.TRorange {background:#FFA726;}
+tr.TRblack {background:#222;color:#fff;}
+tr.TRsalmon {background:#FA8072;color:#fff;}
+tr.TRdarkred {background:#990000;color:#fff;}
+</style>
 <?php
-    $stmt="select group_id,group_color from vicidial_inbound_groups;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    if ($DB) {echo "$stmt\n";}
-    $INgroups_to_print = mysqli_num_rows($rslt);
-        if ($INgroups_to_print > 0)
-        {
-        $g=0;
-        while ($g < $INgroups_to_print)
-            {
-            $row=mysqli_fetch_row($rslt);
-            $group_id[$g] = $row[0];
-            $group_color[$g] = $row[1];
-            echo "   .csc$group_id[$g] {color: black; background-color: $group_color[$g};}\n";
-            echo "   tr.csc$group_id[$g] {background-color: $group_color[$g];}\n";
-            $g++;
-            }
-        }
+// Output dynamic ingroup colors OUTSIDE the <style> tag:
+$stmt="select group_id,group_color from vicidial_inbound_groups;";
+$rslt=mysql_to_mysqli($stmt, $link);
+if ($DB) {echo "$stmt\n";}
+$INgroups_to_print = mysqli_num_rows($rslt);
+if ($INgroups_to_print > 0)
+{
+    $g=0;
+    while ($g < $INgroups_to_print)
+    {
+        $row=mysqli_fetch_row($rslt);
+        $group_id[$g] = $row[0];
+        $group_color[$g] = $row[1];
+        // Always echo these styles outside <style> for dynamic values!
+        echo "<style>.csc$group_id[$g]{color:#000;background-color:$group_color[$g];} tr.csc$group_id[$g]{background-color:$group_color[$g];}</style>\n";
+        $g++;
+    }
+}
 ?>
-</STYLE>
 
 
 <?php
