@@ -13397,85 +13397,75 @@ if ($ADD==20)
 ######################
 if ($ADD==22)
 {
-	echo "<div style='margin:24px auto;max-width:980px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+	// outer wrapper for nicer layout
+	echo "<div style='margin:24px auto;max-width:960px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
 
 	if ($add_copy_disabled > 0)
 	{
-		// Permission error
-		echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;align-items:flex-start;gap:10px;'>
-				<div style=\"font-size:18px;line-height:1;\">⚠️</div>
-				<div style='font-size:14px;'>
-					<div style='font-weight:700;margin-bottom:4px;'>"._QXZ("You do not have permission to add records on this system")."</div>
-					<div style='font-size:12px;opacity:.8;'>- system_settings -</div>
-				</div>
-			  </div>";
+		// permission error
+		echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;align-items:flex-start;gap:10px;'>";
+		echo "<div style='font-size:18px;line-height:1;'>⚠️</div>";
+		echo "<div>";
+		echo "<div style='font-size:14px;font-weight:700;margin-bottom:4px;'>"._QXZ("You do not have permission to add records on this system")."</div>";
+		echo "<div style='font-size:12px;opacity:.8;'>- system_settings -</div>";
+		echo "</div>";
+		echo "</div>";
 	}
 	else
 	{
+		// existing campaign status check
 		$stmt="SELECT count(*) from vicidial_campaign_statuses where campaign_id='$campaign_id' and status='$status_id';";
 		$rslt=mysql_to_mysqli($stmt, $link);
 		$row=mysqli_fetch_row($rslt);
 
 		if ($row[0] > 0)
 		{
-			// Duplicate campaign status
-			echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>
-					<div style='font-size:14px;font-weight:700;'>"
-						._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name").
-					"</div>
-				  </div>";
+			echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>";
+			echo "<div style='font-size:14px;font-weight:700;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name")."</div>";
+			echo "</div>";
 		}
 		else
 		{
+			// existing global status check
 			$stmt="SELECT count(*) from vicidial_statuses where status='$status_id';";
 			$rslt=mysql_to_mysqli($stmt, $link);
 			$row=mysqli_fetch_row($rslt);
 
 			if ($row[0] > 0)
 			{
-				// Duplicate global status
-				echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>
-						<div style='font-size:14px;font-weight:700;'>"
-							._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name").
-						"</div>
-					  </div>";
+				echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>";
+				echo "<div style='font-size:14px;font-weight:700;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name")."</div>";
+				echo "</div>";
 			}
 			else
 			{
+				// basic validation
 				if ( (strlen($campaign_id) < 2) or (strlen($status_id) < 1) or (strlen($status_name) < 2) )
 				{
-					// Validation errors
-					echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>
-							<div style='font-size:14px;font-weight:700;margin-bottom:6px;'>"
-								._QXZ("CAMPAIGN STATUS NOT ADDED - Please go back and look at the data you entered").
-							"</div>
-							<div style='font-size:13px;line-height:1.5;margin-left:4px;'>
-								<div>• "._QXZ("status must be between 1 and 8 characters in length")."</div>
-								<div>• "._QXZ("status name must be between 2 and 30 characters in length")."</div>
-							</div>
-						  </div>";
+					echo "<div style='background:#fff5f5;border:1px solid #f5c2c7;color:#842029;border-radius:10px;padding:14px 18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,0.04);'>";
+					echo "<div style='font-size:14px;font-weight:700;margin-bottom:6px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - Please look at the data you entered")."</div>";
+					echo "<div style='font-size:13px;line-height:1.5;margin-left:4px;'>";
+					echo "<div>• "._QXZ("status must be between 1 and 8 characters in length")."</div>";
+					echo "<div>• "._QXZ("status name must be between 2 and 30 characters in length")."</div>";
+					echo "</div>";
+					echo "</div>";
 				}
 				else
 				{
-					// Success UI card
-					echo "<div style='background:#ecfdf3;border:1px solid #a3cfbb;color:#0f5132;border-radius:10px;padding:14px 18px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;align-items:flex-start;gap:10px;'>
-							<div style='font-size:18px;line-height:1;'>✅</div>
-							<div>
-								<div style='font-size:14px;font-weight:700;margin-bottom:4px;'>"
-									._QXZ("CAMPAIGN STATUS ADDED").
-									": ".htmlspecialchars($campaign_id,ENT_QUOTES)." - ".htmlspecialchars($status_id,ENT_QUOTES)."
-								</div>
-								<div style='font-size:12px;opacity:.85;'>"
-									._QXZ("The new status has been saved and the campaign change date updated.").
-								"</div>
-							</div>
-						  </div>";
+					// success message card
+					echo "<div style='background:#ecfdf3;border:1px solid #a3cfbb;color:#0f5132;border-radius:10px;padding:14px 18px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;align-items:flex-start;gap:10px;'>";
+					echo "<div style='font-size:18px;line-height:1;'>✅</div>";
+					echo "<div>";
+					echo "<div style='font-size:14px;font-weight:700;margin-bottom:4px;'>"._QXZ("CAMPAIGN STATUS ADDED").": $campaign_id - $status_id</div>";
+					echo "<div style='font-size:12px;opacity:.85;'>"._QXZ("The new status has been saved and the campaign change date updated.")."</div>";
+					echo "</div>";
+					echo "</div>";
 
-					// Insert new campaign status
+					// INSERT new campaign status
 					$stmt="INSERT INTO vicidial_campaign_statuses (status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine) values('$status_id','$status_name','$selectable','$campaign_id','$human_answered','$category','$sale','$dnc','$customer_contact','$not_interested','$unworkable','$scheduled_callbacks','$completed','$min_sec','$max_sec','$answering_machine');";
 					$rslt=mysql_to_mysqli($stmt, $link);
 
-					// Update campaign change date
+					// UPDATE campaign change date
 					$stmtB="UPDATE vicidial_campaigns set campaign_changedate='$SQLdate' where campaign_id='$campaign_id';";
 					$rslt=mysql_to_mysqli($stmtB, $link);
 
