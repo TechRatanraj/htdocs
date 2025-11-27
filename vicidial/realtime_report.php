@@ -2094,7 +2094,7 @@ if ($RS_hide_CUST_info < 1)
     .realtime_settings_table {width: 790px; max-width: 790px; }
 
     /* FORCE DARK GREY KPI CARDS - Override inline styles */
-    table[bgcolor="#015b91"],
+    table[bgcolor="#D9E6FE"],
     table[bgcolor="#7E7E02"],
     table[bgcolor="black"] {
         background-color: #2c3e50 !important;
