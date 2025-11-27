@@ -1996,120 +1996,171 @@ if ($RS_hide_CUST_info < 1)
 
 </script>
 
-<style>
-/* Improved and production-ready KPI & table styles */
-.blank {color: black; background-color: white;}
-.green {color: white; background-color: #28a745;}
-.red {color: white; background-color: #dc3545;}
-.lightblue {color: black; background-color: #ADD8E6;}
-.rust {color: black; background-color: #F47442;}
-.blue {color: white; background-color: #007bff;}
-.midnightblue {color: white; background-color: #191970;}
-.purple {color: white; background-color: purple;}
-.violet {color: black; background-color: #EE82EE;}
-.thistle {color: black; background-color: #D8BFD8;}
-.olive {color: white; background-color: #808000;}
-.darkolivegreen {color: white; background-color: #556B2F;}
-.saddlebrown {color: white; background-color: #8B4513;}
-.lime {color: white; background-color: #006600;}
-.yellow {color: black; background-color: #F9F871;}
-.khaki {color: black; background-color: #F0E68C;}
-.orange {color: black; background-color: #FFA726;}
-.black {color: white; background-color: #222;}
-.salmon {color: white; background-color: #FA8072;}
-.darkred {color: white; background-color: #990000;}
+<STYLE type="text/css">
+<!--
+    .blank {color: black; background-color: white;}
+    .green {color: white; background-color: green;}
+    .red {color: white; background-color: red;}
+    .lightblue {color: black; background-color: #ADD8E6;}
+    .rust {color: black; background-color: #F47442}
+    .blue {color: white; background-color: blue;}
+    .midnightblue {color: white; background-color: #191970;}
+    .purple {color: white; background-color: purple;}
+    .violet {color: black; background-color: #EE82EE;}
+    .thistle {color: black; background-color: #D8BFD8;}
+    .olive {color: white; background-color: #808000;}
+    .darkolivegreen {color: white; background-color: #556B2F}
+    .saddlebrown {color: white; background-color: #8B4513}
+    .lime {color: white; background-color: #006600;}
+    .yellow {color: black; background-color: yellow;}
+    .khaki {color: black; background-color: #F0E68C;}
+    .orange {color: black; background-color: orange;}
+    .black {color: white; background-color: black;}
+    .salmon {color: white; background-color: #FA8072;}
+    .darkred {color: white; background-color: #990000}
 
-.kpi-card {
-    background: #23272B;
-    color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-    margin: 0 8px 14px 8px !important;
-    display: inline-block;
-    padding: 18px 14px 12px 14px;
-    font-size: 17px;
-    width: 160px;
-    min-height: 120px;
-    text-align: center;
-    position: relative;
-}
-.kpi-card-dark {
-    background: #35363A;
-    color: #fff;
-}
-.kpi-card h3 {
-    font-size: 15px;
-    margin: 0 0 16px 0;
-    font-weight: 600;
-    color: #e2e5ea;
-}
-.kpi-card .kpi-value {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #fff;
-}
-.kpi-row { display: flex; flex-wrap: wrap; justify-content: center; margin: 0 !important; padding: 0; gap: 0; }
-.campaign-stats-table { width:100%;max-width:1400px;margin:24px auto 0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);}
-.campaign-stats-table table { width:100%;border-collapse:collapse;font-family:'Segoe UI',Arial,sans-serif;font-size:14px;}
-.campaign-stats-table th,.campaign-stats-table td { padding:12px 20px; }
-.campaign-stats-table th { background:#23272B;color:#fff;font-weight:bold;text-align:left;letter-spacing:0.5px; }
-.campaign-stats-table tr { border-bottom:1px solid #ececec; }
-.campaign-stats-table tr:nth-child(even) {background:#f6f8fa;}
-.campaign-stats-table tr:last-child {border-bottom:none;}
-body,td,th,tr {margin:0;padding:0;border:none;}
-.Hblank,.Hgreen,.Hred,.Hlightblue,.Hrust,.Hblue,.Hmidnightblue,.Hpurple,.Hviolet,.Hthistle,.Holive,.Hdarkolivegreen,.Hsaddlebrown,.Hlime,.Hyellow,.Hkhaki,.Horange,.Hblack,.Hsalmon,.Hdarkred {font-size:11px!important;padding:5px 10px!important;}
-.top_settings_key {color:#222;font-family:'Segoe UI',Arial,sans-serif;font-size:11px;font-weight:bold;}
-.top_settings_val {color:#333;font-family:'Segoe UI',Arial,sans-serif;font-size:11px;}
-.top_head_key {color:#222;font-family:'Segoe UI',Arial,sans-serif;font-size:12px;font-weight:bold;}
-.top_head_val {color:#222;font-family:'Segoe UI',Arial,sans-serif;font-size:12px;}
-@media (max-width:900px){
-    .campaign-stats-table{max-width:100%!important;}
-    .campaign-stats-table table{font-size:12px;}
-    .kpi-card{width:120px;min-height:80px;padding:12px 4px;}
-}
-/* Table row color classes unchanged as before */
-tr.TRblank {background: #fff;}
-tr.TRgreen {background:#28a745;color:#fff;}
-tr.TRred {background:#dc3545;color:#fff;}
-tr.TRblue {background:#007bff;color:#fff;}
-tr.TRlightblue {background:#ADD8E6;}
-tr.TRrust {background:#F47442;}
-tr.TRmidnightblue {background:#191970;color:#fff;}
-tr.TRpurple {background:purple;color:#fff;}
-tr.TRviolet {background:#EE82EE;}
-tr.TRthistle {background:#D8BFD8;}
-tr.TRolive {background:#808000;color:#fff;}
-tr.TRdarkolivegreen {background:#556B2F;color:#fff;}
-tr.TRsaddlebrown {background:#8B4513;color:#fff;}
-tr.TRlime {background:#006600;color:#fff;}
-tr.TRyellow {background:#F9F871;}
-tr.TRkhaki {background:#F0E68C;}
-tr.TRorange {background:#FFA726;}
-tr.TRblack {background:#222;color:#fff;}
-tr.TRsalmon {background:#FA8072;color:#fff;}
-tr.TRdarkred {background:#990000;color:#fff;}
-</style>
-<?php
-// Output dynamic ingroup colors OUTSIDE the <style> tag:
-$stmt="select group_id,group_color from vicidial_inbound_groups;";
-$rslt=mysql_to_mysqli($stmt, $link);
-if ($DB) {echo "$stmt\n";}
-$INgroups_to_print = mysqli_num_rows($rslt);
-if ($INgroups_to_print > 0)
-{
-    $g=0;
-    while ($g < $INgroups_to_print)
-    {
-        $row=mysqli_fetch_row($rslt);
-        $group_id[$g] = $row[0];
-        $group_color[$g] = $row[1];
-        // Always echo these styles outside <style> for dynamic values!
-        echo "<style>.csc$group_id[$g]{color:#000;background-color:$group_color[$g];} tr.csc$group_id[$g]{background-color:$group_color[$g];}</style>\n";
-        $g++;
+
+    .Hblank {color: black; background-color: white; font-size: 11;}
+    .Hgreen {color: white; background-color: green; font-size: 11;}
+    .Hred {color: white; background-color: red; font-size: 11;}
+    .Hlightblue {color: black; background-color: #ADD8E6; font-size: 11;}
+    .Hrust {color: black; background-color: #F47442; font-size: 11;}
+    .Hblue {color: white; background-color: blue; font-size: 11;}
+    .Hmidnightblue {color: white; background-color: #191970; font-size: 11;}
+    .Hpurple {color: white; background-color: purple; font-size: 11;}
+    .Hviolet {color: black; background-color: #EE82EE; font-size: 11;}
+    .Hthistle {color: black; background-color: #D8BFD8; font-size: 11;}
+    .Holive {color: white; background-color: #808000; font-size: 11;}
+    .Hdarkolivegreen {color: white; background-color: #556B2F; font-size: 11;}
+    .Hsaddlebrown {color: white; background-color: #8B4513; font-size: 11;}
+    .Hlime {color: white; background-color: #006600; font-size: 11;}
+    .Hyellow {color: black; background-color: yellow; font-size: 11;}
+    .Hkhaki {color: black; background-color: #F0E68C; font-size: 11;}
+    .Horange {color: black; background-color: orange; font-size: 11;}
+    .Hblack {color: white; background-color: black; font-size: 11;}
+    .Hsalmon {color: white; background-color: #FA8072; font-size: 11;}
+    .Hdarkred {color: white; background-color: #990000}
+
+
+    tr.TRblank {background-color: white}
+    tr.TRgreen {background-color: green}
+    tr.TRred {background-color: red}
+    tr.TRlightblue {background-color: #ADD8E6}
+    tr.TRrust {background-color: #F47442}
+    tr.TRblue {background-color: blue}
+    tr.TRmidnightblue {background-color: #191970}
+    tr.TRpurple {background-color: purple}
+    tr.TRviolet {background-color: #EE82EE} 
+    tr.TRthistle {background-color: #D8BFD8} 
+    tr.TRolive {background-color: #808000}
+    tr.TRdarkolivegreen {background-color: #556B2F}
+    tr.TRsaddlebrown {background-color: #8B4513}
+    tr.TRlime {background-color: #006600}
+    tr.TRyellow {background-color: yellow}
+    tr.TRkhaki {background-color: #F0E68C}
+    tr.TRorange {background-color: orange}
+    tr.TRblack {background-color: black}
+    tr.TRsalmon {background-color: #FA8072}
+    tr.TRdarkred {color: white; background-color: #990000}
+
+
+    .r1 {color: black; background-color: #FFCCCC}
+    .r2 {color: black; background-color: #FF9999}
+    .r3 {color: black; background-color: #FF6666}
+    .r4 {color: white; background-color: #FF0000}
+    .b1 {color: black; background-color: #CCCCFF}
+    .b2 {color: black; background-color: #9999FF}
+    .b3 {color: black; background-color: #6666FF}
+    .b4 {color: white; background-color: #0000FF}
+
+
+    .Hfb1 {color: white; background-color: #015b91; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+    .Hfr1 {color: black; background-color: #FFCCCC; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+    .Hfr2 {color: black; background-color: #FF9999; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+    .Hfr3 {color: black; background-color: #FF6666; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+    .Hfr4 {color: white; background-color: #FF0000; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+
+
+    .top_settings_key {color: black; font-family: HELVETICA; font-size: 11; font-weight: bold;}
+    .top_settings_val {color: black; font-family: HELVETICA; font-size: 11;}
+    .top_head_key {color: black; font-family: HELVETICA; font-size: 12; font-weight: bold;}
+    .top_head_val {color: black; font-family: HELVETICA; font-size: 12;}
+
+
+    .realtime_img_icon {width: 42px; height: 42px;}
+    .realtime_img_text {font-family:HELVETICA; font-size:11; color:white; font-weight:bold;}
+    .realtime_table {width: 960px; max-width: 960px; }
+    .realtime_calls_table {width: 860px; max-width: 860px; }
+    .realtime_settings_table {width: 780px; max-width: 780px; }
+
+    /* FORCE DARK GREY KPI CARDS - Override inline styles */
+    table[bgcolor="#015b91"],
+    table[bgcolor="#7E7E02"],
+    table[bgcolor="black"] {
+        background-color: #2c3e50 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
     }
-}
+
+    /* Modern top stats table styling */
+    table[bgcolor="#D9E6FE"],
+    table[cellpadding="5"][bgcolor="#D9E6FE"] {
+        background-color: #ffffff !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
+        width: 100% !important;
+        max-width: 1400px !important;
+        margin: 10px auto !important;
+    }
+
+    table[bgcolor="#D9E6FE"] td {
+        padding: 8px 12px !important;
+        font-family: 'Segoe UI', Arial, sans-serif !important;
+        font-size: 13px !important;
+        border-bottom: 1px solid #e9ecef !important;
+    }
+
+    table[bgcolor="#D9E6FE"] td:nth-child(odd) {
+        font-weight: 600 !important;
+        color: #2c3e50 !important;
+        text-align: right !important;
+        width: 140px !important;
+        background-color: #f8f9fa !important;
+    }
+
+    table[bgcolor="#D9E6FE"] td:nth-child(even) {
+        color: #495057 !important;
+        font-weight: 500 !important;
+    }
+
+    /* Fix unwanted spacing */
+    body, td, th {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+<?php
+    $stmt="select group_id,group_color from vicidial_inbound_groups;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    if ($DB) {echo "$stmt\n";}
+    $INgroups_to_print = mysqli_num_rows($rslt);
+        if ($INgroups_to_print > 0)
+        {
+        $g=0;
+        while ($g < $INgroups_to_print)
+            {
+            $row=mysqli_fetch_row($rslt);
+            $group_id[$g] = $row[0];
+            $group_color[$g] = $row[1];
+            echo "   .csc$group_id[$g] {color: black; background-color: $group_color[$g]}\n";
+            echo "   tr.csc$group_id[$g] {background-color: $group_color[$g]}\n";
+            $g++;
+            }
+        }
 ?>
+-->
+</STYLE>
 
 
 <?php
