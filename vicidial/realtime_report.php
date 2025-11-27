@@ -1,69 +1,5 @@
 <?php 
 # realtime_report.php
-# 
-# Copyright (C) 2024  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
-#
-# live real-time stats for the VICIDIAL Auto-Dialer all servers
-#
-# Rewritten from AST_timeonVDADall.php report to be AJAX and javascript instead 
-# of link-driven
-#
-# * Requires AST_timeonVDADall.php for AJAX-derived stats information
-# 
-# CHANGELOG:
-# 101216-1355 - First Build
-# 101218-1520 - Small time reload bug fix and formatting fixes
-# 110111-1557 - Added options.php options, minor bug fixes
-# 110113-1736 - Small fix
-# 110303-2124 - Added agent on-hook phone indication and RING status and color
-# 110316-2216 - Added Agent, Carrier and Preset options.php settings
-# 110516-2128 - IE fix
-# 110526-1807 - Added webphone_auto_answer option
-# 120223-1917 - Added multi-user-group options
-# 121129-2131 - Fixed Choose link position
-# 130414-0247 - Added report logging
-# 130610-0944 - Finalized changing of all ereg instances to preg
-# 130616-2237 - Added filtering of input to prevent SQL injection attacks and new user auth
-# 130901-0858 - Changed to mysqli PHP functions
-# 140108-0722 - Added webserver and hostname to report logging
-# 140624-1423 - Added droppedOFtotal options.php option
-# 141001-2200 - Finalized adding QXZ translation to all admin files
-# 141230-0032 - Added code for on-the-fly language translations display
-# 150307-0823 - Fixes for QXZ
-# 150804-0953 - Added WHISPER option agent monitoring
-# 160227-1157 - Added INGROUPcolorOVERRIDE option
-# 160327-1258 - Added report_display_type option and several design changes
-# 160406-1852 - Added WALL options for report_display_type
-# 160413-2003 - Added WALL_4 option
-# 160803-1902 - Fixed issue with ERROR in campaign/ingroup name
-# 170318-0942 - Added websocket variable for embedded webphone
-# 170321-1145 - Added pause code time limits colors
-# 170409-1557 - Added IP List validation code
-# 180330-1344 - Added fix for WebRTC webphone microphone permissions
-# 181128-1040 - Added external_web_socket_url option
-# 190302-1927 - Added variable-length header icon tables
-# 190414-1106 - Made admin and summary report links conditional, RS_logoutLINK options.php option
-# 190420-1729 - Added RS_ListenBarge options.php setting
-# 190513-1711 - Added ingroup filter
-# 190525-2205 - Added rust color definition
-# 190927-1758 - Fixed PHP7 array issue
-# 200401-1930 - Added option to show more customer info to level 9 users
-# 200428-1002 - Added RS_report_default_format options.php setting
-# 200506-1633 - Added RS_CUSTINFOminUL options.php setting
-# 200815-0928 - Added agent-paused 10 & 15 minute indicators
-# 201107-2254 - Added optional display of parked calls stats, inbound SLA and LIMITED report type
-# 210314-2039 - Added DID Description for inbound calls
-# 211216-0846 - Added new User Group options
-# 220217-2046 - Added input variable filters
-# 220221-1514 - Added allow_web_debug system setting
-# 221105-0826 - Added webphone_settings to webphone launch data, issue #1385
-# 230308-0215 - Added option to show customer phone code
-# 230421-0106 - Added AGENTlatency display
-# 230421-1625 - Added RS_UGlatencyRESTRICT options.php setting
-# 230811-1530 - Added monitoring display information
-# 231115-1646 - Added RS_no_DEAD_status and RS_hide_CUST_info options.php settings
-# 240801-1130 - Code updates for PHP8 compatibility
-#
 
 $startMS = microtime();
 
@@ -163,218 +99,198 @@ $DB=preg_replace("/[^0-9a-zA-Z]/","",$DB);
 $report_name = 'Real-Time Main Report';
 $db_source = 'M';
 
+
 #############################################
 ##### START SYSTEM_SETTINGS LOOKUP #####
+#############################################
+
 $stmt = "SELECT use_non_latin,outbound_autodial_active,slave_db_server,reports_use_slave_db,enable_languages,language_method,agent_whisper_enabled,report_default_format,enable_pause_code_limits,allow_web_debug FROM system_settings;";
-$rslt=mysql_to_mysqli($stmt, $link);
-#if ($DB) {echo "$stmt\n";}
+$rslt = mysql_to_mysqli($stmt, $link);
 $qm_conf_ct = mysqli_num_rows($rslt);
-if ($qm_conf_ct > 0)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$non_latin =					$row[0];
-	$outbound_autodial_active =		$row[1];
-	$slave_db_server =				$row[2];
-	$reports_use_slave_db =			$row[3];
-	$SSenable_languages =			$row[4];
-	$SSlanguage_method =			$row[5];
-	$agent_whisper_enabled =		$row[6];
-	$SSreport_default_format =		$row[7];
-	$SSenable_pause_code_limits =	$row[8];
-	$SSallow_web_debug =			$row[9];
-	}
-if ($SSallow_web_debug < 1) {$DB=0;}
+
+if ($qm_conf_ct > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $non_latin =                    $row[0];
+    $outbound_autodial_active =     $row[1];
+    $slave_db_server =              $row[2];
+    $reports_use_slave_db =         $row[3];
+    $SSenable_languages =           $row[4];
+    $SSlanguage_method =            $row[5];
+    $agent_whisper_enabled =        $row[6];
+    $SSreport_default_format =      $row[7];
+    $SSenable_pause_code_limits =   $row[8];
+    $SSallow_web_debug =            $row[9];
+}
+
+if ($SSallow_web_debug < 1) {
+    $DB = 0;
+}
+
 ##### END SETTINGS LOOKUP #####
 ###########################################
 
-$webphone_width =	'460';
-$webphone_height =	'500';
-$webphone_left =	'600';
-$webphone_top =		'27';
-$webphone_bufw =	'250';
-$webphone_bufh =	'1';
-$webphone_pad =		'10';
-$webphone_clpos =	"<BR>  &nbsp; <a href=\"#\" onclick=\"hideDiv('webphone_content');\">"._QXZ("webphone")." -</a>";
+// WebPhone Configuration
+$webphone_width =   '460';
+$webphone_height =  '500';
+$webphone_left =    '600';
+$webphone_top =     '27';
+$webphone_bufw =    '250';
+$webphone_bufh =    '1';
+$webphone_pad =     '10';
+$webphone_clpos =   "<BR>  &nbsp; <a href=\"#\" onclick=\"hideDiv('webphone_content');\">"._QXZ("webphone")." -</a>";
 
+// Report Settings
 $RS_ListenBarge = 'MONITOR|BARGE|WHISPER';
-$RS_no_DEAD_status=0;
-$RS_hide_CUST_info=0;
+$RS_no_DEAD_status = 0;
+$RS_hide_CUST_info = 0;
 
-if (file_exists('options.php'))
-	{
-	require('options.php');
-	}
+// Load optional configuration
+if (file_exists('options.php')) {
+    require('options.php');
+}
 
-if (strlen($RS_report_default_format) > 3) {$SSreport_default_format = $RS_report_default_format;}
-if (strlen($report_display_type)<2) {$report_display_type = $SSreport_default_format;}
+// Report Format Override
+if (strlen($RS_report_default_format) > 3) {
+    $SSreport_default_format = $RS_report_default_format;
+}
+if (strlen($report_display_type) < 2) {
+    $report_display_type = $SSreport_default_format;
+}
 
-if (!isset($DB)) 
-	{
-	if (!isset($RS_DB)) {$DB=0;}
-	else {$DB = $RS_DB;}
-	}
-if (!isset($RR)) 
-	{
-	if (!isset($RS_RR)) {$RR=40;}
-	else {$RR = $RS_RR;}
-	}
-if (!isset($group)) 
-	{
-	if (!isset($RS_group)) {$group='ALL-ACTIVE';}
-	else {$group = $RS_group;}
-	}
-if (!isset($usergroup)) 
-	{
-	if (!isset($RS_usergroup)) {$usergroup='';}
-	else {$usergroup = $RS_usergroup;}
-	}
-if (!isset($UGdisplay)) 
-	{
-	if (!isset($RS_UGdisplay)) {$UGdisplay=0;}
-	else {$UGdisplay = $RS_UGdisplay;}
-	}
-if (!isset($UidORname)) 
-	{
-	if (!isset($RS_UidORname)) {$UidORname=1;}
-	else {$UidORname = $RS_UidORname;}
-	}
-if (!isset($orderby)) 
-	{
-	if (!isset($RS_orderby)) {$orderby='timeup';}
-	else {$orderby = $RS_orderby;}
-	}
-if (!isset($SERVdisplay)) 
-	{
-	if (!isset($RS_SERVdisplay)) {$SERVdisplay=0;}
-	else {$SERVdisplay = $RS_SERVdisplay;}
-	}
-if (!isset($CALLSdisplay)) 
-	{
-	if (!isset($RS_CALLSdisplay)) {$CALLSdisplay=1;}
-	else {$CALLSdisplay = $RS_CALLSdisplay;}
-	}
-if (!isset($PHONEdisplay)) 
-	{
-	if (!isset($RS_PHONEdisplay)) {$PHONEdisplay=0;}
-	else {$PHONEdisplay = $RS_PHONEdisplay;}
-	}
-if (!isset($MONITORdisplay)) 
-	{
-	if (!isset($RS_MONITORdisplay)) {$MONITORdisplay=0;}
-	else {$MONITORdisplay = $RS_MONITORdisplay;}
-	}
-if (!isset($CUSTPHONEdisplay)) 
-	{
-	if (!isset($RS_CUSTPHONEdisplay)) {$CUSTPHONEdisplay=0;}
-	else {$CUSTPHONEdisplay = $RS_CUSTPHONEdisplay;}
-	}
-if (!isset($CUSTINFOdisplay)) 
-	{
-	if (!isset($RS_CUSTINFOdisplay)) {$CUSTINFOdisplay=0;}
-	else {$CUSTINFOdisplay = $RS_CUSTINFOdisplay;}
-	}
-if (isset($RS_CUSTINFOminUL)) 
-	{
-	$CUSTINFOminUL = $RS_CUSTINFOminUL;
-	}
-else {$CUSTINFOminUL = 9;}
-if (!isset($PAUSEcodes)) 
-	{
-	if (!isset($RS_PAUSEcodes)) {$PAUSEcodes='N';}
-	else {$PAUSEcodes = $RS_PAUSEcodes;}
-	}
-if (!isset($with_inbound)) 
-	{
-	if (!isset($RS_with_inbound))	
-		{
-		if ($outbound_autodial_active > 0)
-			{$with_inbound='Y';}  # N=no, Y=yes, O=only
-		else
-			{$with_inbound='O';}  # N=no, Y=yes, O=only
-		}
-	else {$with_inbound = $RS_with_inbound;}
-	}
-if (!isset($ShowCustPhoneCode)) 
-	{
-	if (!isset($RS_ShowCustPhoneCode)) {$ShowCustPhoneCode='0';}
-	else {$ShowCustPhoneCode = $RS_ShowCustPhoneCode;}
-	}
-if (!isset($CARRIERstats)) 
-	{
-	if (!isset($RS_CARRIERstats)) {$CARRIERstats='0';}
-	else {$CARRIERstats = $RS_CARRIERstats;}
-	}
-if (!isset($PRESETstats)) 
-	{
-	if (!isset($RS_PRESETstats)) {$PRESETstats='0';}
-	else {$PRESETstats = $RS_PRESETstats;}
-	}
-if (!isset($AGENTtimeSTATS)) 
-	{
-	if (!isset($RS_AGENTtimeSTATS)) {$AGENTtimeSTATS='0';}
-	else {$AGENTtimeSTATS = $RS_AGENTtimeSTATS;}
-	}
-if (!isset($AGENTlatency)) 
-	{
-	if (!isset($RS_AGENTlatency)) {$AGENTlatency='0';}
-	else {$AGENTlatency = $RS_AGENTlatency;}
-	}
-if (!isset($parkSTATS)) 
-	{
-	if (!isset($RS_parkSTATS)) {$parkSTATS='0';}
-	else {$parkSTATS = $RS_parkSTATS;}
-	}
-if (!isset($SLAinSTATS)) 
-	{
-	if (!isset($RS_SLAinSTATS)) {$SLAinSTATS='0';}
-	else {$SLAinSTATS = $RS_SLAinSTATS;}
-	}
-if (!isset($droppedOFtotal)) 
-	{
-	if (!isset($RS_droppedOFtotal)) {$droppedOFtotal='0';}
-	else {$droppedOFtotal = $RS_droppedOFtotal;}
-	}
+// Initialize Variables with Defaults
+if (!isset($DB)) {
+    $DB = isset($RS_DB) ? $RS_DB : 0;
+}
+if (!isset($RR)) {
+    $RR = isset($RS_RR) ? $RS_RR : 40;
+}
+if (!isset($group)) {
+    $group = isset($RS_group) ? $RS_group : 'ALL-ACTIVE';
+}
+if (!isset($usergroup)) {
+    $usergroup = isset($RS_usergroup) ? $RS_usergroup : '';
+}
+if (!isset($UGdisplay)) {
+    $UGdisplay = isset($RS_UGdisplay) ? $RS_UGdisplay : 0;
+}
+if (!isset($UidORname)) {
+    $UidORname = isset($RS_UidORname) ? $RS_UidORname : 1;
+}
+if (!isset($orderby)) {
+    $orderby = isset($RS_orderby) ? $RS_orderby : 'timeup';
+}
+if (!isset($SERVdisplay)) {
+    $SERVdisplay = isset($RS_SERVdisplay) ? $RS_SERVdisplay : 0;
+}
+if (!isset($CALLSdisplay)) {
+    $CALLSdisplay = isset($RS_CALLSdisplay) ? $RS_CALLSdisplay : 1;
+}
+if (!isset($PHONEdisplay)) {
+    $PHONEdisplay = isset($RS_PHONEdisplay) ? $RS_PHONEdisplay : 0;
+}
+if (!isset($MONITORdisplay)) {
+    $MONITORdisplay = isset($RS_MONITORdisplay) ? $RS_MONITORdisplay : 0;
+}
+if (!isset($CUSTPHONEdisplay)) {
+    $CUSTPHONEdisplay = isset($RS_CUSTPHONEdisplay) ? $RS_CUSTPHONEdisplay : 0;
+}
+if (!isset($CUSTINFOdisplay)) {
+    $CUSTINFOdisplay = isset($RS_CUSTINFOdisplay) ? $RS_CUSTINFOdisplay : 0;
+}
+if (isset($RS_CUSTINFOminUL)) {
+    $CUSTINFOminUL = $RS_CUSTINFOminUL;
+} else {
+    $CUSTINFOminUL = 9;
+}
+if (!isset($PAUSEcodes)) {
+    $PAUSEcodes = isset($RS_PAUSEcodes) ? $RS_PAUSEcodes : 'N';
+}
+if (!isset($with_inbound)) {
+    if (!isset($RS_with_inbound)) {
+        if ($outbound_autodial_active > 0) {
+            $with_inbound = 'Y';  # N=no, Y=yes, O=only
+        } else {
+            $with_inbound = 'O';  # N=no, Y=yes, O=only
+        }
+    } else {
+        $with_inbound = $RS_with_inbound;
+    }
+}
+if (!isset($ShowCustPhoneCode)) {
+    $ShowCustPhoneCode = isset($RS_ShowCustPhoneCode) ? $RS_ShowCustPhoneCode : '0';
+}
+if (!isset($CARRIERstats)) {
+    $CARRIERstats = isset($RS_CARRIERstats) ? $RS_CARRIERstats : '0';
+}
+if (!isset($PRESETstats)) {
+    $PRESETstats = isset($RS_PRESETstats) ? $RS_PRESETstats : '0';
+}
+if (!isset($AGENTtimeSTATS)) {
+    $AGENTtimeSTATS = isset($RS_AGENTtimeSTATS) ? $RS_AGENTtimeSTATS : '0';
+}
+if (!isset($AGENTlatency)) {
+    $AGENTlatency = isset($RS_AGENTlatency) ? $RS_AGENTlatency : '0';
+}
+if (!isset($parkSTATS)) {
+    $parkSTATS = isset($RS_parkSTATS) ? $RS_parkSTATS : '0';
+}
+if (!isset($SLAinSTATS)) {
+    $SLAinSTATS = isset($RS_SLAinSTATS) ? $RS_SLAinSTATS : '0';
+}
+if (!isset($droppedOFtotal)) {
+    $droppedOFtotal = isset($RS_droppedOFtotal) ? $RS_droppedOFtotal : '0';
+}
 
-$ingroup_detail='';
+$ingroup_detail = '';
 
-### Force hard-coded variables
-# $report_display_type='LIMITED';
-# $ingroup_filter=array('_STAY','TEST_IN2','TEST_IN3');
+### Force hard-coded variables (commented out by default)
+# $report_display_type = 'LIMITED';
+# $ingroup_filter = array('_STAY','TEST_IN2','TEST_IN3');
 
-if (!is_array($groups)) {$groups=array();}
-if ( (strlen($group)>1) and (strlen($groups[0])<1) ) {$groups[0] = $group;}
-else {$group = $groups[0];}
-if (!is_array($user_group_filter)) {$user_group_filter=array();}
-if (!is_array($ingroup_filter)) {$ingroup_filter=array();}
+// Initialize Arrays
+if (!is_array($groups)) {
+    $groups = array();
+}
+if ((strlen($group) > 1) and (strlen($groups[0]) < 1)) {
+    $groups[0] = $group;
+} else {
+    $group = $groups[0];
+}
+if (!is_array($user_group_filter)) {
+    $user_group_filter = array();
+}
+if (!is_array($ingroup_filter)) {
+    $ingroup_filter = array();
+}
 
+// Time Calculations
 $NOW_TIME = date("Y-m-d H:i:s");
 $NOW_DAY = date("Y-m-d");
 $NOW_HOUR = date("H:i:s");
 $STARTtime = date("U");
 $epochONEminuteAGO = ($STARTtime - 60);
-$timeONEminuteAGO = date("Y-m-d H:i:s",$epochONEminuteAGO);
+$timeONEminuteAGO = date("Y-m-d H:i:s", $epochONEminuteAGO);
 $epochFIVEminutesAGO = ($STARTtime - 300);
-$timeFIVEminutesAGO = date("Y-m-d H:i:s",$epochFIVEminutesAGO);
+$timeFIVEminutesAGO = date("Y-m-d H:i:s", $epochFIVEminutesAGO);
 $epochFIFTEENminutesAGO = ($STARTtime - 900);
-$timeFIFTEENminutesAGO = date("Y-m-d H:i:s",$epochFIFTEENminutesAGO);
+$timeFIFTEENminutesAGO = date("Y-m-d H:i:s", $epochFIFTEENminutesAGO);
 $epochONEhourAGO = ($STARTtime - 3600);
-$timeONEhourAGO = date("Y-m-d H:i:s",$epochONEhourAGO);
+$timeONEhourAGO = date("Y-m-d H:i:s", $epochONEhourAGO);
 $epochSIXhoursAGO = ($STARTtime - 21600);
-$timeSIXhoursAGO = date("Y-m-d H:i:s",$epochSIXhoursAGO);
+$timeSIXhoursAGO = date("Y-m-d H:i:s", $epochSIXhoursAGO);
 $epochTWENTYFOURhoursAGO = ($STARTtime - 86400);
-$timeTWENTYFOURhoursAGO = date("Y-m-d H:i:s",$epochTWENTYFOURhoursAGO);
-$webphone_content='';
+$timeTWENTYFOURhoursAGO = date("Y-m-d H:i:s", $epochTWENTYFOURhoursAGO);
+$webphone_content = '';
 
-if ($non_latin < 1)
-	{
-	$PHP_AUTH_USER = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_USER);
-	$PHP_AUTH_PW = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_PW);
-	}
-else
-	{
-	$PHP_AUTH_USER = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_USER);
-	$PHP_AUTH_PW = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_PW);
-	}
+// Input Sanitization
+if ($non_latin < 1) {
+    $PHP_AUTH_USER = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_USER);
+    $PHP_AUTH_PW = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_PW);
+} else {
+    $PHP_AUTH_USER = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_USER);
+    $PHP_AUTH_PW = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_PW);
+}
+
 $RR = preg_replace('/[^0-9]/', '', $RR);
 $inbound = preg_replace('/[^-_0-9a-zA-Z]/', '', $inbound);
 $group = preg_replace('/[^-_0-9a-zA-Z]/', '', $group);
@@ -393,8 +309,15 @@ $PHONEdisplay = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHONEdisplay);
 $MONITORdisplay = preg_replace('/[^-_0-9a-zA-Z]/', '', $MONITORdisplay);
 $CUSTPHONEdisplay = preg_replace('/[^-_0-9a-zA-Z]/', '', $CUSTPHONEdisplay);
 $CUSTINFOdisplay = preg_replace('/[^-_0-9a-zA-Z]/', '', $CUSTINFOdisplay);
-if ($CUSTINFOdisplay==1)	{$CUSTPHONEdisplay=0;}	# only one of these should be on at one time
-if ($CUSTPHONEdisplay==1)	{$CUSTINFOdisplay=0;}	# only one of these should be on at one time
+
+// Mutual Exclusivity
+if ($CUSTINFOdisplay == 1) {
+    $CUSTPHONEdisplay = 0;
+}
+if ($CUSTPHONEdisplay == 1) {
+    $CUSTINFOdisplay = 0;
+}
+
 $NOLEADSalert = preg_replace('/[^-_0-9a-zA-Z]/', '', $NOLEADSalert);
 $DROPINGROUPstats = preg_replace('/[^-_0-9a-zA-Z]/', '', $DROPINGROUPstats);
 $ALLINGROUPstats = preg_replace('/[^-_0-9a-zA-Z]/', '', $ALLINGROUPstats);
@@ -423,80 +346,98 @@ $submit = preg_replace('/[^-_0-9a-zA-Z]/', '', $submit);
 # $user_group_filter
 # $ingroup_filter
 
-$stmt="SELECT selected_language from vicidial_users where user='$PHP_AUTH_USER';";
-if ($DB) {echo "|$stmt|\n";}
-$rslt=mysql_to_mysqli($stmt, $link);
+// Get User Language Preference
+$stmt = "SELECT selected_language from vicidial_users where user='$PHP_AUTH_USER';";
+if ($DB) {
+    echo "|$stmt|\n";
+}
+$rslt = mysql_to_mysqli($stmt, $link);
 $sl_ct = mysqli_num_rows($rslt);
-if ($sl_ct > 0)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$VUselected_language =		$row[0];
-	}
+if ($sl_ct > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $VUselected_language = $row[0];
+}
 
-$auth=0;
-$reports_auth=0;
-$admin_auth=0;
-$auth_message = user_authorization($PHP_AUTH_USER,$PHP_AUTH_PW,'REPORTS',1,0);
-if ( ($auth_message == 'GOOD') or ($auth_message == '2FA') )
-	{
-	$auth=1;
-	if ($auth_message == '2FA')
-		{
-		header ("Content-type: text/html; charset=utf-8");
-		echo _QXZ("Your session is expired").". <a href=\"admin.php\">"._QXZ("Click here to log in")."</a>.\n";
-		exit;
-		}
-	}
+// Authentication
+$auth = 0;
+$reports_auth = 0;
+$admin_auth = 0;
+$auth_message = user_authorization($PHP_AUTH_USER, $PHP_AUTH_PW, 'REPORTS', 1, 0);
 
-if ($auth > 0)
-	{
-	$stmt="SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level > 7 and view_reports='1';";
-	if ($DB) {echo "|$stmt|\n";}
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$row=mysqli_fetch_row($rslt);
-	$admin_auth=$row[0];
+if (($auth_message == 'GOOD') or ($auth_message == '2FA')) {
+    $auth = 1;
+    if ($auth_message == '2FA') {
+        header("Content-type: text/html; charset=utf-8");
+        echo "<div style='max-width:600px;margin:100px auto;background:#fff3cd;border-radius:12px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);border-left:6px solid #ffc107;'>";
+        echo "<div style='font-size:48px;margin-bottom:15px;'>🔒</div>";
+        echo "<div style='font-size:20px;font-weight:bold;color:#856404;margin-bottom:10px;'>"._QXZ("Your session is expired")."</div>";
+        echo "<a href=\"admin.php\" style='display:inline-block;background:#3498db;color:#fff;padding:12px 30px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:15px;'>"._QXZ("Click here to log in")."</a>";
+        echo "</div>\n";
+        exit;
+    }
+}
 
-	$stmt="SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level > 6 and view_reports='1';";
-	if ($DB) {echo "|$stmt|\n";}
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$row=mysqli_fetch_row($rslt);
-	$reports_auth=$row[0];
-
-	if ($reports_auth < 1)
-		{
-		$VDdisplayMESSAGE = _QXZ("You are not allowed to view reports");
-		Header ("Content-type: text/html; charset=utf-8");
-		echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
-		exit;
-		}
-	if ( ($reports_auth > 0) and ($admin_auth < 1) )
-		{
-		$ADD=999999;
-		$reports_only_user=1;
-		}
-	}
-else
-	{
-	$VDdisplayMESSAGE = _QXZ("Login incorrect, please try again");
-	if ($auth_message == 'LOCK')
-		{
-		$VDdisplayMESSAGE = _QXZ("Too many login attempts, try again in 15 minutes");
-		Header ("Content-type: text/html; charset=utf-8");
-		echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
-		exit;
-		}
-	if ($auth_message == 'IPBLOCK')
-		{
-		$VDdisplayMESSAGE = _QXZ("Your IP Address is not allowed") . ": $ip";
-		Header ("Content-type: text/html; charset=utf-8");
-		echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
-		exit;
-		}
-	Header("WWW-Authenticate: Basic realm=\"CONTACT-CENTER-ADMIN\"");
-	Header("HTTP/1.0 401 Unauthorized");
-	echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\n";
-	exit;
-	}
+if ($auth > 0) {
+    $stmt = "SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level > 7 and view_reports='1';";
+    if ($DB) {
+        echo "|$stmt|\n";
+    }
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $row = mysqli_fetch_row($rslt);
+    $admin_auth = $row[0];
+    
+    $stmt = "SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level > 6 and view_reports='1';";
+    if ($DB) {
+        echo "|$stmt|\n";
+    }
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $row = mysqli_fetch_row($rslt);
+    $reports_auth = $row[0];
+    
+    if ($reports_auth < 1) {
+        $VDdisplayMESSAGE = _QXZ("You are not allowed to view reports");
+        Header("Content-type: text/html; charset=utf-8");
+        echo "<div style='max-width:600px;margin:100px auto;background:#f8d7da;border-radius:12px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);border-left:6px solid #f5c6cb;'>";
+        echo "<div style='font-size:48px;margin-bottom:15px;'>⛔</div>";
+        echo "<div style='font-size:20px;font-weight:bold;color:#721c24;margin-bottom:10px;'>$VDdisplayMESSAGE</div>";
+        echo "<div style='color:#721c24;font-size:14px;'>User: $PHP_AUTH_USER</div>";
+        echo "</div>\n";
+        exit;
+    }
+    if (($reports_auth > 0) and ($admin_auth < 1)) {
+        $ADD = 999999;
+        $reports_only_user = 1;
+    }
+} else {
+    $VDdisplayMESSAGE = _QXZ("Login incorrect, please try again");
+    
+    if ($auth_message == 'LOCK') {
+        $VDdisplayMESSAGE = _QXZ("Too many login attempts, try again in 15 minutes");
+        Header("Content-type: text/html; charset=utf-8");
+        echo "<div style='max-width:600px;margin:100px auto;background:#f8d7da;border-radius:12px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);border-left:6px solid #f5c6cb;'>";
+        echo "<div style='font-size:48px;margin-bottom:15px;'>🔒</div>";
+        echo "<div style='font-size:20px;font-weight:bold;color:#721c24;margin-bottom:10px;'>$VDdisplayMESSAGE</div>";
+        echo "<div style='color:#721c24;font-size:14px;'>User: $PHP_AUTH_USER</div>";
+        echo "</div>\n";
+        exit;
+    }
+    
+    if ($auth_message == 'IPBLOCK') {
+        $VDdisplayMESSAGE = _QXZ("Your IP Address is not allowed") . ": $ip";
+        Header("Content-type: text/html; charset=utf-8");
+        echo "<div style='max-width:600px;margin:100px auto;background:#f8d7da;border-radius:12px;padding:30px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);border-left:6px solid #f5c6cb;'>";
+        echo "<div style='font-size:48px;margin-bottom:15px;'>🚫</div>";
+        echo "<div style='font-size:20px;font-weight:bold;color:#721c24;margin-bottom:10px;'>$VDdisplayMESSAGE</div>";
+        echo "<div style='color:#721c24;font-size:14px;'>User: $PHP_AUTH_USER</div>";
+        echo "</div>\n";
+        exit;
+    }
+    
+    Header("WWW-Authenticate: Basic realm=\"CONTACT-CENTER-ADMIN\"");
+    Header("HTTP/1.0 401 Unauthorized");
+    echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\n";
+    exit;
+}
 
 ##### BEGIN log visit to the vicidial_report_log table #####
 $LOGip = getenv("REMOTE_ADDR");
