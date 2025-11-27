@@ -1998,94 +1998,96 @@ if ($RS_hide_CUST_info < 1)
 
 <STYLE type="text/css">
 <!--
-	.blank {color: black; background-color: white;}
-	.green {color: white; background-color: green;}
-	.red {color: white; background-color: red;}
-	.lightblue {color: black; background-color: #ADD8E6;}
-	.rust {color: black; background-color: #F47442}
-	.blue {color: white; background-color: blue;}
-	.midnightblue {color: white; background-color: #191970;}
-	.purple {color: white; background-color: purple;}
-	.violet {color: black; background-color: #EE82EE;}
-	.thistle {color: black; background-color: #D8BFD8;}
-	.olive {color: white; background-color: #808000;}
-	.darkolivegreen {color: white; background-color: #556B2F}
-	.saddlebrown {color: white; background-color: #8B4513}
-	.lime {color: white; background-color: #006600;}
-	.yellow {color: black; background-color: yellow;}
-	.khaki {color: black; background-color: #F0E68C;}
-	.orange {color: black; background-color: orange;}
-	.black {color: white; background-color: black;}
-	.salmon {color: white; background-color: #FA8072;}
-	.darkred {color: white; background-color: #990000}
+	.blank {color: #1f2933; background-color: #ffffff;}
+	.green {color: #ffffff; background-color: #2e7d32;}
+	.red {color: #ffffff; background-color: #c62828;}
+	.lightblue {color: #1f2933; background-color: #e3f2fd;}
+	.rust {color: #1f2933; background-color: #ffb74d;}
+	.blue {color: #ffffff; background-color: #1565c0;}
+	.midnightblue {color: #ffffff; background-color: #0b3558;}
+	.purple {color: #ffffff; background-color: #6a1b9a;}
+	.violet {color: #1f2933; background-color: #e1bee7;}
+	.thistle {color: #1f2933; background-color: #ede7f6;}
+	.olive {color: #ffffff; background-color: #556b2f;}
+	.darkolivegreen {color: #ffffff; background-color: #2f4f4f;}
+	.saddlebrown {color: #ffffff; background-color: #6d4c41;}
+	.lime {color: #ffffff; background-color: #00796b;}
+	.yellow {color: #1f2933; background-color: #fff59d;}
+	.khaki {color: #1f2933; background-color: #f0e9c2;}
+	.orange {color: #1f2933; background-color: #ffb74d;}
+	.black {color: #ffffff; background-color: #263238;}
+	.salmon {color: #1f2933; background-color: #ffccbc;}
+	.darkred {color: #ffffff; background-color: #b71c1c;}
 
-	.Hblank {color: black; background-color: white; font-size: 11;}
-	.Hgreen {color: white; background-color: green; font-size: 11;}
-	.Hred {color: white; background-color: red; font-size: 11;}
-	.Hlightblue {color: black; background-color: #ADD8E6; font-size: 11;}
-	.Hrust {color: black; background-color: #F47442; font-size: 11;}
-	.Hblue {color: white; background-color: blue; font-size: 11;}
-	.Hmidnightblue {color: white; background-color: #191970; font-size: 11;}
-	.Hpurple {color: white; background-color: purple; font-size: 11;}
-	.Hviolet {color: black; background-color: #EE82EE; font-size: 11;}
-	.Hthistle {color: black; background-color: #D8BFD8; font-size: 11;}
-	.Holive {color: white; background-color: #808000; font-size: 11;}
-	.Hdarkolivegreen {color: white; background-color: #556B2F; font-size: 11;}
-	.Hsaddlebrown {color: white; background-color: #8B4513; font-size: 11;}
-	.Hlime {color: white; background-color: #006600; font-size: 11;}
-	.Hyellow {color: black; background-color: yellow; font-size: 11;}
-	.Hkhaki {color: black; background-color: #F0E68C; font-size: 11;}
-	.Horange {color: black; background-color: orange; font-size: 11;}
-	.Hblack {color: white; background-color: black; font-size: 11;}
-	.Hsalmon {color: white; background-color: #FA8072; font-size: 11;}
-	.Hdarkred {color: white; background-color: #990000}
+	.Hblank {color: #1f2933; background-color: #ffffff; font-size: 11;}
+	.Hgreen {color: #ffffff; background-color: #2e7d32; font-size: 11;}
+	.Hred {color: #ffffff; background-color: #c62828; font-size: 11;}
+	.Hlightblue {color: #1f2933; background-color: #e3f2fd; font-size: 11;}
+	.Hrust {color: #1f2933; background-color: #ffb74d; font-size: 11;}
+	.Hblue {color: #ffffff; background-color: #1565c0; font-size: 11;}
+	.Hmidnightblue {color: #ffffff; background-color: #0b3558; font-size: 11;}
+	.Hpurple {color: #ffffff; background-color: #6a1b9a; font-size: 11;}
+	.Hviolet {color: #1f2933; background-color: #e1bee7; font-size: 11;}
+	.Hthistle {color: #1f2933; background-color: #ede7f6; font-size: 11;}
+	.Holive {color: #ffffff; background-color: #556b2f; font-size: 11;}
+	.Hdarkolivegreen {color: #ffffff; background-color: #2f4f4f; font-size: 11;}
+	.Hsaddlebrown {color: #ffffff; background-color: #6d4c41; font-size: 11;}
+	.Hlime {color: #ffffff; background-color: #00796b; font-size: 11;}
+	.Hyellow {color: #1f2933; background-color: #fff59d; font-size: 11;}
+	.Hkhaki {color: #1f2933; background-color: #f0e9c2; font-size: 11;}
+	.Horange {color: #1f2933; background-color: #ffb74d; font-size: 11;}
+	.Hblack {color: #ffffff; background-color: #263238; font-size: 11;}
+	.Hsalmon {color: #1f2933; background-color: #ffccbc; font-size: 11;}
+	.Hdarkred {color: #ffffff; background-color: #b71c1c; font-size: 11;}
 
-	tr.TRblank {background-color: white}
-	tr.TRgreen {background-color: green}
-	tr.TRred {background-color: red}
-	tr.TRlightblue {background-color: #ADD8E6}
-	tr.TRrust {background-color: #F47442}
-	tr.TRblue {background-color: blue}
-	tr.TRmidnightblue {background-color: #191970}
-	tr.TRpurple {background-color: purple}
-	tr.TRviolet {background-color: #EE82EE} 
-	tr.TRthistle {background-color: #D8BFD8} 
-	tr.TRolive {background-color: #808000}
-	tr.TRdarkolivegreen {background-color: #556B2F}
-	tr.TRsaddlebrown {background-color: #8B4513}
-	tr.TRlime {background-color: #006600}
-	tr.TRyellow {background-color: yellow}
-	tr.TRkhaki {background-color: #F0E68C}
-	tr.TRorange {background-color: orange}
-	tr.TRblack {background-color: black}
-	tr.TRsalmon {background-color: #FA8072}
-	tr.TRdarkred {color: white; background-color: #990000}
+	tr.TRblank {background-color: #ffffff;}
+	tr.TRgreen {background-color: #2e7d32;}
+	tr.TRred {background-color: #c62828;}
+	tr.TRlightblue {background-color: #e3f2fd;}
+	tr.TRrust {background-color: #ffb74d;}
+	tr.TRblue {background-color: #1565c0;}
+	tr.TRmidnightblue {background-color: #0b3558;}
+	tr.TRpurple {background-color: #6a1b9a;}
+	tr.TRviolet {background-color: #e1bee7;} 
+	tr.TRthistle {background-color: #ede7f6;} 
+	tr.TRolive {background-color: #556b2f;}
+	tr.TRdarkolivegreen {background-color: #2f4f4f;}
+	tr.TRsaddlebrown {background-color: #6d4c41;}
+	tr.TRlime {background-color: #00796b;}
+	tr.TRyellow {background-color: #fff59d;}
+	tr.TRkhaki {background-color: #f0e9c2;}
+	tr.TRorange {background-color: #ffb74d;}
+	tr.TRblack {background-color: #263238;}
+	tr.TRsalmon {background-color: #ffccbc;}
+	tr.TRdarkred {color: #ffffff; background-color: #b71c1c;}
 
-	.r1 {color: black; background-color: #FFCCCC}
-	.r2 {color: black; background-color: #FF9999}
-	.r3 {color: black; background-color: #FF6666}
-	.r4 {color: white; background-color: #FF0000}
-	.b1 {color: black; background-color: #CCCCFF}
-	.b2 {color: black; background-color: #9999FF}
-	.b3 {color: black; background-color: #6666FF}
-	.b4 {color: white; background-color: #0000FF}
+	/* range / level colours - softer gradients */
+	.r1 {color: #1f2933; background-color: #ffebee;}
+	.r2 {color: #1f2933; background-color: #ffcdd2;}
+	.r3 {color: #1f2933; background-color: #ef9a9a;}
+	.r4 {color: #ffffff; background-color: #c62828;}
 
-	.Hfb1 {color: white; background-color: #015b91; font-family: HELVETICA; font-size: 18; font-weight: bold;}
-	.Hfr1 {color: black; background-color: #FFCCCC; font-family: HELVETICA; font-size: 18; font-weight: bold;}
-	.Hfr2 {color: black; background-color: #FF9999; font-family: HELVETICA; font-size: 18; font-weight: bold;}
-	.Hfr3 {color: black; background-color: #FF6666; font-family: HELVETICA; font-size: 18; font-weight: bold;}
-	.Hfr4 {color: white; background-color: #FF0000; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+	.b1 {color: #1f2933; background-color: #e3f2fd;}
+	.b2 {color: #1f2933; background-color: #bbdefb;}
+	.b3 {color: #1f2933; background-color: #90caf9;}
+	.b4 {color: #ffffff; background-color: #1565c0;}
 
-	.top_settings_key {color: black; font-family: HELVETICA; font-size: 11; font-weight: bold;}
-	.top_settings_val {color: black; font-family: HELVETICA; font-size: 11;}
-	.top_head_key {color: black; font-family: HELVETICA; font-size: 12; font-weight: bold;}
-	.top_head_val {color: black; font-family: HELVETICA; font-size: 12;}
+	.Hfb1 {color: #ffffff; background-color: #0b3558; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+	.Hfr1 {color: #1f2933; background-color: #ffebee; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+	.Hfr2 {color: #1f2933; background-color: #ffcdd2; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+	.Hfr3 {color: #1f2933; background-color: #ef9a9a; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+	.Hfr4 {color: #ffffff; background-color: #c62828; font-family: HELVETICA; font-size: 18; font-weight: bold;}
+
+	.top_settings_key {color: #1f2933; font-family: HELVETICA; font-size: 11; font-weight: bold;}
+	.top_settings_val {color: #1f2933; font-family: HELVETICA; font-size: 11;}
+	.top_head_key {color: #1f2933; font-family: HELVETICA; font-size: 12; font-weight: bold;}
+	.top_head_val {color: #1f2933; font-family: HELVETICA; font-size: 12;}
 
 	.realtime_img_icon {width: 42px; height: 42px;}
-	.realtime_img_text {font-family:HELVETICA; font-size:11; color:white; font-weight:bold;}
-	.realtime_table {width: 960px; max-width: 960px; }
-	.realtime_calls_table {width: 860px; max-width: 860px; }
-	.realtime_settings_table {width: 780px; max-width: 780px; }
+	.realtime_img_text {font-family: HELVETICA; font-size: 11; color: #ffffff; font-weight: bold;}
+	.realtime_table {width: 960px; max-width: 960px;}
+	.realtime_calls_table {width: 860px; max-width: 860px;}
+	.realtime_settings_table {width: 780px; max-width: 780px;}
 
 <?php
 	$stmt="select group_id,group_color from vicidial_inbound_groups;";
@@ -2108,6 +2110,7 @@ if ($RS_hide_CUST_info < 1)
 ?>
 -->
 </STYLE>
+
 
 <?php
  $stmt = "select count(*) from vicidial_campaigns where active='Y' and campaign_allow_inbound='Y' $group_SQLand;";
