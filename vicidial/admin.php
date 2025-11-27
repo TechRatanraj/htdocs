@@ -32870,104 +32870,216 @@ if ($SUB==23)
 	echo "</div>"; // outer wrapper
 }
 
-	##### CAMPAIGN LEAD RECYCLING #####
-	if ($SUB==25)
+##### CAMPAIGN LEAD RECYCLING #####
+if ($SUB==25)
+{
+	### display counts on leads that have hit the limit in this campaign
+	$stmt="SELECT list_id,active,list_name from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$lists_to_print = mysqli_num_rows($rslt);
+	$camp_lists='';
+	$o=0;
+	while ($lists_to_print > $o) 
+	{
+		$rowx=mysqli_fetch_row($rslt);
+		if (preg_match('/Y/', $rowx[1])) {$camp_lists .= "'$rowx[0]',";}
+		$o++;
+	}
+	$camp_lists = preg_replace('/.$/i','',$camp_lists);
+
+	$stmt="SELECT recycle_id,campaign_id,status,attempt_delay,attempt_maximum,active from vicidial_lead_recycle where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$recycle_to_print = mysqli_num_rows($rslt);
+	$o=0;
+	while ($recycle_to_print > $o) 
+	{
+		$rowx=mysqli_fetch_row($rslt);
+		$RECYCLE_status[$o]  = $rowx[2];
+		$RECYCLE_delay[$o]   = $rowx[3];
+		$RECYCLE_attempt[$o] = $rowx[4];
+		$RECYCLE_active[$o]  = $rowx[5];
+		$RECYCLE_count[$o]   = "'Y','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
+		if ($RECYCLE_attempt[$o]==1) {$RECYCLE_count[$o] = "'Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==2) {$RECYCLE_count[$o] = "'Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==3) {$RECYCLE_count[$o] = "'Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==4) {$RECYCLE_count[$o] = "'Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==5) {$RECYCLE_count[$o] = "'Y5','Y6','Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==6) {$RECYCLE_count[$o] = "'Y6','Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==7) {$RECYCLE_count[$o] = "'Y7','Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==8) {$RECYCLE_count[$o] = "'Y8','Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]==9) {$RECYCLE_count[$o] = "'Y9','Y10'";}
+		if ($RECYCLE_attempt[$o]>9) {$RECYCLE_count[$o] = "'Y10'";}
+		$o++;
+	}
+	$o=0;
+
+	// Outer wrapper
+	echo "<div style='margin:30px auto 24px auto;max-width:1100px;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;'>";
+
+	// Section header
+	echo "<div style='font-size:20px;font-weight:800;color:#111827;display:flex;align-items:center;gap:10px;margin-bottom:6px;'>
+			<span>♻️</span>"._QXZ("Lead Recycling Within This Campaign").": &nbsp; $NWB#lead_recycle$NWE
+		  </div>";
+	echo "<div style='height:4px;background:linear-gradient(90deg,#2685ec,#31cbe8);border-radius:999px;margin-bottom:18px;'></div>";
+
+	// Card: existing recycling rules table
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 12px rgba(15,23,42,0.08);padding:18px 20px;margin-bottom:22px;'>";
+
+	echo "<table cellspacing='0' cellpadding='8' style='width:100%;border-collapse:collapse;font-size:13px;'>";
+
+	// Header row
+	echo "<tr style='background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#475569;text-transform:uppercase;font-size:11px;letter-spacing:.4px;'>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:90px;'>"._QXZ("Status")."</th>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:130px;'>"._QXZ("Attempt Delay")."</th>";
+	echo "<th style='padding:10px 6px;text-align:left;font-weight:700;width:130px;'>"._QXZ("Attempt Maximum")."</th>";
+	echo "<th style='padding:10px 6px;text-align:right;font-weight:700;width:130px;'>"._QXZ("Leads at Limit")."</th>";
+	echo "<th style='padding:10px 6px;text-align:center;font-weight:700;width:90px;'>"._QXZ("Active")."</th>";
+	echo "<th style='padding:10px 6px;text-align:center;font-weight:700;width:110px;'>"._QXZ("Modify")."</th>";
+	echo "<th style='padding:10px 6px;text-align:center;font-weight:700;width:90px;'>"._QXZ("Delete")."</th>";
+	echo "</tr>";
+
+	while ($recycle_to_print > $o) 
+	{
+		$recycle_limit=0;
+		if (strlen($camp_lists) > 2)
 		{
-		### display counts on leads that have hit the limit in this campaign
-		$stmt="SELECT list_id,active,list_name from vicidial_lists where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-		$camp_lists='';
-		$o=0;
-		while ($lists_to_print > $o) 
+			$stmt="SELECT count(*) from vicidial_list where status='$RECYCLE_status[$o]' and list_id IN($camp_lists) and called_since_last_reset IN($RECYCLE_count[$o]);";
+			if ($DB) {echo "|$stmt|\n";}
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$counts_to_print = mysqli_num_rows($rslt);
+			if ($counts_to_print > 0) 
 			{
-			$rowx=mysqli_fetch_row($rslt);
-			if (preg_match('/Y/', $rowx[1])) {$camp_lists .= "'$rowx[0]',";}
-			$o++;
+				$rowx=mysqli_fetch_row($rslt);
+				$recycle_limit = $rowx[0];
 			}
-		$camp_lists = preg_replace('/.$/i','',$camp_lists);
-
-		$stmt="SELECT recycle_id,campaign_id,status,attempt_delay,attempt_maximum,active from vicidial_lead_recycle where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$recycle_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($recycle_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$RECYCLE_status[$o] =	$rowx[2];
-			$RECYCLE_delay[$o] =	$rowx[3];
-			$RECYCLE_attempt[$o] =	$rowx[4];
-			$RECYCLE_active[$o] =	$rowx[5];
-			$RECYCLE_count[$o] = "'Y','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";
-			if ($RECYCLE_attempt[$o]==1) {$RECYCLE_count[$o] = "'Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==2) {$RECYCLE_count[$o] = "'Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==3) {$RECYCLE_count[$o] = "'Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==4) {$RECYCLE_count[$o] = "'Y4','Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==5) {$RECYCLE_count[$o] = "'Y5','Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==6) {$RECYCLE_count[$o] = "'Y6','Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==7) {$RECYCLE_count[$o] = "'Y7','Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==8) {$RECYCLE_count[$o] = "'Y8','Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]==9) {$RECYCLE_count[$o] = "'Y9','Y10'";}
-			if ($RECYCLE_attempt[$o]>9) {$RECYCLE_count[$o] = "'Y10'";}
-			$o++;
-			}
-		$o=0;
-
-		echo "<br><br><b>"._QXZ("LEAD RECYCLING WITHIN THIS CAMPAIGN").": &nbsp; $NWB#lead_recycle$NWE</b><br>\n";
-		echo "<TABLE width=700 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("STATUS")."</td><td>"._QXZ("ATTEMPT DELAY")."</td><td>"._QXZ("ATTEMPT MAXIMUM")."</td><td>"._QXZ("LEADS AT LIMIT")."</td><td>"._QXZ("ACTIVE")."</td><td> </td><td>"._QXZ("DELETE")."</td></tr>\n";
-
-		while ($recycle_to_print > $o) 
-			{
-			$recycle_limit=0;
-			if (strlen($camp_lists) > 2)
-				{
-				$stmt="SELECT count(*) from vicidial_list where status='$RECYCLE_status[$o]' and list_id IN($camp_lists) and called_since_last_reset IN($RECYCLE_count[$o]);";
-				if ($DB) {echo "|$stmt|\n";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$counts_to_print = mysqli_num_rows($rslt);
-				if ($counts_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$recycle_limit = $rowx[0];
-					}
-				}
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=2> &nbsp; $RECYCLE_status[$o]<form action=$PHP_SELF method=POST>\n";
-			echo "<input type=hidden name=status value=\"$RECYCLE_status[$o]\">\n";
-			echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-			echo "<input type=hidden name=ADD value=45></td>\n";
-			echo "<td><font size=1><input type=text size=7 maxlength=5 name=attempt_delay value=\"$RECYCLE_delay[$o]\"></td>\n";
-			echo "<td><font size=1><input type=text size=5 maxlength=3 name=attempt_maximum value=\"$RECYCLE_attempt[$o]\"></td>\n";
-			echo "<td align=right><font size=2>$recycle_limit &nbsp; </td>\n";
-			echo "<td><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$RECYCLE_active[$o]' SELECTED>"._QXZ("$RECYCLE_active[$o]")."</option></select></td>\n";
-			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'></form></td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=65&campaign_id=$campaign_id&status=$RECYCLE_status[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
-			$o++;
-			}
-
-		echo "</table>\n";
-
-		echo "<br>"._QXZ("ADD NEW CAMPAIGN LEAD RECYCLE")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=25>\n";
-		echo "<input type=hidden name=active value=\"N\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Status").": <select size=1 name=status>\n";
-		echo "$LRstatuses_list\n";
-		echo "</select> &nbsp; \n";
-		echo _QXZ("Attempt Delay").": <input type=text size=7 maxlength=5 name=attempt_delay>\n";
-		echo _QXZ("Attempt Maximum").": <input type=text size=5 maxlength=3 name=attempt_maximum>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-
-		echo "</FORM><br>\n";
-		echo "<br>\n";
-		echo "* "._QXZ("Lead counts taken from active lists in the campaign only").".\n";
 		}
+
+		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+			{$row_bg = "#$SSstd_row2_background";}
+		else
+			{$row_bg = "#$SSstd_row1_background";}
+
+		echo "<tr style='background:$row_bg;border-bottom:1px solid #e5e7eb;'>";
+
+		// Status + form open in same row
+		echo "<td style='padding:8px 6px;font-size:12px;font-weight:600;color:#111827;'>
+				<span style='display:inline-flex;align-items:center;justify-content:center;min-width:46px;padding:4px 10px;border-radius:999px;border:1px solid #d1d5db;background:#f9fafb;'>".$RECYCLE_status[$o]."</span>
+				<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;display:inline;'>
+					<input type='hidden' name='status' value=\"".$RECYCLE_status[$o]."\">
+					<input type='hidden' name='campaign_id' value=\"$campaign_id\">
+					<input type='hidden' name='ADD' value='45'>
+			  </td>";
+
+		// Attempt delay
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+				<input type='text' name='attempt_delay' value=\"".$RECYCLE_delay[$o]."\" size='7' maxlength='5'
+					style='width:100%;max-width:110px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#f9fafb;font-size:12px;'>
+			  </td>";
+
+		// Attempt maximum
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;'>
+				<input type='text' name='attempt_maximum' value=\"".$RECYCLE_attempt[$o]."\" size='5' maxlength='3'
+					style='width:100%;max-width:90px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#f9fafb;font-size:12px;'>
+			  </td>";
+
+		// Leads at limit
+		echo "<td style='padding:8px 6px;font-size:12px;color:#111827;text-align:right;'>
+				<span style='font-weight:600;'>".$recycle_limit."</span>
+			  </td>";
+
+		// Active select
+		echo "<td style='padding:8px 6px;text-align:center;'>
+				<select name='active'
+						style='width:100%;max-width:90px;padding:6px 8px;border-radius:7px;border:1px solid #d1d5db;background:#f9fafb;font-size:12px;'>
+					<option value='Y'>"._QXZ("Y")."</option>
+					<option value='N'>"._QXZ("N")."</option>
+					<option value=\"".$RECYCLE_active[$o]."\" SELECTED>"._QXZ($RECYCLE_active[$o])."</option>
+				</select>
+			  </td>";
+
+		// Modify button (same form)
+		echo "<td style='padding:8px 6px;text-align:center;'>
+				<input type='submit' name='submit' value='"._QXZ("MODIFY")."'
+					style='background-color:#$SSbutton_color;color:#fff;border:none;border-radius:999px;font-size:11px;font-weight:700;padding:6px 14px;cursor:pointer;box-shadow:0 2px 5px rgba(37,99,235,0.35);'>
+				</form>
+			  </td>";
+
+		// Delete link
+		echo "<td style='padding:8px 6px;text-align:center;'>
+				<a href=\"$PHP_SELF?ADD=65&campaign_id=$campaign_id&status=".$RECYCLE_status[$o]."\"
+				   style='display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#b91c1c;text-decoration:none;padding:5px 12px;border-radius:999px;border:1px solid #fecaca;background:#fef2f2;'>
+					"._QXZ("DELETE")."
+				</a>
+			  </td>";
+
+		echo "</tr>";
+
+		$o++;
+	}
+
+	if ($recycle_to_print < 1)
+	{
+		echo "<tr><td colspan='7' style='padding:10px 6px;font-size:12px;color:#6b7280;text-align:center;'>"._QXZ("No lead recycling rules defined for this campaign.")."</td></tr>";
+	}
+
+	echo "</table>";
+	echo "</div>"; // end table card
+
+	// Card: Add new campaign lead recycle
+	echo "<div style='background:#ffffff;border-radius:14px;box-shadow:0 3px 12px rgba(15,23,42,0.08);padding:18px 20px;margin-bottom:10px;'>";
+
+	echo "<div style='font-size:16px;font-weight:700;color:#111827;display:flex;align-items:center;gap:8px;margin-bottom:10px;'>
+			<span>➕</span>"._QXZ("Add New Campaign Lead Recycle")."
+		  </div>";
+
+	echo "<form action='$PHP_SELF' method='POST' style='margin:0;padding:0;'>";
+
+	echo "<input type='hidden' name='ADD' value='25'>\n";
+	echo "<input type='hidden' name='active' value='N'>\n";
+	echo "<input type='hidden' name='campaign_id' value=\"$campaign_id\">\n";
+
+	echo "<div style='display:grid;grid-template-columns:220px 220px 220px 1fr;gap:18px;align-items:end;'>";
+
+	// Status dropdown
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Status")."</label>
+			<select name='status'
+					style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#f9fafb;font-size:13px;'>
+				$LRstatuses_list
+			</select>
+		  </div>";
+
+	// Attempt Delay
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Attempt Delay")."</label>
+			<input type='text' name='attempt_delay' size='7' maxlength='5'
+				   style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fbfdff;font-size:13px;'>
+		  </div>";
+
+	// Attempt Maximum
+	echo "<div>
+			<label style='font-size:12px;font-weight:600;color:#4b5563;'>"._QXZ("Attempt Maximum")."</label>
+			<input type='text' name='attempt_maximum' size='5' maxlength='3'
+				   style='width:100%;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid #d1d5db;background:#fbfdff;font-size:13px;'>
+		  </div>";
+
+	// Submit
+	echo "<div style='text-align:right;'>
+			<input type='submit' name='submit' value='"._QXZ("ADD")."'
+				   style='background-color:#$SSbutton_color;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;padding:9px 24px;cursor:pointer;box-shadow:0 2px 6px rgba(37,99,235,0.35);'>
+		  </div>";
+
+	echo "</div>"; // end grid
+
+	echo "</form>";
+	echo "</div>"; // end add card
+
+	// Footnote
+	echo "<div style='font-size:11px;color:#6b7280;margin-top:10px;'>* "._QXZ("Lead counts taken from active lists in the campaign only").".</div>";
+
+	echo "</div>"; // outer wrapper
+}
+	
 
 	##### CAMPAIGN AUTO-ALT-NUMBER DIALING #####
 	if ($SUB==26)
