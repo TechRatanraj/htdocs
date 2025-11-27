@@ -26104,161 +26104,256 @@ if ($ADD==3)
 			$last_auth = " &nbsp; &nbsp; $auth_exp_date - $auth_stage - $auth_attempts";
 			}
 
-		if ( ( ($user_level >= $LOGuser_level) and ($LOGuser_level < 9) ) or ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) and ($user_level > 8) ) )
-			{
-			echo "<br>"._QXZ("You do not have permissions to modify this user").": $user\n";
-			}
-		else
-			{
-			echo "<br>"._QXZ("MODIFY A USERS RECORD").": $user<form action=$PHP_SELF method=POST>\n";
-			if ( ($LOGuser_level > 8) and ($LOGalter_admin_interface > 0) )
-				{echo "<input type=hidden name=ADD value=4A>\n";}
-			else
-				{
-				if ($LOGalter_agent_interface == "1")
-					{echo "<input type=hidden name=ADD value=4B>\n";}
-				else
-					{echo "<input type=hidden name=ADD value=4>\n";}
-				}
-			if ($SScustom_fields_enabled < 1)
-				{
-				echo "<input type=hidden name=custom_fields_modify value=\"$custom_fields_modify\">\n";
-				}
+		
+if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) and ($user_level > 8))) {
+    // Permission Denied Card
+    echo "<div style='max-width:800px;margin:50px auto;background:#f8d7da;border-radius:12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);border-left:6px solid #dc3545;'>";
+    echo "<div style='display:flex;align-items:center;gap:20px;'>";
+    echo "<div style='font-size:48px;color:#721c24;'>⛔</div>";
+    echo "<div>";
+    echo "<div style='font-size:20px;font-weight:bold;color:#721c24;margin-bottom:8px;'>"._QXZ("Permission Denied")."</div>";
+    echo "<div style='color:#721c24;font-size:14px;'>"._QXZ("You do not have permissions to modify this user").": <strong>$user</strong></div>";
+    echo "</div></div></div>\n";
+} else {
+    // Modern Form Card
+    echo "<div style='max-width:900px;margin:30px auto;'>";
+    
+    // Header
+    echo "<div style='background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px 12px 0 0;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>";
+    echo "<div style='color:#fff;font-size:24px;font-weight:bold;'>"._QXZ("MODIFY USER RECORD")."</div>";
+    echo "<div style='color:#f0f0f0;font-size:14px;margin-top:5px;'>User ID: <strong>$user</strong></div>";
+    echo "</div>";
+    
+    // Form Container
+    echo "<div style='background:#fff;border-radius:0 0 12px 12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);'>";
+    echo "<form action='$PHP_SELF' method='POST'>\n";
+    
+    if (($LOGuser_level > 8) and ($LOGalter_admin_interface > 0)) {
+        echo "<input type='hidden' name='ADD' value='4A'>\n";
+    } else {
+        if ($LOGalter_agent_interface == "1") {
+            echo "<input type='hidden' name='ADD' value='4B'>\n";
+        } else {
+            echo "<input type='hidden' name='ADD' value='4'>\n";
+        }
+    }
+    
+    if ($SScustom_fields_enabled < 1) {
+        echo "<input type='hidden' name='custom_fields_modify' value='$custom_fields_modify'>\n";
+    }
+    
+    echo "<input type='hidden' name='user' value='$user'>\n";
+    echo "<input type='hidden' name='DB' value='$DB'>\n";
+    
+    // Form Grid
+    echo "<div style='display:grid;grid-template-columns:1fr;gap:20px;'>";
+    
+    // User Number (Read-only)
+    echo "<div style='background:#f8f9fa;padding:15px;border-radius:8px;border-left:4px solid #667eea;'>";
+    echo "<div style='font-size:12px;font-weight:600;color:#6c757d;margin-bottom:5px;'>"._QXZ("User Number")."</div>";
+    echo "<div style='font-size:16px;font-weight:bold;color:#2c3e50;'>$user $NWB#users-user$NWE</div>";
+    echo "</div>";
+    
+    // Password Section
+    if ($SSpass_hash_enabled > 0) {
+        echo "<div style='background:#fff3cd;padding:15px;border-radius:8px;border-left:4px solid #ffc107;'>";
+        echo "<div style='color:#856404;font-weight:600;font-size:14px;'>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</div>";
+        echo "</div>";
+    }
+    
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Password")."</label>";
+    echo "<div style='display:flex;align-items:center;gap:10px;'>";
+    echo "<input type='text' id='reg_pass' name='pass' size='50' maxlength='100' value='$pass' onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\" style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>";
+    echo "$NWB#users-pass$NWE";
+    echo "<span style='font-size:11px;color:#6c757d;white-space:nowrap;'>"._QXZ("Strength").":</span>";
+    echo "<img id='reg_pass_img' src='images/pixel.gif' style='vertical-align:middle;' onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">";
+    echo "<span style='font-size:11px;color:#6c757d;'>"._QXZ("Length").": <span id='pass_length' name='pass_length'>0</span></span>";
+    echo "</div></div>";
+    
+    // Force Change Password
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Force Change Password")."</label>";
+    echo "<select size='1' name='force_change_password' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>";
+    echo "<option value='Y'>"._QXZ("Y")."</option>";
+    echo "<option value='N'>"._QXZ("N")."</option>";
+    echo "<option value='$force_change_password' SELECTED>"._QXZ("$force_change_password")."</option>";
+    echo "</select>$NWB#users-force_change_password$NWE";
+    echo "</div>";
+    
+    // Last Login Info
+    echo "<div style='background:#e7f3ff;padding:15px;border-radius:8px;border-left:4px solid #007bff;'>";
+    echo "<div style='font-size:12px;font-weight:600;color:#004085;margin-bottom:5px;'>"._QXZ("Last Login Info")."</div>";
+    echo "<div style='font-size:13px;color:#004085;'><strong>$last_login_date - $failed_login_count - $last_ip $last_auth</strong> $NWB#users-last_login_date$NWE</div>";
+    if ($LOGuser_level > 8) {
+        if ($failed_login_attempts_today > 0) {
+            echo "<div style='margin-top:8px;font-size:12px;'><a href='user_logins_report.php?user=$user' style='color:#007bff;text-decoration:none;font-weight:600;'>"._QXZ("Failed logins today")."</a>: $failed_login_attempts_today - $failed_login_count_today - $failed_last_ip_today - $failed_last_type_today</div>";
+        } else {
+            echo "<div style='margin-top:8px;font-size:12px;'><a href='user_logins_report.php?user=$user' style='color:#007bff;text-decoration:none;font-weight:600;'>"._QXZ("Logins summary")."</a></div>";
+        }
+    }
+    echo "</div>";
+    
+    // Full Name
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Full Name")."</label>";
+    echo "<input type='text' name='full_name' size='30' maxlength='30' value='$full_name' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-full_name$NWE";
+    echo "</div>";
+    
+    // User Level
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User Level")."</label>";
+    echo "<select size='1' name='user_level' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>";
+    $h=1;
+    $count_user_level=$LOGuser_level;
+    if (($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8)) {
+        $count_user_level=($LOGuser_level - 1);
+    }
+    while ($h<=$count_user_level) {
+        echo "<option>$h</option>";
+        $h++;
+    }
+    echo "<option SELECTED>$user_level</option>";
+    echo "</select>$NWB#users-user_level$NWE";
+    echo "</div>";
+    
+    // User Group
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=311111&user_group=$user_group' style='color:#667eea;text-decoration:none;'>"._QXZ("User Group")."</a></label>";
+    echo "<select size='1' name='user_group' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>\n";
+    
+    $stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $Ugroups_to_print = mysqli_num_rows($rslt);
+    $Ugroups_list='';
+    $o=0;
+    while ($Ugroups_to_print > $o) {
+        $rowx=mysqli_fetch_row($rslt);
+        $Ugroups_list .= "<option value='$rowx[0]'>$rowx[0] - $rowx[1]</option>\n";
+        $o++;
+    }
+    echo "$Ugroups_list";
+    echo "<option SELECTED>$user_group</option>\n";
+    echo "</select>$NWB#users-user_group$NWE";
+    echo "</div>";
+    
+    // Phone Login
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Phone Login")."</label>";
+    echo "<input type='text' name='phone_login' size='20' maxlength='20' value='$phone_login' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-phone_login$NWE";
+    echo "</div>";
+    
+    // Phone Pass
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Phone Pass")."</label>";
+    echo "<input type='text' name='phone_pass' size='40' maxlength='100' value='$phone_pass' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-phone_pass$NWE";
+    if (($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS')) {
+        echo "<div style='margin-top:8px;font-size:12px;'><a href='email_agent_login_link.php?preview=1&agent_id=$user' style='color:#667eea;text-decoration:none;font-weight:600;'>"._QXZ("send this user a login link email")."</a></div>";
+    }
+    echo "</div>";
+    
+    // Active
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Active")."</label>";
+    echo "<select size='1' name='active' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>";
+    echo "<option value='Y'>"._QXZ("Y")."</option>";
+    echo "<option value='N'>"._QXZ("N")."</option>";
+    echo "<option value='$active' SELECTED>"._QXZ("$active")."</option>";
+    echo "</select>$NWB#users-active$NWE";
+    echo "</div>";
+    
+    // Voicemail ID
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Voicemail ID")."</label>";
+    echo "<div style='display:flex;gap:10px;align-items:center;'>";
+    echo "<input type='text' name='voicemail_id' id='voicemail_id' size='12' maxlength='10' value='$voicemail_id' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>";
+    echo "<a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\" style='background:#667eea;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("voicemail chooser")."</a>";
+    echo "</div>$NWB#users-voicemail_id$NWE";
+    echo "</div>";
+    
+    // Email
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Email")."</label>";
+    echo "<input type='text' name='email' size='40' maxlength='100' value='$email' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-email$NWE";
+    echo "</div>";
+    
+    // Mobile Number
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Mobile Number")."</label>";
+    echo "<input type='text' name='mobile_number' size='20' maxlength='20' value='$mobile_number' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-mobile_number$NWE";
+    echo "</div>";
+    
+    // User Code
+    if ($SSuser_codes_admin > 0) {
+        $user_codes_ct=0;
+        $raw_user_codes_admin_data="|empty\n";
+        $user_code_container_menu='';
+        $uc_selected=0;
+        
+        if ($SSuser_codes_admin == '2') {
+            if (file_exists('user_codes_admin.txt'))
+                $user_codes_admin_ARY = file('user_codes_admin.txt');
+        } else {
+            $stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_CODES_SYSTEM';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $uc_to_print = mysqli_num_rows($rslt);
+            if ($uc_to_print > 0) {
+                $rowx=mysqli_fetch_row($rslt);
+                $raw_user_codes_admin_data = $rowx[0];
+            }
+            $user_codes_admin_ARY = explode("\n",$raw_user_codes_admin_data);
+        }
+        
+        $user_codes_admin_ct = count($user_codes_admin_ARY);
+        $o=0;
+        while ($user_codes_admin_ct > $o) {
+            if ((!preg_match("/^;/",$user_codes_admin_ARY[$o])) and (strlen($user_codes_admin_ARY[$o]) > 0)) {
+                $user_codes_ct++;
+                $user_code_item_ARY = explode('|',$user_codes_admin_ARY[$o]);
+                $user_code_item_ARY[0] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[0]);
+                $user_code_item_ARY[1] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[1]);
+                if (mb_strlen($user_code_item_ARY[1],'utf-8')>50) {
+                    $user_code_item_ARY[1] = mb_substr($user_code_item_ARY[1],0,50,'utf-8') . '...';
+                }
+                $user_code_container_menu .= "<option ";
+                if ($user_code == "$user_code_item_ARY[0]") {
+                    $user_code_container_menu .= "SELECTED ";
+                    $uc_selected++;
+                }
+                if (strlen($user_code_item_ARY[1]) > 0) {
+                    $user_code_container_menu .= "value='$user_code_item_ARY[0]'>$user_code_item_ARY[0] - $user_code_item_ARY[1]</option>\n";
+                } else {
+                    $user_code_container_menu .= "value='$user_code_item_ARY[0]'>$user_code_item_ARY[0]</option>\n";
+                }
+            }
+            $o++;
+        }
+        if ($uc_selected < 1) {
+            $user_code_container_menu .= "<option SELECTED value='$user_code'>$user_code</option>\n";
+        }
+        
+        echo "<div>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User Code")."</label>";
+        if ($LOGuser_level >= 9) {
+            echo "<select size='1' name='user_code' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>$user_code_container_menu</select>$NWB#users-optional$NWE";
+        } else {
+            echo "<input type='hidden' name='user_code' value='$user_code'>";
+            echo "<div style='padding:10px;background:#f8f9fa;border-radius:8px;font-size:14px;color:#495057;'>$user_code</div> $NWB#users-optional$NWE";
+        }
+        echo "</div>";
+    } else {
+        echo "<div>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User Code")."</label>";
+        echo "<input type='text' name='user_code' size='40' maxlength='100' value='$user_code' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-optional$NWE";
+        echo "</div>";
+    }
+    
+    echo "</div>"; // End grid
+    echo "</form>";
+    echo "</div>"; // End form container
+    echo "</div>"; // End main container
+}
 
-			echo "<input type=hidden name=user value=\"$user\">\n";
-			echo "<input type=hidden name=DB value=\"$DB\">\n";
-			echo "<center><TABLE width=980 cellspacing=3>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Number").": </td><td align=left><b>$user</b>$NWB#users-user$NWE</td></tr>\n";
-
-			if ($SSpass_hash_enabled > 0)
-				{
-				echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><b>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</b></td></tr>\n";
-				}
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 value=\"$pass\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
-
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Force Change Password").": </td><td align=left><select size=1 name=force_change_password><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$force_change_password\" SELECTED>"._QXZ("$force_change_password")."</option></select>$NWB#users-force_change_password$NWE</td></tr>\n";
-
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Last Login Info").": </td><td align=left><b>$last_login_date - $failed_login_count - $last_ip $last_auth</b>$NWB#users-last_login_date$NWE &nbsp; ";
-			if ($LOGuser_level > 8)
-				{
-				if ($failed_login_attempts_today > 0)
-					{
-					echo "<font size=2> <a href=\"user_logins_report.php?user=$user\">"._QXZ("Failed logins today")."</a>: $failed_login_attempts_today - $failed_login_count_today - $failed_last_ip_today - $failed_last_type_today</font>";
-					}
-				else
-					{
-					echo "<font size=2> <a href=\"user_logins_report.php?user=$user\">"._QXZ("Logins summary")."</a></font>";
-					}
-				}
-			echo "</td></tr>\n";
-
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=full_name size=30 maxlength=30 value=\"$full_name\">$NWB#users-full_name$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Level").": </td><td align=left><select size=1 name=user_level>";
-			$h=1;
-			$count_user_level=$LOGuser_level;
-			if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
-				{$count_user_level=($LOGuser_level - 1);}
-			while ($h<=$count_user_level)
-				{
-				echo "<option>$h</option>";
-				$h++;
-				}
-			echo "<option SELECTED>$user_level</option></select>$NWB#users-user_level$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><A HREF=\"$PHP_SELF?ADD=311111&user_group=$user_group\">"._QXZ("User Group")."</A>: </td><td align=left><select size=1 name=user_group>\n";
-
-			$stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$Ugroups_to_print = mysqli_num_rows($rslt);
-			$Ugroups_list='';
-			$o=0;
-			while ($Ugroups_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$Ugroups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-				$o++;
-				}
-			echo "$Ugroups_list";
-			echo "<option SELECTED>$user_group</option>\n";
-			echo "</select>$NWB#users-user_group$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Login").": </td><td align=left><input type=text name=phone_login size=20 maxlength=20 value=\"$phone_login\">$NWB#users-phone_login$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Pass").": </td><td align=left><input type=text name=phone_pass size=40 maxlength=100 value=\"$phone_pass\">$NWB#users-phone_pass$NWE\n";
-			if ( ($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS') )
-				{echo " &nbsp; <a href=\"email_agent_login_link.php?preview=1&agent_id=$user\">"._QXZ("send this user a login link email")."</a>";}
-			echo "</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#users-active$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Voicemail ID").": </td><td align=left><input type=text name=voicemail_id id=voicemail_id size=12 maxlength=10 value=\"$voicemail_id\"> <a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\">"._QXZ("voicemail chooser")."</a>$NWB#users-voicemail_id$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Email").": </td><td align=left><input type=text name=email size=40 maxlength=100 value=\"$email\">$NWB#users-email$NWE</td></tr>\n";
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Mobile Number").": </td><td align=left><input type=text name=mobile_number size=20 maxlength=20 value=\"$mobile_number\">$NWB#users-mobile_number$NWE</td></tr>\n";
-
-			if ($SSuser_codes_admin > 0)
-				{
-				$user_codes_ct=0;
-				$raw_user_codes_admin_data="|empty\n";
-				$user_code_container_menu='';
-				$uc_selected=0;
-				if ($SSuser_codes_admin == '2')
-					{
-					if (file_exists('user_codes_admin.txt'))
-					$user_codes_admin_ARY = file('user_codes_admin.txt');
-					}
-				else
-					{
-					$stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_CODES_SYSTEM';";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$uc_to_print = mysqli_num_rows($rslt);
-					if ($uc_to_print > 0)
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						$raw_user_codes_admin_data = $rowx[0];
-						}
-					$user_codes_admin_ARY = explode("\n",$raw_user_codes_admin_data);
-					}
-				$user_codes_admin_ct = count($user_codes_admin_ARY);
-				$o=0;
-				while ($user_codes_admin_ct > $o) 
-					{
-					if ( (!preg_match("/^;/",$user_codes_admin_ARY[$o])) and (strlen($user_codes_admin_ARY[$o]) > 0) )
-						{
-						$user_codes_ct++;
-
-						$user_code_item_ARY = explode('|',$user_codes_admin_ARY[$o]);
-						$user_code_item_ARY[0] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[0]);
-						$user_code_item_ARY[1] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[1]);
-						if (mb_strlen($user_code_item_ARY[1],'utf-8')>50)
-							{$user_code_item_ARY[1] = mb_substr($user_code_item_ARY[1],0,50,'utf-8') . '...';}
-						$user_code_container_menu .= "<option ";
-						if ($user_code == "$user_code_item_ARY[0]") 
-							{
-							$user_code_container_menu .= "SELECTED ";
-							$uc_selected++;
-							}
-						if (strlen($user_code_item_ARY[1]) > 0)
-							{
-							$user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0] - $user_code_item_ARY[1]</option>\n";
-							}
-						else
-							{
-							$user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0]</option>\n";
-							}
-						}
-					$o++;
-					}
-				if ($uc_selected < 1)
-					{$user_code_container_menu .= "<option SELECTED value=\"$user_code\">$user_code</option>\n";}
-
-				if ($LOGuser_level >= 9)
-					{
-					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><select size=1 name=user_code>$user_code_container_menu</select>$NWB#users-optional$NWE</td></tr>\n";
-					}
-				else
-					{
-					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><input type=hidden name=user_code value=\"$user_code\">$user_code &nbsp; $NWB#users-optional$NWE</td></tr>\n";
-					}
-				}
-			else
-				{
-				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><input type=text name=user_code size=40 maxlength=100 value=\"$user_code\">$NWB#users-optional$NWE</td></tr>\n";
-				}
 
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
 			$raw_location_data=";location|description\n|default\n";
