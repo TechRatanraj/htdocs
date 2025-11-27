@@ -28075,8 +28075,8 @@ echo "<style>
     margin-bottom: 20px;
 }
 </style>";
-			
- // END of main if ($ADD==3) condition
+			}			
+} // END of main if ($ADD==3) condition
 else
 {
     echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
