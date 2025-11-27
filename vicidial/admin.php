@@ -27992,10 +27992,17 @@ echo "<a href=\"./user_status.php?user=$user\">"._QXZ("User status")."</a>";
 echo "<a href=\"./user_stats.php?user=$user\">"._QXZ("User stats")."</a>";
 echo "<a href=\"./AST_agent_days_detail.php?user=$user&query_date=$REPORTdate&end_date=$REPORTdate&group[]=--ALL--&shift=ALL\">"._QXZ("User multiple day status detail report")."</a>";
 echo "<a href=\"$PHP_SELF?ADD=8&user=$user\">"._QXZ("User CallBack Holds")."</a>";
-if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-    {
+
+if (
+    ($LOGuser_level >= 9)
+    and (
+        preg_match("/Administration Change Log/", $LOGallowed_reports) ||
+        preg_match("/ALL REPORTS/", $LOGallowed_reports)
+    )
+) {
     echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=USERS&stage=$user\">"._QXZ("Admin changes to this record")."</a>";
-    }
+}
+
 echo "</div>";
 echo "</div>";
 
@@ -28004,42 +28011,43 @@ echo "</div>"; // End container
 // JavaScript for tab functionality
 echo "<script>
 function showTab(tabId) {
-    // Hide all tab contents
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(tab => tab.classList.remove('active'));
-    
-    // Remove active class from all tab buttons
+
     const tabButtons = document.querySelectorAll('.tab-button');
     tabButtons.forEach(btn => btn.classList.remove('active'));
-    
-    // Show selected tab
+
     document.getElementById(tabId).classList.add('active');
-    
-    // Add active class to clicked button
+
     event.target.classList.add('active');
 }
 
-// Initialize first tab as active
 document.addEventListener('DOMContentLoaded', function() {
     const firstTab = document.querySelector('.tab-button');
-    if (firstTab) {
-        firstTab.classList.add('active');
-    }
+    if (firstTab) { firstTab.classList.add('active'); }
+
     const firstContent = document.querySelector('.tab-content');
-    if (firstContent) {
-        firstContent.classList.add('active');
-    }
+    if (firstContent) { firstContent.classList.add('active'); }
 });
 </script>";
 
-{
-echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
-exit;
+// FIRST permission check fail
 }
-			
-		}		
+else
+{
+    echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
+    exit;
+}
+
+// SECOND permission check fail
+else
+{
+    echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
+    exit;
+}
 
          
+
 		
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
 			$raw_location_data=";location|description\n|default\n";
