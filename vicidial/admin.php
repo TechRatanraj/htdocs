@@ -26107,7 +26107,7 @@ if ($ADD==3)
 		
 if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) and ($user_level > 8))) {
     // Permission Denied Card
-    echo "<div style='max-width:800px;margin:50px auto;background:#f8d7da;border-radius:12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);border-left:6px solid #dc3545;'>";
+    echo "<div style='max-width:1100px;margin:50px auto;background:#f8d7da;border-radius:12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);border-left:6px solid #dc3545;'>";
     echo "<div style='display:flex;align-items:center;gap:20px;'>";
     echo "<div style='font-size:48px;color:#721c24;'>⛔</div>";
     echo "<div>";
@@ -26115,13 +26115,13 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "<div style='color:#721c24;font-size:14px;'>"._QXZ("You do not have permissions to modify this user").": <strong>$user</strong></div>";
     echo "</div></div></div>\n";
 } else {
-    // Modern Form Card
-    echo "<div style='max-width:900px;margin:30px auto;'>";
+    // Modern Form Card with Blue Header
+    echo "<div style='max-width:1100px;margin:30px auto;'>";
     
-    // Header
-    echo "<div style='background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px 12px 0 0;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>";
+    // Blue Header
+    echo "<div style='background:linear-gradient(135deg,#007bff 0%,#0056b3 100%);border-radius:12px 12px 0 0;padding:25px;box-shadow:0 3px 12px rgba(0,0,0,0.1);'>";
     echo "<div style='color:#fff;font-size:24px;font-weight:bold;'>"._QXZ("MODIFY USER RECORD")."</div>";
-    echo "<div style='color:#f0f0f0;font-size:14px;margin-top:5px;'>User ID: <strong>$user</strong></div>";
+    echo "<div style='color:#e6f2ff;font-size:14px;margin-top:5px;'>User ID: <strong>$user</strong></div>";
     echo "</div>";
     
     // Form Container
@@ -26145,23 +26145,20 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "<input type='hidden' name='user' value='$user'>\n";
     echo "<input type='hidden' name='DB' value='$DB'>\n";
     
-    // Form Grid
-    echo "<div style='display:grid;grid-template-columns:1fr;gap:20px;'>";
-    
-    // User Number (Read-only)
-    echo "<div style='background:#f8f9fa;padding:15px;border-radius:8px;border-left:4px solid #667eea;'>";
+    // User Number (Full Width)
+    echo "<div style='background:#f8f9fa;padding:15px;border-radius:8px;border-left:4px solid #007bff;margin-bottom:20px;'>";
     echo "<div style='font-size:12px;font-weight:600;color:#6c757d;margin-bottom:5px;'>"._QXZ("User Number")."</div>";
     echo "<div style='font-size:16px;font-weight:bold;color:#2c3e50;'>$user $NWB#users-user$NWE</div>";
     echo "</div>";
     
-    // Password Section
+    // Password Section (Full Width)
     if ($SSpass_hash_enabled > 0) {
-        echo "<div style='background:#fff3cd;padding:15px;border-radius:8px;border-left:4px solid #ffc107;'>";
+        echo "<div style='background:#fff3cd;padding:15px;border-radius:8px;border-left:4px solid #ffc107;margin-bottom:20px;'>";
         echo "<div style='color:#856404;font-weight:600;font-size:14px;'>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</div>";
         echo "</div>";
     }
     
-    echo "<div>";
+    echo "<div style='margin-bottom:20px;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Password")."</label>";
     echo "<div style='display:flex;align-items:center;gap:10px;'>";
     echo "<input type='text' id='reg_pass' name='pass' size='50' maxlength='100' value='$pass' onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\" style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>";
@@ -26171,18 +26168,8 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "<span style='font-size:11px;color:#6c757d;'>"._QXZ("Length").": <span id='pass_length' name='pass_length'>0</span></span>";
     echo "</div></div>";
     
-    // Force Change Password
-    echo "<div>";
-    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Force Change Password")."</label>";
-    echo "<select size='1' name='force_change_password' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>";
-    echo "<option value='Y'>"._QXZ("Y")."</option>";
-    echo "<option value='N'>"._QXZ("N")."</option>";
-    echo "<option value='$force_change_password' SELECTED>"._QXZ("$force_change_password")."</option>";
-    echo "</select>$NWB#users-force_change_password$NWE";
-    echo "</div>";
-    
-    // Last Login Info
-    echo "<div style='background:#e7f3ff;padding:15px;border-radius:8px;border-left:4px solid #007bff;'>";
+    // Last Login Info (Full Width)
+    echo "<div style='background:#e7f3ff;padding:15px;border-radius:8px;border-left:4px solid #007bff;margin-bottom:20px;'>";
     echo "<div style='font-size:12px;font-weight:600;color:#004085;margin-bottom:5px;'>"._QXZ("Last Login Info")."</div>";
     echo "<div style='font-size:13px;color:#004085;'><strong>$last_login_date - $failed_login_count - $last_ip $last_auth</strong> $NWB#users-last_login_date$NWE</div>";
     if ($LOGuser_level > 8) {
@@ -26192,6 +26179,21 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
             echo "<div style='margin-top:8px;font-size:12px;'><a href='user_logins_report.php?user=$user' style='color:#007bff;text-decoration:none;font-weight:600;'>"._QXZ("Logins summary")."</a></div>";
         }
     }
+    echo "</div>";
+    
+    // TWO COLUMN GRID for all other fields
+    echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;'>";
+    
+    // Column 1 Fields
+    
+    // Force Change Password
+    echo "<div>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Force Change Password")."</label>";
+    echo "<select size='1' name='force_change_password' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>";
+    echo "<option value='Y'>"._QXZ("Y")."</option>";
+    echo "<option value='N'>"._QXZ("N")."</option>";
+    echo "<option value='$force_change_password' SELECTED>"._QXZ("$force_change_password")."</option>";
+    echo "</select>$NWB#users-force_change_password$NWE";
     echo "</div>";
     
     // Full Name
@@ -26219,7 +26221,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     
     // User Group
     echo "<div>";
-    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=311111&user_group=$user_group' style='color:#667eea;text-decoration:none;'>"._QXZ("User Group")."</a></label>";
+    echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=311111&user_group=$user_group' style='color:#007bff;text-decoration:none;'>"._QXZ("User Group")."</a></label>";
     echo "<select size='1' name='user_group' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;'>\n";
     
     $stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
@@ -26248,7 +26250,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Phone Pass")."</label>";
     echo "<input type='text' name='phone_pass' size='40' maxlength='100' value='$phone_pass' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>$NWB#users-phone_pass$NWE";
     if (($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS')) {
-        echo "<div style='margin-top:8px;font-size:12px;'><a href='email_agent_login_link.php?preview=1&agent_id=$user' style='color:#667eea;text-decoration:none;font-weight:600;'>"._QXZ("send this user a login link email")."</a></div>";
+        echo "<div style='margin-top:8px;font-size:12px;'><a href='email_agent_login_link.php?preview=1&agent_id=$user' style='color:#007bff;text-decoration:none;font-weight:600;'>"._QXZ("send this user a login link email")."</a></div>";
     }
     echo "</div>";
     
@@ -26267,7 +26269,7 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Voicemail ID")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' name='voicemail_id' id='voicemail_id' size='12' maxlength='10' value='$voicemail_id' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;'>";
-    echo "<a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\" style='background:#667eea;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("voicemail chooser")."</a>";
+    echo "<a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("chooser")."</a>";
     echo "</div>$NWB#users-voicemail_id$NWE";
     echo "</div>";
     
@@ -26348,11 +26350,10 @@ if ((($user_level >= $LOGuser_level) and ($LOGuser_level < 9)) or (($LOGmodify_s
         echo "</div>";
     }
     
-    echo "</div>"; // End grid
+    echo "</div>"; // End 2-column grid
     echo "</form>";
     echo "</div>"; // End form container
     echo "</div>"; // End main container
-
 
 
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
