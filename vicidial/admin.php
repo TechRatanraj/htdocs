@@ -13393,61 +13393,93 @@ if ($ADD==20)
 
 
 ######################
+
 # ADD=22 adds the new campaign status to the system
 ######################
-if ($ADD==22)
-	{
-	if ($add_copy_disabled > 0)
-		{
-		echo "<br>"._QXZ("You do not have permission to add records on this system")." -system_settings-\n";
-		}
-	else
-		{
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-		$stmt="SELECT count(*) from vicidial_campaign_statuses where campaign_id='$campaign_id' and status='$status_id';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		if ($row[0] > 0)
-			{echo "<br>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name")."\n";}
-		else
-			{
-			$stmt="SELECT count(*) from vicidial_statuses where status='$status_id';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$row=mysqli_fetch_row($rslt);
-			if ($row[0] > 0)
-				{echo "<br>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name")."\n";}
-			else
-				{
-				if ( (strlen($campaign_id) < 2) or (strlen($status_id) < 1) or (strlen($status_name) < 2) )
-					{
-					echo "<br>"._QXZ("CAMPAIGN STATUS NOT ADDED - Please go back and look at the data you entered")."\n";
-					echo "<br>"._QXZ("status must be between 1 and 8 characters in length")."\n";
-					echo "<br>"._QXZ("status name must be between 2 and 30 characters in length")."\n";
-					}
-				else
-					{
-					echo "<br><B>"._QXZ("CAMPAIGN STATUS ADDED").": $campaign_id - $status_id</B>\n";
+if ($ADD==22) {
+    if ($add_copy_disabled > 0) {
+        echo "<div style='max-width:800px;margin:30px auto;background:#f8d7da;border-radius:10px;padding:20px 25px;border-left:6px solid #f5c6cb;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
+        echo "<div style='display:flex;align-items:center;gap:15px;'>";
+        echo "<div style='font-size:40px;color:#721c24;'>⚠️</div>";
+        echo "<div>";
+        echo "<div style='font-size:18px;font-weight:bold;color:#721c24;margin-bottom:5px;'>"._QXZ("Permission Denied")."</div>";
+        echo "<div style='color:#721c24;font-size:14px;'>"._QXZ("You do not have permission to add records on this system")." - system_settings -</div>";
+        echo "</div></div></div>\n";
+    } else {
+        $stmt = "SELECT count(*) from vicidial_campaign_statuses where campaign_id='$campaign_id' and status='$status_id';";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        
+        if ($row[0] > 0) {
+            echo "<div style='max-width:800px;margin:30px auto;background:#fff3cd;border-radius:10px;padding:20px 25px;border-left:6px solid #ffc107;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
+            echo "<div style='display:flex;align-items:center;gap:15px;'>";
+            echo "<div style='font-size:40px;color:#856404;'>⚠️</div>";
+            echo "<div>";
+            echo "<div style='font-size:18px;font-weight:bold;color:#856404;margin-bottom:5px;'>"._QXZ("Duplicate Status Detected")."</div>";
+            echo "<div style='color:#856404;font-size:14px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a campaign-status in the system with this name")."</div>";
+            echo "</div></div></div>\n";
+        } else {
+            $stmt = "SELECT count(*) from vicidial_statuses where status='$status_id';";
+            $rslt = mysql_to_mysqli($stmt, $link);
+            $row = mysqli_fetch_row($rslt);
+            
+            if ($row[0] > 0) {
+                echo "<div style='max-width:800px;margin:30px auto;background:#fff3cd;border-radius:10px;padding:20px 25px;border-left:6px solid #ffc107;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
+                echo "<div style='display:flex;align-items:center;gap:15px;'>";
+                echo "<div style='font-size:40px;color:#856404;'>⚠️</div>";
+                echo "<div>";
+                echo "<div style='font-size:18px;font-weight:bold;color:#856404;margin-bottom:5px;'>"._QXZ("Global Status Conflict")."</div>";
+                echo "<div style='color:#856404;font-size:14px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - there is already a global-status in the system with this name")."</div>";
+                echo "</div></div></div>\n";
+            } else {
+                if ((strlen($campaign_id) < 2) or (strlen($status_id) < 1) or (strlen($status_name) < 2)) {
+                    echo "<div style='max-width:800px;margin:30px auto;background:#f8d7da;border-radius:10px;padding:25px;border-left:6px solid #f5c6cb;box-shadow:0 2px 10px rgba(0,0,0,0.08);'>";
+                    echo "<div style='display:flex;align-items:flex-start;gap:15px;'>";
+                    echo "<div style='font-size:40px;color:#721c24;'>❌</div>";
+                    echo "<div style='flex:1;'>";
+                    echo "<div style='font-size:18px;font-weight:bold;color:#721c24;margin-bottom:10px;'>"._QXZ("Validation Error")."</div>";
+                    echo "<div style='color:#721c24;font-size:14px;margin-bottom:8px;'>"._QXZ("CAMPAIGN STATUS NOT ADDED - Please go back and look at the data you entered")."</div>";
+                    echo "<ul style='margin:10px 0 0 20px;padding:0;color:#721c24;'>";
+                    echo "<li style='margin:5px 0;'>"._QXZ("status must be between 1 and 8 characters in length")."</li>";
+                    echo "<li style='margin:5px 0;'>"._QXZ("status name must be between 2 and 30 characters in length")."</li>";
+                    echo "</ul>";
+                    echo "</div></div></div>\n";
+                } else {
+                    // Success message with animation
+                    echo "<div style='max-width:800px;margin:30px auto;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);border-radius:12px;padding:30px;box-shadow:0 8px 24px rgba(102,126,234,0.3);animation:slideIn 0.5s ease-out;'>";
+                    echo "<style>@keyframes slideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}</style>";
+                    echo "<div style='display:flex;align-items:center;gap:20px;'>";
+                    echo "<div style='font-size:50px;'>✅</div>";
+                    echo "<div style='flex:1;'>";
+                    echo "<div style='color:#fff;font-size:24px;font-weight:bold;margin-bottom:8px;'>"._QXZ("CAMPAIGN STATUS ADDED")."</div>";
+                    echo "<div style='background:rgba(255,255,255,0.2);border-radius:8px;padding:12px 18px;display:inline-block;'>";
+                    echo "<span style='color:#f5f5f5;font-size:16px;'><strong style='color:#fff;'>Campaign:</strong> $campaign_id</span>";
+                    echo "<span style='color:#fff;margin:0 10px;'>•</span>";
+                    echo "<span style='color:#f5f5f5;font-size:16px;'><strong style='color:#fff;'>Status:</strong> $status_id</span>";
+                    echo "</div></div></div></div>\n";
+                    
+                    $stmt = "INSERT INTO vicidial_campaign_statuses (status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine) values('$status_id','$status_name','$selectable','$campaign_id','$human_answered','$category','$sale','$dnc','$customer_contact','$not_interested','$unworkable','$scheduled_callbacks','$completed','$min_sec','$max_sec','$answering_machine');";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    
+                    $stmtB = "UPDATE vicidial_campaigns set campaign_changedate='$SQLdate' where campaign_id='$campaign_id';";
+                    $rslt = mysql_to_mysqli($stmtB, $link);
+                    
+                    ### LOG INSERTION Admin Log Table ###
+                    $SQL_log = "$stmt|$stmtB|";
+                    $SQL_log = preg_replace('/;/', '', $SQL_log);
+                    $SQL_log = addslashes($SQL_log);
+                    $stmt = "INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='CAMPAIGN_STATUS', event_type='ADD', record_id='$campaign_id', event_code='ADMIN ADD CAMPAIGN STATUS', event_sql=\"$SQL_log\", event_notes='Status: $status_id';";
+                    if ($DB) {echo "|$stmt|\n";}
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                }
+            }
+        }
+    }
+    $SUB = 22;
+    $ADD = 31;
+}
 
-					$stmt="INSERT INTO vicidial_campaign_statuses (status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine) values('$status_id','$status_name','$selectable','$campaign_id','$human_answered','$category','$sale','$dnc','$customer_contact','$not_interested','$unworkable','$scheduled_callbacks','$completed','$min_sec','$max_sec','$answering_machine');";
-					$rslt=mysql_to_mysqli($stmt, $link);
 
-					$stmtB="UPDATE vicidial_campaigns set campaign_changedate='$SQLdate' where campaign_id='$campaign_id';";
-					$rslt=mysql_to_mysqli($stmtB, $link);
-
-					### LOG INSERTION Admin Log Table ###
-					$SQL_log = "$stmt|$stmtB|";
-					$SQL_log = preg_replace('/;/', '', $SQL_log);
-					$SQL_log = addslashes($SQL_log);
-					$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='CAMPAIGN_STATUS', event_type='ADD', record_id='$campaign_id', event_code='ADMIN ADD CAMPAIGN STATUS', event_sql=\"$SQL_log\", event_notes='Status: $status_id';";
-					if ($DB) {echo "|$stmt|\n";}
-					$rslt=mysql_to_mysqli($stmt, $link);
-					}
-				}
-			}
-		}
-	$SUB=22;
-	$ADD=31;
-	}
 
 
 ######################
@@ -32484,6 +32516,7 @@ echo "</center></div>\n";
 		echo "<td align=center valign=bottom><font size=1><b>"._QXZ("MAX SEC")."</td>\n";
 		echo "<td align=center valign=bottom><font size=2><b>"._QXZ("MODIFY/DELETE")."</td>\n";
 		echo "</tr>\n";
+//Done till here Bottom lines are pending 
 
 		##### get status category listings for dynamic pulldown
 		$stmt="SELECT vsc_id,vsc_name from vicidial_status_categories order by vsc_id desc;";
