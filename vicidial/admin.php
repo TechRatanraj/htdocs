@@ -35236,7 +35236,7 @@ echo "</div>"; // card
 echo "</div>"; // bottom wrapper for "ADD NEW LIST MIX"
 
 echo "</div>\n";  // close outer main wrapper
-
+		}
 
 ######################
 # ADD=30 campaign not allowed
