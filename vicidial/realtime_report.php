@@ -3267,19 +3267,7 @@ if (preg_match("/LIMITED/",$report_display_type)) {
     echo "</header>\n";
     
     // Hidden elements for positioning
-    echo "<span class=\"hidden-element\" style=\"left:160px;z-index:20;\" id=\"campaign_select_list_link\">\n";
-    echo "<div class=\"card\" style=\"width:250px;\">\n";
-    echo "<div class=\"card-header\">\n";
-    echo "<div class=\"card-title\">\n";
-    echo "<i class=\"fas fa-cog\"></i>\n";
-    echo "<span>"._QXZ("Choose Report Display Options")."</span>\n";
-    echo "</div>\n";
-    echo "</div>\n";
-    echo "<div class=\"card-body\">\n";
-    echo "<!-- Options would go here -->\n";
-    echo "</div>\n";
-    echo "</div>\n";
-    echo "</span>\n";
+
     
     echo "<span class=\"hidden-element\" style=\"left:0px;z-index:21;\" id=\"campaign_select_list\"></span>\n";
     echo "<span class=\"hidden-element\" style=\"left:" . $webphone_left . "px;top:" . $webphone_top . "px;z-index:18;\" id=\"webphone_content\">\n";
