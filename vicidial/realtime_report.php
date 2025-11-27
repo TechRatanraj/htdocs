@@ -2110,8 +2110,6 @@ if ($RS_hide_CUST_info < 1)
 </STYLE>
 
 <?php
-
-
  $stmt = "select count(*) from vicidial_campaigns where active='Y' and campaign_allow_inbound='Y' $group_SQLand;";
  $rslt=mysql_to_mysqli($stmt, $link);
 if ($DB) {echo "$stmt\n";}
@@ -2287,6 +2285,83 @@ echo ".hidden-element {\n";
 echo "  position: absolute;\n";
 echo "  z-index: 1000;\n";
 echo "}\n";
+echo ".realtime-container {\n";
+echo "  min-height: 400px;\n";
+echo "  position: relative;\n";
+echo "}\n";
+echo ".performance-indicator {\n";
+echo "  display: flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 8px;\n";
+echo "  padding: 6px 12px;\n";
+echo "  border-radius: 20px;\n";
+echo "  background-color: var(--light-color);\n";
+echo "  font-size: 14px;\n";
+echo "  color: var(--gray-color);\n";
+echo "}\n";
+echo ".notification {\n";
+echo "  display: flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 10px;\n";
+echo "  padding: 12px 16px;\n";
+echo "  margin: 10px 0;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "  box-shadow: var(--box-shadow);\n";
+echo "}\n";
+echo ".notification.info {\n";
+echo "  background-color: #e7f5ff;\n";
+echo "  color: #0052cc;\n";
+echo "  border-left: 4px solid var(--info-color);\n";
+echo "}\n";
+echo ".debug-container {\n";
+echo "  font-family: monospace;\n";
+echo "  background-color: #f8f9fa;\n";
+echo "  padding: 15px;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "  border: 1px solid #eaeaea;\n";
+echo "  max-height: 300px;\n";
+echo "  overflow-y: auto;\n";
+echo "  white-space: pre-wrap;\n";
+echo "  font-size: 13px;\n";
+echo "  line-height: 1.4;\n";
+echo "}\n";
+echo ".dashboard-footer {\n";
+echo "  margin-top: 30px;\n";
+echo "  padding: 20px 0;\n";
+echo "  border-top: 1px solid #eaeaea;\n";
+echo "}\n";
+echo ".footer-content {\n";
+echo "  display: flex;\n";
+echo "  justify-content: space-between;\n";
+echo "  align-items: center;\n";
+echo "  flex-wrap: wrap;\n";
+echo "  gap: 20px;\n";
+echo "}\n";
+echo ".performance-metrics {\n";
+echo "  display: flex;\n";
+echo "  gap: 20px;\n";
+echo "}\n";
+echo ".metric {\n";
+echo "  display: flex;\n";
+echo "  flex-direction: column;\n";
+echo "  align-items: center;\n";
+echo "  gap: 5px;\n";
+echo "}\n";
+echo ".metric-label {\n";
+echo "  font-size: 12px;\n";
+echo "  color: var(--gray-color);\n";
+echo "  text-transform: uppercase;\n";
+echo "  letter-spacing: 0.5px;\n";
+echo "}\n";
+echo ".metric-value {\n";
+echo "  font-size: 16px;\n";
+echo "  font-weight: 600;\n";
+echo "  color: var(--dark-color);\n";
+echo "}\n";
+echo ".footer-actions {\n";
+echo "  display: flex;\n";
+echo "  gap: 10px;\n";
+echo "}\n";
 echo "@media (max-width: 768px) {\n";
 echo "  .header-content {\n";
 echo "    flex-direction: column;\n";
@@ -2298,6 +2373,15 @@ echo "    justify-content: center;\n";
 echo "  }\n";
 echo "  .toggle-group {\n";
 echo "    justify-content: center;\n";
+echo "  }\n";
+echo "  .footer-content {\n";
+echo "    flex-direction: column;\n";
+echo "    align-items: center;\n";
+echo "    text-align: center;\n";
+echo "  }\n";
+echo "  .performance-metrics {\n";
+echo "    width: 100%;\n";
+echo "    justify-content: space-around;\n";
 echo "  }\n";
 echo "}\n";
 echo "</style>\n";
@@ -2581,51 +2665,115 @@ if (!preg_match("/WALL|LIMITED/",$report_display_type)) {
 
 echo "</div>\n"; // End card
 echo "</div>\n"; // End dashboard
+
+// Real-time content container with modern styling
+echo "<div class=\"card\" style=\"margin-top:20px;\">\n";
+echo "<div class=\"card-header\">\n";
+echo "<div class=\"card-title\">\n";
+echo "<i class=\"fas fa-chart-line\"></i>\n";
+echo "<span>"._QXZ("Real-Time Dashboard")."</span>\n";
+echo "</div>\n";
+echo "<div class=\"performance-indicator\" id=\"performance-status\">\n";
+echo "<i class=\"fas fa-tachometer-alt\"></i>\n";
+echo "<span>"._QXZ("Loading")."...</span>\n";
+echo "</div>\n";
+echo "</div>\n";
+echo "<div class=\"card-body\">\n";
+echo "<div id=\"realtime_content\" name=\"realtime_content\" class=\"realtime-container\">\n";
+echo "<!-- Real-time content will be loaded here -->\n";
+echo "</div>\n";
+echo "</div>\n";
+echo "</div>\n";
+
+// Database source switching with modern notification
+if ($db_source == 'S') {
+    mysqli_close($link);
+    $use_slave_server=0;
+    $db_source = 'M';
+    require("dbconnect_mysqli.php");
+    
+    // Show a notification about database switch
+    echo "<div class=\"notification info\">\n";
+    echo "<i class=\"fas fa-database\"></i>\n";
+    echo "<span>"._QXZ("Switched to master database for real-time data")."</span>\n";
+    echo "</div>\n";
+}
+
+// Performance metrics with modern display
+ $endMS = microtime();
+ $startMSary = explode(" ",$startMS);
+ $endMSary = explode(" ",$endMS);
+ $runS = ($endMSary[0] - $startMSary[0]);
+ $runM = ($endMSary[1] - $startMSary[1]);
+ $TOTALrun = ($runS + $runM);
+
+// Update performance status with actual metrics
+echo "<script>\n";
+echo "document.getElementById('performance-status').innerHTML = '<i class=\"fas fa-tachometer-alt\"></i><span>"._QXZ("Load Time").": " . number_format($TOTALrun, 4) . "s</span>';\n";
+echo "</script>\n";
+
+// Update performance log
+ $stmt="UPDATE vicidial_report_log set run_time='$TOTALrun' where report_log_id='$report_log_id';";
+if ($DB) {echo "|$stmt|\n";}
+ $rslt=mysql_to_mysqli($stmt, $link);
+
+// Debug information in modern format
+if ($DB > 0) {
+    echo "<div class=\"card\" style=\"margin-top:20px;\">\n";
+    echo "<div class=\"card-header\">\n";
+    echo "<div class=\"card-title\">\n";
+    echo "<i class=\"fas fa-bug\"></i>\n";
+    echo "<span>"._QXZ("Debug Information")."</span>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "<div class=\"card-body\">\n";
+    echo "<div id=\"ajaxdebug\" name=\"ajaxdebug\" class=\"debug-container\">\n";
+    echo "<!-- Debug information will appear here -->\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+}
+
+// Modern footer with performance metrics
+echo "<footer class=\"dashboard-footer\">\n";
+echo "<div class=\"footer-content\">\n";
+echo "<div class=\"performance-metrics\">\n";
+echo "<div class=\"metric\">\n";
+echo "<span class=\"metric-label\">"._QXZ("Page Load Time")."</span>\n";
+echo "<span class=\"metric-value\">" . number_format($TOTALrun, 4) . "s</span>\n";
+echo "</div>\n";
+echo "<div class=\"metric\">\n";
+echo "<span class=\"metric-label\">"._QXZ("Database Source")."</span>\n";
+echo "<span class=\"metric-value\">" . ($db_source == 'M' ? _QXZ("Master") : _QXZ("Slave")) . "</span>\n";
+echo "</div>\n";
+echo "<div class=\"metric\">\n";
+echo "<span class=\"metric-label\">"._QXZ("Report ID")."</span>\n";
+echo "<span class=\"metric-value\">$report_log_id</span>\n";
+echo "</div>\n";
+echo "</div>\n";
+echo "<div class=\"footer-actions\">\n";
+echo "<button class=\"action-btn\" onclick=\"window.print()\">\n";
+echo "<i class=\"fas fa-print\"></i>\n";
+echo "<span>"._QXZ("Print")."</span>\n";
+echo "</button>\n";
+echo "<button class=\"action-btn\" onclick=\"exportReport()\">\n";
+echo "<i class=\"fas fa-download\"></i>\n";
+echo "<span>"._QXZ("Export")."</span>\n";
+echo "</button>\n";
+echo "</div>\n";
+echo "</div>\n";
+echo "</footer>\n";
+
+// Add JavaScript for export functionality
+echo "<script>\n";
+echo "function exportReport() {\n";
+echo "  // Export functionality would go here\n";
+echo "  alert('"._QXZ("Export functionality would be implemented here")."');\n";
+echo "}\n";
+echo "</script>\n";
+
+// Close HTML tags properly
 echo "</div>\n"; // End container
 echo "</body>\n";
 echo "</html>\n";
-
-
-##### END header formatting #####
-
-#echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
-
-echo "<span id=realtime_content name=realtime_content></span>\n";
-
-
-
-
-
-
-if ($db_source == 'S')
-	{
-	mysqli_close($link);
-	$use_slave_server=0;
-	$db_source = 'M';
-	require("dbconnect_mysqli.php");
-	}
-
-$endMS = microtime();
-$startMSary = explode(" ",$startMS);
-$endMSary = explode(" ",$endMS);
-$runS = ($endMSary[0] - $startMSary[0]);
-$runM = ($endMSary[1] - $startMSary[1]);
-$TOTALrun = ($runS + $runM);
-
-$stmt="UPDATE vicidial_report_log set run_time='$TOTALrun' where report_log_id='$report_log_id';";
-if ($DB) {echo "|$stmt|\n";}
-$rslt=mysql_to_mysqli($stmt, $link);
-
-
 ?>
-</TD></TR></TABLE>
-</FORM>
-
-<?php
-if ($DB > 0)
-{
-echo "<span id=ajaxdebug></span>\n";
-}
-?>
-
-</BODY></HTML>
