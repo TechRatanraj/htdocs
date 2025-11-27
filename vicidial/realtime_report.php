@@ -1390,10 +1390,8 @@ if ($RS_UGlatencyALLOWED > 0) {
  $select_list .= "<span>"._QXZ("VERSION").": $version &nbsp; "._QXZ("BUILD").": $build</span>";
  $select_list .= "</div>";
 
- $select_list .= "</div>"; // End of settings-options
- $select_list .= "</div>"; // End of settings-content
- $select_list .= "</div>"; // End of settings-panel
  
+
 $open_list = '<TABLE WIDTH=250 CELLPADDING=0 CELLSPACING=0 BGCOLOR=\'#D9E6FE\'><TR><TD ALIGN=CENTER><a href=\'#\' onclick=\\"showDiv(\'campaign_select_list\');\\"><font class=\'top_settings_val\'>'._QXZ("Choose Report Display Options").'</a></TD></TR></TABLE>';
 
 
