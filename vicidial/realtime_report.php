@@ -2110,161 +2110,482 @@ if ($RS_hide_CUST_info < 1)
 </STYLE>
 
 <?php
-$stmt = "select count(*) from vicidial_campaigns where active='Y' and campaign_allow_inbound='Y' $group_SQLand;";
-$rslt=mysql_to_mysqli($stmt, $link);
+
+
+ $stmt = "select count(*) from vicidial_campaigns where active='Y' and campaign_allow_inbound='Y' $group_SQLand;";
+ $rslt=mysql_to_mysqli($stmt, $link);
 if ($DB) {echo "$stmt\n";}
-$row=mysqli_fetch_row($rslt);
-$campaign_allow_inbound = $row[0];
+ $row=mysqli_fetch_row($rslt);
+ $campaign_allow_inbound = $row[0];
 
-echo "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\">\n";
-echo "<TITLE>"._QXZ("$report_name").": $group</TITLE></HEAD><BODY BGCOLOR=WHITE marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+// Modern HTML5 structure with responsive design
+echo "<!DOCTYPE html>\n";
+echo "<html lang=\"en\">\n";
+echo "<head>\n";
+echo "<meta charset=\"UTF-8\">\n";
+echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
+echo "<title>"._QXZ("$report_name").": $group</title>\n";
+echo "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n";
+echo "<style>\n";
+echo ":root {\n";
+echo "  --primary-color: #4361ee;\n";
+echo "  --secondary-color: #3f37c9;\n";
+echo "  --success-color: #06ffa5;\n";
+echo "  --danger-color: #ff006e;\n";
+echo "  --warning-color: #ffbe0b;\n";
+echo "  --info-color: #00b4d8;\n";
+echo "  --light-color: #f8f9fa;\n";
+echo "  --dark-color: #212529;\n";
+echo "  --gray-color: #6c757d;\n";
+echo "  --border-radius: 8px;\n";
+echo "  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n";
+echo "  --transition: all 0.3s ease;\n";
+echo "}\n";
+echo "* {\n";
+echo "  margin: 0;\n";
+echo "  padding: 0;\n";
+echo "  box-sizing: border-box;\n";
+echo "  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n";
+echo "}\n";
+echo "body {\n";
+echo "  background-color: #f5f7fb;\n";
+echo "  color: var(--dark-color);\n";
+echo "  line-height: 1.6;\n";
+echo "}\n";
+echo ".container {\n";
+echo "  max-width: 1400px;\n";
+echo "  margin: 0 auto;\n";
+echo "  padding: 20px;\n";
+echo "}\n";
+echo "header {\n";
+echo "  background-color: white;\n";
+echo "  box-shadow: var(--box-shadow);\n";
+echo "  padding: 20px 0;\n";
+echo "  margin-bottom: 30px;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "}\n";
+echo ".header-content {\n";
+echo "  display: flex;\n";
+echo "  justify-content: space-between;\n";
+echo "  align-items: center;\n";
+echo "  padding: 0 20px;\n";
+echo "}\n";
+echo ".logo {\n";
+echo "  font-size: 24px;\n";
+echo "  font-weight: 700;\n";
+echo "  color: var(--primary-color);\n";
+echo "  display: flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 10px;\n";
+echo "}\n";
+echo ".nav-menu {\n";
+echo "  display: flex;\n";
+echo "  gap: 20px;\n";
+echo "}\n";
+echo ".nav-item {\n";
+echo "  padding: 8px 16px;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "  transition: var(--transition);\n";
+echo "  cursor: pointer;\n";
+echo "  font-weight: 500;\n";
+echo "}\n";
+echo ".nav-item:hover {\n";
+echo "  background-color: var(--light-color);\n";
+echo "}\n";
+echo ".nav-item.active {\n";
+echo "  background-color: var(--primary-color);\n";
+echo "  color: white;\n";
+echo "}\n";
+echo ".dashboard {\n";
+echo "  display: grid;\n";
+echo "  grid-template-columns: 1fr;\n";
+echo "  gap: 20px;\n";
+echo "}\n";
+echo ".card {\n";
+echo "  background-color: white;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "  box-shadow: var(--box-shadow);\n";
+echo "  padding: 20px;\n";
+echo "  margin-bottom: 20px;\n";
+echo "}\n";
+echo ".card-header {\n";
+echo "  display: flex;\n";
+echo "  justify-content: space-between;\n";
+echo "  align-items: center;\n";
+echo "  margin-bottom: 20px;\n";
+echo "  padding-bottom: 10px;\n";
+echo "  border-bottom: 1px solid #eaeaea;\n";
+echo "}\n";
+echo ".card-title {\n";
+echo "  font-size: 18px;\n";
+echo "  font-weight: 600;\n";
+echo "  color: var(--dark-color);\n";
+echo "  display: flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 10px;\n";
+echo "}\n";
+echo ".toggle-group {\n";
+echo "  display: flex;\n";
+echo "  flex-wrap: wrap;\n";
+echo "  gap: 10px;\n";
+echo "  margin-top: 20px;\n";
+echo "}\n";
+echo ".toggle-btn {\n";
+echo "  display: inline-flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 6px;\n";
+echo "  padding: 8px 12px;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "  background-color: var(--light-color);\n";
+echo "  color: var(--gray-color);\n";
+echo "  border: none;\n";
+echo "  cursor: pointer;\n";
+echo "  font-size: 14px;\n";
+echo "  transition: var(--transition);\n";
+echo "}\n";
+echo ".toggle-btn:hover {\n";
+echo "  background-color: #e9ecef;\n";
+echo "}\n";
+echo ".toggle-btn.active {\n";
+echo "  background-color: var(--primary-color);\n";
+echo "  color: white;\n";
+echo "}\n";
+echo ".action-btn {\n";
+echo "  display: inline-flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 6px;\n";
+echo "  padding: 8px 16px;\n";
+echo "  border-radius: var(--border-radius);\n";
+echo "  background-color: var(--primary-color);\n";
+echo "  color: white;\n";
+echo "  border: none;\n";
+echo "  cursor: pointer;\n";
+echo "  font-size: 14px;\n";
+echo "  font-weight: 500;\n";
+echo "  transition: var(--transition);\n";
+echo "}\n";
+echo ".action-btn:hover {\n";
+echo "  background-color: var(--secondary-color);\n";
+echo "}\n";
+echo ".action-btn.success {\n";
+echo "  background-color: var(--success-color);\n";
+echo "  color: var(--dark-color);\n";
+echo "}\n";
+echo ".action-btn.danger {\n";
+echo "  background-color: var(--danger-color);\n";
+echo "}\n";
+echo ".refresh-timer {\n";
+echo "  display: inline-flex;\n";
+echo "  align-items: center;\n";
+echo "  gap: 6px;\n";
+echo "  padding: 6px 12px;\n";
+echo "  border-radius: 20px;\n";
+echo "  background-color: var(--light-color);\n";
+echo "  font-size: 14px;\n";
+echo "}\n";
+echo ".hidden-element {\n";
+echo "  position: absolute;\n";
+echo "  z-index: 1000;\n";
+echo "}\n";
+echo "@media (max-width: 768px) {\n";
+echo "  .header-content {\n";
+echo "    flex-direction: column;\n";
+echo "    gap: 20px;\n";
+echo "  }\n";
+echo "  .nav-menu {\n";
+echo "    flex-wrap: wrap;\n";
+echo "    justify-content: center;\n";
+echo "  }\n";
+echo "  .toggle-group {\n";
+echo "    justify-content: center;\n";
+echo "  }\n";
+echo "}\n";
+echo "</style>\n";
+echo "</head>\n";
+echo "<body>\n";
 
-if (preg_match("/LIMITED/",$report_display_type))
-	{
-	$short_header=1;
-	$no_header=1;
+if (preg_match("/LIMITED/",$report_display_type)) {
+    $short_header=1;
+    $no_header=1;
+    require("admin_header.php");
+    
+    echo "<div class=\"container\">\n";
+    echo "<header>\n";
+    echo "<div class=\"header-content\">\n";
+    echo "<div class=\"logo\">\n";
+    echo "<i class=\"fas fa-chart-line\"></i>\n";
+    echo "<span>"._QXZ("$report_name").": $group</span>\n";
+    echo "</div>\n";
+    echo "<div class=\"nav-menu\">\n";
+    echo "<div class=\"nav-item\">\n";
+    echo "<a href=\"#\" onclick=\"update_variables('form_submit','','YES')\" style=\"text-decoration:none;color:inherit;\">\n";
+    echo "<i class=\"fas fa-sync-alt\"></i> "._QXZ("RELOAD NOW")."\n";
+    echo "</a>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</header>\n";
+    
+    // Hidden elements for positioning
+    echo "<span class=\"hidden-element\" style=\"left:160px;z-index:20;\" id=\"campaign_select_list_link\"></span>\n";
+    echo "<span class=\"hidden-element\" style=\"left:0px;z-index:21;\" id=\"campaign_select_list\"></span>\n";
+    echo "<span class=\"hidden-element\" style=\"left:" . $webphone_left . "px;top:" . $webphone_top . "px;z-index:18;\" id=\"webphone_content\"></span>\n";
+    echo "<span class=\"hidden-element\" style=\"left:10px;top:120px;z-index:14;\" id=\"agent_ingroup_display\"></span>\n";
+    
+    echo "<FORM ACTION=\"$PHP_SELF\" METHOD=GET NAME=REALTIMEform ID=REALTIMEform>\n";
+    echo "<INPUT TYPE=HIDDEN NAME=cursorX ID=cursorX>\n";
+    echo "<INPUT TYPE=HIDDEN NAME=cursorY ID=cursorY>\n";
+    echo "</FORM>\n";
+} else {
+    $short_header=1;
+    require("admin_header.php");
+    
+    echo "<div class=\"container\">\n";
+    echo "<header>\n";
+    echo "<div class=\"header-content\">\n";
+    echo "<div class=\"logo\">\n";
+    echo "<i class=\"fas fa-chart-line\"></i>\n";
+    echo "<span>"._QXZ("$report_name").": $group</span>\n";
+    echo "</div>\n";
+    echo "<div class=\"nav-menu\">\n";
+    echo "<div class=\"nav-item\">\n";
+    echo "<a href=\"#\" onclick=\"showDiv('campaign_select_list')\" style=\"text-decoration:none;color:inherit;\">\n";
+    echo "<i class=\"fas fa-cog\"></i> "._QXZ("Options")."\n";
+    echo "</a>\n";
+    echo "</div>\n";
+    echo "<div class=\"nav-item\">\n";
+    echo "<a href=\"#\" onclick=\"update_variables('form_submit','','YES')\" style=\"text-decoration:none;color:inherit;\">\n";
+    echo "<i class=\"fas fa-sync-alt\"></i> "._QXZ("RELOAD NOW")."\n";
+    echo "</a>\n";
+    echo "</div>\n";
+    
+    if ($LOGuser_level > 7) {
+        if (preg_match('/ALL\-ACTIVE/i',$group_string)) {
+            echo "<div class=\"nav-item\">\n";
+            echo "<a href=\"./admin.php?ADD=10\" style=\"text-decoration:none;color:inherit;\">\n";
+            echo "<i class=\"fas fa-edit\"></i> "._QXZ("MODIFY")."\n";
+            echo "</a>\n";
+            echo "</div>\n";
+        } else {
+            echo "<div class=\"nav-item\">\n";
+            echo "<a href=\"./admin.php?ADD=34&campaign_id=$group\" style=\"text-decoration:none;color:inherit;\">\n";
+            echo "<i class=\"fas fa-edit\"></i> "._QXZ("MODIFY")."\n";
+            echo "</a>\n";
+            echo "</div>\n";
+        }
+    }
+    
+    if ($SUMMARYauth > 0) {
+        echo "<div class=\"nav-item\">\n";
+        echo "<a href=\"./AST_timeonVDADallSUMMARY.php?RR=$RR&DB=$DB&adastats=$adastats\" style=\"text-decoration:none;color:inherit;\">\n";
+        echo "<i class=\"fas fa-chart-bar\"></i> "._QXZ("SUMMARY")."\n";
+        echo "</a>\n";
+        echo "</div>\n";
+    }
+    
+    if ($RS_logoutLINK > 0) {
+        echo "<div class=\"nav-item\">\n";
+        echo "<a href=\"./admin.php?force_logout=1\" style=\"text-decoration:none;color:inherit;\">\n";
+        echo "<i class=\"fas fa-sign-out-alt\"></i> "._QXZ("LOGOUT")."\n";
+        echo "</a>\n";
+        echo "</div>\n";
+    }
+    
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</header>\n";
+    
+    // Hidden elements for positioning
+    echo "<span class=\"hidden-element\" style=\"left:160px;z-index:20;\" id=\"campaign_select_list_link\">\n";
+    echo "<div class=\"card\" style=\"width:250px;\">\n";
+    echo "<div class=\"card-header\">\n";
+    echo "<div class=\"card-title\">\n";
+    echo "<i class=\"fas fa-cog\"></i>\n";
+    echo "<span>"._QXZ("Choose Report Display Options")."</span>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "<div class=\"card-body\">\n";
+    echo "<!-- Options would go here -->\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</span>\n";
+    
+    echo "<span class=\"hidden-element\" style=\"left:0px;z-index:21;\" id=\"campaign_select_list\"></span>\n";
+    echo "<span class=\"hidden-element\" style=\"left:" . $webphone_left . "px;top:" . $webphone_top . "px;z-index:18;\" id=\"webphone_content\">\n";
+    echo "<div class=\"card\" style=\"width:" . $webphone_bufw . "px;\">\n";
+    echo "<div class=\"card-body\">\n";
+    echo "$webphone_content\n";
+    echo "<a href=\"#\" onclick=\"hideDiv('webphone_content');\" class=\"action-btn\">\n";
+    echo "<i class=\"fas fa-minus\"></i> "._QXZ("webphone")."\n";
+    echo "</a>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</span>\n";
+    echo "<span class=\"hidden-element\" style=\"left:10px;top:120px;z-index:14;\" id=\"agent_ingroup_display\">\n";
+    echo "<div class=\"card\">\n";
+    echo "<div class=\"card-body\">\n";
+    echo "<!-- Agent in-group display would go here -->\n";
+    echo "</div>\n";
+    echo "</div>\n";
+    echo "</span>\n";
+    
+    echo "<FORM ACTION=\"$PHP_SELF\" METHOD=GET NAME=REALTIMEform ID=REALTIMEform>\n";
+    echo "<INPUT TYPE=HIDDEN NAME=cursorX ID=cursorX>\n";
+    echo "<INPUT TYPE=HIDDEN NAME=cursorY ID=cursorY>\n";
+    echo "</FORM>\n";
+}
 
-	require("admin_header.php");
+// Main dashboard content
+echo "<div class=\"dashboard\">\n";
 
-	echo "<FORM ACTION=\"$PHP_SELF\" METHOD=GET NAME=REALTIMEform ID=REALTIMEform>\n";
-	echo "<INPUT TYPE=HIDDEN NAME=cursorX ID=cursorX>\n";
-	echo "<INPUT TYPE=HIDDEN NAME=cursorY ID=cursorY>\n";
-	echo "<span style=\"position:absolute;left:160px;z-index:20;\" id=campaign_select_list_link></span>\n";
-	echo "<span style=\"position:absolute;left:0px;z-index:21;\" id=campaign_select_list></span>\n";
-	echo "<span style=\"position:absolute;left:" . $webphone_left . "px;top:" . $webphone_top . "px;z-index:18;\" id=webphone_content></span>\n";
-	echo "<span style=\"position:absolute;left:10px;top:120px;z-index:14;\" id=agent_ingroup_display></span>\n";
-	echo "<a href=\"#\" onclick=\"update_variables('form_submit','','YES')\"><font class='top_settings_val'>"._QXZ("RELOAD NOW")."</font></a>";
-	}
-else
-	{
-	$short_header=1;
+// Refresh timer
+echo "<div class=\"card\">\n";
+echo "<div class=\"card-header\">\n";
+echo "<div class=\"card-title\">\n";
+echo "<i class=\"fas fa-clock\"></i>\n";
+echo "<span>"._QXZ("Dashboard Status")."</span>\n";
+echo "</div>\n";
+echo "<div class=\"refresh-timer\">\n";
+echo "<i class=\"fas fa-sync-alt\"></i>\n";
+echo "<span>"._QXZ("refresh").": <span id=\"refresh_countdown\" name=\"refresh_countdown\"></span></span>\n";
+echo "</div>\n";
+echo "</div>\n";
 
-	require("admin_header.php");
+// Display options toggles
+if (!preg_match("/WALL|LIMITED/",$report_display_type)) {
+    echo "<div class=\"toggle-group\">\n";
+    
+    if ($is_webphone == 'Y') {
+        echo "<button class=\"toggle-btn\" onclick=\"ShowWebphone('show');\">\n";
+        echo "<i class=\"fas fa-phone\"></i>\n";
+        echo "<span>"._QXZ("webphone")." +</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($adastats<2) {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('adastats','');\">\n";
+        echo "<i class=\"fas fa-plus\"></i>\n";
+        echo "<span id=\"adastatsTXT\">"._QXZ("VIEW MORE")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('adastats','');\">\n";
+        echo "<i class=\"fas fa-minus\"></i>\n";
+        echo "<span id=\"adastatsTXT\">"._QXZ("VIEW LESS")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($UGdisplay>0) {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('UGdisplay','');\">\n";
+        echo "<i class=\"fas fa-users\"></i>\n";
+        echo "<span id=\"UGdisplayTXT\">"._QXZ("HIDE USER GROUP")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('UGdisplay','');\">\n";
+        echo "<i class=\"fas fa-users\"></i>\n";
+        echo "<span id=\"UGdisplayTXT\">"._QXZ("VIEW USER GROUP")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($SERVdisplay>0) {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('SERVdisplay','');\">\n";
+        echo "<i class=\"fas fa-server\"></i>\n";
+        echo "<span id=\"SERVdisplayTXT\">"._QXZ("HIDE SERVER INFO")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('SERVdisplay','');\">\n";
+        echo "<i class=\"fas fa-server\"></i>\n";
+        echo "<span id=\"SERVdisplayTXT\">"._QXZ("SHOW SERVER INFO")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($CALLSdisplay>0) {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('CALLSdisplay','');\">\n";
+        echo "<i class=\"fas fa-phone-alt\"></i>\n";
+        echo "<span id=\"CALLSdisplayTXT\">"._QXZ("HIDE WAITING CALLS")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('CALLSdisplay','');\">\n";
+        echo "<i class=\"fas fa-phone-alt\"></i>\n";
+        echo "<span id=\"CALLSdisplayTXT\">"._QXZ("SHOW WAITING CALLS")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($ALLINGROUPstats>0) {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('ALLINGROUPstats','');\">\n";
+        echo "<i class=\"fas fa-chart-pie\"></i>\n";
+        echo "<span id=\"ALLINGROUPstatsTXT\">"._QXZ("HIDE IN-GROUP STATS")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('ALLINGROUPstats','');\">\n";
+        echo "<i class=\"fas fa-chart-pie\"></i>\n";
+        echo "<span id=\"ALLINGROUPstatsTXT\">"._QXZ("SHOW IN-GROUP STATS")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($PHONEdisplay>0) {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('PHONEdisplay','');\">\n";
+        echo "<i class=\"fas fa-phone\"></i>\n";
+        echo "<span id=\"PHONEdisplayTXT\">"._QXZ("HIDE PHONES")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('PHONEdisplay','');\">\n";
+        echo "<i class=\"fas fa-phone\"></i>\n";
+        echo "<span id=\"PHONEdisplayTXT\">"._QXZ("SHOW PHONES")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($MONITORdisplay>0) {
+        echo "<button class=\"toggle-btn active\" onclick=\"update_variables('MONITORdisplay','');\">\n";
+        echo "<i class=\"fas fa-headphones\"></i>\n";
+        echo "<span id=\"MONITORdisplayTXT\">"._QXZ("HIDE MONITORS")."</span>\n";
+        echo "</button>\n";
+    } else {
+        echo "<button class=\"toggle-btn\" onclick=\"update_variables('MONITORdisplay','');\">\n";
+        echo "<i class=\"fas fa-headphones\"></i>\n";
+        echo "<span id=\"MONITORdisplayTXT\">"._QXZ("SHOW MONITORS")."</span>\n";
+        echo "</button>\n";
+    }
+    
+    if ($RS_hide_CUST_info < 1) {
+        if ($CUSTPHONEdisplay>0) {
+            echo "<button class=\"toggle-btn active\" onclick=\"update_variables('CUSTPHONEdisplay','');\">\n";
+            echo "<i class=\"fas fa-user-phone\"></i>\n";
+            echo "<span id=\"CUSTPHONEdisplayTXT\">"._QXZ("HIDE CUSTPHONES")."</span>\n";
+            echo "</button>\n";
+        } else {
+            echo "<button class=\"toggle-btn\" onclick=\"update_variables('CUSTPHONEdisplay','');\">\n";
+            echo "<i class=\"fas fa-user-phone\"></i>\n";
+            echo "<span id=\"CUSTPHONEdisplayTXT\">"._QXZ("SHOW CUSTPHONES")."</span>\n";
+            echo "</button>\n";
+        }
+    }
+    
+    if ($LOGuser_level >= $CUSTINFOminUL) {
+        if ($RS_hide_CUST_info < 1) {
+            if ($CUSTINFOdisplay>0) {
+                echo "<button class=\"toggle-btn active\" onclick=\"update_variables('CUSTINFOdisplay','');\">\n";
+                echo "<i class=\"fas fa-user\"></i>\n";
+                echo "<span id=\"CUSTINFOdisplayTXT\">"._QXZ("HIDE CUST INFO")."</span>\n";
+                echo "</button>\n";
+            } else {
+                echo "<button class=\"toggle-btn\" onclick=\"update_variables('CUSTINFOdisplay','');\">\n";
+                echo "<i class=\"fas fa-user\"></i>\n";
+                echo "<span id=\"CUSTINFOdisplayTXT\">"._QXZ("SHOW CUST INFO")."</span>\n";
+                echo "</button>\n";
+            }
+        }
+    }
+    
+    echo "</div>\n";
+}
 
-	echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
-
-	echo "<FORM ACTION=\"$PHP_SELF\" METHOD=GET NAME=REALTIMEform ID=REALTIMEform>\n";
-	echo "<INPUT TYPE=HIDDEN NAME=cursorX ID=cursorX>\n";
-	echo "<INPUT TYPE=HIDDEN NAME=cursorY ID=cursorY>\n";
-
-	#echo "<INPUT TYPE=HIDDEN NAME=RR ID=RR VALUE=\"$RR\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=DB ID=DB VALUE=\"$DB\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=adastats ID=adastats VALUE=\"$adastats\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=SIPmonitorLINK ID=SIPmonitorLINK VALUE=\"$SIPmonitorLINK\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=IAXmonitorLINK ID=IAXmonitorLINK VALUE=\"$IAXmonitorLINK\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=usergroup ID=usergroup VALUE=\"$usergroup\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=UGdisplay ID=UGdisplay VALUE=\"$UGdisplay\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=UidORname ID=UidORname VALUE=\"$UidORname\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=orderby ID=orderby VALUE=\"$orderby\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=SERVdisplay ID=SERVdisplay VALUE=\"$SERVdisplay\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=CALLSdisplay ID=CALLSdisplay VALUE=\"$CALLSdisplay\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=PHONEdisplay ID=PHONEdisplay VALUE=\"$PHONEdisplay\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=CUSTPHONEdisplay ID=CUSTPHONEdisplay VALUE=\"$CUSTPHONEdisplay\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=DROPINGROUPstats ID=DROPINGROUPstats VALUE=\"$DROPINGROUPstats\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=ALLINGROUPstats ID=ALLINGROUPstats VALUE=\"$ALLINGROUPstats\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=CARRIERstats ID=CARRIERstats VALUE=\"$CARRIERstats\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=PRESETstats ID=PRESETstats VALUE=\"$PRESETstats\">\n";
-	#echo "<INPUT TYPE=HIDDEN NAME=AGENTtimeSTATS ID=AGENTtimeSTATS VALUE=\"$AGENTtimeSTATS\">\n";
-
-	echo "<font class='top_head_key'>"._QXZ("$report_name")." &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \n";
-	echo "<span style=\"position:absolute;left:160px;z-index:20;\" id=campaign_select_list_link>\n";
-	echo "<TABLE WIDTH=250 CELLPADDING=0 CELLSPACING=0 BGCOLOR=\"#D9E6FE\"><TR><TD ALIGN=CENTER>\n";
-	echo "<a href=\"#\" onclick=\"showDiv('campaign_select_list');\"><font class='top_head_key'>"._QXZ("Choose Report Display Options")."</a>";
-	echo "</TD></TR></TABLE>\n";
-	echo "</span>\n";
-	echo "<span style=\"position:absolute;left:0px;z-index:21;\" id=campaign_select_list>\n";
-	echo "<TABLE WIDTH=0 HEIGHT=0 CELLPADDING=0 CELLSPACING=0 BGCOLOR=\"#D9E6FE\"><TR><TD ALIGN=CENTER>\n";
-	echo "";
-	echo "</TD></TR></TABLE>\n";
-	echo "</span>\n";
-	echo "<span style=\"position:absolute;left:" . $webphone_left . "px;top:" . $webphone_top . "px;z-index:18;\" id=webphone_content>\n";
-	echo "<TABLE WIDTH=" . $webphone_bufw . " CELLPADDING=" . $webphone_pad . " CELLSPACING=0 BGCOLOR=\"white\"><TR><TD ALIGN=LEFT>\n";
-	echo "$webphone_content\n$webphone_clpos\n";
-	echo "</TD></TR></TABLE>\n";
-	echo "</span>\n";
-	echo "<span style=\"position:absolute;left:10px;top:120px;z-index:14;\" id=agent_ingroup_display>\n";
-	echo " &nbsp; ";
-	echo "</span>\n";
-	echo "<a href=\"#\" onclick=\"update_variables('form_submit','','YES')\"><font class='top_settings_val'>"._QXZ("RELOAD NOW")."</font></a>";
-	if ($LOGuser_level > 7)
-		{
-		if (preg_match('/ALL\-ACTIVE/i',$group_string))
-			{echo " &nbsp; &nbsp; &nbsp; <a href=\"./admin.php?ADD=10\"><font class='top_settings_val'>"._QXZ("MODIFY")."</font></a> | \n";}
-		else
-			{echo " &nbsp; &nbsp; &nbsp; <a href=\"./admin.php?ADD=34&campaign_id=$group\"><font class='top_settings_val'>"._QXZ("MODIFY")."</font></a> | \n";}
-		}
-
-	if ($SUMMARYauth > 0)
-		{echo "<a href=\"./AST_timeonVDADallSUMMARY.php?RR=$RR&DB=$DB&adastats=$adastats\"><font class='top_settings_val'>"._QXZ("SUMMARY")."</font></a> \n";}
-
-	if ($RS_logoutLINK > 0)
-		{echo " | <a href=\"./admin.php?force_logout=1\"><font class='top_settings_val'>"._QXZ("LOGOUT")."</font></a> \n";}
-
-	echo "</FONT>\n";
-	}
-
-echo " &nbsp; &nbsp; &nbsp; <font class='top_settings_val'>"._QXZ("refresh").": <span id=refresh_countdown name=refresh_countdown></span></font>\n\n";
-
-if (!preg_match("/WALL|LIMITED/",$report_display_type))
-	{
-	if ($is_webphone == 'Y')
-		{echo " &nbsp; &nbsp; &nbsp; <span id=webphone_visibility name=webphone_visibility><a href=\"#\" onclick=\"ShowWebphone('show');\"><font class='top_settings_val'>"._QXZ("webphone")." +</font></a></span>\n\n";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <span id=webphone_visibility name=webphone_visibility></span>\n\n";}
-
-	if ($webphone_bufh > 10)
-		{echo "<BR><img src=\"images/pixel.gif\" width=1 height=$webphone_bufh>\n";}
-	echo "<BR>\n\n";
+echo "</div>\n"; // End card
+echo "</div>\n"; // End dashboard
+echo "</div>\n"; // End container
+echo "</body>\n";
+echo "</html>\n";
 
 
-	if ($adastats<2)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('adastats','');\"><font class=\"top_settings_val\"><span id=adastatsTXT>+ "._QXZ("VIEW MORE")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('adastats','');\"><font class=\"top_settings_val\"><span id=adastatsTXT>- "._QXZ("VIEW LESS")."</span></font></a>";}
-	if ($UGdisplay>0)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('UGdisplay','');\"><font class=\"top_settings_val\"><span id=UGdisplayTXT>"._QXZ("HIDE USER GROUP")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('UGdisplay','');\"><font class=\"top_settings_val\"><span id=UGdisplayTXT>"._QXZ("VIEW USER GROUP")."</span></font></a>";}
-	if ($SERVdisplay>0)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('SERVdisplay','');\"><font class=\"top_settings_val\"><span id=SERVdisplayTXT>"._QXZ("HIDE SERVER INFO")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('SERVdisplay','');\"><font class=\"top_settings_val\"><span id=SERVdisplayTXT>"._QXZ("SHOW SERVER INFO")."</span></font></a>";}
-	if ($CALLSdisplay>0)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('CALLSdisplay','');\"><font class=\"top_settings_val\"><span id=CALLSdisplayTXT>"._QXZ("HIDE WAITING CALLS")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('CALLSdisplay','');\"><font class=\"top_settings_val\"><span id=CALLSdisplayTXT>"._QXZ("SHOW WAITING CALLS")."</span></font></a>";}
-	if ($ALLINGROUPstats>0)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('ALLINGROUPstats','');\"><font class=\"top_settings_val\"><span id=ALLINGROUPstatsTXT>"._QXZ("HIDE IN-GROUP STATS")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('ALLINGROUPstats','');\"><font class=\"top_settings_val\"><span id=ALLINGROUPstatsTXT>"._QXZ("SHOW IN-GROUP STATS")."</span></font></a>";}
-	if ($PHONEdisplay>0)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('PHONEdisplay','');\"><font class=\"top_settings_val\"><span id=PHONEdisplayTXT>"._QXZ("HIDE PHONES")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('PHONEdisplay','');\"><font class=\"top_settings_val\"><span id=PHONEdisplayTXT>"._QXZ("SHOW PHONES")."</span></font></a>";}
-	if ($MONITORdisplay>0)
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('MONITORdisplay','');\"><font class=\"top_settings_val\"><span id=MONITORdisplayTXT>"._QXZ("HIDE MONITORS")."</span></font></a>";}
-	else
-		{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('MONITORdisplay','');\"><font class=\"top_settings_val\"><span id=MONITORdisplayTXT>"._QXZ("SHOW MONITORS")."</span></font></a>";}
-	if ($RS_hide_CUST_info < 1)
-		{
-		if ($CUSTPHONEdisplay>0)
-			{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('CUSTPHONEdisplay','');\"><font class=\"top_settings_val\"><span id=CUSTPHONEdisplayTXT>"._QXZ("HIDE CUSTPHONES")."</span></font></a>";}
-		else
-			{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('CUSTPHONEdisplay','');\"><font class=\"top_settings_val\"><span id=CUSTPHONEdisplayTXT>"._QXZ("SHOW CUSTPHONES")."</span></font></a>";}
-		}
-	if ($LOGuser_level >= $CUSTINFOminUL) 
-		{
-		if ($RS_hide_CUST_info < 1)
-			{
-			if ($CUSTINFOdisplay>0)
-				{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('CUSTINFOdisplay','');\"><font class=\"top_settings_val\"><span id=CUSTINFOdisplayTXT>"._QXZ("HIDE CUST INFO")."</span></font></a>";}
-			else
-				{echo " &nbsp; &nbsp; &nbsp; <a href=\"#\" onclick=\"update_variables('CUSTINFOdisplay','');\"><font class=\"top_settings_val\"><span id=CUSTINFOdisplayTXT>"._QXZ("SHOW CUST INFO")."</span></font></a>";}
-			}
-		}
-	}
-
-#echo "</TD></TR></TABLE>";
 ##### END header formatting #####
 
 #echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
