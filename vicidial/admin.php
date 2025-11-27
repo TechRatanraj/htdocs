@@ -25922,2174 +25922,1120 @@ if ($ADD==62111111111111)
 ######################
 # ADD=3 modify user info in the system
 ######################
-
 if ($ADD==3)
-{
-    if ($LOGmodify_users==1)
-    {
-        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-            {
-            $modify_url = "$PHP_SELF?ADD=3&user=$user";
-            $modify_footer_refresh=1;
-            }
-
-        // Modern CSS styles
-        echo "<style>
-        :root {
-            --primary-color: #4a6cf7;
-            --secondary-color: #f5f7ff;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --dark-color: #1f2937;
-            --light-color: #f9fafb;
-         --border-radius: 8px;
-            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .user-management-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-        }
-
-        .user-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #6366f1 100%);
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .user-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .user-id {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        .tabs-container {
-            display: flex;
-            background-color: #f3f4f6;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .tab-button {
-            padding: 12px 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: #6b7280;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-button:hover {
-            color: var(--primary-color);
-        }
-
-        .tab-button.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-            background-color: white;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 30px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-section {
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e5e7eb;
-            color: var(--dark-color);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 500;
-            color: #374151;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d1d5db;
-            border-radius: var(--border-radius);
-            font-size: 14px;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
-        }
-
-        .form-control-sm {
-            max-width: 200px;
-        }
-
-        .form-actions {
-            padding: 20px 30px;
-            background-color: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #3a5ce5;
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
-        }
-
-        .btn-link {
-            background: none;
-            color: var(--primary-color);
-            text-decoration: none;
-            padding: 5px 0;
-        }
-
-        .btn-link:hover {
-            text-decoration: underline;
-        }
-
-        .link-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .link-group a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .link-group a:hover {
-            text-decoration: underline;
-        }
-
-        .alert {
-            padding: 12px 16px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-        }
-
-        .alert-danger {
-            background-color: #fee2e2;
-            color: var(--danger-color);
-            border-left: 4px solid var(--danger-color);
-        }
-
-        .alert-info {
-            background-color: #dbeafe;
-            color: #1e40af;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .strength-indicator {
-            display: inline-flex;
-            align-items: center;
-            margin-left: 10px;
-        }
-
-        .multi-select {
-            min-height: 120px;
-        }
-
-        .toggle-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .toggle-option {
-            padding: 8px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: var(--border-radius);
-            background-color: white;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .toggle-option:hover {
-            border-color: var(--primary-color);
-        }
-
-        .toggle-option.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .info-box {
-            background-color: var(--secondary-color);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-        }
-
-        .info-box strong {
-            color: var(--dark-color);
-        }
-
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .tabs-container {
-                overflow-x: auto;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-        </style>";
-
-        echo "<div class='user-management-container'>";
-
-        $stmt="SELECT user_id,user,pass,full_name,user_level,user_group,phone_login,phone_pass,delete_users,delete_user_groups,delete_lists,delete_campaigns,delete_ingroups,delete_remote_agents,load_leads,campaign_detail,ast_admin_access,ast_delete_phones,delete_scripts,modify_leads,hotkeys_active,change_agent_campaign,agent_choose_ingroups,closer_campaigns,scheduled_callbacks,agentonly_callbacks,agentcall_manual,vicidial_recording,vicidial_transfers,delete_filters,alter_agent_interface_options,closer_default_blended,delete_call_times,modify_call_times,modify_users,modify_campaigns,modify_lists,modify_scripts,modify_filters,modify_ingroups,modify_usergroups,modify_remoteagents,modify_servers,view_reports,vicidial_recording_override,alter_custdata_override,qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit,add_timeclock_log,modify_timeclock_log,delete_timeclock_log,alter_custphone_override,vdc_agent_api_access,modify_inbound_dids,delete_inbound_dids,active,alert_enabled,download_lists,agent_shift_enforcement_override,manager_shift_enforcement_override,shift_override_flag,export_reports,delete_from_dnc,email,user_code,territory,allow_alerts,agent_choose_territories,custom_one,custom_two,custom_three,custom_four,custom_five,voicemail_id,agent_call_log_view_override,callcard_admin,agent_choose_blended,realtime_block_user_info,custom_fields_modify,force_change_password,agent_lead_search_override,modify_shifts,modify_phones,modify_carriers,modify_labels,modify_statuses,modify_voicemail,modify_audiostore,modify_moh,modify_tts,preset_contact_search,modify_contacts,modify_same_user_level,admin_hide_lead_data,admin_hide_phone_data,agentcall_email,modify_email_accounts,failed_login_count,last_login_date,last_ip,alter_admin_interface_options,max_inbound_calls,modify_custom_dialplans,wrapup_seconds_override,modify_languages,selected_language,user_choose_language,ignore_group_on_search,api_list_restrict,api_allowed_functions,lead_filter_id,agentcall_chat,admin_cf_show_hidden,user_hide_realtime,access_recordings,modify_colors,user_nickname,user_new_lead_limit,api_only_user,modify_auto_reports,modify_ip_lists,ignore_ip_list,ready_max_logout,export_gdpr_leads,pause_code_approval,max_hopper_calls,max_hopper_calls_hour,mute_recordings,hide_call_log_info,next_dial_my_callbacks,user_admin_redirect_url,max_inbound_filter_enabled,max_inbound_filter_statuses,max_inbound_filter_ingroups,max_inbound_filter_min_sec,status_group_id,mobile_number,two_factor_override,manual_dial_filter,user_location,download_invalid_files,user_group_two,failed_login_attempts_today,failed_login_count_today,failed_last_ip_today,failed_last_type_today,modify_dial_prefix,inbound_credits,hci_enabled,manual_dial_lead_id from vicidial_users where user='$user' $LOGadmin_viewable_groupsSQL;";
-        $rslt=mysql_to_mysqli($stmt, $link);
-        $row=mysqli_fetch_row($rslt);
-        $user_id =				$row[0];
-        $user =					$row[1];
-        $pass =					$row[2];
-        $full_name =			$row[3];
-        $user_level =			$row[4];
-        $user_group =			$row[5];
-        $phone_login =			$row[6];
-        $phone_pass =			$row[7];
-        $delete_users =			$row[8];
-        $delete_user_groups =	$row[9];
-        $delete_lists =			$row[10];
-        $delete_campaigns =		$row[11];
-        $delete_ingroups =		$row[12];
-        $delete_remote_agents =	$row[13];
-        $load_leads =			$row[14];
-        $campaign_detail =		$row[15];
-        $ast_admin_access =		$row[16];
-        $ast_delete_phones =	$row[17];
-        $delete_scripts =		$row[18];
-        $modify_leads =			$row[19];
-        $hotkeys_active =		$row[20];
-        $change_agent_campaign =$row[21];
-        $agent_choose_ingroups =$row[22];
-        $scheduled_callbacks =	$row[24];
-        $agentonly_callbacks =	$row[25];
-        $agentcall_manual =		$row[26];
-        $vicidial_recording =	$row[27];
-        $vicidial_transfers =	$row[28];
-        $delete_filters =		$row[29];
-        $alter_agent_interface_options =$row[30];
-        $closer_default_blended =		$row[31];
-        $delete_call_times =	$row[32];
-        $modify_call_times =	$row[33];
-        $modify_users =			$row[34];
-        $modify_campaigns =		$row[35];
-        $modify_lists =			$row[36];
-        $modify_scripts =		$row[37];
-        $modify_filters =		$row[38];
-        $modify_ingroups =		$row[39];
-        $modify_usergroups =	$row[40];
-        $modify_remoteagents =	$row[41];
-        $modify_servers =		$row[42];
-        $view_reports =			$row[43];
-        $vicidial_recording_override =	$row[44];
-        $alter_custdata_override = $row[45];
-        $qc_enabled =			$row[46];
-        $qc_user_level =		$row[47];
-        $qc_pass =				$row[48];
-        $qc_finish =			$row[49];
-        $qc_commit =			$row[50];
-        $add_timeclock_log =	$row[51];
-        $modify_timeclock_log = $row[52];
-        $delete_timeclock_log = $row[53];
-        $alter_custphone_override = $row[54];
-        $vdc_agent_api_access = $row[55];
-        $modify_inbound_dids =	$row[56];
-        $delete_inbound_dids =	$row[57];
-        $active =				$row[58];
-        $alert_enabled =		$row[59];
-        $download_lists =		$row[60];
-        $agent_shift_enforcement_override =	$row[61];
-        $manager_shift_enforcement_override =	$row[62];
-        $export_reports =		$row[64];
-        $delete_from_dnc =		$row[65];
-        $email =				$row[66];
-        $user_code =			$row[67];
-        $territory =			$row[68];
-        $allow_alerts =			$row[69];
-        $agent_choose_territories = $row[70];
-        $user_custom_one =		$row[71];
-        $user_custom_two =		$row[72];
-        $user_custom_three =	$row[73];
-        $user_custom_four =		$row[74];
-        $user_custom_five =		$row[75];
-        $voicemail_id =			$row[76];
-        $agent_call_log_view_override = $row[77];
-        $callcard_admin =		$row[78];
-        $agent_choose_blended = $row[79];
-        $realtime_block_user_info = $row[80];
-        $custom_fields_modify =	$row[81];
-        $force_change_password = $row[82];
-        $agent_lead_search_override = $row[83];
-        $modify_shifts =		$row[84];
-        $modify_phones =		$row[85];
-        $modify_carriers =		$row[86];
-        $modify_labels =		$row[87];
-        $modify_statuses =		$row[88];
-        $modify_voicemail =	$row[89];
-        $modify_audiostore =	$row[90];
-        $modify_moh =			$row[91];
-        $modify_tts =			$row[92];
-        $preset_contact_search =	$row[93];
-        $modify_contacts =		$row[94];
-        $modify_same_user_level =	$row[95];
-        $admin_hide_lead_data =	$row[96];
-        $admin_hide_phone_data =	$row[97];
-        $agentcall_email =	$row[98];
-        $modify_email_accounts =	$row[99];
-        $failed_login_count =	$row[100];
-        $last_login_date =		$row[101];
-        $last_ip =				$row[102];
-        $alter_admin_interface_options = $row[103];
-        $max_inbound_calls =	$row[104];
-        $modify_custom_dialplans =	$row[105];
-        $wrapup_seconds_override = $row[106];
-        $modify_languages =		$row[107];
-        $selected_language =	$row[108];
-        $user_choose_language = $row[109];
-        $ignore_group_on_search = $row[110];
-        $api_list_restrict =	$row[111];
-        $api_allowed_functions = $row[112];
-        $lead_filter_id =		$row[113];
-        $agentcall_chat =		$row[114];
-        $admin_cf_show_hidden = $row[115];
-        $user_hide_realtime =	$row[116];
-        $access_recordings =	$row[117];
-        $modify_colors =		$row[118];
-        $user_nickname =		$row[119];
-        $user_new_lead_limit =	$row[120];
-        $api_only_user =		$row[121];
-        $modify_auto_reports =	$row[122];
-        $modify_ip_lists =		$row[123];
-        $ignore_ip_list =		$row[124];
-        $ready_max_logout =		$row[125];
-        $export_gdpr_leads =	$row[126];
-        $pause_code_approval =	$row[127];
-        $max_hopper_calls =		$row[128];
-        $max_hopper_calls_hour =$row[129];
-        $mute_recordings =		$row[130];
-        $hide_call_log_info =	$row[131];
-        $next_dial_my_callbacks=$row[132];
-        $user_admin_redirect_url=$row[133];
-        $max_inbound_filter_enabled=$row[134];
-        $max_inbound_filter_statuses=$row[135];
-        $max_inbound_filter_ingroups=$row[136];
-        $max_inbound_filter_min_sec=$row[137];
-        $status_group_id =		$row[138];
-        $mobile_number =		$row[139];
-        $two_factor_override =	$row[140];
-        $manual_dial_filter =	$row[141];
-        $user_location =		$row[142];
-        $download_invalid_files=$row[143];
-        $user_group_two =		$row[144];
-        $failed_login_attempts_today=$row[145];
-        $failed_login_count_today=$row[146];
-        $failed_last_ip_today = $row[147];
-        $failed_last_type_today=$row[148];
-        $modify_dial_prefix =	$row[149];
-        $inbound_credits =		$row[150];
-        $hci_enabled =			$row[151];
-        $manual_dial_lead_id =	$row[152];
-
-        ##### latest 2FA auth record data
-        $last_auth='';
-        $stmt="SELECT auth_exp_date,auth_stage,auth_attempts from vicidial_two_factor_auth where user='$user' order by auth_date desc limit 1";
-        $rslt=mysql_to_mysqli($stmt, $link);
-        $auths_to_print = mysqli_num_rows($rslt);
-        if ($auths_to_print > 0)
-            {
-            $rowx=mysqli_fetch_row($rslt);
-            $auth_exp_date =	$rowx[0];
-            $auth_stage =		$rowx[1];
-            $auth_attempts =	$rowx[2];
-            $last_auth = " &nbsp; &nbsp; $auth_exp_date - $auth_stage - $auth_attempts";
-            }
-
-        if ( ( ($user_level >= $LOGuser_level) and ($LOGuser_level < 9) ) or ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) and ($user_level > 8) ) )
-            {
-            echo "<div class='alert alert-danger'>"._QXZ("You do not have permissions to modify this user").": $user</div>\n";
-            }
-        else
-            {
-            echo "<div class='user-header'>";
-            echo "<div>";
-            echo "<h1 class='user-title'>"._QXZ("MODIFY A USERS RECORD").": $user</h1>";
-            echo "<div class='user-id'>User ID: $user_id</div>";
-            echo "</div>";
-            echo "<div>$NWB#users-user$NWE</div>";
-            echo "</div>";
-
-            echo "<form action=$PHP_SELF method=POST>\n";
-            if ( ($LOGuser_level > 8) and ($LOGalter_admin_interface > 0) )
-                {echo "<input type=hidden name=ADD value=4A>\n";}
-            else
-                {
-                if ($LOGalter_agent_interface == "1")
-                    {echo "<input type=hidden name=ADD value=4B>\n";}
-                else
-                    {echo "<input type=hidden name=ADD value=4>\n";}
-                }
-            if ($SScustom_fields_enabled < 1)
-                {
-                echo "<input type=hidden name=custom_fields_modify value=\"$custom_fields_modify\">\n";
-                }
-
-            echo "<input type=hidden name=user value=\"$user\">\n";
-            echo "<input type=hidden name=DB value=\"$DB\">\n";
-
-            // Tab Navigation
-            echo "<div class='tabs-container'>";
-            echo "<button class='tab-button active' onclick='showTab(\"basic-info\")'>"._QXZ("Basic Information")."</button>";
-            echo "<button class='tab-button' onclick='showTab(\"agent-options\")'>"._QXZ("Agent Options")."</button>";
-            echo "<button class='tab-button' onclick='showTab(\"admin-options\")'>"._QXZ("Admin Options")."</button>";
-            echo "<button class='tab-button' onclick='showTab(\"security-options\")'>"._QXZ("Security Options")."</button>";
-            echo "<button class='tab-button' onclick='showTab(\"api-options\")'>"._QXZ("API Options")."</button>";
-            echo "</div>";
-
-            // Basic Information Tab
-            echo "<div id='basic-info' class='tab-content active'>";
-            echo "<div class='form-section'>";
-            echo "<h2 class='section-title'>"._QXZ("Basic Information")."</h2>";
-            
-            echo "<div class='form-grid'>";
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Full Name").":</label>";
-            echo "<input type=text name=full_name class='form-control' value=\"$full_name\">$NWB#users-full_name$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("User Level").":</label>";
-            echo "<select name=user_level class='form-control form-control-sm'>";
-            $h=1;
-            $count_user_level=$LOGuser_level;
-            if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
-                {$count_user_level=($LOGuser_level - 1);}
-            while ($h<=$count_user_level)
-                {
-                echo "<option>$h</option>";
-                $h++;
-                }
-            echo "<option SELECTED>$user_level</option></select>$NWB#users-user_level$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("User Group").":</label>";
-            echo "<select name=user_group class='form-control'>";
-            $stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
-            $rslt=mysql_to_mysqli($stmt, $link);
-            $Ugroups_to_print = mysqli_num_rows($rslt);
-            $Ugroups_list='';
-            $o=0;
-            while ($Ugroups_to_print > $o) 
-                {
-                $rowx=mysqli_fetch_row($rslt);
-                $Ugroups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-                $o++;
-                }
-            echo "$Ugroups_list";
-            echo "<option SELECTED>$user_group</option>\n";
-            echo "</select>$NWB#users-user_group$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("VERM Secondary User Group").":</label>";
-            echo "<select name=user_group_two class='form-control'>";
-            echo "<option value=\"\">--UNDEFINED--</option>";
-            $stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
-            $rslt=mysql_to_mysqli($stmt, $link);
-            $Ugroups_to_print = mysqli_num_rows($rslt);
-            $Ugroups_list='';
-            $o=0;
-            while ($Ugroups_to_print > $o) 
-                {
-                $rowx=mysqli_fetch_row($rslt);
-                $Ugroups_list .= "<option value=\"$rowx[0]\"";
-                if ($rowx[0] == $user_group_two) {$Ugroups_list .= " SELECTED";}
-                $Ugroups_list .= ">$rowx[0] - $rowx[1]</option>\n";
-                $o++;
-                }
-            echo "$Ugroups_list";
-            echo "</select>$NWB#users-user_group_two$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Phone Login").":</label>";
-            echo "<input type=text name=phone_login class='form-control' value=\"$phone_login\">$NWB#users-phone_login$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Phone Pass").":</label>";
-            echo "<input type=text name=phone_pass class='form-control' value=\"$phone_pass\">$NWB#users-phone_pass$NWE";
-            if ( ($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS') )
-                {echo " <a href=\"email_agent_login_link.php?preview=1&agent_id=$user\">"._QXZ("send this user a login link email")."</a>";}
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Active").":</label>";
-            echo "<select name=active class='form-control form-control-sm'>";
-            echo "<option value='Y'>"._QXZ("Y")."</option>";
-            echo "<option value='N'>"._QXZ("N")."</option>";
-            echo "<option value='$active' SELECTED>"._QXZ("$active")."</option>";
-            echo "</select>$NWB#users-active$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Email").":</label>";
-            echo "<input type=text name=email class='form-control' value=\"$email\">$NWB#users-email$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Mobile Number").":</label>";
-            echo "<input type=text name=mobile_number class='form-control' value=\"$mobile_number\">$NWB#users-mobile_number$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("User Nickname").":</label>";
-            echo "<input type=text name=user_nickname class='form-control' value=\"$user_nickname\">$NWB#users-user_nickname$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Main Territory").":</label>";
-            echo "<input type=text name=territory class='form-control' value=\"$territory\">$NWB#users-optional$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("User Location").":</label>";
-            echo "<select name=user_location class='form-control'>";
-            $raw_location_data=";location|description\n|default\n";
-            $stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_LOCATIONS_SYSTEM';";
-            $rslt=mysql_to_mysqli($stmt, $link);
-            $loc_to_print = mysqli_num_rows($rslt);
-            if ($loc_to_print > 0)
-                {
-                $rowx=mysqli_fetch_row($rslt);
-                $raw_location_data = $rowx[0];
-                }
-            $location_ARY = explode("\n",$raw_location_data);
-            $location_ct = count($location_ARY);
-            $location_container_menu='';
-            $loc_selected=0;
-            $o=0;
-            while ($location_ct > $o) 
-                {
-                if ( (!preg_match("/^;/",$location_ARY[$o])) and (strlen($location_ARY[$o]) > 2) and (preg_match("/\|/",$location_ARY[$o])) )
-                    {
-                    $location_item_ARY = explode('|',$location_ARY[$o]);
-                    if (mb_strlen($location_item_ARY[1],'utf-8')>50)
-                        {$location_item_ARY[1] = mb_substr($location_item_ARY[1],0,50,'utf-8') . '...';}
-                    $location_container_menu .= "<option ";
-                    if ($user_location == "$location_item_ARY[0]") 
-                        {
-                        $location_container_menu .= "SELECTED ";
-                        $loc_selected++;
-                        }
-                    $location_container_menu .= "value=\"$location_item_ARY[0]\">$location_item_ARY[0] - $location_item_ARY[1]</option>\n";
-                    }
-                $o++;
-                }
-            echo "$location_container_menu";
-            echo "</select>$NWB#users-user_location$NWE";
-            echo "</div>";
-            echo "</div>";
-            
-            // Password Section
-            echo "<div class='form-section'>";
-            echo "<h2 class='section-title'>"._QXZ("Password Settings")."</h2>";
-            
-            if ($SSpass_hash_enabled > 0)
-                {
-                echo "<div class='alert alert-info'>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</div>";
-                }
-            
-            echo "<div class='form-grid'>";
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Password").":</label>";
-            echo "<input type=text id=reg_pass name=pass class='form-control' value=\"$pass\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE";
-            echo "<div class='strength-indicator'>";
-            echo "<span class='form-text'>"._QXZ("Strength").":</span> <IMG id=reg_pass_img src='images/pixel.gif' onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">";
-            echo "<span class='form-text'> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></span>";
-            echo "</div>";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Force Change Password").":</label>";
-            echo "<select name=force_change_password class='form-control form-control-sm'>";
-            echo "<option value='Y'>"._QXZ("Y")."</option>";
-            echo "<option value='N'>"._QXZ("N")."</option>";
-            echo "<option value='$force_change_password' SELECTED>"._QXZ("$force_change_password")."</option>";
-            echo "</select>$NWB#users-force_change_password$NWE";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-            
-            // Login Info Section
-            echo "<div class='form-section'>";
-            echo "<h2 class='section-title'>"._QXZ("Login Information")."</h2>";
-            
-            echo "<div class='info-box'>";
-            echo "<strong>"._QXZ("Last Login Info").":</strong> $last_login_date - $failed_login_count - $last_ip $last_auth";
-            if ($LOGuser_level > 8)
-                {
-                if ($failed_login_attempts_today > 0)
-                    {
-                    echo "<br><strong>"._QXZ("Failed logins today").":</strong> <a href=\"user_logins_report.php?user=$user\">$failed_login_attempts_today - $failed_login_count_today - $failed_last_ip_today - $failed_last_type_today</a>";
-                    }
-                else
-                    {
-                    echo "<br><strong>"._QXZ("Logins summary").":</strong> <a href=\"user_logins_report.php?user=$user\">"._QXZ("View Details")."</a>";
-                    }
-                }
-            echo "</div>";
-            echo "</div>";
-            
-            // User Code Section
-            if ($SSuser_codes_admin > 0)
-                {
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("User Code")."</h2>";
-                
-                $user_codes_ct=0;
-                $raw_user_codes_admin_data="|empty\n";
-                $user_code_container_menu='';
-                $uc_selected=0;
-                if ($SSuser_codes_admin == '2')
-                    {
-                    if (file_exists('user_codes_admin.txt'))
-                    $user_codes_admin_ARY = file('user_codes_admin.txt');
-                    }
-                else
-                    {
-                    $stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_CODES_SYSTEM';";
-                    $rslt=mysql_to_mysqli($stmt, $link);
-                    $uc_to_print = mysqli_num_rows($rslt);
-                    if ($uc_to_print > 0)
-                        {
-                        $rowx=mysqli_fetch_row($rslt);
-                        $raw_user_codes_admin_data = $rowx[0];
-                        }
-                    $user_codes_admin_ARY = explode("\n",$raw_user_codes_admin_data);
-                    }
-                $user_codes_admin_ct = count($user_codes_admin_ARY);
-                $o=0;
-                while ($user_codes_admin_ct > $o) 
-                    {
-                    if ( (!preg_match("/^;/",$user_codes_admin_ARY[$o])) and (strlen($user_codes_admin_ARY[$o]) > 0) )
-                        {
-                        $user_codes_ct++;
-
-                        $user_code_item_ARY = explode('|',$user_codes_admin_ARY[$o]);
-                        $user_code_item_ARY[0] = preg_replace('/[^- \.\,_0-9\p{L}]/u','',$user_code_item_ARY[0]);
-                        $user_code_item_ARY[1] = preg_replace('/[^- \.\,_0-9\p{L}]/u','',$user_code_item_ARY[1]);
-                        if (mb_strlen($user_code_item_ARY[1],'utf-8')>50)
-                            {$user_code_item_ARY[1] = mb_substr($user_code_item_ARY[1],0,50,'utf-8') . '...';}
-                        $user_code_container_menu .= "<option ";
-                        if ($user_code == "$user_code_item_ARY[0]") 
-                            {
-                            $user_code_container_menu .= "SELECTED ";
-                            $uc_selected++;
-                            }
-                        if (strlen($user_code_item_ARY[1]) > 0)
-                            {
-                            $user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0] - $user_code_item_ARY[1]</option>\n";
-                            }
-                        else
-                            {
-                            $user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0]</option>\n";
-                            }
-                        }
-                    $o++;
-                    }
-                if ($uc_selected < 1)
-                    {$user_code_container_menu .= "<option SELECTED value=\"$user_code\">$user_code</option>\n";}
-
-                if ($LOGuser_level >= 9)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<select name=user_code class='form-control'>$user_code_container_menu</select>$NWB#users-optional$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<input type=hidden name=user_code value=\"$user_code\">";
-                    echo "<div class='info-box'>$user_code $NWB#users-optional$NWE</div>";
-                    echo "</div>";
-                    }
-                echo "</div>";
-                }
-            else
-                {
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("User Code")."</h2>";
-                echo "<div class='form-group'>";
-                echo "<input type=text name=user_code class='form-control' value=\"$user_code\">$NWB#users-optional$NWE";
-                echo "</div>";
-                echo "</div>";
-                }
-            
-            // Voicemail Section
-            echo "<div class='form-section'>";
-            echo "<h2 class='section-title'>"._QXZ("Voicemail Settings")."</h2>";
-            
-            echo "<div class='form-grid'>";
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Voicemail ID").":</label>";
-            echo "<input type=text name=voicemail_id id=voicemail_id class='form-control form-control-sm' value=\"$voicemail_id\">";
-            echo " <a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\">"._QXZ("voicemail chooser")."</a>$NWB#users-voicemail_id$NWE";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-            
-            // User Territories Section
-            if ($SSuser_territories_active > 0)
-                {
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("User Territories")."</h2>";
-                
-                $stmt="SELECT vut.territory,vt.territory_description from vicidial_user_territories vut,vicidial_territories vt where user='$user' and vut.territory=vt.territory;";
-                $rslt=mysql_to_mysqli($stmt, $link);
-                $Uterrs_to_print = mysqli_num_rows($rslt);
-                $Uterrs_list='';
-                $o=0;
-                while ($Uterrs_to_print > $o) 
-                    {
-                    $rowx=mysqli_fetch_row($rslt);
-                    $Uterrs_list .= "<div class='info-box'><strong>$rowx[0]:</strong> $rowx[1]</div>\n";
-                    $o++;
-                    }
-                echo "<a href=\"user_territories.php\">"._QXZ("Manage User Territories")."</a>";
-                echo "$Uterrs_list";
-                echo "</div>";
-                }
-            
-            // User New Lead Limits Section
-            if ($SSuser_new_lead_limit > 0)
-                {
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("User New Lead Limits")."</h2>";
-                
-                echo "<div class='form-group'>";
-                echo "<a href=\"admin_user_list_new.php?user=$user&list_id=---ALL---\">"._QXZ("User List Limit Overrides for this user")."</a>";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Overall Limit").":</label>";
-                echo "<input type=text name=user_new_lead_limit class='form-control form-control-sm' value=\"$user_new_lead_limit\">$NWB#users-user_new_lead_limit$NWE";
-                echo "</div>";
-                echo "</div>";
-                }
-            else
-                {
-                echo "<input type=hidden name=user_new_lead_limit value=\"$user_new_lead_limit\">";
-                }
-            
-            // Custom Fields Section
-            echo "<div class='form-section'>";
-            echo "<h2 class='section-title'>"._QXZ("Custom Fields")."</h2>";
-            
-            echo "<div class='form-grid'>";
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Custom")." 1:</label>";
-            echo "<input type=text name=custom_one class='form-control' value=\"$user_custom_one\">$NWB#users-custom_one$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Custom")." 2:</label>";
-            echo "<input type=text name=custom_two class='form-control' value=\"$user_custom_two\">$NWB#users-custom_one$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Custom")." 3:</label>";
-            echo "<input type=text name=custom_three class='form-control' value=\"$user_custom_three\">$NWB#users-custom_one$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Custom")." 4:</label>";
-            echo "<input type=text name=custom_four class='form-control' value=\"$user_custom_four\">$NWB#users-custom_one$NWE";
-            echo "</div>";
-            
-            echo "<div class='form-group'>";
-            echo "<label>"._QXZ("Custom")." 5:</label>";
-            echo "<input type=text name=custom_five class='form-control' value=\"$user_custom_five\">$NWB#users-custom_one$NWE";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-            
-            // Agent Options Tab
-            echo "<div id='agent-options' class='tab-content'>";
-            if ( ($LOGuser_level > 7) and ( ($LOGalter_agent_interface == "1") or ($LOGalter_admin_interface > 0) ) )
-                {
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("AGENT INTERFACE OPTIONS")."</h2>";
-                
-                echo "<div class='form-grid'>";
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Choose Ingroups").":</label>";
-                echo "<select name=agent_choose_ingroups class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$agent_choose_ingroups</option>";
-                echo "</select>$NWB#users-agent_choose_ingroups$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Choose Blended").":</label>";
-                echo "<select name=agent_choose_blended class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$agent_choose_blended</option>";
-                echo "</select>$NWB#users-agent_choose_blended$NWE";
-                echo "</div>";
-                
-                if ($SSuser_territories_active > 0)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Agent Choose Territories").":</label>";
-                    echo "<select name=agent_choose_territories class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$agent_choose_territories</option>";
-                    echo "</select>$NWB#users-agent_choose_territories$NWE";
-                    echo "</div>";
-                    }
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Hot Keys Active").":</label>";
-                echo "<select name=hotkeys_active class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$hotkeys_active</option>";
-                echo "</select>$NWB#users-hotkeys_active$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Scheduled Callbacks").":</label>";
-                echo "<select name=scheduled_callbacks class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$scheduled_callbacks</option>";
-                echo "</select>$NWB#users-scheduled_callbacks$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent-Only Callbacks").":</label>";
-                echo "<select name=agentonly_callbacks class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$agentonly_callbacks</option>";
-                echo "</select>$NWB#users-agentonly_callbacks$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Next-Dial My Callbacks Override").":</label>";
-                echo "<select name=next_dial_my_callbacks class='form-control form-control-sm'>";
-                echo "<option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option>";
-                echo "<option value='ENABLED'>"._QXZ("ENABLED")."</option>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='$next_dial_my_callbacks' SELECTED>"._QXZ("$next_dial_my_callbacks")."</option>";
-                echo "</select>$NWB#users-next_dial_my_callbacks$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Call Manual").":</label>";
-                echo "<select name=agentcall_manual class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option>2</option><option SELECTED>$agentcall_manual</option>";
-                echo "</select>$NWB#users-agentcall_manual$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Manual Dial Filter Override").":</label>";
-                echo "<select name=manual_dial_filter class='form-control'>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='NONE'>"._QXZ("NONE")."</option>";
-                echo "<option value='DNC_ONLY'>"._QXZ("DNC_ONLY")."</option>";
-                echo "<option value='CAMPDNC_ONLY'>"._QXZ("CAMPDNC_ONLY")."</option>";
-                echo "<option value='INTERNALDNC_ONLY'>"._QXZ("INTERNALDNC_ONLY")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC'>"._QXZ("DNC_AND_CAMPDNC")."</option>";
-                echo "<option value='CAMPLISTS_ONLY'>"._QXZ("CAMPLISTS_ONLY")."</option>";
-                echo "<option value='CAMPLISTS_ALL'>"._QXZ("CAMPLISTS_ALL")."</option>";
-                echo "<option value='SYSTEM'>"._QXZ("SYSTEM")."</option>";
-                echo "<option value='DNC_AND_CAMPLISTS'>"._QXZ("DNC_AND_CAMPLISTS")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CAMPLISTS'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CAMPLISTS'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS")."</option>";
-                echo "<option value='DNC_AND_CAMPLISTS_ALL'>"._QXZ("DNC_AND_CAMPLISTS_ALL")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CAMPLISTS_ALL'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_ALL")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_ALL'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_ALL")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL")."</option>";
-                echo "<option value='DNC_AND_SYSTEM'>"._QXZ("DNC_AND_SYSTEM")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_SYSTEM'>"._QXZ("CAMPDNC_ONLY_AND_SYSTEM")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_SYSTEM'>"._QXZ("INTERNALDNC_ONLY_AND_SYSTEM")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_SYSTEM'>"._QXZ("DNC_AND_CAMPDNC_AND_SYSTEM")."</option>";
-                echo "<option value='NONE_WITH_ALT'>"._QXZ("NONE_WITH_ALT")."</option>";
-                echo "<option value='DNC_ONLY_WITH_ALT'>"._QXZ("DNC_ONLY_WITH_ALT")."</option>";
-                echo "<option value='CAMPDNC_ONLY_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_WITH_ALT")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT")."</option>";
-                echo "<option value='CAMPLISTS_ONLY_WITH_ALT'>"._QXZ("CAMPLISTS_ONLY_WITH_ALT")."</option>";
-                echo "<option value='CAMPLISTS_ALL_WITH_ALT'>"._QXZ("CAMPLISTS_ALL_WITH_ALT")."</option>";
-                echo "<option value='SYSTEM_WITH_ALT'>"._QXZ("SYSTEM_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_CAMPLISTS_WITH_ALT'>"._QXZ("DNC_AND_CAMPLISTS_WITH_ALT")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("DNC_AND_CAMPLISTS_ALL_WITH_ALT")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_SYSTEM_WITH_ALT'>"._QXZ("DNC_AND_SYSTEM_WITH_ALT")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT")."</option>";
-                echo "<option value='NONE_WITH_ALT_ADDR3'>"._QXZ("NONE_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_ONLY_WITH_ALT_ADDR3'>"._QXZ("DNC_ONLY_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CAMPDNC_ONLY_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CAMPLISTS_ONLY_WITH_ALT_ADDR3'>"._QXZ("CAMPLISTS_ONLY_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='SYSTEM_WITH_ALT_ADDR3'>"._QXZ("SYSTEM_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_SYSTEM_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT_ADDR3")."</option>";
-                echo "<option value='CALLBACK'>"._QXZ("CALLBACK")."</option>";
-                echo "<option value='DNC_AND_CALLBACK'>"._QXZ("DNC_AND_CALLBACK")."</option>";
-                echo "<option value='CAMPDNC_ONLY_AND_CALLBACK'>"._QXZ("CAMPDNC_ONLY_AND_CALLBACK")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_AND_CALLBACK'>"._QXZ("INTERNALDNC_ONLY_AND_CALLBACK")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_AND_CALLBACK'>"._QXZ("DNC_AND_CAMPDNC_AND_CALLBACK")."</option>";
-                echo "<option value='NONE_WITH_ALT_AND_CALLBACK'>"._QXZ("NONE_WITH_ALT_AND_CALLBACK")."</option>";
-                echo "<option value='DNC_ONLY_WITH_ALT_AND_CALLBACK'>"._QXZ("DNC_ONLY_WITH_ALT_AND_CALLBACK")."</option>";
-                echo "<option value='CAMPDNC_ONLY_WITH_ALT_AND_CALLBACK'>"._QXZ("CAMPDNC_ONLY_WITH_ALT_AND_CALLBACK")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_WITH_ALT_AND_CALLBACK'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT_AND_CALLBACK")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_WITH_ALT_AND_CALLBACK'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT_AND_CALLBACK")."</option>";
-                echo "<option value='NONE_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("NONE_WITH_ALT_ADDR3_AND_CALLBACK")."</option>";
-                echo "<option value='DNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("DNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK")."</option>";
-                echo "<option value='CAMPDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("CAMPDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK")."</option>";
-                echo "<option value='INTERNALDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK")."</option>";
-                echo "<option value='DNC_AND_CAMPDNC_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT_ADDR3_AND_CALLBACK")."</option>";
-                echo "<option value='$manual_dial_filter' SELECTED>"._QXZ("$manual_dial_filter")."</option>";
-                echo "</select>$NWB#users-manual_dial_filter$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Manual Dial by Lead ID Override").":</label>";
-                echo "<select name=manual_dial_lead_id class='form-control form-control-sm'>";
-                echo "<option value='Y'>"._QXZ("Y")."</option>";
-                echo "<option value='N'>"._QXZ("N")."</option>";
-                echo "<option value='ONLY'>"._QXZ("ONLY")."</option>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='$manual_dial_lead_id' SELECTED>"._QXZ("$manual_dial_lead_id")."</option>";
-                echo "</select>$NWB#users-manual_dial_lead_id$NWE";
-                echo "</div>";
-                
-                if ($SSallow_emails > 0) {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Agent Call Email").":</label>";
-                    echo "<select name=agentcall_email class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$agentcall_email</option>";
-                    echo "</select>$NWB#users-agentcall_email$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=agentcall_email value=$agentcall_email>";
-                    }
-                    
-                if ($SSallow_chats > 0) {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Agent Call Chat").":</label>";
-                    echo "<select name=agentcall_chat class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$agentcall_chat</option>";
-                    echo "</select>$NWB#users-agentcall_chat$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=agentcall_chat value=$agentcall_chat>";
-                    }
-                    
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Recording").":</label>";
-                echo "<select name=vicidial_recording class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$vicidial_recording</option>";
-                echo "</select>$NWB#users-agent_recording$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Transfers").":</label>";
-                echo "<select name=vicidial_transfers class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$vicidial_transfers</option>";
-                echo "</select>$NWB#users-agent_transfers$NWE";
-                echo "</div>";
-                
-                if ($SSoutbound_autodial_active > 0)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Closer Default Blended").":</label>";
-                    echo "<select name=closer_default_blended class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$closer_default_blended</option>";
-                    echo "</select>$NWB#users-closer_default_blended$NWE";
-                    echo "</div>";
-                    }
-                    
-                if ($SSenable_languages > 0)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("User Choose Language").":</label>";
-                    echo "<select name=user_choose_language class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$user_choose_language</option>";
-                    echo "</select>$NWB#users-user_choose_language$NWE";
-                    echo "</div>";
-                    
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Selected Language").":</label>";
-                    echo "<select name=selected_language class='form-control'>";
-                    echo "<option value=\"default English\">"._QXZ("default English")."</option>";
-                    $stmt="SELECT language_id,language_description from vicidial_languages where active='Y' $LOGadmin_viewable_groupsSQL order by language_id;";
-                    $rslt=mysql_to_mysqli($stmt, $link);
-                    $languages_to_print = mysqli_num_rows($rslt);
-                    $languages_list='';
-                    $o=0;
-                    while ($languages_to_print > $o) 
-                        {
-                        $rowx=mysqli_fetch_row($rslt);
-                        $languages_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-                        $o++;
-                        }
-                    echo "$languages_list";
-                    echo "<option SELECTED>$selected_language</option>";
-                    echo "</select>$NWB#users-selected_language$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=user_choose_language value=$user_choose_language><input type=hidden name=selected_language value=\"$selected_language\">";
-                    }
-                    
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Recording Override").":</label>";
-                echo "<select name=vicidial_recording_override class='form-control'>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='NEVER'>"._QXZ("NEVER")."</option>";
-                echo "<option value='ONDEMAND'>"._QXZ("ONDEMAND")."</option>";
-                echo "<option value='ALLCALLS'>"._QXZ("ALLCALLS")."</option>";
-                echo "<option value='ALLFORCE'>"._QXZ("ALLFORCE")."</option>";
-                echo "<option value='$vicidial_recording_override' SELECTED>"._QXZ("$vicidial_recording_override")."</option>";
-                echo "</select>$NWB#users-agent_recording_override$NWE";
-                echo "</div>";
-
-                if ($SSmute_recordings > 0)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Mute Recordings Override").":</label>";
-                    echo "<select name=mute_recordings class='form-control form-control-sm'>";
-                    echo "<option value=\"DISABLED\">"._QXZ("DISABLED")."</option>";
-                    echo "<option value=\"Y\">"._QXZ("Y")."</option>";
-                    echo "<option value=\"N\">"._QXZ("N")."</option>";
-                    echo "<option SELECTED value=\"$mute_recordings\">"._QXZ("$mute_recordings")."</option>";
-                    echo "</select>$NWB#users-mute_recordings$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=mute_recordings value=\"$mute_recordings\">";
-                    }
-
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Alter Customer Data Override").":</label>";
-                echo "<select name=alter_custdata_override class='form-control'>";
-                echo "<option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option>";
-                echo "<option value='ALLOW_ALTER'>"._QXZ("ALLOW_ALTER")."</option>";
-                echo "<option value='$alter_custdata_override'  SELECTED>"._QXZ("$alter_custdata_override")."</option>";
-                echo "</select>$NWB#users-alter_custdata_override$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Alter Customer Phone Override").":</label>";
-                echo "<select name=alter_custphone_override class='form-control'>";
-                echo "<option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option>";
-                echo "<option value='ALLOW_ALTER'>"._QXZ("ALLOW_ALTER")."</option>";
-                echo "<option value='$alter_custphone_override' SELECTED>"._QXZ("$alter_custphone_override")."</option>";
-                echo "</select>$NWB#users-alter_custphone_override$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Shift Enforcement Override").":</label>";
-                echo "<select name=agent_shift_enforcement_override class='form-control'>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='OFF'>"._QXZ("OFF")."</option>";
-                echo "<option value='START'>"._QXZ("START")."</option>";
-                echo "<option value='ALL'>"._QXZ("ALL")."</option>";
-                echo "<option value='$agent_shift_enforcement_override' SELECTED>"._QXZ("$agent_shift_enforcement_override")."</option>";
-                echo "</select>$NWB#users-agent_shift_enforcement_override$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Call Log View Override").":</label>";
-                echo "<select name=agent_call_log_view_override class='form-control'>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='Y'>"._QXZ("Y")."</option>";
-                echo "<option value='N'>"._QXZ("N")."</option>";
-                echo "<option value='$agent_call_log_view_override' SELECTED>"._QXZ("$agent_call_log_view_override")."</option>";
-                echo "</select>$NWB#users-agent_call_log_view_override$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Campaign Hide Call Log Override").":</label>";
-                echo "<select name=hide_call_log_info class='form-control'>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='Y'>"._QXZ("Y")."</option>";
-                echo "<option value='N'>"._QXZ("N")."</option>";
-                echo "<option value='SHOW_1'>"._QXZ("SHOW")."_1</option>";
-                echo "<option value='SHOW_2'>"._QXZ("SHOW")."_2</option>";
-                echo "<option value='SHOW_3'>"._QXZ("SHOW")."_3</option>";
-                echo "<option value='SHOW_4'>"._QXZ("SHOW")."_4</option>";
-                echo "<option value='SHOW_5'>"._QXZ("SHOW")."_5</option>";
-                echo "<option value='SHOW_6'>"._QXZ("SHOW")."_6</option>";
-                echo "<option value='SHOW_7'>"._QXZ("SHOW")."_7</option>";
-                echo "<option value='SHOW_8'>"._QXZ("SHOW")."_8</option>";
-                echo "<option value='SHOW_9'>"._QXZ("SHOW")."_9</option>";
-                echo "<option value='SHOW_10'>"._QXZ("SHOW")."_10</option>";
-                echo "<option value='$hide_call_log_info' SELECTED>"._QXZ("$hide_call_log_info")."</option>";
-                echo "</select>$NWB#users-hide_call_log_info$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Lead Search Override").":</label>";
-                echo "<select name=agent_lead_search class='form-control'>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option value='ENABLED'>"._QXZ("ENABLED")."</option>";
-                echo "<option value='LIVE_CALL_INBOUND'>"._QXZ("LIVE_CALL_INBOUND")."</option>";
-                echo "<option value='LIVE_CALL_INBOUND_AND_MANUAL'>"._QXZ("LIVE_CALL_INBOUND_AND_MANUAL")."</option>";
-                echo "<option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option>";
-                echo "<option value='$agent_lead_search_override' SELECTED>"._QXZ("$agent_lead_search_override")."</option>";
-                echo "</select>$NWB#users-agent_lead_search_override$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Lead Filter").":</label>";
-                echo "<select name=lead_filter_id class='form-control'>";
-                echo "$filters_list";
-                echo "<option selected value=\"$lead_filter_id\">".(preg_match('/^NONE$/', $lead_filter_id) ? _QXZ("$lead_filter_id") : $lead_filter_id)." - $filtername_list[$lead_filter_id]</option>";
-                echo "</select>$NWB#users-lead_filter_id$NWE";
-                echo "<small>"._QXZ("only enabled with no-hopper manual dialing")."</small>";
-                echo "</div>";
-
-                if ($SSuser_hide_realtime_enabled > 0)
-                    {
-                    $red_enabledBEGIN='';   $red_enabledEND='';
-                    if ($user_hide_realtime > 0)
-                        {$red_enabledBEGIN='<span class="text-danger">';   $red_enabledEND='</span>';}
-                    echo "<div class='form-group'>";
-                    echo "<label>$red_enabledBEGIN"._QXZ("User Hide in RealTime").": $red_enabledEND</label>";
-                    echo "<select name=user_hide_realtime class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$user_hide_realtime</option>";
-                    echo "</select>$NWB#users-user_hide_realtime$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=user_hide_realtime value=\"$user_hide_realtime\">";
-                    }
-
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Alert Enabled").":</label>";
-                echo "<div class='info-box'>$alert_enabled $NWB#users-alert_enabled$NWE</div>";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Allow Alerts").":</label>";
-                echo "<select name=allow_alerts class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$allow_alerts</option>";
-                echo "</select>$NWB#users-allow_alerts$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Preset Contact Search").":</label>";
-                echo "<select name=preset_contact_search class='form-control'>";
-                echo "<option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option>";
-                echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>";
-                echo "<option SELECTED value='$preset_contact_search'>"._QXZ("$preset_contact_search")."</option>";
-                echo "</select>$NWB#users-preset_contact_search$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Max Inbound Calls").":</label>";
-                echo "<input type=text name=max_inbound_calls class='form-control form-control-sm' value=\"$max_inbound_calls\">$NWB#users-max_inbound_calls$NWE";
-                echo "<small>"._QXZ("inbound calls today").": $USER_inbound_calls_today</small>";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Max Inbound Calls Filtering Enabled").":</label>";
-                echo "<select name=max_inbound_filter_enabled class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$max_inbound_filter_enabled</option>";
-                echo "</select>$NWB#users-max_inbound_filter_enabled$NWE";
-                echo "<small>"._QXZ("inbound filtered calls today").": $USER_inbound_calls_today_filtered</small>";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Max Manual Dial Hopper Calls").":</label>";
-                echo "<input type=text name=max_hopper_calls class='form-control form-control-sm' value=\"$max_hopper_calls\">$NWB#users-max_hopper_calls$NWE";
-                echo "<small>"._QXZ("hopper calls today").": $USER_hopper_calls_today</small>";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Max Manual Dial Hopper Calls Per Hour").":</label>";
-                echo "<input type=text name=max_hopper_calls_hour class='form-control form-control-sm' value=\"$max_hopper_calls_hour\">$NWB#users-max_hopper_calls_hour$NWE";
-                echo "<small>"._QXZ("hopper calls this hour").": $USER_hopper_calls_hour</small>";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Wrap Seconds Override").":</label>";
-                echo "<input type=text name=wrapup_seconds_override class='form-control form-control-sm' value=\"$wrapup_seconds_override\">$NWB#users-wrapup_seconds_override$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Agent Ready Max Logout Override").":</label>";
-                echo "<input type=text name=ready_max_logout class='form-control form-control-sm' value=\"$ready_max_logout\">$NWB#users-ready_max_logout$NWE";
-                echo "</div>";
-                
-                ### BEGIN get status group listings for dynamic pulldown menu ###
-                $stmt="SELECT status_group_id,status_group_notes from vicidial_status_groups $whereLOGadmin_viewable_groupsSQL order by status_group_id;";
-                $rslt=mysql_to_mysqli($stmt, $link);
-                $status_groups_to_print = mysqli_num_rows($rslt);
-                $status_groups_menu='';
-                $status_groups_selected=0;
-                $o=0;
-                while ($status_groups_to_print > $o) 
-                    {
-                    $rowx=mysqli_fetch_row($rslt);
-                    $status_groups_menu .= "<option ";
-                    if ($status_group_id == "$rowx[0]") 
-                        {
-                        $status_groups_menu .= "SELECTED ";
-                        $status_groups_selected++;
-                        }
-                    $status_groups_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-                    $o++;
-                    }
-                $sglinkB='';   $sglinkE='';
-                if (strlen($status_group_id)>1)
-                    {
-                    $sglinkB="<a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id\">";
-                    $sglinkE='</a>';
-                    }
-
-                echo "<div class='form-group'>";
-                echo "<label>$sglinkB"._QXZ("Additional Status Group")."$sglinkE:</label>";
-                echo "<select name=status_group_id class='form-control'>";
-                echo "<option value=\"\">"._QXZ("NONE")."</option>";
-                echo "$status_groups_menu";
-                echo "</select>$NWB#users-status_group_id$NWE";
-                echo "</div>";
-                ### END get status group listings for dynamic pulldown menu ###
-                
-                if ($SSinbound_credits > 0)
-                    {
-                    $ICC_triggered='';
-                    if ($inbound_credits == '0') {$ICC_triggered = " <span class='text-danger'><strong>"._QXZ("Inbound Calls Credits Zero Balance")."</strong></span>";}
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Inbound Calls Credits").":</label>";
-                    echo "<input type=text name=inbound_credits class='form-control form-control-sm' value=\"$inbound_credits\">$NWB#users-inbound_credits$NWE$ICC_triggered";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=inbound_credits value=\"$inbound_credits\">";
-                    }
-                echo "</div>";
-                echo "</div>";
-                }
-                
-            // Admin Options Tab
-            echo "<div id='admin-options' class='tab-content'>";
-            if ( ($LOGuser_level > 8) and ($LOGalter_admin_interface > 0) )
-                {
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("ADMIN REPORT OPTIONS")."</h2>";
-                
-                echo "<div class='form-grid'>";
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Realtime Block User Info").":</label>";
-                echo "<select name=realtime_block_user_info class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$realtime_block_user_info</option>";
-                echo "</select>$NWB#users-realtime_block_user_info$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Admin Hide Lead Data").":</label>";
-                echo "<select name=admin_hide_lead_data class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$admin_hide_lead_data</option>";
-                echo "</select>$NWB#users-admin_hide_lead_data$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Admin Hide Phone Data").":</label>";
-                echo "<select name=admin_hide_phone_data class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option value='2_DIGITS'>"._QXZ("2_DIGITS")."</option><option value='3_DIGITS'>"._QXZ("3_DIGITS")."</option><option value='4_DIGITS'>"._QXZ("4_DIGITS")."</option><option SELECTED>$admin_hide_phone_data</option>";
-                echo "</select>$NWB#users-admin_hide_phone_data$NWE";
-                echo "</div>";
-                
-                if ( (preg_match('/\-ALL/i', $LOGallowed_campaigns)) )
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Search Lead Ignore Group Restrictions").":</label>";
-                    echo "<select name=ignore_group_on_search class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$ignore_group_on_search</option>";
-                    echo "</select>$NWB#users-ignore_group_on_search$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=ignore_group_on_search value=\"$ignore_group_on_search\">";
-                    }
-                
-                if ($SSuser_admin_redirect > 0)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("User Admin Redirect URL").":</label>";
-                    echo "<input type=text name=user_admin_redirect_url class='form-control' value=\"$user_admin_redirect_url\">$NWB#users-user_admin_redirect_url$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=user_admin_redirect_url value=\"$user_admin_redirect_url\">";
-                    }
-                echo "</div>";
-                echo "</div>";
-                
-                echo "<div class='form-section'>";
-                echo "<h2 class='section-title'>"._QXZ("ADMIN INTERFACE OPTIONS")."</h2>";
-                
-                echo "<div class='form-grid'>";
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("View Reports").":</label>";
-                echo "<select name=view_reports class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$view_reports</option>";
-                echo "</select>$NWB#users-view_reports$NWE";
-                echo "</div>";
-                
-                if ($SSlog_recording_access > 0)
-                    {
-                    echo "<div class='form-group'>";
-                    echo "<label>"._QXZ("Access Recordings").":</label>";
-                    echo "<select name=access_recordings class='form-control form-control-sm'>";
-                    echo "<option>0</option><option>1</option><option SELECTED>$access_recordings</option>";
-                    echo "</select>$NWB#users-access_recordings$NWE";
-                    echo "</div>";
-                    }
-                else
-                    {
-                    echo "<input type=hidden name=access_recordings value=\"$access_recordings\">";
-                    }
-                    
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Alter Agent Interface Options").":</label>";
-                echo "<select name=alter_agent_interface_options class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$alter_agent_interface_options</option>";
-                echo "</select>$NWB#users-alter_agent_interface_options$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Modify Users").":</label>";
-                echo "<select name=modify_users class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$modify_users</option>";
-                echo "</select>$NWB#users-modify_sections$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Change Agent Campaign").":</label>";
-                echo "<select name=change_agent_campaign class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$change_agent_campaign</option>";
-                echo "</select>$NWB#users-change_agent_campaign$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Delete Users").":</label>";
-                echo "<select name=delete_users class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$delete_users</option>";
-                echo "</select>$NWB#users-delete_users$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Modify User Groups").":</label>";
-                echo "<select name=modify_usergroups class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$modify_usergroups</option>";
-                echo "</select>$NWB#users-modify_sections$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Delete User Groups").":</label>";
-                echo "<select name=delete_user_groups class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$delete_user_groups</option>";
-                echo "</select>$NWB#users-delete_user_groups$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Modify Lists").":</label>";
-                echo "<select name=modify_lists class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$modify_lists</option>";
-                echo "</select>$NWB#users-modify_sections$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Delete Lists").":</label>";
-                echo "<select name=delete_lists class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$delete_lists</option>";
-                echo "</select>$NWB#users-delete_lists$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Load Leads").":</label>";
-                echo "<select name=load_leads class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$load_leads</option>";
-                echo "</select>$NWB#users-load_leads$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Modify Leads").":</label>";
-                echo "<select name=modify_leads class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option SELECTED>$modify_leads</option>";
-                echo "</select>$NWB#users-modify_leads$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("GDPR-Compliant Export Delete Leads").":</label>";
-                echo "<select name=export_gdpr_leads class='form-control form-control-sm'>";
-                for ($i=0; $i<=$SSenable_gdpr_download_deletion; $i++) 
-                    {
-                    echo "<option>$i</option>";
-                    }
-                echo "<option SELECTED>$export_gdpr_leads</option>";
-                echo "</select>$NWB#users-export_gdpr_leads$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Download Lists").":</label>";
-                echo "<select name=download_lists class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$download_lists</option>";
-                echo "</select>$NWB#users-download_lists$NWE";
-                echo "</div>";
-                
-                echo "<div class='form-group'>";
-                echo "<label>"._QXZ("Export Reports").":</label>";
-                echo "<select name=export_reports class='form-control form-control-sm'>";
-                echo "<option>0</option><option>1</option><option SELECTED>$export_reports</option>";
-                echo "</select>$NWB#users-export_reports$NWE";
-                echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete From DNC Lists").":</label>";
-echo "<select name=delete_from_dnc class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_from_dnc</option>";
-echo "</select>$NWB#users-delete_from_dnc$NWE";
-echo "</div>";
-
-if ($SScustom_fields_enabled > 0)
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Custom Fields Modify").":</label>";
-    echo "<select name=custom_fields_modify class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$custom_fields_modify</option>";
-    echo "</select>$NWB#users-custom_fields_modify$NWE";
-    echo "</div>";
-    }
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Campaigns").":</label>";
-echo "<select name=modify_campaigns class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_campaigns</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Campaign Detail").":</label>";
-echo "<select name=campaign_detail class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$campaign_detail</option>";
-echo "</select>$NWB#users-campaign_detail$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Campaign Dial Prefix").":</label>";
-echo "<select name=modify_dial_prefix class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_dial_prefix</option>";
-echo "</select>$NWB#users-modify_dial_prefix$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete Campaigns").":</label>";
-echo "<select name=delete_campaigns class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_campaigns</option>";
-echo "</select>$NWB#users-delete_campaigns$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify In-Groups").":</label>";
-echo "<select name=modify_ingroups class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_ingroups</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete In-Groups").":</label>";
-echo "<select name=delete_ingroups class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_ingroups</option>";
-echo "</select>$NWB#users-delete_ingroups$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify DIDs").":</label>";
-echo "<select name=modify_inbound_dids class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_inbound_dids</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete DIDs").":</label>";
-echo "<select name=delete_inbound_dids class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_inbound_dids</option>";
-echo "</select>$NWB#users-delete_ingroups$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Custom Dialplans").":</label>";
-echo "<select name=modify_custom_dialplans class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_custom_dialplans</option>";
-echo "</select>$NWB#users-modify_custom_dialplans$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Remote Agents").":</label>";
-echo "<select name=modify_remoteagents class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_remoteagents</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete Remote Agents").":</label>";
-echo "<select name=delete_remote_agents class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_remote_agents</option>";
-echo "</select>$NWB#users-delete_remote_agents$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Scripts").":</label>";
-echo "<select name=modify_scripts class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_scripts</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete Scripts").":</label>";
-echo "<select name=delete_scripts class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_scripts</option>";
-echo "</select>$NWB#users-delete_scripts$NWE";
-echo "</div>";
-
-if ($SSoutbound_autodial_active > 0)
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Modify Filters").":</label>";
-    echo "<select name=modify_filters class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$modify_filters</option>";
-    echo "</select>$NWB#users-modify_sections$NWE";
-    echo "</div>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Delete Filters").":</label>";
-    echo "<select name=delete_filters class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$delete_filters</option>";
-    echo "</select>$NWB#users-delete_filters$NWE";
-    echo "</div>";
-    }
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("AGC Admin Access").":</label>";
-echo "<select name=ast_admin_access class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$ast_admin_access</option>";
-echo "</select>$NWB#users-ast_admin_access$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("AGC Delete Phones").":</label>";
-echo "<select name=ast_delete_phones class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$ast_delete_phones</option>";
-echo "</select>$NWB#users-ast_delete_phones$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Call Times").":</label>";
-echo "<select name=modify_call_times class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_call_times</option>";
-echo "</select>$NWB#users-modify_call_times$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete Call Times").":</label>";
-echo "<select name=delete_call_times class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_call_times</option>";
-echo "</select>$NWB#users-delete_call_times$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Servers").":</label>";
-echo "<select name=modify_servers class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_servers</option>";
-echo "</select>$NWB#users-modify_servers$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Shifts").":</label>";
-echo "<select name=modify_shifts class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_shifts</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Phones").":</label>";
-echo "<select name=modify_phones class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_phones</option>";
-echo "</select>$NWB#users-modify_phones$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Carriers").":</label>";
-echo "<select name=modify_carriers class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_carriers</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-if ($SSallow_emails > 0) 
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Modify Email Accounts").":</label>";
-    echo "<select name=modify_email_accounts class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$modify_email_accounts</option>";
-    echo "</select>$NWB#users-modify_email_accounts$NWE";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=modify_email_accounts value=$modify_email_accounts>";
-    }
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Labels").":</label>";
-echo "<select name=modify_labels class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_labels</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Colors").":</label>";
-echo "<select name=modify_colors class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_colors</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-if ($SSenable_languages > 0)
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Modify Languages").":</label>";
-    echo "<select name=modify_languages class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$modify_languages</option>";
-    echo "</select>$NWB#users-modify_sections$NWE";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=modify_languages value=$modify_languages>";
-    }
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Statuses").":</label>";
-echo "<select name=modify_statuses class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_statuses</option>";
-echo "</select>$NWB#users-modify_statuses$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Voicemail").":</label>";
-echo "<select name=modify_voicemail class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_voicemail</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Audio Store").":</label>";
-echo "<select name=modify_audiostore class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_audiostore</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Music On Hold").":</label>";
-echo "<select name=modify_moh class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_moh</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify TTS").":</label>";
-echo "<select name=modify_tts class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_tts</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Contacts").":</label>";
-echo "<select name=modify_contacts class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_contacts</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("CallCard Access").":</label>";
-echo "<select name=callcard_admin class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$callcard_admin</option>";
-echo "</select>$NWB#users-modify_sections$NWE";
-echo "</div>";
-
-if ($SSenable_auto_reports > 0)
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Modify Automated Reports").":</label>";
-    echo "<select name=modify_auto_reports class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$modify_auto_reports</option>";
-    echo "</select>$NWB#users-modify_sections$NWE";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=modify_auto_reports value=$modify_auto_reports>";
-    }
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Add Timeclock Log Record").":</label>";
-echo "<select name=add_timeclock_log class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$add_timeclock_log</option>";
-echo "</select>$NWB#users-add_timeclock_log$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Modify Timeclock Log Record").":</label>";
-echo "<select name=modify_timeclock_log class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$modify_timeclock_log</option>";
-echo "</select>$NWB#users-modify_timeclock_log$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Delete Timeclock Log Record").":</label>";
-echo "<select name=delete_timeclock_log class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$delete_timeclock_log</option>";
-echo "</select>$NWB#users-delete_timeclock_log$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Manager Shift Enforcement Override").":</label>";
-echo "<select name=manager_shift_enforcement_override class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$manager_shift_enforcement_override</option>";
-echo "</select>$NWB#users-manager_shift_enforcement_override$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Manager Pause Code Approval").":</label>";
-echo "<select name=pause_code_approval class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$pause_code_approval</option>";
-echo "</select>$NWB#users-pause_code_approval$NWE";
-echo "</div>";
-
-if (preg_match("/cf_encrypt/",$SSactive_modules))
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Admin Custom Fields Show Hidden").":</label>";
-    echo "<select name=admin_cf_show_hidden class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$admin_cf_show_hidden</option>";
-    echo "</select>$NWB#users-admin_cf_show_hidden$NWE";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=admin_cf_show_hidden value=\"$admin_cf_show_hidden\">";
-    }
-
-echo "</div>";
-echo "</div>";
-
-// Security Options Tab
-echo "<div id='security-options' class='tab-content'>";
-echo "<div class='form-section'>";
-echo "<h2 class='section-title'>"._QXZ("SECURITY OPTIONS, Only enable if needed")."</h2>";
-
-echo "<div class='form-grid'>";
-if ($SSallow_ip_lists > 0)
-    {
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Modify IP Lists").":</label>";
-    echo "<select name=modify_ip_lists class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$modify_ip_lists</option>";
-    echo "</select>$NWB#users-modify_ip_lists$NWE";
-    echo "</div>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("Ignore IP List").":</label>";
-    echo "<select name=ignore_ip_list class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$ignore_ip_list</option>";
-    echo "</select>$NWB#users-ignore_ip_lists$NWE";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=modify_ip_lists value=$modify_ip_lists><input type=hidden name=ignore_ip_list value=$ignore_ip_list>";
-    }
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Two Factor Auth Override").":</label>";
-echo "<select name=two_factor_override class='form-control'>";
-echo "<option value=\"NOT_ACTIVE\">"._QXZ("NOT_ACTIVE")."</option>";
-echo "<option value=\"DISABLED\">"._QXZ("DISABLED")."</option>";
-echo "<option SELECTED value=\"$two_factor_override\">"._QXZ("$two_factor_override")."</option>";
-echo "</select>$NWB#users-two_factor_override$NWE";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-
-// API Options Tab
-echo "<div id='api-options' class='tab-content'>";
-echo "<div class='form-section'>";
-echo "<h2 class='section-title'>"._QXZ("API USER OPTIONS, Only enable if needed")."</h2>";
-
-echo "<div class='form-grid'>";
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("Agent API Access").":</label>";
-echo "<select name=vdc_agent_api_access class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$vdc_agent_api_access</option>";
-echo "</select>$NWB#users-vdc_agent_api_access$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("API List Restrict").":</label>";
-echo "<select name=api_list_restrict class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$api_list_restrict</option>";
-echo "</select>$NWB#users-api_list_restrict$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("API Allowed Functions").":</label>";
-echo "<select MULTIPLE name=api_allowed_functions[] class='form-control multi-select'>";
- $Afunctions_ARY = explode(' ',$APIfunctions);
- $Afunctions_ct = count($Afunctions_ARY);
- $b=0;
-while ($b < $Afunctions_ct)
-    {
-    $field_selected='';
-    trim($Afunctions_ARY[$b]);
-    if (preg_match("/ $Afunctions_ARY[$b] /",$api_allowed_functions))
-        {$field_selected = 'SELECTED';}
-    echo "<option value=\"$Afunctions_ARY[$b]\" $field_selected>"._QXZ("$Afunctions_ARY[$b]")."</option>";
-    $b++;
-    }
-echo "</select>$NWB#users-api_allowed_functions$NWE";
-echo "</div>";
-
-echo "<div class='form-group'>";
-echo "<label>"._QXZ("API Only User").":</label>";
-echo "<select name=api_only_user class='form-control form-control-sm'>";
-echo "<option>0</option><option>1</option><option SELECTED>$api_only_user</option>";
-echo "</select>$NWB#users-api_only_user$NWE";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-
-// Level 9 Admin Options
-if (
-    (($LOGmodify_same_user_level > 0) || ($LOGalter_admin_interface > 0))
-    && ($LOGuser_level > 8))
-    {
-    echo "<div class='form-section'>";
-    echo "<h2 class='section-title'>"._QXZ("LEVEL 9 ADMIN OPTIONS")."</h2>";
-    
-    echo "<div class='form-grid'>";
-    if ( ($LOGmodify_same_user_level < 1) or ($LOGuser_level < 9) )
-        {
-        echo "<input type=hidden name=modify_same_user_level id=modify_same_user_level value=\"0\">";
-        echo "<input type=hidden name=download_invalid_files id=download_invalid_files value=\"0\">";
-        }
-    else
-        {
-        echo "<div class='form-group'>";
-        echo "<label>"._QXZ("Modify Same User Level").":</label>";
-        echo "<select name=modify_same_user_level class='form-control form-control-sm'>";
-        echo "<option>0</option><option>1</option><option SELECTED>$modify_same_user_level</option>";
-        echo "</select>$NWB#users-modify_same_user_level$NWE";
-        echo "</div>";
-
-        echo "<div class='form-group'>";
-        echo "<label>"._QXZ("Download Invalid Files").":</label>";
-        echo "<select name=download_invalid_files class='form-control form-control-sm'>";
-        echo "<option>0</option><option>1</option><option SELECTED>$download_invalid_files</option>";
-        echo "</select>$NWB#users-download_invalid_files$NWE";
-        echo "</div>";
-        }
-
-    if ( ($LOGalter_admin_interface < 1) or ($LOGuser_level < 9) )
-        {
-        echo "<input type=hidden name=alter_admin_interface_options id=alter_admin_interface_options value=\"0\">";
-        }
-    else
-        {
-        echo "<div class='form-group'>";
-        echo "<label>"._QXZ("Alter Admin Interface Options").":</label>";
-        echo "<select name=alter_admin_interface_options class='form-control form-control-sm'>";
-        echo "<option>0</option><option>1</option><option SELECTED>$alter_admin_interface_options</option>";
-        echo "</select>$NWB#users-alter_admin_interface_options$NWE";
-        echo "</div>";
-        }
-    echo "</div>";
-    echo "</div>";
-    }
-
-// QC Features Section
-if ($SSqc_features_active > 0)
-    {
-    echo "<div class='form-section'>";
-    echo "<h2 class='section-title'>"._QXZ("Quality Control Options")."</h2>";
-    
-    echo "<div class='form-grid'>";
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("QC Enabled").":</label>";
-    echo "<select name=qc_enabled class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$qc_enabled</option>";
-    echo "</select>$NWB#users-qc_enabled$NWE";
-    echo "</div>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("QC User Level").":</label>";
-    echo "<select name=qc_user_level class='form-control'>";
-    echo "<option value=1>1 - "._QXZ("Modify Nothing")."</option>";
-    echo "<option value=2>2 - "._QXZ("Modify Nothing Except Status")."</option>";
-    echo "<option value=3>3 - "._QXZ("Modify All Fields")."</option>";
-    echo "<option value=4>4 - "._QXZ("Verify First Round of QC")."</option>";
-    echo "<option value=5>5 - "._QXZ("View QC Statistics")."</option>";
-    echo "<option value=6>6 - "._QXZ("Ability to Modify FINISHed records")."</option>";
-    echo "<option value=7>7 - "._QXZ("Manager Level")."</option>";
-    echo "<option SELECTED>$qc_user_level</option>";
-    echo "</select>$NWB#users-qc_user_level$NWE";
-    echo "</div>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("QC Pass").":</label>";
-    echo "<select name=qc_pass class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$qc_pass</option>";
-    echo "</select>$NWB#users-qc_pass$NWE";
-    echo "</div>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("QC Finish").":</label>";
-    echo "<select name=qc_finish class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$qc_finish</option>";
-    echo "</select>$NWB#users-qc_finish$NWE";
-    echo "</div>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("QC Commit").":</label>";
-    echo "<select name=qc_commit class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option><option SELECTED>$qc_commit</option>";
-    echo "</select>$NWB#users-qc_commit$NWE";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=qc_enabled value=\"$qc_enabled\">";
-    echo "<input type=hidden name=qc_user_level value=\"$qc_user_level\">";
-    echo "<input type=hidden name=qc_pass value=\"$qc_pass\">";
-    echo "<input type=hidden name=qc_finish value=\"$qc_finish\">";
-    echo "<input type=hidden name=qc_commit value=\"$qc_commit\">";
-    }
-
-// HCI Features Section
-if ($SShopper_hold_inserts > 0)
-    {
-    echo "<div class='form-section'>";
-    echo "<h2 class='section-title'>"._QXZ("Hopper Control Interface")."</h2>";
-    
-    echo "<div class='form-group'>";
-    echo "<label>"._QXZ("HCI Enabled").":</label>";
-    echo "<select name=hci_enabled class='form-control form-control-sm'>";
-    echo "<option>0</option><option>1</option>";
-    if ($SShopper_hold_inserts > 1)
-        {
-        echo "<option>2</option>";
-        }
-    echo "<option SELECTED>$hci_enabled</option>";
-    echo "</select>$NWB#users-hci_enabled$NWE";
-    echo "</div>";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=hci_enabled value=\"$hci_enabled\">";
-    }
-
-// Form Actions
-echo "<div class='form-actions'>";
-echo "<button type='submit' name='SUBMIT' class='btn btn-primary'>"._QXZ("SUBMIT")."</button>";
-
-if ($LOGdelete_users > 0)
-    {
-    echo "<a href=\"$PHP_SELF?ADD=5&user=$user\" class='btn btn-danger'>"._QXZ("DELETE THIS USER")."</a>";
-    }
-echo "</div>";
-
-echo "</form>";
-
-// Quick Links Section
-echo "<div class='form-section'>";
-echo "<h2 class='section-title'>"._QXZ("Quick Links")."</h2>";
-echo "<div class='link-group'>";
-echo "<a href=\"./AST_agent_time_sheet.php?agent=$user\">"._QXZ("User time sheet")."</a>";
-echo "<a href=\"./user_status.php?user=$user\">"._QXZ("User status")."</a>";
-echo "<a href=\"./user_stats.php?user=$user\">"._QXZ("User stats")."</a>";
-echo "<a href=\"./AST_agent_days_detail.php?user=$user&query_date=$REPORTdate&end_date=$REPORTdate&group[]=--ALL--&shift=ALL\">"._QXZ("User multiple day status detail report")."</a>";
-echo "<a href=\"$PHP_SELF?ADD=8&user=$user\">"._QXZ("User CallBack Holds")."</a>";
-if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-    {
-    echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=USERS&stage=$user\">"._QXZ("Admin changes to this record")."</a>";
-    }
-echo "</div>";
-echo "</div>";
-
-echo "</div>"; // End container
-
-// JavaScript for tab functionality
-echo "<script>
-function showTab(tabId) {
-    // Hide all tab contents
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(tab => tab.classList.remove('active'));
-    
-    // Remove active class from all tab buttons
-    const tabButtons = document.querySelectorAll('.tab-button');
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    
-    // Show selected tab
-    document.getElementById(tabId).classList.add('active');
-    
-    // Add active class to clicked button
-    event.target.classList.add('active');
-}
-
-// Initialize first tab as active
-document.addEventListener('DOMContentLoaded', function() {
-    const firstTab = document.querySelector('.tab-button');
-    if (firstTab) {
-        firstTab.classList.add('active');
-    }
-    const firstContent = document.querySelector('.tab-content');
-    if (firstContent) {
-        firstContent.classList.add('active');
-    }
-});
-</script>";
-
-}
-else
-{
-echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
-exit;
-}
-}
-else
-{
-echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
-exit;
-}
+	{
+	if ($LOGmodify_users==1)
+		{
+		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
+			{
+			$modify_url = "$PHP_SELF?ADD=3&user=$user";
+			$modify_footer_refresh=1;
+			}
+
+		echo "<TABLE><TR><TD>\n";
+		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+
+		$stmt="SELECT user_id,user,pass,full_name,user_level,user_group,phone_login,phone_pass,delete_users,delete_user_groups,delete_lists,delete_campaigns,delete_ingroups,delete_remote_agents,load_leads,campaign_detail,ast_admin_access,ast_delete_phones,delete_scripts,modify_leads,hotkeys_active,change_agent_campaign,agent_choose_ingroups,closer_campaigns,scheduled_callbacks,agentonly_callbacks,agentcall_manual,vicidial_recording,vicidial_transfers,delete_filters,alter_agent_interface_options,closer_default_blended,delete_call_times,modify_call_times,modify_users,modify_campaigns,modify_lists,modify_scripts,modify_filters,modify_ingroups,modify_usergroups,modify_remoteagents,modify_servers,view_reports,vicidial_recording_override,alter_custdata_override,qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit,add_timeclock_log,modify_timeclock_log,delete_timeclock_log,alter_custphone_override,vdc_agent_api_access,modify_inbound_dids,delete_inbound_dids,active,alert_enabled,download_lists,agent_shift_enforcement_override,manager_shift_enforcement_override,shift_override_flag,export_reports,delete_from_dnc,email,user_code,territory,allow_alerts,agent_choose_territories,custom_one,custom_two,custom_three,custom_four,custom_five,voicemail_id,agent_call_log_view_override,callcard_admin,agent_choose_blended,realtime_block_user_info,custom_fields_modify,force_change_password,agent_lead_search_override,modify_shifts,modify_phones,modify_carriers,modify_labels,modify_statuses,modify_voicemail,modify_audiostore,modify_moh,modify_tts,preset_contact_search,modify_contacts,modify_same_user_level,admin_hide_lead_data,admin_hide_phone_data,agentcall_email,modify_email_accounts,failed_login_count,last_login_date,last_ip,alter_admin_interface_options,max_inbound_calls,modify_custom_dialplans,wrapup_seconds_override,modify_languages,selected_language,user_choose_language,ignore_group_on_search,api_list_restrict,api_allowed_functions,lead_filter_id,agentcall_chat,admin_cf_show_hidden,user_hide_realtime,access_recordings,modify_colors,user_nickname,user_new_lead_limit,api_only_user,modify_auto_reports,modify_ip_lists,ignore_ip_list,ready_max_logout,export_gdpr_leads,pause_code_approval,max_hopper_calls,max_hopper_calls_hour,mute_recordings,hide_call_log_info,next_dial_my_callbacks,user_admin_redirect_url,max_inbound_filter_enabled,max_inbound_filter_statuses,max_inbound_filter_ingroups,max_inbound_filter_min_sec,status_group_id,mobile_number,two_factor_override,manual_dial_filter,user_location,download_invalid_files,user_group_two,failed_login_attempts_today,failed_login_count_today,failed_last_ip_today,failed_last_type_today,modify_dial_prefix,inbound_credits,hci_enabled,manual_dial_lead_id from vicidial_users where user='$user' $LOGadmin_viewable_groupsSQL;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$row=mysqli_fetch_row($rslt);
+		$user_id =				$row[0];
+		$user =					$row[1];
+		$pass =					$row[2];
+		$full_name =			$row[3];
+		$user_level =			$row[4];
+		$user_group =			$row[5];
+		$phone_login =			$row[6];
+		$phone_pass =			$row[7];
+		$delete_users =			$row[8];
+		$delete_user_groups =	$row[9];
+		$delete_lists =			$row[10];
+		$delete_campaigns =		$row[11];
+		$delete_ingroups =		$row[12];
+		$delete_remote_agents =	$row[13];
+		$load_leads =			$row[14];
+		$campaign_detail =		$row[15];
+		$ast_admin_access =		$row[16];
+		$ast_delete_phones =	$row[17];
+		$delete_scripts =		$row[18];
+		$modify_leads =			$row[19];
+		$hotkeys_active =		$row[20];
+		$change_agent_campaign =$row[21];
+		$agent_choose_ingroups =$row[22];
+		$scheduled_callbacks =	$row[24];
+		$agentonly_callbacks =	$row[25];
+		$agentcall_manual =		$row[26];
+		$vicidial_recording =	$row[27];
+		$vicidial_transfers =	$row[28];
+		$delete_filters =		$row[29];
+		$alter_agent_interface_options =$row[30];
+		$closer_default_blended =		$row[31];
+		$delete_call_times =	$row[32];
+		$modify_call_times =	$row[33];
+		$modify_users =			$row[34];
+		$modify_campaigns =		$row[35];
+		$modify_lists =			$row[36];
+		$modify_scripts =		$row[37];
+		$modify_filters =		$row[38];
+		$modify_ingroups =		$row[39];
+		$modify_usergroups =	$row[40];
+		$modify_remoteagents =	$row[41];
+		$modify_servers =		$row[42];
+		$view_reports =			$row[43];
+		$vicidial_recording_override =	$row[44];
+		$alter_custdata_override = $row[45];
+		$qc_enabled =			$row[46];
+		$qc_user_level =		$row[47];
+		$qc_pass =				$row[48];
+		$qc_finish =			$row[49];
+		$qc_commit =			$row[50];
+		$add_timeclock_log =	$row[51];
+		$modify_timeclock_log = $row[52];
+		$delete_timeclock_log = $row[53];
+		$alter_custphone_override = $row[54];
+		$vdc_agent_api_access = $row[55];
+		$modify_inbound_dids =	$row[56];
+		$delete_inbound_dids =	$row[57];
+		$active =				$row[58];
+		$alert_enabled =		$row[59];
+		$download_lists =		$row[60];
+		$agent_shift_enforcement_override =	$row[61];
+		$manager_shift_enforcement_override =	$row[62];
+		$export_reports =		$row[64];
+		$delete_from_dnc =		$row[65];
+		$email =				$row[66];
+		$user_code =			$row[67];
+		$territory =			$row[68];
+		$allow_alerts =			$row[69];
+		$agent_choose_territories = $row[70];
+		$user_custom_one =		$row[71];
+		$user_custom_two =		$row[72];
+		$user_custom_three =	$row[73];
+		$user_custom_four =		$row[74];
+		$user_custom_five =		$row[75];
+		$voicemail_id =			$row[76];
+		$agent_call_log_view_override = $row[77];
+		$callcard_admin =		$row[78];
+		$agent_choose_blended = $row[79];
+		$realtime_block_user_info = $row[80];
+		$custom_fields_modify =	$row[81];
+		$force_change_password = $row[82];
+		$agent_lead_search_override = $row[83];
+		$modify_shifts =		$row[84];
+		$modify_phones =		$row[85];
+		$modify_carriers =		$row[86];
+		$modify_labels =		$row[87];
+		$modify_statuses =		$row[88];
+		$modify_voicemail =		$row[89];
+		$modify_audiostore =	$row[90];
+		$modify_moh =			$row[91];
+		$modify_tts =			$row[92];
+		$preset_contact_search =	$row[93];
+		$modify_contacts =		$row[94];
+		$modify_same_user_level =	$row[95];
+		$admin_hide_lead_data =	$row[96];
+		$admin_hide_phone_data =	$row[97];
+		$agentcall_email =	$row[98];
+		$modify_email_accounts =	$row[99];
+		$failed_login_count =	$row[100];
+		$last_login_date =		$row[101];
+		$last_ip =				$row[102];
+		$alter_admin_interface_options = $row[103];
+		$max_inbound_calls =	$row[104];
+		$modify_custom_dialplans =	$row[105];
+		$wrapup_seconds_override = $row[106];
+		$modify_languages =		$row[107];
+		$selected_language =	$row[108];
+		$user_choose_language = $row[109];
+		$ignore_group_on_search = $row[110];
+		$api_list_restrict =	$row[111];
+		$api_allowed_functions = $row[112];
+		$lead_filter_id =		$row[113];
+		$agentcall_chat =		$row[114];
+		$admin_cf_show_hidden = $row[115];
+		$user_hide_realtime =	$row[116];
+		$access_recordings =	$row[117];
+		$modify_colors =		$row[118];
+		$user_nickname =		$row[119];
+		$user_new_lead_limit =	$row[120];
+		$api_only_user =		$row[121];
+		$modify_auto_reports =	$row[122];
+		$modify_ip_lists =		$row[123];
+		$ignore_ip_list =		$row[124];
+		$ready_max_logout =		$row[125];
+		$export_gdpr_leads =	$row[126];
+		$pause_code_approval =	$row[127];
+		$max_hopper_calls =		$row[128];
+		$max_hopper_calls_hour =$row[129];
+		$mute_recordings =		$row[130];
+		$hide_call_log_info =	$row[131];
+		$next_dial_my_callbacks=$row[132];
+		$user_admin_redirect_url=$row[133];
+		$max_inbound_filter_enabled=$row[134];
+		$max_inbound_filter_statuses=$row[135];
+		$max_inbound_filter_ingroups=$row[136];
+		$max_inbound_filter_min_sec=$row[137];
+		$status_group_id =		$row[138];
+		$mobile_number =		$row[139];
+		$two_factor_override =	$row[140];
+		$manual_dial_filter =	$row[141];
+		$user_location =		$row[142];
+		$download_invalid_files=$row[143];
+		$user_group_two =		$row[144];
+		$failed_login_attempts_today=$row[145];
+		$failed_login_count_today=$row[146];
+		$failed_last_ip_today = $row[147];
+		$failed_last_type_today=$row[148];
+		$modify_dial_prefix =	$row[149];
+		$inbound_credits =		$row[150];
+		$hci_enabled =			$row[151];
+		$manual_dial_lead_id =	$row[152];
+
+		##### latest 2FA auth record data
+		$last_auth='';
+		$stmt="SELECT auth_exp_date,auth_stage,auth_attempts from vicidial_two_factor_auth where user='$user' order by auth_date desc limit 1";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$auths_to_print = mysqli_num_rows($rslt);
+		if ($auths_to_print > 0)
+			{
+			$rowx=mysqli_fetch_row($rslt);
+			$auth_exp_date =	$rowx[0];
+			$auth_stage =		$rowx[1];
+			$auth_attempts =	$rowx[2];
+			$last_auth = " &nbsp; &nbsp; $auth_exp_date - $auth_stage - $auth_attempts";
+			}
+
+		if ( ( ($user_level >= $LOGuser_level) and ($LOGuser_level < 9) ) or ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) and ($user_level > 8) ) )
+			{
+			echo "<br>"._QXZ("You do not have permissions to modify this user").": $user\n";
+			}
+		else
+			{
+			echo "<br>"._QXZ("MODIFY A USERS RECORD").": $user<form action=$PHP_SELF method=POST>\n";
+			if ( ($LOGuser_level > 8) and ($LOGalter_admin_interface > 0) )
+				{echo "<input type=hidden name=ADD value=4A>\n";}
+			else
+				{
+				if ($LOGalter_agent_interface == "1")
+					{echo "<input type=hidden name=ADD value=4B>\n";}
+				else
+					{echo "<input type=hidden name=ADD value=4>\n";}
+				}
+			if ($SScustom_fields_enabled < 1)
+				{
+				echo "<input type=hidden name=custom_fields_modify value=\"$custom_fields_modify\">\n";
+				}
+
+			echo "<input type=hidden name=user value=\"$user\">\n";
+			echo "<input type=hidden name=DB value=\"$DB\">\n";
+			echo "<center><TABLE width=980 cellspacing=3>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Number").": </td><td align=left><b>$user</b>$NWB#users-user$NWE</td></tr>\n";
+
+			if ($SSpass_hash_enabled > 0)
+				{
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><b>"._QXZ("PASSWORD IS ENCRYPTED, ONLY ENTER IN A PASSWORD BELOW IF YOU WANT TO CHANGE IT")."!</b></td></tr>\n";
+				}
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=pass size=50 maxlength=100 value=\"$pass\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#users-pass$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Force Change Password").": </td><td align=left><select size=1 name=force_change_password><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$force_change_password\" SELECTED>"._QXZ("$force_change_password")."</option></select>$NWB#users-force_change_password$NWE</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Last Login Info").": </td><td align=left><b>$last_login_date - $failed_login_count - $last_ip $last_auth</b>$NWB#users-last_login_date$NWE &nbsp; ";
+			if ($LOGuser_level > 8)
+				{
+				if ($failed_login_attempts_today > 0)
+					{
+					echo "<font size=2> <a href=\"user_logins_report.php?user=$user\">"._QXZ("Failed logins today")."</a>: $failed_login_attempts_today - $failed_login_count_today - $failed_last_ip_today - $failed_last_type_today</font>";
+					}
+				else
+					{
+					echo "<font size=2> <a href=\"user_logins_report.php?user=$user\">"._QXZ("Logins summary")."</a></font>";
+					}
+				}
+			echo "</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=full_name size=30 maxlength=30 value=\"$full_name\">$NWB#users-full_name$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Level").": </td><td align=left><select size=1 name=user_level>";
+			$h=1;
+			$count_user_level=$LOGuser_level;
+			if ( ($LOGmodify_same_user_level < 1) and ($LOGuser_level > 8) )
+				{$count_user_level=($LOGuser_level - 1);}
+			while ($h<=$count_user_level)
+				{
+				echo "<option>$h</option>";
+				$h++;
+				}
+			echo "<option SELECTED>$user_level</option></select>$NWB#users-user_level$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right><A HREF=\"$PHP_SELF?ADD=311111&user_group=$user_group\">"._QXZ("User Group")."</A>: </td><td align=left><select size=1 name=user_group>\n";
+
+			$stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$Ugroups_to_print = mysqli_num_rows($rslt);
+			$Ugroups_list='';
+			$o=0;
+			while ($Ugroups_to_print > $o) 
+				{
+				$rowx=mysqli_fetch_row($rslt);
+				$Ugroups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+				$o++;
+				}
+			echo "$Ugroups_list";
+			echo "<option SELECTED>$user_group</option>\n";
+			echo "</select>$NWB#users-user_group$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Login").": </td><td align=left><input type=text name=phone_login size=20 maxlength=20 value=\"$phone_login\">$NWB#users-phone_login$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Pass").": </td><td align=left><input type=text name=phone_pass size=40 maxlength=100 value=\"$phone_pass\">$NWB#users-phone_pass$NWE\n";
+			if ( ($SSuser_account_emails == 'SEND_NO_PASS') or ($SSuser_account_emails == 'SEND_WITH_PASS') )
+				{echo " &nbsp; <a href=\"email_agent_login_link.php?preview=1&agent_id=$user\">"._QXZ("send this user a login link email")."</a>";}
+			echo "</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#users-active$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Voicemail ID").": </td><td align=left><input type=text name=voicemail_id id=voicemail_id size=12 maxlength=10 value=\"$voicemail_id\"> <a href=\"javascript:launch_vm_chooser('voicemail_id','vm');\">"._QXZ("voicemail chooser")."</a>$NWB#users-voicemail_id$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Email").": </td><td align=left><input type=text name=email size=40 maxlength=100 value=\"$email\">$NWB#users-email$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Mobile Number").": </td><td align=left><input type=text name=mobile_number size=20 maxlength=20 value=\"$mobile_number\">$NWB#users-mobile_number$NWE</td></tr>\n";
+
+			if ($SSuser_codes_admin > 0)
+				{
+				$user_codes_ct=0;
+				$raw_user_codes_admin_data="|empty\n";
+				$user_code_container_menu='';
+				$uc_selected=0;
+				if ($SSuser_codes_admin == '2')
+					{
+					if (file_exists('user_codes_admin.txt'))
+					$user_codes_admin_ARY = file('user_codes_admin.txt');
+					}
+				else
+					{
+					$stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_CODES_SYSTEM';";
+					$rslt=mysql_to_mysqli($stmt, $link);
+					$uc_to_print = mysqli_num_rows($rslt);
+					if ($uc_to_print > 0)
+						{
+						$rowx=mysqli_fetch_row($rslt);
+						$raw_user_codes_admin_data = $rowx[0];
+						}
+					$user_codes_admin_ARY = explode("\n",$raw_user_codes_admin_data);
+					}
+				$user_codes_admin_ct = count($user_codes_admin_ARY);
+				$o=0;
+				while ($user_codes_admin_ct > $o) 
+					{
+					if ( (!preg_match("/^;/",$user_codes_admin_ARY[$o])) and (strlen($user_codes_admin_ARY[$o]) > 0) )
+						{
+						$user_codes_ct++;
+
+						$user_code_item_ARY = explode('|',$user_codes_admin_ARY[$o]);
+						$user_code_item_ARY[0] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[0]);
+						$user_code_item_ARY[1] = preg_replace('/[^- \.\,\_0-9\p{L}]/u','',$user_code_item_ARY[1]);
+						if (mb_strlen($user_code_item_ARY[1],'utf-8')>50)
+							{$user_code_item_ARY[1] = mb_substr($user_code_item_ARY[1],0,50,'utf-8') . '...';}
+						$user_code_container_menu .= "<option ";
+						if ($user_code == "$user_code_item_ARY[0]") 
+							{
+							$user_code_container_menu .= "SELECTED ";
+							$uc_selected++;
+							}
+						if (strlen($user_code_item_ARY[1]) > 0)
+							{
+							$user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0] - $user_code_item_ARY[1]</option>\n";
+							}
+						else
+							{
+							$user_code_container_menu .= "value=\"$user_code_item_ARY[0]\">$user_code_item_ARY[0]</option>\n";
+							}
+						}
+					$o++;
+					}
+				if ($uc_selected < 1)
+					{$user_code_container_menu .= "<option SELECTED value=\"$user_code\">$user_code</option>\n";}
+
+				if ($LOGuser_level >= 9)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><select size=1 name=user_code>$user_code_container_menu</select>$NWB#users-optional$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><input type=hidden name=user_code value=\"$user_code\">$user_code &nbsp; $NWB#users-optional$NWE</td></tr>\n";
+					}
+				}
+			else
+				{
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Code").": </td><td align=left><input type=text name=user_code size=40 maxlength=100 value=\"$user_code\">$NWB#users-optional$NWE</td></tr>\n";
+				}
+
+			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
+			$raw_location_data=";location|description\n|default\n";
+			$stmt="SELECT container_entry from vicidial_settings_containers where container_id='USER_LOCATIONS_SYSTEM';";
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$loc_to_print = mysqli_num_rows($rslt);
+			if ($loc_to_print > 0)
+				{
+				$rowx=mysqli_fetch_row($rslt);
+				$raw_location_data = $rowx[0];
+				}
+			$location_ARY = explode("\n",$raw_location_data);
+			$location_ct = count($location_ARY);
+			$location_container_menu='';
+			$loc_selected=0;
+			$o=0;
+			while ($location_ct > $o) 
+				{
+				if ( (!preg_match("/^;/",$location_ARY[$o])) and (strlen($location_ARY[$o]) > 2) and (preg_match("/\|/",$location_ARY[$o])) )
+					{
+					$location_item_ARY = explode('|',$location_ARY[$o]);
+					if (mb_strlen($location_item_ARY[1],'utf-8')>50)
+						{$location_item_ARY[1] = mb_substr($location_item_ARY[1],0,50,'utf-8') . '...';}
+					$location_container_menu .= "<option ";
+					if ($user_location == "$location_item_ARY[0]") 
+						{
+						$location_container_menu .= "SELECTED ";
+						$loc_selected++;
+						}
+					$location_container_menu .= "value=\"$location_item_ARY[0]\">$location_item_ARY[0] - $location_item_ARY[1]</option>\n";
+					}
+				$o++;
+				}
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Location").": </td><td align=left><select size=1 name=user_location>$location_container_menu</select>$NWB#users-user_location$NWE</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>";
+			if (strlen($user_group_two) > 0)
+				{
+				echo "<A HREF=\"$PHP_SELF?ADD=311111&user_group=$user_group_two\">"._QXZ("VERM Secondary User Group")."</A>";
+				echo ": </td><td align=left><select size=1 name=user_group_two><option value=\"\">--UNDEFINED--</option>\n";
+				}
+			else
+				{
+				echo ""._QXZ("VERM Secondary User Group")."";
+				echo ": </td><td align=left><select size=1 name=user_group_two><option value=\"\" SELECTED>--UNDEFINED--</option>\n";
+				}
+
+			$stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group;";
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$Ugroups_to_print = mysqli_num_rows($rslt);
+			$Ugroups_list='';
+			$o=0;
+			while ($Ugroups_to_print > $o) 
+				{
+				$rowx=mysqli_fetch_row($rslt);
+				$Ugroups_list .= "<option value=\"$rowx[0]\"";
+				if ($rowx[0] == $user_group_two) {$Ugroups_list .= " SELECTED";}
+				$Ugroups_list .= ">$rowx[0] - $rowx[1]</option>\n";
+				$o++;
+				}
+			echo "$Ugroups_list";
+			echo "</select>$NWB#users-user_group_two$NWE</td></tr>\n";
+
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Main Territory").": </td><td align=left><input type=text name=territory size=40 maxlength=100 value=\"$territory\">$NWB#users-optional$NWE</td></tr>\n";
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Nickname").": </td><td align=left><input type=text name=user_nickname size=40 maxlength=50 value=\"$user_nickname\">$NWB#users-user_nickname$NWE</td></tr>\n";
+
+			if ($SSuser_territories_active > 0)
+				{
+				$stmt="SELECT vut.territory,vt.territory_description from vicidial_user_territories vut,vicidial_territories vt where user='$user' and vut.territory=vt.territory;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$Uterrs_to_print = mysqli_num_rows($rslt);
+				$Uterrs_list='';
+				$o=0;
+				while ($Uterrs_to_print > $o) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$Uterrs_list .= "$rowx[0] - $rowx[1]<BR>\n";
+					$o++;
+					}
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"user_territories.php\">"._QXZ("User Territories")."</a>: </td><td align=left>$Uterrs_list</tr>\n";
+				}
+			if ($SSuser_new_lead_limit > 0)
+				{
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right rowspan=2>"._QXZ("User New Lead Limits").": </td><td align=left><a href=\"admin_user_list_new.php?user=$user&list_id=---ALL---\">"._QXZ("User List Limit Overrides for this user")."</a></td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=left>"._QXZ("Overall Limit").": <input type=text name=user_new_lead_limit size=5 maxlength=5 value=\"$user_new_lead_limit\">$NWB#users-user_new_lead_limit$NWE</td></tr>\n";
+				}
+			else
+				{
+				echo "<tr bgcolor=#$SSstd_row4_background><td><input type=hidden name=user_new_lead_limit value=\"$user_new_lead_limit\"></td></tr>\n";
+				}
+			if ( ($LOGuser_level > 7) and ( ($LOGalter_agent_interface == "1") or ($LOGalter_admin_interface > 0) ) )
+				{
+				echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("AGENT INTERFACE OPTIONS").":</B></td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Choose Ingroups").": </td><td align=left><select size=1 name=agent_choose_ingroups><option>0</option><option>1</option><option SELECTED>$agent_choose_ingroups</option></select>$NWB#users-agent_choose_ingroups$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Choose Blended").": </td><td align=left><select size=1 name=agent_choose_blended><option>0</option><option>1</option><option SELECTED>$agent_choose_blended</option></select>$NWB#users-agent_choose_blended$NWE</td></tr>\n";
+				if ($SSuser_territories_active > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Choose Territories").": </td><td align=left><select size=1 name=agent_choose_territories><option>0</option><option>1</option><option SELECTED>$agent_choose_territories</option></select>$NWB#users-agent_choose_territories$NWE</td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Hot Keys Active").": </td><td align=left><select size=1 name=hotkeys_active><option>0</option><option>1</option><option SELECTED>$hotkeys_active</option></select>$NWB#users-hotkeys_active$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Scheduled Callbacks").": </td><td align=left><select size=1 name=scheduled_callbacks><option>0</option><option>1</option><option SELECTED>$scheduled_callbacks</option></select>$NWB#users-scheduled_callbacks$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent-Only Callbacks").": </td><td align=left><select size=1 name=agentonly_callbacks><option>0</option><option>1</option><option SELECTED>$agentonly_callbacks</option></select>$NWB#users-agentonly_callbacks$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Next-Dial My Callbacks Override").": </td><td align=left><select size=1 name=next_dial_my_callbacks><option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='$next_dial_my_callbacks' SELECTED>"._QXZ("$next_dial_my_callbacks")."</option></select>$NWB#users-next_dial_my_callbacks$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Call Manual").": </td><td align=left><select size=1 name=agentcall_manual><option>0</option><option>1</option><option>2</option><option SELECTED>$agentcall_manual</option></select>$NWB#users-agentcall_manual$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manual Dial Filter Override").": </td><td align=left><select size=1 name=manual_dial_filter>
+				<option value='DISABLED'>"._QXZ("DISABLED")."</option>
+				<option value='NONE'>"._QXZ("NONE")."</option>
+				<option value='DNC_ONLY'>"._QXZ("DNC_ONLY")."</option>
+				<option value='CAMPDNC_ONLY'>"._QXZ("CAMPDNC_ONLY")."</option>
+				<option value='INTERNALDNC_ONLY'>"._QXZ("INTERNALDNC_ONLY")."</option>
+				<option value='DNC_AND_CAMPDNC'>"._QXZ("DNC_AND_CAMPDNC")."</option>
+				<option value='CAMPLISTS_ONLY'>"._QXZ("CAMPLISTS_ONLY")."</option>
+				<option value='CAMPLISTS_ALL'>"._QXZ("CAMPLISTS_ALL")."</option>
+				<option value='SYSTEM'>"._QXZ("SYSTEM")."</option>
+				<option value='DNC_AND_CAMPLISTS'>"._QXZ("DNC_AND_CAMPLISTS")."</option>
+				<option value='CAMPDNC_ONLY_AND_CAMPLISTS'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CAMPLISTS'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS")."</option>
+				<option value='DNC_AND_CAMPLISTS_ALL'>"._QXZ("DNC_AND_CAMPLISTS_ALL")."</option>
+				<option value='CAMPDNC_ONLY_AND_CAMPLISTS_ALL'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_ALL")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_ALL'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_ALL")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL")."</option>
+				<option value='DNC_AND_SYSTEM'>"._QXZ("DNC_AND_SYSTEM")."</option>
+				<option value='CAMPDNC_ONLY_AND_SYSTEM'>"._QXZ("CAMPDNC_ONLY_AND_SYSTEM")."</option>
+				<option value='INTERNALDNC_ONLY_AND_SYSTEM'>"._QXZ("INTERNALDNC_ONLY_AND_SYSTEM")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_SYSTEM'>"._QXZ("DNC_AND_CAMPDNC_AND_SYSTEM")."</option>
+				<option value='NONE_WITH_ALT'>"._QXZ("NONE_WITH_ALT")."</option>
+				<option value='DNC_ONLY_WITH_ALT'>"._QXZ("DNC_ONLY_WITH_ALT")."</option>
+				<option value='CAMPDNC_ONLY_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_WITH_ALT")."</option>
+				<option value='INTERNALDNC_ONLY_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT")."</option>
+				<option value='DNC_AND_CAMPDNC_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT")."</option>
+				<option value='CAMPLISTS_ONLY_WITH_ALT'>"._QXZ("CAMPLISTS_ONLY_WITH_ALT")."</option>
+				<option value='CAMPLISTS_ALL_WITH_ALT'>"._QXZ("CAMPLISTS_ALL_WITH_ALT")."</option>
+				<option value='SYSTEM_WITH_ALT'>"._QXZ("SYSTEM_WITH_ALT")."</option>
+				<option value='DNC_AND_CAMPLISTS_WITH_ALT'>"._QXZ("DNC_AND_CAMPLISTS_WITH_ALT")."</option>
+				<option value='CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT")."</option>
+				<option value='DNC_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("DNC_AND_CAMPLISTS_ALL_WITH_ALT")."</option>
+				<option value='CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT")."</option>
+				<option value='DNC_AND_SYSTEM_WITH_ALT'>"._QXZ("DNC_AND_SYSTEM_WITH_ALT")."</option>
+				<option value='CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT'>"._QXZ("CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT")."</option>
+				<option value='INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT'>"._QXZ("INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT'>"._QXZ("DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT")."</option>
+				<option value='NONE_WITH_ALT_ADDR3'>"._QXZ("NONE_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_ONLY_WITH_ALT_ADDR3'>"._QXZ("DNC_ONLY_WITH_ALT_ADDR3")."</option>
+				<option value='CAMPDNC_ONLY_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_WITH_ALT_ADDR3")."</option>
+				<option value='INTERNALDNC_ONLY_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_CAMPDNC_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT_ADDR3")."</option>
+				<option value='CAMPLISTS_ONLY_WITH_ALT_ADDR3'>"._QXZ("CAMPLISTS_ONLY_WITH_ALT_ADDR3")."</option>
+				<option value='CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>
+				<option value='SYSTEM_WITH_ALT_ADDR3'>"._QXZ("SYSTEM_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>
+				<option value='CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>
+				<option value='CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_SYSTEM_WITH_ALT_ADDR3")."</option>
+				<option value='CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3")."</option>
+				<option value='INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT_ADDR3'>"._QXZ("DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT_ADDR3")."</option>
+				<option value='CALLBACK'>"._QXZ("CALLBACK")."</option>
+				<option value='DNC_AND_CALLBACK'>"._QXZ("DNC_AND_CALLBACK")."</option>
+				<option value='CAMPDNC_ONLY_AND_CALLBACK'>"._QXZ("CAMPDNC_ONLY_AND_CALLBACK")."</option>
+				<option value='INTERNALDNC_ONLY_AND_CALLBACK'>"._QXZ("INTERNALDNC_ONLY_AND_CALLBACK")."</option>
+				<option value='DNC_AND_CAMPDNC_AND_CALLBACK'>"._QXZ("DNC_AND_CAMPDNC_AND_CALLBACK")."</option>
+				<option value='NONE_WITH_ALT_AND_CALLBACK'>"._QXZ("NONE_WITH_ALT_AND_CALLBACK")."</option>
+				<option value='DNC_ONLY_WITH_ALT_AND_CALLBACK'>"._QXZ("DNC_ONLY_WITH_ALT_AND_CALLBACK")."</option>
+				<option value='CAMPDNC_ONLY_WITH_ALT_AND_CALLBACK'>"._QXZ("CAMPDNC_ONLY_WITH_ALT_AND_CALLBACK")."</option>
+				<option value='INTERNALDNC_ONLY_WITH_ALT_AND_CALLBACK'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT_AND_CALLBACK")."</option>
+				<option value='DNC_AND_CAMPDNC_WITH_ALT_AND_CALLBACK'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT_AND_CALLBACK")."</option>
+				<option value='NONE_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("NONE_WITH_ALT_ADDR3_AND_CALLBACK")."</option>
+				<option value='DNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("DNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK")."</option>
+				<option value='CAMPDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("CAMPDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK")."</option>
+				<option value='INTERNALDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("INTERNALDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK")."</option>
+				<option value='DNC_AND_CAMPDNC_WITH_ALT_ADDR3_AND_CALLBACK'>"._QXZ("DNC_AND_CAMPDNC_WITH_ALT_ADDR3_AND_CALLBACK")."</option>
+				<option value='$manual_dial_filter' SELECTED>"._QXZ("$manual_dial_filter")."</option>
+				</select>$NWB#users-manual_dial_filter$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manual Dial by Lead ID Override").": </td><td align=left><select size=1 name=manual_dial_lead_id><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='ONLY'>"._QXZ("ONLY")."</option><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='$manual_dial_lead_id' SELECTED>"._QXZ("$manual_dial_lead_id")."</option></select>$NWB#users-manual_dial_lead_id$NWE</td></tr>\n";
+
+				if ($SSallow_emails > 0) {
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Call Email").": </td><td align=left><select size=1 name=agentcall_email><option>0</option><option>1</option><option SELECTED>$agentcall_email</option></select>$NWB#users-agentcall_email$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right></td><td align=left><input type=hidden name=agentcall_email value=$agentcall_email></td></tr>\n";
+					}
+				if ($SSallow_chats > 0) {
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Call Chat").": </td><td align=left><select size=1 name=agentcall_chat><option>0</option><option>1</option><option SELECTED>$agentcall_chat</option></select>$NWB#users-agentcall_chat$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right></td><td align=left><input type=hidden name=agentcall_chat value=$agentcall_chat></td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Recording").": </td><td align=left><select size=1 name=vicidial_recording><option>0</option><option>1</option><option SELECTED>$vicidial_recording</option></select>$NWB#users-agent_recording$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Transfers").": </td><td align=left><select size=1 name=vicidial_transfers><option>0</option><option>1</option><option SELECTED>$vicidial_transfers</option></select>$NWB#users-agent_transfers$NWE</td></tr>\n";
+				if ($SSoutbound_autodial_active > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Closer Default Blended").": </td><td align=left><select size=1 name=closer_default_blended><option>0</option><option>1</option><option SELECTED>$closer_default_blended</option></select>$NWB#users-closer_default_blended$NWE</td></tr>\n";
+					}
+				if ($SSenable_languages > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Choose Language").": </td><td align=left><select size=1 name=user_choose_language><option>0</option><option>1</option><option SELECTED>$user_choose_language</option></select>$NWB#users-user_choose_language$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Selected Language").": </td><td align=left><select size=1 name=selected_language><option value=\"default English\">"._QXZ("default English")."</option>\n";
+					$stmt="SELECT language_id,language_description from vicidial_languages where active='Y' $LOGadmin_viewable_groupsSQL order by language_id;";
+					$rslt=mysql_to_mysqli($stmt, $link);
+					$languages_to_print = mysqli_num_rows($rslt);
+					$languages_list='';
+					$o=0;
+					while ($languages_to_print > $o) 
+						{
+						$rowx=mysqli_fetch_row($rslt);
+						$languages_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+						$o++;
+						}
+					echo "$languages_list";
+					echo "<option SELECTED>$selected_language</option></select>$NWB#users-selected_language$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right></td><td align=left><input type=hidden name=user_choose_language value=$user_choose_language><input type=hidden name=selected_language value=\"$selected_language\"></td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Recording Override").": </td><td align=left><select size=1 name=vicidial_recording_override><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='NEVER'>"._QXZ("NEVER")."</option><option value='ONDEMAND'>"._QXZ("ONDEMAND")."</option><option value='ALLCALLS'>"._QXZ("ALLCALLS")."</option><option value='ALLFORCE'>"._QXZ("ALLFORCE")."</option><option value='$vicidial_recording_override' SELECTED>"._QXZ("$vicidial_recording_override")."</option></select>$NWB#users-agent_recording_override$NWE</td></tr>\n";
+
+				if ($SSmute_recordings > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Mute Recordings Override").": </td><td align=left><select size=1 name=mute_recordings><option value=\"DISABLED\">"._QXZ("DISABLED")."</option><option value=\"Y\">"._QXZ("Y")."</option><option value=\"N\">"._QXZ("N")."</option><option SELECTED value=\"$mute_recordings\">"._QXZ("$mute_recordings")."</option></select>$NWB#users-mute_recordings$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td colspan=2><input type=hidden name=mute_recordings value=\"$mute_recordings\"></td></tr>\n";
+					}
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Alter Customer Data Override").": </td><td align=left><select size=1 name=alter_custdata_override><option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option><option value='ALLOW_ALTER'>"._QXZ("ALLOW_ALTER")."</option><option value='$alter_custdata_override'  SELECTED>"._QXZ("$alter_custdata_override")."</option></select>$NWB#users-alter_custdata_override$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Alter Customer Phone Override").": </td><td align=left><select size=1 name=alter_custphone_override><option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option><option value='ALLOW_ALTER'>"._QXZ("ALLOW_ALTER")."</option><option value='$alter_custphone_override' SELECTED>"._QXZ("$alter_custphone_override")."</option></select>$NWB#users-alter_custphone_override$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Shift Enforcement Override").": </td><td align=left><select size=1 name=agent_shift_enforcement_override><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='OFF'>"._QXZ("OFF")."</option><option value='START'>"._QXZ("START")."</option><option value='ALL'>"._QXZ("ALL")."</option><option value='$agent_shift_enforcement_override' SELECTED>"._QXZ("$agent_shift_enforcement_override")."</option></select>$NWB#users-agent_shift_enforcement_override$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Call Log View Override").": </td><td align=left><select size=1 name=agent_call_log_view_override><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$agent_call_log_view_override' SELECTED>"._QXZ("$agent_call_log_view_override")."</option></select>$NWB#users-agent_call_log_view_override$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign Hide Call Log Override").": </td><td align=left><select size=1 name=hide_call_log_info><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='SHOW_1'>"._QXZ("SHOW")."_1</option><option value='SHOW_2'>"._QXZ("SHOW")."_2</option><option value='SHOW_3'>"._QXZ("SHOW")."_3</option><option value='SHOW_4'>"._QXZ("SHOW")."_4</option><option value='SHOW_5'>"._QXZ("SHOW")."_5</option><option value='SHOW_6'>"._QXZ("SHOW")."_6</option><option value='SHOW_7'>"._QXZ("SHOW")."_7</option><option value='SHOW_8'>"._QXZ("SHOW")."_8</option><option value='SHOW_9'>"._QXZ("SHOW")."_9</option><option value='SHOW_10'>"._QXZ("SHOW")."_10</option><option value='$hide_call_log_info' SELECTED>"._QXZ("$hide_call_log_info")."</option></select>$NWB#users-hide_call_log_info$NWE</td></tr>\n";
+				
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Lead Search Override").": </td><td align=left><select size=1 name=agent_lead_search><option value='DISABLED'>"._QXZ("DISABLED")."</option><option value='ENABLED'>"._QXZ("ENABLED")."</option><option value='LIVE_CALL_INBOUND'>"._QXZ("LIVE_CALL_INBOUND")."</option><option value='LIVE_CALL_INBOUND_AND_MANUAL'>"._QXZ("LIVE_CALL_INBOUND_AND_MANUAL")."</option><option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option><option value='$agent_lead_search_override' SELECTED>"._QXZ("$agent_lead_search_override")."</option></select>$NWB#users-agent_lead_search_override$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=31111111&lead_filter_id=$lead_filter_id\">"._QXZ("Lead Filter")."</a>: </td><td align=left>";
+				echo "<select size=1 name=lead_filter_id>\n";
+				echo "$filters_list";
+				echo "<option selected value=\"$lead_filter_id\">".(preg_match('/^NONE$/', $lead_filter_id) ? _QXZ("$lead_filter_id") : $lead_filter_id)." - $filtername_list[$lead_filter_id]</option>\n";
+				echo "</select>$NWB#users-lead_filter_id$NWE <i>"._QXZ("only enabled with no-hopper manual dialing")."</i>";
+				echo "</td></tr>\n";
+
+				if ($SSuser_hide_realtime_enabled > 0)
+					{
+					$red_enabledBEGIN='';   $red_enabledEND='';
+					if ($user_hide_realtime > 0)
+						{$red_enabledBEGIN='<font color=red><B>';   $red_enabledEND='</B></font>';}
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>$red_enabledBEGIN"._QXZ("User Hide in RealTime").": $red_enabledEND</td><td align=left><select size=1 name=user_hide_realtime><option>0</option><option>1</option><option SELECTED>$user_hide_realtime</option></select>$NWB#users-user_hide_realtime$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td colspan=2><input type=hidden name=user_hide_realtime value=\"$user_hide_realtime\"></td></tr>\n";
+					}
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Alert Enabled").": </td><td align=left>$alert_enabled $NWB#users-alert_enabled$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Allow Alerts").": </td><td align=left><select size=1 name=allow_alerts><option>0</option><option>1</option><option SELECTED>$allow_alerts</option></select>$NWB#users-allow_alerts$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Preset Contact Search").": </td><td align=left><select size=1 name=preset_contact_search><option value='NOT_ACTIVE'>"._QXZ("NOT_ACTIVE")."</option><option value='DISABLED'>"._QXZ("DISABLED")."</option><option SELECTED value='$preset_contact_search'>"._QXZ("$preset_contact_search")."</option></select>$NWB#users-preset_contact_search$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Inbound Calls").": </td><td align=left><input type=text name=max_inbound_calls size=6 maxlength=5 value=\"$max_inbound_calls\">$NWB#users-max_inbound_calls$NWE &nbsp; &nbsp; <i>"._QXZ("inbound calls today").": $USER_inbound_calls_today</i></td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Inbound Calls Filtering Enabled").": </td><td align=left><select size=1 name=max_inbound_filter_enabled><option>0</option><option>1</option><option SELECTED>$max_inbound_filter_enabled</option></select>$NWB#users-max_inbound_filter_enabled$NWE &nbsp; &nbsp; <i>"._QXZ("inbound filtered calls today").": $USER_inbound_calls_today_filtered</i></td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=center valign=top colspan=2>"._QXZ("Max Inbound Calls Filtering Options").": </td></tr>\n";
+				echo "<tr><td colspan=2 align=right><table border=0 cellspacing=3><tr>";
+
+				echo "<td align=left>"._QXZ("Filter Statuses").":$NWB#users-max_inbound_filter_statuses$NWE &nbsp; <br>";
+				echo "<select MULTIPLE size=6 name=max_inbound_filter_statuses[]>";
+				$max_inbound_filter_statuses_ARY = explode(',',$max_inbound_filter_statuses);
+				$max_inbound_filter_statuses_ct = count($max_inbound_filter_statuses_ARY);
+				##### get status listings for dynamic pulldown
+				$stmt="SELECT distinct(status) from vicidial_statuses where status NOT IN('QUEUE','INCALL') order by status";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$statuses_to_print = mysqli_num_rows($rslt);
+				$o=0;
+				while ($statuses_to_print > $o) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$b=0;
+					$field_selected='';
+					while ($b < $max_inbound_filter_statuses_ct)
+						{
+						trim($max_inbound_filter_statuses_ARY[$b]);
+						if ($max_inbound_filter_statuses_ARY[$b] === $rowx[0])
+							{
+							$field_selected = 'SELECTED';
+							echo "<option value=\"$rowx[0]\" $field_selected>$rowx[0]</option>\n";
+							}
+						$b++;
+						}
+					if (strlen($field_selected) < 5) {echo "<option value=\"$rowx[0]\" >$rowx[0]</option>\n";}
+					$o++;
+					}
+				$stmt="SELECT distinct(status),status_name from vicidial_campaign_statuses $whereLOGallowed_campaignsSQL order by status;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$Cstatuses_to_print = mysqli_num_rows($rslt);
+				$o=0;
+				while ($Cstatuses_to_print > $o) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$b=0;
+					$field_selected='';
+					while ($b < $max_inbound_filter_statuses_ct)
+						{
+						trim($max_inbound_filter_statuses_ARY[$b]);
+						if ($max_inbound_filter_statuses_ARY[$b] === $rowx[0])
+							{
+							$field_selected = 'SELECTED';
+							echo "<option value=\"$rowx[0]\" $field_selected>$rowx[0]</option>\n";
+							}
+						$b++;
+						}
+					if (strlen($field_selected) < 5) {echo "<option value=\"$rowx[0]\" >$rowx[0]</option>\n";}
+					$o++;
+					}
+				echo "</select></td>\n";
+
+				echo "<td align=left>"._QXZ("Filter In-Groups").":$NWB#users-max_inbound_filter_ingroups$NWE &nbsp; <br>";
+				echo "<select MULTIPLE size=6 name=max_inbound_filter_ingroups[]>";
+				$max_inbound_filter_ingroups_ARY = explode(',',$max_inbound_filter_ingroups);
+				$max_inbound_filter_ingroups_ct = count($max_inbound_filter_ingroups_ARY);
+				##### get status listings for dynamic pulldown
+				$stmt="SELECT group_id,group_name from vicidial_inbound_groups order by group_id;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$ingroups_to_print = mysqli_num_rows($rslt);
+				$o=0;
+				while ($ingroups_to_print > $o) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$b=0;
+					$field_selected='';
+					while ($b < $max_inbound_filter_ingroups_ct)
+						{
+						trim($max_inbound_filter_ingroups_ARY[$b]);
+						if ($max_inbound_filter_ingroups_ARY[$b] === $rowx[0])
+							{
+							$field_selected = 'SELECTED';
+							echo "<option value=\"$rowx[0]\" $field_selected>$rowx[0] - $rowx[1]</option>\n";
+							}
+						$b++;
+						}
+					if (strlen($field_selected) < 5) {echo "<option value=\"$rowx[0]\" >$rowx[0] - $rowx[1]</option>\n";}
+					$o++;
+					}
+				echo "</select></td>\n";
+
+				echo "<td align=center width=80>"._QXZ("Filter Minimum Seconds").":$NWB#users-max_inbound_filter_min_sec$NWE &nbsp; <br>";
+				echo "<input type=text name=max_inbound_filter_min_sec size=6 maxlength=5 value=\"$max_inbound_filter_min_sec\"></td></tr></table></td></tr>\n";
+
+				if ($SSinbound_credits > 0)
+					{
+					$ICC_triggered='';
+					if ($inbound_credits == '0') {$ICC_triggered = " &nbsp; &nbsp; <b><font color=red>"._QXZ("Inbound Calls Credits Zero Balance")."</font></b>";}
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Inbound Calls Credits").": </td><td align=left><input type=text name=inbound_credits size=7 maxlength=6 value=\"$inbound_credits\">$NWB#users-inbound_credits$NWE$ICC_triggered</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td colspan=2><input type=hidden name=inbound_credits value=\"$inbound_credits\"></td></tr>\n";
+					}
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Manual Dial Hopper Calls").": </td><td align=left><input type=text name=max_hopper_calls size=6 maxlength=5 value=\"$max_hopper_calls\">$NWB#users-max_hopper_calls$NWE &nbsp; &nbsp; <i>"._QXZ("hopper calls today").": $USER_hopper_calls_today</i></td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Manual Dial Hopper Calls Per Hour").": </td><td align=left><input type=text name=max_hopper_calls_hour size=6 maxlength=5 value=\"$max_hopper_calls_hour\">$NWB#users-max_hopper_calls_hour$NWE &nbsp; &nbsp; <i>"._QXZ("hopper calls this hour").": $USER_hopper_calls_hour</i></td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Wrap Seconds Override").": </td><td align=left><input type=text name=wrapup_seconds_override size=6 maxlength=5 value=\"$wrapup_seconds_override\">$NWB#users-wrapup_seconds_override$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Ready Max Logout Override").": </td><td align=left><input type=text name=ready_max_logout size=7 maxlength=6 value=\"$ready_max_logout\">$NWB#users-ready_max_logout$NWE</td></tr>\n";
+
+				### BEGIN get status group listings for dynamic pulldown menu ###
+				$stmt="SELECT status_group_id,status_group_notes from vicidial_status_groups $whereLOGadmin_viewable_groupsSQL order by status_group_id;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+				$status_groups_to_print = mysqli_num_rows($rslt);
+				$status_groups_menu='';
+				$status_groups_selected=0;
+				$o=0;
+				while ($status_groups_to_print > $o) 
+					{
+					$rowx=mysqli_fetch_row($rslt);
+					$status_groups_menu .= "<option ";
+					if ($status_group_id == "$rowx[0]") 
+						{
+						$status_groups_menu .= "SELECTED ";
+						$status_groups_selected++;
+						}
+					$status_groups_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+					$o++;
+					}
+				$sglinkB='';   $sglinkE='';
+				if (strlen($status_group_id)>1)
+					{
+					$sglinkB="<a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id\">";
+					$sglinkE='</a>';
+					}
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>$sglinkB"._QXZ("Additional Status Group")."$sglinkE: </td><td align=left><select size=1 name=status_group_id>";
+				echo "<option value=\"\">"._QXZ("NONE")."</option>";
+				echo "$status_groups_menu";
+				echo "</select>$NWB#users-status_group_id$NWE</td></tr>\n";
+				### END get status group listings for dynamic pulldown menu ###
+
+
+				if (strlen($campaign_js_rank) < 2) {$campaign_js_rank="''";}
+				if (strlen($campaign_js_grade) < 2) {$campaign_js_grade="''";}
+				if (strlen($ingroup_js_rank) < 2) {$ingroup_js_rank="''";}
+				if (strlen($ingroup_js_grade) < 2) {$ingroup_js_grade="''";}
+				echo "<script language=\"JavaScript\">\n";
+				echo "ARYcampaign_js_rank = new Array($campaign_js_rank);\n";
+				echo "ARYcampaign_js_grade = new Array($campaign_js_grade);\n";
+				echo "ARYingroup_js_rank = new Array($ingroup_js_rank);\n";
+				echo "ARYingroup_js_grade = new Array($ingroup_js_grade);\n";
+				echo "var campaign_js_rank_ct = '$campaign_js_rank_ct';\n";
+				echo "var campaign_js_grade_ct = '$campaign_js_grade_ct';\n";
+				echo "var ingroup_js_rank_ct = '$ingroup_js_rank_ct';\n";
+				echo "var ingroup_js_grade_ct = '$ingroup_js_grade_ct';\n";
+				echo "\n";
+				echo "function campaign_rank_val_change()\n";
+				echo "	{\n";
+				echo "	var camp_rank_select = document.getElementById(\"campaign_js_rank_select\");\n";
+				echo "	var camp_rank_selected = camp_rank_select.value\n";
+				echo "	if (camp_rank_selected.length > 0)\n";
+				echo "		{\n";
+				echo "		var loop_ct=0;\n";
+				echo "		while(loop_ct < campaign_js_rank_ct)\n";
+				echo "			{\n";
+				echo "			document.getElementById(ARYcampaign_js_rank[loop_ct]).value = camp_rank_selected;\n";
+				echo "			loop_ct++;\n";
+				echo "			}\n";
+				echo "		}\n";
+				echo "	}\n";
+				echo "function campaign_grade_val_change()\n";
+				echo "	{\n";
+				echo "	var camp_grade_select = document.getElementById(\"campaign_js_grade_select\");\n";
+				echo "	var camp_grade_selected = camp_grade_select.value\n";
+				echo "	if (camp_grade_selected.length > 0)\n";
+				echo "		{\n";
+				echo "		var loop_ct=0;\n";
+				echo "		while(loop_ct < campaign_js_grade_ct)\n";
+				echo "			{\n";
+				echo "			document.getElementById(ARYcampaign_js_grade[loop_ct]).value = camp_grade_selected;\n";
+				echo "			loop_ct++;\n";
+				echo "			}\n";
+				echo "		}\n";
+				echo "	}\n";
+				echo "function ingroup_rank_val_change()\n";
+				echo "	{\n";
+				echo "	var camp_rank_select = document.getElementById(\"ingroup_js_rank_select\");\n";
+				echo "	var camp_rank_selected = camp_rank_select.value\n";
+				echo "	if (camp_rank_selected.length > 0)\n";
+				echo "		{\n";
+				echo "		var loop_ct=0;\n";
+				echo "		while(loop_ct < ingroup_js_rank_ct)\n";
+				echo "			{\n";
+				echo "			document.getElementById(ARYingroup_js_rank[loop_ct]).value = camp_rank_selected;\n";
+				echo "			loop_ct++;\n";
+				echo "			}\n";
+				echo "		}\n";
+				echo "	}\n";
+				echo "function ingroup_grade_val_change()\n";
+				echo "	{\n";
+				echo "	var camp_grade_select = document.getElementById(\"ingroup_js_grade_select\");\n";
+				echo "	var camp_grade_selected = camp_grade_select.value\n";
+				echo "	if (camp_grade_selected.length > 0)\n";
+				echo "		{\n";
+				echo "		var loop_ct=0;\n";
+				echo "		while(loop_ct < ingroup_js_grade_ct)\n";
+				echo "			{\n";
+				echo "			document.getElementById(ARYingroup_js_grade[loop_ct]).value = camp_grade_selected;\n";
+				echo "			loop_ct++;\n";
+				echo "			}\n";
+				echo "		}\n";
+				echo "	}\n";
+				echo "</script>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Campaign Ranks").": $NWB#users-campaign_ranks$NWE<BR>\n";
+				echo "<table border=0 width=850>\n";
+				echo "$RANKcampaigns_list";
+				echo "</table>\n";
+				echo "</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Inbound Groups").": $NWB#users-closer_campaigns$NWE<BR>\n";
+				echo "<table border=0 width=950>\n";
+				echo "$RANKgroups_list";
+				echo "</table>\n";
+				echo "</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom")." 1: </td><td align=left><input type=text name=custom_one size=50 maxlength=100 value=\"$user_custom_one\">$NWB#users-custom_one$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom")." 2: </td><td align=left><input type=text name=custom_two size=50 maxlength=100 value=\"$user_custom_two\">$NWB#users-custom_one$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom")." 3: </td><td align=left><input type=text name=custom_three size=50 maxlength=100 value=\"$user_custom_three\">$NWB#users-custom_one$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom")." 4: </td><td align=left><input type=text name=custom_four size=50 maxlength=100 value=\"$user_custom_four\">$NWB#users-custom_one$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom")." 5: </td><td align=left><input type=text name=custom_five size=50 maxlength=100 value=\"$user_custom_five\">$NWB#users-custom_one$NWE</td></tr>\n";
+
+				if ($SSqc_features_active > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("QC Enabled").": </td><td align=left><select size=1 name=qc_enabled><option>0</option><option>1</option><option SELECTED>$qc_enabled</option></select>$NWB#users-qc_enabled$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("QC User Level").": </td><td align=left><select size=1 name=qc_user_level><option value=1>1 - "._QXZ("Modify Nothing")."</option><option value=2>2 - "._QXZ("Modify Nothing Except Status")."</option><option value=3>3 - "._QXZ("Modify All Fields")."</option><option value=4>4 - "._QXZ("Verify First Round of QC")."</option><option value=5>5 - "._QXZ("View QC Statistics")."</option><option value=6>6 - "._QXZ("Ability to Modify FINISHed records")."</option><option value=7>7 - "._QXZ("Manager Level")."</option><option SELECTED>$qc_user_level</option></select>$NWB#users-qc_user_level$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("QC Pass").": </td><td align=left><select size=1 name=qc_pass><option>0</option><option>1</option><option SELECTED>$qc_pass</option></select>$NWB#users-qc_pass$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("QC Finish").": </td><td align=left><select size=1 name=qc_finish><option>0</option><option>1</option><option SELECTED>$qc_finish</option></select>$NWB#users-qc_finish$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("QC Commit").": </td><td align=left><select size=1 name=qc_commit><option>0</option><option>1</option><option SELECTED>$qc_commit</option></select>$NWB#users-qc_commit$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>";
+					echo "<input type=hidden name=qc_enabled value=\"$qc_enabled\">";
+					echo "<input type=hidden name=qc_user_level value=\"$qc_user_level\">";
+					echo "<input type=hidden name=qc_pass value=\"$qc_pass\">";
+					echo "<input type=hidden name=qc_finish value=\"$qc_finish\">";
+					echo "<input type=hidden name=qc_commit value=\"$qc_commit\">";
+					echo "</td></tr>\n";
+					}
+
+				if ($SShopper_hold_inserts > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("HCI Enabled").": </td><td align=left><select size=1 name=hci_enabled><option>0</option><option>1</option>";
+					if ($SShopper_hold_inserts > 1)
+						{
+						echo "<option>2</option>";
+						}
+					echo "<option SELECTED>$hci_enabled</option></select>$NWB#users-hci_enabled$NWE</td></tr>\n";
+
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>";
+					echo "<input type=hidden name=hci_enabled value=\"$hci_enabled\">";
+					echo "</td></tr>\n";
+					}
+
+				}
+			if ( ($LOGuser_level > 8) and ($LOGalter_admin_interface > 0) )
+				{
+				echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("ADMIN REPORT OPTIONS").":</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Realtime Block User Info").": </td><td align=left><select size=1 name=realtime_block_user_info><option>0</option><option>1</option><option SELECTED>$realtime_block_user_info</option></select>$NWB#users-realtime_block_user_info$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Admin Hide Lead Data").": </td><td align=left><select size=1 name=admin_hide_lead_data><option>0</option><option>1</option><option SELECTED>$admin_hide_lead_data</option></select>$NWB#users-admin_hide_lead_data$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Admin Hide Phone Data").": </td><td align=left><select size=1 name=admin_hide_phone_data><option>0</option><option>1</option><option value='2_DIGITS'>"._QXZ("2_DIGITS")."</option><option value='3_DIGITS'>"._QXZ("3_DIGITS")."</option><option value='4_DIGITS'>"._QXZ("4_DIGITS")."</option><option SELECTED>$admin_hide_phone_data</option></select>$NWB#users-admin_hide_phone_data$NWE</td></tr>\n";
+
+				if ( (preg_match('/\-ALL/i', $LOGallowed_campaigns)) )
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Search Lead Ignore Group Restrictions").": </td><td align=left><select size=1 name=ignore_group_on_search><option>0</option><option>1</option><option SELECTED>$ignore_group_on_search</option></select>$NWB#users-ignore_group_on_search$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Search Lead Ignore Group Restrictions").": </td><td align=left><input type=hidden name=ignore_group_on_search value=\"$ignore_group_on_search\"> $ignore_group_on_search $NWB#users-ignore_group_on_search$NWE</td></tr>\n";
+					}
+
+				if ($SSuser_admin_redirect > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("User Admin Redirect URL").": </td><td align=left><input type=text name=user_admin_redirect_url size=70 maxlength=5000 value=\"$user_admin_redirect_url\">$NWB#users-user_admin_redirect_url$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right></td><td align=left><input type=hidden name=user_admin_redirect_url value=\"$user_admin_redirect_url\"></td></tr>\n";
+					}
+
+				echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("ADMIN INTERFACE OPTIONS").":</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("View Reports").": </td><td align=left><select size=1 name=view_reports><option>0</option><option>1</option><option SELECTED>$view_reports</option></select>$NWB#users-view_reports$NWE</td></tr>\n";
+
+				if ($SSlog_recording_access > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Access Recordings").": </td><td align=left><select size=1 name=access_recordings><option>0</option><option>1</option><option SELECTED>$access_recordings</option></select>$NWB#users-access_recordings$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right></td><td align=left><input type=hidden name=access_recordings value=\"$access_recordings\"></td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Alter Agent Interface Options").": </td><td align=left><select size=1 name=alter_agent_interface_options><option>0</option><option>1</option><option SELECTED>$alter_agent_interface_options</option></select>$NWB#users-alter_agent_interface_options$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Users").": </td><td align=left><select size=1 name=modify_users><option>0</option><option>1</option><option SELECTED>$modify_users</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Change Agent Campaign").": </td><td align=left><select size=1 name=change_agent_campaign><option>0</option><option>1</option><option SELECTED>$change_agent_campaign</option></select>$NWB#users-change_agent_campaign$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete Users").": </td><td align=left><select size=1 name=delete_users><option>0</option><option>1</option><option SELECTED>$delete_users</option></select>$NWB#users-delete_users$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify User Groups").": </td><td align=left><select size=1 name=modify_usergroups><option>0</option><option>1</option><option SELECTED>$modify_usergroups</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Delete User Groups").": </td><td align=left><select size=1 name=delete_user_groups><option>0</option><option>1</option><option SELECTED>$delete_user_groups</option></select>$NWB#users-delete_user_groups$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Lists").": </td><td align=left><select size=1 name=modify_lists><option>0</option><option>1</option><option SELECTED>$modify_lists</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete Lists").": </td><td align=left><select size=1 name=delete_lists><option>0</option><option>1</option><option SELECTED>$delete_lists</option></select>$NWB#users-delete_lists$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Load Leads").": </td><td align=left><select size=1 name=load_leads><option>0</option><option>1</option><option SELECTED>$load_leads</option></select>$NWB#users-load_leads$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Leads").": </td><td align=left><select size=1 name=modify_leads><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option SELECTED>$modify_leads</option></select>$NWB#users-modify_leads$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("GDPR-Compliant Export Delete Leads").": </td><td align=left><select size=1 name=export_gdpr_leads>";
+				for ($i=0; $i<=$SSenable_gdpr_download_deletion; $i++) 
+					{
+					echo "<option>$i</option>";
+					}
+				echo "<option SELECTED>$export_gdpr_leads</option></select>$NWB#users-export_gdpr_leads$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Download Lists").": </td><td align=left><select size=1 name=download_lists><option>0</option><option>1</option><option SELECTED>$download_lists</option></select>$NWB#users-download_lists$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Export Reports").": </td><td align=left><select size=1 name=export_reports><option>0</option><option>1</option><option SELECTED>$export_reports</option></select>$NWB#users-export_reports$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete From DNC Lists").": </td><td align=left><select size=1 name=delete_from_dnc><option>0</option><option>1</option><option SELECTED>$delete_from_dnc</option></select>$NWB#users-delete_from_dnc$NWE</td></tr>\n";
+
+				if ($SScustom_fields_enabled > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Custom Fields Modify").": </td><td align=left><select size=1 name=custom_fields_modify><option>0</option><option>1</option><option SELECTED>$custom_fields_modify</option></select>$NWB#users-custom_fields_modify$NWE</td></tr>\n";
+					}
+
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify Campaigns").": </td><td align=left><select size=1 name=modify_campaigns><option>0</option><option>1</option><option SELECTED>$modify_campaigns</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Campaign Detail").": </td><td align=left><select size=1 name=campaign_detail><option>0</option><option>1</option><option SELECTED>$campaign_detail</option></select>$NWB#users-campaign_detail$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify Campaign Dial Prefix").": </td><td align=left><select size=1 name=modify_dial_prefix><option>0</option><option>1</option><option SELECTED>$modify_dial_prefix</option></select>$NWB#users-modify_dial_prefix$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Delete Campaigns").": </td><td align=left><select size=1 name=delete_campaigns><option>0</option><option>1</option><option SELECTED>$delete_campaigns</option></select>$NWB#users-delete_campaigns$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify In-Groups").": </td><td align=left><select size=1 name=modify_ingroups><option>0</option><option>1</option><option SELECTED>$modify_ingroups</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete In-Groups").": </td><td align=left><select size=1 name=delete_ingroups><option>0</option><option>1</option><option SELECTED>$delete_ingroups</option></select>$NWB#users-delete_ingroups$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify DIDs").": </td><td align=left><select size=1 name=modify_inbound_dids><option>0</option><option>1</option><option SELECTED>$modify_inbound_dids</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete DIDs").": </td><td align=left><select size=1 name=delete_inbound_dids><option>0</option><option>1</option><option SELECTED>$delete_inbound_dids</option></select>$NWB#users-delete_ingroups$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Custom Dialplans").": </td><td align=left><select size=1 name=modify_custom_dialplans><option>0</option><option>1</option><option SELECTED>$modify_custom_dialplans</option></select>$NWB#users-modify_custom_dialplans$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify Remote Agents").": </td><td align=left><select size=1 name=modify_remoteagents><option>0</option><option>1</option><option SELECTED>$modify_remoteagents</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Delete Remote Agents").": </td><td align=left><select size=1 name=delete_remote_agents><option>0</option><option>1</option><option SELECTED>$delete_remote_agents</option></select>$NWB#users-delete_remote_agents$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Scripts").": </td><td align=left><select size=1 name=modify_scripts><option>0</option><option>1</option><option SELECTED>$modify_scripts</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete Scripts").": </td><td align=left><select size=1 name=delete_scripts><option>0</option><option>1</option><option SELECTED>$delete_scripts</option></select>$NWB#users-delete_scripts$NWE</td></tr>\n";
+
+				if ($SSoutbound_autodial_active > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify Filters").": </td><td align=left><select size=1 name=modify_filters><option>0</option><option>1</option><option SELECTED>$modify_filters</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Delete Filters").": </td><td align=left><select size=1 name=delete_filters><option>0</option><option>1</option><option SELECTED>$delete_filters</option></select>$NWB#users-delete_filters$NWE</td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("AGC Admin Access").": </td><td align=left><select size=1 name=ast_admin_access><option>0</option><option>1</option><option SELECTED>$ast_admin_access</option></select>$NWB#users-ast_admin_access$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("AGC Delete Phones").": </td><td align=left><select size=1 name=ast_delete_phones><option>0</option><option>1</option><option SELECTED>$ast_delete_phones</option></select>$NWB#users-ast_delete_phones$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Call Times").": </td><td align=left><select size=1 name=modify_call_times><option>0</option><option>1</option><option SELECTED>$modify_call_times</option></select>$NWB#users-modify_call_times$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Delete Call Times").": </td><td align=left><select size=1 name=delete_call_times><option>0</option><option>1</option><option SELECTED>$delete_call_times</option></select>$NWB#users-delete_call_times$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Servers").": </td><td align=left><select size=1 name=modify_servers><option>0</option><option>1</option><option SELECTED>$modify_servers</option></select>$NWB#users-modify_servers$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Shifts").": </td><td align=left><select size=1 name=modify_shifts><option>0</option><option>1</option><option SELECTED>$modify_shifts</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Phones").": </td><td align=left><select size=1 name=modify_phones><option>0</option><option>1</option><option SELECTED>$modify_phones</option></select>$NWB#users-modify_phones$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Carriers").": </td><td align=left><select size=1 name=modify_carriers><option>0</option><option>1</option><option SELECTED>$modify_carriers</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				if ($SSallow_emails > 0) 
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Email Accounts").": </td><td align=left><select size=1 name=modify_email_accounts><option>0</option><option>1</option><option SELECTED>$modify_email_accounts</option></select>$NWB#users-modify_email_accounts$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right></td><td align=left><input type=hidden name=modify_email_accounts value=$modify_email_accounts></td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Labels").": </td><td align=left><select size=1 name=modify_labels><option>0</option><option>1</option><option SELECTED>$modify_labels</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Colors").": </td><td align=left><select size=1 name=modify_colors><option>0</option><option>1</option><option SELECTED>$modify_colors</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				if ($SSenable_languages > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Languages").": </td><td align=left><select size=1 name=modify_languages><option>0</option><option>1</option><option SELECTED>$modify_languages</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right></td><td align=left><input type=hidden name=modify_languages value=$modify_languages></td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Statuses").": </td><td align=left><select size=1 name=modify_statuses><option>0</option><option>1</option><option SELECTED>$modify_statuses</option></select>$NWB#users-modify_statuses$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Voicemail").": </td><td align=left><select size=1 name=modify_voicemail><option>0</option><option>1</option><option SELECTED>$modify_voicemail</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Audio Store").": </td><td align=left><select size=1 name=modify_audiostore><option>0</option><option>1</option><option SELECTED>$modify_audiostore</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Music On Hold").": </td><td align=left><select size=1 name=modify_moh><option>0</option><option>1</option><option SELECTED>$modify_moh</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify TTS").": </td><td align=left><select size=1 name=modify_tts><option>0</option><option>1</option><option SELECTED>$modify_tts</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Contacts").": </td><td align=left><select size=1 name=modify_contacts><option>0</option><option>1</option><option SELECTED>$modify_contacts</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("CallCard Access").": </td><td align=left><select size=1 name=callcard_admin><option>0</option><option>1</option><option SELECTED>$callcard_admin</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+				if ($SSenable_auto_reports > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify Automated Reports").": </td><td align=left><select size=1 name=modify_auto_reports><option>0</option><option>1</option><option SELECTED>$modify_auto_reports</option></select>$NWB#users-modify_sections$NWE</td></tr>\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right></td><td align=left><input type=hidden name=modify_auto_reports value=$modify_auto_reports></td></tr>\n";
+					}
+
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Add Timeclock Log Record").": </td><td align=left><select size=1 name=add_timeclock_log><option>0</option><option>1</option><option SELECTED>$add_timeclock_log</option></select>$NWB#users-add_timeclock_log$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify Timeclock Log Record").": </td><td align=left><select size=1 name=modify_timeclock_log><option>0</option><option>1</option><option SELECTED>$modify_timeclock_log</option></select>$NWB#users-modify_timeclock_log$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Delete Timeclock Log Record").": </td><td align=left><select size=1 name=delete_timeclock_log><option>0</option><option>1</option><option SELECTED>$delete_timeclock_log</option></select>$NWB#users-delete_timeclock_log$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Manager Shift Enforcement Override").": </td><td align=left><select size=1 name=manager_shift_enforcement_override><option>0</option><option>1</option><option SELECTED>$manager_shift_enforcement_override</option></select>$NWB#users-manager_shift_enforcement_override$NWE</td></tr>\n";
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Manager Pause Code Approval").": </td><td align=left><select size=1 name=pause_code_approval><option>0</option><option>1</option><option SELECTED>$pause_code_approval</option></select>$NWB#users-pause_code_approval$NWE</td></tr>\n";
+
+				if (preg_match("/cf_encrypt/",$SSactive_modules))
+					{echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Admin Custom Fields Show Hidden").": </td><td align=left><select size=1 name=admin_cf_show_hidden><option>0</option><option>1</option><option SELECTED>$admin_cf_show_hidden</option></select>$NWB#users-admin_cf_show_hidden$NWE</td></tr>\n";}
+				else
+					{echo "<tr bgcolor=#$SSstd_row2_background><td colspan=2><input type=hidden name=admin_cf_show_hidden value=\"$admin_cf_show_hidden\"></td></tr>\n";}
+
+				echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("SECURITY OPTIONS, Only enable if needed").":</td></tr>\n";
+				if ($SSallow_ip_lists > 0)
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Modify IP Lists").": </td><td align=left><select size=1 name=modify_ip_lists><option>0</option><option>1</option><option SELECTED>$modify_ip_lists</option></select>$NWB#users-modify_ip_lists$NWE</td></tr>\n";
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Ignore IP List").": </td><td align=left><select size=1 name=ignore_ip_list><option>0</option><option>1</option><option SELECTED>$ignore_ip_list</option></select>$NWB#users-ignore_ip_lists$NWE</td></tr>\n";
+					# <option value=\"ENABLED\">"._QXZ("ENABLED")."</option>
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row2_background><td align=right></td><td align=left><input type=hidden name=modify_ip_lists value=$modify_ip_lists><input type=hidden name=ignore_ip_list value=$ignore_ip_list></td></tr>\n";
+					}
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Two Factor Auth Override").": </td><td align=left><select size=1 name=two_factor_override><option value=\"NOT_ACTIVE\">"._QXZ("NOT_ACTIVE")."</option><option value=\"DISABLED\">"._QXZ("DISABLED")."</option><option SELECTED value=\"$two_factor_override\">"._QXZ("$two_factor_override")."</option></select>$NWB#users-two_factor_override$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("API USER OPTIONS, Only enable if needed").":</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Agent API Access").": </td><td align=left><select size=1 name=vdc_agent_api_access><option>0</option><option>1</option><option SELECTED>$vdc_agent_api_access</option></select>$NWB#users-vdc_agent_api_access$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("API List Restrict").": </td><td align=left><select size=1 name=api_list_restrict><option>0</option><option>1</option><option SELECTED>$api_list_restrict</option></select>$NWB#users-api_list_restrict$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("API Allowed Functions").": </td><td align=left><select MULTIPLE size=8 name=api_allowed_functions[]>\n";
+				$Afunctions_ARY = explode(' ',$APIfunctions);
+				$Afunctions_ct = count($Afunctions_ARY);
+				$b=0;
+				while ($b < $Afunctions_ct)
+					{
+					$field_selected='';
+					trim($Afunctions_ARY[$b]);
+					if (preg_match("/ $Afunctions_ARY[$b] /",$api_allowed_functions))
+						{$field_selected = 'SELECTED';}
+					echo "<option value=\"$Afunctions_ARY[$b]\" $field_selected>"._QXZ("$Afunctions_ARY[$b]")."</option>\n";
+					$b++;
+					}
+				echo "</select>$NWB#users-api_allowed_functions$NWE</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("DISABLE ADMIN AND AGENT SCREEN OPTIONS").":</td></tr>\n";
+
+				echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("API Only User").": </td><td align=left><select size=1 name=api_only_user><option>0</option><option>1</option><option SELECTED>$api_only_user</option></select>$NWB#users-api_only_user$NWE</td></tr>\n";
+
+				if ( ( ($LOGmodify_same_user_level > 0) or ($LOGalter_admin_interface > 0) ) and ($LOGuser_level > 8) )
+					{
+					echo "<tr bgcolor=#$SSmenu_background><td colspan=2 align=center><font color=white><B>"._QXZ("LEVEL 9 ADMIN OPTIONS").":</td></tr>\n";
+					}
+
+				if ( ($LOGmodify_same_user_level < 1) or ($LOGuser_level < 9) )
+					{
+					echo "<input type=hidden name=modify_same_user_level id=modify_same_user_level value=\"0\">\n";
+					echo "<input type=hidden name=download_invalid_files id=download_invalid_files value=\"0\">\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Modify Same User Level").": </td><td align=left><select size=1 name=modify_same_user_level><option>0</option><option>1</option><option SELECTED>$modify_same_user_level</option></select>$NWB#users-modify_same_user_level$NWE</td></tr>\n";
+
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Download Invalid Files").": </td><td align=left><select size=1 name=download_invalid_files><option>0</option><option>1</option><option SELECTED>$download_invalid_files</option></select>$NWB#users-download_invalid_files$NWE</td></tr>\n";
+					}
+
+				if ( ($LOGalter_admin_interface < 1) or ($LOGuser_level < 9) )
+					{
+					echo "<input type=hidden name=alter_admin_interface_options id=alter_admin_interface_options value=\"0\">\n";
+					}
+				else
+					{
+					echo "<tr bgcolor=#$SSstd_row1_background><td align=right>"._QXZ("Alter Admin Interface Options").": </td><td align=left><select size=1 name=alter_admin_interface_options><option>0</option><option>1</option><option SELECTED>$alter_admin_interface_options</option></select>$NWB#users-alter_admin_interface_options$NWE</td></tr>\n";
+					}
+				}
+			echo "<tr bgcolor=#$SSstd_row1_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
+			echo "</TABLE></center>\n";
+
+			if ($LOGdelete_users > 0)
+				{
+				echo "<br><br><a href=\"$PHP_SELF?ADD=5&user=$user\">"._QXZ("DELETE THIS USER")."</a>\n";
+				}
+			echo "<br><br><a href=\"./AST_agent_time_sheet.php?agent=$user\">"._QXZ("Click here for user time sheet")."</a>\n";
+			echo "<br><br><a href=\"./user_status.php?user=$user\">"._QXZ("Click here for user status")."</a>\n";
+			echo "<br><br><a href=\"./user_stats.php?user=$user\">"._QXZ("Click here for user stats")."</a>\n";
+			echo "<br><br><a href=\"./AST_agent_days_detail.php?user=$user&query_date=$REPORTdate&end_date=$REPORTdate&group[]=--ALL--&shift=ALL\">"._QXZ("Click here for user multiple day status detail report")."</a>\n";
+			echo "<br><br><a href=\"$PHP_SELF?ADD=8&user=$user\">"._QXZ("Click here for user CallBack Holds")."</a>\n";
+			if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+				{
+				echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=USERS&stage=$user\">"._QXZ("Click here to see Admin changes to this record")."</FONT>\n";
+				}
+			}
+		}
+	else
+		{
+		echo _QXZ("You do not have permission to view this page")."\n";
+		exit;
+		}
 	}
-}
+
+
 ######################
 # ADD=31 modify campaign info in the system - Detail view
 ######################
