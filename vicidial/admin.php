@@ -28038,14 +28038,9 @@ else
 echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
 exit;
 }
-}
-else
-{
-echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
-exit;
-}
-         
 
+
+         
 		
 			##### get container entry for USER_LOCATIONS_SYSTEM for pulldown menu
 			$raw_location_data=";location|description\n|default\n";
