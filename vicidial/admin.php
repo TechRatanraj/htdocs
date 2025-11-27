@@ -27884,7 +27884,7 @@ echo "</div>";
 echo "</div>";
 
 // Level 9 Admin Options
-if ( ($LOGmodify_same_user_level > 0) or ($LOGalter_admin_interface > 0) ) and ($LOGuser_level > 8) )
+if ( ($LOGmodify_same_user_level > 0) or ($LOGalter_admin_interface > 0) ) and ($LOGuser_level > 8)
     {
     echo "<div class='form-section'>";
     echo "<h2 class='section-title'>"._QXZ("LEVEL 9 ADMIN OPTIONS")."</h2>";
@@ -28086,7 +28086,7 @@ else
 echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
 exit;
 }
-	}
+
 ######################
 # ADD=31 modify campaign info in the system - Detail view
 ######################
