@@ -27987,11 +27987,11 @@ echo "</form>";
 echo "<div class='form-section'>";
 echo "<h2 class='section-title'>"._QXZ("Quick Links")."</h2>";
 echo "<div class='link-group'>";
-echo "<a href=\"./AST_agent_time_sheet.php?agent=$user\">"._QXZ("User time sheet")."</a>";
-echo "<a href=\"./user_status.php?user=$user\">"._QXZ("User status")."</a>";
-echo "<a href=\"./user_stats.php?user=$user\">"._QXZ("User stats")."</a>";
-echo "<a href=\"./AST_agent_days_detail.php?user=$user&query_date=$REPORTdate&end_date=$REPORTdate&group[]=--ALL--&shift=ALL\">"._QXZ("User multiple day status detail report")."</a>";
-echo "<a href=\"$PHP_SELF?ADD=8&user=$user\">"._QXZ("User CallBack Holds")."</a>";
+echo "<a href=\"./AST_agent_time_sheet.php?agent=$user\" class='link-item'>"._QXZ("User time sheet")."</a>";
+echo "<a href=\"./user_status.php?user=$user\" class='link-item'>"._QXZ("User status")."</a>";
+echo "<a href=\"./user_stats.php?user=$user\" class='link-item'>"._QXZ("User stats")."</a>";
+echo "<a href=\"./AST_agent_days_detail.php?user=$user&query_date=$REPORTdate&end_date=$REPORTdate&group[]=--ALL--&shift=ALL\" class='link-item'>"._QXZ("User multiple day status detail report")."</a>";
+echo "<a href=\"$PHP_SELF?ADD=8&user=$user\" class='link-item'>"._QXZ("User CallBack Holds")."</a>";
 
 if (
     ($LOGuser_level >= 9)
@@ -28000,7 +28000,7 @@ if (
         preg_match("/ALL REPORTS/", $LOGallowed_reports)
     )
 ) {
-    echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=USERS&stage=$user\">"._QXZ("Admin changes to this record")."</a>";
+    echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=USERS&stage=$user\" class='link-item'>"._QXZ("Admin changes to this record")."</a>";
 }
 
 echo "</div>";
@@ -28011,26 +28011,78 @@ echo "</div>"; // End container
 // JavaScript for tab functionality
 echo "<script>
 function showTab(tabId) {
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(tab => tab.classList.remove('active'));
-
-    const tabButtons = document.querySelectorAll('.tab-button');
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-
+    // Hide all tab contents
+    var tabContents = document.querySelectorAll('.tab-content');
+    for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+    }
+    
+    // Remove active class from all tab buttons
+    var tabButtons = document.querySelectorAll('.tab-button');
+    for (var i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove('active');
+    }
+    
+    // Show selected tab
     document.getElementById(tabId).classList.add('active');
-
-    event.target.classList.add('active');
+    
+    // Add active class to clicked button
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
 }
 
+// Initialize first tab as active
 document.addEventListener('DOMContentLoaded', function() {
-    const firstTab = document.querySelector('.tab-button');
-    if (firstTab) { firstTab.classList.add('active'); }
-
-    const firstContent = document.querySelector('.tab-content');
-    if (firstContent) { firstContent.classList.add('active'); }
+    var firstTab = document.querySelector('.tab-button');
+    if (firstTab) {
+        firstTab.classList.add('active');
+    }
+    
+    var firstContent = document.querySelector('.tab-content');
+    if (firstContent) {
+        firstContent.classList.add('active');
+    }
 });
 </script>";
-			
+
+// Add these styles to the existing CSS
+echo "<style>
+.link-item {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 5px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.link-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+}
+
+.link-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+</style>";
+
+// FIRST permission check fail
+}
+else
+{
+    echo "<div class='alert alert-danger'>"._QXZ("You do not have permission to view this page")."</div>\n";
+    exit;
+}
 
 
          
