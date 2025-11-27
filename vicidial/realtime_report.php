@@ -907,158 +907,119 @@ $NFB = '<b><font size=6 face="courier">';
 $NFE = '</font></b>';
 $F=''; $FG=''; $B=''; $BG='';
 
-
-// Modern Settings Panel with Grid Layout
-$select_list = "<div style='background:#fff;border-radius:12px;padding:25px;box-shadow:0 2px 12px rgba(0,0,0,0.08);max-width:1200px;margin:20px auto;'>";
-
-// Grid Container
-$select_list .= "<div style='display:grid;grid-template-columns:1fr 1fr;gap:30px;'>";
-
-// LEFT COLUMN - Filters
-$select_list .= "<div>";
-
-// Campaigns Section
-$select_list .= "<div style='margin-bottom:25px;'>";
-$select_list .= "<label style='display:block;font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:8px;'>"._QXZ("Select Campaigns")."</label>";
-$select_list .= "<select size='8' name='groups[]' id='groups[]' multiple style='width:100%;padding:8px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:13px;font-family:\"Segoe UI\",Arial,sans-serif;'>";
+$select_list = "<TABLE class='realtime_settings_table' CELLPADDING=5 BGCOLOR='#D9E6FE'><TR><TD VALIGN=TOP>"._QXZ("Select Campaigns").": <BR>";
+$select_list .= "<SELECT SIZE=8 NAME=groups[] ID=groups[] multiple>";
 $o=0;
-while ($groups_to_print > $o) {
-    if (preg_match("/\|$LISTgroups[$o]\|/",$group_string)) {
-        $select_list .= "<option selected value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";
-    } else {
-        $select_list .= "<option value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";
-    }
-    $o++;
-}
-$select_list .= "</select>";
-$select_list .= "<div style='font-size:11px;color:#6c757d;margin-top:6px;'>("._QXZ("To select more than 1 campaign, hold down the Ctrl key and click").")</div>";
-$select_list .= "</div>";
+while ($groups_to_print > $o)
+	{
+	if (preg_match("/\|$LISTgroups[$o]\|/",$group_string)) 
+		{$select_list .= "<option selected value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";}
+	else
+		{$select_list .= "<option value='$LISTgroups[$o]'>"._QXZ("$LISTgroups[$o]")." - "._QXZ("$LISTnames[$o]")."</option>";}
+	$o++;
+	}
+$select_list .= "</SELECT>";
+$select_list .= "<BR><font class='top_settings_val'>("._QXZ("To select more than 1 campaign, hold down the Ctrl key and click").")</font>";
 
-// User Groups Section
-$select_list .= "<div style='margin-bottom:25px;'>";
-$select_list .= "<label style='display:block;font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:8px;'>"._QXZ("Select User Groups")."</label>";
-$select_list .= "<select size='8' name='user_group_filter[]' id='user_group_filter[]' multiple style='width:100%;padding:8px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:13px;font-family:\"Segoe UI\",Arial,sans-serif;'>";
+$select_list .= "<BR><BR>"._QXZ("Select User Groups").": <BR>";
+$select_list .= "<SELECT SIZE=8 NAME=user_group_filter[] ID=user_group_filter[] multiple>";
 $o=0;
-while ($o < $usergroups_to_print) {
-    if (preg_match("/\|$usergroups[$o]\|/",$user_group_string)) {
-        $select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
-    } else {
-        if (($user_group_none > 0) and ($usergroups[$o] == 'ALL-GROUPS')) {
-            $select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
-        } else {
-            $select_list .= "<option value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";
-        }
-    }
-    $o++;
-}
-$select_list .= "</select>";
-$select_list .= "</div>";
+while ($o < $usergroups_to_print)
+	{
+	if (preg_match("/\|$usergroups[$o]\|/",$user_group_string))
+		{$select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
+	else
+		{
+		if ( ($user_group_none > 0) and ($usergroups[$o] == 'ALL-GROUPS') )
+			{$select_list .= "<option selected value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
+		else
+			{$select_list .= "<option value='$usergroups[$o]'>"._QXZ("$usergroups[$o]")." - "._QXZ("$usergroupnames[$o]")."</option>";}
+		}
+	$o++;
+	}
+$select_list .= "</SELECT>";
 
-// In-Groups Section
-$select_list .= "<div>";
-$select_list .= "<label style='display:block;font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:8px;'>"._QXZ("Select In-Groups")."</label>";
-$select_list .= "<select size='8' name='ingroup_filter[]' id='ingroup_filter[]' multiple style='width:100%;padding:8px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:13px;font-family:\"Segoe UI\",Arial,sans-serif;'>";
+$select_list .= "<BR><BR>"._QXZ("Select In-Groups").": <BR>";
+$select_list .= "<SELECT SIZE=8 NAME=ingroup_filter[] ID=ingroup_filter[] multiple>";
 $o=0;
-while ($o < $ingroups_to_print) {
-    if (preg_match("/\|$LISTingroups[$o]\|/",$ingroup_string)) {
-        $select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
-    } else {
-        if (($ingroup_none > 0) and ($LISTingroups[$o] == 'ALL-INGROUPS')) {
-            $select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
-        } else {
-            $select_list .= "<option value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";
-        }
-    }
-    $o++;
-}
-$select_list .= "</select>";
-$select_list .= "</div>";
+while ($o < $ingroups_to_print)
+	{
+	if (preg_match("/\|$LISTingroups[$o]\|/",$ingroup_string))
+		{$select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";}
+	else
+		{
+		if ( ($in_group_none > 0) and ($LISTingroups[$o] == 'ALL-INGROUPS') )
+			{$select_list .= "<option selected value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")." - "._QXZ("$LISTingroup_names[$o]")."</option>";}
+		else
+			{$select_list .= "<option value='$LISTingroups[$o]'>"._QXZ("$LISTingroups[$o]")."- "._QXZ("$LISTingroup_names[$o]")."</option>";}
+		}
+	$o++;
+	}
+$select_list .= "</SELECT>";
 
-$select_list .= "</div>"; // End left column
+$select_list .= "</TD><TD VALIGN=TOP ALIGN=CENTER>";
+$select_list .= "<a href='#' onclick=\\\"hideDiv('campaign_select_list');\\\">"._QXZ("Close Panel")."</a><BR><BR>";
+$select_list .= "<TABLE CELLPADDING=2 CELLSPACING=2 BORDER=0>";
 
-// RIGHT COLUMN - Settings
-$select_list .= "<div>";
-
-// Close Button
-$select_list .= "<div style='text-align:center;margin-bottom:25px;'>";
-$select_list .= "<a href='#' onclick=\"hideDiv('campaign_select_list');\" style='display:inline-block;background:#6c757d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;transition:all 0.2s;'>"._QXZ("Close Panel")."</a>";
-$select_list .= "</div>";
-
-// Settings Card
-$select_list .= "<div style='background:#f8f9fa;border-radius:10px;padding:20px;'>";
-
-// Screen Refresh Rate
-$select_list .= "<div style='margin-bottom:20px;'>";
-$select_list .= "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Screen Refresh Rate")."</label>";
-$select_list .= "<select size='1' name='RR' id='RR' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:14px;font-family:\"Segoe UI\",Arial,sans-serif;'>";
+$select_list .= "<TR><TD align=right>";
+$select_list .= _QXZ("Screen Refresh Rate").":  </TD><TD align=left><SELECT SIZE=1 NAME=RR ID=RR>";
 $select_list .= "<option value='4'";   if ($RR < 5) {$select_list .= " selected";}    $select_list .= ">4 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='10'";   if (($RR >= 5) and ($RR <=10)) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='20'";   if (($RR >= 11) and ($RR <=20)) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='30'";   if (($RR >= 21) and ($RR <=30)) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='40'";   if (($RR >= 31) and ($RR <=40)) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='60'";   if (($RR >= 41) and ($RR <=60)) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("seconds")."</option>";
-$select_list .= "<option value='120'";   if (($RR >= 61) and ($RR <=120)) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='300'";   if (($RR >= 121) and ($RR <=300)) {$select_list .= " selected";}    $select_list .= ">5 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='600'";   if (($RR >= 301) and ($RR <=600)) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='1200'";   if (($RR >= 601) and ($RR <=1200)) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='1800'";   if (($RR >= 1201) and ($RR <=1800)) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='2400'";   if (($RR >= 1801) and ($RR <=2400)) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='3600'";   if (($RR >= 2401) and ($RR <=3600)) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("minutes")."</option>";
-$select_list .= "<option value='7200'";   if (($RR >= 3601) and ($RR <=7200)) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("hours")."</option>";
+$select_list .= "<option value='10'";   if ( ($RR >= 5) and ($RR <=10) ) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='20'";   if ( ($RR >= 11) and ($RR <=20) ) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='30'";   if ( ($RR >= 21) and ($RR <=30) ) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='40'";   if ( ($RR >= 31) and ($RR <=40) ) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='60'";   if ( ($RR >= 41) and ($RR <=60) ) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("seconds")."</option>";
+$select_list .= "<option value='120'";   if ( ($RR >= 61) and ($RR <=120) ) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='300'";   if ( ($RR >= 121) and ($RR <=300) ) {$select_list .= " selected";}    $select_list .= ">5 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='600'";   if ( ($RR >= 301) and ($RR <=600) ) {$select_list .= " selected";}    $select_list .= ">10 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='1200'";   if ( ($RR >= 601) and ($RR <=1200) ) {$select_list .= " selected";}    $select_list .= ">20 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='1800'";   if ( ($RR >= 1201) and ($RR <=1800) ) {$select_list .= " selected";}    $select_list .= ">30 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='2400'";   if ( ($RR >= 1801) and ($RR <=2400) ) {$select_list .= " selected";}    $select_list .= ">40 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='3600'";   if ( ($RR >= 2401) and ($RR <=3600) ) {$select_list .= " selected";}    $select_list .= ">60 "._QXZ("minutes")."</option>";
+$select_list .= "<option value='7200'";   if ( ($RR >= 3601) and ($RR <=7200) ) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("hours")."</option>";
 $select_list .= "<option value='63072000'";   if ($RR >= 7201) {$select_list .= " selected";}    $select_list .= ">2 "._QXZ("years")."</option>";
-$select_list .= "</select>";
-$select_list .= "</div>";
+$select_list .= "</SELECT></TD></TR>";
 
-// Inbound
-$select_list .= "<div style='margin-bottom:20px;'>";
-$select_list .= "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Inbound")."</label>";
-$select_list .= "<select size='1' name='with_inbound' id='with_inbound' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:14px;font-family:\"Segoe UI\",Arial,sans-serif;'>";
+$select_list .= "<TR><TD align=right>";
+$select_list .= _QXZ("Inbound").":  </TD><TD align=left><SELECT SIZE=1 NAME=with_inbound ID=with_inbound>";
 $select_list .= "<option value='N'";
-if ($with_inbound=='N') {$select_list .= " selected";} 
+	if ($with_inbound=='N') {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("No")."</option>";
 $select_list .= "<option value='Y'";
-if ($with_inbound=='Y') {$select_list .= " selected";} 
+	if ($with_inbound=='Y') {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("Yes")."</option>";
 $select_list .= "<option value='O'";
-if ($with_inbound=='O') {$select_list .= " selected";} 
+	if ($with_inbound=='O') {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("Only")."</option>";
-$select_list .= "</select>";
-$select_list .= "</div>";
+$select_list .= "</SELECT></TD></TR>";
 
-// Monitor
-$select_list .= "<div>";
-$select_list .= "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Monitor")."</label>";
-$select_list .= "<select size='1' name='monitor_active' id='monitor_active' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;background:#fff;font-size:14px;font-family:\"Segoe UI\",Arial,sans-serif;'>";
+$select_list .= "<TR><TD align=right>";
+$select_list .= _QXZ("Monitor").":  </TD><TD align=left><SELECT SIZE=1 NAME=monitor_active ID=monitor_active>";
 $select_list .= "<option value=''";
-if (strlen($monitor_active) < 2) {$select_list .= " selected";} 
+	if (strlen($monitor_active) < 2) {$select_list .= " selected";} 
 $select_list .= ">"._QXZ("NONE")."</option>";
-
-if (preg_match("/MONITOR/",$RS_ListenBarge)) {
-    $select_list .= "<option value='MONITOR'";
-    if ($monitor_active=='MONITOR') {$select_list .= " selected";} 
-    $select_list .= ">"._QXZ("MONITOR")."</option>";
-}
-
-if (preg_match("/BARGE/",$RS_ListenBarge)) {
-    $select_list .= "<option value='BARGE'";
-    if ($monitor_active=='BARGE') {$select_list .= " selected";} 
-    $select_list .= ">"._QXZ("BARGE")."</option>";
-}
-
-if (($agent_whisper_enabled == '1') and (preg_match("/WHISPER/",$RS_ListenBarge))) {
-    $select_list .= "<option value='WHISPER'";
-    if ($monitor_active=='WHISPER') {$select_list .= " selected";} 
-    $select_list .= ">"._QXZ("WHISPER")."</option>";
-}
-
-$select_list .= "</select>";
-$select_list .= "</div>";
-
-$select_list .= "</div>"; // End settings card
-$select_list .= "</div>"; // End right column
-$select_list .= "</div>"; // End grid
-$select_list .= "</div>"; // End main container
-
+if (preg_match("/MONITOR/",$RS_ListenBarge) )
+	{
+	$select_list .= "<option value='MONITOR'";
+		if ($monitor_active=='MONITOR') {$select_list .= " selected";} 
+	$select_list .= ">"._QXZ("MONITOR")."</option>";
+	}
+if (preg_match("/BARGE/",$RS_ListenBarge) )
+	{
+	$select_list .= "<option value='BARGE'";
+		if ($monitor_active=='BARGE') {$select_list .= " selected";} 
+	$select_list .= ">"._QXZ("BARGE")."</option>";
+	}
+if ( ($agent_whisper_enabled == '1') and (preg_match("/WHISPER/",$RS_ListenBarge) ) )
+	{
+	$select_list .= "<option value='WHISPER'";
+		if ($monitor_active=='WHISPER') {$select_list .= " selected";} 
+	$select_list .= ">"._QXZ("WHISPER")."</option>";
+	}
+#$select_list .= "<option value='HIJACK'";
+#	if ($monitor_active=='HIJACK') {$select_list .= " selected";} 
+#$select_list .= ">HIJACK</option>";
+$select_list .= "</SELECT></TD></TR>";
 
 $select_list .= "<TR><TD align=right>";
 $select_list .= _QXZ("Phone").":  </TD><TD align=left>";
