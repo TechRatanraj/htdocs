@@ -32488,7 +32488,6 @@ echo "</center></div>\n";
 		}
 
 
-	
 ##### CAMPAIGN CUSTOM STATUSES #####
 if ($SUB==22) {
     ##### get status category listings for dynamic pulldown
@@ -32813,6 +32812,8 @@ if ($SUB==22) {
     echo "$status_group_overrides_OUTPUT";
     echo "</center>\n";
 }
+
+	
 
 	##### CAMPAIGN HOTKEYS #####
 if ($SUB==23)
