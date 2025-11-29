@@ -26118,13 +26118,14 @@ if ($ADD == 3) {
             echo "body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; }\n";
             echo ".main-container { max-width: 1200px; margin: 0 auto; padding: 20px; }\n";
 echo ".header-section { 
-    background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%); 
-    color: #333; 
+    background: linear-gradient(90deg, #606060 0%, #C0C0C0 100%);
+    color: white;
     padding: 20px; 
     border-radius: 10px; 
     margin-bottom: 25px; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-}\n";            echo ".tab-navigation { background: white; border-radius: 10px; padding: 5px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }\n";
+}\n";
+            echo ".tab-navigation { background: white; border-radius: 10px; padding: 5px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }\n";
             echo ".tab-navigation .nav-link { border-radius: 8px; margin: 3px; color: #6c757d; font-weight: 500; transition: all 0.3s ease; }\n";
             echo ".tab-navigation .nav-link:hover { background-color: #f1f3f5; }\n";
             echo ".tab-navigation .nav-link.active { background: linear-gradient(135deg, #4a6cf7 0%, #2575fc 100%); color: white; }\n";
