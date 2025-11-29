@@ -25922,8 +25922,6 @@ if ($ADD==62111111111111)
 ######################
 # ADD=3 modify user info in the system
 ######################
-
-
 if ($ADD == 3) {
     if ($LOGmodify_users == 1) {
         if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
@@ -27215,15 +27213,13 @@ if ($ADD == 3) {
                 echo "</div>\n";
                 echo "</div>\n";
                 
-                echo "<div class='form-group row'>\n";
-                echo "<label for='custom_three' class='col-sm-4 col-form-label'>" . _QX
-                
-                 echo "<div class='form-group row'>\n";
-                echo "<label for='custom_three' class='col-sm-4 col-form-label'>" . _QXZ("Custom") . " 3:</label>\n";
-                echo "<div class='col-sm-8'>\n";
-                echo "<input type='text' class='form-control' id='custom_three' name='custom_three' size='50' maxlength='100' value=\"$user_custom_three\">\n";
-                echo "</div>\n";
-                echo "</div>\n";
+echo "<div class='form-group row'>\n";
+echo "<label for='custom_three' class='col-sm-4 col-form-label'>" . _QXZ("Custom") . " 3:</label>\n";
+echo "<div class='col-sm-8'>\n";
+echo "<input type='text' class='form-control' id='custom_three' name='custom_three' size='50' maxlength='100' value=\"$user_custom_three\">\n";
+echo "</div>\n";
+echo "</div>\n";
+
                 
                 echo "<div class='form-group row'>\n";
                 echo "<label for='custom_four' class='col-sm-4 col-form-label'>" . _QXZ("Custom") . " 4:</label>\n";
