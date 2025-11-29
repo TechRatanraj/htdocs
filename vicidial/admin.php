@@ -35653,7 +35653,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 }
 }
-
+	}
 
 ######################
 # ADD=34 modify campaign info in the system - Basic View
