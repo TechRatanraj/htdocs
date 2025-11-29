@@ -35347,131 +35347,213 @@ if ($SUB == '20A') {
 
 
 	##### CAMPAIGN AREACODE CID #####
-	if ($SUB==202)
-		{
-		$checkbox_list='';
-		$checkbox_count=0;
-		echo "<br><br><b>"._QXZ("AREACODE CIDS FOR THIS CAMPAIGN").": &nbsp; $NWB#campaign_cid_areacodes$NWE</b><br>\n";
-		if ($use_custom_cid != 'AREACODE')
-			{echo "<br><B><font color=red>"._QXZ("The campaign setting Custom CallerID is not set to AREACODE")."! </font></B><BR>";}
-		echo "<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=202>\n";
-		echo "<input type=hidden name=stage value=MODIFY>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<center><TABLE width=700 cellspacing=2>\n";
+	
+if ($SUB == 202) {
+    $checkbox_list = '';
+    $checkbox_count = 0;
+    
+    echo "<div style='max-width: 1200px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>";
+    echo "<div style='background-color: #ffffff; border-radius: 12px; padding: 25px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;'>";
+    
+    // Header
+    echo "<div style='display: flex; align-items: center; margin-bottom: 25px;'>";
+    echo "<div style='background-color: #f0f4ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;'>";
+    echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5Z' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M3 9H21' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M9 21V9' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</div>";
+    echo "<div>";
+    echo "<h1 style='color: #2c3e50; font-size: 24px; margin: 0; font-weight: 600;'>" . _QXZ("AREACODE CIDS FOR THIS CAMPAIGN") . "</h1>";
+    echo "<div style='color: #64748b; margin: 5px 0 0 0; font-size: 14px;'>$NWB#campaign_cid_areacodes$NWE</div>";
+    echo "</div>";
+    echo "</div>";
+    
+    // Warning message if custom CID is not set to AREACODE
+    if ($use_custom_cid != 'AREACODE') {
+        echo "<div style='background-color: #fff8f8; border-left: 4px solid #f56565; padding: 15px; margin-bottom: 20px; border-radius: 4px;'>";
+        echo "<div style='display: flex; align-items: center;'>";
+        echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 10px; color: #f56565;'><path d='M10.29 3.86L1.82 18C1.42023 18.6691 1.20957 19.4373 1.21285 20.2205C1.21613 21.0037 1.43322 21.7701 1.83858 22.4361C2.24394 23.1021 2.82036 23.6402 3.51204 23.9987C4.20372 24.3572 4.98268 24.5216 5.76 24.473H18.24C19.0173 24.5216 19.7963 24.3572 20.488 23.9987C21.1796 23.6402 21.7561 23.1021 22.1614 22.4361C22.5668 21.7701 22.7839 21.0037 22.7871 20.2205C22.7904 19.4373 22.5798 18.6691 22.18 18L13.71 3.86C13.3131 3.20808 12.7485 2.67025 12.0782 2.30602C11.408 1.94179 10.6562 1.76416 9.8987 1.79117C9.1412 1.81818 8.40371 2.04893 7.76077 2.45892C7.11784 2.86891 6.59286 3.44404 6.244 4.12C6.244 4.12 10.29 3.86 10.29 3.86Z' stroke='#f56565' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M12 9V13' stroke='#f56565' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M12 17H12.01' stroke='#f56565' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+        echo "<div style='color: #e53e3e; font-weight: 500;'>" . _QXZ("The campaign setting Custom CallerID is not set to AREACODE") . "!</div>";
+        echo "</div>";
+        echo "</div>";
+    }
+    
+    // Form for modifying existing area code CIDs
+    echo "<form action='$PHP_SELF' method='POST'>";
+    echo "<input type='hidden' name='ADD' value='202'>";
+    echo "<input type='hidden' name='stage' value='MODIFY'>";
+    echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
+    
+    // Table for existing area code CIDs
+    echo "<div style='overflow-x: auto; margin-bottom: 25px;'>";
+    echo "<table style='width: 100%; border-collapse: collapse;'>";
+    
+    // Fetch data
+    $stmt = "SELECT areacode,outbound_cid,active,cid_description,call_count_today from vicidial_campaign_cid_areacodes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by areacode,outbound_cid;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $accids_to_print = mysqli_num_rows($rslt);
+    $o = 0;
+    
+    while ($accids_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        $Xareacode[$o] = $rowx[0];
+        $Xoutbound_cid[$o] = $rowx[1];
+        $Xactive[$o] = $rowx[2];
+        $Xcid_description[$o] = $rowx[3];
+        $Xcall_count_today[$o] = $rowx[4];
+        $checkbox_list .= "|active_$Xareacode[$o]_$Xoutbound_cid[$o]";
+        $o++;
+        $checkbox_count++;
+    }
+    
+    // Table header
+    echo "<thead>";
+    echo "<tr style='background-color: #f8f9fa;'>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>#</th>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>" . _QXZ("AREACODE") . "</th>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>" . _QXZ("CID NUMBER") . "</th>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>" . _QXZ("DESCRIPTION") . "</th>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>";
+    echo "<div>" . _QXZ("ACTIVE") . "</div>";
+    echo "<div style='margin-top: 5px;'>";
+    echo "<span id='ACCID_link'>";
+    echo "<a href=\"#\" onclick=\"FORM_selectall('$checkbox_count','$checkbox_list','on','ACCID_link');return false;\" style='color: #6a11cb; text-decoration: none; font-size: 12px; font-weight: 500;'>" . _QXZ("select all") . "</a>";
+    echo "</span>";
+    echo "</div>";
+    echo "</th>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>" . _QXZ("CALLS") . "</th>";
+    echo "<th style='padding: 12px 15px; text-align: left; font-weight: 600; color: #2c3e50; border-bottom: 2px solid #e1e8ed;'>" . _QXZ("DELETE") . "</th>";
+    echo "</tr>";
+    echo "</thead>";
+    
+    // Table body
+    echo "<tbody>";
+    $o = 0;
+    while ($accids_to_print > $o) {
+        $ct = ($o + 1);
+        
+        // Alternate row colors
+        $bgcolor = ($o % 2 == 0) ? "#ffffff" : "#f8f9fa";
+        
+        // Check for DID edit link
+        $DID_edit_link_BEGIN = '';
+        $DID_edit_link_END = '';
+        if (strlen($Xoutbound_cid[$o]) > 0) {
+            $stmt = "SELECT did_id from vicidial_inbound_dids where did_pattern='$Xoutbound_cid[$o]' $LOGadmin_viewable_groupsSQL limit 1;";
+            $rslt = mysql_to_mysqli($stmt, $link);
+            $dids_to_print = mysqli_num_rows($rslt);
+            if ($dids_to_print > 0) {
+                $rowx = mysqli_fetch_row($rslt);
+                $DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\" style='color: #6a11cb; text-decoration: none; font-weight: 500;'>";
+                $DID_edit_link_END = '</a>';
+            }
+        }
+        
+        echo "<tr style='background-color: $bgcolor;'>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed; color: #2c3e50;'>$ct</td>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed; color: #2c3e50; font-weight: 500;'>$Xareacode[$o]</td>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed; color: #2c3e50;'>$DID_edit_link_BEGIN$Xoutbound_cid[$o]$DID_edit_link_END</td>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed;'>";
+        echo "<input type='text' size='30' maxlength='100' name='cid_description_$Xareacode[$o]_$Xoutbound_cid[$o]' value=\"$Xcid_description[$o]\" style='width: 100%; padding: 8px 12px; border: 1px solid #e1e8ed; border-radius: 6px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+        echo "</td>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed;'>";
+        echo "<div style='display: flex; align-items: center;'>";
+        echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\"" . ($Xactive[$o] == 'Y' ? ' CHECKED' : '') . " style='width: 18px; height: 18px; margin-right: 8px; cursor: pointer;'>";
+        echo "<label for=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" style='cursor: pointer; color: #2c3e50;'>" . ($Xactive[$o] == 'Y' ? _QXZ("Active") : _QXZ("Inactive")) . "</label>";
+        echo "</div>";
+        echo "</td>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed; color: #2c3e50;'>$Xcall_count_today[$o]</td>";
+        echo "<td style='padding: 12px 15px; border-bottom: 1px solid #e1e8ed;'>";
+        echo "<a href=\"$PHP_SELF?ADD=202&stage=DELETE&campaign_id=$campaign_id&areacode=$Xareacode[$o]&outbound_cid=$Xoutbound_cid[$o]\" style='color: #e53e3e; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center;'>";
+        echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 5px;'><path d='M3 6H5H21' stroke='#e53e3e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M19 6V20C19 21 18 22 17 22H7C6 22 5 21 5 20V6M8 6V4C8 3 9 2 10 2H14C15 2 16 3 16 4V6' stroke='#e53e3e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+        echo _QXZ("DELETE");
+        echo "</a>";
+        echo "</td>";
+        echo "</tr>";
+        $o++;
+    }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    
+    // Submit button for modifications
+    echo "<div style='display: flex; justify-content: flex-end; margin-bottom: 30px;'>";
+    echo "<button type='submit' name='submit' value='" . _QXZ("SUBMIT CHANGES") . "' style='background-color: #6a11cb; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);' onmouseover=\"this.style.backgroundColor='#5a0dbb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(106, 17, 203, 0.4)';\" onmouseout=\"this.style.backgroundColor='#6a11cb'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(106, 17, 203, 0.3)';\">" . _QXZ("SUBMIT CHANGES") . "</button>";
+    echo "</div>";
+    echo "</form>";
+    
+    // Add new area code CID form
+    echo "<div style='background-color: #f8f9fa; border-radius: 12px; padding: 25px; margin-bottom: 30px;'>";
+    echo "<h2 style='color: #2c3e50; font-size: 20px; margin: 0 0 20px 0; font-weight: 600;'>" . _QXZ("ADD NEW AREACODE CID") . "</h2>";
+    echo "<form action='$PHP_SELF' method='POST'>";
+    echo "<input type='hidden' name='ADD' value='202'>";
+    echo "<input type='hidden' name='stage' value='ADD'>";
+    echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
+    
+    echo "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;'>";
+    echo "<div>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Areacode") . "</label>";
+    echo "<input type='text' size='7' maxlength='5' name='areacode' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "</div>";
+    
+    echo "<div>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Outbound CID") . "</label>";
+    echo "<input type='text' size='20' maxlength='20' name='outbound_cid' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Description") . "</label>";
+    echo "<input type='text' size='50' maxlength='100' name='cid_description' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "</div>";
+    
+    echo "<button type='submit' name='submit' value='" . _QXZ("ADD") . "' style='background-color: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);' onmouseover=\"this.style.backgroundColor='#218838'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';\" onmouseout=\"this.style.backgroundColor='#28a745'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';\">" . _QXZ("ADD") . "</button>";
+    echo "</form>";
+    echo "</div>";
+    
+    // Admin changes link for authorized users
+    if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/", $LOGallowed_reports)) or (preg_match("/ALL REPORTS/", $LOGallowed_reports)))) {
+        echo "<div style='margin-bottom: 30px;'>";
+        echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\" style='color: #6a11cb; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center;'>";
+        echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 8px;'><path d='M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z' fill='#6a11cb'/></svg>";
+        echo _QXZ("Click here to see Admin changes to this campaign") . " AC-CID";
+        echo "</a>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>";
+}
 
-		$stmt="SELECT areacode,outbound_cid,active,cid_description,call_count_today from vicidial_campaign_cid_areacodes where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by areacode,outbound_cid;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$accids_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($accids_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$Xareacode[$o] =			$rowx[0];
-			$Xoutbound_cid[$o] =		$rowx[1];
-			$Xactive[$o] =				$rowx[2];
-			$Xcid_description[$o] =		$rowx[3];
-			$Xcall_count_today[$o] =	$rowx[4];
-			$checkbox_list .= "|active_$Xareacode[$o]_$Xoutbound_cid[$o]";
-			$o++;
-			$checkbox_count++;
-			}
-
-		echo "<tr><td>#</td><td>"._QXZ("AREACODE")."</td><td>"._QXZ("CID NUMBER")."</td><td>"._QXZ("DESCRIPTION")."</td><td>"._QXZ("ACTIVE")."<br><span id=ACCID_link><a href=\"#\" onclick=\"FORM_selectall('$checkbox_count','$checkbox_list','on','ACCID_link');return false;\"><font size=1>"._QXZ("select all")."</font></a></span></td><td>"._QXZ("CALLS")."</td><td>"._QXZ("DELETE")."</td></tr>\n";
-
-		$o=0;
-		while ($accids_to_print > $o) 
-			{
-			$ct = ($o + 1);
-			if ($ct == '1')
-				{
-				$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';
-				$bgac = $Xareacode[$o];
-				} 
-			else
-				{
-				if ($Xareacode[$o] != $bgac)
-					{
-					if (preg_match("/1$|3$|5$|7$|9$/i", $bgct))
-						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';} 
-					else
-						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
-					$bgct++;
-					$bgac = $Xareacode[$o];
-					}
-				}
-
-			$DID_edit_link_BEGIN='';
-			$DID_edit_link_END='';
-			if (strlen($Xoutbound_cid[$o]) > 0)
-				{
-				$stmt="SELECT did_id from vicidial_inbound_dids where did_pattern='$Xoutbound_cid[$o]' $LOGadmin_viewable_groupsSQL limit 1;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$dids_to_print = mysqli_num_rows($rslt);
-				if ($dids_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\">";
-					$DID_edit_link_END='</a>';
-					}
-				}
-			echo "<tr $bgcolor><td><font size=2> &nbsp; $ct</font></td>\n";
-			echo "<td><font size=2> &nbsp; $Xareacode[$o]</font></td>\n";
-			echo "<td><font size=2> &nbsp; $DID_edit_link_BEGIN$Xoutbound_cid[$o]$DID_edit_link_END</font></td>\n";
-			echo "<td><input type=text size=30 maxlength=100 name=cid_description_$Xareacode[$o]_$Xoutbound_cid[$o] value=\"$Xcid_description[$o]\" style=\"font-family: sans-serif; font-size: 10px;\"></td>\n";
-			echo "<td>\n";
-			if ($Xactive[$o] == 'Y')
-				{
-				echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\" CHECKED>";
-				}
-			else
-				{
-				echo "<input type=\"checkbox\" name=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" id=\"active_$Xareacode[$o]_$Xoutbound_cid[$o]\" value=\"Y\">";
-				}
-			echo "</td>\n";
-			echo "<td><font size=2> &nbsp; $Xcall_count_today[$o]</font></td>\n";
-			echo "<td><font size=1> &nbsp; <a href=\"$PHP_SELF?ADD=202&stage=DELETE&campaign_id=$campaign_id&areacode=$Xareacode[$o]&outbound_cid=$Xoutbound_cid[$o]\">"._QXZ("DELETE")."</a></td></tr>\n";
-			$o++;
-			}
-
-		echo "</table>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value=\""._QXZ("SUBMIT CHANGES")."\"></form><br><br>\n";
-
-		echo "<br>"._QXZ("ADD NEW AREACODE CID")."<BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=202>\n";
-		echo "<input type=hidden name=stage value=ADD>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo _QXZ("Areacode").": <input type=text size=7 maxlength=5 name=areacode>\n";
-		echo _QXZ("Outbound CID").": <input type=text size=20 maxlength=20 name=outbound_cid><BR>\n";
-		echo _QXZ("Description").": <input type=text size=50 maxlength=100 name=cid_description>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-
-		echo "</center></FORM><br>\n";
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\">"._QXZ("Click here to see Admin changes to this campaign")." AC-CID</a></FONT>\n";
-			}
-		echo "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0><TR><TD>\n";
-		}
-
-
-	if ($SUB < 1)
-		{
-		echo "<BR><BR>\n";
-		echo "<a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\">"._QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN")."</a><BR><BR>\n";
-	#	echo "<a href=\"$PHP_SELF?ADD=53&campaign_id=$campaign_id&DB=$DB\">EMERGENCY VDAC CLEAR FOR THIS CAMPAIGN</a><BR><BR>\n";
-
-		if ($LOGdelete_campaigns > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\">"._QXZ("DELETE THIS CAMPAIGN")."</a>\n";
-			}
-		}
-	}
-	else
-	{
-	echo _QXZ("You do not have permission to view this page")."\n";
-	exit;
-	}
+if ($SUB < 1) {
+    echo "<div style='max-width: 1200px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>";
+    echo "<div style='background-color: #ffffff; border-radius: 12px; padding: 25px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;'>";
+    
+    echo "<div style='display: flex; flex-direction: column; gap: 15px;'>";
+    
+    echo "<a href=\"$PHP_SELF?ADD=52&campaign_id=$campaign_id&DB=$DB\" style='background-color: #f8f9fa; color: #2c3e50; text-decoration: none; padding: 15px 20px; border-radius: 8px; display: flex; align-items: center; transition: all 0.2s; border: 1px solid #e1e8ed;' onmouseover=\"this.style.backgroundColor='#e9ecef'; this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(0)';\">";
+    echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 12px;'><path d='M16 17L21 12L16 7M21 12H9M9 21H5C4 21 3 20 3 19V5C3 4 4 3 5 3H9' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "<span style='font-weight: 500;'>" . _QXZ("LOG ALL AGENTS OUT OF THIS CAMPAIGN") . "</span>";
+    echo "</a>";
+    
+    if ($LOGdelete_campaigns > 0) {
+        echo "<a href=\"$PHP_SELF?ADD=51&campaign_id=$campaign_id\" style='background-color: #fff8f8; color: #e53e3e; text-decoration: none; padding: 15px 20px; border-radius: 8px; display: flex; align-items: center; transition: all 0.2s; border: 1px solid #feb2b2;' onmouseover=\"this.style.backgroundColor='#fed7d7'; this.style.transform='translateY(-2px)';\" onmouseout=\"this.style.backgroundColor='#fff8f8'; this.style.transform='translateY(0)';\">";
+        echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 12px;'><path d='M3 6H5H21' stroke='#e53e3e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M19 6V20C19 21 18 22 17 22H7C6 22 5 21 5 20V6M8 6V4C8 3 9 2 10 2H14C15 2 16 3 16 4V6' stroke='#e53e3e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+        echo "<span style='font-weight: 500;'>" . _QXZ("DELETE THIS CAMPAIGN") . "</span>";
+        echo "</a>";
+    }
+    
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+} else {
+    echo "<div style='max-width: 1200px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>";
+    echo "<div style='background-color: #fff8f8; border-radius: 12px; padding: 25px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #feb2b2;'>";
+    echo "<div style='display: flex; align-items: center;'>";
+    echo "<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 15px; color: #e53e3e;'><path d='M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z' fill='#e53e3e'/></svg>";
+    echo "<div style='color: #e53e3e; font-weight: 500; font-size: 16px;'>" . _QXZ("You do not have permission to view this page") . "</div>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    exit;
 }
 
 
