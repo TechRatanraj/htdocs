@@ -13250,7 +13250,7 @@ if ($ADD==21)
 ######################
 # ADD=20 adds copied new campaign to the system
 ######################
-<?php
+
 if ($ADD == 20) {
     // Sanitize campaign ID
     $campaign_id = preg_replace("/\-/", '', $campaign_id);
@@ -13481,7 +13481,7 @@ if ($ADD == 20) {
     }
     $ADD = 31;
 }
-?>
+
 
 <style>
 /* Campaign Header Styles */
