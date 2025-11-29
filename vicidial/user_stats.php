@@ -714,7 +714,8 @@ else {
             $login_sec = ($EQepoch - $row[1]);
             $total_login_time = ($total_login_time + $login_sec);
         }
-        $total_login_hours_minutes = sec_convert($total_login_time,'H);
+        $total_login_hours_minutes = sec_convert($total_login_time,'H');
+	
 
         // Closer In-Group Selection Logs
         $stmt="SELECT user,campaign_id,event_date,blended,closer_campaigns,manager_change from ".$vicidial_user_closer_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by event_date desc limit 1000;";
