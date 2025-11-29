@@ -13450,9 +13450,9 @@ if ($ADD==20) {
                     return;
                 }
                 
-                // Show loading state
-                this.innerHTML = '<i style=\"margin-right: 8px;\">fas fa-spinner fa-spin</i> '._QXZ("Validating...")."';
-                this.disabled = true;
+echo "this.innerHTML = '<i class=\"fas fa-spinner fa-spin\" style=\"margin-right:8px;\"></i> "._QXZ("Validating...")."';\n";
+echo "this.disabled = true;\n";
+
                 
                 // Make AJAX request to validate campaign
                 fetch('api/validate_campaign.php', {
@@ -13569,7 +13569,7 @@ if ($ADD==20) {
         
         echo "</div>";
     }
-
+}
 
 ######################
 # ADD=22 adds the new campaign status to the system
