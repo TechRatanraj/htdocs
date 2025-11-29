@@ -34968,46 +34968,257 @@ if ($SUB==27)
 		}
 
 	##### CAMPAIGN SURVEY SETTINGS #####
-	if ($SUB=='20A')
-		{
-
-		echo "<center><br><b>"._QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN").":</b><br>\n";
-		echo "<form action=$PHP_SELF method=POST name=admin_form id=admin_form><center><TABLE width=850 cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><input type=hidden name=ADD value=40A>\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey First Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_first_audio_file id=survey_first_audio_file value=\"$survey_first_audio_file\"> <a href=\"javascript:launch_chooser('survey_first_audio_file','date');\">"._QXZ("audio chooser")."</a>  $NWB#campaigns-survey_first_audio_file$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey DTMF Digits").": </td><td><input type=text size=16 maxlength=16 name=survey_dtmf_digits value=\"$survey_dtmf_digits\"> $NWB#campaigns-survey_dtmf_digits$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Not Interested Digit").": </td><td><input type=text size=5 maxlength=1 name=survey_ni_digit value=\"$survey_ni_digit\"> $NWB#campaigns-survey_ni_digit$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Wait Seconds").": </td><td><input type=text size=5 maxlength=2 name=survey_wait_sec value=\"$survey_wait_sec\"> $NWB#campaigns-survey_wait_sec$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Opt-in Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_opt_in_audio_file id=survey_opt_in_audio_file value=\"$survey_opt_in_audio_file\"> <a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_opt_in_audio_file$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Not Interested Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_ni_audio_file id=survey_ni_audio_file value=\"$survey_ni_audio_file\"> <a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_ni_audio_file$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Method").": </td><td><select size=1 name=survey_method><option value='AGENT_XFER'>"._QXZ("AGENT_XFER")."</option><option value='VOICEMAIL'>"._QXZ("VOICEMAIL")."</option><option value='VMAIL_NO_INST'>"._QXZ("VMAIL_NO_INST")."</option><option value='EXTENSION'>"._QXZ("EXTENSION")."</option><option value='HANGUP'>"._QXZ("HANGUP")."</option><option value='CAMPREC_60_WAV'>"._QXZ("CAMPREC_60_WAV")."</option><option value='CALLMENU'>"._QXZ("CALLMENU")."</option><option value='$survey_method' SELECTED>"._QXZ("$survey_method")."</option></select> $NWB#campaigns-survey_method$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey No-Response Action").": </td><td><select size=1 name=survey_no_response_action><option value='OPTIN'>"._QXZ("OPTIN")."</option><option value='OPTOUT'>"._QXZ("OPTOUT")."</option><option value='DROP'>"._QXZ("DROP")."</option><option value='$survey_no_response_action' SELECTED>"._QXZ("$survey_no_response_action")."</option></select> $NWB#campaigns-survey_no_response_action$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Not Interested Status").": </td><td><select name=survey_ni_status>$survey_ni_status_list</select> $NWB#campaigns-survey_ni_status$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Digit").": </td><td><input type=text size=5 maxlength=1 name=survey_third_digit id=survey_third_digit value=\"$survey_third_digit\"> $NWB#campaigns-survey_third_digit$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_third_audio_file id=survey_third_audio_file value=\"$survey_third_audio_file\"> <a href=\"javascript:launch_chooser('survey_third_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_third_audio_file$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Status").": </td><td><input type=text size=10 maxlength=6 name=survey_third_status value=\"$survey_third_status\"> $NWB#campaigns-survey_third_status$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Third Extension").": </td><td><input type=text size=20 maxlength=20 name=survey_third_exten value=\"$survey_third_exten\"> $NWB#campaigns-survey_third_exten$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Digit").": </td><td><input type=text size=5 maxlength=1 name=survey_fourth_digit value=\"$survey_fourth_digit\"> $NWB#campaigns-survey_fourth_digit$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Audio File").": </td><td nowrap><input type=text size=70 maxlength=1000 name=survey_fourth_audio_file id=survey_fourth_audio_file value=\"$survey_fourth_audio_file\"> <a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\">"._QXZ("audio chooser")."</a> $NWB#campaigns-survey_fourth_audio_file$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Status").": </td><td><input type=text size=10 maxlength=6 name=survey_fourth_status value=\"$survey_fourth_status\"> $NWB#campaigns-survey_fourth_status$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Fourth Extension").": </td><td><input type=text size=20 maxlength=20 name=survey_fourth_exten value=\"$survey_fourth_exten\"> $NWB#campaigns-survey_fourth_exten$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Response Digit Map").": </td><td><input type=text size=70 maxlength=100 name=survey_response_digit_map value=\"$survey_response_digit_map\"> $NWB#campaigns-survey_response_digit_map$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Survey Xfer Extension").": </td><td><input type=text size=12 maxlength=20 name=survey_xfer_exten value=\"$survey_xfer_exten\"> $NWB#campaigns-survey_xfer_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Campaign Recording Directory").": </td><td><input type=text size=70 maxlength=255 name=survey_camp_record_dir value=\"$survey_camp_record_dir\"> $NWB#campaigns-survey_camp_record_dir$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Voicemail").": </td><td><input type=text size=12 maxlength=10 name=voicemail_ext id=voicemail_ext value=\"$voicemail_ext\"> <a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\">"._QXZ("voicemail chooser")."</a> $NWB#campaigns-voicemail_ext$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right><a href=\"$PHP_SELF?ADD=3511&menu_id=$survey_menu_id\">"._QXZ("Survey Call Menu")."</a>: </td><td align=left><select size=1 name=survey_menu_id id=survey_menu_id>$call_menu_list<option SELECTED>$survey_menu_id</option></select>$NWB#campaigns-survey_menu_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Survey Recording").": </td><td align=left><select size=1 name=survey_recording id=survey_recording><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='Y_WITH_AMD'>"._QXZ("Y_WITH_AMD")."</option><option value='$survey_recording' SELECTED>"._QXZ("$survey_recording")."</option></select>$NWB#campaigns-survey_recording$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</table>\n";
-		echo "<BR></center></FORM><br>\n";
-		}
+	
+if ($SUB == '20A') {
+    echo "<div style='max-width: 900px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;'>";
+    echo "<div style='text-align: center; margin-bottom: 25px;'>";
+    echo "<h2 style='color: #333; font-size: 24px; margin-bottom: 10px;'>" . _QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN") . "</h2>";
+    echo "</div>";
+    
+    echo "<form action='$PHP_SELF' method='POST' name='admin_form' id='admin_form'>";
+    echo "<input type='hidden' name='ADD' value='40A'>";
+    echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
+    
+    echo "<div style='background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>";
+    
+    // Basic Survey Settings
+    echo "<div style='margin-bottom: 25px;'>";
+    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Basic Survey Settings") . "</h3>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey First Audio File") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='1000' name='survey_first_audio_file' id='survey_first_audio_file' value='$survey_first_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo "<button type='button' onclick=\"launch_chooser('survey_first_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
+    echo " $NWB#campaigns-survey_first_audio_file$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey DTMF Digits") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='16' maxlength='16' name='survey_dtmf_digits' value='$survey_dtmf_digits' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo " $NWB#campaigns-survey_dtmf_digits$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Not Interested Digit") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='5' maxlength='1' name='survey_ni_digit' value='$survey_ni_digit' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
+    echo " $NWB#campaigns-survey_ni_digit$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Wait Seconds") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='5' maxlength='2' name='survey_wait_sec' value='$survey_wait_sec' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
+    echo " $NWB#campaigns-survey_wait_sec$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Opt-in Audio File") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='1000' name='survey_opt_in_audio_file' id='survey_opt_in_audio_file' value='$survey_opt_in_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo "<button type='button' onclick=\"launch_chooser('survey_opt_in_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
+    echo " $NWB#campaigns-survey_opt_in_audio_file$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Not Interested Audio File") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='1000' name='survey_ni_audio_file' id='survey_ni_audio_file' value='$survey_ni_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo "<button type='button' onclick=\"launch_chooser('survey_ni_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
+    echo " $NWB#campaigns-survey_ni_audio_file$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Method") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='survey_method' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo "<option value='AGENT_XFER'>" . _QXZ("AGENT_XFER") . "</option>";
+    echo "<option value='VOICEMAIL'>" . _QXZ("VOICEMAIL") . "</option>";
+    echo "<option value='VMAIL_NO_INST'>" . _QXZ("VMAIL_NO_INST") . "</option>";
+    echo "<option value='EXTENSION'>" . _QXZ("EXTENSION") . "</option>";
+    echo "<option value='HANGUP'>" . _QXZ("HANGUP") . "</option>";
+    echo "<option value='CAMPREC_60_WAV'>" . _QXZ("CAMPREC_60_WAV") . "</option>";
+    echo "<option value='CALLMENU'>" . _QXZ("CALLMENU") . "</option>";
+    echo "<option value='$survey_method' SELECTED>" . _QXZ("$survey_method") . "</option>";
+    echo "</select>";
+    echo " $NWB#campaigns-survey_method$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey No-Response Action") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='survey_no_response_action' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo "<option value='OPTIN'>" . _QXZ("OPTIN") . "</option>";
+    echo "<option value='OPTOUT'>" . _QXZ("OPTOUT") . "</option>";
+    echo "<option value='DROP'>" . _QXZ("DROP") . "</option>";
+    echo "<option value='$survey_no_response_action' SELECTED>" . _QXZ("$survey_no_response_action") . "</option>";
+    echo "</select>";
+    echo " $NWB#campaigns-survey_no_response_action$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Not Interested Status") . ":</div>";
+    echo "<div>";
+    echo "<select name='survey_ni_status' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>$survey_ni_status_list</select>";
+    echo " $NWB#campaigns-survey_ni_status$NWE";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    
+    // Third Digit Settings
+    echo "<div style='margin-bottom: 25px;'>";
+    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Third Digit Settings") . "</h3>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Digit") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='5' maxlength='1' name='survey_third_digit' id='survey_third_digit' value='$survey_third_digit' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
+    echo " $NWB#campaigns-survey_third_digit$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Audio File") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='1000' name='survey_third_audio_file' id='survey_third_audio_file' value='$survey_third_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo "<button type='button' onclick=\"launch_chooser('survey_third_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
+    echo " $NWB#campaigns-survey_third_audio_file$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Status") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='10' maxlength='6' name='survey_third_status' value='$survey_third_status' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 120px;'>";
+    echo " $NWB#campaigns-survey_third_status$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Extension") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='20' maxlength='20' name='survey_third_exten' value='$survey_third_exten' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;'>";
+    echo " $NWB#campaigns-survey_third_exten$NWE";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    
+    // Fourth Digit Settings
+    echo "<div style='margin-bottom: 25px;'>";
+    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Fourth Digit Settings") . "</h3>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Digit") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='5' maxlength='1' name='survey_fourth_digit' value='$survey_fourth_digit' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
+    echo " $NWB#campaigns-survey_fourth_digit$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Audio File") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='1000' name='survey_fourth_audio_file' id='survey_fourth_audio_file' value='$survey_fourth_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo "<button type='button' onclick=\"launch_chooser('survey_fourth_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
+    echo " $NWB#campaigns-survey_fourth_audio_file$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Status") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='10' maxlength='6' name='survey_fourth_status' value='$survey_fourth_status' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 120px;'>";
+    echo " $NWB#campaigns-survey_fourth_status$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Extension") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='20' maxlength='20' name='survey_fourth_exten' value='$survey_fourth_exten' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;'>";
+    echo " $NWB#campaigns-survey_fourth_exten$NWE";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    
+    // Advanced Settings
+    echo "<div style='margin-bottom: 25px;'>";
+    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Advanced Settings") . "</h3>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Response Digit Map") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='100' name='survey_response_digit_map' value='$survey_response_digit_map' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo " $NWB#campaigns-survey_response_digit_map$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Survey Xfer Extension") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='12' maxlength='20' name='survey_xfer_exten' value='$survey_xfer_exten' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 150px;'>";
+    echo " $NWB#campaigns-survey_xfer_exten$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Campaign Recording Directory") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='70' maxlength='255' name='survey_camp_record_dir' value='$survey_camp_record_dir' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
+    echo " $NWB#campaigns-survey_camp_record_dir$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Voicemail") . ":</div>";
+    echo "<div>";
+    echo "<input type='text' size='12' maxlength='10' name='voicemail_ext' id='voicemail_ext' value='$voicemail_ext' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 150px;'>";
+    echo "<button type='button' onclick=\"launch_vm_chooser('voicemail_ext','vm')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("voicemail chooser") . "</button>";
+    echo " $NWB#campaigns-voicemail_ext$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'><a href=\"$PHP_SELF?ADD=3511&menu_id=$survey_menu_id\" style='color: #007bff; text-decoration: none;'>" . _QXZ("Survey Call Menu") . "</a>:</div>";
+    echo "<div>";
+    echo "<select size='1' name='survey_menu_id' id='survey_menu_id' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>$call_menu_list<option SELECTED>$survey_menu_id</option></select>";
+    echo "$NWB#campaigns-survey_menu_id$NWE";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
+    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Recording") . ":</div>";
+    echo "<div>";
+    echo "<select size='1' name='survey_recording' id='survey_recording' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo "<option value='Y'>" . _QXZ("Y") . "</option>";
+    echo "<option value='N'>" . _QXZ("N") . "</option>";
+    echo "<option value='Y_WITH_AMD'>" . _QXZ("Y_WITH_AMD") . "</option>";
+    echo "<option value='$survey_recording' SELECTED>" . _QXZ("$survey_recording") . "</option>";
+    echo "</select>";
+    echo "$NWB#campaigns-survey_recording$NWE";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    
+    // Submit Button
+    echo "<div style='text-align: center; margin-top: 30px;'>";
+    echo "<input type='submit' name='submit' value='" . _QXZ("SUBMIT") . "' style='background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: 500; transition: background-color 0.2s;'>";
+    echo "</div>";
+    
+    echo "</div>";
+    echo "</form>";
+    echo "</div>";
+}
 
 
 	##### CAMPAIGN PRESETS #####
