@@ -35463,24 +35463,36 @@ if ($SUB==202) {
             // Alternating row colors
             $rowBg = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
             
-            echo "<tr style='background-color: $rowBg;'>";
-            echo "<td style='padding: 12px 8px; font-weight: 500; color: #2c3e50;'>$areacode</td>";
-            echo "<td style='padding: 12px 8px; color: #2c3e50;'>$outbound_cid</td>";
-            echo "<td style='padding: 12px 8px; color: #2c3e50;'>$id_description</td>";
-            echo "<td style='padding: 12px 8px; color: #2c3e50; text-align: center;'>";
-            echo "<span style='display: inline-flex; align-items: center; gap: 8px;'>";
-            echo "<span style='display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; color: " . ($active == 'Y' ? '#28a745' : '#e9ecef') . "; 
-                   ($active == 'Y' ? '✓' : '✗') . "</span>";
-            echo "</span>";
-            echo "</td>";
-            echo "<td style='padding: 12px 8px; text-align: center;'>";
-            echo "<button type='button' onclick=\"editAreacode('$areacode', '$outbound_cid', '$id_description', '$active')\" style='background-color: #f1f5f5; color: #2c3e50; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; cursor: pointer; transition: all 0.3s ease;'>";
-            echo "<i style='margin-right: 4px;'>✏️</i>";
-            echo "<span style='margin-right: 8px;'>"._QXZ("Edit")."</span>";
-            echo "</button>";
-            echo "</td>";
-            echo "</tr>";
-            
+echo "<tr style='background-color: $rowBg;'>";
+echo "<td style='padding: 12px 8px; font-weight: 500; color: #2c3e50;'>$areacode</td>";
+echo "<td style='padding: 12px 8px; color: #2c3e50;'>$outbound_cid</td>";
+echo "<td style='padding: 12px 8px; color: #2c3e50;'>$id_description</td>";
+
+echo "<td style='padding: 12px 8px; text-align: center;'>";
+
+$statusColor = ($active == 'Y') ? '#28a745' : '#dc3545';
+$statusText  = ($active == 'Y') ? '✓ Active' : '✗ Inactive';
+$statusBg    = ($active == 'Y') ? 'rgba(40,167,69,0.15)' : 'rgba(220,53,69,0.15)';
+
+echo "<span style='padding: 4px 10px; border-radius: 6px; font-size: 12px;
+                 font-weight: 600; color: $statusColor; background-color: $statusBg;'>
+        $statusText
+      </span>";
+
+echo "</td>";
+
+echo "<td style='padding: 12px 8px; text-align: center;'>";
+echo "<button type='button' 
+              onclick=\"editAreacode('$areacode', '$outbound_cid', '$id_description', '$active')\" 
+              style='background-color: #f1f5f5; color: #2c3e50; border: none; border-radius: 4px; 
+                     padding: 6px 10px; font-size: 12px; cursor: pointer; 
+                     transition: all 0.3s ease;'>
+        ✏️ <span style='margin-left: 4px;'>"._QXZ("Edit")."</span>
+      </button>";
+echo "</td>";
+
+echo "</tr>";
+
             $o++;
         }
     } else {
