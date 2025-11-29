@@ -1327,7 +1327,7 @@ else {
         }
         
         header {
-            background: linear-gradient(135deg, #f5f7fa;, #f5f7fa;);
+            background: linear-gradient(135deg,  #4a6cf7, #f5f7fa;);
             color: white;
             padding: 20px;
             border-radius: 10px;
