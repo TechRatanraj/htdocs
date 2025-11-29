@@ -13250,326 +13250,314 @@ if ($ADD==21)
 ######################
 # ADD=20 adds copied new campaign to the system
 ######################
-
-if ($ADD==20) {
-    $campaign_id = preg_replace("/\-/",'',$campaign_id);
+<?php
+if ($ADD == 20) {
+    // Sanitize campaign ID
+    $campaign_id = preg_replace("/\-/", '', $campaign_id);
     
     // Check permissions
     if ($add_copy_disabled > 0) {
-        echo "<div style='font-family: var(--font-family); max-width: 1000px; margin: 0 auto; padding: 20px;'>";
-        echo "<div style='background-color: var(--accent-light); color: var(--accent-color); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;'>";
-        echo "<i style='font-size: 20px; color: var(--accent-color);'>fas fa-exclamation-triangle</i>";
-        echo "<span style='font-weight: var(--font-weight-medium);'>"._QXZ("You do not have permission to add records on this system")."</span>";
-        echo "</div>";
-        echo "</div>";
+        echo '<div class="error-message">' . _QXZ("You do not have permission to add records on this system") . ' -system_settings-</div>';
     } else {
-        // Modern card-based layout
-        echo "<div style='font-family: var(--font-family); max-width: 1000px; margin: 0 auto; padding: 20px;'>";
+        // Handle ID override if enabled
+        $stmt = "SELECT value FROM vicidial_override_ids WHERE id_table='vicidial_campaigns' AND active='1'";
+        $rslt = mysqli_prepare($link, $stmt);
+        mysqli_stmt_execute($rslt);
+        $voi_ct = mysqli_stmt_num_rows($rslt);
         
-        // Header Card
-        echo "<div style='background-color: white; border-radius: var(--border-radius-lg); box-shadow: var(--box-shadow); margin-bottom: 24px; overflow: hidden;'>";
-        echo "<div style='background-color: var(--primary-color); color: white; padding: 16px 20px;'>";
-        echo "<h2 style='font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); margin: 0; display: flex; align-items: center; gap: 10px;'>";
-        echo "<i style='font-size: 24px;'>fas fa-copy</i>";
-        echo "<span>"._QXZ("Copy Campaign Settings")."</span>";
-        echo "</h2>";
-        echo "</div>";
-        
-        echo "<div style='padding: 24px;'>";
-        
-        // Source Campaign Selection
-        echo "<div style='margin-bottom: 20px;'>";
-        echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Source Campaign")."</label>";
-        echo "<select name='source_campaign_id' style='width: 100%; padding: 12px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); background-color: white; transition: var(--transition);'>";
-        
-        $stmt = "SELECT campaign_id, campaign_name FROM vicidial_campaigns WHERE active='Y' ORDER BY campaign_name";
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $campaigns_to_print = mysqli_num_rows($rslt);
-        
-        while ($campaigns_to_print > 0) {
-            $row = mysqli_fetch_row($rslt);
-            $selected = ($source_campaign_id == $row[0]) ? "selected" : "";
-            echo "<option value='{$row[0]}' $selected>"._QXZ($row[1])."</option>";
-            $campaigns_to_print--;
+        if ($voi_ct > 0) {
+            $row = mysqli_fetch_row(mysqli_stmt_get_result($rslt));
+            $campaign_id = ($row[0] + 1);
+            
+            $updateStmt = "UPDATE vicidial_override_ids SET value=? WHERE id_table='vicidial_campaigns' AND active='1'";
+            $updateRslt = mysqli_prepare($link, $updateStmt);
+            mysqli_stmt_bind_param($updateRslt, "i", $campaign_id);
+            mysqli_stmt_execute($updateRslt);
         }
         
-        echo "</select>";
-        echo "</div>";
+        // Display campaign icon and header
+        echo '<div class="campaign-header">';
+        echo '<img src="images/icon_black_campaigns.png" alt="Campaigns" width="42" height="42">';
+        echo '<span class="campaign-title">Campaign Management</span>';
+        echo '</div>';
         
-        echo "<div style='display: flex; justify-content: flex-end; gap: 12px;'>";
-        echo "<button type='button' id='validate-campaign' style='display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border: none; border-radius: var(--border-radius); font-size: var(--font-size-base); font-weight: var(--font-weight-medium); cursor: pointer; transition: var(--transition); text-decoration: none; background-color: var(--primary-color); color: white;'>";
-        echo "<i style='margin-right: 8px;'>fas fa-check-circle</i>";
-        echo "<span>"._QXZ("Validate Campaign")."</span>";
-        echo "</button>";
-        echo "</div>";
+        // Check if campaign already exists
+        $stmt = "SELECT count(*) FROM vicidial_campaigns WHERE campaign_id=?";
+        $rslt = mysqli_prepare($link, $stmt);
+        mysqli_stmt_bind_param($rslt, "s", $campaign_id);
+        mysqli_stmt_execute($rslt);
+        $row = mysqli_fetch_row(mysqli_stmt_get_result($rslt));
         
-        echo "</div>";
-        echo "</div>";
-        
-        // Campaign Validation Results
-        echo "<div id='validation-results' style='margin-top: 16px;'></div>";
-        
-        // Copy Campaign Form
-        echo "<div style='background-color: white; border-radius: var(--border-radius-lg); box-shadow: var(--box-shadow); margin-bottom: 24px; overflow: hidden;'>";
-        echo "<div style='background-color: var(--primary-color); color: white; padding: 16px 20px;'>";
-        echo "<h2 style='font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); margin: 0; display: flex; align-items: center; gap: 10px;'>";
-        echo "<i style='font-size: 24px;'>fas fa-clone</i>";
-        echo "<span>"._QXZ("Copy Campaign")."</span>";
-        echo "</h2>";
-        echo "</div>";
-        
-        echo "<div style='padding: 24px;'>";
-        echo "<form id='copy-campaign-form' style='margin: 0; padding: 0;'>";
-        echo "<input type='hidden' name='ADD' value='20'>";
-        echo "<input type='hidden' name='source_campaign_id' id='hidden_campaign_id'>";
-        
-        // Campaign Options
-        echo "<div style='margin-bottom: 30px;'>";
-        echo "<h3 style='font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--primary-color); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-light);'>"._QXZ("Campaign Options")."</h3>";
-        
-        echo "<div style='display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;'>";
-        echo "<div style='flex: 1; min-width: 200px;'>";
-        echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Campaign ID")."</label>";
-        echo "<input type='text' id='new_campaign_id' name='campaign_id' style='width: 100%; padding: 12px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);' placeholder='"._QXZ("Enter new campaign ID")."'>";
-        echo "</div>";
-        
-        echo "<div style='flex: 1; min-width: 200px;'>";
-        echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Campaign Name")."</label>";
-        echo "<input type='text' id='new_campaign_name' name='campaign_name' style='width: 100%; padding: 12px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);' placeholder='"._QXZ("Enter campaign name")."'>";
-        echo "</div>";
-        echo "</div>";
-        
-        echo "<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;'>";
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_statuses' name='copy_statuses' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_statuses' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy Statuses")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_hotkeys' name='copy_hotkeys' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_hotkeys' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy Hotkeys")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_recycle' name='copy_recycle' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_recycle' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy Lead Recycling")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_pause_codes' name='copy_pause_codes' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_pause_codes' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy Pause Codes")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_cid_areacodes' name='copy_cid_areacodes' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_cid_areacodes' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy CID Areacodes")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_xfer_presets' name='copy_xfer_presets' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_xfer_presets' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy Transfer Presets")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_campaign_settings' name='copy_campaign_settings' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_campaign_settings' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy Campaign Settings")."</label>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; align-items: center; gap: 8px;'>";
-        echo "<input type='checkbox' id='copy_url_multi' name='copy_url_multi' checked style='width: 18px; height: 18px;'>";
-        echo "<label for='copy_url_multi' style='cursor: pointer; font-weight: var(--font-weight-medium);'>"._QXZ("Copy URL Multi")."</label>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-        
-        echo "<div style='display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;'>";
-        echo "<button type='submit' style='display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border: none; border-radius: var(--border-radius); font-size: var(--font-size-base); font-weight: var(--font-weight-medium); cursor: pointer; transition: var(--transition); text-decoration: none; background-color: var(--primary-color); color: white;'>";
-        echo "<i style='margin-right: 8px;'>fas fa-copy</i>";
-        echo "<span>"._QXZ("Copy Campaign")."</span>";
-        echo "</button>";
-        echo "</div>";
-        
-        echo "</form>";
-        echo "</div>";
-        echo "</div>";
-        
-        // Copy Progress
-        echo "<div id='copy-progress' style='margin: 20px 0; display: none;'>";
-        echo "<div style='width: 100%; height: 8px; background-color: var(--gray-light); border-radius: var(--border-radius); overflow: hidden;'>";
-        echo "<div id='progress-fill' style='height: 10px; background-color: var(--primary-color); width: 0%; transition: width 0.3s ease;'></div>";
-        echo "</div>";
-        echo "<div id='progress-text' style='margin-top: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Copying campaign...")."</div>";
-        echo "</div>";
-        
-        // Copy Results
-        echo "<div id='copy-results' style='margin-top: 16px;'></div>";
-        echo "</div>";
-        
-        // JavaScript for form interactions
-        echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Campaign ID validation
-            document.getElementById('new_campaign_id').addEventListener('input', function() {
-                const value = this.value;
-                const isValid = /^[A-Za-z0-9_-]{2,8}$/.test(value);
-                
-                if (!isValid) {
-                    this.style.borderColor = 'var(--danger-color)';
-                    document.getElementById('campaign-id-error').textContent = '"._QXZ("Campaign ID must be 2-8 characters and contain only letters, numbers, hyphens and underscores")."';
-                } else {
-                    this.style.borderColor = 'var(--gray-light)';
-                    document.getElementById('campaign-id-error').textContent = '';
-                }
-            });
+        if ($row[0] > 0) {
+            echo '<div class="error-message">' . _QXZ("CAMPAIGN NOT ADDED - there is already a campaign in the system with this ID") . '</div>';
+        } 
+        // Check if inbound group with same ID exists
+        else {
+            $stmt = "SELECT count(*) FROM vicidial_inbound_groups WHERE group_id=?";
+            $rslt = mysqli_prepare($link, $stmt);
+            mysqli_stmt_bind_param($rslt, "s", $campaign_id);
+            mysqli_stmt_execute($rslt);
+            $row = mysqli_fetch_row(mysqli_stmt_get_result($rslt));
             
-            // Campaign name validation
-            document.getElementById('new_campaign_name').addEventListener('input', function() {
-                const value = this.value;
-                const isValid = value.length >= 6;
+            if ($row[0] > 0) {
+                echo '<div class="error-message">' . _QXZ("CAMPAIGN NOT ADDED - there is already an inbound group in the system with this ID") . '</div>';
+            } 
+            // Check if status group with same ID exists
+            else {
+                $stmt = "SELECT count(*) FROM vicidial_status_groups WHERE status_group_id=?";
+                $rslt = mysqli_prepare($link, $stmt);
+                mysqli_stmt_bind_param($rslt, "s", $campaign_id);
+                mysqli_stmt_execute($rslt);
+                $row = mysqli_fetch_row(mysqli_stmt_get_result($rslt));
                 
-                if (!isValid) {
-                    this.style.borderColor = 'var(--danger-color)';
-                    document.getElementById('campaign-name-error').textContent = '"._QXZ("Campaign name must be at least 6 characters")."';
-                } else {
-                    this.style.borderColor = 'var(--gray-light)';
-                    document.getElementById('campaign-name-error').textContent = '';
-                }
-            });
-            
-            // Source campaign selection
-            document.getElementById('source_campaign_id').addEventListener('change', function() {
-                document.getElementById('hidden_campaign_id').value = this.value;
-            });
-            
-            // Validate campaign button
-            document.getElementById('validate-campaign').addEventListener('click', function() {
-                const sourceId = document.getElementById('source_campaign_id').value;
-                
-                if (!sourceId) {
-                    showNotification('"._QXZ("Please select a source campaign")."', 'error');
-                    return;
-                }
-                
-echo "this.innerHTML = '<i class=\"fas fa-spinner fa-spin\" style=\"margin-right:8px;\"></i> "._QXZ("Validating...")."';\n";
-echo "this.disabled = true;\n";
-
-                
-                // Make AJAX request to validate campaign
-                fetch('api/validate_campaign.php', {
-                    method: 'POST',
-                    body: JSON.stringify({ campaign_id: sourceId }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Reset button state
-                    this.innerHTML = '<i style=\"margin-right: 8px;\">fas fa-check-circle</i> '._QXZ("Validate Campaign")."';
-                    this.disabled = false;
+                if ($row[0] > 0) {
+                    echo '<div class="error-message">' . _QXZ("CAMPAIGN NOT ADDED - there is already a status group in the system with this ID") . '</div>';
+                } 
+                // Validate input data
+                else if ((strlen($campaign_id) < 2) or (mb_strlen($campaign_id,'utf-8') > 8) or 
+                         (strlen($campaign_name) < 6) or (strlen($source_campaign_id) < 2) or 
+                         (mb_strlen($source_campaign_id,'utf-8') > 8)) {
+                    echo '<div class="error-message">' . _QXZ("CAMPAIGN NOT ADDED - Please go back and look at the data you entered") . '</div>';
+                    echo '<div class="error-message">' . _QXZ("campaign ID must be between 2 and 8 characters in length") . '</div>';
+                    echo '<div class="error-message">' . _QXZ("source campaign ID must be between 2 and 8 characters in length") . '</div>';
+                } 
+                // All checks passed, proceed with campaign copy
+                else {
+                    echo '<div class="success-message"><strong>' . _QXZ("CAMPAIGN COPIED") . ': ' . $campaign_id . ' ' . _QXZ("copied from") . ' ' . $source_campaign_id . '</strong></div>';
                     
-                    // Display results
-                    const resultsDiv = document.getElementById('validation-results');
-                    if (data.valid) {
-                        resultsDiv.innerHTML = '<div style=\"background-color: var(--kpi-green-light); color: var(--kpi-green-text); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;\"><i style=\"font-size: 20px; color: var(--kpi-green-text);\">fas fa-check-circle</i><span style=\"font-weight: var(--font-weight-medium);\">'._QXZ("Campaign is valid and can be copied")."</span></div>';
-                        document.getElementById('copy-campaign-form').style.display = 'block';
-                    } else {
-                        resultsDiv.innerHTML = '<div style=\"background-color: var(--accent-light); color: var(--accent-color); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;\"><i style=\"font-size: 20px; color: var(--accent-color);\">fas fa-exclamation-triangle</i><span style=\"font-weight: var(--font-weight-medium);\">'._QXZ("Campaign validation failed").": ' + data.message + '</span></div>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    this.innerHTML = '<i style=\"margin-right: 8px;\">fas fa-check-circle</i> '._QXZ("Validate Campaign")."';
-                    this.disabled = false;
-                    
-                    const resultsDiv = document.getElementById('validation-results');
-                    resultsDiv.innerHTML = '<div style=\"background-color: var(--accent-light); color: var(--accent-color); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;\"><i style=\"font-size: 20px; color: var(--accent-color);\">fas fa-exclamation-triangle</i><span style=\"font-weight: var(--font-weight-medium);\">'._QXZ("Error validating campaign")."</span></div>';
-                });
-            });
-            
-            // Copy campaign form submission
-            document.getElementById('copy-campaign-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const campaignId = document.getElementById('new_campaign_id').value;
-                const campaignName = document.getElementById('new_campaign_name').value;
-                const sourceId = document.getElementById('hidden_campaign_id').value;
-                
-                // Basic validation
-                if (!campaignId || !campaignName) {
-                    showNotification('"._QXZ("Please enter both campaign ID and name")."', 'error');
-                    return;
-                }
-                
-                // Show progress
-                const progressContainer = document.getElementById('copy-progress');
-                const progressFill = document.getElementById('progress-fill');
-                const progressText = document.getElementById('progress-text');
-                
-                progressContainer.style.display = 'block';
-                progressFill.style.width = '0%';
-                progressText.textContent = '"._QXZ("Initializing...")."';
-                
-                // Create form data
-                const formData = new FormData(this);
-                
-                // Make AJAX request to copy campaign
-                fetch('api/copy_campaign.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Update progress
-                    if (data.progress) {
-                        progressFill.style.width = data.progress + '%';
-                        progressText.textContent = data.message || '"._QXZ("Copying campaign...")."';
-                    }
-                    
-                    // Handle completion
-                    if (data.complete) {
-                        progressContainer.style.display = 'none';
+                    // Update user group's allowed campaigns if needed
+                    if (!preg_match('/\-ALL/i', $LOGallowed_campaigns)) {
+                        $UPDATEallowed_campaigns = $LOGallowed_campaigns;
+                        $UPDATEallowed_campaigns = preg_replace("/ -$/", " $campaign_id -", $UPDATEallowed_campaigns);
+                        $LOGallowed_campaigns = $UPDATEallowed_campaigns;
+                        $rawLOGallowed_campaignsSQL = preg_replace("/ -/", '', $LOGallowed_campaigns);
+                        $rawLOGallowed_campaignsSQL = preg_replace("/ /", "','", $rawLOGallowed_campaignsSQL);
+                        $LOGallowed_campaignsSQL = "and campaign_id IN('$rawLOGallowed_campaignsSQL')";
+                        $whereLOGallowed_campaignsSQL = "where campaign_id IN('$rawLOGallowed_campaignsSQL')";
+                        $regexLOGallowed_campaigns = " $LOGallowed_campaigns ";
                         
-                        const resultsDiv = document.getElementById('copy-results');
-                        if (data.success) {
-                            resultsDiv.innerHTML = '<div style=\"background-color: var(--kpi-green-light); color: var(--kpi-green-text); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;\"><i style=\"font-size: 20px; color: var(--kpi-green-text);\">fas fa-check-circle</i><span style=\"font-weight: var(--font-weight-medium);\">'._QXZ("Campaign copied successfully")." + (data.newCampaignId ? ' '._QXZ("New ID:").' + data.newCampaignId : '') + '</span></div>';
+                        $stmtX = "UPDATE vicidial_user_groups SET allowed_campaigns=? WHERE user_group=?";
+                        $rslt = mysqli_prepare($link, $stmtX);
+                        mysqli_stmt_bind_param($rslt, "ss", $UPDATEallowed_campaigns, $LOGuser_group);
+                        mysqli_stmt_execute($rslt);
+                    }
+                    
+                    // Get column names for the campaign table
+                    $result = mysqli_query($link, "SHOW COLUMNS FROM vicidial_campaigns");
+                    $columns = array();
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $columns[] = $row['Field'];
+                    }
+                    
+                    // Build the INSERT SELECT statement for campaign data
+                    $stmt = "INSERT INTO vicidial_campaigns (";
+                    $values = "SELECT ";
+                    
+                    foreach ($columns as $column) {
+                        $stmt .= $column . ",";
+                        if ($column === "campaign_name") {
+                            $values .= "'" . mysqli_real_escape_string($link, $campaign_name) . "',";
+                        } else if ($column === "campaign_id") {
+                            $values .= "'" . mysqli_real_escape_string($link, $campaign_id) . "',";
+                        } else if ($column === "active") {
+                            $values .= "'N',";
+                        } else if ($column === "list_order_mix") {
+                            $values .= "'DISABLED',";
                         } else {
-                            resultsDiv.innerHTML = '<div style=\"background-color: var(--accent-light); color: var(--accent-color); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;\"><i style=\"font-size: 20px; color: var(--accent-color);\">fas fa-exclamation-triangle</i><span style=\"font-weight: var(--font-weight-medium);\">'._QXZ("Error copying campaign").": ' + data.message + '</span></div>';
+                            $values .= $column . ",";
                         }
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    progressContainer.style.display = 'none';
                     
-                    const resultsDiv = document.getElementById('copy-results');
-                    resultsDiv.innerHTML = '<div style=\"background-color: var(--accent-light); color: var(--accent-color); padding: 16px 20px; border-radius: var(--border-radius); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;\"><i style=\"font-size: 20px; color: var(--accent-color);\">fas fa-exclamation-triangle</i><span style=\"font-weight: var(--font-weight-medium);\">'._QXZ("Error copying campaign")."</span></div>';
-                });
-            });
-            
-            // Notification function
-            function showNotification(message, type) {
-                const notification = document.createElement('div');
-                notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background-color: ' + (type === 'error' ? 'var(--accent-light)' : 'var(--kpi-green-light)') + '; color: ' + (type === 'error' ? 'var(--accent-color)' : 'var(--kpi-green-text)') + '; padding: 16px 20px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); z-index: 1000; display: flex; align-items: center; gap: 12px;';
-                notification.innerHTML = '<i style=\"font-size: 20px;\">fas fa-' + (type === 'error' ? 'exclamation-triangle' : 'info-circle') + '\"></i> ' + message;
-                
-                document.body.appendChild(notification);
-                
-                // Auto remove after 5 seconds
-                setTimeout(() => {
-                    notification.remove();
-                }, 5000);
+                    $stmt = rtrim($stmt, ",") . ") " . rtrim($values, ",") . " FROM vicidial_campaigns WHERE campaign_id=?";
+                    
+                    $rslt = mysqli_prepare($link, $stmt);
+                    mysqli_stmt_bind_param($rslt, "s", $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rows = mysqli_affected_rows($link);
+                    
+                    // Insert into campaign stats
+                    $stmtA = "INSERT INTO vicidial_campaign_stats (campaign_id) VALUES(?)";
+                    $rslt = mysqli_prepare($link, $stmtA);
+                    mysqli_stmt_bind_param($rslt, "s", $campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsA = mysqli_affected_rows($link);
+                    
+                    // Insert into campaign stats debug
+                    $stmtB = "INSERT INTO vicidial_campaign_stats_debug (campaign_id) VALUES(?)";
+                    $rslt = mysqli_prepare($link, $stmtB);
+                    mysqli_stmt_bind_param($rslt, "s", $campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsB = mysqli_affected_rows($link);
+                    
+                    // Copy campaign statuses
+                    $stmtC = "INSERT INTO vicidial_campaign_statuses (status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine) SELECT status,status_name,selectable,?,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine FROM vicidial_campaign_statuses WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtC);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsC = mysqli_affected_rows($link);
+                    
+                    // Copy campaign hotkeys
+                    $stmtD = "INSERT INTO vicidial_campaign_hotkeys (status,hotkey,status_name,selectable,campaign_id) SELECT status,hotkey,status_name,selectable,? FROM vicidial_campaign_hotkeys WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtD);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsD = mysqli_affected_rows($link);
+                    
+                    // Copy lead recycle settings
+                    $stmtE = "INSERT INTO vicidial_lead_recycle (status,attempt_delay,attempt_maximum,active,campaign_id) SELECT status,attempt_delay,attempt_maximum,active,? FROM vicidial_lead_recycle WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtE);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsE = mysqli_affected_rows($link);
+                    
+                    // Copy pause codes
+                    $stmtF = "INSERT INTO vicidial_pause_codes (pause_code,pause_code_name,billable,campaign_id,time_limit,require_mgr_approval) SELECT pause_code,pause_code_name,billable,?,time_limit,require_mgr_approval FROM vicidial_pause_codes WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtF);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsF = mysqli_affected_rows($link);
+                    
+                    // Copy transfer presets
+                    $stmtG = "INSERT INTO vicidial_xfer_presets (campaign_id,preset_name,preset_number,preset_dtmf,preset_hide_number) SELECT ?,preset_name,preset_number,preset_dtmf,preset_hide_number FROM vicidial_xfer_presets WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtG);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsG = mysqli_affected_rows($link);
+                    
+                    // Copy transfer stats
+                    $stmtH = "INSERT INTO vicidial_xfer_stats (campaign_id,preset_name) SELECT ?,preset_name FROM vicidial_xfer_presets WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtH);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsH = mysqli_affected_rows($link);
+                    
+                    // Copy CID area codes
+                    $stmtI = "INSERT INTO vicidial_campaign_cid_areacodes (areacode,outbound_cid,active,cid_description,campaign_id) SELECT areacode,outbound_cid,active,cid_description,? FROM vicidial_campaign_cid_areacodes WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtI);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsI = mysqli_affected_rows($link);
+                    
+                    // Copy URL multi settings
+                    $stmtJ = "INSERT INTO vicidial_url_multi (entry_type,active,url_type,url_rank,url_statuses,url_description,url_address,url_lists,campaign_id) SELECT entry_type,active,url_type,url_rank,url_statuses,url_description,url_address,url_lists,? FROM vicidial_url_multi WHERE campaign_id=?";
+                    $rslt = mysqli_prepare($link, $stmtJ);
+                    mysqli_stmt_bind_param($rslt, "ss", $campaign_id, $source_campaign_id);
+                    mysqli_stmt_execute($rslt);
+                    $affected_rowsJ = mysqli_affected_rows($link);
+                    
+                    // Check and copy AMD agent options if they exist
+                    $containerId = "AMD_AGENT_OPT_$source_campaign_id";
+                    $stmtK = "SELECT count(*) FROM vicidial_settings_containers WHERE container_id=?";
+                    $rslt = mysqli_prepare($link, $stmtK);
+                    mysqli_stmt_bind_param($rslt, "s", $containerId);
+                    mysqli_stmt_execute($rslt);
+                    $row = mysqli_fetch_row(mysqli_stmt_get_result($rslt));
+                    $AMDAOcount = $row[0];
+                    
+                    $affected_rowsL = 0;
+                    if ($AMDAOcount > 0) {
+                        $newContainerId = "AMD_AGENT_OPT_$campaign_id";
+                        $containerNotes = "AMD agent options for $campaign_id campaign";
+                        
+                        $stmtL = "INSERT INTO vicidial_settings_containers (container_id,container_notes,container_type,user_group,container_entry) SELECT ?, ?, container_type, user_group, container_entry FROM vicidial_settings_containers WHERE container_id=?";
+                        $rslt = mysqli_prepare($link, $stmtL);
+                        mysqli_stmt_bind_param($rslt, "sss", $newContainerId, $containerNotes, $containerId);
+                        mysqli_stmt_execute($rslt);
+                        $affected_rowsL = mysqli_affected_rows($link);
+                    }
+                    
+                    // Log the operation
+                    $SQL_log = "CAMPAIGN_COPY_OPERATION";
+                    $SQL_log = addslashes($SQL_log);
+                    $event_notes = "$affected_rows|$affected_rowsA|$affected_rowsB|$affected_rowsC|$affected_rowsD|$affected_rowsE|$affected_rowsF|$affected_rowsG|$affected_rowsH|$affected_rowsI|$affected_rowsJ|$AMDAOcount|$affected_rowsL";
+                    
+                    $stmtLog = "INSERT INTO vicidial_admin_log SET event_date=?, user=?, ip_address=?, event_section='CAMPAIGNS', event_type='COPY', record_id=?, event_code='ADMIN COPY CAMPAIGN', event_sql=?, event_notes=?";
+                    $rslt = mysqli_prepare($link, $stmtLog);
+                    mysqli_stmt_bind_param($rslt, "ssssss", $SQLdate, $PHP_AUTH_USER, $ip, $campaign_id, $SQL_log, $event_notes);
+                    mysqli_stmt_execute($rslt);
+                }
             }
-        });
-        </script>";
-        
-        // Add error message containers
-        echo "<div id='campaign-id-error' style='color: var(--danger-color); font-size: var(--font-size-sm); margin-top: 4px; min-height: 16px;'></div>";
-        echo "<div id='campaign-name-error' style='color: var(--danger-color); font-size: var(--font-size-sm); margin-top: 4px; min-height: 16px;'></div>";
-        
-        echo "</div>";
+        }
+    }
+    $ADD = 31;
+}
+?>
+
+<style>
+/* Campaign Header Styles */
+.campaign-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.campaign-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #333;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+/* Message Styles */
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin: 10px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    display: block;
+    width: fit-content;
+}
+
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin: 10px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    display: block;
+    width: fit-content;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .campaign-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .campaign-title {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .error-message, .success-message {
+        width: 100%;
+        box-sizing: border-box;
     }
 }
+
+/* Animation for messages */
+.error-message, .success-message {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
 
 ######################
 # ADD=22 adds the new campaign status to the system
