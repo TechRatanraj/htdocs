@@ -35505,151 +35505,152 @@ echo "</tr>";
     echo "</table>";
     echo "</div>";
     
-    // JavaScript for form interactions
     echo "<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Campaign selection
-        const campaignSelect = document.getElementById('campaign-select');
-        if (campaignSelect) {
-            campaignSelect.addEventListener('change', function() {
-                const selectedOptions = Array.from(campaignSelect.selectedOptions);
-                const allOptions = Array.from(campaignSelect.options);
-                
-                // Clear all selections
-                allOptions.forEach(option => option.selected = false);
-                
-                // Re-select previously selected options
-                selectedOptions.forEach(option => option.selected = true);
-            });
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Campaign selection
+    const campaignSelect = document.getElementById('campaign-select');
+    if (campaignSelect) {
+        campaignSelect.addEventListener('change', function() {
+            const selectedOptions = Array.from(campaignSelect.selectedOptions);
+            const allOptions = Array.from(campaignSelect.options);
+
+            allOptions.forEach(option => option.selected = false);
+            selectedOptions.forEach(option => option.selected = true);
         });
-        
-        // Add new area code form
-        const addForm = document.getElementById('add-areacode');
-        if (addForm) {
-            addForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const areacode = document.getElementById('new_areacode').value.trim();
-                const outbound_cid = document.getElementById('new_outbound_cid').value.trim();
-                const id_description = document.getElementById('new_id_description').value.trim();
-                
-                if (!areacode || !outbound_cid) {
-                    showNotification('"._QXZ("Please enter both area code and outbound CID")."', 'error');
-                    return;
-                }
-                
-                // Show loading state
-                this.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> '._QXZ("Adding area code...")."';
-                this.disabled = true;
-                
-                // Make AJAX request to add area code
-                const formData = new FormData(this);
-                
-                fetch('api/add_areacode.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Reset button state
-                    this.innerHTML = '<i class=\"fas fa-check-circle\"></i> '._QXZ("Area code added successfully")."';
-                    this.disabled = false;
-                    
-                    // Display results
-                    if (data.success) {
-                        showNotification('"._QXZ("Area code added successfully").', 'success');
-                        
-                        // Refresh the page after a short delay
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
-                    } else {
-                        showNotification('"._QXZ("Error adding area code").": ' + data.message, 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    this.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> '._QXZ("Error adding area code")."';
-                    this.disabled = false;
-                    
-                    showNotification('"._QXZ("Error adding area code").', 'error');
-                });
-            });
-        });
-        
-        // Edit area code function
-        window.editAreacode = function(areacode, outbound_cid, id_description, active) {
-            // Populate form fields
-            document.getElementById('edit-areacode').value = areacode;
-            document.getElementById('edit-outbound_cid').value = outbound_cid;
-            document.getElementById('edit-id_description').value = id_description;
-            document.getElementById('edit-active').value = active;
-            
-            // Show edit modal
-            const modal = document.getElementById('edit-modal');
-            modal.style.display = 'block';
-        };
-        
-        // Delete area code function
-        window.deleteAreacode = function(areacode) {
-            if (confirm('"._QXZ("Are you sure you want to delete this area code?") + areacode)) {
-                // Show loading state
-                const deleteBtn = document.getElementById('delete-' + areacode);
-                deleteBtn.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> '._QXZ("Deleting...")."';
-                deleteBtn.disabled = true;
-                
-                // Make AJAX request to delete area code
-                fetch('api/delete_areacode.php', {
-                    method: 'POST',
-                    body: JSON.stringify({ areacode: areacode })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Reset button state
-                    deleteBtn.innerHTML = '<i class=\"fas fa-check-circle\"></i> '._QXZ("Deleted")."';
-                    deleteBtn.disabled = false;
-                    
-                    // Display results
-                    if (data.success) {
-                        showNotification('"._QXZ("Area code deleted successfully").', 'success');
-                        
-                        // Refresh the page after a short delay
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
-                    } else {
-                        showNotification('"._QXZ("Error deleting area code").": ' + data.message, 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    deleteBtn.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> '._QXZ("Error deleting area code")."';
-                    deleteBtn.disabled = false;
-                    
-                    showNotification('"._QXZ("Error deleting area code").', 'error');
-                });
-            } else {
-                // User cancelled the deletion
-                showNotification('"._QXZ("Deletion cancelled").', 'info');
-            }
-        };
-        
-        // Notification function
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = 'alert alert alert-' + type;
-            notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background-color: ' + (type === 'error' ? 'var(--accent-light)' : 'var(--kpi-green-light)') + '; color: ' + (type === 'error' ? 'var(--accent-color)' : 'var(--kpi-green-text)') + '; padding: 16px 20px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); z-index: 1000; display: flex; align-items: center; gap: 12px;';
-            notification.innerHTML = '<i class=\"fas fa-' + (type === 'error' ? 'exclamation-triangle' : 'info-circle') + '\"></i> ' + message;
-            
-            document.body.appendChild(notification);
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                notification.remove();
-            }, 5000);
-        }
     }
-    </script>";
+
+    // Add new area code form
+    const addForm = document.getElementById('add-areacode');
+    if (addForm) {
+
+        addForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const areacode = document.getElementById('new_areacode').value.trim();
+            const outbound_cid = document.getElementById('new_outbound_cid').value.trim();
+            const id_description = document.getElementById('new_id_description').value.trim();
+
+            if (!areacode || !outbound_cid) {
+                showNotification('"._QXZ("Please enter both area code and outbound CID")."', 'error');
+                return;
+            }
+
+            // Loading state
+            this.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> "._QXZ("Adding area code...")."';
+            this.disabled = true;
+
+            const formData = new FormData(this);
+
+            fetch('api/add_areacode.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+
+                this.innerHTML = '<i class=\"fas fa-check-circle\"></i> "._QXZ("Area code added")."';
+                this.disabled = false;
+
+                if (data.success) {
+                    showNotification('"._QXZ("Area code added successfully")."', 'success');
+
+                    setTimeout(() => { window.location.reload(); }, 1000);
+
+                } else {
+                    showNotification('"._QXZ("Error adding area code")." ' + data.message, 'error');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+
+                this.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> "._QXZ("Add Area Code")."';
+                this.disabled = false;
+
+                showNotification('"._QXZ("Error adding area code")."', 'error');
+            });
+
+        }); // end submit
+    } // end addForm
+
+
+    // Edit area code
+    window.editAreacode = function(areacode, outbound_cid, id_description, active) {
+        document.getElementById('edit-areacode').value = areacode;
+        document.getElementById('edit-outbound_cid').value = outbound_cid;
+        document.getElementById('edit-id_description').value = id_description;
+        document.getElementById('edit-active').value = active;
+
+        document.getElementById('edit-modal').style.display = 'block';
+    };
+
+
+    // Delete area code
+    window.deleteAreacode = function(areacode) {
+
+        if (!confirm('"._QXZ("Are you sure you want to delete this area code?")." ' + areacode)) {
+            showNotification('"._QXZ("Deletion cancelled")."', 'info');
+            return;
+        }
+
+        const deleteBtn = document.getElementById('delete-' + areacode);
+        deleteBtn.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> "._QXZ("Deleting...")."';
+        deleteBtn.disabled = true;
+
+        fetch('api/delete_areacode.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ areacode: areacode })
+        })
+        .then(r => r.json())
+        .then(data => {
+            deleteBtn.innerHTML = '<i class=\"fas fa-check-circle\"></i> "._QXZ("Deleted")."';
+            deleteBtn.disabled = false;
+
+            if (data.success) {
+                showNotification('"._QXZ("Area code deleted successfully")."', 'success');
+                setTimeout(() => { window.location.reload(); }, 1000);
+
+            } else {
+                showNotification('"._QXZ("Error deleting area code")." ' + data.message, 'error');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+
+            deleteBtn.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> "._QXZ("Error")."';
+            deleteBtn.disabled = false;
+
+            showNotification('"._QXZ("Error deleting area code")."', 'error');
+        });
+    };
+
+
+    // Notification system
+    function showNotification(message, type) {
+
+        const notification = document.createElement('div');
+        notification.className = 'alert alert-' + type;
+
+        notification.style.cssText =
+            'position: fixed; top: 20px; right: 20px; ' +
+            'padding: 16px 20px; border-radius: 6px; ' +
+            'box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000;' +
+            'background-color: ' + (type === 'error' ? '#fbeaea' : '#e9f8ef') + '; ' +
+            'color: ' + (type === 'error' ? '#c0392b' : '#2ecc71') + ';';
+
+        notification.innerHTML =
+            '<i class=\"fas fa-' + (type === 'error' ? 'exclamation-triangle' : 'info-circle') + '\"></i> ' +
+            message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => { notification.remove(); }, 5000);
+    }
+
+});
+</script>";
+
 }
 }
 
