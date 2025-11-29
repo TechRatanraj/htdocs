@@ -28123,25 +28123,25 @@ echo "</div>\n";
             echo "    });\n";
             echo "  });\n";
             echo "  \n";
-            echo "  // Password visibility toggle\n";
-            echo "  const passwordToggles = document.querySelectorAll('.password-toggle');\n";
-            echo "  passwordToggles.forEach(toggle => {\n";
-            echo "    toggle.addEventListener('click', function() {\n";
-            echo "      const targetId = this.getAttribute('data-target');\n";
-            echo "      const passwordField = document.getElementById(targetId) || document.getElementsByName(targetId)[0];\n";
-            echo "      if (passwordField)
-                
-             
-                         echo "      if (passwordField) {\n";
-            echo "        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';\n";
-            echo "        passwordField.setAttribute('type', type);\n";
-            echo "        this.classList.toggle('fa-eye');\n";
-            echo "        this.classList.toggle('fa-eye-slash');\n";
-            echo "      }\n";
-            echo "    });\n";
-            echo "  });\n";
-            echo "  \n";
-            echo "  // Form validation\n";
+echo "  // Password visibility toggle\n";
+echo "  const passwordToggles = document.querySelectorAll('.password-toggle');\n";
+echo "  passwordToggles.forEach(toggle => {\n";
+echo "    toggle.addEventListener('click', function() {\n";
+echo "      const targetId = this.getAttribute('data-target');\n";
+echo "      const passwordField = document.getElementById(targetId) || document.getElementsByName(targetId)[0];\n";
+
+echo "      if (passwordField) {\n";
+echo "        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';\n";
+echo "        passwordField.setAttribute('type', type);\n";
+echo "        this.classList.toggle('fa-eye');\n";
+echo "        this.classList.toggle('fa-eye-slash');\n";
+echo "      }\n";
+
+echo "    });\n";
+echo "  });\n";
+echo "\n";
+echo "  // Form validation\n";
+
             echo "  const form = document.getElementById('user-modify-form');\n";
             echo "  if (form) {\n";
             echo "    form.addEventListener('submit', function(e) {\n";
