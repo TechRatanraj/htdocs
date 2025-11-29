@@ -401,22 +401,6 @@ else
     $full_name = $row[0];
     }
 
- $HEADER.="<html>\n";
- $HEADER.="<head>\n";
- $HEADER.="<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
- $HEADER.="<script language=\"JavaScript\" src=\"help.js\"></script>\n";
- $HEADER.="<link rel=\"stylesheet\" href=\"calendar.css\">\n";
- $HEADER.="<link rel=\"stylesheet\" type=\"text/css\" href=\"vicidial_stylesheet.php\">\n";
-
- $HEADER.="<div id='HelpDisplayDiv' class='help_info' style='display:none;'></div>\n";
-
- $HEADER.="<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\">\n";
-
-if ($did > 0)
-    {$HEADER.="<title>"._QXZ("ADMINISTRATION: DID Call Stats");}
-else
-    {$HEADER.="<title>"._QXZ("ADMINISTRATION").": "._QXZ("$report_name");}
-
 ##### BEGIN Set variables to make header show properly #####
  $ADD =                  '3';
  $hh =                   'users';
@@ -450,7 +434,871 @@ if ($did > 0)
  $NWB = "<IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, '";
  $NWE = "')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
 
-// Modern UI HTML Structure
+ $HEADER.="<html>\n";
+ $HEADER.="<head>\n";
+ $HEADER.="<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
+ $HEADER.="<script language=\"JavaScript\" src=\"help.js\"></script>\n";
+ $HEADER.="<link rel=\"stylesheet\" href=\"calendar.css\">\n";
+ $HEADER.="<link rel=\"stylesheet\" type=\"text/css\" href=\"vicidial_stylesheet.php\">\n";
+
+ $HEADER.="<div id='HelpDisplayDiv' class='help_info' style='display:none;'></div>\n";
+
+ $HEADER.="<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\">\n";
+
+if ($did > 0)
+    {$HEADER.="<title>"._QXZ("ADMINISTRATION: DID Call Stats");}
+else
+    {$HEADER.="<title>"._QXZ("ADMINISTRATION").": "._QXZ("$report_name");}
+
+// Process data for reports
+ $download_link="$PHP_SELF?DB=$DB&pause_code_rpt=$pause_code_rpt&park_rpt=$park_rpt&did_id=$did_id&did=$did&begin_date=$begin_date&end_date=$end_date&user=$user&submit=$submit&search_archived_data=$search_archived_data&NVAuser=$NVAuser\n";
+
+// Generate all report data
+if ($pause_code_rpt >= 1) {
+    // Agent Pause Logs
+    $stmt="SELECT ".$vicidial_agent_log_table.".campaign_id,event_time,talk_sec,pause_sec,sec_to_time(pause_sec) as pause_length,wait_sec,dispo_sec,dead_sec,sub_status, vicidial_users.user_group from vicidial_users,".$vicidial_agent_log_table.",vicidial_pause_codes where sub_status is not null and event_time <= '$end_date 23:59:59' and event_time >= '$begin_date 00:00:00' and ".$vicidial_agent_log_table.".user='$user' and ".$vicidial_agent_log_table.".user=vicidial_users.user and pause_sec<65000 and wait_sec<65000 and talk_sec<65000 and dispo_sec<65000 and ".$vicidial_agent_log_table.".sub_status=vicidial_pause_codes.pause_code and ".$vicidial_agent_log_table.".campaign_id=vicidial_pause_codes.campaign_id order by event_time asc limit 500000;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    if ($DB) {$MAIN.="$stmt\n";}
+    $pause_rows_to_print = mysqli_num_rows($rslt);
+    
+    $o=0; $total_pause_time=0;
+    $pause_logs = array();
+    while ($pause_row=mysqli_fetch_array($rslt)) {
+        $total_pause_time+=$pause_row["pause_sec"];
+        $pause_logs[] = $pause_row;
+        $o++;
+    }
+    
+    $total_pause_stmt="SELECT sec_to_time($total_pause_time)";
+    $total_pause_rslt=mysql_to_mysqli($total_pause_stmt, $link);
+    $total_pause_row=mysqli_fetch_row($total_pause_rslt);
+    $total_pause_time_formatted=$total_pause_row[0];
+}
+elseif ($park_rpt >= 1) {
+    // Agent Parked Call Logs
+    $stmt="SELECT parked_time,status,lead_id,parked_sec from park_log where parked_time <= '$end_date 23:59:59' and parked_time >= '$begin_date 00:00:00' and user='$user' order by parked_time asc limit 500000;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    if ($DB) {$MAIN.="$stmt\n";}
+    $park_rows_to_print = mysqli_num_rows($rslt);
+    
+    $o=0; $total_park_time=0;
+    $park_logs = array();
+    while ($park_row=mysqli_fetch_array($rslt)) {
+        $total_park_time+=$park_row["parked_sec"];
+        $park_logs[] = $park_row;
+        $o++;
+    }
+    
+    $total_park_stmt="SELECT sec_to_time($total_park_time)";
+    $total_park_rslt=mysql_to_mysqli($total_park_stmt, $link);
+    $total_park_row=mysqli_fetch_row($total_park_rslt);
+    $total_park_time_formatted=$total_park_row[0];
+}
+else {
+    // Regular reports
+    if ($did < 1) {
+        // Agent Talk Time and Status
+        $stmt="SELECT count(*),status, sum(length_in_sec) from ".$vicidial_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' $query_call_status group by status order by status";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $VLstatuses_to_print = mysqli_num_rows($rslt);
+        $total_calls=0;
+        $o=0;   $p=0;
+        $counts=array();
+        $status=array();
+        $call_sec=array();
+        while ($VLstatuses_to_print > $o) {
+            $row=mysqli_fetch_row($rslt);
+            $counts[$p] =      $row[0];
+            $status[$p] =      $row[1];
+            $call_sec[$p] =    $row[2];
+            $p++;
+            $o++;
+        }
+
+        $stmt="SELECT count(*),status, sum(length_in_sec-queue_seconds) from ".$vicidial_closer_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' $query_call_status group by status order by status";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $VCLstatuses_to_print = mysqli_num_rows($rslt);
+        $o=0;
+        while ($VCLstatuses_to_print > $o) {
+            $status_match=0;
+            $r=0;
+            $row=mysqli_fetch_row($rslt);
+            while ($VLstatuses_to_print > $r) {
+                if ($status[$r] == $row[1]) {
+                    $counts[$r] = ($counts[$r] + $row[0]);
+                    $call_sec[$r] = ($call_sec[$r] + $row[2]);
+                    $status_match++;
+                }
+                $r++;
+            }
+            if ($status_match < 1) {
+                $counts[$p] =      $row[0];
+                $status[$p] =      $row[1];
+                $call_sec[$p] =    $row[2];
+                $VLstatuses_to_print++;
+                $p++;
+            }
+            $o++;
+        }
+
+        $o=0;
+        $total_sec=0;
+        $talk_status_data = array();
+        while ($o < $p) {
+            $call_hours_minutes = sec_convert($call_sec[$o],'H');
+            $talk_status_data[] = array(
+                'status' => $status[$o],
+                'count' => $counts[$o],
+                'time' => $call_hours_minutes
+            );
+            $total_calls = ($total_calls + $counts[$o]);
+            $total_sec = ($total_sec + $call_sec[$o]);
+            $call_seconds=0;
+            $o++;
+        }
+
+        $call_hours_minutes = sec_convert($total_sec,'H');
+
+        // Agent Login and Logout Time
+        $stmt="SELECT event,event_epoch,event_date,campaign_id,user_group,session_id,server_ip,extension,computer_ip,phone_login,phone_ip,if(event='LOGOUT' or event='TIMEOUTLOGOUT', 1, 0) as LOGpriority, webserver, login_url from ".$vicidial_user_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by event_date, LOGpriority asc;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $events_to_print = mysqli_num_rows($rslt);
+
+        $total_calls=0;
+        $total_logins=0;
+        $o=0;
+        $event_start_seconds='';
+        $event_stop_seconds='';
+        $login_logout_data = array();
+        $URL_MAIN = '';
+        while ($events_to_print > $o) {
+            $row=mysqli_fetch_row($rslt);
+            if (preg_match("/LOGIN/i", $row[0])) {
+                if ($row[10]=='LOOKUP') {$row[10]='';}
+                $event_start_seconds = $row[1];
+                $login_logout_data[] = array(
+                    'type' => 'login',
+                    'event' => $row[0],
+                    'date' => $row[2],
+                    'campaign' => $row[3],
+                    'group' => $row[4],
+                    'session' => $row[5],
+                    'server' => $row[6],
+                    'phone' => $row[7],
+                    'computer' => $row[8],
+                    'phone_login' => $row[9],
+                    'phone_ip' => $row[10]
+                );
+                
+                if ($LOGuser_level==9) {
+                    if ($total_logins%2==0) {$url_bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+                    else {$url_bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+                    $webserver_txt="";
+                    $url_txt="";
+                    if ($row[12]>0) {
+                        $webserver_stmt="select webserver, hostname from vicidial_webservers where webserver_id='$row[12]'";
+                        $webserver_rslt=mysql_to_mysqli($webserver_stmt, $link);
+                        $webserver_row=mysqli_fetch_row($webserver_rslt);
+                        $webserver_txt="$webserver_row[0] - $webserver_row[1]";
+                        $webserver_txt=preg_replace('/^\s\-\s|\s\-\s$/', '', $webserver_txt);
+                    }
+                    if ($row[13]>0) {
+                        $login_url_stmt="select url from vicidial_urls where url_id='$row[13]'";
+                        $login_url_rslt=mysql_to_mysqli($login_url_stmt, $link);
+                        $login_url_row=mysqli_fetch_row($login_url_rslt);
+                        $url_txt=trim("$login_url_row[0]");
+                    }
+
+                    $URL_MAIN.="<tr $url_bgcolor>";
+                    $URL_MAIN.="<td align=right><font size=2> $row[2] </td>\n";
+                    $URL_MAIN.="<td align=right><font size=2> $row[3] </td>\n";
+                    $URL_MAIN.="<td align=right><font size=2> $row[4] </td>\n";
+                    $URL_MAIN.="<td align=right><font size=2> $row[6] </td>\n";
+                    $URL_MAIN.="<td align=right><font size=2> ".(!$webserver_txt ? "&nbsp;" : "$webserver_txt")." </td>\n";
+                    $URL_MAIN.="<td align=right><font size=2> ".(!$url_txt ? "&nbsp;" : "$url_txt")." </td>\n";
+                    $URL_MAIN.="</tr>\n";
+                }
+                $total_logins++;
+            }
+            if (preg_match('/LOGOUT/', $row[0])) {
+                if ($event_start_seconds) {
+                    $event_stop_seconds = $row[1];
+                    $event_seconds = ($event_stop_seconds - $event_start_seconds);
+                    $total_login_time = ($total_login_time + $event_seconds);
+                    $event_hours_minutes = sec_convert($event_seconds,'H');
+
+                    $login_logout_data[] = array(
+                        'type' => 'logout',
+                        'event' => $row[0],
+                        'date' => $row[2],
+                        'campaign' => $row[3],
+                        'group' => $row[4],
+                        'session_time' => $event_hours_minutes,
+                        'phone' => $row[7]
+                    );
+                    $event_start_seconds='';
+                    $event_stop_seconds='';
+                }
+                else {
+                    $login_logout_data[] = array(
+                        'type' => 'logout',
+                        'event' => $row[0],
+                        'date' => $row[2],
+                        'campaign' => $row[3],
+                        'group' => $row[4],
+                        'session_time' => '',
+                        'phone' => $row[7]
+                    );
+                }
+            }
+            $total_calls++;
+            $call_seconds=0;
+            $o++;
+        }
+        $total_login_hours_minutes = sec_convert($total_login_time,'H');
+
+        // Timeclock Login and Logout Time
+        $SQday_ARY = explode('-',$begin_date);
+        $EQday_ARY = explode('-',$end_date);
+        $SQepoch = mktime(0, 0, 0, $SQday_ARY[1], $SQday_ARY[2], $SQday_ARY[0]);
+        $EQepoch = mktime(23, 59, 59, $EQday_ARY[1], $EQday_ARY[2], $EQday_ARY[0]);
+
+        $total_login_time=0;
+        $stmt="SELECT event,event_epoch,user_group,login_sec,ip_address,timeclock_id,manager_user from ".$vicidial_timeclock_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_epoch >= '$SQepoch'  and event_epoch <= '$EQepoch';";
+        if ($DB>0) {$MAIN.="|$stmt|";}
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $events_to_print = mysqli_num_rows($rslt);
+
+        $total_logs=0;
+        $o=0;
+        $timeclock_data = array();
+        while ($events_to_print > $o) {
+            $row=mysqli_fetch_row($rslt);
+            $TC_log_date = date("Y-m-d H:i:s", $row[1]);
+            $manager_edit='';
+            if (strlen($row[6])>0) {$manager_edit = ' *';}
+
+            if (preg_match('/LOGIN/', $row[0])) {
+                $login_sec='';
+                $timeclock_data[] = array(
+                    'type' => 'login',
+                    'id' => $row[5],
+                    'manager_edit' => $manager_edit,
+                    'event' => $row[0],
+                    'date' => $TC_log_date,
+                    'ip_address' => $row[4],
+                    'group' => $row[2],
+                    'session_time' => ''
+                );
+            }
+            if (preg_match('/LOGOUT/', $row[0])) {
+                $login_sec = $row[3];
+                $total_login_time = ($total_login_time + $login_sec);
+                $event_hours_minutes = sec_convert($login_sec,'H');
+
+                $timeclock_data[] = array(
+                    'type' => 'logout',
+                    'id' => $row[5],
+                    'manager_edit' => $manager_edit,
+                    'event' => $row[0],
+                    'date' => $TC_log_date,
+                    'ip_address' => $row[4],
+                    'group' => $row[2],
+                    'session_time' => $event_hours_minutes
+                );
+            }
+            $o++;
+        }
+        if (strlen($login_sec)<1) {
+            $login_sec = ($EQepoch - $row[1]);
+            $total_login_time = ($total_login_time + $login_sec);
+        }
+        $total_login_hours_minutes = sec_convert($total_login_time,'H);
+
+        // Closer In-Group Selection Logs
+        $stmt="SELECT user,campaign_id,event_date,blended,closer_campaigns,manager_change from ".$vicidial_user_closer_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by event_date desc limit 1000;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $closer_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            $u++;
+            $closer_data[] = array(
+                'num' => $u,
+                'date' => $row[2],
+                'campaign' => $row[1],
+                'blend' => $row[3],
+                'groups' => $row[4],
+                'manager' => $row[5]
+            );
+        }
+
+        // Outbound Calls
+        $stmt="SELECT uniqueid,lead_id,list_id,campaign_id,call_date,start_epoch,end_epoch,length_in_sec,status,phone_code,phone_number,user,comments,processed,user_group,term_reason,alt_dial from ".$vicidial_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' $query_call_status order by call_date desc limit 10000;";
+        if ($firstlastname_display_user_stats > 0) {
+            $stmt="SELECT uniqueid,vlog.lead_id,vlog.list_id,campaign_id,call_date,start_epoch,end_epoch,length_in_sec,vlog.status,vlog.phone_code,vlog.phone_number,vlog.user,vlog.comments,processed,user_group,term_reason,alt_dial,first_name,last_name from ".$vicidial_log_table." vlog, vicidial_list vlist where vlog.user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' and vlog.lead_id=vlist.lead_id $VLquery_call_status order by call_date desc limit 10000;";
+        }
+        if ($DB) {$MAIN.="outbound calls|$stmt|";}
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $outbound_calls_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            if ($LOGadmin_hide_phone_data != '0') {
+                if ($DB > 0) {echo "HIDEPHONEDATA|$row[10]|$LOGadmin_hide_phone_data|\n";}
+                $phone_temp = $row[10];
+                if (strlen($phone_temp) > 0) {
+                    if ($LOGadmin_hide_phone_data == '4_DIGITS') {
+                        $row[10] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);
+                    } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
+                        $row[10] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);
+                    } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
+                        $row[10] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);
+                    } else {
+                        $row[10] = preg_replace("/./",'X',$phone_temp);
+                    }
+                }
+            }
+            $u++;
+            $outbound_calls_data[] = array(
+                'num' => $u,
+                'date' => $row[4],
+                'length' => $row[7],
+                'status' => $row[8],
+                'phone' => $row[10],
+                'campaign' => $row[3],
+                'group' => $row[14],
+                'list' => $row[2],
+                'lead_id' => $row[1],
+                'name' => ($firstlastname_display_user_stats > 0) ? "$row[17] $row[18]" : '',
+                'term_reason' => $row[15]
+            );
+            if (strlen($query_call_status) > 5) {
+                $CS_vicidial_id_list .= "'$row[0]',";
+            }
+        }
+
+        // Outbound Emails
+        if ($allow_emails>0) {
+            $stmt="SELECT email_log_id,email_row_id,lead_id,email_date,user,email_to,message,campaign_id,attachments from ".$vicidial_email_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and email_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and email_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by email_date desc limit 10000;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $logs_to_print = mysqli_num_rows($rslt);
+
+            $u=0;
+            $outbound_emails_data = array();
+            while ($logs_to_print > $u) {
+                $row=mysqli_fetch_row($rslt);
+                if (strlen($row[6])>400) {$row[6]=substr($row[6],0,400)."...";}
+                $row[8]=preg_replace('/\|/', ', ', $row[8]);
+                $row[8]=preg_replace('/,\s+$/', '', $row[8]);
+                $u++;
+
+                $outbound_emails_data[] = array(
+                    'num' => $u,
+                    'date' => $row[3],
+                    'campaign' => $row[7],
+                    'email_to' => $row[5],
+                    'attachments' => $row[8],
+                    'lead_id' => $row[2],
+                    'message' => $row[6]
+                );
+            }
+        }
+
+        // Agent Activity
+        $Aevent_time=array();
+        $Alead_id=array();
+        $Acampaign_id=array();
+        $Apause_sec=array();
+        $Await_sec=array();
+        $Atalk_sec=array();
+        $Adispo_sec=array();
+        $Adead_sec=array();
+        $Astatus=array();
+        $Apause_code=array();
+        $Auser_group=array();
+        $Acomments=array();
+        $Acustomer_sec=array();
+        $Aagent_log_id=array();
+
+        $stmt="SELECT event_time,lead_id,campaign_id,pause_sec,wait_sec,talk_sec,dispo_sec,dead_sec,status,sub_status,user_group,comments,agent_log_id from ".$vicidial_agent_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_time <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' and ( (pause_sec > 0) or (wait_sec > 0) or (talk_sec > 0) or (dispo_sec > 0) ) $query_call_status order by event_time desc limit 10000;";
+        if ($DB) {$MAIN.="agent activity|$stmt|";}
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $TOTALpauseSECONDS=0;
+        $TOTALwaitSECONDS=0;
+        $TOTALtalkSECONDS=0;
+        $TOTALdispoSECONDS=0;
+        $TOTALdeadSECONDS=0;
+        $TOTALcustomerSECONDS=0;
+        $TOT_HIDDEN=0;
+        $TOT_VISIBLE=0;
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            $Aevent_time[$u] =  $row[0];
+            $Alead_id[$u] =      $row[1];
+            $Acampaign_id[$u] =   $row[2];
+            $Apause_sec[$u] =     $row[3];
+            $Await_sec[$u] =      $row[4];
+            $Atalk_sec[$u] =      $row[5];
+            $Adispo_sec[$u] =     $row[6];
+            $Adead_sec[$u] =      $row[7];
+            $Astatus[$u] =        $row[8];
+            $Apause_code[$u] =    $row[9];
+            $Auser_group[$u] =    $row[10];
+            $Acomments[$u] =      $row[11];
+            $Aagent_log_id[$u] =   $row[12];
+            $Acustomer_sec[$u] = ($Atalk_sec[$u] - $Adead_sec[$u]);
+            if ($Acustomer_sec[$u] < 0) {$Acustomer_sec[$u]=0;}
+            $u++;
+        }
+        $u=0;
+        $agent_activity_data = array();
+        while ($logs_to_print > $u) {
+            $event_time =  $Aevent_time[$u];
+            $lead_id =      $Alead_id[$u];
+            $campaign_id =   $Acampaign_id[$u];
+            $pause_sec =     $Apause_sec[$u];
+            $wait_sec =      $Await_sec[$u];
+            $talk_sec =      $Atalk_sec[$u];
+            $dispo_sec =     $Adispo_sec[$u];
+            $dead_sec =      $Adead_sec[$u];
+            $status =        $Astatus[$u];
+            $pause_code =    $Apause_code[$u];
+            $user_group =    $Auser_group[$u];
+            $comments =      $Acomments[$u];
+            $agent_log_id =  $Aagent_log_id[$u];
+            $customer_sec =  $Acustomer_sec[$u];
+
+            $HIDDEN_sec=0;   $VISIBLE_sec=0;
+            $stmt="select count(*),sum(length_in_sec),visibility from ".$vicidial_agent_visibility_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and db_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01' and db_time <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' and visibility IN('HIDDEN','VISIBLE') and agent_log_id='$agent_log_id' group by visibility;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $visibility_results = mysqli_num_rows($rslt);
+            if ($DB) {echo "$visibility_results|$stmt\n";}
+            $v_ct=0;
+            while ($visibility_results > $v_ct) {
+                $row=mysqli_fetch_row($rslt);
+                if ($row[2] == 'HIDDEN') {$HIDDEN_sec = $row[1];}
+                if ($row[2] == 'VISIBLE') {$VISIBLE_sec = $row[1];}
+                $v_ct++;
+            }
+            $TOT_HIDDEN =   ($TOT_HIDDEN + $HIDDEN_sec);
+            $TOT_VISIBLE =  ($TOT_VISIBLE + $VISIBLE_sec);
+            if ($HIDDEN_sec < 1) {$HIDDEN_sec='';}
+            if ($VISIBLE_sec < 1) {$VISIBLE_sec='';}
+
+            $TOTALpauseSECONDS = ($TOTALpauseSECONDS + $pause_sec);
+            $TOTALwaitSECONDS = ($TOTALwaitSECONDS + $wait_sec);
+            $TOTALtalkSECONDS = ($TOTALtalkSECONDS + $talk_sec);
+            $TOTALdispoSECONDS = ($TOTALdispoSECONDS + $dispo_sec);
+            $TOTALdeadSECONDS = ($TOTALdeadSECONDS + $dead_sec);
+            $TOTALcustomerSECONDS = ($TOTALcustomerSECONDS + $customer_sec);
+
+            $u++;
+            $agent_activity_data[] = array(
+                'num' => $u,
+                'event_time' => $event_time,
+                'pause_sec' => $pause_sec,
+                'wait_sec' => $wait_sec,
+                'talk_sec' => $talk_sec,
+                'dispo_sec' => $dispo_sec,
+                'dead_sec' => $dead_sec,
+                'customer_sec' => $customer_sec,
+                'visible_sec' => $VISIBLE_sec,
+                'hidden_sec' => $HIDDEN_sec,
+                'status' => $status,
+                'lead_id' => $lead_id,
+                'call_type' => (strlen($lead_id) > 0) ? 
+                    (($comments == 'INBOUND') ? 'I' : 
+                    (($comments == 'EMAIL') ? 'E' : 
+                    (($comments == 'CHAT') ? 'C' : 
+                    (($comments == 'MANUAL') ? 'M' : 'A')))) : '',
+                'campaign' => $campaign_id,
+                'pause_code' => $pause_code
+            );
+        }
+
+        $TOTALpauseSECONDShh = sec_convert($TOTALpauseSECONDS,'H');
+        $TOTALwaitSECONDShh = sec_convert($TOTALwaitSECONDS,'H');
+        $TOTALtalkSECONDShh = sec_convert($TOTALtalkSECONDS,'H');
+        $TOTALdispoSECONDShh = sec_convert($TOTALdispoSECONDS,'H');
+        $TOTALdeadSECONDShh = sec_convert($TOTALdeadSECONDS,'H');
+        $TOTALcustomerSECONDShh = sec_convert($TOTALcustomerSECONDS,'H);
+        $TOTALvisibleSECONDShh = sec_convert($TOT_VISIBLE,'H');
+        $TOTALhiddenSECONDShh = sec_convert($TOT_HIDDEN,'H');
+
+        // Manual Outbound Calls
+        $stmt="SELECT call_date,call_type,server_ip,phone_number,number_dialed,lead_id,callerid,group_alias_id,preset_name,customer_hungup,customer_hungup_seconds from ".$user_call_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by call_date desc limit 10000;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $manual_calls_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            if ($LOGadmin_hide_phone_data != '0') {
+                if ($DB > 0) {echo "HIDEPHONEDATA|$row[10]|$LOGadmin_hide_phone_data|\n";}
+                $phone_temp = $row[3];
+                $dialed_temp = $row[4];
+                if ($LOGadmin_hide_phone_data == '4_DIGITS') {
+                    if (strlen($phone_temp) > 0) {
+                        $row[3] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);
+                    }
+                    if (strlen($dialed_temp) > 0) {
+                        $row[4] = str_repeat("X", (strlen($dialed_temp) - 4)) . substr($dialed_temp,-4,4);
+                    }
+                } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
+                    if (strlen($phone_temp) > 0) {
+                        $row[3] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);
+                    }
+                    if (strlen($dialed_temp) > 0) {
+                        $row[4] = str_repeat("X", (strlen($dialed_temp) - 3)) . substr($dialed_temp,-3,3);
+                    }
+                } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
+                    if (strlen($phone_temp) > 0) {
+                        $row[3] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);
+                    }
+                    if (strlen($dialed_temp) > 0) {
+                        $row[4] = str_repeat("X", (strlen($dialed_temp) - 2)) . substr($dialed_temp,-2,2);
+                    }
+                } else {
+                    if (strlen($phone_temp) > 0) {
+                        $row[3] = preg_replace("/./",'X',$phone_temp);
+                    }
+                    if (strlen($dialed_temp) > 0) {
+                        $row[4] = preg_replace("/./",'X',$dialed_temp);
+                    }
+                }
+            }
+
+            $u++;
+            $C3HU='';
+            if ($row[9]=='BEFORE_CALL') {$row[9]='BC';}
+            if ($row[9]=='DURING_CALL') {$row[9]='DC';}
+            if (strlen($row[9]) > 1) {$C3HU = "$row[9] $row[10]";}
+
+            $manual_calls_data[] = array(
+                'num' => $u,
+                'date' => $row[0],
+                'call_type' => $row[1],
+                'server' => $row[2],
+                'phone' => $row[3],
+                'dialed' => $row[4],
+                'lead_id' => $row[5],
+                'callerid' => $row[6],
+                'alias' => $row[7],
+                'preset' => $row[8],
+                'c3hu' => $C3HU
+            );
+        }
+
+        // Lead Searches
+        $stmt="SELECT event_date,source,results,seconds,search_query from ".$vicidial_lead_search_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by event_date desc limit 10000;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $lead_searches_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            $row[4] = preg_replace("/SELECT count\(\*\) from vicidial_list where/",'',$row[4]);
+            $row[4] = preg_replace('/SELECT lead_id,entry_date,modify_date,status,user,vendor_lead_code,source_id,list_id,gmt_offset_now,called_since_last_reset,phone_code,phone_number,title,first_name,middle_initial,last_name,address1,address2,address3,city,state,province,postal_code,country_code,gender,date_of_birth,alt_phone,email,security_phrase,comments,called_count,last_local_call_time,rank,owner from vicidial_list where /','',$row[4]);
+
+            if (strlen($row[4]) > 100) {$row[4] = substr($row[4], 0, 100);}
+
+            $u++;
+            $lead_searches_data[] = array(
+                'num' => $u,
+                'date' => $row[0],
+                'source' => $row[1],
+                'results' => $row[2],
+                'seconds' => $row[3],
+                'query' => $row[4]
+            );
+        }
+        // Preview Lead Skips
+        $stmt="SELECT user,event_date,lead_id,campaign_id,previous_status,previous_called_count from ".$vicidial_agent_skip_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and event_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by event_date desc limit 10000;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $preview_skips_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            $u++;
+            $preview_skips_data[] = array(
+                'num' => $u,
+                'date' => $row[1],
+                'lead_id' => $row[2],
+                'status' => $row[4],
+                'count' => $row[5],
+                'campaign' => $row[3]
+            );
+        }
+
+        // Agent Lead Switches
+        $stmt="SELECT event_time,lead_id,stage,caller_code,uniqueid,comments,campaign_id from ".$vicidial_agent_function_log." where user='" . mysqli_real_escape_string($link, $user) . "' and event_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_time <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' and function='switch_lead' order by event_time desc limit 10000;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $lead_switches_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            $u++;
+            $lead_switches_data[] = array(
+                'num' => $u,
+                'date' => $row[0],
+                'from_lead_id' => $row[1],
+                'to_lead_id' => $row[2],
+                'call_id' => $row[3],
+                'uniqueid' => $row[4],
+                'phone' => $row[5],
+                'campaign' => $row[6]
+            );
+        }
+
+        // Manager Pause Code Approvals
+        $stmt="SELECT event_time,user,user_group,campaign_id,comments from ".$vicidial_agent_function_log." where stage='" . mysqli_real_escape_string($link, $user) . "' and event_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and event_time <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' and function='mgrapr_pause_code' order by event_time desc limit 10000;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+
+        $u=0;
+        $pause_approvals_data = array();
+        while ($logs_to_print > $u) {
+            $row=mysqli_fetch_row($rslt);
+            $u++;
+            $pause_approvals_data[] = array(
+                'num' => $u,
+                'date' => $row[0],
+                'agent' => $row[1],
+                'agent_group' => $row[2],
+                'campaign' => $row[3],
+                'pause_code' => $row[4]
+            );
+        }
+
+        // HCI Agent Log Records
+        if ($SShopper_hold_inserts > 0) {
+            $stmt="SELECT call_date,lead_id,phone_number,user_ip,campaign_id from ".$vicidial_hci_log." where user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by call_date desc limit 10000;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $logs_to_print = mysqli_num_rows($rslt);
+            if ($DB > 0) {echo "|$logs_to_print|$stmt|";}
+
+            $u=0;
+            $hci_log_data = array();
+            while ($logs_to_print > $u) {
+                $row=mysqli_fetch_row($rslt);
+                $u++;
+                $hci_log_data[] = array(
+                    'num' => $u,
+                    'date' => $row[0],
+                    'lead_id' => $row[1],
+                    'phone' => $row[2],
+                    'user_ip' => $row[3],
+                    'campaign' => $row[4]
+                );
+            }
+        }
+    }
+
+    // Inbound Closer Calls
+    $stmt="SELECT call_date,length_in_sec,status,phone_number,campaign_id,queue_seconds,list_id,lead_id,term_reason,closecallid from ".$vicidial_closer_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' $query_call_status order by call_date desc limit 10000;";
+    if ($did > 0) {
+        $stmt="SELECT start_time,length_in_sec,0,caller_code,0,0,0,extension,0,0,uniqueid from ".$call_log_table." where channel_group='DID_INBOUND' and number_dialed='" . mysqli_real_escape_string($link, $user) . "' and start_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and start_time <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' order by start_time desc limit 10000;";
+    } else {
+        if ($firstlastname_display_user_stats > 0) {
+            $stmt="SELECT call_date,length_in_sec,vlog.status,vlog.phone_number,campaign_id,queue_seconds,vlog.list_id,vlog.lead_id,term_reason,closecallid,first_name,last_name from ".$vicidial_closer_log_table." vlog, vicidial_list vlist where vlog.user='" . mysqli_real_escape_string($link, $user) . "' and call_date >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and call_date <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' and vlog.lead_id=vlist.lead_id $VLquery_call_status order by call_date desc limit 10000;";
+        }
+    }
+    if ($DB) {$MAIN.="inbound calls|$stmt|";}
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+
+    $u=0;
+    $TOTALinSECONDS=0;
+    $TOTALagentSECONDS=0;
+    $inbound_calls_data = array();
+    while ($logs_to_print > $u) {
+        $row=mysqli_fetch_row($rslt);
+        if ($did > 0) {
+            if (strlen($row[7]) > 17) {
+                $row[7] = substr($row[7], -9);
+                $row[7] = ($row[7] + 0);
+            } else {
+                $row[7]='0';
+                $lead_id_stmt="select lead_id from vicidial_closer_log where uniqueid='$row[10]'";
+                $lead_id_rslt=mysql_to_mysqli($lead_id_stmt, $link);
+                if (mysqli_num_rows($lead_id_rslt)>0) {
+                    $lead_id_row=mysqli_fetch_row($lead_id_rslt);
+                    $row[7]=$lead_id_row[0];
+                }
+            }
+        }
+        $TOTALinSECONDS = ($TOTALinSECONDS + $row[1]);
+        $AGENTseconds = ($row[1] - $row[5]);
+        if ($AGENTseconds < 0) {$AGENTseconds=0;}
+        $TOTALagentSECONDS = ($TOTALagentSECONDS + $AGENTseconds);
+
+        if ($LOGadmin_hide_phone_data != '0') {
+            if ($DB > 0) {echo "HIDEPHONEDATA|$row[10]|$LOGadmin_hide_phone_data|\n";}
+            $phone_temp = $row[3];
+            if (strlen($phone_temp) > 0) {
+                if ($LOGadmin_hide_phone_data == '4_DIGITS') {
+                    $row[3] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);
+                } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
+                    $row[3] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);
+                } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
+                    $row[3] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);
+                } else {
+                    $row[3] = preg_replace("/./",'X',$phone_temp);
+                }
+            }
+        }
+
+        $u++;
+        $inbound_calls_data[] = array(
+            'num' => $u,
+            'date' => $row[0],
+            'length' => $row[1],
+            'status' => $row[2],
+            'phone' => $row[3],
+            'campaign' => $row[4],
+            'wait' => $row[5],
+            'agent' => $AGENTseconds,
+            'list' => $row[6],
+            'lead_id' => $row[7],
+            'name' => ($firstlastname_display_user_stats > 0) ? "$row[10] $row[11]" : '',
+            'term_reason' => $row[8]
+        );
+        if (strlen($query_call_status) > 5) {
+            $CS_vicidial_id_list .= "'$row[9]',";
+        }
+    }
+
+    // Recordings
+    $mute_column='';   $mute_column_csv='';
+    $agent_column='';   $agent_column_csv='';
+    $ANI_column='';   $ANI_column_csv='';
+    if ($SSmute_recordings > 0) {
+        $mute_column = "<td align=center><font size=2>"._QXZ("MUTE")." &nbsp; </td>";
+        $mute_column_csv = ",\""._QXZ("MUTE")."\"";
+    }
+    if ($NVAuser > 0) {
+        $agent_column = "<td align=center><font size=2>"._QXZ("AGENT")." &nbsp; </td>";
+        $agent_column_csv = ",\""._QXZ("AGENT")."\"";
+        $ANI_column = "<td align=center><font size=2>"._QXZ("ANI")." &nbsp; </td>";
+        $ANI_column_csv = ",\""._QXZ("ANI")."\"";
+    }
+
+    if (strlen($query_call_status) > 5) {
+        $CS_vicidial_id_list .= "'X'";
+        $CS_vicidial_id_list_SQL = "and vicidial_id IN($CS_vicidial_id_list)";
+    }
+
+    $stmt="SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from ".$recording_log_table." where user='" . mysqli_real_escape_string($link, $user) . "' and start_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01'  and start_time <= '" . mysqli_real_escape_string($link, $end_date) . " 23:59:59' $CS_vicidial_id_list_SQL order by recording_id desc limit 10000;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) {$MAIN.="agent activity|$stmt|";}
+
+    $u=0;
+    $recordings_data = array();
+    while ($logs_to_print > $u) {
+        $row=mysqli_fetch_row($rslt);
+        $location = $row[11];
+        $CSV_location=$row[11];
+        $vicidial_id=$row[14];
+
+        if (strlen($location)>2) {
+            $URLserver_ip = $location;
+            $URLserver_ip = preg_replace('/http:\/\//i', '',$URLserver_ip);
+            $URLserver_ip = preg_replace('/https:\/\//i', '',$URLserver_ip);
+            $URLserver_ip = preg_replace('/\/.*/i', '',$URLserver_ip);
+            $stmt="SELECT count(*) from servers where server_ip='$URLserver_ip';";
+            $rsltx=mysql_to_mysqli($stmt, $link);
+            $rowx=mysqli_fetch_row($rsltx);
+            
+            if ($rowx[0] > 0) {
+                $stmt="SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
+                $rsltx=mysql_to_mysqli($stmt, $link);
+                $rowx=mysqli_fetch_row($rsltx);
+                
+                if (preg_match("/ALT_IP/i",$rowx[0])) {
+                    $location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
+                }
+                if (preg_match("/EXTERNAL_IP/i",$rowx[0])) {
+                    $location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
+                }
+            }
+        }
+        if ($SSmute_recordings > 0) {
+            $mute_events=0;
+            $stmt="SELECT count(*) from ".$vicidial_agent_function_log." where user='" . mysqli_real_escape_string($link, $user) . "' and event_time >= '$row[4]' and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
+            $rsltx=mysql_to_mysqli($stmt, $link);
+            $flogs_to_print = mysqli_num_rows($rsltx);
+            if ($flogs_to_print > 0) {
+                $rowx=mysqli_fetch_row($rsltx);
+                $mute_events = $rowx[0];
+            }
+        }
+        if ($NVAuser > 0) {
+            $agent_user='';
+            $stmt="SELECT user from ".$vicidial_agent_log_table." where lead_id='$row[12]' and event_time <= '$row[4]'  and event_time >= '" . mysqli_real_escape_string($link, $begin_date) . " 0:00:01' order by event_time;";
+            $rsltx=mysql_to_mysqli($stmt, $link);
+            $valogs_to_print = mysqli_num_rows($rsltx);
+            if ($valogs_to_print > 0) {
+                $rowx=mysqli_fetch_row($rsltx);
+                $agent_user = $rowx[0];
+            }
+
+            $ANI='';
+            $ANI_stmt="SELECT caller_code from call_log where uniqueid='$vicidial_id' order by start_time;";
+            $ANI_rslt=mysql_to_mysqli($ANI_stmt, $link);
+            $ANI_logs_to_print = mysqli_num_rows($ANI_rslt);
+            if ($ANI_logs_to_print > 0) {
+                $ANI_row=mysqli_fetch_row($ANI_rslt);
+                $ANI = $ANI_row[0];
+            }
+        }
+
+        if (strlen($location)>30) {
+            $locat = substr($location,0,27);  $locat = "$locat...";
+        } else {
+            $locat = $location;
+        }
+        if ( (preg_match('/ftp/i',$location)) or (preg_match('/http/i',$location)) ) {
+            if ($log_recording_access<1) {
+                $location = "<a href=\"$location\">$locat</a>";
+            } else {
+                $location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=$search_archived_data\">$locat</a>";
+            }
+        } else {
+            $location = $locat;
+        }
+        $u++;
+        $recordings_data[] = array(
+            'num' => $u,
+            'agent_user' => ($NVAuser > 0) ? $agent_user : '',
+            'lead_id' => $row[12],
+            'ANI' => ($NVAuser > 0) ? $ANI : '',
+            'date' => $row[4],
+            'seconds' => $row[8],
+            'recid' => $row[0],
+            'filename' => $row[10],
+            'location' => $location,
+            'mute_events' => ($SSmute_recordings > 0) ? $mute_events : ''
+        );
+    }
+}
+
+// Generate HTML output
  $HTML = "<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -883,7 +1731,7 @@ if ($did > 0)
 </head>
 <body>";
 
-// Generate the modern UI
+// Generate the HTML structure
  $HTML .= "
     <div class='container'>
         <header>
@@ -943,205 +1791,1065 @@ if ($did > 0)
                     </div>
                 </form>
             </div>
-        </div>
-        
+        </div>";
+
+// Display pause code report if selected
+if ($pause_code_rpt >= 1) {
+    $HTML .= "
+        <div class='card mb-20'>
+            <div class='card-header'>
+                <div class='card-title'>"._QXZ("Agent Pause Logs")."</div>
+                <div>
+                    <a href='$download_link&file_download=11' class='btn btn-secondary'>
+                        <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                    </a>
+                </div>
+            </div>
+            <div class='card-body'>
+                <div class='table-container'>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>"._QXZ("EVENT TIME")."</th>
+                                <th>"._QXZ("CAMPAIGN ID")."</th>
+                                <th>"._QXZ("USER GROUP")."</th>
+                                <th>"._QXZ("PAUSE CODE")."</th>
+                                <th>"._QXZ("PAUSE LENGTH (HH:MM:SS)")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+    
+    foreach ($pause_logs as $pause_row) {
+        $HTML .= "
+                            <tr>
+                                <td>$pause_row[event_time]</td>
+                                <td>$pause_row[campaign_id]</td>
+                                <td>$pause_row[user_group]</td>
+                                <td>$pause_row[sub_status]</td>
+                                <td>$pause_row[pause_length]</td>
+                            </tr>";
+    }
+    
+    $HTML .= "
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan='4' class='text-right'><strong>"._QXZ("TOTAL").":</strong></td>
+                                <td>$total_pause_time_formatted</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class='mt-20'>
+                    <a href='user_stats.php?DB=$DB&user=$user&begin_date=$begin_date&end_date=$end_date' class='btn btn-primary'>
+                        "._QXZ("VIEW USER STATS")."
+                    </a>
+                </div>
+            </div>
+        </div>";
+}
+// Display park report if selected
+elseif ($park_rpt >= 1) {
+    $HTML .= "
+        <div class='card mb-20'>
+            <div class='card-header'>
+                <div class='card-title'>"._QXZ("Agent Parked Call Logs")."</div>
+                <div>
+                    <a href='$download_link&file_download=12' class='btn btn-secondary'>
+                        <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                    </a>
+                </div>
+            </div>
+            <div class='card-body'>
+                <div class='table-container'>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>"._QXZ("PARKED TIME")."</th>
+                                <th>"._QXZ("STATUS")."</th>
+                                <th>"._QXZ("LEAD ID")."</th>
+                                <th>"._QXZ("PARKED SEC")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+    
+    foreach ($park_logs as $park_row) {
+        $HTML .= "
+                            <tr>
+                                <td>$park_row[parked_time]</td>
+                                <td>$park_row[status]</td>
+                                <td><a href='admin_modify_lead.php?lead_id=$park_row[lead_id]' target='_blank'>$park_row[lead_id]</a></td>
+                                <td>$park_row[parked_sec]</td>
+                            </tr>";
+    }
+    
+    $HTML .= "
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan='3' class='text-right'><strong>"._QXZ("TOTAL").":</strong></td>
+                                <td>$total_park_time_formatted</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class='mt-20'>
+                    <a href='user_stats.php?DB=$DB&user=$user&begin_date=$begin_date&end_date=$end_date' class='btn btn-primary'>
+                        "._QXZ("VIEW USER STATS")."
+                    </a>
+                </div>
+            </div>
+        </div>";
+}
+// Display regular reports
+else {
+    $HTML .= "
         <div class='layout'>
             <div class='sidebar'>
                 <ul class='sidebar-menu'>
                     <li><a href='#talk-time' class='active'>"._QXZ("Talk Time & Status")."</a></li>
                     <li><a href='#login-logout'>"._QXZ("Login/Logout Time")."</a></li>
                     <li><a href='#timeclock'>"._QXZ("Timeclock")."</a></li>
+                    <li><a href='#closer-groups'>"._QXZ("Closer Groups")."</a></li>
                     <li><a href='#outbound-calls'>"._QXZ("Outbound Calls")."</a></li>
                     <li><a href='#inbound-calls'>"._QXZ("Inbound Calls")."</a></li>
                     <li><a href='#agent-activity'>"._QXZ("Agent Activity")."</a></li>
                     <li><a href='#recordings'>"._QXZ("Recordings")."</a></li>
                     <li><a href='#manual-calls'>"._QXZ("Manual Calls")."</a></li>
                     <li><a href='#lead-searches'>"._QXZ("Lead Searches")."</a></li>
+                    <li><a href='#preview-skips'>"._QXZ("Preview Skips")."</a></li>
+                    <li><a href='#lead-switches'>"._QXZ("Lead Switches")."</a></li>
+                    <li><a href='#pause-approvals'>"._QXZ("Pause Approvals")."</a></li>";
+    
+    if ($SShopper_hold_inserts > 0) {
+        $HTML .= "
+                    <li><a href='#hci-logs'>"._QXZ("HCI Logs")."</a></li>";
+    }
+    
+    $HTML .= "
                 </ul>
             </div>
             
             <div class='main-content'>
-                <div class='tabs'>
-                    <div class='tab active' data-tab='overview'>"._QXZ("Overview")."</div>
-                    <div class='tab' data-tab='details'>"._QXZ("Details")."</div>
+                <div class='stats-grid'>
+                    <div class='stat-card'>
+                        <div class='stat-value'>$total_calls</div>
+                        <div class='stat-label'>"._QXZ("Total Calls")."</div>
+                    </div>
+                    <div class='stat-card'>
+                        <div class='stat-value'>$total_login_hours_minutes</div>
+                        <div class='stat-label'>"._QXZ("Total Login Time")."</div>
+                    </div>
+                    <div class='stat-card'>
+                        <div class='stat-value'>$call_hours_minutes</div>
+                        <div class='stat-label'>"._QXZ("Total Talk Time")."</div>
+                    </div>
+                    <div class='stat-card'>
+                        <div class='stat-value'>$TOTALinSECONDS</div>
+                        <div class='stat-label'>"._QXZ("Inbound Seconds")."</div>
+                    </div>
+                </div>";
+    
+    // Talk Time and Status
+    if ($did < 1) {
+        $HTML .= "
+                <div class='card mb-20' id='talk-time'>
+                    <div class='card-header'>
+                        <div class='card-title'>"._QXZ("Agent Talk Time and Status")."</div>
+                        <div>
+                            <a href='$download_link&file_download=1' class='btn btn-secondary'>
+                                <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                            </a>
+                        </div>
+                    </div>
+                    <div class='card-body'>
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>"._QXZ("STATUS")."</th>
+                                        <th>"._QXZ("COUNT")."</th>
+                                        <th>"._QXZ("HOURS:MM:SS")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+        
+        foreach ($talk_status_data as $status_data) {
+            $HTML .= "
+                                    <tr>
+                                        <td>$status_data[status]</td>
+                                        <td>$status_data[count]</td>
+                                        <td>$status_data[time]</td>
+                                    </tr>";
+        }
+        
+        $HTML .= "
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>"._QXZ("TOTAL CALLS")."</strong></td>
+                                        <td><strong>$total_calls</strong></td>
+                                        <td><strong>$call_hours_minutes</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>";
+        
+        // Login/Logout Time
+        $HTML .= "
+                <div class='card mb-20' id='login-logout'>
+                    <div class='card-header'>
+                        <div class='card-title'>"._QXZ("Agent Login and Logout Time")."</div>
+                        <div>
+                            <a href='$download_link&file_download=2' class='btn btn-secondary'>
+                                <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                            </a>
+                        </div>
+                    </div>
+                    <div class='card-body'>
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>"._QXZ("EVENT")."</th>
+                                        <th>"._QXZ("DATE")."</th>
+                                        <th>"._QXZ("CAMPAIGN")."</th>
+                                        <th>"._QXZ("GROUP")."</th>
+                                        <th>"._QXZ("SESSION")."</th>
+                                        <th>"._QXZ("SERVER")."</th>
+                                        <th>"._QXZ("PHONE")."</th>
+                                        <th>"._QXZ("COMPUTER")."</th>
+                                        <th>"._QXZ("PHONE LOGIN")."</th>
+                                        <th>"._QXZ("PHONE IP")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+        
+        foreach ($login_logout_data as $event) {
+            if ($event['type'] == 'login') {
+                $HTML .= "
+                                    <tr>
+                                        <td>$event[event]</td>
+                                        <td>$event[date]</td>
+                                        <td>$event[campaign]</td>
+                                        <td>$event[group]</td>
+                                        <td>$event[session]</td>
+                                        <td>$event[server]</td>
+                                        <td>$event[phone]</td>
+                                        <td>$event[computer]</td>
+                                        <td>$event[phone_login]</td>
+                                        <td>$event[phone_ip]</td>
+                                    </tr>";
+            } else {
+                $HTML .= "
+                                    <tr>
+                                        <td>$event[event]</td>
+                                        <td>$event[date]</td>
+                                        <td>$event[campaign]</td>
+                                        <td>$event[group]</td>
+                                        <td>$event[session_time]</td>
+                                        <td colspan='5'>$event[phone]</td>
+                                    </tr>";
+            }
+        }
+        
+        $HTML .= "
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>"._QXZ("TOTAL")."</strong></td>
+                                        <td colspan='4'></td>
+                                        <td><strong>$total_login_hours_minutes</strong></td>
+                                        <td colspan='4'></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>";
+        
+        // Timeclock
+        $HTML .= "
+                <div class='card mb-20' id='timeclock'>
+                    <div class='card-header'>
+                        <div class='card-title'>"._QXZ("Timeclock Login and Logout Time")."</div>
+                        <div>
+                            <a href='$download_link&file_download=3' class='btn btn-secondary'>
+                                <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                            </a>
+                        </div>
+                    </div>
+                    <div class='card-body'>
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>"._QXZ("ID")."</th>
+                                        <th>"._QXZ("EDIT")."</th>
+                                        <th>"._QXZ("EVENT")."</th>
+                                        <th>"._QXZ("DATE")."</th>
+                                        <th>"._QXZ("IP ADDRESS")."</th>
+                                        <th>"._QXZ("GROUP")."</th>
+                                        <th>"._QXZ("HOURS:MM:SS")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+        
+        foreach ($timeclock_data as $event) {
+            $HTML .= "
+                                    <tr>
+                                        <td><a href='timeclock_edit.php?timeclock_id=$event[id]'>$event[id]</a></td>
+                                        <td>$event[manager_edit]</td>
+                                        <td>$event[event]</td>
+                                        <td>$event[date]</td>
+                                        <td>$event[ip_address]</td>
+                                        <td>$event[group]</td>
+                                        <td>$event[session_time]</td>
+                                    </tr>";
+        }
+        
+        $HTML .= "
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan='5'></td>
+                                        <td><strong>"._QXZ("TOTAL")."</strong></td>
+                                        <td><strong>$total_login_hours_minutes</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>";
+        
+        // Closer In-Group Selection Logs
+        $HTML .= "
+                <div class='card mb-20' id='closer-groups'>
+                    <div class='card-header'>
+                        <div class='card-title'>"._QXZ("Closer In-Group Selection Logs")."</div>
+                        <div>
+                            <a href='$download_link&file_download=4' class='btn btn-secondary'>
+                                <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                            </a>
+                        </div>
+                    </div>
+                    <div class='card-body'>
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>"._QXZ("DATE/TIME")."</th>
+                                        <th>"._QXZ("CAMPAIGN")."</th>
+                                        <th>"._QXZ("BLEND")."</th>
+                                        <th>"._QXZ("GROUPS")."</th>
+                                        <th>"._QXZ("MANAGER")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+        
+        foreach ($closer_data as $row) {
+            $HTML .= "
+                                    <tr>
+                                        <td>$row[num]</td>
+                                        <td>$row[date]</td>
+                                        <td>$row[campaign]</td>
+                                        <td>$row[blend]</td>
+                                        <td>$row[groups]</td>
+                                        <td>$row[manager]</td>
+                                    </tr>";
+        }
+        
+        $HTML .= "
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>";
+        
+        // Outbound Calls
+        $HTML .= "
+                <div class='card mb-20' id='outbound-calls'>
+                    <div class='card-header'>
+                        <div class='card-title'>"._QXZ("Outbound Calls")."</div>
+                        <div>
+                            <a href='$download_link&file_download=5' class='btn btn-secondary'>
+                                <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                            </a>
+                        </div>
+                    </div>
+                    <div class='card-body'>
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>"._QXZ("DATE/TIME")."</th>
+                                        <th>"._QXZ("LENGTH")."</th>
+                                        <th>"._QXZ("STATUS")."</th>
+                                        <th>"._QXZ("PHONE")."</th>
+                                        <th>"._QXZ("CAMPAIGN")."</th>
+                                        <th>"._QXZ("GROUP")."</th>
+                                        <th>"._QXZ("LIST")."</th>
+                                        <th>"._QXZ("LEAD")."</th>";
+        
+        if ($firstlastname_display_user_stats > 0) {
+            $HTML .= "
+                                        <th>"._QXZ("NAME")."</th>";
+        }
+        
+        $HTML .= "
+                                        <th>"._QXZ("HANGUP REASON")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+        
+        foreach ($outbound_calls_data as $call) {
+            $HTML .= "
+                                    <tr>
+                                        <td>$call[num]</td>
+                                        <td>$call[date]</td>
+                                        <td>$call[length]</td>
+                                        <td>$call[status]</td>
+                                        <td>$call[phone]</td>
+                                        <td>$call[campaign]</td>
+                                        <td>$call[group]</td>
+                                        <td>$call[list]</td>
+                                        <td><a href='admin_modify_lead.php?lead_id=$call[lead_id]' target='_blank'>$call[lead_id]</a></td>";
+            
+            if ($firstlastname_display_user_stats > 0) {
+                $HTML .= "
+                                        <td>$call[name]</td>";
+            }
+            
+            $HTML .= "
+                                        <td>$call[term_reason]</td>
+                                    </tr>";
+        }
+        
+        $HTML .= "
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>";
+        
+        // Outbound Emails
+        if ($allow_emails > 0) {
+            $HTML .= "
+                <div class='card mb-20' id='outbound-emails'>
+                    <div class='card-header'>
+                        <div class='card-title'>"._QXZ("Outbound Emails")."</div>
+                        <div>
+                            <a href='$download_link&file_download=5' class='btn btn-secondary'>
+                                <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                            </a>
+                        </div>
+                    </div>
+                    <div class='card-body'>
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>"._QXZ("DATE/TIME")."</th>
+                                        <th>"._QXZ("CAMPAIGN")."</th>
+                                        <th>"._QXZ("EMAIL TO")."</th>
+                                        <th>"._QXZ("ATTACHMENTS")."</th>
+                                        <th>"._QXZ("LEAD")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+            
+            foreach ($outbound_emails_data as $email) {
+                $HTML .= "
+                                    <tr>
+                                        <td>$email[num]</td>
+                                        <td>$email[date]</td>
+                                        <td>$email[campaign]</td>
+                                        <td>$email[email_to]</td>
+                                        <td>$email[attachments]</td>
+                                        <td><a href='admin_modify_lead.php?lead_id=$email[lead_id]' target='_blank'>$email[lead_id]</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan='6'><em>"._QXZ("MESSAGE").": $email[message]</em></td>
+                                    </tr>";
+            }
+            
+            $HTML .= "
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>";
+        }
+    }
+    
+    // Inbound Calls
+    $HTML .= "
+            <div class='card mb-20' id='inbound-calls'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Inbound Closer Calls")."</div>
+                    <div>
+                        <a href='$download_link&file_download=6' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
                 </div>
-                
-                <div class='tab-content active' id='overview'>
-                    <div class='stats-grid'>
-                        <div class='stat-card'>
-                            <div class='stat-value'>$total_calls</div>
-                            <div class='stat-label'>"._QXZ("Total Calls")."</div>
-                        </div>
-                        <div class='stat-card'>
-                            <div class='stat-value'>$total_login_hours_minutes</div>
-                            <div class='stat-label'>"._QXZ("Total Login Time")."</div>
-                        </div>
-                        <div class='stat-card'>
-                            <div class='stat-value'>$call_hours_minutes</div>
-                            <div class='stat-label'>"._QXZ("Total Talk Time")."</div>
-                        </div>
-                        <div class='stat-card'>
-                            <div class='stat-value'>$TOTALinSECONDS</div>
-                            <div class='stat-label'>"._QXZ("Inbound Seconds")."</div>
-                        </div>
-                    </div>
-                    
-                    <div class='card mb-20'>
-                        <div class='card-header'>
-                            <div class='card-title'>"._QXZ("Agent Talk Time and Status")."</div>
-                            <div>
-                                <a href='$download_link&file_download=1' class='btn btn-secondary'>
-                                    <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
-                                </a>
-                            </div>
-                        </div>
-                        <div class='card-body'>
-                            <div class='table-container'>
-                                <table class='table'>
-                                    <thead>
-                                        <tr>
-                                            <th>"._QXZ("STATUS")."</th>
-                                            <th>"._QXZ("COUNT")."</th>
-                                            <th>"._QXZ("HOURS:MM:SS")."</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Agent Talk Time Data Here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class='tab-content' id='details'>
-                    <div class='card mb-20'>
-                        <div class='card-header'>
-                            <div class='card-title'>"._QXZ("Agent Login and Logout Time")."</div>
-                            <div>
-                                <a href='$download_link&file_download=2' class='btn btn-secondary'>
-                                    <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
-                                </a>
-                            </div>
-                        </div>
-                        <div class='card-body'>
-                            <div class='table-container'>
-                                <table class='table'>
-                                    <thead>
-                                        <tr>
-                                            <th>"._QXZ("EVENT")."</th>
-                                            <th>"._QXZ("DATE")."</th>
-                                            <th>"._QXZ("CAMPAIGN")."</th>
-                                            <th>"._QXZ("GROUP")."</th>
-                                            <th>"._QXZ("SESSION")."</th>
-                                            <th>"._QXZ("SERVER")."</th>
-                                            <th>"._QXZ("PHONE")."</th>
-                                            <th>"._QXZ("COMPUTER")."</th>
-                                            <th>"._QXZ("PHONE LOGIN")."</th>
-                                            <th>"._QXZ("PHONE IP")."</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Login/Logout Data Here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class='card mb-20'>
-                        <div class='card-header'>
-                            <div class='card-title'>"._QXZ("Outbound Calls")."</div>
-                            <div>
-                                <a href='$download_link&file_download=5' class='btn btn-secondary'>
-                                    <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
-                                </a>
-                            </div>
-                        </div>
-                        <div class='card-body'>
-                            <div class='table-container'>
-                                <table class='table'>
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>"._QXZ("DATE/TIME")."</th>
-                                            <th>"._QXZ("LENGTH")."</th>
-                                            <th>"._QXZ("STATUS")."</th>
-                                            <th>"._QXZ("PHONE")."</th>
-                                            <th>"._QXZ("CAMPAIGN")."</th>
-                                            <th>"._QXZ("GROUP")."</th>
-                                            <th>"._QXZ("LIST")."</th>
-                                            <th>"._QXZ("LEAD")."</th>
-                                            <th>"._QXZ("HANGUP REASON")."</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Outbound Calls Data Here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class='card mb-20'>
-                        <div class='card-header'>
-                            <div class='card-title'>"._QXZ("Inbound Calls")."</div>
-                            <div>
-                                <a href='$download_link&file_download=6' class='btn btn-secondary'>
-                                    <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
-                                </a>
-                            </div>
-                        </div>
-                        <div class='card-body'>
-                            <div class='table-container'>
-                                <table class='table'>
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>"._QXZ("DATE/TIME")."</th>
-                                            <th>"._QXZ("LENGTH")."</th>
-                                            <th>"._QXZ("STATUS")."</th>
-                                            <th>"._QXZ("PHONE")."</th>
-                                            <th>"._QXZ("IN-GROUP")."</th>
-                                            <th>"._QXZ("WAIT (S)")."</th>
-                                            <th>"._QXZ("AGENT (S)")."</th>
-                                            <th>"._QXZ("LIST")."</th>
-                                            <th>"._QXZ("LEAD")."</th>
-                                            <th>"._QXZ("HANGUP REASON")."</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Inbound Calls Data Here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("LENGTH")."</th>
+                                    <th>"._QXZ("STATUS")."</th>
+                                    <th>"._QXZ("PHONE")."</th>
+                                    <th>"._QXZ("IN-GROUP")."</th>
+                                    <th>"._QXZ("WAIT (S)")."</th>
+                                    <th>"._QXZ("AGENT (S)")."</th>
+                                    <th>"._QXZ("LIST")."</th>
+                                    <th>"._QXZ("LEAD")."</th>";
+    
+    if ($firstlastname_display_user_stats > 0) {
+        $HTML .= "
+                                    <th>"._QXZ("NAME")."</th>";
+    }
+    
+    $HTML .= "
+                                    <th>"._QXZ("HANGUP REASON")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+    
+    foreach ($inbound_calls_data as $call) {
+        $HTML .= "
+                                <tr>
+                                    <td>$call[num]</td>
+                                    <td>$call[date]</td>
+                                    <td>$call[length]</td>
+                                    <td>$call[status]</td>
+                                    <td>$call[phone]</td>
+                                    <td>$call[campaign]</td>
+                                    <td>$call[wait]</td>
+                                    <td>$call[agent]</td>
+                                    <td>$call[list]</td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$call[lead_id]' target='_blank'>$call[lead_id]</a></td>";
+        
+        if ($firstlastname_display_user_stats > 0) {
+            $HTML .= "
+                                    <td>$call[name]</td>";
+        }
+        
+        $HTML .= "
+                                    <td>$call[term_reason]</td>
+                                </tr>";
+    }
+    
+    $HTML .= "
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan='2'><strong>"._QXZ("TOTALS")."</strong></td>
+                                    <td><strong>$TOTALinSECONDS</strong></td>
+                                    <td colspan='4'></td>
+                                    <td><strong>$TOTALagentSECONDS</strong></td>
+                                    <td colspan='";
+    
+    if ($firstlastname_display_user_stats > 0) {
+        $HTML .= "3";
+    } else {
+        $HTML .= "2";
+    }
+    
+    $HTML .= "'></td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
+            </div>";
+    
+    // Agent Activity
+    if ($did < 1) {
+        $HTML .= "
+            <div class='card mb-20' id='agent-activity'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Agent Activity")."</div>
+                    <div>
+                        <a href='$download_link&file_download=7' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("PAUSE")."</th>
+                                    <th>"._QXZ("WAIT")."</th>
+                                    <th>"._QXZ("TALK")."</th>
+                                    <th>"._QXZ("DISPO")."</th>
+                                    <th>"._QXZ("DEAD")."</th>
+                                    <th>"._QXZ("CUSTOMER")."</th>
+                                    <th>"._QXZ("VISIBLE")."</th>
+                                    <th>"._QXZ("HIDDEN")."</th>
+                                    <th>"._QXZ("STATUS")."</th>
+                                    <th>"._QXZ("LEAD")."</th>
+                                    <th>"._QXZ("TYPE")."</th>
+                                    <th>"._QXZ("CAMPAIGN")."</th>
+                                    <th>"._QXZ("PAUSE CODE")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+        
+        foreach ($agent_activity_data as $activity) {
+            $HTML .= "
+                                <tr>
+                                    <td>$activity[num]</td>
+                                    <td>$activity[event_time]</td>
+                                    <td>$activity[pause_sec]</td>
+                                    <td>$activity[wait_sec]</td>
+                                    <td>$activity[talk_sec]</td>
+                                    <td>$activity[dispo_sec]</td>
+                                    <td>$activity[dead_sec]</td>
+                                    <td>$activity[customer_sec]</td>
+                                    <td>$activity[visible_sec]</td>
+                                    <td>$activity[hidden_sec]</td>
+                                    <td>$activity[status]</td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$activity[lead_id]' target='_blank'>$activity[lead_id]</a></td>
+                                    <td>$activity[call_type]</td>
+                                    <td>$activity[campaign]</td>
+                                    <td>$activity[pause_code]</td>
+                                </tr>";
+        }
+        
+        $HTML .= "
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan='2'><strong>"._QXZ("TOTALS")."</strong></td>
+                                    <td><strong>$TOTALpauseSECONDS</strong></td>
+                                    <td><strong>$TOTALwaitSECONDS</strong></td>
+                                    <td><strong>$TOTALtalkSECONDS</strong></td>
+                                    <td><strong>$TOTALdispoSECONDS</strong></td>
+                                    <td><strong>$TOTALdeadSECONDS</strong></td>
+                                    <td><strong>$TOTALcustomerSECONDS</strong></td>
+                                    <td><strong>$TOT_VISIBLE</strong></td>
+                                    <td><strong>$TOT_HIDDEN</strong></td>
+                                    <td colspan='5'></td>
+                                </tr>
+                                <tr>
+                                    <td colspan='2'><em>("._QXZ("in HH:MM:SS").")</em></td>
+                                    <td><em>$TOTALpauseSECONDShh</em></td>
+                                    <td><em>$TOTALwaitSECONDShh</em></td>
+                                    <td><em>$TOTALtalkSECONDShh</em></td>
+                                    <td><em>$TOTALdispoSECONDShh</em></td>
+                                    <td><em>$TOTALdeadSECONDShh</em></td>
+                                    <td><em>$TOTALcustomerSECONDShh</em></td>
+                                    <td><em>$TOTALvisibleSECONDShh</em></td>
+                                    <td><em>$TOTALhiddenSECONDShh</em></td>
+                                    <td colspan='5'></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        
+        // Manual Calls
+        $HTML .= "
+            <div class='card mb-20' id='manual-calls'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Manual Outbound Calls")."</div>
+                    <div>
+                        <a href='$download_link&file_download=9' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("CALL TYPE")."</th>
+                                    <th>"._QXZ("SERVER")."</th>
+                                    <th>"._QXZ("PHONE")."</th>
+                                    <th>"._QXZ("DIALED")."</th>
+                                    <th>"._QXZ("LEAD")."</th>
+                                    <th>"._QXZ("CALLERID")."</th>
+                                    <th>"._QXZ("ALIAS")."</th>
+                                    <th>"._QXZ("PRESET")."</th>
+                                    <th>"._QXZ("C3HU")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+        
+        foreach ($manual_calls_data as $call) {
+            $HTML .= "
+                                <tr>
+                                    <td>$call[num]</td>
+                                    <td>$call[date]</td>
+                                    <td>$call[call_type]</td>
+                                    <td>$call[server]</td>
+                                    <td>$call[phone]</td>
+                                    <td>$call[dialed]</td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$call[lead_id]' target='_blank'>$call[lead_id]</a></td>
+                                    <td>$call[callerid]</td>
+                                    <td>$call[alias]</td>
+                                    <td>$call[preset]</td>
+                                    <td>$call[c3hu]</td>
+                                </tr>";
+        }
+        
+        $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        
+        // Lead Searches
+        $HTML .= "
+            <div class='card mb-20' id='lead-searches'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Lead Searches")."</div>
+                    <div>
+                        <a href='$download_link&file_download=10' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("TYPE")."</th>
+                                    <th>"._QXZ("RESULTS")."</th>
+                                    <th>"._QXZ("SEC")."</th>
+                                    <th>"._QXZ("QUERY")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+        
+        foreach ($lead_searches_data as $search) {
+            $HTML .= "
+                                <tr>
+                                    <td>$search[num]</td>
+                                    <td>$search[date]</td>
+                                    <td>$search[source]</td>
+                                    <td>$search[results]</td>
+                                    <td>$search[seconds]</td>
+                                    <td>$search[query]</td>
+                                </tr>";
+        }
+        
+        $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        
+        // Preview Lead Skips
+        $HTML .= "
+            <div class='card mb-20' id='preview-skips'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Preview Lead Skips")."</div>
+                    <div>
+                        <a href='$download_link&file_download=11' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("LEAD ID")."</th>
+                                    <th>"._QXZ("STATUS")."</th>
+                                    <th>"._QXZ("COUNT")."</th>
+                                    <th>"._QXZ("CAMPAIGN")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+        
+        foreach ($preview_skips_data as $skip) {
+            $HTML .= "
+                                <tr>
+                                    <td>$skip[num]</td>
+                                    <td>$skip[date]</td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$skip[lead_id]' target='_blank'>$skip[lead_id]</a></td>
+                                    <td>$skip[status]</td>
+                                    <td>$skip[count]</td>
+                                    <td>$skip[campaign]</td>
+                                </tr>";
+        }
+        
+        $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        
+        // Agent Lead Switches
+        $HTML .= "
+            <div class='card mb-20' id='lead-switches'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Agent Lead Switches")."</div>
+                    <div>
+                        <a href='$download_link&file_download=13' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("FROM LEAD ID")."</th>
+                                    <th>"._QXZ("TO LEAD ID")."</th>
+                                    <th>"._QXZ("CALL ID")."</th>
+                                    <th>"._QXZ("UNIQUEID")."</th>
+                                    <th>"._QXZ("PHONE")."</th>
+                                    <th>"._QXZ("CAMPAIGN")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+        
+        foreach ($lead_switches_data as $switch) {
+            $HTML .= "
+                                <tr>
+                                    <td>$switch[num]</td>
+                                    <td>$switch[date]</td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$switch[from_lead_id]' target='_blank'>$switch[from_lead_id]</a></td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$switch[to_lead_id]' target='_blank'>$switch[to_lead_id]</a></td>
+                                    <td>$switch[call_id]</td>
+                                    <td>$switch[uniqueid]</td>
+                                    <td>$switch[phone]</td>
+                                    <td>$switch[campaign]</td>
+                                </tr>";
+        }
+        
+        $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        
+        // Manager Pause Code Approvals
+        $HTML .= "
+            <div class='card mb-20' id='pause-approvals'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Manager Pause Code Approvals")."</div>
+                    <div>
+                        <a href='$download_link&file_download=14' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("AGENT")."</th>
+                                    <th>"._QXZ("AGENT USER GROUP")."</th>
+                                    <th>"._QXZ("CAMPAIGN")."</th>
+                                    <th>"._QXZ("PAUSE CODE")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+        
+        foreach ($pause_approvals_data as $approval) {
+            $HTML .= "
+                                <tr>
+                                    <td>$approval[num]</td>
+                                    <td>$approval[date]</td>
+                                    <td><a href='$PHP_SELF?user=$approval[agent]' target='_blank'>$approval[agent]</a></td>
+                                    <td>$approval[agent_group]</td>
+                                    <td>$approval[campaign]</td>
+                                    <td>$approval[pause_code]</td>
+                                </tr>";
+        }
+        
+        $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        
+        // HCI Agent Log Records
+        if ($SShopper_hold_inserts > 0) {
+            $HTML .= "
+            <div class='card mb-20' id='hci-logs'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("HCI Agent Log Records")."</div>
+                    <div>
+                        <a href='$download_link&file_download=16' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("LEAD ID")."</th>
+                                    <th>"._QXZ("PHONE")."</th>
+                                    <th>"._QXZ("CALL DATE")."</th>
+                                    <th>"._QXZ("CAMPAIGN")."</th>
+                                    <th>"._QXZ("USER IP")."</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+            
+            foreach ($hci_log_data as $log) {
+                $HTML .= "
+                                <tr>
+                                    <td>$log[num]</td>
+                                    <td>$log[date]</td>
+                                    <td><a href='admin_modify_lead.php?lead_id=$log[lead_id]' target='_blank'>$log[lead_id]</a></td>
+                                    <td>$log[phone]</td>
+                                    <td>$log[date]</td>
+                                    <td>$log[campaign]</td>
+                                    <td>$log[user_ip]</td>
+                                </tr>";
+            }
+            
+            $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+        }
+    }
+    
+    // Recordings
+    $HTML .= "
+            <div class='card mb-20' id='recordings'>
+                <div class='card-header'>
+                    <div class='card-title'>"._QXZ("Recordings")."</div>
+                    <div>
+                        <a href='$download_link&file_download=8' class='btn btn-secondary'>
+                            <i class='fas fa-download'></i> "._QXZ("DOWNLOAD")."
+                        </a>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='table-container'>
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>";
+    
+    if ($NVAuser > 0) {
+        $HTML .= "
+                                    <th>"._QXZ("AGENT")."</th>";
+    }
+    
+    $HTML .= "
+                                    <th>"._QXZ("LEAD")."</th>";
+    
+    if ($NVAuser > 0) {
+        $HTML .= "
+                                    <th>"._QXZ("ANI")."</th>";
+    }
+    
+    $HTML .= "
+                                    <th>"._QXZ("DATE/TIME")."</th>
+                                    <th>"._QXZ("SECONDS")."</th>
+                                    <th>"._QXZ("RECID")."</th>
+                                    <th>"._QXZ("FILENAME")."</th>
+                                    <th>"._QXZ("LOCATION")."</th>";
+    
+    if ($SSmute_recordings > 0) {
+        $HTML .= "
+                                    <th>"._QXZ("MUTE")."</th>";
+    }
+    
+    $HTML .= "
+                                </tr>
+                            </thead>
+                            <tbody>";
+    
+    foreach ($recordings_data as $recording) {
+        $HTML .= "
+                                <tr>
+                                    <td>$recording[num]</td>";
+        
+        if ($NVAuser > 0) {
+            $HTML .= "
+                                    <td>$recording[agent_user]</td>";
+        }
+        
+        $HTML .= "
+                                    <td><a href='admin_modify_lead.php?lead_id=$recording[lead_id]' target='_blank'>$recording[lead_id]</a></td>";
+        
+        if ($NVAuser > 0) {
+            $HTML .= "
+                                    <td>$recording[ANI]</td>";
+        }
+        
+        $HTML .= "
+                                    <td>$recording[date]</td>
+                                    <td>$recording[seconds]</td>
+                                    <td>$recording[recid]</td>
+                                    <td>$recording[filename]</td>
+                                    <td>$recording[location]</td>";
+        
+        if ($SSmute_recordings > 0) {
+            $HTML .= "
+                                    <td>$recording[mute_events]</td>";
+        }
+        
+        $HTML .= "
+                                </tr>";
+    }
+    
+    $HTML .= "
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>";
+    
+    $HTML .= "
             </div>
         </div>
-    </div>
-    
+    </div>";
+}
+
+ $HTML .= "
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tab functionality
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // Remove active class from all tabs and contents
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(tc => tc.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    this.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-            
             // Sidebar menu functionality
             const menuLinks = document.querySelectorAll('.sidebar-menu a');
             
@@ -1161,19 +2869,10 @@ if ($did > 0)
                     
                     if (targetElement) {
                         targetElement.scrollIntoView({
-                            behavior: 'smooth'
+                            behavior: 'smooth',
+                            block: 'start'
                         });
                     }
-                });
-            });
-            
-            // Calendar functionality (if needed)
-            const dateInputs = document.querySelectorAll('input[name=\"begin_date\"], input[name=\"end_date\"]');
-            
-            dateInputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    // Initialize calendar if needed
-                    // This would require integration with your calendar library
                 });
             });
         });
@@ -1181,46 +2880,64 @@ if ($did > 0)
 </body>
 </html>";
 
-// Rest of your PHP code continues here...
+ $ENDtime = date("U");
+ $RUNtime = ($ENDtime - $STARTtime);
 
-// The rest of your code remains the same, but you would need to populate the tables
-// with the data from your database queries. I've included placeholders above.
+// Generate CSV data for downloads
+ $CSV_text1 = "\""._QXZ("Agent Talk Time and Status")."\"\n";
+ $CSV_text1 .= "\"\",\""._QXZ("STATUS")."\",\""._QXZ("COUNT")."\",\""._QXZ("HOURS:MM:SS")."\"\n";
 
-if ($file_download>0) 
-    {
+foreach ($talk_status_data as $status_data) {
+    $CSV_text1 .= "\"\",\"$status_data[status]\",\"$status_data[count]\",\"$status_data[time]\"\n";
+}
+ $CSV_text1 .= "\"\",\""._QXZ("TOTAL CALLS")."\",\"$total_calls\",\"$call_hours_minutes\"\n";
+
+ $CSV_text2 = "\""._QXZ("Agent Login and Logout Time")."\"\n";
+ $CSV_text2 .= "\"\",\""._QXZ("EVENT")."\",\""._QXZ("DATE")."\",\""._QXZ("CAMPAIGN")."\",\""._QXZ("GROUP")."\",\""._QXZ("SESSION")."\",\""._QXZ("SERVER")."\",\""._QXZ("PHONE")."\",\""._QXZ("COMPUTER")."\",\""._QXZ("PHONE LOGIN")."\",\""._QXZ("PHONE IP")."\"\n";
+
+foreach ($login_logout_data as $event) {
+    if ($event['type'] == 'login') {
+        $CSV_text2 .= "\"\",\"$event[event]\",\"$event[date]\",\"$event[campaign]\",\"$event[group]\",\"\",\"$event[session]\",\"$event[server]\",\"$event[phone]\",\"$event[computer]\",\"$event[phone_login]\",\"$event[phone_ip]\"\n";
+    } else {
+        $CSV_text2 .= "\"\",\"$event[event]\",\"$event[date]\",\"$event[campaign]\",\"$event[group]\",\"$event[session_time]\"\n";
+    }
+}
+ $CSV_text2 .= "\"\",\""._QXZ("TOTAL")."\",\"\",\"\",\"\",\"\",\"$total_login_hours_minutes\"\n";
+
+// Generate more CSV data for other sections as needed...
+
+if ($file_download>0) {
     $FILE_TIME = date("Ymd-His");
-    $CSVfilename = "user_stats_$US$FILE_TIME.csv";
+    $CSVfilename = "user_stats_$user" . "_$FILE_TIME.csv";
     $CSV_var="CSV_text".$file_download;
     $CSV_text=preg_replace('/^\s+/', '', $$CSV_var);
     $CSV_text=preg_replace('/\n\s+,/', ',', $CSV_text);
     $CSV_text=preg_replace('/ +\"/', '"', $CSV_text);
     $CSV_text=preg_replace('/\" +/', '"', $CSV_text);
-    // We'll be outputting a TXT file
+    
+    // We'll be outputting a CSV file
     header('Content-type: application/octet-stream');
-
-    // It will be called LIST_101_20090209-121212.txt
+    
+    // It will be called user_stats_YYYYMMDD-HHMMSS.csv
     header("Content-Disposition: attachment; filename=\"$CSVfilename\"");
     header('Expires: 0');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     ob_clean();
     flush();
-
+    
     echo "$CSV_text";
-    }
-else
-    {
+} else {
     header ("Content-type: text/html; charset=utf-8");
     echo $HTML;
-    }
+}
 
-if ($db_source == 'S')
-    {
+if ($db_source == 'S') {
     mysqli_close($link);
     $use_slave_server=0;
     $db_source = 'M';
     require("dbconnect_mysqli.php");
-    }
+}
 
  $endMS = microtime();
  $startMSary = explode(" ",$startMS);
@@ -1229,7 +2946,7 @@ if ($db_source == 'S')
  $runM = ($endMSary[1] - $startMSary[1]);
  $TOTALrun = ($runS + $runM);
 
- $stmt="UPDATE vicidial_report_log set run_time='$TOTALrun' where report_log_id='$report_log_id';";
+ $stmt="UPDATE vicidial_report_log set run_time='$TOTALrun' where report_log_id='$report_log_id;";
 if ($DB) {echo "|$stmt|\n";}
  $rslt=mysql_to_mysqli($stmt, $link);
 
