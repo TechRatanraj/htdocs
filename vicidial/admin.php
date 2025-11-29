@@ -34971,16 +34971,16 @@ if ($SUB==27)
 	
 if ($SUB == '20A') {
     echo "<div style='max-width: 1200px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>";
-    echo "<div style='background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); border-radius: 12px 12px 0 0; padding: 25px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>";
-    echo "<h1 style='color: white; font-size: 24px; margin: 0; font-weight: 600;'>" . _QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN") . "</h1>";
-    echo "<p style='color: rgba(255,255,255,0.8); margin: 8px 0 0 0; font-size: 14px;'>Configure how your survey system interacts with customers</p>";
+    echo "<div style='background-color: #ffffff; border-radius: 12px 12px 0 0; padding: 25px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e1e8ed; border-bottom: none;'>";
+    echo "<h1 style='color: #2c3e50; font-size: 24px; margin: 0; font-weight: 600;'>" . _QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN") . "</h1>";
+    echo "<p style='color: #64748b; margin: 8px 0 0 0; font-size: 14px;'>Configure how your survey system interacts with customers</p>";
     echo "</div>";
     
     echo "<form action='$PHP_SELF' method='POST' name='admin_form' id='admin_form'>";
     echo "<input type='hidden' name='ADD' value='40A'>";
     echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
     
-    echo "<div style='background-color: #ffffff; border-radius: 0 0 12px 12px; padding: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>";
+    echo "<div style='background-color: #ffffff; border-radius: 0 0 12px 12px; padding: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e1e8ed; border-top: none;'>";
     
     // Basic Survey Settings Section
     echo "<div style='padding: 25px 30px; border-bottom: 1px solid #eef2f7;'>";
@@ -35267,7 +35267,7 @@ if ($SUB == '20A') {
     
     // Submit Button
     echo "<div style='padding: 20px 30px; background-color: #f8f9fa; border-radius: 0 0 12px 12px; display: flex; justify-content: flex-end;'>";
-    echo "<button type='submit' name='submit' value='" . _QXZ("SUBMIT") . "' style='background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(106, 17, 203, 0.4)';\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(106, 17, 203, 0.3)';\">" . _QXZ("SUBMIT") . "</button>";
+    echo "<button type='submit' name='submit' value='" . _QXZ("SUBMIT") . "' style='background-color: #28a745; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);' onmouseover=\"this.style.backgroundColor='#218838'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';\" onmouseout=\"this.style.backgroundColor='#28a745'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';\">" . _QXZ("SUBMIT") . "</button>";
     echo "</div>";
     
     echo "</div>";
