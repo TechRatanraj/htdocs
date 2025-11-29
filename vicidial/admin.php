@@ -35349,100 +35349,105 @@ if ($SUB == '20A') {
 	##### CAMPAIGN AREACODE CID #####
 
 if ($SUB==202) {
-    $checkbox_list = '';
-    $checkbox_count = 0;
+    echo "<div style='font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px;'>";
     
-    echo "<div style='font-family: var(--font-family); max-width: 1000px; margin: 0 auto; padding: 20px;'>";
-    
-    // Header Card
-    echo "<div style='background-color: white; border-radius: var(--border-radius-lg); box-shadow: var(--box-shadow); margin-bottom: 24px; overflow: hidden;'>";
-    echo "<div style='background-color: var(--primary-color); color: white; padding: 16px 20px; border-radius: var(--border-radius); display: flex; align-items: center; gap: 10px;'>";
-    echo "<i style='font-size: 24px;'>📞</i>";
-    echo "<span style='font-size: var(--font-size-xl); font-weight: var(--font-weight-bold);'>"._QXZ("AREACODE CIDS FOR THIS CAMPAIGN")."</span>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='padding: 24px;'>";
-    
-    // Campaign Selection
-    echo "<div style='margin-bottom: 20px;'>";
-    echo "<h3 style='font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--primary-color); margin-bottom: 12px; border-bottom: 1px solid var(--gray-light); padding-bottom: 8px;'>"._QXZ("Select Campaign")."</h3>";
-    echo "<select id='campaign-select' name='groups[]' multiple style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); background-color: white; transition: var(--transition);'>";
-    
-    $stmt = "SELECT campaign_id, campaign_name FROM vicidial_campaigns WHERE active='Y' ORDER BY campaign_name";
-    $rslt = mysql_to_mysqli($stmt, $link);
-    $campaigns_to_print = mysqli_num_rows($rslt);
-    
-    while ($campaigns_to_print > 0) {
-        $row = mysqli_fetch_row($rslt);
-        $selected = (preg_match("/\|$row[0]\|/", $group_string)) ? "selected" : "";
-        echo "<option value='$row[0]' $selected>"._QXZ("$row[1]")." - "._QXZ("$row[2]")."</option>";
-        $campaigns_to_print--;
-    }
-    
-    echo "</select>";
-    echo "<p style='font-size: var(--font-size-sm); color: var(--gray-color); margin-top: 8px; font-style: italic;'>"._QXZ("To select more than 1 campaign, hold down the Ctrl key and click")."</p>";
+    // Header with modern styling
+    echo "<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>";
+    echo "<h2 style='font-size: 24px; font-weight: 700; color: #2c3e50; margin: 0; display: flex; align-items: center; gap: 10px;'>";
+    echo "<i style='font-size: 28px; margin-right: 10px;'>📞</i>";
+    echo "<span style='font-weight:700;'>"._QXZ("AREACODE CIDS FOR THIS CAMPAIGN")."</span>";
+    echo "</h2>";
     echo "</div>";
     
     // Form for adding new area code
-    echo "<div style='display: flex; gap: 20px; margin-bottom: 20px; align-items: flex-end;'>";
+    echo "<div style='display: flex; gap: 20px; margin-bottom: 24px;'>";
+    
     echo "<div style='flex: 1;'>";
-    echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Add New Area Code")."</label>";
-    echo "<input type='text' id='new_areacode' name='areacode' maxlength='5' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);' placeholder='"._QXZ("Enter area code")."'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("Area Code")."</label>";
+    echo "<input type='text' id='new_areacode' name='areacode' maxlength='5' style='width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 16px; transition: all 0.3s ease;'>";
     echo "</div>";
     echo "</div>";
     
     echo "<div style='flex: 1;'>";
-    echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Outbound CID")."</label>";
-    echo "<input type='text' id='new_outbound_cid' name='outbound_cid' maxlength='20' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);' placeholder='"._QXZ("Enter outbound CID")."'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("Outbound CID")."</label>";
+    echo "<input type='text' id='new_outbound_cid' maxlength='20' style='width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 16px; transition: all 0.3s ease;'>";
     echo "</div>";
     echo "</div>";
     
     echo "<div style='flex: 1;'>";
-    echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("ID Description")."</label>";
-    echo "<input type='text' id='new_id_description' name='id_description' maxlength='100' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);' placeholder='"._QXZ("Enter description")."'>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='flex: 1;'>";
-    echo "<label style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Active")."</label>";
-    echo "<select id='new_active' name='active' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("Active")."</label>";
+    echo "<select id='new_active' name='active' style='width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 16px; transition: all 0.3s ease;'>";
     echo "<option value='Y'>"._QXZ("Yes")."</option>";
     echo "<option value='N'>"._QXZ("No")."</option>";
     echo "</select>";
     echo "</div>";
+    echo "</div>";
     
     echo "<div style='flex: 1;'>";
-    echo "<button type='submit' id='add-areacode' style='background-color: var(--primary-color); color: white; border: none; border-radius: var(--border-radius); padding: 10px 20px; font-size: var(--font-size-base); font-weight: var(--font-weight-medium); cursor: pointer; transition: var(--transition);'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("ID Description")."</label>";
+    echo "<textarea id='new_id_description' name='id_description' rows='3' style='width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; transition: all 0.3s ease; resize: vertical-align: middle;'>";
+    echo "</textarea>";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='flex: 1;'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("Active")."</label>";
+    echo "<select id='new_active' name='active' style='width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 16px; transition: all 0.3s ease;'>";
+    echo "<option value='Y'>"._QXZ("Yes")."</option>";
+    echo "<option value='N'>"._QXZ("No")."</option>";
+    echo "</select>";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='flex: 1;'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("ID Description")."</label>";
+    echo "<textarea id='new_id_description' rows='3' style='width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; transition: all 0.3s ease; resize: vertical-align: middle;'>";
+    echo "</textarea>";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div style='flex: 1;'>";
+    echo "<div style='margin-bottom: 8px;'>";
+    echo "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #495057;'>"._QXZ("Actions")."</label>";
+    echo "<div style='display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;'>";
+    echo "<button type='submit' id='add-areacode' style='background-color: #4361ee; color: white; border: none; border-radius: 6px; padding: 10px 20px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2);'>";
     echo "<i style='margin-right: 8px;'>➕</i>";
-    echo "<span>"._QXZ("Add Area Code")."</span>";
+    echo "<span style='margin-right: 8px;'>"._QXZ("Add Area Code")."</span>";
     echo "</button>";
+    echo "</div>";
     echo "</div>";
     echo "</div>";
     echo "</div>";
     
     // Existing area codes table
     echo "<div style='margin-bottom: 24px;'>";
-    echo "<h3 style='font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--primary-color); margin-bottom: 12px; border-bottom: 1px solid var(--gray-light); padding-bottom: 8px;'>"._QXZ("Existing Area Codes")."</h3>";
+    echo "<h3 style='font-size: 18px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;'>"._QXZ("Existing Area Codes")."</h3>";
     
     echo "<div style='overflow-x: auto;'>";
-    echo "<table style='width: 100%; border-collapse: collapse; border-radius: var(--border-radius); box-shadow: var(--box-shadow); background-color: white;'>";
+    echo "<table style='width: 100%; border-collapse: collapse; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); background-color: white;'>";
     
     // Table header
     echo "<thead>";
-    echo "<tr style='background-color: var(--primary-light);'>";
-    echo "<th style='padding: 12px 8px; text-align: left; font-weight: var(--font-weight-semibold); color: var(--primary-dark); border-bottom: 2px solid var(--primary-color);'>"._QXZ("Area Code")."</th>";
-    echo "<th style='padding: 12px 8px; text-align: left; font-weight: var(--font-weight-semibold); color: var(--primary-dark); border-bottom: 2px solid var(--primary-color);'>"._QXZ("Outbound CID")."</th>";
-    echo "<th style='padding: 12px 8px; text-align: left; font-weight: var(--font-weight-semibold); color: var(--primary-dark); border-bottom: 2px solid var(--primary-color);'>"._QXZ("Description")."</th>";
-    echo "<th style='padding: 12px 8px; text-align: left; font-weight: var(--font-weight-semibold); color: var(--primary-dark); border-bottom: 2px solid var(--primary-color);'>"._QXZ("Active")."</th>";
-    echo "<th style='padding: 12px 8px; text-align: center; font-weight: var(--font-weight-semibold); color: var(--primary-dark); border-bottom: 2px solid var(--primary-color);'>"._QXZ("Actions")."</th>";
+    echo "<tr style='background-color: #f1f5f5; color: #495057;'>";
+    echo "<th style='padding: 12px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid #e2e8f0;'>";
+    echo "<th style='padding: 12px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid #e2e8f0;'>"._QXZ("Area Code")."</th>";
+    echo "<th style='padding: 12px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid #e2e8f0;'>"._QXZ("Outbound CID")."</th>";
+    echo "<th style='padding: 12px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid #e2e8f0;'>"._QXZ("Description")."</th>";
+    echo "<th style='padding: 12px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid #e2e8f0;'>"._QXZ("Active")."</th>";
+    echo "<th style='padding: 12px 8px; text-align: center; font-weight: 600; border-bottom: 2px solid #e2e8f0;'>"._QXZ("Actions")."</th>";
     echo "</tr>";
     echo "</thead>";
     
     // Table body
     echo "<tbody>";
     
-    $stmt = "SELECT areacode, outbound_cid, active, id_description FROM vicidial_campaign_cid_areacodes WHERE campaign_id='$campaign_id' $LOGallowed_campaignsSQL ORDER BY areacode";
+    $stmt = "SELECT areacode,outbound_cid,active,id_description FROM vicidial_campaign_cid_areacodes WHERE campaign_id='$campaign_id' $LOGallowed_campaignsSQL ORDER BY areacode";
     $rslt = mysql_to_mysqli($stmt, $link);
     $areacodes_to_print = mysqli_num_rows($rslt);
     
@@ -35459,20 +35464,19 @@ if ($SUB==202) {
             $rowBg = ($o % 2 == 0) ? '#ffffff' : '#f8f9fa';
             
             echo "<tr style='background-color: $rowBg;'>";
-            echo "<td style='padding: 12px 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>$areacode</td>";
-            echo "<td style='padding: 12px 8px; color: var(--dark-color);'>$outbound_cid</td>";
-            echo "<td style='padding: 12px 8px; color: var(--dark-color);'>$id_description</td>";
-            echo "<td style='padding: 12px 8px; text-align: center;'>";
+            echo "<td style='padding: 12px 8px; font-weight: 500; color: #2c3e50;'>$areacode</td>";
+            echo "<td style='padding: 12px 8px; color: #2c3e50;'>$outbound_cid</td>";
+            echo "<td style='padding: 12px 8px; color: #2c3e50;'>$id_description</td>";
+            echo "<td style='padding: 12px 8px; color: #2c3e50; text-align: center;'>";
             echo "<span style='display: inline-flex; align-items: center; gap: 8px;'>";
-            echo "<span style='display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: var(--font-weight-medium); color: " . ($active == 'Y' ? 'var(--success-color)' : 'var(--gray-color)') . ";'>" . ($active == 'Y' ? '✓' : '✗') . "</span>";
+            echo "<span style='display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; color: " . ($active == 'Y' ? '#28a745' : '#e9ecef') . "; 
+                   ($active == 'Y' ? '✓' : '✗') . "</span>";
             echo "</span>";
             echo "</td>";
             echo "<td style='padding: 12px 8px; text-align: center;'>";
-            echo "<button type='button' onclick=\"editAreacode('$areacode', '$outbound_cid', '$id_description', '$active')\" style='background-color: var(--primary-color); color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; cursor: pointer; transition: var(--transition);'>";
+            echo "<button type='button' onclick=\"editAreacode('$areacode', '$outbound_cid', '$id_description', '$active')\" style='background-color: #f1f5f5; color: #2c3e50; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; cursor: pointer; transition: all 0.3s ease;'>";
             echo "<i style='margin-right: 4px;'>✏️</i>";
-            echo "</button>";
-            echo "<button type='button' onclick=\"deleteAreacode('$areacode')\" style='background-color: var(--danger-color); color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; cursor: pointer; transition: var(--transition); margin-left: 4px;'>";
-            echo "<i style='margin-right: 4px;'>🗑️</i>";
+            echo "<span style='margin-right: 8px;'>"._QXZ("Edit")."</span>";
             echo "</button>";
             echo "</td>";
             echo "</tr>";
@@ -35481,7 +35485,7 @@ if ($SUB==202) {
         }
     } else {
         echo "<tr>";
-        echo "<td colspan='5' style='padding: 20px; text-align: center; color: var(--gray-color); font-style: italic;'>"._QXZ("No area codes defined for this campaign")."</td>";
+        echo "<td colspan='5' style='padding: 20px; text-align: center; color: #6c757d; font-style: italic;'>"._QXZ("No area codes defined for this campaign")."</td>";
         echo "</tr>";
     }
     
@@ -35494,15 +35498,17 @@ if ($SUB==202) {
     document.addEventListener('DOMContentLoaded', function() {
         // Campaign selection
         const campaignSelect = document.getElementById('campaign-select');
-        campaignSelect.addEventListener('change', function() {
-            const selectedOptions = Array.from(campaignSelect.selectedOptions);
-            const allOptions = Array.from(campaignSelect.options);
-            
-            // Clear all selections
-            allOptions.forEach(option => option.selected = false);
-            
-            // Re-select previously selected options
-            selectedOptions.forEach(option => option.selected = true);
+        if (campaignSelect) {
+            campaignSelect.addEventListener('change', function() {
+                const selectedOptions = Array.from(campaignSelect.selectedOptions);
+                const allOptions = Array.from(campaignSelect.options);
+                
+                // Clear all selections
+                allOptions.forEach(option => option.selected = false);
+                
+                // Re-select previously selected options
+                selectedOptions.forEach(option => option.selected = true);
+            });
         });
         
         // Add new area code form
@@ -35514,16 +35520,15 @@ if ($SUB==202) {
                 const areacode = document.getElementById('new_areacode').value.trim();
                 const outbound_cid = document.getElementById('new_outbound_cid').value.trim();
                 const id_description = document.getElementById('new_id_description').value.trim();
-                const active = document.getElementById('new_active').value;
                 
                 if (!areacode || !outbound_cid) {
                     showNotification('"._QXZ("Please enter both area code and outbound CID")."', 'error');
                     return;
                 }
                 
-this.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> ' + '" . _QXZ("Adding area code...") . "';
-this.disabled = true;
-
+                // Show loading state
+                this.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> '._QXZ("Adding area code...")."';
+                this.disabled = true;
                 
                 // Make AJAX request to add area code
                 const formData = new FormData(this);
@@ -35535,13 +35540,12 @@ this.disabled = true;
                 .then(response => response.json())
                 .then(data => {
                     // Reset button state
-                 this.innerHTML = '<i class=\"fas fa-check-circle\"></i> ' + \"" . _QXZ("Add Area Code") . "\";
-this.disabled = false;
-
+                    this.innerHTML = '<i class=\"fas fa-check-circle\"></i> '._QXZ("Area code added successfully")."';
+                    this.disabled = false;
                     
                     // Display results
                     if (data.success) {
-                        showNotification('"._QXZ("Area code added successfully")."', 'success');
+                        showNotification('"._QXZ("Area code added successfully").', 'success');
                         
                         // Refresh the page after a short delay
                         setTimeout(() => {
@@ -35553,39 +35557,30 @@ this.disabled = false;
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    this.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> '._QXZ("Add Area Code")."';
+                    this.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> '._QXZ("Error adding area code")."';
                     this.disabled = false;
                     
-                    showNotification('"._QXZ("Error adding area code")."', 'error');
+                    showNotification('"._QXZ("Error adding area code").', 'error');
                 });
             });
         });
         
-.catch(error => {
-    console.error('Error:', error);
-    this.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' . "<?php echo _QXZ('Add Area Code'); ?>";
-    this.disabled = false;
-
-    showNotification("<?php echo _QXZ('Error adding area code'); ?>", 'error');
-});
-
-// Edit area code function
-window.editAreacode = function(areacode, outbound_cid, id_description, active) {
-    document.getElementById('edit-areacode').value = areacode;
-    document.getElementById('edit-outbound_cid').value = outbound_cid;
-    document.getElementById('edit-id_description').value = id_description;
-    document.getElementById('edit-active').value = active;
-
-    document.getElementById('edit-modal').style.display = 'block';
-};
-
-// Delete area code function
-window.deleteAreacode = function(areacode) {
-    if (confirm("<?php echo _QXZ('Are you sure you want to delete this area code?'); ?> " + areacode)) {
-        // deletion logic here
-    }
-};
- {
+        // Edit area code function
+        window.editAreacode = function(areacode, outbound_cid, id_description, active) {
+            // Populate form fields
+            document.getElementById('edit-areacode').value = areacode;
+            document.getElementById('edit-outbound_cid').value = outbound_cid;
+            document.getElementById('edit-id_description').value = id_description;
+            document.getElementById('edit-active').value = active;
+            
+            // Show edit modal
+            const modal = document.getElementById('edit-modal');
+            modal.style.display = 'block';
+        };
+        
+        // Delete area code function
+        window.deleteAreacode = function(areacode) {
+            if (confirm('"._QXZ("Are you sure you want to delete this area code?") + areacode)) {
                 // Show loading state
                 const deleteBtn = document.getElementById('delete-' + areacode);
                 deleteBtn.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> '._QXZ("Deleting...")."';
@@ -35599,12 +35594,12 @@ window.deleteAreacode = function(areacode) {
                 .then(response => response.json())
                 .then(data => {
                     // Reset button state
-                    deleteBtn.innerHTML = '<i class=\"fas fa-check-circle\"></i> '._QXZ("Delete")."';
+                    deleteBtn.innerHTML = '<i class=\"fas fa-check-circle\"></i> '._QXZ("Deleted")."';
                     deleteBtn.disabled = false;
                     
                     // Display results
                     if (data.success) {
-                        showNotification('"._QXZ("Area code deleted successfully")."', 'success');
+                        showNotification('"._QXZ("Area code deleted successfully").', 'success');
                         
                         // Refresh the page after a short delay
                         setTimeout(() => {
@@ -35616,21 +35611,21 @@ window.deleteAreacode = function(areacode) {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    deleteBtn.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> '._QXZ("Delete")."';
+                    deleteBtn.innerHTML = '<i class=\"fas fa-exclamation-triangle\"></i> '._QXZ("Error deleting area code")."';
                     deleteBtn.disabled = false;
                     
-                    showNotification('"._QXZ("Error deleting area code")."', 'error');
+                    showNotification('"._QXZ("Error deleting area code").', 'error');
                 });
             } else {
                 // User cancelled the deletion
-                showNotification('"._QXZ("Deletion cancelled")."', 'info');
+                showNotification('"._QXZ("Deletion cancelled").', 'info');
             }
         };
         
         // Notification function
         function showNotification(message, type) {
             const notification = document.createElement('div');
-            notification.className = 'alert alert-' + type;
+            notification.className = 'alert alert alert-' + type;
             notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background-color: ' + (type === 'error' ? 'var(--accent-light)' : 'var(--kpi-green-light)') + '; color: ' + (type === 'error' ? 'var(--accent-color)' : 'var(--kpi-green-text)') + '; padding: 16px 20px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); z-index: 1000; display: flex; align-items: center; gap: 12px;';
             notification.innerHTML = '<i class=\"fas fa-' + (type === 'error' ? 'exclamation-triangle' : 'info-circle') + '\"></i> ' + message;
             
@@ -35641,67 +35636,10 @@ window.deleteAreacode = function(areacode) {
                 notification.remove();
             }, 5000);
         }
-    });
+    }
     </script>";
-    
-    // Edit Modal
-    echo "<div id='edit-modal' style='display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border-radius: var(--border-radius-lg); box-shadow: var(--box-shadow-lg); z-index: 1000; width: 500px; max-width: 90%;'>";
-    echo "<div style='display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-light);'>";
-    echo "<h3 style='margin: 0; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--dark-color);'>"._QXZ("Edit Area Code")."</h3>";
-    echo "<button onclick=\"document.getElementById('edit-modal').style.display='none';\" style='background: none; border: none; font-size: 18px; cursor: pointer; color: var(--gray-color); float: right; padding: 4px 8px;'>✖</button>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='padding: 20px;'>";
-    echo "<form id='edit-form' method='POST' action='api/update_areacode.php'>";
-    echo "<input type='hidden' name='areacode' id='edit-areacode'>";
-    echo "<input type='hidden' name='outbound_cid' id='edit-outbound_cid'>";
-    echo "<input type='hidden' name='id_description' id='edit-id-description'>";
-    echo "<input type='hidden' name='active' id='edit-active'>";
-    
-    echo "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;'>";
-    echo "<div>";
-    echo "<label for='edit-areacode' style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Area Code")."</label>";
-    echo "<input type='text' id='edit-areacode' name='areacode' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);'>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div>";
-    echo "<label for='edit-outbound_cid' style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Outbound CID")."</label>";
-    echo "<input type='text' id='edit-outbound_cid' name='outbound_cid' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);'>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div>";
-    echo "<label for='edit-id-description' style='display: block; margin-bottom: 8px; font-weight: var(--font-size-base); color: var(--dark-color);'>"._QXZ("ID Description")."</label>";
-    echo "<textarea id='edit-id-description' name='id_description' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition); rows='3;'></textarea>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div>";
-    echo "<label for='edit-active' style='display: block; margin-bottom: 8px; font-weight: var(--font-weight-medium); color: var(--dark-color);'>"._QXZ("Active")."</label>";
-    echo "<select id='edit-active' name='active' style='width: 100%; padding: 10px; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: var(--font-size-base); transition: var(--transition);'>";
-    echo "<option value='Y'>"._QXZ("Yes")."</option>";
-    echo "<option value='N'>"._QXZ("No")."</option>";
-    echo "</select>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px;'>";
-    echo "<button type='submit' style='background-color: var(--primary-color); color: white; border: none; border-radius: var(--border-radius); padding: 10px 20px; font-size: var(--font-size-base); font-weight: var(--font-weight-medium); cursor: pointer; transition: var(--transition);'>";
-    echo "<i style='margin-right: 8px;'>💾</i>";
-    echo "<span>"._QXZ("Update Area Code")."</span>";
-    echo "</button>";
-    echo "</div>";
-    echo "</form>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "</div>";
 }
-
-		
+}
 
 
 ######################
