@@ -35535,8 +35535,9 @@ this.disabled = true;
                 .then(response => response.json())
                 .then(data => {
                     // Reset button state
-                    this.innerHTML = '<i class=\"fas fa-check-circle\"></i> '._QXZ("Add Area Code")."';
-                    this.disabled = false;
+                 this.innerHTML = '<i class=\"fas fa-check-circle\"></i> ' + \"" . _QXZ("Add Area Code") . "\";
+this.disabled = false;
+
                     
                     // Display results
                     if (data.success) {
