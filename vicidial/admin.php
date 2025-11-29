@@ -34970,76 +34970,91 @@ if ($SUB==27)
 	##### CAMPAIGN SURVEY SETTINGS #####
 	
 if ($SUB == '20A') {
-    echo "<div style='max-width: 900px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;'>";
-    echo "<div style='text-align: center; margin-bottom: 25px;'>";
-    echo "<h2 style='color: #333; font-size: 24px; margin-bottom: 10px;'>" . _QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN") . "</h2>";
+    echo "<div style='max-width: 1200px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>";
+    echo "<div style='background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); border-radius: 12px 12px 0 0; padding: 25px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>";
+    echo "<h1 style='color: white; font-size: 24px; margin: 0; font-weight: 600;'>" . _QXZ("SURVEY SETTINGS FOR THIS CAMPAIGN") . "</h1>";
+    echo "<p style='color: rgba(255,255,255,0.8); margin: 8px 0 0 0; font-size: 14px;'>Configure how your survey system interacts with customers</p>";
     echo "</div>";
     
     echo "<form action='$PHP_SELF' method='POST' name='admin_form' id='admin_form'>";
     echo "<input type='hidden' name='ADD' value='40A'>";
     echo "<input type='hidden' name='campaign_id' value='$campaign_id'>";
     
-    echo "<div style='background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);'>";
+    echo "<div style='background-color: #ffffff; border-radius: 0 0 12px 12px; padding: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);'>";
     
-    // Basic Survey Settings
-    echo "<div style='margin-bottom: 25px;'>";
-    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Basic Survey Settings") . "</h3>";
+    // Basic Survey Settings Section
+    echo "<div style='padding: 25px 30px; border-bottom: 1px solid #eef2f7;'>";
+    echo "<div style='display: flex; align-items: center; margin-bottom: 20px;'>";
+    echo "<div style='background-color: #f0f4ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;'>";
+    echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M9 11H15M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</div>";
+    echo "<h2 style='color: #2c3e50; font-size: 18px; margin: 0; font-weight: 600;'>" . _QXZ("Basic Survey Settings") . "</h2>";
+    echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey First Audio File") . ":</div>";
+    echo "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 25px;'>";
+    
+    // Left column
     echo "<div>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_first_audio_file' id='survey_first_audio_file' value='$survey_first_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo "<button type='button' onclick=\"launch_chooser('survey_first_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
-    echo " $NWB#campaigns-survey_first_audio_file$NWE";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey First Audio File") . "</label>";
+    echo "<div style='display: flex;'>";
+    echo "<input type='text' name='survey_first_audio_file' id='survey_first_audio_file' value='$survey_first_audio_file' style='flex: 1; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px 0 0 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<button type='button' onclick=\"launch_chooser('survey_first_audio_file','date')\" style='padding: 12px 15px; background-color: #f8f9fa; border: 1px solid #e1e8ed; border-left: none; border-radius: 0 8px 8px 0; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.backgroundColor='#e9ecef';\" onmouseout=\"this.style.backgroundColor='#f8f9fa';\">";
+    echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M7 10L12 15M12 15L17 10M12 15V3' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</button>";
     echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_first_audio_file$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey DTMF Digits") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='16' maxlength='16' name='survey_dtmf_digits' value='$survey_dtmf_digits' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
-    echo " $NWB#campaigns-survey_dtmf_digits$NWE";
-    echo "</div>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey DTMF Digits") . "</label>";
+    echo "<input type='text' name='survey_dtmf_digits' value='$survey_dtmf_digits' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_dtmf_digits$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Not Interested Digit") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='5' maxlength='1' name='survey_ni_digit' value='$survey_ni_digit' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
-    echo " $NWB#campaigns-survey_ni_digit$NWE";
-    echo "</div>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Not Interested Digit") . "</label>";
+    echo "<input type='text' name='survey_ni_digit' value='$survey_ni_digit' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_ni_digit$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Wait Seconds") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='5' maxlength='2' name='survey_wait_sec' value='$survey_wait_sec' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
-    echo " $NWB#campaigns-survey_wait_sec$NWE";
-    echo "</div>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Wait Seconds") . "</label>";
+    echo "<input type='text' name='survey_wait_sec' value='$survey_wait_sec' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_wait_sec$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Opt-in Audio File") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_opt_in_audio_file' id='survey_opt_in_audio_file' value='$survey_opt_in_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo "<button type='button' onclick=\"launch_chooser('survey_opt_in_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
-    echo " $NWB#campaigns-survey_opt_in_audio_file$NWE";
-    echo "</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Not Interested Audio File") . ":</div>";
+    // Right column
     echo "<div>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_ni_audio_file' id='survey_ni_audio_file' value='$survey_ni_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo "<button type='button' onclick=\"launch_chooser('survey_ni_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
-    echo " $NWB#campaigns-survey_ni_audio_file$NWE";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Opt-in Audio File") . "</label>";
+    echo "<div style='display: flex;'>";
+    echo "<input type='text' name='survey_opt_in_audio_file' id='survey_opt_in_audio_file' value='$survey_opt_in_audio_file' style='flex: 1; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px 0 0 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<button type='button' onclick=\"launch_chooser('survey_opt_in_audio_file','date')\" style='padding: 12px 15px; background-color: #f8f9fa; border: 1px solid #e1e8ed; border-left: none; border-radius: 0 8px 8px 0; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.backgroundColor='#e9ecef';\" onmouseout=\"this.style.backgroundColor='#f8f9fa';\">";
+    echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M7 10L12 15M12 15L17 10M12 15V3' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</button>";
     echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_opt_in_audio_file$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Method") . ":</div>";
-    echo "<div>";
-    echo "<select size='1' name='survey_method' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Not Interested Audio File") . "</label>";
+    echo "<div style='display: flex;'>";
+    echo "<input type='text' name='survey_ni_audio_file' id='survey_ni_audio_file' value='$survey_ni_audio_file' style='flex: 1; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px 0 0 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<button type='button' onclick=\"launch_chooser('survey_ni_audio_file','date')\" style='padding: 12px 15px; background-color: #f8f9fa; border: 1px solid #e1e8ed; border-left: none; border-radius: 0 8px 8px 0; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.backgroundColor='#e9ecef';\" onmouseout=\"this.style.backgroundColor='#f8f9fa';\">";
+    echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M7 10L12 15M12 15L17 10M12 15V3' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</button>";
+    echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_ni_audio_file$NWE</div>";
+    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Method") . "</label>";
+    echo "<select name='survey_method' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; background-color: white; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
     echo "<option value='AGENT_XFER'>" . _QXZ("AGENT_XFER") . "</option>";
     echo "<option value='VOICEMAIL'>" . _QXZ("VOICEMAIL") . "</option>";
     echo "<option value='VMAIL_NO_INST'>" . _QXZ("VMAIL_NO_INST") . "</option>";
@@ -35049,170 +35064,210 @@ if ($SUB == '20A') {
     echo "<option value='CALLMENU'>" . _QXZ("CALLMENU") . "</option>";
     echo "<option value='$survey_method' SELECTED>" . _QXZ("$survey_method") . "</option>";
     echo "</select>";
-    echo " $NWB#campaigns-survey_method$NWE";
-    echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_method$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey No-Response Action") . ":</div>";
-    echo "<div>";
-    echo "<select size='1' name='survey_no_response_action' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey No-Response Action") . "</label>";
+    echo "<select name='survey_no_response_action' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; background-color: white; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
     echo "<option value='OPTIN'>" . _QXZ("OPTIN") . "</option>";
     echo "<option value='OPTOUT'>" . _QXZ("OPTOUT") . "</option>";
     echo "<option value='DROP'>" . _QXZ("DROP") . "</option>";
     echo "<option value='$survey_no_response_action' SELECTED>" . _QXZ("$survey_no_response_action") . "</option>";
     echo "</select>";
-    echo " $NWB#campaigns-survey_no_response_action$NWE";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_no_response_action$NWE</div>";
+    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Not Interested Status") . "</label>";
+    echo "<select name='survey_ni_status' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; background-color: white; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';'>$survey_ni_status_list</select>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_ni_status$NWE</div>";
+    echo "</div>";
+    
+    echo "</div>";
+    
     echo "</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Not Interested Status") . ":</div>";
+    // Third Digit Settings Section
+    echo "<div style='padding: 25px 30px; border-bottom: 1px solid #eef2f7;'>";
+    echo "<div style='display: flex; align-items: center; margin-bottom: 20px;'>";
+    echo "<div style='background-color: #f0f4ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;'>";
+    echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M7 10L12 15M12 15L17 10M12 15V3M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</div>";
+    echo "<h2 style='color: #2c3e50; font-size: 18px; margin: 0; font-weight: 600;'>" . _QXZ("Third Digit Settings") . "</h2>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 25px;'>";
+    
+    // Left column
     echo "<div>";
-    echo "<select name='survey_ni_status' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>$survey_ni_status_list</select>";
-    echo " $NWB#campaigns-survey_ni_status$NWE";
-    echo "</div>";
-    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Third Digit") . "</label>";
+    echo "<input type='text' name='survey_third_digit' id='survey_third_digit' value='$survey_third_digit' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_third_digit$NWE</div>";
     echo "</div>";
     
-    // Third Digit Settings
-    echo "<div style='margin-bottom: 25px;'>";
-    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Third Digit Settings") . "</h3>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Third Audio File") . "</label>";
+    echo "<div style='display: flex;'>";
+    echo "<input type='text' name='survey_third_audio_file' id='survey_third_audio_file' value='$survey_third_audio_file' style='flex: 1; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px 0 0 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<button type='button' onclick=\"launch_chooser('survey_third_audio_file','date')\" style='padding: 12px 15px; background-color: #f8f9fa; border: 1px solid #e1e8ed; border-left: none; border-radius: 0 8px 8px 0; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.backgroundColor='#e9ecef';\" onmouseout=\"this.style.backgroundColor='#f8f9fa';\">";
+    echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M7 10L12 15M12 15L17 10M12 15V3' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</button>";
+    echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_third_audio_file$NWE</div>";
+    echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Digit") . ":</div>";
+    echo "</div>";
+    
+    // Right column
     echo "<div>";
-    echo "<input type='text' size='5' maxlength='1' name='survey_third_digit' id='survey_third_digit' value='$survey_third_digit' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
-    echo " $NWB#campaigns-survey_third_digit$NWE";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Third Status") . "</label>";
+    echo "<input type='text' name='survey_third_status' value='$survey_third_status' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_third_status$NWE</div>";
+    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Third Extension") . "</label>";
+    echo "<input type='text' name='survey_third_exten' value='$survey_third_exten' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_third_exten$NWE</div>";
+    echo "</div>";
+    
+    echo "</div>";
+    
     echo "</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Audio File") . ":</div>";
+    // Fourth Digit Settings Section
+    echo "<div style='padding: 25px 30px; border-bottom: 1px solid #eef2f7;'>";
+    echo "<div style='display: flex; align-items: center; margin-bottom: 20px;'>";
+    echo "<div style='background-color: #f0f4ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;'>";
+    echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M7 10L12 15M12 15L17 10M12 15V3M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</div>";
+    echo "<h2 style='color: #2c3e50; font-size: 18px; margin: 0; font-weight: 600;'>" . _QXZ("Fourth Digit Settings") . "</h2>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 25px;'>";
+    
+    // Left column
     echo "<div>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_third_audio_file' id='survey_third_audio_file' value='$survey_third_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo "<button type='button' onclick=\"launch_chooser('survey_third_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
-    echo " $NWB#campaigns-survey_third_audio_file$NWE";
-    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Fourth Digit") . "</label>";
+    echo "<input type='text' name='survey_fourth_digit' value='$survey_fourth_digit' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_fourth_digit$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Status") . ":</div>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Fourth Audio File") . "</label>";
+    echo "<div style='display: flex;'>";
+    echo "<input type='text' name='survey_fourth_audio_file' id='survey_fourth_audio_file' value='$survey_fourth_audio_file' style='flex: 1; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px 0 0 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<button type='button' onclick=\"launch_chooser('survey_fourth_audio_file','date')\" style='padding: 12px 15px; background-color: #f8f9fa; border: 1px solid #e1e8ed; border-left: none; border-radius: 0 8px 8px 0; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.backgroundColor='#e9ecef';\" onmouseout=\"this.style.backgroundColor='#f8f9fa';\">";
+    echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M7 10L12 15M12 15L17 10M12 15V3' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</button>";
+    echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_fourth_audio_file$NWE</div>";
+    echo "</div>";
+    
+    echo "</div>";
+    
+    // Right column
     echo "<div>";
-    echo "<input type='text' size='10' maxlength='6' name='survey_third_status' value='$survey_third_status' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 120px;'>";
-    echo " $NWB#campaigns-survey_third_status$NWE";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Fourth Status") . "</label>";
+    echo "<input type='text' name='survey_fourth_status' value='$survey_fourth_status' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_fourth_status$NWE</div>";
+    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Fourth Extension") . "</label>";
+    echo "<input type='text' name='survey_fourth_exten' value='$survey_fourth_exten' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_fourth_exten$NWE</div>";
+    echo "</div>";
+    
+    echo "</div>";
+    
     echo "</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Third Extension") . ":</div>";
+    // Advanced Settings Section
+    echo "<div style='padding: 25px 30px;'>";
+    echo "<div style='display: flex; align-items: center; margin-bottom: 20px;'>";
+    echo "<div style='background-color: #f0f4ff; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;'>";
+    echo "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M10.325 4.317C10.751 2.56 13.249 2.56 13.675 4.317C13.815 4.874 14.33 5.262 14.905 5.236C16.71 5.155 17.335 7.485 15.735 8.383C15.236 8.657 15.013 9.241 15.208 9.773C15.836 11.476 13.732 12.88 12.387 11.653C11.948 11.257 11.273 11.257 10.834 11.653C9.489 12.88 7.385 11.476 8.013 9.773C8.208 9.241 7.985 8.657 7.486 8.383C5.886 7.485 6.511 5.155 8.316 5.236C8.891 5.262 9.406 4.874 9.546 4.317ZM12 8C12.552 8 13 7.552 13 7C13 6.448 12.552 6 12 6C11.448 6 11 6.448 11 7C11 7.552 11.448 8 12 8ZM3 17C3 16.4477 3.44772 16 4 16H20C20.5523 16 21 16.4477 21 17C21 17.5523 20.5523 18 20 18H4C3.44772 18 3 17.5523 3 17Z' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</div>";
+    echo "<h2 style='color: #2c3e50; font-size: 18px; margin: 0; font-weight: 600;'>" . _QXZ("Advanced Settings") . "</h2>";
+    echo "</div>";
+    
+    echo "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 25px;'>";
+    
+    // Left column
     echo "<div>";
-    echo "<input type='text' size='20' maxlength='20' name='survey_third_exten' value='$survey_third_exten' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;'>";
-    echo " $NWB#campaigns-survey_third_exten$NWE";
-    echo "</div>";
-    echo "</div>";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Response Digit Map") . "</label>";
+    echo "<input type='text' name='survey_response_digit_map' value='$survey_response_digit_map' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_response_digit_map$NWE</div>";
     echo "</div>";
     
-    // Fourth Digit Settings
-    echo "<div style='margin-bottom: 25px;'>";
-    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Fourth Digit Settings") . "</h3>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Xfer Extension") . "</label>";
+    echo "<input type='text' name='survey_xfer_exten' value='$survey_xfer_exten' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_xfer_exten$NWE</div>";
+    echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Digit") . ":</div>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Campaign Recording Directory") . "</label>";
+    echo "<input type='text' name='survey_camp_record_dir' value='$survey_camp_record_dir' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_camp_record_dir$NWE</div>";
+    echo "</div>";
+    
+    echo "</div>";
+    
+    // Right column
     echo "<div>";
-    echo "<input type='text' size='5' maxlength='1' name='survey_fourth_digit' value='$survey_fourth_digit' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 60px;'>";
-    echo " $NWB#campaigns-survey_fourth_digit$NWE";
+    
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Voicemail") . "</label>";
+    echo "<div style='display: flex;'>";
+    echo "<input type='text' name='voicemail_ext' id='voicemail_ext' value='$voicemail_ext' style='flex: 1; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px 0 0 8px; font-size: 14px; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
+    echo "<button type='button' onclick=\"launch_vm_chooser('voicemail_ext','vm')\" style='padding: 12px 15px; background-color: #f8f9fa; border: 1px solid #e1e8ed; border-left: none; border-radius: 0 8px 8px 0; cursor: pointer; transition: all 0.2s;' onmouseover=\"this.style.backgroundColor='#e9ecef';\" onmouseout=\"this.style.backgroundColor='#f8f9fa';\">";
+    echo "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M7 10L12 15M12 15L17 10M12 15V3' stroke='#6a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+    echo "</button>";
     echo "</div>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-voicemail_ext$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Audio File") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='70' maxlength='1000' name='survey_fourth_audio_file' id='survey_fourth_audio_file' value='$survey_fourth_audio_file' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo "<button type='button' onclick=\"launch_chooser('survey_fourth_audio_file','date')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("audio chooser") . "</button>";
-    echo " $NWB#campaigns-survey_fourth_audio_file$NWE";
-    echo "</div>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'><a href=\"$PHP_SELF?ADD=3511&menu_id=$survey_menu_id\" style='color: #6a11cb; text-decoration: none; font-weight: 500;'>" . _QXZ("Survey Call Menu") . "</a></label>";
+    echo "<select name='survey_menu_id' id='survey_menu_id' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; background-color: white; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">$call_menu_list<option SELECTED>$survey_menu_id</option></select>";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_menu_id$NWE</div>";
     echo "</div>";
     
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Status") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='10' maxlength='6' name='survey_fourth_status' value='$survey_fourth_status' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 120px;'>";
-    echo " $NWB#campaigns-survey_fourth_status$NWE";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Fourth Extension") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='20' maxlength='20' name='survey_fourth_exten' value='$survey_fourth_exten' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;'>";
-    echo " $NWB#campaigns-survey_fourth_exten$NWE";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    
-    // Advanced Settings
-    echo "<div style='margin-bottom: 25px;'>";
-    echo "<h3 style='color: #495057; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6;'>" . _QXZ("Advanced Settings") . "</h3>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Response Digit Map") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='70' maxlength='100' name='survey_response_digit_map' value='$survey_response_digit_map' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo " $NWB#campaigns-survey_response_digit_map$NWE";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Survey Xfer Extension") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='12' maxlength='20' name='survey_xfer_exten' value='$survey_xfer_exten' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 150px;'>";
-    echo " $NWB#campaigns-survey_xfer_exten$NWE";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Campaign Recording Directory") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='70' maxlength='255' name='survey_camp_record_dir' value='$survey_camp_record_dir' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 100%; max-width: 500px;'>";
-    echo " $NWB#campaigns-survey_camp_record_dir$NWE";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Voicemail") . ":</div>";
-    echo "<div>";
-    echo "<input type='text' size='12' maxlength='10' name='voicemail_ext' id='voicemail_ext' value='$voicemail_ext' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; width: 150px;'>";
-    echo "<button type='button' onclick=\"launch_vm_chooser('voicemail_ext','vm')\" style='margin-left: 10px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;'>" . _QXZ("voicemail chooser") . "</button>";
-    echo " $NWB#campaigns-voicemail_ext$NWE";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'><a href=\"$PHP_SELF?ADD=3511&menu_id=$survey_menu_id\" style='color: #007bff; text-decoration: none;'>" . _QXZ("Survey Call Menu") . "</a>:</div>";
-    echo "<div>";
-    echo "<select size='1' name='survey_menu_id' id='survey_menu_id' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>$call_menu_list<option SELECTED>$survey_menu_id</option></select>";
-    echo "$NWB#campaigns-survey_menu_id$NWE";
-    echo "</div>";
-    echo "</div>";
-    
-    echo "<div style='display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 15px;'>";
-    echo "<div style='text-align: right; padding-top: 8px; color: #495057; font-weight: 500;'>" . _QXZ("Survey Recording") . ":</div>";
-    echo "<div>";
-    echo "<select size='1' name='survey_recording' id='survey_recording' style='padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;'>";
+    echo "<div style='margin-bottom: 20px;'>";
+    echo "<label style='display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 500; font-size: 14px;'>" . _QXZ("Survey Recording") . "</label>";
+    echo "<select name='survey_recording' id='survey_recording' style='width: 100%; padding: 12px 15px; border: 1px solid #e1e8ed; border-radius: 8px; font-size: 14px; background-color: white; transition: all 0.2s;' onfocus=\"this.style.borderColor='#6a11cb'; this.style.boxShadow='0 0 0 3px rgba(106, 17, 203, 0.1)';\" onblur=\"this.style.borderColor='#e1e8ed'; this.style.boxShadow='none';\">";
     echo "<option value='Y'>" . _QXZ("Y") . "</option>";
     echo "<option value='N'>" . _QXZ("N") . "</option>";
     echo "<option value='Y_WITH_AMD'>" . _QXZ("Y_WITH_AMD") . "</option>";
     echo "<option value='$survey_recording' SELECTED>" . _QXZ("$survey_recording") . "</option>";
     echo "</select>";
-    echo "$NWB#campaigns-survey_recording$NWE";
+    echo "<div style='font-size: 12px; color: #64748b; margin-top: 5px;'>$NWB#campaigns-survey_recording$NWE</div>";
     echo "</div>";
+    
+    echo "</div>";
+    
     echo "</div>";
     echo "</div>";
     
     // Submit Button
-    echo "<div style='text-align: center; margin-top: 30px;'>";
-    echo "<input type='submit' name='submit' value='" . _QXZ("SUBMIT") . "' style='background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: 500; transition: background-color 0.2s;'>";
+    echo "<div style='padding: 20px 30px; background-color: #f8f9fa; border-radius: 0 0 12px 12px; display: flex; justify-content: flex-end;'>";
+    echo "<button type='submit' name='submit' value='" . _QXZ("SUBMIT") . "' style='background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);' onmouseover=\"this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(106, 17, 203, 0.4)';\" onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(106, 17, 203, 0.3)';\">" . _QXZ("SUBMIT") . "</button>";
     echo "</div>";
     
     echo "</div>";
