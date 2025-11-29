@@ -35521,9 +35521,9 @@ if ($SUB==202) {
                     return;
                 }
                 
-                // Show loading state
-                this.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> '._QXZ("Adding area code...")."';
-                this.disabled = true;
+this.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> ' + '" . _QXZ("Adding area code...") . "';
+this.disabled = true;
+
                 
                 // Make AJAX request to add area code
                 const formData = new FormData(this);
