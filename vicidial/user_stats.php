@@ -1315,7 +1315,7 @@ else {
         }
         
         body {
-            background-color: #f5f7fa96;
+            background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
         }
@@ -1327,11 +1327,11 @@ else {
         }
         
         header {
-            background: linear-gradient(135deg,  #4a6cf7, #f5f7fa;);
+            background: linear-gradient(135deg, #4a6cf7, #8b5cf6);
             color: white;
             padding: 20px;
             border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
