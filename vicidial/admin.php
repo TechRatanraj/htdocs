@@ -13569,7 +13569,7 @@ if ($ADD==20) {
         
         echo "</div>";
     }
-}
+
 
 ######################
 # ADD=22 adds the new campaign status to the system
