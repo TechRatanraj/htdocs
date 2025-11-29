@@ -1315,7 +1315,7 @@ else {
         }
         
         body {
-            background-color: #f5f7fa;
+            background-color: #f5f7fa96;
             color: #333;
             line-height: 1.6;
         }
