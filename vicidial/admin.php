@@ -34996,7 +34996,7 @@ if ($SUB=='20A') {
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Survey First Audio File")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_first_audio_file' id='survey_first_audio_file' value='$survey_first_audio_file' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_first_audio_file','date');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_first_audio_file','date');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
     echo "</div>$NWB#campaigns-survey_first_audio_file$NWE";
     echo "</div>";
     
@@ -35023,7 +35023,7 @@ if ($SUB=='20A') {
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Survey Opt-in Audio File")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_opt_in_audio_file' id='survey_opt_in_audio_file' value='$survey_opt_in_audio_file' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_opt_in_audio_file','date');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
     echo "</div>$NWB#campaigns-survey_opt_in_audio_file$NWE";
     echo "</div>";
     
@@ -35032,7 +35032,7 @@ if ($SUB=='20A') {
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Survey Not Interested Audio File")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_ni_audio_file' id='survey_ni_audio_file' value='$survey_ni_audio_file' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_ni_audio_file','date');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
     echo "</div>$NWB#campaigns-survey_ni_audio_file$NWE";
     echo "</div>";
     
@@ -35079,7 +35079,7 @@ if ($SUB=='20A') {
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Survey Third Audio File")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_third_audio_file' id='survey_third_audio_file' value='$survey_third_audio_file' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_third_audio_file','date');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_third_audio_file','date');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
     echo "</div>$NWB#campaigns-survey_third_audio_file$NWE";
     echo "</div>";
     
@@ -35106,7 +35106,7 @@ if ($SUB=='20A') {
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Survey Fourth Audio File")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='70' maxlength='1000' name='survey_fourth_audio_file' id='survey_fourth_audio_file' value='$survey_fourth_audio_file' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
+    echo "<a href=\"javascript:launch_chooser('survey_fourth_audio_file','date');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
     echo "</div>$NWB#campaigns-survey_fourth_audio_file$NWE";
     echo "</div>";
     
@@ -35140,12 +35140,12 @@ if ($SUB=='20A') {
     echo "<input type='text' size='70' maxlength='255' name='survey_camp_record_dir' value='$survey_camp_record_dir' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'> $NWB#campaigns-survey_camp_record_dir$NWE";
     echo "</div>";
     
-    // Voicemail
+    // Voicemail with blue button
     echo "<div style='box-sizing:border-box;'>";
     echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Voicemail")."</label>";
     echo "<div style='display:flex;gap:10px;align-items:center;'>";
     echo "<input type='text' size='12' maxlength='10' name='voicemail_ext' id='voicemail_ext' value='$voicemail_ext' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
-    echo "<a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\" style='background:#495057;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("voicemail chooser")."</a>";
+    echo "<a href=\"javascript:launch_vm_chooser('voicemail_ext','vm');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("voicemail chooser")."</a>";
     echo "</div>$NWB#campaigns-voicemail_ext$NWE";
     echo "</div>";
     
@@ -35168,9 +35168,9 @@ if ($SUB=='20A') {
     
     echo "</div>"; // End grid
     
-    // Submit Button
+    // Submit Button - green
     echo "<div style='margin-top:30px;text-align:center;'>";
-    echo "<button type='submit' name='submit' style='background:#495057;color:#fff;padding:12px 40px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;'>"._QXZ("SUBMIT")."</button>";
+    echo "<button type='submit' name='submit' style='background:#28a745;color:#fff;padding:12px 40px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;'>"._QXZ("SUBMIT")."</button>";
     echo "</div>";
     
     echo "</form>";
