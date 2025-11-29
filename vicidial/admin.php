@@ -26975,15 +26975,11 @@ if ($ADD == 3) {
                 echo "<div>\n";
                 
                 // Wrap Seconds Override
-                echo "<div class='form-group'>\n";
-                echo "<label class='form-label'>" . _QXZ("Wrap Seconds Override") . "</label>\n";
-                echo "<input type='text' class='form-control' name='wrapup_seconds_override' value=\"$wrap
-                
-                
-                
-                
-                                echo "<input type='text' class='form-control' name='wrapup_seconds_override' value=\"$wrapup_seconds_override\">\n";
-                echo "</div>\n";
+echo "<div class='form-group'>\n";
+echo "<label class='form-label'>" . _QXZ("Wrap Seconds Override") . "</label>\n";
+echo "<input type='text' class='form-control' name='wrapup_seconds_override' value=\"$wrapup_seconds_override\">\n";
+echo "</div>\n";
+
                 
                 // Agent Ready Max Logout Override
                 echo "<div class='form-group'>\n";
