@@ -35473,7 +35473,7 @@ if ($SUB==202)
     echo "</div>";
     echo "</div>";
     
-    if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) )
+    if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ))
         {
         echo "<div style='max-width: 1200px; margin: 30px auto 0; padding: 0 20px;'>";
         echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CAMPAIGN_AC-CID&stage=$campaign_id\" style='color: #6a11cb; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center;'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style='margin-right: 8px;'><path d='M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z' fill='#6a11cb'/></svg>"._QXZ("Click here to see Admin changes to this campaign")." AC-CID</a></FONT>\n";
