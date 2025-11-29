@@ -26119,7 +26119,8 @@ if ($ADD == 3) {
             echo ".main-container { max-width: 1200px; margin: 0 auto; padding: 20px; }\n";
 echo ".header-section { 
     background: linear-gradient(90deg, #606060 0%, #C0C0C0 100%);
-    color: white;
+    color: black;              /* text set to black */
+    background-color: white;   /* ensures outer background stays white */
     padding: 20px; 
     border-radius: 10px; 
     margin-bottom: 25px; 
