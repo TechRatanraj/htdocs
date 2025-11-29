@@ -35533,7 +35533,7 @@ if ($SUB < 1) {
     echo "</div>";
     exit;
 }
-		}
+	
 
 ######################
 # ADD=34 modify campaign info in the system - Basic View
