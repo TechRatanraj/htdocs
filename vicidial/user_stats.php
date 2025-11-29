@@ -931,7 +931,7 @@ else {
         $TOTALtalkSECONDShh = sec_convert($TOTALtalkSECONDS,'H');
         $TOTALdispoSECONDShh = sec_convert($TOTALdispoSECONDS,'H');
         $TOTALdeadSECONDShh = sec_convert($TOTALdeadSECONDS,'H');
-        $TOTALcustomerSECONDShh = sec_convert($TOTALcustomerSECONDS,'H);
+        $TOTALcustomerSECONDShh = sec_convert($TOTALcustomerSECONDS,'H');
         $TOTALvisibleSECONDShh = sec_convert($TOT_VISIBLE,'H');
         $TOTALhiddenSECONDShh = sec_convert($TOT_HIDDEN,'H');
 
