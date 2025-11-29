@@ -1291,3 +1291,134 @@ if ($DB) {echo "|$stmt|\n";}
 
 exit;
 ?>
+                        // Charts Tab Content
+                        echo "<div class=\"tab-content\" id=\"charts\">\n";
+                        echo "    <div class=\"card mb-20\">\n";
+                        echo "        <div class=\"card-header\">\n";
+                        echo "            <div class=\"card-title\">"._QXZ("Call Status Charts")."</div>\n";
+                        echo "        </div>\n";
+                        echo "        <div class=\"card-body\">\n";
+                        echo "            <div class=\"chart-container\">\n";
+                        echo "                <canvas id=\"statusChart\"></canvas>\n";
+                        echo "            </div>\n";
+                        echo "        </div>\n";
+                        echo "    </div>\n";
+                        
+                        // DNC/DNCCI Percentage Chart
+                        echo "    <div class=\"card mb-20\">\n";
+                        echo "        <div class=\"card-header\">\n";
+                        echo "            <div class=\"card-title\">"._QXZ("DNC/DNCCI Percentage")."</div>\n";
+                        echo "        </div>\n";
+                        echo "        <div class=\"card-body\">\n";
+                        echo "            <div class=\"chart-container\">\n";
+                        echo "                <canvas id=\"dncciChart\"></canvas>\n";
+                        echo "            </div>\n";
+                        echo "        </div>\n";
+                        echo "    </div>\n";
+                        
+                        // JavaScript for charts
+                        echo "    <script>\n";
+                        echo "        document.addEventListener('DOMContentLoaded', function() {\n";
+                        echo "            // Status Chart\n";
+                        echo "            const statusCtx = document.getElementById('statusChart').getContext('2d');\n";
+                        echo "            const statusChart = new Chart(statusCtx, {\n";
+                        echo "                type: 'bar',\n";
+                        echo "                data: {\n";
+                        echo "                    labels: [";
+                        
+                        $first = true;
+                        foreach ($dates_ary as $date) {
+                            if (!$first) {
+                                echo ",";
+                            }
+                            echo "'".preg_replace('/ +/', ' ', $date)."'";
+                            $first = false;
+                        }
+                        
+                        echo "],\n";
+                        echo "                    datasets: [{\n";
+                        echo "                        label: '"._QXZ("Number of Calls")."',\n";
+                        echo "                        data: [";
+                        
+                        $first = true;
+                        foreach ($dates_ary as $date) {
+                            if (!$first) {
+                                echo ",";
+                            }
+                            $date_calls = 0;
+                            foreach ($status_ary as $status) {
+                                $stmt="select count(*) from vicidial_users,".$vicidial_agent_log_table." where event_time <= '$date 23:59:59' and event_time >= '$date 00:00:00' and vicidial_users.user=".$vicidial_agent_log_table.".user and ".$vicidial_agent_log_table.".user='$user' $group_SQL $vuLOGadmin_viewable_groupsSQL and status='$status' limit 1;";
+                                $rslt=mysql_to_mysqli($stmt, $link);
+                                $row=mysqli_fetch_row($rslt);
+                                $date_calls += $row[0];
+                            }
+                            echo "$date_calls";
+                            $first = false;
+                        }
+                        
+                        echo "],\n";
+                        echo "                        backgroundColor: 'rgba(74, 108, 247, 0.7)',\n";
+                        echo "                        borderColor: 'rgba(74, 108, 247, 1)',\n";
+                        echo "                        borderWidth: 1\n";
+                        echo "                    }]\n";
+                        echo "                }\n";
+                        echo "            });\n";
+                        echo "            \n";
+                        echo "            // DNC/DNCCI Chart\n";
+                        echo "            const dncciCtx = document.getElementById('dncciChart').getContext('2d');\n";
+                        echo "            const dncciChart = new Chart(dncciCtx, {\n";
+                        echo "                type: 'line',\n";
+                        echo "                data: {\n";
+                        echo "                    labels: [";
+                        
+                        $first = true;
+                        foreach ($dates_ary as $date) {
+                            if (!$first) {
+                                echo ",";
+                            }
+                            echo "'".preg_replace('/ +/', ' ', $date)."'";
+                            $first = false;
+                        }
+                        
+                        echo "],\n";
+                        echo "                    datasets: [{\n";
+                        echo "                        label: '"._QXZ("DNC/DNCCI %")."',\n";
+                        echo "                        data: [";
+                        
+                        $first = true;
+                        foreach ($dates_ary as $date) {
+                            if (!$first) {
+                                echo ",";
+                            }
+                            $date_dncci_percent = 0;
+                            if (isset($chart_data[$date])) {
+                                $date_dncci_percent = $chart_data[$date]['dncci_percent'];
+                            }
+                            echo "$date_dncci_percent";
+                            $first = false;
+                        }
+                        
+                        echo "],\n";
+                        echo "                        backgroundColor: 'rgba(220, 53, 69, 0.7)',\n";
+                        echo "                        borderColor: 'rgba(220, 53, 69, 1)',\n";
+                        echo "                        borderWidth: 2,\n";
+                        echo "                        pointBackgroundColor: 'rgba(220, 53, 69, 1)',\n";
+                        echo "                        pointBorderColor: 'rgba(220, 53, 69, 1)',\n";
+                        echo "                        pointRadius: 5,\n";
+                        echo "                        fill: false\n";
+                        echo "                    }]\n";
+                        echo "                }\n";
+                        echo "            });\n";
+                        echo "        });\n";
+                        echo "    </script>\n";
+                        echo "</div>\n";
+                        echo "    </div>\n";
+                        echo "</div>\n";
+                        echo "</div>\n";
+                    
+                    ?>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
