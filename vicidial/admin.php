@@ -35561,22 +35561,31 @@ this.disabled = false;
             });
         });
         
-        // Edit area code function
-        window.editAreacode = function(areacode, outbound_cid, id_description, active) {
-            // Populate form fields
-            document.getElementById('edit-areacode').value = areacode;
-            document.getElementById('edit-outbound_cid').value = outbound_cid;
-            document.getElementById('edit-id_description').value = id_description;
-            document.getElementById('edit-active').value = active;
-            
-            // Show edit modal
-            const modal = document.getElementById('edit-modal');
-            modal.style.display = 'block';
-        };
-        
-        // Delete area code function
-        window.deleteAreacode = function(areacode) {
-            if (confirm('"._QXZ("Are you sure you want to delete this area code?")." + areacode)) {
+.catch(error => {
+    console.error('Error:', error);
+    this.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' . "<?php echo _QXZ('Add Area Code'); ?>";
+    this.disabled = false;
+
+    showNotification("<?php echo _QXZ('Error adding area code'); ?>", 'error');
+});
+
+// Edit area code function
+window.editAreacode = function(areacode, outbound_cid, id_description, active) {
+    document.getElementById('edit-areacode').value = areacode;
+    document.getElementById('edit-outbound_cid').value = outbound_cid;
+    document.getElementById('edit-id_description').value = id_description;
+    document.getElementById('edit-active').value = active;
+
+    document.getElementById('edit-modal').style.display = 'block';
+};
+
+// Delete area code function
+window.deleteAreacode = function(areacode) {
+    if (confirm("<?php echo _QXZ('Are you sure you want to delete this area code?'); ?> " + areacode)) {
+        // deletion logic here
+    }
+};
+ {
                 // Show loading state
                 const deleteBtn = document.getElementById('delete-' + areacode);
                 deleteBtn.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> '._QXZ("Deleting...")."';
