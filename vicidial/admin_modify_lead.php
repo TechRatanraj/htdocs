@@ -2810,7 +2810,7 @@ if ($lead_id == 'NEW') {
     $lists_to_print = mysqli_num_rows($rslt);
 
     $Lc = 0;
-    $select_list = '<select size=1 name=list_id>';
+    $select_list = '<select size=1 name=list_id style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">';
     while ($lists_to_print > $Lc) {
         $row = mysqli_fetch_row($rslt);
         $select_list .= "<option value='$row[0]'>$row[0] - $row[1] - $row[2]</option>";
@@ -2826,155 +2826,184 @@ if (strlen($HTML_inline_script) > 0) {
 
 echo "</script>\n";
 echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
-echo "</head><BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+echo '<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 0; }
+.modern-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+.card { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 30px 40px; margin-bottom: 25px; }
+.card-header { display: flex; align-items: center; padding-bottom: 20px; border-bottom: 2px solid #e5e7eb; margin-bottom: 25px; }
+.card-title { font-size: 24px; font-weight: 700; color: #1f2937; margin: 0; }
+.info-badge { background: #dbeafe; color: #1e40af; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; margin-left: 12px; }
+.alert-info { background: #dbeafe; border-left: 4px solid #3b82f6; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; color: #1e40af; font-weight: 500; }
+.alert-warning { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; color: #92400e; font-weight: 500; }
+.alert-danger { background: #fee2e2; border-left: 4px solid #ef4444; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; color: #991b1b; font-weight: 600; }
+.form-group { display: grid; grid-template-columns: 200px 1fr; gap: 20px; margin-bottom: 18px; align-items: center; }
+.form-label { font-size: 14px; font-weight: 600; color: #374151; text-align: right; }
+.form-input { width: 100%; padding: 10px 14px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; color: #1f2937; transition: border-color 0.2s; }
+.form-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.form-textarea { width: 100%; padding: 10px 14px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; color: #1f2937; resize: vertical; min-height: 80px; font-family: inherit; }
+.form-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.read-only-value { padding: 10px 0; color: #1f2937; font-size: 14px; }
+.stats-row { display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid #e5e7eb; margin-bottom: 15px; flex-wrap: wrap; }
+.stat-item { font-size: 14px; color: #6b7280; }
+.stat-value { font-weight: 600; color: #1f2937; }
+.comment-history { background: #f9fafb; border-radius: 8px; padding: 15px; margin-top: 20px; }
+.comment-item { background: #fff; border-left: 3px solid #3b82f6; padding: 15px; margin-bottom: 12px; border-radius: 6px; }
+.comment-meta { font-size: 12px; color: #6b7280; font-style: italic; margin-top: 8px; }
+.comment-timestamp { font-weight: 600; color: #374151; font-size: 13px; }
+.section-divider { height: 1px; background: #e5e7eb; margin: 25px 0; }
+</style>';
+echo "</head><BODY>\n";
 echo "<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
-echo "<span style=\"position:absolute;left:0px;top:0px;z-index:20;\" id=admin_header>";
-echo "<div id='LogModDisplayDiv' style='position:absolute; top:0; left:0; z-index:21; background-color:white display:none;'></div>\n";
-echo "<div id='DetailDisplayDiv' style='position:absolute; top:0; left:0; z-index:20; background-color:white display:none;'></div>\n";
+echo "<div id='LogModDisplayDiv' style='position:fixed; top:0; left:0; z-index:9999; background-color:#fff; display:none; width:100%; height:100%; overflow:auto;'></div>\n";
+echo "<div id='DetailDisplayDiv' style='position:fixed; top:0; left:0; z-index:9998; background-color:#fff; display:none; width:100%; height:100%; overflow:auto;'></div>\n";
 
 $short_header = 1;
-
 //require("admin_header.php");
 
-echo "</span>\n";
 echo "$messagesHTML\n";
+
+echo '<div class="modern-container">';
 
 if ($lead_id == 'NEW') {
     if ($LOGmodify_leads == '5') {
-        echo "ERROR: " . _QXZ("You do not have permission to add new leads") . ": $LOGmodify_leads \n";
+        echo '<div class="alert-danger">ERROR: ' . _QXZ("You do not have permission to add new leads") . '</div>';
         exit;
     }
-    echo "<br><b>" . _QXZ("Add A New Lead") . "</B>\n";
+    echo '<div class="card"><div class="card-header"><h1 class="card-title">➕ ' . _QXZ("Add A New Lead") . '</h1></div>';
 } else {
     if ($lead_count > 0) {
-        echo "<br>" . _QXZ("Lead information") . ": $first_name $last_name - $phone_number\n";
+        echo '<div class="card"><div class="card-header"><h1 class="card-title">👤 ' . _QXZ("Lead information") . '</h1><span class="info-badge">' . htmlspecialchars($first_name . ' ' . $last_name) . '</span></div>';
     }
 }
 
 if (($lead_count > 0) or ($lead_id == 'NEW')) {
     if ($campaign_id == '---NONE') { $campaign_id = ''; }
     
-    echo "<br><br><form action=$PHP_SELF method=POST>\n";
-    echo "<input type=hidden name=end_call value=1>\n";
-    echo "<input type=hidden name=DB value=\"$DB\">\n";
-    echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
-    echo "<input type=hidden name=dispo value=\"$dispo\">\n";
-    echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-    echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
-    echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-    echo "<input type=hidden name=extension value=\"$extension\">\n";
-    echo "<input type=hidden name=channel value=\"$channel\">\n";
-    echo "<input type=hidden name=call_began value=\"$call_began\">\n";
-    echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
-    echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
-    echo "<table cellpadding=1 cellspacing=0>\n";
-    echo "<tr><td colspan=2>$label_lead_id: $lead_id &nbsp; &nbsp; $label_list_id: $list_id &nbsp; &nbsp; <font size=2>$label_gmt_offset_now: $gmt_offset_now &nbsp; &nbsp; $label_called_since_last_reset: $called_since_last_reset</td></tr>\n";
-    echo "<tr><td colspan=2>$label_user: <A HREF=\"user_stats.php?user=$tsr\">$tsr</A> &nbsp; &nbsp; $label_called_count: $called_count <font size=2>(" . _QXZ("today") . ": $call_count_today)</font> &nbsp; &nbsp; $label_last_local_call_time: $last_local_call_time</td></tr>\n";
+    echo '<form action="' . $PHP_SELF . '" method="POST">';
+    echo '<input type="hidden" name="end_call" value="1">';
+    echo '<input type="hidden" name="DB" value="' . $DB . '">';
+    echo '<input type="hidden" name="lead_id" value="' . $lead_id . '">';
+    echo '<input type="hidden" name="dispo" value="' . $dispo . '">';
+    echo '<input type="hidden" name="list_id" value="' . $list_id . '">';
+    echo '<input type="hidden" name="campaign_id" value="' . $campaign_id . '">';
+    echo '<input type="hidden" name="old_phone" value="' . $phone_number . '">';
+    echo '<input type="hidden" name="server_ip" value="' . $server_ip . '">';
+    echo '<input type="hidden" name="extension" value="' . $extension . '">';
+    echo '<input type="hidden" name="channel" value="' . $channel . '">';
+    echo '<input type="hidden" name="call_began" value="' . $call_began . '">';
+    echo '<input type="hidden" name="parked_time" value="' . $parked_time . '">';
+    echo '<input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />';
+    
+    // Stats row
+    echo '<div class="stats-row">';
+    echo '<div class="stat-item">' . $label_lead_id . ': <span class="stat-value">' . $lead_id . '</span></div>';
+    echo '<div class="stat-item">' . $label_list_id . ': <span class="stat-value">' . $list_id . '</span></div>';
+    echo '<div class="stat-item">' . $label_gmt_offset_now . ': <span class="stat-value">' . $gmt_offset_now . '</span></div>';
+    echo '<div class="stat-item">' . $label_called_since_last_reset . ': <span class="stat-value">' . $called_since_last_reset . '</span></div>';
+    echo '</div>';
+    
+    echo '<div class="stats-row">';
+    echo '<div class="stat-item">' . $label_user . ': <a href="user_stats.php?user=' . $tsr . '" style="color:#3b82f6;font-weight:600;text-decoration:none;">' . $tsr . '</a></div>';
+    echo '<div class="stat-item">' . $label_called_count . ': <span class="stat-value">' . $called_count . '</span> <small>(' . _QXZ("today") . ': ' . $call_count_today . ')</small></div>';
+    echo '<div class="stat-item">' . $label_last_local_call_time . ': <span class="stat-value">' . $last_local_call_time . '</span></div>';
+    echo '</div>';
     
     if ($archive_search == "Yes") {
-        echo "<tr><td colspan=2 align='center'>";
-        echo "<B><font color='#FF0000'>*** " . _QXZ("ARCHIVED LEAD") . " ***</font></B>";
-        echo "<input type='hidden' name='archive_search' value='Yes'>";
-        echo "</td></tr>\n";
+        echo '<div class="alert-danger">*** ' . _QXZ("ARCHIVED LEAD") . ' ***<input type="hidden" name="archive_search" value="Yes"></div>';
     }
     
     if ($archive_log == "Yes") {
-        echo "<tr><td colspan=2 align='center'>";
-        echo "<B><font color='#FF0000'>*** " . _QXZ("ARCHIVED LOG SEARCH ENABLED") . " ***</font></B> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=No&CIDdisplay=$CIDdisplay\">" . _QXZ("Turn off archived logs display") . "</a><BR>";
-        echo "<B><font color='#FF0000'>*** " . _QXZ("ARCHIVED LOGS SHOWN IN RED, THERE MAY BE DUPLICATES WITH NON-ARCHIVED LOG ENTRIES") . " ***</font></B>";
-        echo "<input type='hidden' name='archive_log' value='Yes'>";
-        echo "</td></tr>\n";
+        echo '<div class="alert-warning">*** ' . _QXZ("ARCHIVED LOG SEARCH ENABLED") . ' *** <a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=No&CIDdisplay=' . $CIDdisplay . '" style="color:#92400e;text-decoration:underline;">' . _QXZ("Turn off archived logs display") . '</a><br><small>*** ' . _QXZ("ARCHIVED LOGS SHOWN IN RED, THERE MAY BE DUPLICATES WITH NON-ARCHIVED LOG ENTRIES") . ' ***</small><input type="hidden" name="archive_log" value="Yes"></div>';
     } else {
-        echo "<tr><td colspan=2 align='center'>";
-        echo "<a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=Yes&CIDdisplay=$CIDdisplay\">" . _QXZ("Turn on archived logs display") . "</a>";
-        echo "</td></tr>\n";
+        echo '<div class="alert-info"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=Yes&CIDdisplay=' . $CIDdisplay . '" style="color:#1e40af;text-decoration:underline;">' . _QXZ("Turn on archived logs display") . '</a></div>';
     }
 
     if ($lead_id == 'NEW') { $list_id = ''; }
 
+    echo '<div class="section-divider"></div>';
+
     if ($LOGadmin_hide_lead_data != '0') {
-        // Display-only mode (read-only)
-        echo "<tr><td align=right>$label_title: </td><td align=left>$title &nbsp; \n";
-        echo "$label_first_name: $first_name </td></tr>\n";
-        echo "<tr><td align=right>$label_middle_initial: </td><td align=left>$middle_initial &nbsp; \n";
-        echo " $label_last_name: $last_name </td></tr>\n";
-        echo "<tr><td align=right>$label_address1 : </td><td align=left>$address1</td></tr>\n";
-        echo "<tr><td align=right>$label_address2 : </td><td align=left>$address2</td></tr>\n";
-        echo "<tr><td align=right>$label_address3 : </td><td align=left>$address3</td></tr>\n";
-        echo "<tr><td align=right>$label_city : </td><td align=left>$city</td></tr>\n";
-        echo "<tr><td align=right>$label_state: </td><td align=left>$state &nbsp; \n";
-        echo " $label_postal_code: $postal_code </td></tr>\n";
-        echo "<tr><td align=right>$label_province : </td><td align=left>$province</td></tr>\n";
-        echo "<tr><td align=right>$label_country_code : </td><td align=left>$country_code &nbsp; \n";
-        echo " $label_date_of_birth: $date_of_birth </td></tr>\n";
-        echo "<tr><td align=right>$label_phone_number : </td><td align=left>$phone_number</td></tr>\n";
-        echo "<tr><td align=right>$label_phone_code : </td><td align=left>$phone_code</td></tr>\n";
-        echo "<tr><td align=right>$label_alt_phone : </td><td align=left>$alt_phone</td></tr>\n";
-        echo "<tr><td align=right>$label_email : </td><td align=left>$email</td></tr>\n";
-        echo "<tr><td align=right>$label_security_phrase : </td><td align=left>$security</td></tr>\n";
-        echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left>$vendor_id</td></tr>\n";
+        // Read-only display
+        echo '<div class="form-group"><div class="form-label">' . $label_title . ':</div><div class="read-only-value">' . htmlspecialchars($title) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_first_name . ':</div><div class="read-only-value">' . htmlspecialchars($first_name) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_middle_initial . ':</div><div class="read-only-value">' . htmlspecialchars($middle_initial) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_last_name . ':</div><div class="read-only-value">' . htmlspecialchars($last_name) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address1 . ':</div><div class="read-only-value">' . htmlspecialchars($address1) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address2 . ':</div><div class="read-only-value">' . htmlspecialchars($address2) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address3 . ':</div><div class="read-only-value">' . htmlspecialchars($address3) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_city . ':</div><div class="read-only-value">' . htmlspecialchars($city) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_state . ':</div><div class="read-only-value">' . htmlspecialchars($state) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_postal_code . ':</div><div class="read-only-value">' . htmlspecialchars($postal_code) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_province . ':</div><div class="read-only-value">' . htmlspecialchars($province) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_country_code . ':</div><div class="read-only-value">' . htmlspecialchars($country_code) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_date_of_birth . ':</div><div class="read-only-value">' . htmlspecialchars($date_of_birth) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_phone_number . ':</div><div class="read-only-value">' . htmlspecialchars($phone_number) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_phone_code . ':</div><div class="read-only-value">' . htmlspecialchars($phone_code) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_alt_phone . ':</div><div class="read-only-value">' . htmlspecialchars($alt_phone) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_email . ':</div><div class="read-only-value">' . htmlspecialchars($email) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_security_phrase . ':</div><div class="read-only-value">' . htmlspecialchars($security) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_vendor_lead_code . ':</div><div class="read-only-value">' . htmlspecialchars($vendor_id) . '</div></div>';
         if ($SSsource_id_display > 0) {
-            echo "<tr><td align=right>$label_source_id : </td><td align=left>$source_id</td></tr>\n";
+            echo '<div class="form-group"><div class="form-label">' . $label_source_id . ':</div><div class="read-only-value">' . htmlspecialchars($source_id) . '</div></div>';
         }
-        echo "<tr><td align=right>$label_rank : </td><td align=left>$rank</td></tr>\n";
-        echo "<tr><td align=right>$label_owner : </td><td align=left>$owner</td></tr>\n";
-        echo "<tr><td align=right>$label_comments : </td><td align=left>$comments</td></tr>\n";
+        echo '<div class="form-group"><div class="form-label">' . $label_rank . ':</div><div class="read-only-value">' . htmlspecialchars($rank) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_owner . ':</div><div class="read-only-value">' . htmlspecialchars($owner) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_comments . ':</div><div class="read-only-value">' . htmlspecialchars($comments) . '</div></div>';
     } else {
-        // Editable mode
-        echo "<tr><td align=right>$label_title: </td><td align=left><input type=text name=title id=title size=4 maxlength=$MAXtitle value=\"$title\"> &nbsp; \n";
-        echo "$label_first_name: <input type=text name=first_name id=first_name size=15 maxlength=$MAXfirst_name value=\"" . htmlparse($first_name) . "\"> </td></tr>\n";
-        echo "<tr><td align=right>$label_middle_initial: </td><td align=left><input type=text name=middle_initial id=middle_initial size=4 maxlength=$MAXmiddle_initial value=\"" . htmlparse($middle_initial) . "\"> &nbsp; \n";
-        echo " $label_last_name: <input type=text name=last_name id=last_name size=15 maxlength=$MAXlast_name value=\"" . htmlparse($last_name) . "\"> </td></tr>\n";
-        echo "<tr><td align=right>$label_address1 : </td><td align=left><input type=text name=address1 id=address1 size=40 maxlength=$MAXaddress1 value=\"" . htmlparse($address1) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_address2 : </td><td align=left><input type=text name=address2 id=address2 size=40 maxlength=$MAXaddress2 value=\"" . htmlparse($address2) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_address3 : </td><td align=left><input type=text name=address3 id=address3 size=40 maxlength=$MAXaddress3 value=\"" . htmlparse($address3) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_city : </td><td align=left><input type=text name=city id=city size=40 maxlength=$MAXcity value=\"" . htmlparse($city) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_state: </td><td align=left><input type=text name=state id=state size=2 maxlength=$MAXstate value=\"" . htmlparse($state) . "\"> &nbsp; \n";
-        echo " $label_postal_code: <input type=text name=postal_code id=postal_code size=10 maxlength=$MAXpostal_code value=\"" . htmlparse($postal_code) . "\"> </td></tr>\n";
-        echo "<tr><td align=right>$label_province : </td><td align=left><input type=text name=province id=province size=40 maxlength=$MAXprovince value=\"" . htmlparse($province) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_country_code : </td><td align=left><input type=text name=country_code id=country_code size=3 maxlength=$MAXcountry_code value=\"" . htmlparse($country_code) . "\"> &nbsp; \n";
-        echo " $label_date_of_birth: <input type=text name=date_of_birth id=date_of_birth size=12 maxlength=10 value=\"" . htmlparse($date_of_birth) . "\"></td></tr>\n";
+        // Editable fields
+        echo '<div class="form-group"><div class="form-label">' . $label_title . ':</div><div><input type="text" name="title" id="title" class="form-input" style="max-width:150px;" maxlength="' . $MAXtitle . '" value="' . htmlparse($title) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_first_name . ':</div><div><input type="text" name="first_name" id="first_name" class="form-input" maxlength="' . $MAXfirst_name . '" value="' . htmlparse($first_name) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_middle_initial . ':</div><div><input type="text" name="middle_initial" id="middle_initial" class="form-input" style="max-width:150px;" maxlength="' . $MAXmiddle_initial . '" value="' . htmlparse($middle_initial) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_last_name . ':</div><div><input type="text" name="last_name" id="last_name" class="form-input" maxlength="' . $MAXlast_name . '" value="' . htmlparse($last_name) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address1 . ':</div><div><input type="text" name="address1" id="address1" class="form-input" maxlength="' . $MAXaddress1 . '" value="' . htmlparse($address1) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address2 . ':</div><div><input type="text" name="address2" id="address2" class="form-input" maxlength="' . $MAXaddress2 . '" value="' . htmlparse($address2) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address3 . ':</div><div><input type="text" name="address3" id="address3" class="form-input" maxlength="' . $MAXaddress3 . '" value="' . htmlparse($address3) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_city . ':</div><div><input type="text" name="city" id="city" class="form-input" maxlength="' . $MAXcity . '" value="' . htmlparse($city) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_state . ':</div><div><input type="text" name="state" id="state" class="form-input" style="max-width:150px;" maxlength="' . $MAXstate . '" value="' . htmlparse($state) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_postal_code . ':</div><div><input type="text" name="postal_code" id="postal_code" class="form-input" style="max-width:250px;" maxlength="' . $MAXpostal_code . '" value="' . htmlparse($postal_code) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_province . ':</div><div><input type="text" name="province" id="province" class="form-input" maxlength="' . $MAXprovince . '" value="' . htmlparse($province) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_country_code . ':</div><div><input type="text" name="country_code" id="country_code" class="form-input" style="max-width:150px;" maxlength="' . $MAXcountry_code . '" value="' . htmlparse($country_code) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_date_of_birth . ':</div><div><input type="text" name="date_of_birth" id="date_of_birth" class="form-input" style="max-width:250px;" maxlength="10" value="' . htmlparse($date_of_birth) . '"></div></div>';
 
         if (($LOGmodify_leads == '1') or ($LOGmodify_leads == '3') or ($lead_id == 'NEW')) {
-            echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=text name=phone_number id=phone_number size=18 maxlength=$MAXphone_number value=\"" . htmlparse($phone_number) . "\"></td></tr>\n";
-            echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=text name=phone_code id=phone_code size=10 maxlength=$MAXphone_code value=\"" . htmlparse($phone_code) . "\"></td></tr>\n";
-            echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=text name=alt_phone id=alt_phone size=12 maxlength=$MAXalt_phone value=\"" . htmlparse($alt_phone) . "\"></td></tr>\n";
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_number . ':</div><div><input type="text" name="phone_number" id="phone_number" class="form-input" maxlength="' . $MAXphone_number . '" value="' . htmlparse($phone_number) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_code . ':</div><div><input type="text" name="phone_code" id="phone_code" class="form-input" style="max-width:250px;" maxlength="' . $MAXphone_code . '" value="' . htmlparse($phone_code) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_alt_phone . ':</div><div><input type="text" name="alt_phone" id="alt_phone" class="form-input" maxlength="' . $MAXalt_phone . '" value="' . htmlparse($alt_phone) . '"></div></div>';
         } else {
-            echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=hidden name=phone_number value=\"" . htmlparse($phone_number) . "\">" . htmlparse($phone_number) . "</td></tr>\n";
-            echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=hidden name=phone_code value=\"" . htmlparse($phone_code) . "\">" . htmlparse($phone_code) . "</td></tr>\n";
-            echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=hidden name=alt_phone value=\"" . htmlparse($alt_phone) . "\">" . htmlparse($alt_phone) . "</td></tr>\n";
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_number . ':</div><div class="read-only-value">' . htmlparse($phone_number) . '<input type="hidden" name="phone_number" value="' . htmlparse($phone_number) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_code . ':</div><div class="read-only-value">' . htmlparse($phone_code) . '<input type="hidden" name="phone_code" value="' . htmlparse($phone_code) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_alt_phone . ':</div><div class="read-only-value">' . htmlparse($alt_phone) . '<input type="hidden" name="alt_phone" value="' . htmlparse($alt_phone) . '"></div></div>';
         }
 
-        echo "<tr><td align=right>$label_email : </td><td align=left><input type=text name=email size=40 maxlength=$MAXemail value=\"" . htmlparse($email) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_security_phrase : </td><td align=left><input type=text name=security id=security_phrase size=30 maxlength=$MAXsecurity_phrase value=\"" . htmlparse($security) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left><input type=text name=vendor_id id=vendor_lead_code size=30 maxlength=$MAXvendor_lead_code value=\"" . htmlparse($vendor_id) . "\"></td></tr>\n";
+        echo '<div class="form-group"><div class="form-label">' . $label_email . ':</div><div><input type="text" name="email" class="form-input" maxlength="' . $MAXemail . '" value="' . htmlparse($email) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_security_phrase . ':</div><div><input type="text" name="security" id="security_phrase" class="form-input" maxlength="' . $MAXsecurity_phrase . '" value="' . htmlparse($security) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_vendor_lead_code . ':</div><div><input type="text" name="vendor_id" id="vendor_lead_code" class="form-input" maxlength="' . $MAXvendor_lead_code . '" value="' . htmlparse($vendor_id) . '"></div></div>';
         if ($SSsource_id_display > 0) {
-            echo "<tr><td align=right>$label_source_id : </td><td align=left><input type=text name=source_id id=source_id size=30 maxlength=$MAXsource_id value=\"" . htmlparse($source_id) . "\"></td></tr>\n";
+            echo '<div class="form-group"><div class="form-label">' . $label_source_id . ':</div><div><input type="text" name="source_id" id="source_id" class="form-input" maxlength="' . $MAXsource_id . '" value="' . htmlparse($source_id) . '"></div></div>';
         }
-        echo "<tr><td align=right>$label_rank : </td><td align=left><input type=text name=rank id=rank size=7 maxlength=5 value=\"" . htmlparse($rank) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_owner : </td><td align=left><input type=text name=owner id=owner size=22 maxlength=$MAXowner value=\"" . htmlparse($owner) . "\"></td></tr>\n";
-        echo "<tr><td align=right>$label_comments : </td><td align=left><TEXTAREA name=comments id=comments ROWS=3 COLS=65>" . htmlparse($comments) . "</TEXTAREA></td></tr>\n";
+        echo '<div class="form-group"><div class="form-label">' . $label_rank . ':</div><div><input type="text" name="rank" id="rank" class="form-input" style="max-width:150px;" maxlength="5" value="' . htmlparse($rank) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_owner . ':</div><div><input type="text" name="owner" id="owner" class="form-input" maxlength="' . $MAXowner . '" value="' . htmlparse($owner) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_comments . ':</div><div><textarea name="comments" id="comments" class="form-textarea">' . htmlparse($comments) . '</textarea></div></div>';
     }
 } else {
-    echo "<!-- " . _QXZ("no lead fields form display lead does not exist") . " -->\n";
-    echo "<br><br><form action=$PHP_SELF method=POST>\n";
-    echo "<input type=hidden name=end_call value=1>\n";
-    echo "<input type=hidden name=DB value=\"$DB\">\n";
-    echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
-    echo "<input type=hidden name=dispo value=\"$dispo\">\n";
-    echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-    echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
-    echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-    echo "<input type=hidden name=extension value=\"$extension\">\n";
-    echo "<input type=hidden name=channel value=\"$channel\">\n";
-    echo "<input type=hidden name=call_began value=\"$call_began\">\n";
-    echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
-    echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
-    echo "<table cellpadding=1 cellspacing=0>\n";
+    echo '<!-- ' . _QXZ("no lead fields form display lead does not exist") . ' -->';
+    echo '<div class="card"><form action="' . $PHP_SELF . '" method="POST">';
+    echo '<input type="hidden" name="end_call" value="1">';
+    echo '<input type="hidden" name="DB" value="' . $DB . '">';
+    echo '<input type="hidden" name="lead_id" value="' . $lead_id . '">';
+    echo '<input type="hidden" name="dispo" value="' . $dispo . '">';
+    echo '<input type="hidden" name="list_id" value="' . $list_id . '">';
+    echo '<input type="hidden" name="campaign_id" value="' . $campaign_id . '">';
+    echo '<input type="hidden" name="old_phone" value="' . $phone_number . '">';
+    echo '<input type="hidden" name="server_ip" value="' . $server_ip . '">';
+    echo '<input type="hidden" name="extension" value="' . $extension . '">';
+    echo '<input type="hidden" name="channel" value="' . $channel . '">';
+    echo '<input type="hidden" name="call_began" value="' . $call_began . '">';
+    echo '<input type="hidden" name="parked_time" value="' . $parked_time . '">';
+    echo '<input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />';
 }
 
+// Comment History Section
 if ($lead_id != 'NEW') {
     $stmt = "SELECT user_id, timestamp, list_id, campaign_id, comment from vicidial_comments where lead_id='$lead_id' order by timestamp;";
     $rslt = mysql_to_mysqli($stmt, $link);
@@ -2984,7 +3013,9 @@ if ($lead_id != 'NEW') {
     
     while ($row_count > $o) {
         if (!$audit_comments) {
-            echo "<tr><td colspan='2' align=center><b>" . _QXZ("Comment History") . "</b></td></tr>\n";
+            echo '<div class="section-divider"></div>';
+            echo '<h2 style="font-size:20px;font-weight:700;color:#1f2937;margin:25px 0 15px 0;">💬 ' . _QXZ("Comment History") . '</h2>';
+            echo '<div class="comment-history">';
             $audit_comments = true;
         }
         $rowx = mysqli_fetch_row($rslt);
@@ -3004,14 +3035,25 @@ if ($lead_id != 'NEW') {
             $rowx = mysqli_fetch_row($rslt);
             $Afull_name = $rowx[0];
         }
-        echo "<tr><td align=right><font size=2>$Atimestamp[$o]: </td><td align=left><font size=2><hr> &nbsp; $Acomment[$o]<br> &nbsp; </font><font size=1><i>by user: $Auser[$o] - $Afull_name</i></td></tr>\n";
+        echo '<div class="comment-item">';
+        echo '<div class="comment-timestamp">🕒 ' . htmlspecialchars($Atimestamp[$o]) . '</div>';
+        echo '<div style="margin:10px 0;color:#1f2937;font-size:14px;line-height:1.6;">' . nl2br(htmlspecialchars($Acomment[$o])) . '</div>';
+        echo '<div class="comment-meta">by user: ' . htmlspecialchars($Auser[$o]) . ' - ' . htmlspecialchars($Afull_name) . '</div>';
+        echo '</div>';
         $o++;
     }
 
     if ($audit_comments) {
-        echo "<tr><td align=center></td><td><hr></td></tr>\n";
+        echo '</div>'; // Close comment-history
     }
+}
 
+echo '</form></div></div>'; // Close card and container
+
+	
+	
+	
+	
 		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
 
 		### find out if status(dispo) is a scheduled callback status
