@@ -379,129 +379,172 @@ echo " "._QXZ("Lead search").": $vendor_id $phone $lead_id $status $list_id $use
 echo date("l F j, Y G:i:s A");
 echo "<BR>\n";
 
-if ( (!$vendor_id) and (!$phone)  and (!$lead_id) and (!$log_phone)  and (!$log_lead_id) and (!$log_phone_archive)  and (!$log_lead_id_archive) and ( (strlen($status)<1) and (strlen($list_id)<1) and (strlen($user)<1) and (strlen($owner)<1) ) and ( (strlen($first_name)<1) and (strlen($last_name)<1) and (strlen($email)<1) ))
-	{
-	### Lead search
-	echo "<br><center>\n";
-	echo "<form method=post name=search action=\"$PHP_SELF\">\n";
-	echo "<input type=hidden name=DB value=\"$DB\">\n";
-	echo "<TABLE CELLPADDING=3 CELLSPACING=3>";
-	echo "<TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center><font color=#FFFFFF><b>"._QXZ("Lead Search Options").":</b></font></TD>";
-	echo "</TR>";
+if (
+    (!$vendor_id) && (!$phone) && (!$lead_id) && (!$log_phone) && (!$log_lead_id) && (!$log_phone_archive) && (!$log_lead_id_archive)
+    && ((strlen($status) < 1) && (strlen($list_id) < 1) && (strlen($user) < 1) && (strlen($owner) < 1))
+    && ((strlen($first_name) < 1) && (strlen($last_name) < 1) && (strlen($email) < 1))
+) {
+    // Lead search with modern inline styling
+    echo '<br><center>
+    <form method="post" name="search" action="' . $PHP_SELF . '">
+    <input type="hidden" name="DB" value="' . $DB . '">
+    <table cellpadding="0" cellspacing="0" style="width:740px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:8px;">
+    <tr style="background:#314455;">
+        <td colspan="3" align="center" style="padding:22px 0 10px 0;"><span style="color:#fff;font-size:22px;font-weight:bold;">' . _QXZ("Lead Search Options") . ':</span></td>
+    </tr>';
 
-	$archive_stmt="SHOW TABLES LIKE '%vicidial_list_archive%'";
-	$archive_rslt=mysql_to_mysqli($archive_stmt, $link);
-	if (mysqli_num_rows($archive_rslt)>0) 
-		{
-		echo "<TR bgcolor=#$SSstd_row2_background>";
-		echo "<TD ALIGN=right>"._QXZ("Archive search").": &nbsp; </TD><TD ALIGN=left><select size=1 name=archive_search><option value='No'>"._QXZ("No")."</option><option value='Yes'>"._QXZ("Yes")."</option><option	SELECTED value='$archive_search'>"._QXZ("$archive_search")."</option></select></TD>";
-		echo "<TD> &nbsp; </TD>\n";
-		echo "</TR><TR bgcolor=#$SSmenu_background>";
-		echo "<TD colspan=3 align=center height=1></TD></TR>";
-		}
+    $archive_stmt = "SHOW TABLES LIKE '%vicidial_list_archive%'";
+    $archive_rslt = mysql_to_mysqli($archive_stmt, $link);
+    if (mysqli_num_rows($archive_rslt) > 0) {
+        echo '
+        <tr style="background:#e9ecef;">
+            <td align="right" style="padding:6px 12px;font-size:15px;color:#324456;">' . _QXZ("Archive search") . ': </td>
+            <td align="left" style="padding:6px;">
+                <select name="archive_search" style="font-size:15px;background:#fff;padding:8px 10px;border:1px solid #ccd;">
+                    <option value="No">' . _QXZ("No") . '</option>
+                    <option value="Yes">' . _QXZ("Yes") . '</option>
+                    <option selected value="' . $archive_search . '">' . _QXZ($archive_search) . '</option>
+                </select>
+            </td>
+            <td style="width:60px;"></td>
+        </tr>
+        <tr style="background:#314455;"><td colspan="3" align="center" style="height:9px;"></td></tr>';
+    }
 
-	echo "<TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>$label_vendor_lead_code("._QXZ("vendor lead code")."): &nbsp; </TD><TD ALIGN=left><input type=text name=vendor_id size=10 maxlength=20></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center height=1></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
+    // Vendor ID
+    echo '
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_vendor_lead_code . ' (' . _QXZ("vendor lead code") . '): </td>
+        <td align="left"><input type="text" name="vendor_id" maxlength="20" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>';
 
-	echo "<TD ALIGN=right>$label_phone_number: &nbsp; </TD><TD ALIGN=left><input type=text name=phone size=14 maxlength=18></TD>";
-	echo "<TD rowspan=2><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>$label_alt_phone "._QXZ("search").": &nbsp; </TD><TD ALIGN=left><select size=1 name=alt_phone_search><option value='No'>"._QXZ("No")."</option><option value='Yes'>"._QXZ("Yes")."</option><option SELECTED value='$alt_phone_search'>"._QXZ("$alt_phone_search")."</option></select></TD>";
+    // Phone
+    echo '
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_phone_number . ': </td>
+        <td align="left"><input type="text" name="phone" maxlength="18" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td rowspan="2"><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_alt_phone . ' ' . _QXZ("search") . ': </td>
+        <td align="left">
+            <select name="alt_phone_search" style="font-size:15px;background:#fff;padding:8px 10px;border:1px solid #ccd;">
+                <option value="No">' . _QXZ("No") . '</option>
+                <option value="Yes">' . _QXZ("Yes") . '</option>
+                <option selected value="' . $alt_phone_search . '">' . _QXZ($alt_phone_search) . '</option>
+            </select>
+        </td>
+    </tr>
+    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>';
 
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center height=1></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
+    // Lead ID
+    echo '
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Lead ID") . ': </td>
+        <td align="left"><input type="text" name="lead_id" maxlength="10" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#314455;"><td colspan="3" align="center" style="height:7px;"></td></tr>';
 
-	echo "<TD ALIGN=right>"._QXZ("Lead ID").": &nbsp; </TD><TD ALIGN=left><input type=text name=lead_id size=10 maxlength=10></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center height=3></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
+    // Status/List/User/Owner
+    echo '
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Status") . ': </td>
+        <td align="left"><input type="text" name="status" maxlength="6" style="width:80px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td rowspan="4"><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("List ID") . ': </td>
+        <td align="left"><input type="text" name="list_id" maxlength="14" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("User") . ': </td>
+        <td align="left"><input type="text" name="user" maxlength="20" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Owner") . ': </td>
+        <td align="left"><input type="text" name="owner" maxlength="50" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+    </tr>
+    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>';
 
-	echo "<TD ALIGN=right>"._QXZ("Status").": &nbsp; </TD><TD ALIGN=left><input type=text name=status size=7 maxlength=6></TD>";
-	echo "<TD rowspan=4><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>"._QXZ("List ID").": &nbsp; </TD><TD ALIGN=left><input type=text name=list_id size=15 maxlength=14></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>"._QXZ("User").": &nbsp; </TD><TD ALIGN=left><input type=text name=user size=15 maxlength=20></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>"._QXZ("Owner").": &nbsp; </TD><TD ALIGN=left><input type=text name=owner size=15 maxlength=50></TD>";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center height=1></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
+    // First/Last Name, Email
+    echo '
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_first_name . ': </td>
+        <td align="left"><input type="text" name="first_name" maxlength="30" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td rowspan="2"><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_last_name . ': </td>
+        <td align="left"><input type="text" name="last_name" maxlength="30" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+    </tr>
+    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_email . ': </td>
+        <td align="left"><input type="text" name="email" maxlength="30" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;"><td colspan="3" style="height:10px;"></td></tr>';
 
-	echo "<TD ALIGN=right>$label_first_name: &nbsp; </TD><TD ALIGN=left><input type=text name=first_name size=15 maxlength=30></TD>";
-	echo "<TD rowspan=2><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>$label_last_name: &nbsp; </TD><TD ALIGN=left><input type=text name=last_name size=15 maxlength=30></TD>";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center height=1></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>$label_email: &nbsp; </TD><TD ALIGN=left><input type=text name=email size=15 maxlength=30></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "</TR>";
+    // Log search section
+    echo '
+    <tr style="background:#314455;"><td colspan="3" align="center" style="padding-top:16px;"><span style="color:#fff;font-size:18px;font-weight:bold;">' . _QXZ("Log Search Options") . ':</span></td></tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Lead ID") . ': </td>
+        <td align="left"><input type="text" name="log_lead_id" maxlength="10" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#0084ff;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_phone_number . ' ' . _QXZ("Dialed") . ': </td>
+        <td align="left"><input type="text" name="log_phone" maxlength="18" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#0084ff;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#314455;"><td colspan="3" align="center" style="padding-top:12px;"><span style="color:#fff;font-size:18px;font-weight:bold;">' . _QXZ("Archived Log Search Options") . ':</span></td></tr>';
 
+    if ((strlen($SScoldstorage_server_ip) > 1) && (strlen($SScoldstorage_login) > 0) && (strlen($SScoldstorage_pass) > 0)) {
+        if (strlen($archive_type) < 1) { $archive_type = 'ARCHIVE'; }
+        echo '
+        <tr style="background:#f7f9fb;">
+            <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Archive Type") . ': </td>
+            <td align="left">
+                <select name="archive_type" style="font-size:15px;background:#fff;padding:8px 10px;border:1px solid #ccd;">
+                    <option value="ARCHIVE">' . _QXZ("Archive Only") . '</option>
+                    <option value="COLDSTORAGE">' . _QXZ("Cold-Storage Only") . '</option>
+                    <option value="ARCHIVE_AND_COLDSTORAGE">' . _QXZ("Archive and Cold-Storage") . '</option>
+                    <option selected value="' . $archive_type . '">' . _QXZ($archive_type) . '</option>
+                </select>
+            </td>
+            <td></td>
+        </tr>
+        <tr style="background:#314455;"><td colspan="3" align="center" style="height:9px;"></td></tr>';
+    } else {
+        echo '<tr style="background:#f7f9fb;">
+            <td align="right"></td>
+            <td align="left"><input type="hidden" name="archive_type" value="ARCHIVE"></td>
+            <td></td>
+        </tr>';
+    }
+    echo '
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Lead ID") . ': </td>
+        <td align="left"><input type="text" name="log_lead_id_archive" maxlength="10" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#226dad;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;">
+        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_phone_number . ' ' . _QXZ("Dialed") . ': </td>
+        <td align="left"><input type="text" name="log_phone_archive" maxlength="18" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
+        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#226dad;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
+    </tr>
+    <tr style="background:#f7f9fb;"><td colspan="3" style="height:10px;"></td></tr>
+    </table>
+    </form>
+    </center>';
+    echo "</body></html>";
+    exit;
+}
 
-	### Log search
-	echo "<br><center>\n";
-	echo "<TD colspan=3 align=center> &nbsp; </TD>";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center><font color=#FFFFFF><b>"._QXZ("Log Search Options").":</b></font></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-
-	echo "<TD ALIGN=right>"._QXZ("Lead ID").": &nbsp; </TD><TD ALIGN=left><input type=text name=log_lead_id size=10 maxlength=10></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=cente height=1></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-
-	echo "<TD ALIGN=right>$label_phone_number "._QXZ("Dialed").": &nbsp; </TD><TD ALIGN=left><input type=text name=log_phone size=18 maxlength=18></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR>";
-	echo "<TD colspan=3 align=center> &nbsp; </TD>";
-	echo "</TR>";
-	echo "<TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center><font color=#FFFFFF><b>"._QXZ("Archived Log Search Options").":</b></font></TD>";
-
-	if ( (strlen($SScoldstorage_server_ip) > 1) and (strlen($SScoldstorage_login) > 0) and (strlen($SScoldstorage_pass) > 0) )
-		{
-		if (strlen($archive_type) < 1) {$archive_type = 'ARCHIVE';}
-		echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-		echo "<TD ALIGN=right>"._QXZ("Archive Type").": &nbsp; </TD><TD ALIGN=left><select size=1 name=archive_type><option value='ARCHIVE'>"._QXZ("Archive Only")."</option><option value='COLDSTORAGE'>"._QXZ("Cold-Storage Only")."</option><option value='ARCHIVE_AND_COLDSTORAGE'>"._QXZ("Archive and Cold-Storage")."</option><option	SELECTED value='$archive_type'>"._QXZ("$archive_type")."</option></select></TD>";
-		echo "</TR><TR bgcolor=#$SSmenu_background>";
-		echo "<TD colspan=3 align=center height=1></TD>";
-		}
-	else
-		{
-		echo "</TR><TR>";
-		echo "<TD ALIGN=right></TD><TD ALIGN=left><input type=hidden name=archive_type value='ARCHIVE'></TD>";
-		}
-
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-	echo "<TD ALIGN=right>"._QXZ("Lead ID").": &nbsp; </TD><TD ALIGN=left><input type=text name=log_lead_id_archive size=10 maxlength=10></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR bgcolor=#$SSmenu_background>";
-	echo "<TD colspan=3 align=center height=1></TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-
-	echo "<TD ALIGN=right>$label_phone_number "._QXZ("Dialed").": &nbsp; </TD><TD ALIGN=left><input type=text name=log_phone_archive size=18 maxlength=18></TD>";
-	echo "<TD><INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='"._QXZ("SUBMIT")."'></TD>\n";
-	echo "</TR><TR>";
-	echo "<TD colspan=3 align=center> &nbsp; </TD>";
-	echo "</TR><TR bgcolor=#$SSstd_row2_background>";
-
-
-	echo "</TABLE>\n";
-	echo "</form>\n</center>\n";
-	echo "</body></html>\n";
-	exit;
-	}
 
 else
 	{
