@@ -2918,7 +2918,7 @@ while (!feof($file)) {
 			
 			} 
 
-		}
+		
 # Lead Loader Processing Section - Modern UI with Inline CSS
 
 // Display processing options information in a modern card layout
@@ -3704,7 +3704,7 @@ echo '</div>';
 echo '</div>'; // End of card body
 echo '</div>'; // End of card
 
-<?php
+
 // Final progress update
 echo "<script>updateProgress($good, $bad, $total, $dup, $moved);</script>";
 echo "<script>addLogEntry('Processing complete. Good: $good, Bad: $bad, Total: $total', 'success');</script>";
