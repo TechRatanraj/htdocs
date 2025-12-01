@@ -1491,10 +1491,10 @@ else
 
         $RUNtime = ($ENDtime - $STARTtime);
 
-        echo "<div class=\"text-center\">\n";
-        echo "<a href=\"$PHP_SELF\"
+echo "<div class=\"text-center\">\n";
+       
 
-		echo "<a href=\"$PHP_SELF\" class=\"new-search-btn\">"._QXZ("NEW SEARCH")."</a>\n";
+echo "<a href=\"$PHP_SELF\" class=\"new-search-btn\">"._QXZ("NEW SEARCH")."</a>\n";
 echo "<div class=\"runtime-info\">"._QXZ("script runtime").": $RUNtime "._QXZ("seconds")."</div>\n";
 echo "</div>\n";
 
@@ -1661,7 +1661,7 @@ exit;
         require("dbconnect_mysqli.php");
         echo "<!-- Using slave server $slave_db_server $db_source -->\n";
         }
-		
+
 
     $rslt=mysql_to_mysqli("$stmt", $link);
     $results_to_print = mysqli_num_rows($rslt);
