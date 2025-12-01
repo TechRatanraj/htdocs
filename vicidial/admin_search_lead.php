@@ -1378,7 +1378,7 @@ echo "</div>"; // Close search-container
 	$stmtL="UPDATE vicidial_lead_search_log set results='$o', seconds='$search_seconds' where search_log_id='$search_log_id';";
 	if ($DB) {echo "|$stmtL|\n";}
 	$rslt=mysql_to_mysqli($stmtL, $link);
-	}
+	
 	##### END Lead search #####
 
 
