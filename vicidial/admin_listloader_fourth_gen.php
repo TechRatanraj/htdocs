@@ -3708,7 +3708,7 @@ echo '</div>'; // End of card
 // Final progress update
 echo "<script>updateProgress($good, $bad, $total, $dup, $moved);</script>";
 echo "<script>addLogEntry('Processing complete. Good: $good, Bad: $bad, Total: $total', 'success');</script>";
-
+			}
 
 ##### BEGIN field chooser #####
 else if ($file_layout == "custom") {
