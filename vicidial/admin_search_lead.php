@@ -375,7 +375,7 @@ if (strlen($row[17])>0) {$label_email =				$row[17];}
 if (strlen($row[18])>0) {$label_comments =			$row[18];}
 
 
-echo " "._QXZ("Lead search").": $vendor_id $phone $lead_id $status $list_id $user\n";
+echo " " . _QXZ("Lead search") . ": $vendor_id $phone $lead_id $status $list_id $user\n";
 echo date("l F j, Y G:i:s A");
 echo "<BR>\n";
 
@@ -384,164 +384,245 @@ if (
     && ((strlen($status) < 1) && (strlen($list_id) < 1) && (strlen($user) < 1) && (strlen($owner) < 1))
     && ((strlen($first_name) < 1) && (strlen($last_name) < 1) && (strlen($email) < 1))
 ) {
-    // Lead search with modern inline styling
-    echo '<br><center>
-    <form method="post" name="search" action="' . $PHP_SELF . '">
-    <input type="hidden" name="DB" value="' . $DB . '">
-    <table cellpadding="0" cellspacing="0" style="width:740px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:8px;">
-    <tr style="background:#314455;">
-        <td colspan="3" align="center" style="padding:22px 0 10px 0;"><span style="color:#fff;font-size:22px;font-weight:bold;">' . _QXZ("Lead Search Options") . ':</span></td>
-    </tr>';
+    // Modern card-based search form matching the screenshot style
+    echo '
+    <div style="max-width:1400px;margin:30px auto;padding:0 20px;">
+        <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:40px 50px;">
+            
+            <!-- Header with Icon -->
+            <div style="display:flex;align-items:center;margin-bottom:35px;padding-bottom:25px;border-bottom:1px solid #e5e7eb;">
+                <div style="width:50px;height:50px;background:#4b5563;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-right:15px;">
+                    <span style="color:#fff;font-size:24px;">🔍</span>
+                </div>
+                <h1 style="margin:0;font-size:28px;font-weight:600;color:#1f2937;">LEAD SEARCH</h1>
+            </div>
+            
+            <form method="post" name="search" action="' . $PHP_SELF . '">
+                <input type="hidden" name="DB" value="' . $DB . '">';
 
+    // Archive search option
     $archive_stmt = "SHOW TABLES LIKE '%vicidial_list_archive%'";
     $archive_rslt = mysql_to_mysqli($archive_stmt, $link);
     if (mysqli_num_rows($archive_rslt) > 0) {
         echo '
-        <tr style="background:#e9ecef;">
-            <td align="right" style="padding:6px 12px;font-size:15px;color:#324456;">' . _QXZ("Archive search") . ': </td>
-            <td align="left" style="padding:6px;">
-                <select name="archive_search" style="font-size:15px;background:#fff;padding:8px 10px;border:1px solid #ccd;">
-                    <option value="No">' . _QXZ("No") . '</option>
-                    <option value="Yes">' . _QXZ("Yes") . '</option>
-                    <option selected value="' . $archive_search . '">' . _QXZ($archive_search) . '</option>
-                </select>
-            </td>
-            <td style="width:60px;"></td>
-        </tr>
-        <tr style="background:#314455;"><td colspan="3" align="center" style="height:9px;"></td></tr>';
+                <!-- Archive Search Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Archive search") . '</label>
+                        <select name="archive_search" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
+                            <option value="No">' . _QXZ("No") . '</option>
+                            <option value="Yes">' . _QXZ("Yes") . '</option>
+                            <option selected value="' . $archive_search . '">' . _QXZ($archive_search) . '</option>
+                        </select>
+                    </div>
+                    <div></div>
+                </div>';
     }
 
-    // Vendor ID
     echo '
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_vendor_lead_code . ' (' . _QXZ("vendor lead code") . '): </td>
-        <td align="left"><input type="text" name="vendor_id" maxlength="20" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>';
+                <!-- Vendor ID Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_vendor_lead_code . '</label>
+                        <input type="text" name="vendor_id" maxlength="20" placeholder="digits only" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;">
+                        <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s;">
+                            ' . _QXZ("SUBMIT") . '
+                        </button>
+                    </div>
+                </div>
 
-    // Phone
-    echo '
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_phone_number . ': </td>
-        <td align="left"><input type="text" name="phone" maxlength="18" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td rowspan="2"><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_alt_phone . ' ' . _QXZ("search") . ': </td>
-        <td align="left">
-            <select name="alt_phone_search" style="font-size:15px;background:#fff;padding:8px 10px;border:1px solid #ccd;">
-                <option value="No">' . _QXZ("No") . '</option>
-                <option value="Yes">' . _QXZ("Yes") . '</option>
-                <option selected value="' . $alt_phone_search . '">' . _QXZ($alt_phone_search) . '</option>
-            </select>
-        </td>
-    </tr>
-    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>';
+                <!-- Phone Number Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_phone_number . '</label>
+                        <input type="text" name="phone" maxlength="18" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_alt_phone . ' ' . _QXZ("search") . '</label>
+                        <select name="alt_phone_search" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
+                            <option value="No">' . _QXZ("No") . '</option>
+                            <option value="Yes">' . _QXZ("Yes") . '</option>
+                            <option selected value="' . $alt_phone_search . '">' . _QXZ($alt_phone_search) . '</option>
+                        </select>
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                </div>
+                
+                <div style="text-align:right;margin-bottom:25px;">
+                    <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                        ' . _QXZ("SUBMIT") . '
+                    </button>
+                </div>
 
-    // Lead ID
-    echo '
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Lead ID") . ': </td>
-        <td align="left"><input type="text" name="lead_id" maxlength="10" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#314455;"><td colspan="3" align="center" style="height:7px;"></td></tr>';
+                <!-- Lead ID Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Lead ID") . '</label>
+                        <input type="text" name="lead_id" maxlength="10" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;">
+                        <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                            ' . _QXZ("SUBMIT") . '
+                        </button>
+                    </div>
+                </div>
 
-    // Status/List/User/Owner
-    echo '
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Status") . ': </td>
-        <td align="left"><input type="text" name="status" maxlength="6" style="width:80px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td rowspan="4"><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("List ID") . ': </td>
-        <td align="left"><input type="text" name="list_id" maxlength="14" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("User") . ': </td>
-        <td align="left"><input type="text" name="user" maxlength="20" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Owner") . ': </td>
-        <td align="left"><input type="text" name="owner" maxlength="50" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-    </tr>
-    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>';
+                <!-- Status and List ID Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Status") . '</label>
+                        <input type="text" name="status" maxlength="6" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("List ID") . '</label>
+                        <input type="text" name="list_id" maxlength="14" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                </div>
 
-    // First/Last Name, Email
-    echo '
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_first_name . ': </td>
-        <td align="left"><input type="text" name="first_name" maxlength="30" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td rowspan="2"><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_last_name . ': </td>
-        <td align="left"><input type="text" name="last_name" maxlength="30" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-    </tr>
-    <tr style="background:#314455;"><td colspan="3" align="center" style="height:8px;"></td></tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_email . ': </td>
-        <td align="left"><input type="text" name="email" maxlength="30" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#28a745;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;"><td colspan="3" style="height:10px;"></td></tr>';
+                <!-- User and Owner Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("User") . '</label>
+                        <input type="text" name="user" maxlength="20" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Owner") . '</label>
+                        <input type="text" name="owner" maxlength="50" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                </div>
+                
+                <div style="text-align:right;margin-bottom:25px;">
+                    <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                        ' . _QXZ("SUBMIT") . '
+                    </button>
+                </div>
 
-    // Log search section
-    echo '
-    <tr style="background:#314455;"><td colspan="3" align="center" style="padding-top:16px;"><span style="color:#fff;font-size:18px;font-weight:bold;">' . _QXZ("Log Search Options") . ':</span></td></tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Lead ID") . ': </td>
-        <td align="left"><input type="text" name="log_lead_id" maxlength="10" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#0084ff;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_phone_number . ' ' . _QXZ("Dialed") . ': </td>
-        <td align="left"><input type="text" name="log_phone" maxlength="18" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#0084ff;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#314455;"><td colspan="3" align="center" style="padding-top:12px;"><span style="color:#fff;font-size:18px;font-weight:bold;">' . _QXZ("Archived Log Search Options") . ':</span></td></tr>';
+                <!-- First Name and Last Name Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_first_name . '</label>
+                        <input type="text" name="first_name" maxlength="30" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_last_name . '</label>
+                        <input type="text" name="last_name" maxlength="30" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                </div>
+                
+                <div style="text-align:right;margin-bottom:25px;">
+                    <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                        ' . _QXZ("SUBMIT") . '
+                    </button>
+                </div>
+
+                <!-- Email Row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div>
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_email . '</label>
+                        <input type="text" name="email" maxlength="30" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;">
+                        <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                            ' . _QXZ("SUBMIT") . '
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Log Search Section -->
+                <div style="margin-top:45px;padding-top:35px;border-top:1px solid #e5e7eb;">
+                    <h2 style="font-size:20px;font-weight:600;color:#1f2937;margin:0 0 25px 0;">' . _QXZ("Log Search Options") . '</h2>
+                    
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                        <div>
+                            <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Lead ID") . '</label>
+                            <input type="text" name="log_lead_id" maxlength="10" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        </div>
+                        <div style="display:flex;align-items:flex-end;">
+                            <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                                ' . _QXZ("SUBMIT") . '
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                        <div>
+                            <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_phone_number . ' ' . _QXZ("Dialed") . '</label>
+                            <input type="text" name="log_phone" maxlength="18" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        </div>
+                        <div style="display:flex;align-items:flex-end;">
+                            <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                                ' . _QXZ("SUBMIT") . '
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Archived Log Search Section -->
+                <div style="margin-top:35px;padding-top:35px;border-top:1px solid #e5e7eb;">
+                    <h2 style="font-size:20px;font-weight:600;color:#1f2937;margin:0 0 25px 0;">' . _QXZ("Archived Log Search Options") . '</h2>';
 
     if ((strlen($SScoldstorage_server_ip) > 1) && (strlen($SScoldstorage_login) > 0) && (strlen($SScoldstorage_pass) > 0)) {
         if (strlen($archive_type) < 1) { $archive_type = 'ARCHIVE'; }
         echo '
-        <tr style="background:#f7f9fb;">
-            <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Archive Type") . ': </td>
-            <td align="left">
-                <select name="archive_type" style="font-size:15px;background:#fff;padding:8px 10px;border:1px solid #ccd;">
-                    <option value="ARCHIVE">' . _QXZ("Archive Only") . '</option>
-                    <option value="COLDSTORAGE">' . _QXZ("Cold-Storage Only") . '</option>
-                    <option value="ARCHIVE_AND_COLDSTORAGE">' . _QXZ("Archive and Cold-Storage") . '</option>
-                    <option selected value="' . $archive_type . '">' . _QXZ($archive_type) . '</option>
-                </select>
-            </td>
-            <td></td>
-        </tr>
-        <tr style="background:#314455;"><td colspan="3" align="center" style="height:9px;"></td></tr>';
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                        <div>
+                            <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Archive Type") . '</label>
+                            <select name="archive_type" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
+                                <option value="ARCHIVE">' . _QXZ("Archive Only") . '</option>
+                                <option value="COLDSTORAGE">' . _QXZ("Cold-Storage Only") . '</option>
+                                <option value="ARCHIVE_AND_COLDSTORAGE">' . _QXZ("Archive and Cold-Storage") . '</option>
+                                <option selected value="' . $archive_type . '">' . _QXZ($archive_type) . '</option>
+                            </select>
+                        </div>
+                        <div></div>
+                    </div>';
     } else {
-        echo '<tr style="background:#f7f9fb;">
-            <td align="right"></td>
-            <td align="left"><input type="hidden" name="archive_type" value="ARCHIVE"></td>
-            <td></td>
-        </tr>';
+        echo '<input type="hidden" name="archive_type" value="ARCHIVE">';
     }
+
     echo '
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . _QXZ("Lead ID") . ': </td>
-        <td align="left"><input type="text" name="log_lead_id_archive" maxlength="10" style="width:120px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#226dad;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;">
-        <td align="right" style="padding:10px 12px;font-size:15px;color:#324456;">' . $label_phone_number . ' ' . _QXZ("Dialed") . ': </td>
-        <td align="left"><input type="text" name="log_phone_archive" maxlength="18" style="width:180px;padding:8px;border-radius:6px;border:1.2px solid #ccd;font-size:15px;"></td>
-        <td><input type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="background:#226dad;color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:15px;font-weight:bold;cursor:pointer;"></td>
-    </tr>
-    <tr style="background:#f7f9fb;"><td colspan="3" style="height:10px;"></td></tr>
-    </table>
-    </form>
-    </center>';
-    echo "</body></html>";
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                        <div>
+                            <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Lead ID") . '</label>
+                            <input type="text" name="log_lead_id_archive" maxlength="10" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        </div>
+                        <div style="display:flex;align-items:flex-end;">
+                            <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                                ' . _QXZ("SUBMIT") . '
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                        <div>
+                            <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_phone_number . ' ' . _QXZ("Dialed") . '</label>
+                            <input type="text" name="log_phone_archive" maxlength="18" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
+                        </div>
+                        <div style="display:flex;align-items:flex-end;">
+                            <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+                                ' . _QXZ("SUBMIT") . '
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    </body>
+    </html>';
     exit;
 }
 
