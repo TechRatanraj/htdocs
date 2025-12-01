@@ -543,82 +543,100 @@ if ($SSadmin_screen_colors != 'default') {
 }
 
 
-
 #############################################
 ##### BEGIN modify log status functions #####
 #############################################
-if ($modify_log_submit>0)
-	{
-	if ( ($LOGmodify_leads == '3') or ($LOGmodify_leads == '4') )
-		{
-		if (strlen($modify_log_status)>0)
-			{
-			if ( (strlen($lead_id)>0) and (strlen($modify_log_table)>3) and (strlen($modify_log_status)>0) and (strlen($modify_old_status)>0) and (strlen($vicidial_id) > 0) and (strlen($log_date) > 10) )
-				{
-				$stmt='';
-				if ($modify_log_table == 'vicidial_log')
-					{
-					$stmt="UPDATE vicidial_log set status='$modify_log_status' where lead_id='$lead_id' and uniqueid='$vicidial_id' and call_date='$log_date';";
-					}
-				if ($modify_log_table == 'vicidial_log_archive')
-					{
-					$stmt="UPDATE vicidial_log_archive set status='$modify_log_status' where lead_id='$lead_id' and uniqueid='$vicidial_id' and call_date='$log_date';";
-					}
-				if ($modify_log_table == 'vicidial_closer_log')
-					{
-					$stmt="UPDATE vicidial_closer_log set status='$modify_log_status' where lead_id='$lead_id' and closecallid='$vicidial_id' and call_date='$log_date';";
-					}
-				if ($modify_log_table == 'vicidial_closer_log_archive')
-					{
-					$stmt="UPDATE vicidial_closer_log_archive set status='$modify_log_status' where lead_id='$lead_id' and closecallid='$vicidial_id' and call_date='$log_date';";
-					}
-				if ($modify_log_table == 'vicidial_agent_log')
-					{
-					$stmt="UPDATE vicidial_agent_log set status='$modify_log_status' where lead_id='$lead_id' and agent_log_id='$vicidial_id' and event_time='$log_date';";
-					}
-				if ($modify_log_table == 'vicidial_agent_log_archive')
-					{
-					$stmt="UPDATE vicidial_agent_log_archive set status='$modify_log_status' where lead_id='$lead_id' and agent_log_id='$vicidial_id' and event_time='$log_date';";
-					}
+if ($modify_log_submit > 0) {
+    // Only allow certain roles to change log statuses
+    if (($LOGmodify_leads == '3') || ($LOGmodify_leads == '4')) {
+        if (strlen($modify_log_status) > 0) {
+            // All primary fields are required for update
+            if (
+                strlen($lead_id) > 0 &&
+                strlen($modify_log_table) > 3 &&
+                strlen($modify_log_status) > 0 &&
+                strlen($modify_old_status) > 0 &&
+                strlen($vicidial_id) > 0 &&
+                strlen($log_date) > 10
+            ) {
+                $stmt = '';
+                switch ($modify_log_table) {
+                    case 'vicidial_log':
+                        $stmt = "UPDATE vicidial_log SET status='$modify_log_status' WHERE lead_id='$lead_id' AND uniqueid='$vicidial_id' AND call_date='$log_date';";
+                        break;
+                    case 'vicidial_log_archive':
+                        $stmt = "UPDATE vicidial_log_archive SET status='$modify_log_status' WHERE lead_id='$lead_id' AND uniqueid='$vicidial_id' AND call_date='$log_date';";
+                        break;
+                    case 'vicidial_closer_log':
+                        $stmt = "UPDATE vicidial_closer_log SET status='$modify_log_status' WHERE lead_id='$lead_id' AND closecallid='$vicidial_id' AND call_date='$log_date';";
+                        break;
+                    case 'vicidial_closer_log_archive':
+                        $stmt = "UPDATE vicidial_closer_log_archive SET status='$modify_log_status' WHERE lead_id='$lead_id' AND closecallid='$vicidial_id' AND call_date='$log_date';";
+                        break;
+                    case 'vicidial_agent_log':
+                        $stmt = "UPDATE vicidial_agent_log SET status='$modify_log_status' WHERE lead_id='$lead_id' AND agent_log_id='$vicidial_id' AND event_time='$log_date';";
+                        break;
+                    case 'vicidial_agent_log_archive':
+                        $stmt = "UPDATE vicidial_agent_log_archive SET status='$modify_log_status' WHERE lead_id='$lead_id' AND agent_log_id='$vicidial_id' AND event_time='$log_date';";
+                        break;
+                }
 
-				if (strlen($stmt)>20)
-					{
-					if ($DB) {echo "$stmt\n";}
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$affected_rows = mysqli_affected_rows($link);
+                if (strlen($stmt) > 20) {
+                    if ($DB) { echo "$stmt\n"; }
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $affected_rows = mysqli_affected_rows($link);
 
-					$SQL_log = addslashes($stmt);
-					$stmt="INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LEADS', event_type='MODIFY', record_id='$lead_id', event_code='MODIFY LEAD LOG STATUS', event_sql=\"$SQL_log\", event_notes='$lead_id|$modify_log_table|$modify_log_status|$modify_old_status|$vicidial_id|$log_date|$affected_rows';";
-					if ($DB) {echo "|$stmt|\n";}
-					$rslt=mysql_to_mysqli($stmt, $link);
+                    // Write an admin log entry for the change
+                    $SQL_log = addslashes($stmt);
+                    $now_time = date("Y-m-d H:i:s");
+                    $stmt = "INSERT INTO vicidial_admin_log SET event_date='$now_time', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LEADS', event_type='MODIFY', record_id='$lead_id', event_code='MODIFY LEAD LOG STATUS', event_sql=\"$SQL_log\", event_notes='$lead_id|$modify_log_table|$modify_log_status|$modify_old_status|$vicidial_id|$log_date|$affected_rows';";
+                    if ($DB) { echo "|$stmt|\n"; }
+                    $rslt = mysql_to_mysqli($stmt, $link);
 
-					echo "SUCCESS: "._QXZ("Log Status Modified").": $modify_log_status \n";
-					exit;
-					}
-				else
-					{
-					echo "ERROR: "._QXZ("Modification could not be completed").": $stmt|$lead_id|$modify_log_table|$modify_log_status|$modify_old_status|$vicidial_id|$log_date \n";
-					exit;
-					}
-				}
-			else
-				{
-				echo "ERROR: "._QXZ("Missing required fields").": $lead_id|$modify_log_table|$modify_log_status|$modify_old_status|$vicidial_id|$log_date \n";
-				exit;
-				}
-			}
-		else
-			{
-			echo "ERROR: "._QXZ("Log status not changed, new status is blank or the same as the old status").": $modify_log_status \n";
-			exit;
-			}
-		}
-	else
-		{
-		echo "ERROR: "._QXZ("You do not have permission to modify log statuses").": $LOGmodify_leads \n";
-		exit;
-		}
-	}
+                    // Success HTML
+                    echo '<div style="max-width:520px;margin:40px auto;background:#d1fae5;padding:36px 30px;border-radius:12px;border-left:4px solid #10b981;font-family:Segoe UI,Arial,sans-serif;text-align:center">';
+                    echo '<div style="font-size:38px;margin-bottom:20px;">✅</div>';
+                    echo '<div style="font-size:18px;color:#065f46;font-weight:600;margin-bottom:10px;">' . _QXZ("Log Status Modified") . '!</div>';
+                    echo '<div style="font-size:15px;color:#065f46;">' . _QXZ("New Status") . ': <b>' . htmlentities($modify_log_status) . '</b></div>';
+                    echo '</div>';
+                    exit;
+                } else {
+                    echo '<div style="max-width:520px;margin:40px auto;background:#fee2e2;padding:36px 30px;border-radius:12px;border-left:4px solid #ef4444;font-family:Segoe UI,Arial,sans-serif;text-align:center">';
+                    echo '<div style="font-size:38px;margin-bottom:20px;">❌</div>';
+                    echo '<div style="font-size:18px;color:#991b1b;font-weight:600;margin-bottom:10px;">' . _QXZ("Modification could not be completed") . '</div>';
+                    echo '<div style="font-size:15px;color:#991b1b;">' . htmlentities("$stmt|$lead_id|$modify_log_table|$modify_log_status|$modify_old_status|$vicidial_id|$log_date") . '</div>';
+                    echo '</div>';
+                    exit;
+                }
+            } else {
+                // Missing data
+                echo '<div style="max-width:520px;margin:40px auto;background:#fee2e2;padding:36px 30px;border-radius:12px;border-left:4px solid #ef4444;font-family:Segoe UI,Arial,sans-serif;text-align:center">';
+                echo '<div style="font-size:38px;margin-bottom:20px;">❌</div>';
+                echo '<div style="font-size:18px;color:#991b1b;font-weight:600;margin-bottom:10px;">' . _QXZ("Missing required fields") . '</div>';
+                echo '<div style="font-size:15px;color:#991b1b;">' . htmlentities("$lead_id|$modify_log_table|$modify_log_status|$modify_old_status|$vicidial_id|$log_date") . '</div>';
+                echo '</div>';
+                exit;
+            }
+        } else {
+            // Blank or unchanged status
+            echo '<div style="max-width:520px;margin:40px auto;background:#fef3c7;padding:36px 30px;border-radius:12px;border-left:4px solid #f59e0b;font-family:Segoe UI,Arial,sans-serif;text-align:center">';
+            echo '<div style="font-size:38px;margin-bottom:20px;">⚠️</div>';
+            echo '<div style="font-size:18px;color:#92400e;font-weight:600;margin-bottom:10px;">' . _QXZ("Log status not changed, new status is blank or the same as the old status") . '</div>';
+            echo '<div style="font-size:15px;color:#92400e;">' . htmlentities($modify_log_status) . '</div>';
+            echo '</div>';
+            exit;
+        }
+    } else {
+        // No permission to modify logs
+        echo '<div style="max-width:520px;margin:40px auto;background:#fee2e2;padding:36px 30px;border-radius:12px;border-left:4px solid #ef4444;font-family:Segoe UI,Arial,sans-serif;text-align:center">';
+        echo '<div style="font-size:38px;margin-bottom:20px;">⛔</div>';
+        echo '<div style="font-size:18px;color:#991b1b;font-weight:600;margin-bottom:10px;">' . _QXZ("You do not have permission to modify log statuses") . '</div>';
+        echo '<div style="font-size:15px;color:#991b1b;">' . htmlentities($LOGmodify_leads) . '</div>';
+        echo '</div>';
+        exit;
+    }
+}
+
 ############################################
 ##### END modify log status functions #####
 #############################################
