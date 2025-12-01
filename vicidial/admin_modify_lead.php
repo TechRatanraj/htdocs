@@ -3011,9 +3011,8 @@ if ($lead_id != 'NEW') {
     if ($audit_comments) {
         echo "<tr><td align=center></td><td><hr></td></tr>\n";
     }
-}
 
-echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
+		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
 
 		### find out if status(dispo) is a scheduled callback status
 		$scheduled_callback='';
