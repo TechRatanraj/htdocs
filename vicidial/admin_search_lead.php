@@ -697,8 +697,9 @@ if ($results_to_print < 1 && $results_to_printX < 1) {
                 </tbody>
             </table>
         </div>';
-}
+
 echo '</div></div>';
+
 
 
 		if (strlen($stmtC) > 10)
