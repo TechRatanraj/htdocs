@@ -786,10 +786,10 @@ if ((!$OK_to_process) or (($leadfile) and ($file_layout != "standard" && $file_l
                 </table>
             </div>
         </div>
-   
-						
+   					
 
-<?php
+
+		<?php
 if ($SSenable_international_dncs) {
     $dnc_stmt = "SELECT iso3, country_name FROM vicidial_country_iso_tld WHERE iso3 IS NOT NULL AND iso3!='' ORDER BY country_name ASC";
     $dnc_rslt = mysql_to_mysqli($dnc_stmt, $link);
@@ -808,12 +808,12 @@ if ($SSenable_international_dncs) {
         }
     }
     ?>
-    <tr>
-        <td style="padding:15px 20px;width:28%;vertical-align:middle;">
-            <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("DNC Scrub by Country"); ?>:</label>
+    <tr style="background:#fff;">
+        <td style="padding:20px 30px;width:22%;vertical-align:middle;background:#f9fafb;">
+            <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("DNC Scrub by Country"); ?>:</label>
         </td>
-        <td style="padding:15px 20px;width:72%;">
-            <select name="international_dnc_scrub" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:300px;background:#fff;">
+        <td style="padding:20px 30px;width:78%;background:#fff;">
+            <select name="international_dnc_scrub" style="padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:650px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
                 <?php
                 if ($available_countries > 0) {
                     echo "<option value=''>-- "._QXZ("SELECT COUNTRY DNC LIST")." --</option>\n";
@@ -829,13 +829,13 @@ if ($SSenable_international_dncs) {
 }
 ?>
 
-<tr style="background:#f9fafb;">
-    <td style="padding:15px 20px;vertical-align:top;">
-        <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Status Duplicate Check"); ?>:</label>
+<tr style="background:#fff;">
+    <td style="padding:20px 30px;vertical-align:top;background:#f9fafb;">
+        <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Status Duplicate Check"); ?>:</label>
     </td>
-    <td style="padding:15px 20px;">
+    <td style="padding:20px 30px;background:#fff;">
         <span id="statuses_display">
-            <select id="dedupe_statuses" name="dedupe_statuses[]" size="5" multiple style="padding:8px 12px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;width:280px;background:#fff;">
+            <select id="dedupe_statuses" name="dedupe_statuses[]" size="5" multiple style="padding:10px 14px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:350px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
                 <option value="--ALL--" selected>--<?php echo _QXZ("ALL DISPOSITIONS"); ?>--</option>
                 <?php echo $dedupe_status_select ?>
             </select>
@@ -844,13 +844,13 @@ if ($SSenable_international_dncs) {
 </tr>
 
 <?php if ($enable_status_mismatch_leadloader_option > 0) { ?>
-    <tr>
-        <td style="padding:15px 20px;vertical-align:middle;">
-            <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Status Mismatch Action"); ?>:</label>
+    <tr style="background:#fff;">
+        <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+            <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Status Mismatch Action"); ?>:</label>
         </td>
-        <td style="padding:15px 20px;">
+        <td style="padding:20px 30px;background:#fff;">
             <span id="status_mismatch_display">
-                <select id="status_mismatch_action" name="status_mismatch_action" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:400px;background:#fff;">
+                <select id="status_mismatch_action" name="status_mismatch_action" style="padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:650px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
                     <option value="" selected><?php echo _QXZ("NONE"); ?></option>
                     <option value="MOVE RECENT FROM SYSTEM"><?php echo _QXZ("MOVE MOST RECENT PHONE DUPLICATE, CHECK ENTIRE SYSTEM"); ?></option>
                     <option value="MOVE ALL FROM SYSTEM"><?php echo _QXZ("MOVE ALL PHONE DUPLICATES, CHECK ENTIRE SYSTEM"); ?></option>
@@ -863,12 +863,12 @@ if ($SSenable_international_dncs) {
     </tr>
 <?php } ?>
 
-<tr style="background:#f9fafb;">
-    <td style="padding:15px 20px;vertical-align:middle;">
-        <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("USA-Canada Check"); ?>:</label>
+<tr style="background:#fff;">
+    <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+        <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("USA-Canada Check"); ?>:</label>
     </td>
-    <td style="padding:15px 20px;">
-        <select name="usacan_check" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:300px;background:#fff;">
+    <td style="padding:20px 30px;background:#fff;">
+        <select name="usacan_check" style="padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:450px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
             <option selected value="NONE"><?php echo _QXZ("NO USACAN VALID CHECK"); ?></option>
             <option value="PREFIX"><?php echo _QXZ("CHECK FOR VALID PREFIX"); ?></option>
             <option value="AREACODE"><?php echo _QXZ("CHECK FOR VALID AREACODE"); ?></option>
@@ -878,12 +878,12 @@ if ($SSenable_international_dncs) {
     </td>
 </tr>
 
-<tr>
-    <td style="padding:15px 20px;vertical-align:middle;">
-        <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</label>
+<tr style="background:#fff;">
+    <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+        <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</label>
     </td>
-    <td style="padding:15px 20px;">
-        <select name="postalgmt" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:300px;background:#fff;">
+    <td style="padding:20px 30px;background:#fff;">
+        <select name="postalgmt" style="padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:450px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
             <option selected value="AREA"><?php echo _QXZ("COUNTRY CODE AND AREA CODE ONLY"); ?></option>
             <option value="POSTAL"><?php echo _QXZ("POSTAL CODE FIRST"); ?></option>
             <option value="TZCODE"><?php echo _QXZ("OWNER TIME ZONE CODE FIRST"); ?></option>
@@ -892,24 +892,24 @@ if ($SSenable_international_dncs) {
     </td>
 </tr>
 
-<tr style="background:#f9fafb;">
-    <td style="padding:15px 20px;vertical-align:middle;">
-        <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("State Abbreviation Lookup"); ?>:</label>
+<tr style="background:#fff;">
+    <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+        <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("State Abbreviation Lookup"); ?>:</label>
     </td>
-    <td style="padding:15px 20px;">
-        <select name="state_conversion" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:300px;background:#fff;">
+    <td style="padding:20px 30px;background:#fff;">
+        <select name="state_conversion" style="padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:450px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
             <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
             <option value="STATELOOKUP"><?php echo _QXZ("FULL STATE NAME TO ABBREVIATION"); ?></option>
         </select>
     </td>
 </tr>
 
-<tr>
-    <td style="padding:15px 20px;vertical-align:middle;">
-        <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Required Phone Number Length"); ?>:</label>
+<tr style="background:#fff;">
+    <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+        <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Required Phone Number Length"); ?>:</label>
     </td>
-    <td style="padding:15px 20px;">
-        <select name="web_loader_phone_length" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:180px;background:#fff;">
+    <td style="padding:20px 30px;background:#fff;">
+        <select name="web_loader_phone_length" style="padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;width:100%;max-width:250px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#374151;">
             <?php if ($SSweb_loader_phone_length == 'DISABLED') { ?>
                 <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
             <?php } 
@@ -924,18 +924,18 @@ if ($SSenable_international_dncs) {
     </td>
 </tr>
 
-<tr style="background:#f9fafb;">
-    <td colspan="2" style="padding:25px 20px;text-align:center;">
-        <input type="submit" style="padding:14px 48px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;border:none;border-radius:8px;margin-right:20px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.1);" value="<?php echo _QXZ("SUBMIT"); ?>" name="submit_file">
-        <input type="button" style="padding:14px 32px;background:#f3f4f6;color:#1f2937;font-size:15px;font-weight:600;border:2px solid #d1d5db;border-radius:8px;cursor:pointer;" onClick="javascript:document.location='admin_listloader_fourth_gen.php'" value="<?php echo _QXZ("START OVER"); ?>" name="reload_page">
+<tr style="background:#fff;">
+    <td colspan="2" style="padding:35px 30px;text-align:center;border-top:1px solid #e5e7eb;">
+        <input type="submit" style="padding:12px 40px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;border:none;border-radius:6px;margin-right:15px;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" value="<?php echo _QXZ("SUBMIT"); ?>" name="submit_file">
+        <input type="button" style="padding:12px 32px;background:#f9fafb;color:#374151;font-size:15px;font-weight:600;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" onClick="javascript:document.location='admin_listloader_fourth_gen.php'" value="<?php echo _QXZ("START OVER"); ?>" name="reload_page">
     </td>
 </tr>
 
-<tr>
-    <td style="padding:20px;font-size:13px;">
-        <a href="admin.php?ADD=100" target="_parent" style="color:#2563eb;text-decoration:none;font-weight:600;">← <?php echo _QXZ("BACK TO ADMIN"); ?></a>
+<tr style="background:#fff;">
+    <td style="padding:20px 30px;font-size:14px;background:#f9fafb;">
+        <a href="admin.php?ADD=100" target="_parent" style="color:#2563eb;text-decoration:none;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">← <?php echo _QXZ("BACK TO ADMIN"); ?></a>
     </td>
-    <td style="padding:20px;text-align:right;font-size:12px;color:#6b7280;">
+    <td style="padding:20px 30px;text-align:right;font-size:13px;color:#6b7280;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
         <strong style="color:#374151;"><?php echo _QXZ("LIST LOADER 4th Gen"); ?></strong> | 
         <a href="admin_listloader_fifth_gen.php" style="color:#2563eb;text-decoration:none;font-weight:600;"><?php echo _QXZ("5th Gen"); ?></a>
         &nbsp;&nbsp;•&nbsp;&nbsp;
@@ -952,92 +952,92 @@ if ($SSenable_international_dncs) {
 }
 else {
     ?>
-    <table style="width:100%;max-width:900px;margin:30px auto;border-collapse:collapse;background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);overflow:hidden;">
-        <tr>
-            <td style="padding:15px 25px;width:35%;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Lead file"); ?>:</label>
+    <table style="width:100%;max-width:1200px;margin:30px auto;border-collapse:collapse;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;width:22%;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Lead file"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;width:65%;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;width:78%;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $leadfile_name ?>
             </td>
         </tr>
-        <tr style="background:#f9fafb;">
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("List ID Override"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("List ID Override"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $list_id_override ?>
             </td>
         </tr>
-        <tr>
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Phone Code Override"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Phone Code Override"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $phone_code_override ?>
             </td>
         </tr>
-        <tr style="background:#f9fafb;">
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("USA-Canada Check"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("USA-Canada Check"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $usacan_check ?>
             </td>
         </tr>
-        <tr>
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Lead Duplicate Check"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Lead Duplicate Check"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $dupcheck ?>
             </td>
         </tr>
         <?php if ($SSenable_international_dncs) { ?>
-        <tr style="background:#f9fafb;">
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("International DNC scrub"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("International DNC scrub"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $international_dnc_scrub ?>
             </td>
         </tr>
         <?php } ?>
-        <tr>
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $postalgmt ?>
             </td>
         </tr>
-        <tr style="background:#f9fafb;">
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("State Abbreviation Lookup"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("State Abbreviation Lookup"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $state_conversion ?>
             </td>
         </tr>
-        <tr>
-            <td style="padding:15px 25px;vertical-align:middle;">
-                <label style="font-weight:600;color:#374151;font-size:14px;"><?php echo _QXZ("Required Phone Number Length"); ?>:</label>
+        <tr style="background:#fff;">
+            <td style="padding:20px 30px;vertical-align:middle;background:#f9fafb;">
+                <label style="font-weight:600;color:#1f2937;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Required Phone Number Length"); ?>:</label>
             </td>
-            <td style="padding:15px 25px;font-size:14px;color:#1f2937;">
+            <td style="padding:20px 30px;font-size:15px;color:#374151;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo $web_loader_phone_length ?>
             </td>
         </tr>
-        <tr style="background:#f9fafb;">
-            <td colspan="2" style="padding:25px;text-align:center;">
+        <tr style="background:#fff;">
+            <td colspan="2" style="padding:35px 30px;text-align:center;border-top:1px solid #e5e7eb;">
                 <form action="<?php echo $PHP_SELF ?>" method="get" enctype="multipart/form-data">
                     <input type="hidden" name="leadfile_name" value="<?php echo $leadfile_name ?>">
                     <input type="hidden" name="DB" value="<?php echo $DB ?>">
-                    <a href="admin_listloader_fourth_gen.php" style="display:inline-block;padding:14px 32px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px;margin-right:20px;"><?php echo _QXZ("Load Another Lead File"); ?></a>
+                    <a href="admin_listloader_fourth_gen.php" style="display:inline-block;padding:12px 40px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"><?php echo _QXZ("Load Another Lead File"); ?></a>
                 </form>
             </td>
         </tr>
-        <tr>
-            <td colspan="2" style="padding:20px 25px;text-align:center;font-size:12px;color:#6b7280;border-top:1px solid #e5e7eb;">
+        <tr style="background:#fff;">
+            <td colspan="2" style="padding:20px 30px;text-align:center;font-size:13px;color:#6b7280;border-top:1px solid #f3f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
                 <?php echo _QXZ("VERSION"); ?>: <strong><?php echo $version ?></strong>
                 &nbsp;&nbsp;•&nbsp;&nbsp;
                 <?php echo _QXZ("BUILD"); ?>: <strong><?php echo $build ?></strong>
