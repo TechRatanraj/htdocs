@@ -3876,7 +3876,7 @@ if ($CIDdisplay == "Yes") {
         }
     }
     echo '</tbody></table></div></div>';
-}
+
 
 echo '</div>'; // Close modern-container
 echo '</body></html>';
