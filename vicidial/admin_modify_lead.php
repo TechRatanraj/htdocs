@@ -3552,298 +3552,335 @@ echo '</body></html>';
 
 
 		### iframe for custom fields display/editing
-		if ($custom_fields_enabled > 0)
-			{
-			$CLlist_id = $list_id;
-			if (strlen($entry_list_id) > 2)
-				{$CLlist_id = $entry_list_id;}
-			$stmt="SHOW TABLES LIKE \"custom_$CLlist_id\";";
-			if ($DB>0) {echo "$stmt";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$tablecount_to_print = mysqli_num_rows($rslt);
-			if ($tablecount_to_print > 0) 
-				{
-				$stmt="SELECT count(*) from custom_$CLlist_id where lead_id='$lead_id';";
-				if ($DB>0) {echo "$stmt";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$fieldscount_to_print = mysqli_num_rows($rslt);
-				if ($fieldscount_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$custom_records_count =	$rowx[0];
-					$submit_buttonURL = '&submit_button=YES';
-					if ($LOGmodify_leads == '5') {$submit_buttonURL = '&submit_button=READONLY';}
+if ($custom_fields_enabled > 0) {
+    $CLlist_id = $list_id;
+    if (strlen($entry_list_id) > 2) { $CLlist_id = $entry_list_id; }
+    
+    $stmt = "SHOW TABLES LIKE \"custom_$CLlist_id\";";
+    if ($DB > 0) { echo "$stmt"; }
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $tablecount_to_print = mysqli_num_rows($rslt);
+    
+    if ($tablecount_to_print > 0) {
+        $stmt = "SELECT count(*) from custom_$CLlist_id where lead_id='$lead_id';";
+        if ($DB > 0) { echo "$stmt"; }
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $fieldscount_to_print = mysqli_num_rows($rslt);
+        
+        if ($fieldscount_to_print > 0) {
+            $rowx = mysqli_fetch_row($rslt);
+            $custom_records_count = $rowx[0];
+            $submit_buttonURL = '&submit_button=YES';
+            if ($LOGmodify_leads == '5') { $submit_buttonURL = '&submit_button=READONLY'; }
 
-					echo "<B>"._QXZ("CUSTOM FIELDS FOR THIS LEAD").":</B><BR>\n";
-					echo "<iframe src=\"../agc/$vdc_form_display?lead_id=$lead_id&list_id=$CLlist_id&stage=DISPLAY$submit_buttonURL&user=$PHP_AUTH_USER&pass=$PHP_AUTH_PW&bcrypt=OFF&bgcolor=E6E6E6\" style=\"background-color:transparent;\" scrolling=\"auto\" frameborder=\"2\" allowtransparency=\"true\" id=\"vcFormIFrame\" name=\"vcFormIFrame\" width=\"740\" height=\"300\" STYLE=\"z-index:18\"> </iframe>\n";
-					echo "<BR><BR>";
-					}
-				}
-			}
+            echo '<div class="card" style="margin-top:25px;">';
+            echo '<div class="card-header"><h2 class="card-title">📝 ' . _QXZ("CUSTOM FIELDS FOR THIS LEAD") . '</h2></div>';
+            echo '<div style="padding:10px;background:#f9fafb;border-radius:8px;">';
+            echo "<iframe src=\"../agc/$vdc_form_display?lead_id=$lead_id&list_id=$CLlist_id&stage=DISPLAY$submit_buttonURL&user=$PHP_AUTH_USER&pass=$PHP_AUTH_PW&bcrypt=OFF&bgcolor=E6E6E6\" style=\"background-color:transparent;width:100%;border:1px solid #d1d5db;border-radius:8px;\" scrolling=\"auto\" allowtransparency=\"true\" id=\"vcFormIFrame\" name=\"vcFormIFrame\" height=\"300\"></iframe>\n";
+            echo '</div></div>';
+        }
+    }
+}
 
+// CALLS TO THIS LEAD Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">📞 ' . _QXZ("CALLS TO THIS LEAD") . '</h2>';
+if ($CIDdisplay == "Yes") {
+    echo '<a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#3b82f6;text-decoration:none;font-size:14px;">🔄 ' . _QXZ("Toggle Details") . '</a>';
+}
+echo '</div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LENGTH") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("HANGUP REASON") . '</th>';
+echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>';
 
-		echo "<B>"._QXZ("CALLS TO THIS LEAD").":</B>\n";
-		if ($CIDdisplay=="Yes")
-			{
-			$out_log_width=1300;
-			if ($AMDcount > 0) {$out_log_width=1500;}
-			echo "<TABLE width=$out_log_width cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=center><font size=2> "._QXZ("PHONE")."</td><td align=center><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALLER ID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("UNIQUEID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("SERVER IP")."</a></td>";
-			if ($AMDcount > 0)
-				{echo "<td align=right><font size=2> "._QXZ("AMD STATUS")."</td><td align=right><font size=2> "._QXZ("AMD RESPONSE")."</td>";}
-			echo "</tr>\n";
-			}
-		else
-			{
-			echo "<TABLE width=850 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=center><font size=2> "._QXZ("PHONE")."</td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALLER ID")."</a></td></tr>\n";
-			}
+if ($CIDdisplay == "Yes") {
+    echo '<th style="padding:12px;text-align:center;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALLER ID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("UNIQUEID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("SERVER IP") . '</a></th>';
+    if ($AMDcount > 0) {
+        echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("AMD STATUS") . '</th>';
+        echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("AMD RESPONSE") . '</th>';
+    }
+} else {
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALLER ID") . '</a></th>';
+}
+echo '</tr></thead><tbody>';
+echo "$call_log\n";
+echo '</tbody></table></div></div>';
 
-		echo "$call_log\n";
+// CLOSER RECORDS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">📥 ' . _QXZ("CLOSER RECORDS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LENGTH") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("WAIT") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("HANGUP REASON") . '</th>';
 
-		echo "</TABLE>\n";
-		echo "<BR><BR>\n";
+if ($CIDdisplay == "Yes") {
+    echo '<th style="padding:12px;text-align:center;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALL ID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:center;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("DID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("UNIQUEID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("SERVER IP") . '</a></th>';
+} else {
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALL ID") . '</a></th>';
+}
+echo '</tr></thead><tbody>';
+echo "$closer_log\n";
+echo '</tbody></table></div></div>';
 
-		echo "<B>"._QXZ("CLOSER RECORDS FOR THIS LEAD").":</B>\n";
-		if ($CIDdisplay=="Yes")
-			{
-			echo "<TABLE width=1150 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("WAIT")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=center><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALL ID")."</a></td><td align=center><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("DID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("UNIQUEID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("SERVER IP")."</a></td></tr>\n";
-			}
-		else
-			{
-			echo "<TABLE width=850 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("WAIT")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALL ID")."</a></td></tr>\n";
-			}
+// AGENT LOG RECORDS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">👤 ' . _QXZ("AGENT LOG RECORDS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PAUSE") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("WAIT") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("TALK") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("DISPO") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("GROUP") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("SUB") . '</th>';
+echo '</tr></thead><tbody>';
+echo "$agent_log\n";
+echo '</tbody></table></div></div>';
 
-		echo "$closer_log\n";
+// PARK LOGS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">🅿️ ' . _QXZ("PARK LOGS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PARK TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CHANNEL GROUP") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("GRAB TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("HANGUP TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PARK SEC") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TALK SEC") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("EXTENSION") . '</th>';
+echo '</tr></thead><tbody>';
 
-		echo "</TABLE>\n";
-		echo "<BR><BR>\n";
+$stmt = "SELECT * from park_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by parked_time, grab_time, hangup_time desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
+$u = 0;
+while ($logs_to_print > $u) {
+    $row = mysqli_fetch_array($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    $u++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[parked_time]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[channel_group]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[user]</td>";
+    echo "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;'>$row[status]</span></td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[grab_time]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[hangup_time]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[parked_sec]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[talked_sec]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[extension]</td>";
+    echo "</tr>";
+}
+echo '</tbody></table></div></div>';
 
-		echo "<B>"._QXZ("AGENT LOG RECORDS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=0 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("CAMPAIGN")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=left><font size=2> "._QXZ("PAUSE")."</td><td align=right><font size=2> "._QXZ("WAIT")."</td><td align=right><font size=2> "._QXZ("TALK")."</td><td align=right><font size=2> "._QXZ("DISPO")."</td><td align=right><font size=2> "._QXZ("STATUS")."</td><td align=right><font size=2> "._QXZ("GROUP")."</td><td align=right><font size=2> "._QXZ("SUB")."</td></tr>\n";
+// IVR LOGS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">🔢 ' . _QXZ("IVR LOGS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALL MENU") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ACTION") . '</th>';
+echo '</tr></thead><tbody>';
 
-			echo "$agent_log\n";
+$stmt = "SELECT campaign_id,event_date,menu_id,menu_action from vicidial_outbound_ivr_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by uniqueid,event_date,menu_action desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-		echo "</TABLE>\n";
-		echo "<BR><BR>\n";
+$u = 0;
+while ($logs_to_print > $u) {
+    $row = mysqli_fetch_row($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    $u++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+    echo "</tr>";
+}
 
+if ($CIDdisplay == "Yes") {
+    $stmt = "SELECT start_time,caller_id,channel,server_ip,comment_d,uniqueid from live_inbound_log where uniqueid IN($uniqueidLIST) order by start_time desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-		echo "<B>"._QXZ("PARK LOGS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("PARK TIME")."</td><td><font size=2>"._QXZ("CHANNEL GROUP")." </td><td align=left><font size=2>"._QXZ("TSR")." </td><td align=left><font size=2> &nbsp; "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("GRAB TIME")."</td><td align=left><font size=2> "._QXZ("HANGUP TIME")."</td><td align=left><font size=2> "._QXZ("PARK SEC")."</td><td align=left><font size=2> "._QXZ("TALK SEC")."</td><td align=left><font size=2> "._QXZ("EXTENSION")."</td></tr>\n";
+    if ($logs_to_print > 0) {
+        echo "<tr style='background:#fff3cd;'><td colspan='5' style='padding:12px;font-size:14px;font-weight:600;color:#856404;'>" . _QXZ("Inbound Call IVR entries") . "</td></tr>";
+    }
 
-		$stmt="SELECT * from park_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by parked_time, grab_time, hangup_time desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[5]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[4]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+        echo "</tr>";
+    }
+}
+echo '</tbody></table></div></div>';
 
-		$u=0;
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_array($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
+// VOICEMAIL MESSAGE LOGS
+if ($CIDdisplay == "Yes") {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📧 ' . _QXZ("VOICEMAIL MESSAGE DAILY COUNT LOGS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("MESSAGE STARTED COUNT") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("MESSAGE COMPLETED COUNT") . '</th>';
+    echo '</tr></thead><tbody>';
 
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=1> $row[parked_time] </td>";
-			echo "<td align=left><font size=1> $row[channel_group] </td>\n";
-			echo "<td align=left><font size=2> $row[user] </td>\n";
-			echo "<td align=left><font size=2> $row[status] </td>\n";
-			echo "<td align=left><font size=1> $row[grab_time] </td>\n";
-			echo "<td align=left><font size=1> $row[hangup_time] </td>\n";
-			echo "<td align=left><font size=2> $row[parked_sec] </td>\n";
-			echo "<td align=left><font size=2> $row[talked_sec] </td>\n";
-			echo "<td align=left><font size=1> $row[extension] </td>\n";
-			echo "</tr>\n";
-			}
+    $stmt = "SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-		echo "</TABLE><BR><BR>\n";
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+        echo "</tr>";
+    }
 
+    if ($archive_log == "Yes") {
+        $stmt = "SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+        if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-		echo "<B>"._QXZ("IVR LOGS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("CAMPAIGN")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("CALL MENU")." </td><td align=left><font size=2> &nbsp; "._QXZ("ACTION")."</td></tr>\n";
+        $u = 0;
+        while ($logs_to_print > $u) {
+            $row = mysqli_fetch_row($rslt);
+            $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+            $u++;
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$row[0]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+            echo "</tr>";
+        }
+    }
+    echo '</tbody></table></div></div>';
+}
 
-		$stmt="SELECT campaign_id,event_date,menu_id,menu_action from vicidial_outbound_ivr_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by uniqueid,event_date,menu_action desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
+// 3-WAY PRESS LOGS
+if ($CIDdisplay == "Yes") {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">☎️ ' . _QXZ("3-WAY PRESS LOGS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PHONE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RESULT") . '</th>';
+    echo '</tr></thead><tbody>';
 
-		$u=0;
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
+    $stmt = "SELECT phone_number,call_date,user,result from vicidial_3way_press_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[0] </td>";
-			echo "<td align=left><font size=1> $row[1] </td>\n";
-			echo "<td align=left><font size=2> $row[2] </td>\n";
-			echo "<td align=left><font size=2> $row[3] &nbsp;</td>\n";
-			echo "</tr>\n";
-			}
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+        echo "</tr>";
+    }
 
-		if ($CIDdisplay=="Yes")
-			{
-			$stmt="SELECT start_time,caller_id,channel,server_ip,comment_d,uniqueid from live_inbound_log where uniqueid IN($uniqueidLIST) order by start_time desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-			if ($DB) {echo "$logs_to_print|$stmt|\n";}
+    if ($archive_log == "Yes") {
+        $stmt = "SELECT phone_number,call_date,user,result from vicidial_3way_press_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+        if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-			if ($logs_to_print > 0)
-				{echo "<tr bgcolor=white><td align=left colspan=5><font size=2> "._QXZ("Inbound Call IVR entries").": </td></tr>";}
+        $u = 0;
+        while ($logs_to_print > $u) {
+            $row = mysqli_fetch_row($rslt);
+            $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+            $u++;
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$row[0]</td>";
+            echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+            echo "</tr>";
+        }
+    }
+    echo '</tbody></table></div></div>';
+}
 
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
+echo '</div>'; // Close modern-container
+echo '</body></html>';
 
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=2> $row[5] </td>";
-				echo "<td align=left><font size=2> $row[0] </td>\n";
-				echo "<td align=left><font size=2> $row[4] </td>\n";
-				echo "<td align=left><font size=2> $row[1] &nbsp;</td>\n";
-				echo "</tr>\n";
-				}
-			}
-		echo "</TABLE><BR><BR>\n";
-
-
-		if ($CIDdisplay=="Yes")
-			{
-			echo "<B>"._QXZ("VOICEMAIL MESSAGE DAILY COUNT LOGS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2>"._QXZ("DATE")." </td><td align=left><font size=2>"._QXZ("MESSAGE STARTED COUNT")." </td><td align=left><font size=2> &nbsp; "._QXZ("MESSAGE COMPLETED COUNT")."</td></tr>\n";
-
-			$stmt="SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-			if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=2> $row[0] </td>";
-				echo "<td align=left><font size=2> $row[1] </td>\n";
-				echo "<td align=left><font size=2> $row[2] &nbsp; </td>\n";
-				echo "</tr>\n";
-				}
-
-			if ($archive_log=="Yes") 
-				{
-				$stmt="SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$logs_to_print = mysqli_num_rows($rslt);
-				if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-				$u=0;
-				while ($logs_to_print > $u) 
-					{
-					$row=mysqli_fetch_row($rslt);
-					if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-					$u++;
-					echo "<tr $bgcolor>";
-					echo "<td><font size=1>$u</td>";
-					echo "<td align=left><font size=2 color='#FF0000'> $row[0] </td>";
-					echo "<td align=left><font size=2> $row[1] </td>\n";
-					echo "<td align=left><font size=2> $row[2] &nbsp; </td>\n";
-					echo "</tr>\n";
-					}
-				}
-
-			echo "</TABLE><BR><BR>\n";
-			}
-
-
-		if ($CIDdisplay=="Yes")
-			{
-			echo "<B>"._QXZ("3-WAY PRESS LOGS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=1400 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("PHONE")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td><font size=2>"._QXZ("USER")." </td><td align=left><font size=2>"._QXZ("RESULT")." </td></tr>\n";
-
-			$stmt="SELECT phone_number,call_date,user,result from vicidial_3way_press_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-			if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=2> $row[0] </td>";
-				echo "<td align=left><font size=1> $row[1] </td>\n";
-				echo "<td align=left><font size=2> $row[2] </td>\n";
-				echo "<td align=left><font size=2> $row[3] &nbsp;</td>\n";
-				echo "</tr>\n";
-				}
-
-			if ($archive_log=="Yes") 
-				{
-				$stmt="SELECT phone_number,call_date,user,result from vicidial_3way_press_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$logs_to_print = mysqli_num_rows($rslt);
-				if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-				$u=0;
-				while ($logs_to_print > $u) 
-					{
-					$row=mysqli_fetch_row($rslt);
-					if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-					$u++;
-					echo "<tr $bgcolor>";
-					echo "<td><font size=1>$u</td>";
-					echo "<td align=left><font size=2 color='#FF0000'> $row[0] </td>";
-					echo "<td align=left><font size=1> $row[1] </td>\n";
-					echo "<td align=left><font size=2> $row[2] </td>\n";
-					echo "<td align=left><font size=2> $row[3] &nbsp;</td>\n";
-					echo "</tr>\n";
-					}
-				}
-			echo "</TABLE><BR><BR>\n";
 
 
 
