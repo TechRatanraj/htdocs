@@ -4465,4 +4465,5 @@ function htmlparse($text) {
         return $text;
     }
 }
+}
 ?>
