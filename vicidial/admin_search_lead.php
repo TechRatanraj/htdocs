@@ -696,8 +696,8 @@ if ($results_to_print < 1 && $results_to_printX < 1) {
     echo '
                 </tbody>
             </table>
-        </div>';
-
+          </div>';
+}
 echo '</div></div>';
 
 
