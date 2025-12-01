@@ -6,7 +6,7 @@
 #
 
 require("dbconnect_mysqli.php");
-require("functions.php");
+//require("functions.php");
 
  $PHP_AUTH_USER=$_SERVER['PHP_AUTH_USER'];
  $PHP_AUTH_PW=$_SERVER['PHP_AUTH_PW'];
