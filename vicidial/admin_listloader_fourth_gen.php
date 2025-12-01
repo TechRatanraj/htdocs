@@ -4033,6 +4033,8 @@ print "</script>";
 
 ##### END field chooser #####
 }
+		}
+	}
 ?>
 </form>
 </body>
