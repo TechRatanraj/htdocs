@@ -384,7 +384,7 @@ if (
     && ((strlen($status) < 1) && (strlen($list_id) < 1) && (strlen($user) < 1) && (strlen($owner) < 1))
     && ((strlen($first_name) < 1) && (strlen($last_name) < 1) && (strlen($email) < 1))
 ) {
-    // Modern card-based search form matching the screenshot style
+    // Modern card-based search form
     echo '
     <div style="max-width:1400px;margin:30px auto;padding:0 20px;">
         <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:40px 50px;">
@@ -394,7 +394,7 @@ if (
                 <div style="width:50px;height:50px;background:#4b5563;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-right:15px;">
                     <span style="color:#fff;font-size:24px;">🔍</span>
                 </div>
-                <h1 style="margin:0;font-size:28px;font-weight:600;color:#1f2937;">LEAD SEARCH</h1>
+                <h1 style="margin:0;font-size:28px;font-weight:600;color:#1f2937;">' . _QXZ("LEAD SEARCH") . '</h1>
             </div>
             
             <form method="post" name="search" action="' . $PHP_SELF . '">
@@ -406,35 +406,35 @@ if (
     if (mysqli_num_rows($archive_rslt) > 0) {
         echo '
                 <!-- Archive Search Row -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
-                    <div>
-                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Archive search") . '</label>
-                        <select name="archive_search" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
-                            <option value="No">' . _QXZ("No") . '</option>
-                            <option value="Yes">' . _QXZ("Yes") . '</option>
-                            <option selected value="' . $archive_search . '">' . _QXZ($archive_search) . '</option>
-                        </select>
-                    </div>
-                    <div></div>
+                <div style="margin-bottom:25px;">
+                    <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Archive search") . '</label>
+                    <select name="archive_search" style="width:100%;max-width:300px;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
+                        <option value="No">' . _QXZ("No") . '</option>
+                        <option value="Yes">' . _QXZ("Yes") . '</option>
+                        <option selected value="' . $archive_search . '">' . _QXZ($archive_search) . '</option>
+                    </select>
                 </div>';
     }
 
     echo '
-                <!-- Vendor ID Row -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                <!-- Lead Search Section -->
+                <h2 style="margin:30px 0 20px 0;font-size:18px;font-weight:600;color:#1f2937;padding-top:20px;border-top:1px solid #e5e7eb;">' . _QXZ("Lead Search Options") . '</h2>
+                
+                <!-- Vendor ID -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_vendor_lead_code . '</label>
                         <input type="text" name="vendor_id" maxlength="20" placeholder="digits only" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
-                    <div style="display:flex;align-items:flex-end;">
+                    <div>
                         <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s;">
                             ' . _QXZ("SUBMIT") . '
                         </button>
                     </div>
                 </div>
 
-                <!-- Phone Number Row -->
+                <!-- Phone Number -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_phone_number . '</label>
@@ -451,28 +451,27 @@ if (
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
                 </div>
-                
                 <div style="text-align:right;margin-bottom:25px;">
                     <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                         ' . _QXZ("SUBMIT") . '
                     </button>
                 </div>
 
-                <!-- Lead ID Row -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                <!-- Lead ID -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Lead ID") . '</label>
                         <input type="text" name="lead_id" maxlength="10" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
-                    <div style="display:flex;align-items:flex-end;">
+                    <div>
                         <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                             ' . _QXZ("SUBMIT") . '
                         </button>
                     </div>
                 </div>
 
-                <!-- Status and List ID Row -->
+                <!-- Status, List ID, User, Owner -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Status") . '</label>
@@ -485,8 +484,6 @@ if (
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
                 </div>
-
-                <!-- User and Owner Row -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("User") . '</label>
@@ -499,14 +496,13 @@ if (
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
                 </div>
-                
                 <div style="text-align:right;margin-bottom:25px;">
                     <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                         ' . _QXZ("SUBMIT") . '
                     </button>
                 </div>
 
-                <!-- First Name and Last Name Row -->
+                <!-- First Name, Last Name -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_first_name . '</label>
@@ -519,21 +515,20 @@ if (
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
                 </div>
-                
                 <div style="text-align:right;margin-bottom:25px;">
                     <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                         ' . _QXZ("SUBMIT") . '
                     </button>
                 </div>
 
-                <!-- Email Row -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                <!-- Email -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                     <div>
                         <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_email . '</label>
                         <input type="text" name="email" maxlength="30" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         <span style="display:inline-block;margin-top:5px;color:#6b7280;font-size:12px;">ⓘ</span>
                     </div>
-                    <div style="display:flex;align-items:flex-end;">
+                    <div>
                         <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                             ' . _QXZ("SUBMIT") . '
                         </button>
@@ -544,24 +539,24 @@ if (
                 <div style="margin-top:45px;padding-top:35px;border-top:1px solid #e5e7eb;">
                     <h2 style="font-size:20px;font-weight:600;color:#1f2937;margin:0 0 25px 0;">' . _QXZ("Log Search Options") . '</h2>
                     
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                         <div>
                             <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Lead ID") . '</label>
                             <input type="text" name="log_lead_id" maxlength="10" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         </div>
-                        <div style="display:flex;align-items:flex-end;">
+                        <div>
                             <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                                 ' . _QXZ("SUBMIT") . '
                             </button>
                         </div>
                     </div>
 
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                         <div>
                             <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_phone_number . ' ' . _QXZ("Dialed") . '</label>
                             <input type="text" name="log_phone" maxlength="18" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         </div>
-                        <div style="display:flex;align-items:flex-end;">
+                        <div>
                             <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                                 ' . _QXZ("SUBMIT") . '
                             </button>
@@ -576,41 +571,38 @@ if (
     if ((strlen($SScoldstorage_server_ip) > 1) && (strlen($SScoldstorage_login) > 0) && (strlen($SScoldstorage_pass) > 0)) {
         if (strlen($archive_type) < 1) { $archive_type = 'ARCHIVE'; }
         echo '
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
-                        <div>
-                            <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Archive Type") . '</label>
-                            <select name="archive_type" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
-                                <option value="ARCHIVE">' . _QXZ("Archive Only") . '</option>
-                                <option value="COLDSTORAGE">' . _QXZ("Cold-Storage Only") . '</option>
-                                <option value="ARCHIVE_AND_COLDSTORAGE">' . _QXZ("Archive and Cold-Storage") . '</option>
-                                <option selected value="' . $archive_type . '">' . _QXZ($archive_type) . '</option>
-                            </select>
-                        </div>
-                        <div></div>
+                    <div style="margin-bottom:25px;">
+                        <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Archive Type") . '</label>
+                        <select name="archive_type" style="width:100%;max-width:400px;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;cursor:pointer;">
+                            <option value="ARCHIVE">' . _QXZ("Archive Only") . '</option>
+                            <option value="COLDSTORAGE">' . _QXZ("Cold-Storage Only") . '</option>
+                            <option value="ARCHIVE_AND_COLDSTORAGE">' . _QXZ("Archive and Cold-Storage") . '</option>
+                            <option selected value="' . $archive_type . '">' . _QXZ($archive_type) . '</option>
+                        </select>
                     </div>';
     } else {
         echo '<input type="hidden" name="archive_type" value="ARCHIVE">';
     }
 
     echo '
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                         <div>
                             <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . _QXZ("Lead ID") . '</label>
                             <input type="text" name="log_lead_id_archive" maxlength="10" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         </div>
-                        <div style="display:flex;align-items:flex-end;">
+                        <div>
                             <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                                 ' . _QXZ("SUBMIT") . '
                             </button>
                         </div>
                     </div>
 
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;align-items:end;">
                         <div>
                             <label style="display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">' . $label_phone_number . ' ' . _QXZ("Dialed") . '</label>
                             <input type="text" name="log_phone_archive" maxlength="18" style="width:100%;padding:12px 14px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">
                         </div>
-                        <div style="display:flex;align-items:flex-end;">
+                        <div>
                             <button type="submit" name="SUBMIT" value="' . _QXZ("SUBMIT") . '" style="width:100%;padding:12px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
                                 ' . _QXZ("SUBMIT") . '
                             </button>
@@ -625,555 +617,479 @@ if (
     </html>';
     exit;
 }
-else {
-    ##### BEGIN Log search #####
-    if ((strlen($log_lead_id) > 0) or (strlen($log_phone) > 0)) {
-        if (strlen($log_lead_id) > 0) {
-            $stmtA = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log where lead_id='" . mysqli_real_escape_string($link, $log_lead_id) . "' $LOGallowed_listsSQL";
-            $stmtB = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log where lead_id='" . mysqli_real_escape_string($link, $log_lead_id) . "' $LOGallowed_listsSQL";
-        }
-        if (strlen($log_phone) > 0) {
-            $stmtA = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log where phone_number='" . mysqli_real_escape_string($link, $log_phone) . "' $LOGallowed_listsSQL";
-            $stmtB = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log where phone_number='" . mysqli_real_escape_string($link, $log_phone) . "' $LOGallowed_listsSQL";
-            $stmtC = "SELECT extension,caller_id_number,did_id,call_date from vicidial_did_log where caller_id_number='" . mysqli_real_escape_string($link, $log_phone) . "'";
-        }
-
-        if ((strlen($slave_db_server) > 5) and (preg_match("/$report_name/", $reports_use_slave_db))) {
-            mysqli_close($link);
-            $use_slave_server = 1;
-            $db_source = 'S';
-            require("dbconnect_mysqli.php");
-            echo "<!-- Using slave server $slave_db_server $db_source -->\n";
-        }
-
-        // OUTBOUND LOG RESULTS
-        $rslt = mysql_to_mysqli("$stmtA", $link);
-        $results_to_print = mysqli_num_rows($rslt);
-        
-        echo '<div style="max-width:1400px;margin:30px auto;padding:0 20px;">';
-        
-        if (($results_to_print < 1) and ($results_to_printX < 1)) {
-            echo '
-            <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;">
-                <strong style="color:#856404;font-size:16px;">' . _QXZ("There are no outbound calls matching your search criteria") . '</strong>
-            </div>';
-        } else {
-            echo '
-            <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:30px;margin-bottom:30px;">
-                <h2 style="margin:0 0 20px 0;font-size:20px;font-weight:600;color:#1f2937;">
-                    ' . _QXZ("OUTBOUND LOG RESULTS") . ': <span style="color:#10b981;">' . $results_to_print . '</span>
-                </h2>
-                <div style="overflow-x:auto;">
-                    <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                        <thead>
-                            <tr style="background:#374151;color:#fff;">
-                                <th style="padding:12px 10px;text-align:left;font-weight:600;">#</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LEAD ID") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CALL DATE") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("STATUS") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("USER") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LIST ID") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LENGTH") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("DIAL") . '</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-            
-            $o = 0;
-            while ($results_to_print > $o) {
-                $row = mysqli_fetch_row($rslt);
-                
-                // Phone data hiding logic
-                if ($LOGadmin_hide_phone_data != '0') {
-                    if ($DB > 0) { echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n"; }
-                    $phone_temp = $row[1];
-                    if (strlen($phone_temp) > 0) {
-                        if ($LOGadmin_hide_phone_data == '4_DIGITS') {
-                            $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4, 4);
-                        } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
-                            $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3, 3);
-                        } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
-                            $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2, 2);
-                        } else {
-                            $row[1] = preg_replace("/./", 'X', $phone_temp);
-                        }
-                    }
-                }
-                
-                $o++;
-                $search_lead = $row[0];
-                $bg_color = ($o % 2 == 0) ? '#f9fafb' : '#fff';
-                
-                echo '<tr style="background:' . $bg_color . ';border-bottom:1px solid #e5e7eb;">
-                    <td style="padding:10px;"><strong>' . $o . '</strong></td>
-                    <td style="padding:10px;text-align:center;">
-                        <a href="admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '" 
-                           onclick="javascript:window.open(\'admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '\', \'_blank\');return false;" 
-                           style="color:#3b82f6;text-decoration:none;font-weight:600;">' . $row[0] . '</a>
-                    </td>
-                    <td style="padding:10px;text-align:center;">' . $row[1] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[2] . '</td>
-                    <td style="padding:10px;text-align:center;font-size:13px;">' . $row[3] . '</td>
-                    <td style="padding:10px;text-align:center;">
-                        <span style="background:#e5e7eb;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600;">' . $row[4] . '</span>
-                    </td>
-                    <td style="padding:10px;text-align:center;">' . $row[5] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[6] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[7] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[8] . '</td>
-                </tr>';
-            }
-            
-            echo '</tbody></table></div></div>';
-        }
-
-        // INBOUND LOG RESULTS
-        $rslt = mysql_to_mysqli("$stmtB", $link);
-        $results_to_print = mysqli_num_rows($rslt);
-        
-        if (($results_to_print < 1) and ($results_to_printX < 1)) {
-            echo '
-            <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;">
-                <strong style="color:#856404;font-size:16px;">' . _QXZ("There are no inbound calls matching your search criteria") . '</strong>
-            </div>';
-        } else {
-            echo '
-            <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:30px;margin-bottom:30px;">
-                <h2 style="margin:0 0 20px 0;font-size:20px;font-weight:600;color:#1f2937;">
-                    ' . _QXZ("INBOUND LOG RESULTS") . ': <span style="color:#3b82f6;">' . $results_to_print . '</span>
-                </h2>
-                <div style="overflow-x:auto;">
-                    <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                        <thead>
-                            <tr style="background:#374151;color:#fff;">
-                                <th style="padding:12px 10px;text-align:left;font-weight:600;">#</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LEAD ID") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("INGROUP") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CALL DATE") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("STATUS") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("USER") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LIST ID") . '</th>
-                                <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LENGTH") . '</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-            
-            $o = 0;
-            while ($results_to_print > $o) {
-                $row = mysqli_fetch_row($rslt);
-                
-                // Phone data hiding logic
-                if ($LOGadmin_hide_phone_data != '0') {
-                    if ($DB > 0) { echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n"; }
-                    $phone_temp = $row[1];
-                    if (strlen($phone_temp) > 0) {
-                        if ($LOGadmin_hide_phone_data == '4_DIGITS') {
-                            $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4, 4);
-                        } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
-                            $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3, 3);
-                        } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
-                            $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2, 2);
-                        } else {
-                            $row[1] = preg_replace("/./", 'X', $phone_temp);
-                        }
-                    }
-                }
-                
-                $o++;
-                $search_lead = $row[0];
-                $bg_color = ($o % 2 == 0) ? '#f9fafb' : '#fff';
-                
-                echo '<tr style="background:' . $bg_color . ';border-bottom:1px solid #e5e7eb;">
-                    <td style="padding:10px;"><strong>' . $o . '</strong></td>
-                    <td style="padding:10px;text-align:center;">
-                        <a href="admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '" 
-                           onclick="javascript:window.open(\'admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '\', \'_blank\');return false;" 
-                           style="color:#3b82f6;text-decoration:none;font-weight:600;">' . $row[0] . '</a>
-                    </td>
-                    <td style="padding:10px;text-align:center;">' . $row[1] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[2] . '</td>
-                    <td style="padding:10px;text-align:center;font-size:13px;">' . $row[3] . '</td>
-                    <td style="padding:10px;text-align:center;">
-                        <span style="background:#e5e7eb;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600;">' . $row[4] . '</span>
-                    </td>
-                    <td style="padding:10px;text-align:center;">' . $row[5] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[6] . '</td>
-                    <td style="padding:10px;text-align:center;">' . $row[7] . '</td>
-                </tr>';
-            }
-            
-            echo '</tbody></table></div></div>';
-        }
-
-        // INBOUND DID LOG RESULTS
-        if (strlen($stmtC) > 10) {
-            $rslt = mysql_to_mysqli("$stmtC", $link);
-            $results_to_print = mysqli_num_rows($rslt);
-            
-            if (($results_to_print < 1) and ($results_to_printX < 1)) {
-                echo '
-                <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;">
-                    <strong style="color:#856404;font-size:16px;">' . _QXZ("There are no inbound did calls matching your search criteria") . '</strong>
-                </div>';
-            } else {
-                echo '
-                <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:30px;margin-bottom:30px;">
-                    <h2 style="margin:0 0 20px 0;font-size:20px;font-weight:600;color:#1f2937;">
-                        ' . _QXZ("INBOUND DID LOG RESULTS") . ': <span style="color:#6366f1;">' . $results_to_print . '</span>
-                    </h2>
-                    <div style="overflow-x:auto;">
-                        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                            <thead>
-                                <tr style="background:#374151;color:#fff;">
-                                    <th style="padding:12px 10px;text-align:left;font-weight:600;">#</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("DID") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("DID ID") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CALL DATE") . '</th>
-                                </tr>
-                            </thead>
-                            <tbody>';
-                
-                $o = 0;
-                while ($results_to_print > $o) {
-                    $row = mysqli_fetch_row($rslt);
-                    
-                    // Phone data hiding logic
-                    if ($LOGadmin_hide_phone_data != '0') {
-                        if ($DB > 0) { echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n"; }
-                        $phone_temp = $row[1];
-                        if (strlen($phone_temp) > 0) {
-                            if ($LOGadmin_hide_phone_data == '4_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4, 4);
-                            } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3, 3);
-                            } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2, 2);
-                            } else {
-                                $row[1] = preg_replace("/./", 'X', $phone_temp);
-                            }
-                        }
-                    }
-                    
-                    $o++;
-                    $search_lead = $row[0];
-                    $bg_color = ($o % 2 == 0) ? '#f9fafb' : '#fff';
-                    
-                    echo '<tr style="background:' . $bg_color . ';border-bottom:1px solid #e5e7eb;">
-                        <td style="padding:10px;"><strong>' . $o . '</strong></td>
-                        <td style="padding:10px;text-align:center;">' . $row[0] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[1] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[2] . '</td>
-                        <td style="padding:10px;text-align:center;font-size:13px;">' . $row[3] . '</td>
-                    </tr>';
-                }
-                
-                echo '</tbody></table></div></div>';
-            }
-        }
-
-        echo '</div>'; // Close page wrapper
-
-        if ($db_source == 'S') {
-            mysqli_close($link);
-            $use_slave_server = 0;
-            $db_source = 'M';
-            require("dbconnect_mysqli.php");
-        }
 
 
-		        ### LOG INSERTION Admin Log Table ###
-        $event_notes = "$DB|$SUBMIT|$alt_phone_search|$archive_search|$first_name|$last_name|$lead_id|$list_id|$log_lead_id|$log_lead_id_archive|$log_phone|$log_phone_archive|$owner|$phone|$status|$submit|$user|$vendor_id|$called_count";
-        $event_notes = preg_replace("/\"|\\\\|;/", "", $event_notes);
-        $SQL_log = "$stmtA|$stmtB|$stmtC|";
-        $SQL_log = preg_replace('/;/', '', $SQL_log);
-        $SQL_log = addslashes($SQL_log);
-        $stmt = "INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LEADS', event_type='SEARCH', record_id='$search_lead', event_code='ADMIN SEARCH LEAD', event_sql=\"$SQL_log\", event_notes=\"$event_notes\";";
-        if ($DB) { echo "|$stmt|\n"; }
-        $rslt = mysql_to_mysqli($stmt, $link);
+else
+	{
+	##### BEGIN Log search #####
+	if ( (strlen($log_lead_id)>0) or (strlen($log_phone)>0) )
+		{
+		if (strlen($log_lead_id)>0)
+			{
+			$stmtA="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log where lead_id='" . mysqli_real_escape_string($link, $log_lead_id) . "' $LOGallowed_listsSQL";
+			$stmtB="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log where lead_id='" . mysqli_real_escape_string($link, $log_lead_id) . "' $LOGallowed_listsSQL";
+			}
+		if (strlen($log_phone)>0)
+			{
+			$stmtA="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log where phone_number='" . mysqli_real_escape_string($link, $log_phone) . "' $LOGallowed_listsSQL";
+			$stmtB="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log where phone_number='" . mysqli_real_escape_string($link, $log_phone) . "' $LOGallowed_listsSQL";
+			$stmtC="SELECT extension,caller_id_number,did_id,call_date from vicidial_did_log where caller_id_number='" . mysqli_real_escape_string($link, $log_phone) . "'";
+			}
 
-        $ENDtime = date("U");
-        $RUNtime = ($ENDtime - $STARTtime);
+		if ( (strlen($slave_db_server)>5) and (preg_match("/$report_name/",$reports_use_slave_db)) )
+			{
+			mysqli_close($link);
+			$use_slave_server=1;
+			$db_source = 'S';
+			require("dbconnect_mysqli.php");
+			echo "<!-- Using slave server $slave_db_server $db_source -->\n";
+			}
 
-        echo '
-        <div style="text-align:center;margin:40px 0;">
-            <a href="' . $PHP_SELF . '" style="display:inline-block;padding:12px 32px;background:#10b981;color:#fff;text-decoration:none;border-radius:8px;font-size:15px;font-weight:600;transition:background 0.2s;">
-                ' . _QXZ("NEW SEARCH") . '
-            </a>
-        </div>
-        <div style="text-align:center;margin:20px 0;color:#6b7280;font-size:14px;">
-            ' . _QXZ("script runtime") . ': <strong>' . $RUNtime . '</strong> ' . _QXZ("seconds") . '
-        </div>
-        </div>
-        </body>
-        </html>';
-        exit;
-    }
-    ##### END Log search #####
+		$rslt=mysql_to_mysqli("$stmtA", $link);
+		$results_to_print = mysqli_num_rows($rslt);
+		if ( ($results_to_print < 1) and ($results_to_printX < 1) )
+			{
+			echo "\n<br><br><center>\n";
+			echo "<b>There are no outbound calls matching your search criteria</b><br><br>\n";
+			echo "</center>\n";
+			}
+		else
+			{
+			echo "<BR><b>"._QXZ("OUTBOUND LOG RESULTS").": $results_to_print</b><BR>\n";
+			echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
+			echo "<TR BGCOLOR=BLACK>\n";
+			echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LEAD ID")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CAMPAIGN")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("STATUS")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("USER")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LIST ID")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LENGTH")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DIAL")."</B></FONT></TD>\n";
+			echo "</TR>\n";
+			$o=0;
+			while ($results_to_print > $o)
+				{
+				$row=mysqli_fetch_row($rslt);
+				if ($LOGadmin_hide_phone_data != '0')
+					{
+					if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
+					$phone_temp = $row[1];
+					if (strlen($phone_temp) > 0)
+						{
+						if ($LOGadmin_hide_phone_data == '4_DIGITS')
+							{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
+						elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
+							{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
+						elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
+							{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
+						else
+							{$row[1] = preg_replace("/./",'X',$phone_temp);}
+						}
+					}
+				$o++;
+				$search_lead = $row[0];
+				if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+					{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+				else
+					{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+				echo "<TR $bgcolor>\n";
+				echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1><A HREF=\"admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search\" onclick=\"javascript:window.open('admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search', '_blank');return false;\">$row[0]</A></FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[4]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[5]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[6]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[7]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[8]</FONT></TD>\n";
+				echo "</TR>\n";
+				}
+			echo "</TABLE>\n";
+			}
 
-    ##### BEGIN Log archive search #####
-    if ((strlen($log_lead_id_archive) > 0) or (strlen($log_phone_archive) > 0)) {
-        if ((strlen($SScoldstorage_server_ip) > 1) and (strlen($SScoldstorage_login) > 0) and (strlen($SScoldstorage_pass) > 0) and (preg_match("/COLDSTORAGE/", $archive_type))) {
-            $linkCS = mysqli_connect("$SScoldstorage_server_ip", "$SScoldstorage_login", "$SScoldstorage_pass", "$SScoldstorage_dbname", $SScoldstorage_port);
-            if (!$linkCS) { echo "MySQL Cold-Storage connect ERROR: " . mysqli_connect_error(); }
-        }
-        
-        if (strlen($log_lead_id_archive) > 0) {
-            $stmtA = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log_archive where lead_id='" . mysqli_real_escape_string($link, $log_lead_id_archive) . "' $LOGallowed_listsSQL";
-            $stmtB = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log_archive where lead_id='" . mysqli_real_escape_string($link, $log_lead_id_archive) . "' $LOGallowed_listsSQL";
-            $log_archive_link = 'Yes';
-        }
-        
-        if (strlen($log_phone_archive) > 0) {
-            $stmtA = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log_archive where phone_number='" . mysqli_real_escape_string($link, $log_phone_archive) . "' $LOGallowed_listsSQL";
-            $stmtB = "SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log_archive where phone_number='" . mysqli_real_escape_string($link, $log_phone_archive) . "' $LOGallowed_listsSQL";
-            $stmtC = "SELECT extension,caller_id_number,did_id,call_date from vicidial_did_log where caller_id_number='" . mysqli_real_escape_string($link, $log_phone_archive) . "'";
-            $log_archive_link = 'Yes';
-        }
+		$rslt=mysql_to_mysqli("$stmtB", $link);
+		$results_to_print = mysqli_num_rows($rslt);
+		if ( ($results_to_print < 1) and ($results_to_printX < 1) )
+			{
+			echo "\n<br><br><center>\n";
+			echo "<b>"._QXZ("There are no inbound calls matching your search criteria")."</b><br><br>\n";
+			echo "</center>\n";
+			}
+		else
+			{
+			echo "<BR><b>INBOUND LOG RESULTS: $results_to_print</b><BR>\n";
+			echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
+			echo "<TR BGCOLOR=BLACK>\n";
+			echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LEAD ID")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("INGROUP")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("STATUS")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("USER")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LIST ID")."</B> &nbsp;</FONT></TD>\n";
+			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LENGTH")."</B> &nbsp;</FONT></TD>\n";
+			echo "</TR>\n";
+			$o=0;
+			while ($results_to_print > $o)
+				{
+				$row=mysqli_fetch_row($rslt);
+				if ($LOGadmin_hide_phone_data != '0')
+					{
+					if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
+					$phone_temp = $row[1];
+					if (strlen($phone_temp) > 0)
+						{
+						if ($LOGadmin_hide_phone_data == '4_DIGITS')
+							{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
+						elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
+							{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
+						elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
+							{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
+						else
+							{$row[1] = preg_replace("/./",'X',$phone_temp);}
+						}
+					}
+				$o++;
+				$search_lead = $row[0];
+				if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+					{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+				else
+					{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+				echo "<TR $bgcolor>\n";
+				echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1><A HREF=\"admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search\" onclick=\"javascript:window.open('admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search', '_blank');return false;\">$row[0]</A></FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[4]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[5]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[6]</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[7]</FONT></TD>\n";
+				echo "</TR>\n";
+				}
+			echo "</TABLE>\n";
+			}
 
-        if ((strlen($slave_db_server) > 5) and (preg_match("/$report_name/", $reports_use_slave_db))) {
-            mysqli_close($link);
-            $use_slave_server = 1;
-            $db_source = 'S';
-            require("dbconnect_mysqli.php");
-            echo "<!-- Using slave server $slave_db_server $db_source -->\n";
-        }
+		if (strlen($stmtC) > 10)
+			{
+			$rslt=mysql_to_mysqli("$stmtC", $link);
+			$results_to_print = mysqli_num_rows($rslt);
+			if ( ($results_to_print < 1) and ($results_to_printX < 1) )
+				{
+				echo "\n<br><br><center>\n";
+				echo "<b>"._QXZ("There are no inbound did calls matching your search criteria")."</b><br><br>\n";
+				echo "</center>\n";
+				}
+			else
+				{
+				echo "<BR><b>"._QXZ("INBOUND DID LOG RESULTS").": $results_to_print</b><BR>\n";
+				echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
+				echo "<TR BGCOLOR=BLACK>\n";
+				echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DID")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DID ID")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
+				echo "</TR>\n";
+				$o=0;
+				while ($results_to_print > $o)
+					{
+					$row=mysqli_fetch_row($rslt);
+					if ($LOGadmin_hide_phone_data != '0')
+						{
+						if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
+						$phone_temp = $row[1];
+						if (strlen($phone_temp) > 0)
+							{
+							if ($LOGadmin_hide_phone_data == '4_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
+							elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
+							elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
+							else
+								{$row[1] = preg_replace("/./",'X',$phone_temp);}
+							}
+						}
+					$o++;
+					$search_lead = $row[0];
+					if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+					else
+						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+					echo "<TR $bgcolor>\n";
+					echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[0]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
+					echo "</TR>\n";
+					}
+				echo "</TABLE>\n";
+				}
+			}
 
-        echo '<div style="max-width:1400px;margin:30px auto;padding:0 20px;">';
+		if ($db_source == 'S')
+			{
+			mysqli_close($link);
+			$use_slave_server=0;
+			$db_source = 'M';
+			require("dbconnect_mysqli.php");
+			}
 
-        // OUTBOUND ARCHIVED LOG RESULTS
-        if (preg_match("/ARCHIVE/", $archive_type)) {
-            $rslt = mysql_to_mysqli("$stmtA", $link);
-            $results_to_print = mysqli_num_rows($rslt);
-            
-            if (($results_to_print < 1) and ($results_to_printX < 1)) {
-                echo '
-                <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;">
-                    <strong style="color:#856404;font-size:16px;">' . _QXZ("There are no archived outbound calls matching your search criteria") . '</strong>
-                </div>';
-            } else {
-                echo '
-                <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:30px;margin-bottom:30px;">
-                    <h2 style="margin:0 0 20px 0;font-size:20px;font-weight:600;color:#1f2937;">
-                        ' . _QXZ("OUTBOUND ARCHIVED LOG RESULTS") . ': <span style="color:#8b5cf6;">' . $results_to_print . '</span>
-                    </h2>
-                    <div style="overflow-x:auto;">
-                        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                            <thead>
-                                <tr style="background:#374151;color:#fff;">
-                                    <th style="padding:12px 10px;text-align:left;font-weight:600;">#</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LEAD ID") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CALL DATE") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("STATUS") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("USER") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LIST ID") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LENGTH") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("DIAL") . '</th>
-                                </tr>
-                            </thead>
-                            <tbody>';
-                
-                $o = 0;
-                while ($results_to_print > $o) {
-                    $row = mysqli_fetch_row($rslt);
-                    
-                    // Phone data hiding logic
-                    if ($LOGadmin_hide_phone_data != '0') {
-                        if ($DB > 0) { echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n"; }
-                        $phone_temp = $row[1];
-                        if (strlen($phone_temp) > 0) {
-                            if ($LOGadmin_hide_phone_data == '4_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4, 4);
-                            } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3, 3);
-                            } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2, 2);
-                            } else {
-                                $row[1] = preg_replace("/./", 'X', $phone_temp);
-                            }
-                        }
-                    }
-                    
-                    $o++;
-                    $search_lead = $row[0];
-                    $bg_color = ($o % 2 == 0) ? '#f9fafb' : '#fff';
-                    
-                    echo '<tr style="background:' . $bg_color . ';border-bottom:1px solid #e5e7eb;">
-                        <td style="padding:10px;"><strong>' . $o . '</strong></td>
-                        <td style="padding:10px;text-align:center;">
-                            <a href="admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '&archive_log=' . $log_archive_link . '" 
-                               onclick="javascript:window.open(\'admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '&archive_log=' . $log_archive_link . '\', \'_blank\');return false;" 
-                               style="color:#8b5cf6;text-decoration:none;font-weight:600;">' . $row[0] . '</a>
-                        </td>
-                        <td style="padding:10px;text-align:center;">' . $row[1] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[2] . '</td>
-                        <td style="padding:10px;text-align:center;font-size:13px;">' . $row[3] . '</td>
-                        <td style="padding:10px;text-align:center;">
-                            <span style="background:#e5e7eb;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600;">' . $row[4] . '</span>
-                        </td>
-                        <td style="padding:10px;text-align:center;">' . $row[5] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[6] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[7] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[8] . '</td>
-                    </tr>';
-                }
-                
-                echo '</tbody></table></div></div>';
-            }
+		### LOG INSERTION Admin Log Table ###
+		$event_notes = "$DB|$SUBMIT|$alt_phone_search|$archive_search|$first_name|$last_name|$lead_id|$list_id|$log_lead_id|$log_lead_id_archive|$log_phone|$log_phone_archive|$owner|$phone|$status|$submit|$user|$vendor_id|$called_count";
+		$event_notes = preg_replace("/\"|\\\\|;/","",$event_notes);
+		$SQL_log = "$stmtA|$stmtB|$stmtC|";
+		$SQL_log = preg_replace('/;/', '', $SQL_log);
+		$SQL_log = addslashes($SQL_log);
+		$stmt="INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LEADS', event_type='SEARCH', record_id='$search_lead', event_code='ADMIN SEARCH LEAD', event_sql=\"$SQL_log\", event_notes=\"$event_notes\";";
+		if ($DB) {echo "|$stmt|\n";}
+		$rslt=mysql_to_mysqli($stmt, $link);
 
-            // INBOUND ARCHIVED LOG RESULTS
-            $rslt = mysql_to_mysqli("$stmtB", $link);
-            $results_to_print = mysqli_num_rows($rslt);
-            
-            if (($results_to_print < 1) and ($results_to_printX < 1)) {
-                echo '
-                <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;">
-                    <strong style="color:#856404;font-size:16px;">' . _QXZ("There are no archived inbound calls matching your search criteria") . '</strong>
-                </div>';
-            } else {
-                echo '
-                <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:30px;margin-bottom:30px;">
-                    <h2 style="margin:0 0 20px 0;font-size:20px;font-weight:600;color:#1f2937;">
-                        ' . _QXZ("INBOUND ARCHIVED LOG RESULTS") . ': <span style="color:#8b5cf6;">' . $results_to_print . '</span>
-                    </h2>
-                    <div style="overflow-x:auto;">
-                        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                            <thead>
-                                <tr style="background:#374151;color:#fff;">
-                                    <th style="padding:12px 10px;text-align:left;font-weight:600;">#</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LEAD ID") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("INGROUP") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CALL DATE") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("STATUS") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("USER") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LIST ID") . '</th>
-                                    <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("LENGTH") . '</th>
-                                </tr>
-                            </thead>
-                            <tbody>';
-                
-                $o = 0;
-                while ($results_to_print > $o) {
-                    $row = mysqli_fetch_row($rslt);
-                    
-                    // Phone data hiding logic
-                    if ($LOGadmin_hide_phone_data != '0') {
-                        if ($DB > 0) { echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n"; }
-                        $phone_temp = $row[1];
-                        if (strlen($phone_temp) > 0) {
-                            if ($LOGadmin_hide_phone_data == '4_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4, 4);
-                            } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3, 3);
-                            } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
-                                $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2, 2);
-                            } else {
-                                $row[1] = preg_replace("/./", 'X', $phone_temp);
-                            }
-                        }
-                    }
-                    
-                    $o++;
-                    $search_lead = $row[0];
-                    $bg_color = ($o % 2 == 0) ? '#f9fafb' : '#fff';
-                    
-                    echo '<tr style="background:' . $bg_color . ';border-bottom:1px solid #e5e7eb;">
-                        <td style="padding:10px;"><strong>' . $o . '</strong></td>
-                        <td style="padding:10px;text-align:center;">
-                            <a href="admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '&archive_log=' . $log_archive_link . '" 
-                               onclick="javascript:window.open(\'admin_modify_lead.php?lead_id=' . $row[0] . '&archive_search=' . $archive_search . '&archive_log=' . $log_archive_link . '\', \'_blank\');return false;" 
-                               style="color:#8b5cf6;text-decoration:none;font-weight:600;">' . $row[0] . '</a>
-                        </td>
-                        <td style="padding:10px;text-align:center;">' . $row[1] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[2] . '</td>
-                        <td style="padding:10px;text-align:center;font-size:13px;">' . $row[3] . '</td>
-                        <td style="padding:10px;text-align:center;">
-                            <span style="background:#e5e7eb;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600;">' . $row[4] . '</span>
-                        </td>
-                        <td style="padding:10px;text-align:center;">' . $row[5] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[6] . '</td>
-                        <td style="padding:10px;text-align:center;">' . $row[7] . '</td>
-                    </tr>';
-                }
-                
-                echo '</tbody></table></div></div>';
-            }
+		$ENDtime = date("U");
 
-            // INBOUND DID ARCHIVED LOG RESULTS
-            if (strlen($stmtC) > 10) {
-                $rslt = mysql_to_mysqli("$stmtC", $link);
-                $results_to_print = mysqli_num_rows($rslt);
-                
-                if (($results_to_print < 1) and ($results_to_printX < 1)) {
-                    echo '
-                    <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;">
-                        <strong style="color:#856404;font-size:16px;">' . _QXZ("There are no archived inbound did calls matching your search criteria") . '</strong>
-                    </div>';
-                } else {
-                    echo '
-                    <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:30px;margin-bottom:30px;">
-                        <h2 style="margin:0 0 20px 0;font-size:20px;font-weight:600;color:#1f2937;">
-                            ' . _QXZ("INBOUND DID ARCHIVED LOG RESULTS") . ': <span style="color:#8b5cf6;">' . $results_to_print . '</span>
-                        </h2>
-                        <div style="overflow-x:auto;">
-                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                                <thead>
-                                    <tr style="background:#374151;color:#fff;">
-                                        <th style="padding:12px 10px;text-align:left;font-weight:600;">#</th>
-                                        <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("DID") . '</th>
-                                        <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>
-                                        <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("DID ID") . '</th>
-                                        <th style="padding:12px 10px;text-align:center;font-weight:600;">' . _QXZ("CALL DATE") . '</th>
-                                    </tr>
-                                </thead>
-                                <tbody>';
-                    
-                    $o = 0;
-                    while ($results_to_print > $o) {
-                        $row = mysqli_fetch_row($rslt);
-                        
-                        // Phone data hiding logic
-                        if ($LOGadmin_hide_phone_data != '0') {
-                            if ($DB > 0) { echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n"; }
-                            $phone_temp = $row[1];
-                            if (strlen($phone_temp) > 0) {
-                                if ($LOGadmin_hide_phone_data == '4_DIGITS') {
-                                    $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4, 4);
-                                } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
-                                    $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3, 3);
-                                } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
-                                    $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2, 2);
-                                } else {
-                                    $row[1] = preg_replace("/./", 'X', $phone_temp);
-                                }
-                            }
-                        }
-                        
-                        $o++;
-                        $search_lead = $row[0];
-                        $bg_color = ($o % 2 == 0) ? '#f9fafb' : '#fff';
-                        
-                        echo '<tr style="background:' . $bg_color . ';border-bottom:1px solid #e5e7eb;">
-                            <td style="padding:10px;"><strong>' . $o . '</strong></td>
-                            <td style="padding:10px;text-align:center;">' . $row[0] . '</td>
-                            <td style="padding:10px;text-align:center;">' . $row[1] . '</td>
-                            <td style="padding:10px;text-align:center;">' . $row[2] . '</td>
-                            <td style="padding:10px;text-align:center;font-size:13px;">' . $row[3] . '</td>
-                        </tr>';
-                    }
-                    
-                    echo '</tbody></table></div></div>';
-                }
-            }
-        }
-        
-        echo '</div>'; // Close page wrapper
+		$RUNtime = ($ENDtime - $STARTtime);
+
+		echo "\n\n\n<br><br><br>\n<a href=\"$PHP_SELF\">NEW SEARCH</a>";
+
+		echo "\n\n\n<br><br><br>\n"._QXZ("script runtime").": $RUNtime "._QXZ("seconds");
+
+		echo "\n\n\n</body></html>";
+
+		exit;
+		}
+	##### END Log search #####
+
+
+	##### BEGIN Log archive search #####
+	if ( (strlen($log_lead_id_archive)>0) or (strlen($log_phone_archive)>0) )
+		{
+		if ( (strlen($SScoldstorage_server_ip) > 1) and (strlen($SScoldstorage_login) > 0) and (strlen($SScoldstorage_pass) > 0) and (preg_match("/COLDSTORAGE/",$archive_type)) )
+			{
+			$linkCS = mysqli_connect("$SScoldstorage_server_ip", "$SScoldstorage_login", "$SScoldstorage_pass", "$SScoldstorage_dbname", $SScoldstorage_port);
+			if (!$linkCS) {echo "MySQL Cold-Storage connect ERROR:  " . mysqli_connect_error();}
+			}
+		if (strlen($log_lead_id_archive)>0)
+			{
+			$stmtA="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log_archive where lead_id='" . mysqli_real_escape_string($link, $log_lead_id_archive) . "' $LOGallowed_listsSQL";
+			$stmtB="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log_archive where lead_id='" . mysqli_real_escape_string($link, $log_lead_id_archive) . "' $LOGallowed_listsSQL";
+			$log_archive_link='Yes';
+			}
+		if (strlen($log_phone_archive)>0)
+			{
+			$stmtA="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log_archive where phone_number='" . mysqli_real_escape_string($link, $log_phone_archive) . "' $LOGallowed_listsSQL";
+			$stmtB="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log_archive where phone_number='" . mysqli_real_escape_string($link, $log_phone_archive) . "' $LOGallowed_listsSQL";
+			$stmtC="SELECT extension,caller_id_number,did_id,call_date from vicidial_did_log where caller_id_number='" . mysqli_real_escape_string($link, $log_phone_archive) . "'";
+			$log_archive_link='Yes';
+			}
+
+		if ( (strlen($slave_db_server)>5) and (preg_match("/$report_name/",$reports_use_slave_db)) )
+			{
+			mysqli_close($link);
+			$use_slave_server=1;
+			$db_source = 'S';
+			require("dbconnect_mysqli.php");
+			echo "<!-- Using slave server $slave_db_server $db_source -->\n";
+			}
+
+		if (preg_match("/ARCHIVE/",$archive_type))
+			{
+			$rslt=mysql_to_mysqli("$stmtA", $link);
+			$results_to_print = mysqli_num_rows($rslt);
+			if ( ($results_to_print < 1) and ($results_to_printX < 1) )
+				{
+				echo "\n<br><br><center>\n";
+				echo "<b>"._QXZ("There are no archived outbound calls matching your search criteria")."</b><br><br>\n";
+				echo "</center>\n";
+				}
+			else
+				{
+				echo "<BR><b>"._QXZ("OUTBOUND ARCHIVED LOG RESULTS").": $results_to_print</b><BR>\n";
+				echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
+				echo "<TR BGCOLOR=BLACK>\n";
+				echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LEAD ID")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CAMPAIGN")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("STATUS")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("USER")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LIST ID")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LENGTH")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DIAL")."</B></FONT></TD>\n";
+				echo "</TR>\n";
+				$o=0;
+				while ($results_to_print > $o)
+					{
+					$row=mysqli_fetch_row($rslt);
+					if ($LOGadmin_hide_phone_data != '0')
+						{
+						if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
+						$phone_temp = $row[1];
+						if (strlen($phone_temp) > 0)
+							{
+							if ($LOGadmin_hide_phone_data == '4_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
+							elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
+							elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
+							else
+								{$row[1] = preg_replace("/./",'X',$phone_temp);}
+							}
+						}
+					$o++;
+					$search_lead = $row[0];
+					if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
+					else
+						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+					echo "<TR $bgcolor>\n";
+					echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1><A HREF=\"admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search&archive_log=$log_archive_link\" onclick=\"javascript:window.open('admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search&archive_log=$log_archive_link', '_blank');return false;\">$row[0]</A></FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[4]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[5]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[6]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[7]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[8]</FONT></TD>\n";
+					echo "</TR>\n";
+					}
+				echo "</TABLE>\n";
+				}
+
+			$rslt=mysql_to_mysqli("$stmtB", $link);
+			$results_to_print = mysqli_num_rows($rslt);
+			if ( ($results_to_print < 1) and ($results_to_printX < 1) )
+				{
+				echo "\n<br><br><center>\n";
+				echo "<b>"._QXZ("There are no archived inbound calls matching your search criteria")."</b><br><br>\n";
+				echo "</center>\n";
+				}
+			else
+				{
+				echo "<BR><b>"._QXZ("INBOUND ARCHIVED LOG RESULTS").": $results_to_print</b><BR>\n";
+				echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
+				echo "<TR BGCOLOR=BLACK>\n";
+				echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LEAD ID")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("INGROUP")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("STATUS")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("USER")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LIST ID")."</B> &nbsp;</FONT></TD>\n";
+				echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LENGTH")."</B> &nbsp;</FONT></TD>\n";
+				echo "</TR>\n";
+				$o=0;
+				while ($results_to_print > $o)
+					{
+					$row=mysqli_fetch_row($rslt);
+					if ($LOGadmin_hide_phone_data != '0')
+						{
+						if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
+						$phone_temp = $row[1];
+						if (strlen($phone_temp) > 0)
+							{
+							if ($LOGadmin_hide_phone_data == '4_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
+							elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
+							elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
+								{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
+							else
+								{$row[1] = preg_replace("/./",'X',$phone_temp);}
+							}
+						}
+					$o++;
+					$search_lead = $row[0];
+					if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+						{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
+					else
+						{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+					echo "<TR $bgcolor>\n";
+					echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1><A HREF=\"admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search&archive_log=$log_archive_link\" onclick=\"javascript:window.open('admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search&archive_log=$log_archive_link', '_blank');return false;\">$row[0]</A></FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[4]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[5]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[6]</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[7]</FONT></TD>\n";
+					echo "</TR>\n";
+					}
+				echo "</TABLE>\n";
+				}
+
+			if (strlen($stmtC) > 10)
+				{
+				$rslt=mysql_to_mysqli("$stmtC", $link);
+				$results_to_print = mysqli_num_rows($rslt);
+				if ( ($results_to_print < 1) and ($results_to_printX < 1) )
+					{
+					echo "\n<br><br><center>\n";
+					echo "<b>"._QXZ("There are no archived inbound did calls matching your search criteria")."</b><br><br>\n";
+					echo "</center>\n";
+					}
+				else
+					{
+					echo "<BR><b>"._QXZ("INBOUND DID ARCHIVED LOG RESULTS").": $results_to_print</b><BR>\n";
+					echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
+					echo "<TR BGCOLOR=BLACK>\n";
+					echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
+					echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DID")."</B> &nbsp;</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DID ID")."</B> &nbsp;</FONT></TD>\n";
+					echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
+					echo "</TR>\n";
+					$o=0;
+					while ($results_to_print > $o)
+						{
+						$row=mysqli_fetch_row($rslt);
+						if ($LOGadmin_hide_phone_data != '0')
+							{
+							if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
+							$phone_temp = $row[1];
+							if (strlen($phone_temp) > 0)
+								{
+								if ($LOGadmin_hide_phone_data == '4_DIGITS')
+									{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
+								elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
+									{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
+								elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
+									{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
+								else
+									{$row[1] = preg_replace("/./",'X',$phone_temp);}
+								}
+							}
+						$o++;
+						$search_lead = $row[0];
+						if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+							{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';}
+						else
+							{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+						echo "<TR $bgcolor>\n";
+						echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
+						echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[0]</FONT></TD>\n";
+						echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
+						echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
+						echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
+						echo "</TR>\n";
+						}
+					echo "</TABLE>\n";
+					}
+				}
+			}
+
 		// Search through cold-storage archive logs
 		if ( ($linkCS) and (preg_match("/COLDSTORAGE/",$archive_type)) )
 			{
