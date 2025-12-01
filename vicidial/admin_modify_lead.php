@@ -1,7 +1,131 @@
 <?php
+# admin_modify_lead.php   version 2.14
+# 
+# ViciDial database administration modify lead in vicidial_list
+# admin_modify_lead.php
 #
+# this is the administration lead information modifier screen, the administrator 
+# just needs to enter the leadID and then they can view and modify the 
+# information in the record for that lead
+#
+# Copyright (C) 2025  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+#
+# CHANGES
+#
+# 60419-1705 - Added ability to change lead callback record from USERONLY to ANYONE or USERONLY-user
+# 60421-1459 - check GET/POST vars lines with isset to not trigger PHP NOTICES
+# 60609-1112 - Added DNC list addition if status changed to DNC
+# 60619-1539 - Added variable filtering to eliminate SQL injection attack threat
+# 61130-1639 - Added recording_log lookup and list for this lead_id
+# 61201-1136 - Added recording_log user(TSR) display and link
+# 70305-1133 - Changed to default CHECKED modify logs upon status change
+# 70424-1128 - Added campaign-specific statuses, reformatted recordings list
+# 70702-1259 - Added recording location link and truncation
+# 70906-2132 - Added closer_log records display
+# 80428-0144 - UTF8 cleanup
+# 80501-0454 - Added Hangup Reason to logs display
+# 80516-0936 - Cleanup of logging changes, added vicidial_agent_log display
+# 80701-0832 - Changed to allow for altering of main phone number
+# 80805-2106 - Changed comments to TEXTAREA
+# 81210-1529 - Added server recording display options
+# 90309-1829 - Added admin_log logging
+# 90508-0644 - Changed to PHP long tags
+# 90708-1549 - Added phone number dialed to outbound log
+# 90721-1246 - Added rank and owner as vicidial_list fields
+# 90917-2355 - Added extended alt phone entries
+# 100405-1333 - Changed to show logs of non-found leads
+# 100618-0148 - Added Middle name modify and fixes statuses list
+# 100622-0945 - Added field labels
+# 100703-1122 - Added custom fields display/edit
+# 100712-1416 - Added entry_list_id field to vicidial_list to preserve link to custom fields if any
+# 100924-1431 - Added Called Count display
+# 101127-1610 - Added ability to set a scheduled callback date and time
+# 110212-2041 - Added compatibility with definable scheduled callback statuses
+# 110215-1411 - Added display of call notes to log records
+# 110215-1717 - Changed empty lead_id behavior to be add-a-lead functionality
+# 110525-1827 - Added ivr log records display
+# 111103-1533 - Added admin_hide_phone_data and admin_hide_lead_data options
+# 120223-2249 - Removed logging of good login passwords if webroot writable is enabled
+# 120518-1004 - Fix for multi-line comments
+# 120529-1635 - Added User Group Campaign-Lists validation
+# 121116-1411 - Added QC functionality
+# 121130-1033 - Changed scheduled callback user ID field to be 20 characters, issue #467
+# 121222-2145 - Added email log
+# 130123-1940 - Added options.php option to allow display of non-selectable statuses
+# 130610-1049 - Finalized changing of all ereg instances to preg
+# 130621-1731 - Added filtering of input to prevent SQL injection attacks and new user auth
+# 130705-1726 - Minor change for encrypted password compatibility
+# 130901-0816 - Changed to mysqli PHP functions
+# 130926-2053 - Added option for viewing/modifying vicidial_list_archive leads
+# 140125-1100 - Fixed issue with Callback records having no campaign_id
+# 140304-2034 - Fixed issue with special characters in standard data fields
+# 140706-0827 - Incorporated QC includes into code
+# 140817-0937 - Added Archive Log search option
+# 141001-2200 - Finalized adding QXZ translation to all admin files
+# 141128-0859 - Code cleanup for QXZ functions
+# 141229-1745 - Added code for on-the-fly language translations display
+# 150107-1729 - Added ignore_group_on_search user option
+# 150114-2321 - Added date_of_birth as editable field
+# 150312-1506 - Fixed minor Iframe form bug related to custom fields
+# 150514-1522 - Added $gmt_offset lookup for adding a new lead
+# 150603-1527 - Allow non-digit characters in alt_phone field
+# 150808-1437 - Added compatibility for custom fields data options
+# 150908-1531 - Fixed input lengths for several standard fields to match DB
+# 150917-1301 - Added dynamic default field maxlengths based on DB schema
+# 150923-0700 - Fixed security issues with user access, issue #894
+# 160102-1238 - Fixed issues with special characters, added $htmlconvert option
+# 160112-2344 - Added link to direct to recording logging page, access log display
+# 160122-1337 - Added display of gmt-offset, last-local-call and called-since-last-reset
+# 160407-2023 - Design changes, added more variable scrubbing, added more admin logging
+# 160926-1052 - Fix for inbound call notes display
+# 170224-1639 - Added ability to display archived recordings
+# 170409-1554 - Added IP List validation code
+# 170527-2253 - Fix for rare inbound logging issue #1017
+# 170710-2039 - Added Audit Comments display
+# 170807-2255 - Added park log
+# 170826-0858 - Added link to turn on/off archived logs display
+# 171001-1109 - Added in-browser audio control, if recording access control is disabled
+# 171216-2058 - Added ability to modify all active scheduled callbacks, and view callbacks log
+# 180212-2340 - Added basic GDPR compliance features
+# 180302-1605 - Added complete GDPR compliance features
+# 180310-2300 - Added optional source_id display
+# 180311-0008 - Added CIDdisplay
+# 180410-1720 - Added switch lead log entry display
+# 180506-1813 - Added switch_list log entry display
+# 180807-0957 - Added new diff logging code
+# 190310-2223 - Added indication of muted recordings by agent
+# 190329-1917 - Added display of AMD log info when CIDdisplay=Yes is set
+# 190609-0927 - Added sip_event_logging support
+# 191113-2204 - Added support for per-User additional status groups
+# 200815-0017 - Added support for additional modify_leads setting
+# 200916-2321 - Added options to allow users to modify any call or agent log status
+# 201113-0841 - Added server_ip information to extended log view
+# 201117-0807 - Changes for better compatibility with non-latin data input
+# 201109-1725 - Fix for blank page after certain updates submitted
+# 201123-1704 - Added today called count display
+# 210304-1509 - Added option '5' for modify_lead for this page to work as read-only
+# 210421-2120 - Added more screen labels
+# 210629-1545 - Added KHOMP stats display
+# 210630-0838 - Added display of vicidial_vmm_counts data, if $CIDdisplay=="Yes"
+# 220222-1454 - Added allow_web_debug system setting
+# 220312-0953 - Added vicidial_dial_cid_log data
+# 220427-1132 - Fixes for lead not found, Issue #1358
+# 220520-1319 - Fix for admin hide phone data issue #1359
+# 230204-0011 - Fix for inbound Call ID display
+# 230205-2135 - Small fix for ignore_group_on_search issue
+# 230307-1326 - Small fix for closer calls DID display, Issue #1447
+# 230309-1444 - Added Inbound Call Menu Log display as part of IVR Log section
+# 231117-1920 - Added vicidial_3way_press_log display
+# 231126-2218 - Added vicidial_hci_log display
+# 240704-2329 - Added coldstorage log view option
+# 241002-0936 - Fix for displaying CID info on outbound calls that were blind transferred
+# 250129-0921 - Fix for closer call notes display, Issue #1534
+# 250913-0837 - Added Stereo Call Recording indicator
+# 251010-1140 - Added DTMF count and muting recording log indicator columns
+#
+
 require("dbconnect_mysqli.php");
-//require("functions.php");
+require("functions.php");
 
 $PHP_AUTH_USER=$_SERVER['PHP_AUTH_USER'];
 $PHP_AUTH_PW=$_SERVER['PHP_AUTH_PW'];
