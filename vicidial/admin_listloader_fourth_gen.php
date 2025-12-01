@@ -2918,7 +2918,7 @@ while (!feof($file)) {
 			
 			} 
 
-			<?php
+		}
 # Lead Loader Processing Section - Modern UI with Inline CSS
 
 // Display processing options information in a modern card layout
