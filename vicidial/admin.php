@@ -37740,417 +37740,113 @@ if ($ADD==302)
 ######################
 # ADD=311 modify list info in the system
 ######################
-if ($ADD == 311) {
-    if ($LOGmodify_lists == 1) {
-        if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
+
+
+if ($ADD==311) {
+    if ($LOGmodify_lists==1) {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) ) {
             $modify_url = "$PHP_SELF?ADD=311&list_id=$list_id";
-            $modify_footer_refresh = 1;
+            $modify_footer_refresh=1;
         }
-        
-        // Modern UI CSS with white background and adjusted spacing
-        echo "<style>
-            body { 
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-                color: #333; 
-                line-height: 1.5; 
-                background-color: #f5f7fa; 
-                margin: 0;
-                padding: 0;
-            }
-            .container { 
-                max-width: 1200px; 
-                margin: 0 auto; 
-                padding: 15px;
-            }
-            .card { 
-                background: #fff; 
-                border-radius: 8px; 
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
-                margin-bottom: 20px; 
-                overflow: hidden; 
-                border: 1px solid #eaeaea;
-            }
-            .card-header { 
-                background: #fff; 
-                color: #333; 
-                padding: 12px 20px; 
-                border-bottom: 1px solid #eaeaea;
-                font-weight: 600;
-            }
-            .card-header h2 { 
-                margin: 0; 
-                font-size: 1.4rem; 
-                font-weight: 600;
-                color: #2c3e50;
-            }
-            .card-body { 
-                padding: 15px; 
-            }
-            .form-grid { 
-                display: grid; 
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-                gap: 15px; 
-            }
-            .form-section { 
-                background: #fff; 
-                border-radius: 6px; 
-                padding: 12px; 
-                border: 1px solid #eaeaea;
-                margin-bottom: 15px;
-            }
-            .section-title { 
-                margin-top: 0; 
-                margin-bottom: 10px; 
-                color: #2c3e50; 
-                font-size: 1rem; 
-                font-weight: 600;
-                border-bottom: 1px solid #eaeaea; 
-                padding-bottom: 6px; 
-            }
-            .section-title i { 
-                margin-right: 8px; 
-                color: #3498db; 
-            }
-            .form-group { 
-                margin-bottom: 12px; 
-            }
-            .form-group label { 
-                display: block; 
-                margin-bottom: 4px; 
-                font-weight: 500; 
-                color: #555; 
-                font-size: 0.9rem;
-            }
-            .form-control { 
-                display: block; 
-                width: 100%; 
-                padding: 6px 10px; 
-                font-size: 0.9rem; 
-                line-height: 1.4; 
-                color: #495057; 
-                background-color: #fff; 
-                border: 1px solid #ced4da; 
-                border-radius: 4px; 
-            }
-            .form-control:focus { 
-                color: #495057; 
-                background-color: #fff; 
-                border-color: #80bdff; 
-                outline: 0; 
-                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
-            }
-            .form-control-static { 
-                padding-top: 6px; 
-                padding-bottom: 6px; 
-                margin-bottom: 0; 
-                min-height: 30px; 
-                font-size: 0.9rem;
-            }
-            .input-group { 
-                position: relative; 
-                display: flex; 
-                flex-wrap: wrap; 
-                align-items: stretch; 
-                width: 100%; 
-            }
-            .input-group .form-control { 
-                position: relative; 
-                flex: 1 1 auto; 
-                width: 1%; 
-                margin-bottom: 0; 
-            }
-            .input-group-append { 
-                display: flex; 
-                margin-left: -1px; 
-            }
-            .input-group-append .btn, 
-            .input-group-append .input-group-text { 
-                border-top-left-radius: 0; 
-                border-bottom-left-radius: 0; 
-            }
-            .input-group-text { 
-                display: flex; 
-                align-items: center; 
-                padding: 6px 10px; 
-                margin-bottom: 0; 
-                font-size: 0.9rem; 
-                font-weight: 400; 
-                line-height: 1.4; 
-                color: #495057; 
-                text-align: center; 
-                white-space: nowrap; 
-                background-color: #e9ecef; 
-                border: 1px solid #ced4da; 
-                border-radius: 4px; 
-            }
-            .btn { 
-                display: inline-block; 
-                font-weight: 400; 
-                text-align: center; 
-                white-space: nowrap; 
-                vertical-align: middle; 
-                border: 1px solid transparent; 
-                padding: 6px 12px; 
-                font-size: 0.9rem; 
-                line-height: 1.4; 
-                border-radius: 4px; 
-                cursor: pointer; 
-                text-decoration: none; 
-            }
-            .btn-primary { 
-                color: #fff; 
-                background-color: #007bff; 
-                border-color: #007bff; 
-            }
-            .btn-success { 
-                color: #fff; 
-                background-color: #28a745; 
-                border-color: #28a745; 
-            }
-            .btn-info { 
-                color: #fff; 
-                background-color: #17a2b8; 
-                border-color: #17a2b8; 
-            }
-            .btn-warning { 
-                color: #212529; 
-                background-color: #ffc107; 
-                border-color: #ffc107; 
-            }
-            .btn-danger { 
-                color: #fff; 
-                background-color: #dc3545; 
-                border-color: #dc3545; 
-            }
-            .btn-secondary { 
-                color: #fff; 
-                background-color: #6c757d; 
-                border-color: #6c757d; 
-            }
-            .btn-outline-secondary { 
-                color: #6c757d; 
-                background-color: transparent; 
-                border-color: #6c757d; 
-            }
-            .btn-sm { 
-                padding: 4px 8px; 
-                font-size: 0.8rem; 
-                line-height: 1.3; 
-                border-radius: 3px; 
-            }
-            .form-actions { 
-                margin-top: 15px; 
-                text-align: center; 
-            }
-            .table { 
-                width: 100%; 
-                margin-bottom: 1rem; 
-                background-color: transparent; 
-                border-collapse: collapse; 
-                font-size: 0.9rem;
-            }
-            .table th, 
-            .table td { 
-                padding: 0.5rem; 
-                vertical-align: top; 
-                border-top: 1px solid #dee2e6; 
-            }
-            .table thead th { 
-                vertical-align: bottom; 
-                border-bottom: 2px solid #dee2e6; 
-                background-color: #f8f9fa; 
-                font-weight: 600;
-            }
-            .table tbody tr:nth-of-type(odd) { 
-                background-color: rgba(0, 0, 0, 0.01); 
-            }
-            .table-hover tbody tr:hover { 
-                background-color: rgba(0, 0, 0, 0.04); 
-            }
-            .table-striped tbody tr:nth-of-type(odd) { 
-                background-color: rgba(0, 0, 0, 0.02); 
-            }
-            .table-active, 
-            .table-active > th, 
-            .table-active > td { 
-                background-color: rgba(0, 123, 255, 0.05); 
-            }
-            .table-responsive { 
-                display: block; 
-                width: 100%; 
-                overflow-x: auto; 
-            }
-            .alert { 
-                position: relative; 
-                padding: 0.6rem 1rem; 
-                margin-bottom: 1rem; 
-                border: 1px solid transparent; 
-                border-radius: 4px; 
-                font-size: 0.9rem;
-            }
-            .alert-warning { 
-                color: #856404; 
-                background-color: #fff3cd; 
-                border-color: #ffeeba; 
-            }
-            .alert-danger { 
-                color: #721c24; 
-                background-color: #f8d7da; 
-                border-color: #f5c6cb; 
-            }
-            .text-danger { 
-                color: #dc3545; 
-            }
-            .text-center { 
-                text-align: center; 
-            }
-            .text-right { 
-                text-align: right; 
-            }
-            .mt-2 { 
-                margin-top: 0.4rem; 
-            }
-            .mt-5 { 
-                margin-top: 2rem; 
-            }
-            .mb-3 { 
-                margin-bottom: 0.8rem; 
-            }
-            .ml-2 { 
-                margin-left: 0.4rem; 
-            }
-            .date-container { 
-                position: relative; 
-            }
-            .date-container .input-group-text { 
-                cursor: pointer; 
-            }
-            @media (max-width: 768px) {
-                .form-grid { 
-                    grid-template-columns: 1fr; 
-                }
-                .card-body { 
-                    padding: 12px; 
-                }
-                .form-section { 
-                    padding: 10px; 
-                }
-                .section-title { 
-                    font-size: 0.95rem; 
-                }
-            }
-        </style>";
-        
-        // Modern UI Container
-        echo "<div class='container'>";
-        echo "<div class='card'>";
-        echo "<div class='card-header'><h2>" . _QXZ("MODIFY A LISTS RECORD") . ": $list_id</h2></div>";
-        echo "<div class='card-body'>";
-        
+
         if ($SSexpired_lists_inactive > 0) {
-            $expired_check = 0;
-            $stmt = "SELECT count(*) from vicidial_lists where list_id='$list_id' and expiration_date < \"$REPORTdate\";";
-            $rslt = mysql_to_mysqli($stmt, $link);
+            $expired_check=0;
+            $stmt="SELECT count(*) from vicidial_lists where list_id='$list_id' and expiration_date < \"$REPORTdate\";";
+            $rslt=mysql_to_mysqli($stmt, $link);
             $Cexp_to_print = mysqli_num_rows($rslt);
             if ($Cexp_to_print > 0) {
-                $rowx = mysqli_fetch_row($rslt);
+                $rowx=mysqli_fetch_row($rslt);
                 $expired_check = "$rowx[0]";
             }
-            if ($DB) {
-                echo "$expired_check|$stmt|\n";
-            }
+            if ($DB) {echo "$expired_check|$stmt|\n";}
             if ($expired_check > 0) {
                 $stmt = "UPDATE vicidial_lists SET active='N' where list_id='$list_id';";
-                $rslt = mysql_to_mysqli($stmt, $link);
+                $rslt=mysql_to_mysqli($stmt, $link);
                 $ELaffected_rows = mysqli_affected_rows($link);
-                if ($DB) {
-                    echo "|$stmt|\n";
-                }
+                if ($DB) {echo "|$stmt|\n";}
 
                 ### LOG INSERTION Admin Log Table ###
                 $SQL_log = "$stmt|";
                 $SQL_log = preg_replace('/;/', '', $SQL_log);
                 $SQL_log = addslashes($SQL_log);
-                $stmt = "INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='MODIFY', record_id='$list_id', event_code='ADMIN AUTO EXPIRE LIST', event_sql=\"$SQL_log\", event_notes='LIST: $list_id CHANGED: $ELaffected_rows';";
-                if ($DB) {
-                    echo "|$stmt|\n";
-                }
-                $rslt = mysql_to_mysqli($stmt, $link);
+                $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='MODIFY', record_id='$list_id', event_code='ADMIN AUTO EXPIRE LIST', event_sql=\"$SQL_log\", event_notes='LIST: $list_id CHANGED: $ELaffected_rows';";
+                if ($DB) {echo "|$stmt|\n";}
+                $rslt=mysql_to_mysqli($stmt, $link);
 
-                echo "<div class='alert alert-warning'><i class='fas fa-exclamation-triangle'></i> " . _QXZ("NOTICE: expired list set to inactive") . "</div>\n";
+                echo "<div style='background:#fff3cd;border-left:4px solid #ffc107;padding:15px;border-radius:8px;margin:20px 0;'>";
+                echo "<strong style='color:#856404;'>"._QXZ("NOTICE: expired list set to inactive")."</strong>";
+                echo "</div>";
             }
         }
 
-        $stmt = "SELECT vicidial_lists.list_id,list_name,campaign_id,active,list_description,list_changedate,list_lastcalldate,reset_time,agent_script_override,campaign_cid_override,am_message_exten_override,drop_inbound_group_override,xferconf_a_number,xferconf_b_number,xferconf_c_number,xferconf_d_number,xferconf_e_number,web_form_address,web_form_address_two,time_zone_setting,inventory_report,IFNULL(audit_comments,0),expiration_date,DATE_FORMAT(expiration_date,'%Y%m%d'),na_call_url,local_call_time,web_form_address_three,status_group_id,user_new_lead_limit,inbound_list_script_override,default_xfer_group,daily_reset_limit,resets_today,auto_active_list_rank,inbound_drop_voicemail,inbound_after_hours_voicemail,qc_scorecard_id,qc_statuses_id,qc_web_form_address,auto_alt_threshold,cid_group_id,dial_prefix,weekday_resets_container from vicidial_lists left outer join vicidial_lists_custom on vicidial_lists.list_id=vicidial_lists_custom.list_id where vicidial_lists.list_id='$list_id' $LOGallowed_campaignsSQL;";
+        $stmt="SELECT vicidial_lists.list_id,list_name,campaign_id,active,list_description,list_changedate,list_lastcalldate,reset_time,agent_script_override,campaign_cid_override,am_message_exten_override,drop_inbound_group_override,xferconf_a_number,xferconf_b_number,xferconf_c_number,xferconf_d_number,xferconf_e_number,web_form_address,web_form_address_two,time_zone_setting,inventory_report,IFNULL(audit_comments,0),expiration_date,DATE_FORMAT(expiration_date,'%Y%m%d'),na_call_url,local_call_time,web_form_address_three,status_group_id,user_new_lead_limit,inbound_list_script_override,default_xfer_group,daily_reset_limit,resets_today,auto_active_list_rank,inbound_drop_voicemail,inbound_after_hours_voicemail,qc_scorecard_id,qc_statuses_id,qc_web_form_address,auto_alt_threshold,cid_group_id,dial_prefix,weekday_resets_container from vicidial_lists left outer join vicidial_lists_custom on vicidial_lists.list_id=vicidial_lists_custom.list_id where vicidial_lists.list_id='$list_id' $LOGallowed_campaignsSQL;";
 
-        $rslt = mysql_to_mysqli($stmt, $link);
-        if ($DB) {
-            echo "$stmt\n";
-        }
-        $row = mysqli_fetch_row($rslt);
-        $list_name = $row[1];
-        $campaign_id = $row[2];
-        $active = $row[3];
-        $list_description = $row[4];
-        $list_changedate = $row[5];
-        $list_lastcalldate = $row[6];
-        $reset_time = $row[7];
-        $agent_script_override = $row[8];
-        $campaign_cid_override = $row[9];
-        $am_message_exten_override = $row[10];
-        $drop_inbound_group_override = $row[11];
-        $xferconf_a_number = $row[12];
-        $xferconf_b_number = $row[13];
-        $xferconf_c_number = $row[14];
-        $xferconf_d_number = $row[15];
-        $xferconf_e_number = $row[16];
-        $web_form_address = $row[17];
-        $web_form_address_two = $row[18];
-        $time_zone_setting = $row[19];
-        $inventory_report = $row[20];
-        $audit_comments = $row[21];
-        $expiration_date = $row[22];
-        $expiration_dateINT = $row[23];
-        $na_call_url = $row[24];
-        $list_local_call_time = $row[25];
-        $web_form_address_three = $row[26];
-        $status_group_id = $row[27];
-        $user_new_lead_limit = $row[28];
-        $inbound_list_script_override = $row[29];
-        $default_xfer_group = $row[30];
-        $daily_reset_limit = $row[31];
-        $resets_today = $row[32];
-        $auto_active_list_rank = $row[33];
-        $inbound_drop_voicemail = $row[34];
-        $inbound_after_hours_voicemail = $row[35];
-        $qc_scorecard_id = $row[36];
-        $qc_statuses_id = $row[37];
-        $qc_web_form_address = $row[38];
-        $auto_alt_threshold = $row[39];
-        $cid_group_id = $row[40];
-        $dial_prefix = $row[41];
+        $rslt=mysql_to_mysqli($stmt, $link);
+        if ($DB) {echo "$stmt\n";}
+        $row=mysqli_fetch_row($rslt);
+        $list_name =                $row[1];
+        $campaign_id =              $row[2];
+        $active =                   $row[3];
+        $list_description =         $row[4];
+        $list_changedate =          $row[5];
+        $list_lastcalldate =        $row[6];
+        $reset_time =               $row[7];
+        $agent_script_override =    $row[8];
+        $campaign_cid_override =    $row[9];
+        $am_message_exten_override =    $row[10];
+        $drop_inbound_group_override =  $row[11];
+        $xferconf_a_number =        $row[12];
+        $xferconf_b_number =        $row[13];
+        $xferconf_c_number =        $row[14];
+        $xferconf_d_number =        $row[15];
+        $xferconf_e_number =        $row[16];
+        $web_form_address =         $row[17];
+        $web_form_address_two =     $row[18];
+        $time_zone_setting =        $row[19];
+        $inventory_report =         $row[20];
+        $audit_comments =           $row[21];
+        $expiration_date =          $row[22];
+        $expiration_dateINT =       $row[23];
+        $na_call_url =              $row[24];
+        $list_local_call_time =     $row[25];
+        $web_form_address_three =   $row[26];
+        $status_group_id =          $row[27];
+        $user_new_lead_limit =      $row[28];
+        $inbound_list_script_override =     $row[29];
+        $default_xfer_group =       $row[30];
+        $daily_reset_limit =        $row[31];
+        $resets_today =             $row[32];
+        $auto_active_list_rank =    $row[33];
+        $inbound_drop_voicemail =   $row[34];
+        $inbound_after_hours_voicemail =    $row[35];
+        $qc_scorecard_id =          $row[36];
+        $qc_statuses_id =           $row[37];
+        $qc_web_form_address =      $row[38];
+        $auto_alt_threshold =       $row[39];
+        $cid_group_id =             $row[40];
+        $dial_prefix =              $row[41];
         $weekday_resets_container = $row[42];
 
         # grab names of global statuses and statuses in the selected campaign
-        $stmt = "SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_statuses order by status;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_statuses order by status;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $statuses_to_print = mysqli_num_rows($rslt);
 
-        $o = 0;
+        $o=0;
         while ($statuses_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $statuses_list["$rowx[0]"] = "$rowx[1]";
             $statuses_complete_list["$rowx[0]"] = "$rowx[11]";
             $o++;
         }
 
-        $stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable,scheduled_callback,completed,min_sec,max_sec,answering_machine from vicidial_campaign_statuses where campaign_id='$campaign_id' $LOGallowed_campaignsSQL order by status;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $Cstatuses_to_print = mysqli_num_rows($rslt);
 
-        $o = 0;
+        $o=0;
         while ($Cstatuses_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $statuses_list["$rowx[0]"] = "$rowx[1]";
             $statuses_complete_list["$rowx[0]"] = "$rowx[12]";
             $o++;
@@ -38158,27 +37854,27 @@ if ($ADD == 311) {
         # end grab status names
 
         ##### get scripts listings for pulldown
-        $Lscripts_list = "<option value=\"\">" . _QXZ("NONE - INACTIVE") . "</option>\n";
-        $stmt = "SELECT script_id,script_name from vicidial_scripts $whereLOGadmin_viewable_groupsSQL order by script_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $Lscripts_list = "<option value=\"\">"._QXZ("NONE - INACTIVE")."</option>\n";
+        $stmt="SELECT script_id,script_name from vicidial_scripts $whereLOGadmin_viewable_groupsSQL order by script_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $scripts_to_print = mysqli_num_rows($rslt);
-        $o = 0;
+        $o=0;
         while ($scripts_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $Lscripts_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
             $scriptname_list["$rowx[0]"] = "$rowx[1]";
             $o++;
         }
 
         ##### get in-groups listings for dynamic drop in-group pulldown
-        $stmt = "SELECT group_id,group_name from vicidial_inbound_groups $whereLOGadmin_viewable_groupsSQL order by group_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $stmt="SELECT group_id,group_name from vicidial_inbound_groups $whereLOGadmin_viewable_groupsSQL order by group_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $Dgroups_to_print = mysqli_num_rows($rslt);
-        $Dgroups_menu = '';
-        $Dgroups_selected = 0;
-        $o = 0;
+        $Dgroups_menu='';
+        $Dgroups_selected=0;
+        $o=0;
         while ($Dgroups_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $Dgroups_menu .= "<option ";
             if ($drop_inbound_group_override == "$rowx[0]") {
                 $Dgroups_menu .= "SELECTED ";
@@ -38188,99 +37884,125 @@ if ($ADD == 311) {
             $o++;
         }
         if ($Dgroups_selected < 1) {
-            $Dgroups_menu .= "<option SELECTED value=\"\">---" . _QXZ("NONE") . "---</option>\n";
+            $Dgroups_menu .= "<option SELECTED value=\"\">---"._QXZ("NONE")."---</option>\n";
         } else {
-            $Dgroups_menu .= "<option value=\"\">---" . _QXZ("NONE") . "---</option>\n";
+            $Dgroups_menu .= "<option value=\"\">---"._QXZ("NONE")."---</option>\n";
         }
 
-        echo "<form action=$PHP_SELF method=POST name=vicidial_report id=vicidial_report>\n";
-        echo "<input type=hidden name=ADD value=411>\n";
-        echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-        echo "<input type=hidden name=old_campaign_id value=\"$campaign_id\">\n";
+        // Modern Modify List Section
+        echo "<div style='max-width:100%;margin:30px auto;box-sizing:border-box;'>";
         
-        // Modern Form Layout
-        echo "<div class='form-grid'>";
+        // Header
+        echo "<div style='display:flex;align-items:center;gap:15px;margin-bottom:20px;'>";
+        echo "<div style='background:#495057;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;'>📝</div>";
+        echo "<div>";
+        echo "<h2 style='margin:0;font-size:22px;color:#2c3e50;font-weight:600;'>"._QXZ("MODIFY A LISTS RECORD")."</h2>";
+        echo "<span style='font-size:13px;color:#6c757d;'>List ID: <strong>$list_id</strong></span>";
+        echo "</div>";
+        echo "</div>";
         
-        // Basic Information Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-info-circle'></i> " . _QXZ("Basic Information") . "</h3>";
+        // Form Container
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;'>";
+        echo "<form action='$PHP_SELF' method='POST' name='vicidial_report' id='vicidial_report'>";
+        echo "<input type='hidden' name='ADD' value='411'>";
+        echo "<input type='hidden' name='list_id' value='$list_id'>";
+        echo "<input type='hidden' name='old_campaign_id' value='$campaign_id'>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List ID") . "</label>";
-        echo "<div class='form-control-static'><b>$list_id</b>$NWB#lists-list_id$NWE</div>";
-        echo "</div>\n";
+        // Two-column grid layout
+        echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;box-sizing:border-box;'>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List Name") . "</label>";
-        echo "<input type=text name=list_name class='form-control' value=\"$list_name\">$NWB#lists-list_name$NWE";
-        echo "</div>\n";
+        // List ID (read-only, full width)
+        echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List ID")."</label>";
+        echo "<div style='padding:10px;background:#f8f9fa;border:1.5px solid #e9ecef;border-radius:8px;font-size:14px;font-weight:600;color:#2c3e50;box-sizing:border-box;'>$list_id</div>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_id$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List Description") . "</label>";
-        echo "<input type=text name=list_description class='form-control' value=\"$list_description\">$NWB#lists-list_description$NWE";
-        echo "</div>\n";
+        // List Name
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List Name")."</label>";
+        echo "<input type='text' name='list_name' size='30' maxlength='30' value='$list_name' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_name$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label><a href=\"$PHP_SELF?ADD=34&campaign_id=$campaign_id\">" . _QXZ("Campaign") . "</a></label>";
-        echo "<select name=campaign_id class='form-control'>\n";
-
-        $stmt = "SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        // List Description
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List Description")."</label>";
+        echo "<input type='text' name='list_description' size='30' maxlength='255' value='$list_description' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_description$NWE</div>";
+        echo "</div>";
+        
+        // Campaign
+        $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $campaigns_to_print = mysqli_num_rows($rslt);
-        $campaigns_list = '';
-        $camp_list = '|';
-        $o = 0;
+        $campaigns_list='';
+        $camp_list='|';
+        $o=0;
         while ($campaigns_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
             $camp_list .= "$rowx[0]|";
             $o++;
         }
+        
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=34&campaign_id=$campaign_id' style='color:#495057;text-decoration:none;'>"._QXZ("Campaign")."</a></label>";
+        echo "<select size='1' name='campaign_id' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
         echo "$campaigns_list";
-        echo "<option SELECTED>$campaign_id</option>\n";
-        echo "</select>$NWB#lists-campaign_id$NWE";
-        if (!preg_match("/\|$campaign_id\|/", $camp_list)) {
-            echo "<div class='text-danger'><B>" . _QXZ("CAMPAIGN DOES NOT EXIST") . "</B></div>";
+        echo "<option SELECTED>$campaign_id</option>";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-campaign_id$NWE";
+        if (!preg_match("/\|$campaign_id\|/",$camp_list)) {
+            echo "<br><span style='color:#dc3545;font-weight:600;'>"._QXZ("CAMPAIGN DOES NOT EXIST")."</span>";
         }
-        echo "</div>\n";
+        echo "</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Active") . "</label>";
-        echo "<select name=active class='form-control'><option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$active' SELECTED>" . _QXZ("$active") . "</option></select>$NWB#lists-active$NWE";
-        if (($expiration_dateINT < $EXPtestdate) and ($active == 'Y')) {
-            echo "<div class='text-danger mt-2'><B>" . _QXZ("LIST EXPIRED AND SET TO ACTIVE") . "</B></div>";
+        // Active
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Active")."</label>";
+        echo "<select size='1' name='active' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value='Y'>"._QXZ("Y")."</option>";
+        echo "<option value='N'>"._QXZ("N")."</option>";
+        echo "<option value='$active' SELECTED>"._QXZ("$active")."</option>";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-active$NWE";
+        if ( ($expiration_dateINT < $EXPtestdate) and ($active == 'Y') ) {
+            echo "<br><span style='color:#dc3545;font-weight:600;'>"._QXZ("LIST EXPIRED AND SET TO ACTIVE")."</span>";
         }
-        echo "</div>\n";
+        echo "</div>";
+        echo "</div>";
         
-        echo "</div>"; // End Basic Information Section
+        // Reset Lead-Called-Status
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Reset Lead-Called-Status for this list")."</label>";
+        echo "<select size='1' name='reset_list' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value='Y'>"._QXZ("Y")."</option>";
+        echo "<option value='N' SELECTED>"._QXZ("N")."</option>";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-reset_list$NWE</div>";
+        echo "</div>";
         
-        // Reset Settings Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-redo'></i> " . _QXZ("Reset Settings") . "</h3>";
+        // Reset Times
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Reset Times")."</label>";
+        echo "<input type='text' name='reset_time' size='30' maxlength='100' value='$reset_time' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-reset_time$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Reset Lead-Called-Status for this list") . "</label>";
-        echo "<select name=reset_list class='form-control'><option value='Y'>" . _QXZ("Y") . "</option><option value='N' SELECTED>" . _QXZ("N") . "</option></select>$NWB#lists-reset_list$NWE";
-        echo "</div>\n";
-        
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Reset Times") . "</label>";
-        echo "<input type=text name=reset_time class='form-control' value=\"$reset_time\">$NWB#lists-reset_time$NWE";
-        echo "</div>\n";
-
-        if ($SSweekday_resets > 0) {
+                if ($SSweekday_resets > 0) {
             ##### get container listings for dynamic WEEKDAY_TIMERANGE_SECONDS container pulldown menu
-            $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='LIST_WEEKDAY_RESETS' $LOGadmin_viewable_groupsSQL order by container_id;";
-            $rslt = mysql_to_mysqli($stmt, $link);
+            $stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='LIST_WEEKDAY_RESETS' $LOGadmin_viewable_groupsSQL order by container_id;";
+            $rslt=mysql_to_mysqli($stmt, $link);
             $dtlc_to_print = mysqli_num_rows($rslt);
-            $weekday_resets_container_menu = '';
-            $dtlc_selected = 0;
-            $o = 0;
+            $weekday_resets_container_menu='';
+            $dtlc_selected=0;
+            $o=0;
             while ($dtlc_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-                if (mb_strlen($rowx[1], 'utf-8') > 40) {
-                    $rowx[1] = mb_substr($rowx[1], 0, 40, 'utf-8') . '...';
-                }
+                $rowx=mysqli_fetch_row($rslt);
+                if (mb_strlen($rowx[1],'utf-8')>40)
+                    {$rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';}
                 $weekday_resets_container_menu .= "<option ";
                 if ($weekday_resets_container == "$rowx[0]") {
                     $weekday_resets_container_menu .= "SELECTED ";
@@ -38289,163 +38011,186 @@ if ($ADD == 311) {
                 $weekday_resets_container_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
                 $o++;
             }
-
-            echo "<div class='form-group'>";
+            
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>";
             if ($dtlc_selected > 0) {
-                echo "<label><a href=\"$PHP_SELF?ADD=392111111111&container_id=$weekday_resets_container\">" . _QXZ("Weekday Resets Container") . "</a></label>";
+                echo "<a href='$PHP_SELF?ADD=392111111111&container_id=$weekday_resets_container' style='color:#495057;text-decoration:none;'>"._QXZ("Weekday Resets Container")."</a>";
             } else {
-                echo "<label>" . _QXZ("Weekday Resets Container") . "</label>";
+                echo _QXZ("Weekday Resets Container");
             }
-            echo "<select name=weekday_resets_container class='form-control'><option value='DISABLED'>" . _QXZ("DISABLED") . "</option>$weekday_resets_container_menu</select>$NWB#lists-weekday_resets_container$NWE";
-            echo "</div>\n";
+            echo "</label>";
+            echo "<select size='1' name='weekday_resets_container' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+            echo "<option value='DISABLED'>"._QXZ("DISABLED")."</option>$weekday_resets_container_menu";
+            echo "</select>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-weekday_resets_container$NWE</div>";
+            echo "</div>";
         } else {
-            echo "<input type=hidden name=weekday_resets_container value=\"$weekday_resets_container\">\n";
+            echo "<input type='hidden' name='weekday_resets_container' value='$weekday_resets_container'>";
         }
-
+        
+        // Daily Reset Limit
         if ($LOGuser_level >= 9) {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Daily Reset Limit") . "</label>";
-            echo "<div class='input-group'>";
-            echo "<input type=text name=daily_reset_limit class='form-control' value=\"$daily_reset_limit\">";
-            echo "<div class='input-group-append'><span class='input-group-text'>" . _QXZ("Resets Today") . ": $resets_today</span></div>";
-            echo "</div>$NWB#lists-daily_reset_limit$NWE";
-            echo "</div>\n";
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Daily Reset Limit")."</label>";
+            echo "<div style='display:flex;gap:10px;align-items:center;'>";
+            echo "<input type='text' name='daily_reset_limit' size='4' maxlength='3' value='$daily_reset_limit' style='padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<span style='font-size:13px;color:#6c757d;'><i>"._QXZ("Resets Today").":</i> <strong>$resets_today</strong></span>";
+            echo "</div>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-daily_reset_limit$NWE</div>";
+            echo "</div>";
         } else {
             $daily_reset_limitTEXT = $daily_reset_limit;
-            if ($daily_reset_limit < 1) {
-                $daily_reset_limitTEXT = _QXZ("none");
-            }
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Daily Reset Limit") . "</label>";
-            echo "<div class='form-control-static'>$daily_reset_limitTEXT <span class='ml-2'><i>" . _QXZ("Resets Today") . ":</i> $resets_today</span>$NWB#lists-daily_reset_limit$NWE</div>";
-            echo "<input type=hidden name=daily_reset_limit value=\"$daily_reset_limit\">";
-            echo "</div>\n";
+            if ($daily_reset_limit < 0) {$daily_reset_limitTEXT=_QXZ("none");}
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Daily Reset Limit")."</label>";
+            echo "<input type='hidden' name='daily_reset_limit' value='$daily_reset_limit'>";
+            echo "<div style='padding:10px;background:#f8f9fa;border:1.5px solid #e9ecef;border-radius:8px;font-size:14px;color:#6c757d;'>$daily_reset_limitTEXT <i>"._QXZ("Resets Today").":</i> $resets_today</div>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-daily_reset_limit$NWE</div>";
+            echo "</div>";
         }
         
-        echo "</div>"; // End Reset Settings Section
-        
-        // Date & Time Settings Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-calendar-alt'></i> " . _QXZ("Date & Time Settings") . "</h3>";
-        
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Expiration Date") . "</label>";
-        echo "<div class='input-group date-container'>";
-        echo "<input type=text name=expiration_date class='form-control datepicker' value=\"$expiration_date\">";
-        echo "<div class='input-group-append'><span class='input-group-text'><i class='fas fa-calendar'></i></span></div>";
-        echo "</div>";
+        // Expiration Date
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Expiration Date")."</label>";
+        echo "<input type='text' name='expiration_date' size='12' maxlength='10' value='$expiration_date' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
         echo "<script language=\"JavaScript\">\n";
         echo "var o_cal = new tcal ({\n";
-        echo "	// form name\n";
         echo "	'formname': 'vicidial_report',\n";
-        echo "	// input name\n";
         echo "	'controlname': 'expiration_date'\n";
         echo "});\n";
         echo "o_cal.a_tpl.yearscroll = false;\n";
-        echo "// o_cal.a_tpl.weekstart = 1; // Monday week start\n";
-        echo "</script> $NWB#lists-expiration_date$NWE";
+        echo "</script>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-expiration_date$NWE";
         if ($expiration_dateINT < $EXPtestdate) {
             if ($active == 'Y') {
-                echo "<div class='text-danger mt-2'><B>" . _QXZ("LIST EXPIRED AND SET TO ACTIVE") . "</B></div>";
+                echo "<br><span style='color:#dc3545;font-weight:600;'>"._QXZ("LIST EXPIRED AND SET TO ACTIVE")."</span>";
             } else {
-                echo "<div class='text-danger mt-2'><B>" . _QXZ("LIST EXPIRED") . "</B></div>";
+                echo "<br><span style='color:#dc3545;font-weight:600;'>"._QXZ("LIST EXPIRED")."</span>";
             }
         }
-        echo "</div>\n";
+        echo "</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
+        // Local Call Time
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>";
         if ($list_local_call_time == 'campaign') {
-            echo "<label>" . _QXZ("Local Call Time") . "</label>";
+            echo _QXZ("Local Call Time");
         } else {
-            echo "<label><a href=\"$PHP_SELF?ADD=311111111&call_time_id=$list_local_call_time\">" . _QXZ("Local Call Time") . "</a></label>";
+            echo "<a href='$PHP_SELF?ADD=311111111&call_time_id=$list_local_call_time' style='color:#495057;text-decoration:none;'>"._QXZ("Local Call Time")."</a>";
         }
-        echo "<select name=local_call_time class='form-control'>\n";
-        echo "<option value=\"campaign\">" . _QXZ("Campaign - Use Campaign Settings") . "</option>\n";
+        echo "</label>";
+        echo "<select size='1' name='local_call_time' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value=\"campaign\">"._QXZ("Campaign - Use Campaign Settings")."</option>\n";
         echo "$call_times_list";
-        if ($list_local_call_time == "campaign") {
-            echo "<option selected value=\"campaign\">" . _QXZ("Campaign - Use Campaign Settings") . "</option>\n";
+        if($list_local_call_time == "campaign") {
+            echo "<option selected value=\"campaign\">"._QXZ("Campaign - Use Campaign Settings")."</option>\n";
         } else {
             echo "<option selected value=\"$list_local_call_time\">$list_local_call_time - $call_timename_list[$list_local_call_time]</option>\n";
         }
-        echo "</select>$NWB#lists-local_call_time$NWE";
-        echo "</div>\n";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-local_call_time$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List Change Date") . "</label>";
-        echo "<div class='form-control-static'>$list_changedate$NWB#lists-list_changedate$NWE</div>";
-        echo "</div>\n";
+        // Audit Comments
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Audit Comments")."</label>";
+        echo "<select size='1' name='audit_comments' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        if($audit_comments=='1') {
+            echo "<option value='1' selected>"._QXZ("Y")."</option><option value='0'>"._QXZ("N")."</option>";
+        } else {
+            echo "<option value='1'>"._QXZ("Y")."</option><option value='0' selected>"._QXZ("N")."</option>";
+        }
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-audit_comments$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List Last Call Date") . "</label>";
-        echo "<div class='form-control-static'>$list_lastcalldate$NWB#lists-list_lastcalldate$NWE</div>";
-        echo "</div>\n";
+        // List Change Date (read-only)
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List Change Date")."</label>";
+        echo "<div style='padding:10px;background:#f8f9fa;border:1.5px solid #e9ecef;border-radius:8px;font-size:14px;color:#495057;'>$list_changedate</div>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_changedate$NWE</div>";
+        echo "</div>";
         
-        echo "</div>"; // End Date & Time Settings Section
+        // List Last Call Date (read-only)
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List Last Call Date")."</label>";
+        echo "<div style='padding:10px;background:#f8f9fa;border:1.5px solid #e9ecef;border-radius:8px;font-size:14px;color:#495057;'>$list_lastcalldate</div>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_lastcalldate$NWE</div>";
+        echo "</div>";
         
-        // Script & Override Settings Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-code'></i> " . _QXZ("Script & Override Settings") . "</h3>";
-        
-        echo "<div class='form-group'>";
-        echo "<label><a href=\"$PHP_SELF?ADD=3111111&script_id=$agent_script_override\">" . _QXZ("Agent Script Override") . "</a></label>";
-        echo "<select name=agent_script_override class='form-control'>\n";
+        // Agent Script Override
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=3111111&script_id=$agent_script_override' style='color:#495057;text-decoration:none;'>"._QXZ("Agent Script Override")."</a></label>";
+        echo "<select size='1' name='agent_script_override' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
         echo "$Lscripts_list";
         echo "<option selected value=\"$agent_script_override\">$agent_script_override - $scriptname_list[$agent_script_override]</option>\n";
-        echo "</select>$NWB#lists-agent_script_override$NWE";
-        echo "</div>\n";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-agent_script_override$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label><a href=\"$PHP_SELF?ADD=3111111&script_id=$inbound_list_script_override\">" . _QXZ("Inbound Script Override") . "</a></label>";
-        echo "<select name=inbound_list_script_override class='form-control'>\n";
+        // Inbound Script Override
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='$PHP_SELF?ADD=3111111&script_id=$inbound_list_script_override' style='color:#495057;text-decoration:none;'>"._QXZ("Inbound Script Override")."</a></label>";
+        echo "<select size='1' name='inbound_list_script_override' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
         echo "$Lscripts_list";
         echo "<option selected value=\"$inbound_list_script_override\">$inbound_list_script_override - $scriptname_list[$inbound_list_script_override]</option>\n";
-        echo "</select>$NWB#lists-inbound_list_script_override$NWE";
-        echo "</div>\n";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-inbound_list_script_override$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Inbound Drop Voicemail Override") . "</label>";
-        echo "<div class='input-group'>";
-        echo "<input type=text name=inbound_drop_voicemail id=inbound_drop_voicemail class='form-control' value=\"$inbound_drop_voicemail\">";
-        echo "<div class='input-group-append'><button type='button' class='btn btn-outline-secondary' onclick=\"launch_vm_chooser('inbound_drop_voicemail','vm')\">" . _QXZ("voicemail chooser") . "</button></div>";
-        echo "</div>$NWB#lists-inbound_drop_voicemail$NWE";
-        echo "</div>\n";
+        // Inbound Drop Voicemail Override
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Inbound Drop Voicemail Override")."</label>";
+        echo "<div style='display:flex;gap:10px;align-items:center;'>";
+        echo "<input type='text' name='inbound_drop_voicemail' id='inbound_drop_voicemail' size='12' maxlength='20' value='$inbound_drop_voicemail' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<a href=\"javascript:launch_vm_chooser('inbound_drop_voicemail','vm');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("voicemail chooser")."</a>";
+        echo "</div>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-inbound_drop_voicemail$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Inbound After Hours Voicemail Override") . "</label>";
-        echo "<div class='input-group'>";
-        echo "<input type=text name=inbound_after_hours_voicemail id=inbound_after_hours_voicemail class='form-control' value=\"$inbound_after_hours_voicemail\">";
-        echo "<div class='input-group-append'><button type='button' class='btn btn-outline-secondary' onclick=\"launch_vm_chooser('inbound_after_hours_voicemail','vm')\">" . _QXZ("voicemail chooser") . "</button></div>";
-        echo "</div>$NWB#lists-inbound_after_hours_voicemail$NWE";
-        echo "</div>\n";
+        // Inbound After Hours Voicemail Override
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Inbound After Hours Voicemail Override")."</label>";
+        echo "<div style='display:flex;gap:10px;align-items:center;'>";
+        echo "<input type='text' name='inbound_after_hours_voicemail' id='inbound_after_hours_voicemail' size='12' maxlength='20' value='$inbound_after_hours_voicemail' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<a href=\"javascript:launch_vm_chooser('inbound_after_hours_voicemail','vm');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("voicemail chooser")."</a>";
+        echo "</div>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-inbound_after_hours_voicemail$NWE</div>";
+        echo "</div>";
         
-        $DID_edit_link_BEGIN = '';
-        $DID_edit_link_END = '';
+        // Campaign CID Override
+        $DID_edit_link_BEGIN='';
+        $DID_edit_link_END='';
         if (strlen($campaign_cid_override) > 0) {
-            $stmt = "SELECT did_id from vicidial_inbound_dids where did_pattern='$campaign_cid_override' $LOGadmin_viewable_groupsSQL limit 1;";
-            $rslt = mysql_to_mysqli($stmt, $link);
+            $stmt="SELECT did_id from vicidial_inbound_dids where did_pattern='$campaign_cid_override' $LOGadmin_viewable_groupsSQL limit 1;";
+            $rslt=mysql_to_mysqli($stmt, $link);
             $dids_to_print = mysqli_num_rows($rslt);
             if ($dids_to_print > 0) {
-                $rowx = mysqli_fetch_row($rslt);
-                $DID_edit_link_BEGIN = "<a href=\"$PHP_SELF?ADD=3311&did_id=$rowx[0]\">";
-                $DID_edit_link_END = '</a>';
+                $rowx=mysqli_fetch_row($rslt);
+                $DID_edit_link_BEGIN = "<a href='$PHP_SELF?ADD=3311&did_id=$rowx[0]' style='color:#495057;text-decoration:none;'>";
+                $DID_edit_link_END='</a>';
             }
         }
-
-        echo "<div class='form-group'>";
-        echo "<label>$DID_edit_link_BEGIN" . _QXZ("Campaign CID Override") . "$DID_edit_link_END</label>";
-        echo "<input type=text name=campaign_cid_override class='form-control' value=\"$campaign_cid_override\">$NWB#lists-campaign_cid_override$NWE";
-        echo "</div>\n";
-
+        
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>$DID_edit_link_BEGIN"._QXZ("Campaign CID Override")."$DID_edit_link_END</label>";
+        echo "<input type='text' name='campaign_cid_override' size='20' maxlength='20' value='$campaign_cid_override' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-campaign_cid_override$NWE</div>";
+        echo "</div>";
+        
+        // Campaign CID Group Override
         if ($SScampaign_cid_areacodes_enabled == '1') {
             ##### get vicidial_cid_groups listings for dynamic pulldown list
-            $stmt = "SELECT cid_group_id,cid_group_type,cid_group_notes from vicidial_cid_groups $whereLOGadmin_viewable_groupsSQL order by cid_group_id;";
-            $rslt = mysql_to_mysqli($stmt, $link);
+            $stmt="SELECT cid_group_id,cid_group_type,cid_group_notes from vicidial_cid_groups $whereLOGadmin_viewable_groupsSQL order by cid_group_id;";
+            $rslt=mysql_to_mysqli($stmt, $link);
             $cid_groups_to_print = mysqli_num_rows($rslt);
-            $cid_groups_menu = '';
-            $cid_groups_selected = 0;
-            $o = 0;
+            $cid_groups_menu='';
+            $cid_groups_selected=0;
+            $o=0;
             while ($cid_groups_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
+                $rowx=mysqli_fetch_row($rslt);
                 $cid_groups_menu .= "<option ";
                 if ($cid_group_id == "$rowx[0]") {
                     $cid_groups_menu .= "SELECTED ";
@@ -38454,46 +38199,54 @@ if ($ADD == 311) {
                 $cid_groups_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1] - $rowx[2]</option>\n";
                 $o++;
             }
-
-            echo "<div class='form-group'>";
+            
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>";
             if ($cid_groups_selected > 0) {
-                echo "<label><a href=\"$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id\">" . _QXZ("Campaign CID Group Override") . "</a></label>";
+                echo "<a href='$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id' style='color:#495057;text-decoration:none;'>"._QXZ("Campaign CID Group Override")."</a>";
             } else {
-                echo "<label>" . _QXZ("Campaign CID Group Override") . "</label>";
+                echo _QXZ("Campaign CID Group Override");
             }
-            echo "<select name=cid_group_id class='form-control'>";
-            echo "<option value=\"---DISABLED---\">---" . _QXZ("DISABLED") . "---</option>";
+            echo "</label>";
+            echo "<select size='1' name='cid_group_id' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+            echo "<option value=\"---DISABLED---\">---"._QXZ("DISABLED")."---</option>";
             echo "$cid_groups_menu";
-            echo "</select>$NWB#lists-cid_group_id$NWE";
-            echo "</div>\n";
+            echo "</select>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-cid_group_id$NWE</div>";
+            echo "</div>";
         } else {
-            echo "<input type=hidden name=cid_group_id value=\"$cid_group_id\">\n";
+            echo "<input type='hidden' name='cid_group_id' value='$cid_group_id'>";
         }
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Answering Machine Message Override") . "</label>";
-        echo "<div class='input-group'>";
-        echo "<input type=text name=am_message_exten_override id=am_message_exten_override class='form-control' value=\"$am_message_exten_override\">";
-        echo "<div class='input-group-append'><button type='button' class='btn btn-outline-secondary' onclick=\"launch_chooser('am_message_exten_override','date')\">" . _QXZ("audio chooser") . "</button></div>";
-        echo "</div> $NWB#lists-am_message_exten_override$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Drop Inbound Group Override") . "</label>";
-        echo "<select name=drop_inbound_group_override class='form-control'>";
+        
+        // Answering Machine Message Override (full width)
+        echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Answering Machine Message Override")."</label>";
+        echo "<div style='display:flex;gap:10px;align-items:center;'>";
+        echo "<input type='text' name='am_message_exten_override' id='am_message_exten_override' size='50' maxlength='100' value='$am_message_exten_override' style='flex:1;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<a href=\"javascript:launch_chooser('am_message_exten_override','date');\" style='background:#007bff;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px;white-space:nowrap;'>"._QXZ("audio chooser")."</a>";
+        echo "</div>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-am_message_exten_override$NWE</div>";
+        echo "</div>";
+        
+        // Drop Inbound Group Override
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Drop Inbound Group Override")."</label>";
+        echo "<select size='1' name='drop_inbound_group_override' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
         echo "$Dgroups_menu";
-        echo "</select>$NWB#lists-drop_inbound_group_override$NWE";
-        echo "</div>\n";
-
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-drop_inbound_group_override$NWE</div>";
+        echo "</div>";
+        
+        // Status Group Override
         ##### get status group listings for dynamic pulldown menu
-        $stmt = "SELECT status_group_id,status_group_notes from vicidial_status_groups $whereLOGadmin_viewable_groupsSQL order by status_group_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $stmt="SELECT status_group_id,status_group_notes from vicidial_status_groups $whereLOGadmin_viewable_groupsSQL order by status_group_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $status_groups_to_print = mysqli_num_rows($rslt);
-        $status_groups_menu = '';
-        $status_groups_selected = 0;
-        $o = 0;
+        $status_groups_menu='';
+        $status_groups_selected=0;
+        $o=0;
         while ($status_groups_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $status_groups_menu .= "<option ";
             if ($status_group_id == "$rowx[0]") {
                 $status_groups_menu .= "SELECTED ";
@@ -38502,41 +38255,193 @@ if ($ADD == 311) {
             $status_groups_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
             $o++;
         }
-        $sglinkB = '';
-        $sglinkE = '';
-        if (strlen($status_group_id) > 1) {
-            $sglinkB = "<a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id\">";
-            $sglinkE = '</a>';
+        $sglinkB='';   $sglinkE='';
+        if (strlen($status_group_id)>1) {
+            $sglinkB="<a href='$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id' style='color:#495057;text-decoration:none;'>";
+            $sglinkE='</a>';
         }
-
+        
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>$sglinkB"._QXZ("Status Group Override")."$sglinkE</label>";
+        echo "<select size='1' name='status_group_id' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value=\"\">"._QXZ("NONE")."</option>";
+        echo "$status_groups_menu";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-status_group_id$NWE</div>";
+        echo "</div>";
+        
+        // QC Features (if enabled)
+        if ($SSqc_features_active>0) {
+            ##### get QC status container listings for pulldown
+            $stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='QC_TEMPLATE' order by container_id;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $containers_to_print = mysqli_num_rows($rslt);
+            $QCcontainers_list="<option value=\"\">NONE</option>";
+            $o=0;
+            while ($containers_to_print > $o) {
+                $rowx=mysqli_fetch_row($rslt);
+                $QCcontainers_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                $qc_containers_list["$rowx[0]"] = "$rowx[1]";
+                $o++;
+            }
+            ##### get scorecards listings for pulldown
+            $stmt="SELECT qc_scorecard_id,scorecard_name from quality_control_scorecards where active='Y' order by qc_scorecard_id;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $scorecards_to_print = mysqli_num_rows($rslt);
+            $QCscorecards_list="<option value=\"\">NONE</option>";
+            $o=0;
+            while ($scorecards_to_print > $o) {
+                $rowx=mysqli_fetch_row($rslt);
+                $QCscorecards_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                $scorecardname_list["$rowx[0]"] = "$rowx[1]";
+                $o++;
+            }
+            
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("QC Statuses")."</label>";
+            echo "<select size='1' name='qc_statuses_id' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+            echo "<option selected value=\"$qc_statuses_id\">".(!$qc_statuses_id ? "NONE" : "$qc_statuses_id - $qc_containers_list[$qc_statuses_id]")."</option>\n";
+            echo "$QCcontainers_list";
+            echo "</select>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-qc_statuses_id$NWE</div>";
+            echo "</div>";
+            
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("QC Scorecard Override")."</label>";
+            echo "<select size='1' name='qc_scorecard_id' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+            echo "<option selected value=\"$qc_scorecard_id\">".(!$qc_scorecard_id ? "NONE" : "$qc_scorecard_id - $scorecardname_list[$qc_scorecard_id]")."</option>\n";
+            echo "$QCscorecards_list";
+            echo "</select>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-qc_scorecard_override$NWE</div>";
+            echo "</div>";
+            
+            echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("QC WebForm")."</label>";
+            echo "<input type='text' name='qc_web_form_address' size='70' maxlength='255' value='$qc_web_form_address' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-qc_web_form_address$NWE</div>";
+            echo "</div>";
+        }
+        
+        // Web Forms (full width)
+        echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Web Form")."</label>";
+        echo "<input type='text' name='web_form_address' size='70' maxlength='9999' value='$web_form_address' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-web_form_address$NWE";
+        if ($SSenable_first_webform < 1) {echo " <span style='color:#dc3545;font-weight:600;'>"._QXZ("DISABLED")."</span>";}
+        echo "</div>";
+        echo "</div>";
+        
+        if ($SSenable_second_webform > 0) {
+            echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Web Form Two")."</label>";
+            echo "<input type='text' name='web_form_address_two' size='70' maxlength='9999' value='$web_form_address_two' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-web_form_address$NWE</div>";
+            echo "</div>";
+        }
+        
+        if ($SSenable_third_webform > 0) {
+            echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Web Form Three")."</label>";
+            echo "<input type='text' name='web_form_address_three' size='70' maxlength='9999' value='$web_form_address_three' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-web_form_address$NWE</div>";
+            echo "</div>";
+        }
+        
+        // No Agent Call URL
+        if ($na_call_url == 'ALT') {
+            $stmt="SELECT count(*) from vicidial_url_multi where campaign_id='$list_id' and entry_type='list' and url_type='noagent';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $vum_to_print = mysqli_num_rows($rslt);
+            if ($vum_to_print > 0) {
+                $rowx=mysqli_fetch_row($rslt);
+                $vum_count = $rowx[0]; 
+            }
+            
+            echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'><a href='admin_url_multi.php?DB=$DB&campaign_id=$list_id&entry_type=list&url_type=noagent' style='color:#495057;text-decoration:none;'>"._QXZ("No Agent Call URL")."</a></label>";
+            echo "<input type='text' name='na_call_url' size='10' maxlength='5000' value='$na_call_url' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-na_call_url$NWE <a href='admin_url_multi.php?DB=$DB&campaign_id=$list_id&entry_type=list&url_type=noagent' style='color:#007bff;'>"._QXZ("Alternate No Agent URLs Defined").": $vum_count</a></div>";
+            echo "</div>";
+        } else {
+            echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("No Agent Call URL")."</label>";
+            echo "<input type='text' name='na_call_url' size='70' maxlength='5000' value='$na_call_url' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-na_call_url$NWE</div>";
+            echo "</div>";
+        }
+        
+        // API New Lead URL
+        $apinewlead_url='';
+        $stmt="SELECT url_address from vicidial_url_multi where campaign_id='$list_id' and entry_type='list' and url_type='apinewlead';";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $urls_to_print = mysqli_num_rows($rslt);
+        if ($urls_to_print > 0) {
+            $rowx=mysqli_fetch_row($rslt);
+            $apinewlead_url = $rowx[0];
+        }
+        echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("API New Lead URL")."</label>";
+        echo "<input type='text' size='70' maxlength='5000' name='apinewlead_url' value='$apinewlead_url' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-apinewlead_url$NWE</div>";
+        echo "</div>";
+        
+        // Auto Alt Threshold Override
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Auto Alt Threshold Override")."</label>";
+        echo "<input type='text' name='auto_alt_threshold' size='3' maxlength='3' value='$auto_alt_threshold' placeholder='"._QXZ("number only")."' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-auto_alt_threshold$NWE</div>";
+        echo "</div>";
+        
+        // Dial Prefix Override
+        if ($LOGmodify_dial_prefix > 0) {
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Dial Prefix Override")."</label>";
+            echo "<input type='text' name='dial_prefix' size='4' maxlength='20' value='$dial_prefix' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-dial_prefix$NWE</div>";
+            echo "</div>";
+        } else {
+            echo "<input type='hidden' name='dial_prefix' value='$dial_prefix'>";
+        }
+        
+        // Transfer-Conf Numbers
+        for ($i = 1; $i <= 5; $i++) {
+            $letters = ['a', 'b', 'c', 'd', 'e'];
+            $varname = "xferconf_{$letters[$i-1]}_number";
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Transfer-Conf Number $i Override")."</label>";
+            echo "<input type='text' name='$varname' size='20' maxlength='50' value='".$$varname."' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-xferconf_a_dtmf$NWE</div>";
+            echo "</div>";
+        }
+        
+        // Default Transfer Group
         ##### get in-groups listings for dynamic transfer group pulldown list menu
-        $xfer_groupsSQL = '';
-        $stmt = "SELECT closer_campaigns,xfer_groups from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $row = mysqli_fetch_row($rslt);
-        $closer_campaigns = $row[0];
-        $closer_campaigns = preg_replace("/ -$/", "", $closer_campaigns);
-        $groups = explode(" ", $closer_campaigns);
-        $xfer_groups = $row[1];
-        $xfer_groups = preg_replace("/ -$/", "", $xfer_groups);
-        $XFERgroups = explode(" ", $xfer_groups);
-        $xfer_groupsSQL = preg_replace("/^ | -$/", "", $xfer_groups);
-        $xfer_groupsSQL = preg_replace("/ /", "','", $xfer_groupsSQL);
+        $xfer_groupsSQL='';
+        $stmt="SELECT closer_campaigns,xfer_groups from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $closer_campaigns =	$row[0];
+            $closer_campaigns = preg_replace("/ -$/","",$closer_campaigns);
+            $groups = explode(" ", $closer_campaigns);
+        $xfer_groups =	$row[1];
+            $xfer_groups = preg_replace("/ -$/","",$xfer_groups);
+            $XFERgroups = explode(" ", $xfer_groups);
+        $xfer_groupsSQL = preg_replace("/^ | -$/","",$xfer_groups);
+        $xfer_groupsSQL = preg_replace("/ /","','",$xfer_groupsSQL);
         $xfer_groupsSQL = "WHERE group_id IN('$xfer_groupsSQL')";
 
         $nxLOGadmin_viewable_groupsSQL = $LOGadmin_viewable_groupsSQL;
-        if (strlen($xfer_groupsSQL) < 6) {
-            $nxLOGadmin_viewable_groupsSQL = $whereLOGadmin_viewable_groupsSQL;
-        }
+        if (strlen($xfer_groupsSQL) < 6)
+                {$nxLOGadmin_viewable_groupsSQL = $whereLOGadmin_viewable_groupsSQL;}
 
-        $stmt = "SELECT group_id,group_name from vicidial_inbound_groups $xfer_groupsSQL $nxLOGadmin_viewable_groupsSQL order by group_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $stmt="SELECT group_id,group_name from vicidial_inbound_groups $xfer_groupsSQL $nxLOGadmin_viewable_groupsSQL order by group_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $Xgroups_to_print = mysqli_num_rows($rslt);
-        $Xgroups_menu = '';
-        $Xgroups_selected = 0;
-        $o = 0;
+        $Xgroups_menu='';
+        $Xgroups_selected=0;
+        $o=0;
         while ($Xgroups_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
+            $rowx=mysqli_fetch_row($rslt);
             $Xgroups_menu .= "<option ";
             if ($default_xfer_group == "$rowx[0]") {
                 $Xgroups_menu .= "SELECTED ";
@@ -38546,863 +38451,763 @@ if ($ADD == 311) {
             $o++;
         }
         if ($Xgroups_selected < 1) {
-            $Xgroups_menu .= "<option SELECTED value=\"---NONE---\">---" . _QXZ("NONE") . "---</option>\n";
+            $Xgroups_menu .= "<option SELECTED value=\"---NONE---\">---"._QXZ("NONE")."---</option>\n";
         } else {
-            $Xgroups_menu .= "<option value=\"---NONE---\">---" . _QXZ("NONE") . "---</option>\n";
-        }
-
-        echo "<div class='form-group'>";
-        echo "<label>$sglinkB" . _QXZ("Status Group Override") . "$sglinkE</label>";
-        echo "<select name=status_group_id class='form-control'>";
-        echo "<option value=\"\">" . _QXZ("NONE") . "</option>";
-        echo "$status_groups_menu";
-        echo "</select>$NWB#lists-status_group_id$NWE";
-        echo "</div>\n";
-
-        if ($SSqc_features_active > 0) {
-            ##### get QC status container listings for pulldown
-            $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='QC_TEMPLATE' order by container_id;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $containers_to_print = mysqli_num_rows($rslt);
-            $QCcontainers_list = "<option value=\"\">NONE</option>";
-            $o = 0;
-            while ($containers_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-                $QCcontainers_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-                $qc_containers_list["$rowx[0]"] = "$rowx[1]";
-                $o++;
-            }
-            ##### get scorecards listings for pulldown
-            $stmt = "SELECT qc_scorecard_id,scorecard_name from quality_control_scorecards where active='Y' order by qc_scorecard_id;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $scorecards_to_print = mysqli_num_rows($rslt);
-            $QCscorecards_list = "<option value=\"\">NONE</option>";
-            $o = 0;
-            while ($scorecards_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-                $QCscorecards_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-                $scorecardname_list["$rowx[0]"] = "$rowx[1]";
-                $o++;
-            }
-
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("QC Statuses") . "</label>";
-            echo "<select name=qc_statuses_id class='form-control'>";
-            echo "<option selected value=\"$qc_statuses_id\">" . (!$qc_statuses_id ? "NONE" : "$qc_statuses_id - $qc_containers_list[$qc_statuses_id]") . "</option>\n";
-            echo "$QCcontainers_list";
-            echo "</select>$NWB#lists-qc_statuses_id$NWE";
-            echo "</div>\n";
-
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("QC Scorecard Override") . "</label>";
-            echo "<select name=qc_scorecard_id class='form-control'>";
-            echo "<option selected value=\"$qc_scorecard_id\">" . (!$qc_scorecard_id ? "NONE" : "$qc_scorecard_id - $scorecardname_list[$qc_scorecard_id]") . "</option>\n";
-            echo "$QCscorecards_list";
-            echo "</select>$NWB#lists-qc_scorecard_override$NWE";
-            echo "</div>\n";
-
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("QC WebForm") . "</label>";
-            echo "<input type=text name=qc_web_form_address class='form-control' value=\"$qc_web_form_address\">$NWB#lists-qc_web_form_address$NWE";
-            echo "</div>\n";
+            $Xgroups_menu .= "<option value=\"---NONE---\">---"._QXZ("NONE")."---</option>\n";
         }
         
-        echo "</div>"; // End Script & Override Settings Section
-        
-        // Web Form & URL Settings Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-globe'></i> " . _QXZ("Web Form & URL Settings") . "</h3>";
-        
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Web Form") . "</label>";
-        echo "<input type=text name=web_form_address class='form-control' value=\"$web_form_address\">$NWB#lists-web_form_address$NWE";
-        if ($SSenable_first_webform < 1) {
-            echo "<div class='text-danger mt-2'><b>" . _QXZ("DISABLED") . "</b></div>";
-        }
-        echo "</div>\n";
-        
-        if ($SSenable_second_webform > 0) {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Web Form Two") . "</label>";
-            echo "<input type=text name=web_form_address_two class='form-control' value=\"$web_form_address_two\">$NWB#lists-web_form_address$NWE";
-            echo "</div>\n";
-        }
-        
-        if ($SSenable_third_webform > 0) {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Web Form Three") . "</label>";
-            echo "<input type=text name=web_form_address_three class='form-control' value=\"$web_form_address_three\">$NWB#lists-web_form_address$NWE";
-            echo "</div>\n";
-        }
-
-        if ($na_call_url == 'ALT') {
-            $stmt = "SELECT count(*) from vicidial_url_multi where campaign_id='$list_id' and entry_type='list' and url_type='noagent';";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $vum_to_print = mysqli_num_rows($rslt);
-            if ($vum_to_print > 0) {
-                $rowx = mysqli_fetch_row($rslt);
-                $vum_count = $rowx[0];
-            }
-
-            echo "<div class='form-group'>";
-            echo "<label><a href=\"admin_url_multi.php?DB=$DB&campaign_id=$list_id&entry_type=list&url_type=noagent\">" . _QXZ("No Agent Call URL") . "</a></label>";
-            echo "<div class='input-group'>";
-            echo "<input type=text name=na_call_url class='form-control' value=\"$na_call_url\">";
-            echo "<div class='input-group-append'><a href=\"admin_url_multi.php?DB=$DB&campaign_id=$list_id&entry_type=list&url_type=noagent\" class='btn btn-outline-secondary'>" . _QXZ("Alternate No Agent URLs Defined") . ": $vum_count</a></div>";
-            echo "</div>$NWB#lists-na_call_url$NWE";
-            echo "</div>\n";
-        } else {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("No Agent Call URL") . "</label>";
-            echo "<input type=text name=na_call_url class='form-control' value=\"$na_call_url\">$NWB#lists-na_call_url$NWE";
-            echo "</div>\n";
-        }
-
-        $apinewlead_url = '';
-        $stmt = "SELECT url_address from vicidial_url_multi where campaign_id='$list_id' and entry_type='list' and url_type='apinewlead';";
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $urls_to_print = mysqli_num_rows($rslt);
-        if ($urls_to_print > 0) {
-            $rowx = mysqli_fetch_row($rslt);
-            $apinewlead_url = $rowx[0];
-        }
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("API New Lead URL") . "</label>";
-        echo "<input type=text size=70 maxlength=5000 name=apinewlead_url class='form-control' value=\"$apinewlead_url\">$NWB#lists-apinewlead_url$NWE";
-        echo "</div>\n";
-        
-        echo "</div>"; // End Web Form & URL Settings Section
-        
-        // Transfer Settings Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-exchange-alt'></i> " . _QXZ("Transfer Settings") . "</h3>";
-        
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Transfer-Conf Number 1 Override") . "</label>";
-        echo "<input type=text name=xferconf_a_number class='form-control' value=\"$xferconf_a_number\">$NWB#lists-xferconf_a_dtmf$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Transfer-Conf Number 2 Override") . "</label>";
-        echo "<input type=text name=xferconf_b_number class='form-control' value=\"$xferconf_b_number\">$NWB#lists-xferconf_a_dtmf$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Transfer-Conf Number 3 Override") . "</label>";
-        echo "<input type=text name=xferconf_c_number class='form-control' value=\"$xferconf_c_number\">$NWB#lists-xferconf_a_dtmf$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Transfer-Conf Number 4 Override") . "</label>";
-        echo "<input type=text name=xferconf_d_number class='form-control' value=\"$xferconf_d_number\">$NWB#lists-xferconf_a_dtmf$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Transfer-Conf Number 5 Override") . "</label>";
-        echo "<input type=text name=xferconf_e_number class='form-control' value=\"$xferconf_e_number\">$NWB#lists-xferconf_a_dtmf$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Default Transfer Group") . "</label>";
-        echo "<select name=default_xfer_group class='form-control'>";
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Default Transfer Group")."</label>";
+        echo "<select size='1' name='default_xfer_group' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
         echo "$Xgroups_menu";
-        echo "</select>$NWB#lists-default_xfer_group$NWE";
-        echo "</div>\n";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-default_xfer_group$NWE</div>";
+        echo "</div>";
         
-        echo "</div>"; // End Transfer Settings Section
-        
-        // Additional Settings Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-cog'></i> " . _QXZ("Additional Settings") . "</h3>";
-        
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Auto Alt Threshold Override") . "</label>";
-        echo "<div class='input-group'>";
-        echo "<input type=text name=auto_alt_threshold class='form-control' value=\"$auto_alt_threshold\">";
-        echo "<div class='input-group-append'><span class='input-group-text'><i>" . _QXZ("number only") . "</i></span></div>";
-        echo "</div> $NWB#lists-auto_alt_threshold$NWE";
-        echo "</div>\n";
-
-        if ($LOGmodify_dial_prefix > 0) {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Dial Prefix Override") . "</label>";
-            echo "<input type=text name=dial_prefix class='form-control' value=\"$dial_prefix\"> $NWB#lists-dial_prefix$NWE";
-            echo "</div>\n";
-        } else {
-            echo "<input type=hidden name=dial_prefix value=\"$dial_prefix\">\n";
-        }
-
+        // User New Lead Limit
         if ($SSuser_new_lead_limit > 0) {
-            $stmt = "SELECT no_hopper_dialing from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $row = mysqli_fetch_row($rslt);
-            $no_hopper_dialing = $row[0];
+            $stmt="SELECT no_hopper_dialing from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $row=mysqli_fetch_row($rslt);
+            $no_hopper_dialing =		$row[0];
 
-            $no_hopper_dialing_warning = '';
-            if ($no_hopper_dialing == 'N') {
-                $no_hopper_dialing_warning = " <span class='text-danger'>" . _QXZ("CAMPAIGN NO HOPPER DIALING DISABLED") . "</span>";
-            }
+            $no_hopper_dialing_warning='';
+            if ($no_hopper_dialing == 'N') {$no_hopper_dialing_warning=" <span style='color:#dc3545;font-weight:600;'>"._QXZ("CAMPAIGN NO HOPPER DIALING DISABLED")."</span>";}
 
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("User New Lead Limit") . "</label>";
-            echo "<div class='input-group'>";
-            echo "<input type=text name=user_new_lead_limit class='form-control' value=\"$user_new_lead_limit\">";
-            echo "<div class='input-group-append'><span class='input-group-text'>$no_hopper_dialing_warning</span></div>";
-            echo "</div>$NWB#lists-user_new_lead_limit$NWE";
-            echo "<div class='mt-2'><a href=\"admin_user_list_new.php?user=---ALL---&list_id=$list_id\" class='btn btn-sm btn-outline-info'>" . _QXZ("User Overrides for this list") . "</a></div>";
-            echo "</div>\n";
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("User New Lead Limit")."</label>";
+            echo "<input type='text' name='user_new_lead_limit' size='4' maxlength='4' value='$user_new_lead_limit' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-user_new_lead_limit$NWE $no_hopper_dialing_warning <a href='admin_user_list_new.php?user=---ALL---&list_id=$list_id' style='color:#007bff;'>"._QXZ("User Overrides for this list")."</a></div>";
+            echo "</div>";
         } else {
-            echo "<input type=hidden name=user_new_lead_limit value=\"$user_new_lead_limit\">\n";
+            echo "<input type='hidden' name='user_new_lead_limit' value='$user_new_lead_limit'>";
         }
-
+        
+        // Auto Active List Rank
         if ($SScall_quota_lead_ranking > 0) {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Auto Active List Rank") . "</label>";
-            echo "<input type=text name=auto_active_list_rank class='form-control' value=\"$auto_active_list_rank\">$NWB#lists-auto_active_list_rank$NWE";
-            echo "</div>\n";
+            echo "<div style='box-sizing:border-box;'>";
+            echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Auto Active List Rank")."</label>";
+            echo "<input type='text' name='auto_active_list_rank' size='4' maxlength='4' value='$auto_active_list_rank' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+            echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-auto_active_list_rank$NWE</div>";
+            echo "</div>";
         } else {
-            echo "<input type=hidden name=auto_active_list_rank value=\"$auto_active_list_rank\">\n";
-        }
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Inventory Report") . "</label>";
-        echo "<select name=inventory_report class='form-control'><option value='Y'>" . _QXZ("Y") . "</option><option value='N'>" . _QXZ("N") . "</option><option value='$inventory_report' SELECTED>" . _QXZ("$inventory_report") . "</option></select>$NWB#lists-inventory_report$NWE";
-        echo "</div>\n";
-
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Time Zone Setting") . "</label>";
-        echo "<select name=time_zone_setting class='form-control'><option value='COUNTRY_AND_AREA_CODE'>" . _QXZ("COUNTRY_AND_AREA_CODE") . "</option><option value='POSTAL_CODE'>" . _QXZ("POSTAL_CODE") . "</option><option value='NANPA_PREFIX'>" . _QXZ("NANPA_PREFIX") . "</option><option value='OWNER_TIME_ZONE_CODE'>" . _QXZ("OWNER_TIME_ZONE_CODE") . "</option><option value='$time_zone_setting' SELECTED>" . _QXZ("$time_zone_setting") . "</option></select>$NWB#lists-time_zone_setting$NWE";
-        echo "</div>\n";
-
-        if ($audit_comments == '1') {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Audit Comments") . "</label>";
-            echo "<select name=audit_comments class='form-control'><option value='1' selected>" . _QXZ("Y") . "</option><option value='0'>" . _QXZ("N") . "</option></select>$NWB#lists-audit_comments$NWE";
-            echo "</div>\n";
-        } else {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("Audit Comments") . "</label>";
-            echo "<select name=audit_comments class='form-control'><option value='1'>" . _QXZ("Y") . "</option><option value='0' selected>" . _QXZ("N") . "</option></select>$NWB#lists-audit_comments$NWE";
-            echo "</div>\n";
+            echo "<input type='hidden' name='auto_active_list_rank' value='$auto_active_list_rank'>";
         }
         
-        echo "</div>"; // End Additional Settings Section
+        // Inventory Report
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Inventory Report")."</label>";
+        echo "<select size='1' name='inventory_report' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value='Y'>"._QXZ("Y")."</option>";
+        echo "<option value='N'>"._QXZ("N")."</option>";
+        echo "<option value='$inventory_report' SELECTED>"._QXZ("$inventory_report")."</option>";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-inventory_report$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-actions'>";
-        echo "<button type='submit' name='SUBMIT' class='btn btn-primary'><i class='fas fa-save'></i> " . _QXZ("SUBMIT") . "</button>";
-        echo "</div>\n";
+        // Time Zone Setting
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Time Zone Setting")."</label>";
+        echo "<select size='1' name='time_zone_setting' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value='COUNTRY_AND_AREA_CODE'>"._QXZ("COUNTRY_AND_AREA_CODE")."</option>";
+        echo "<option value='POSTAL_CODE'>"._QXZ("POSTAL_CODE")."</option>";
+        echo "<option value='NANPA_PREFIX'>"._QXZ("NANPA_PREFIX")."</option>";
+        echo "<option value='OWNER_TIME_ZONE_CODE'>"._QXZ("OWNER_TIME_ZONE_CODE")."</option>";
+        echo "<option value='$time_zone_setting' SELECTED>"._QXZ("$time_zone_setting")."</option>";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-time_zone_setting$NWE</div>";
+        echo "</div>";
+    
+        echo "</div>"; // End grid
         
-        echo "</div>"; // End form-grid
-        echo "</form>\n";
+        // Submit Button - Green
+        echo "<div style='margin-top:30px;text-align:center;'>";
+        echo "<button type='submit' name='SUBMIT' style='background:#28a745;color:#fff;padding:12px 40px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 2px 4px rgba(40,167,69,0.3);'>"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
         
+        echo "</form>";
+        echo "</div>"; // End form container
+
         // Statuses Section
-        echo "<div class='mt-5'>";
-        echo "<h3 class='section-title'><i class='fas fa-list'></i> " . _QXZ("STATUSES WITHIN THIS LIST") . "</h3>\n";
-
-        if ($SSexpanded_list_stats > 0) {
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            $dialable_total = 0;
-            $complete_total = 0;
-            $fSQL = '';
-            $stmt = "SELECT dial_statuses,local_call_time,lead_filter_id,drop_lockout_time,call_count_limit from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $row = mysqli_fetch_row($rslt);
-            $dial_statuses = $row[0];
-            $local_call_time = $row[1];
-            $lead_filter_id = $row[2];
-            $drop_lockout_time = $row[3];
-            $call_count_limit = $row[4];
-
-            $stmt = "SELECT lead_filter_sql from vicidial_lead_filters where lead_filter_id='$lead_filter_id' $LOGadmin_viewable_groupsSQL;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $filters_to_print = mysqli_num_rows($rslt);
-            if ($filters_to_print > 0) {
-                $rowx = mysqli_fetch_row($rslt);
-                $filterSQL = $rowx[0];
-                $filterSQL = preg_replace("/\\\\/", "", $filterSQL);
-                $filterSQL = preg_replace('/^and|and$|^or|or$/i', '', $filterSQL);
-                if (strlen($filterSQL) > 4) {
-                    $fSQL = "and ($filterSQL)";
-                } else {
-                    $fSQL = '';
-                }
-            }
-            echo "<thead><tr><th>" . _QXZ("STATUS") . "</th><th>" . _QXZ("STATUS NAME") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th><th>" . _QXZ("DIALABLE") . "</th><th>" . _QXZ("PENETRATION") . "</th></tr></thead>\n";
-        } else {
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            echo "<thead><tr><th>" . _QXZ("STATUS") . "</th><th>" . _QXZ("STATUS NAME") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th></tr></thead>\n";
-        }
-
-        $leads_in_list = 0;
-        $leads_in_list_N = 0;
-        $leads_in_list_Y = 0;
-        $stmt = "SELECT status,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by status,called_since_last_reset order by status,called_since_last_reset;";
-        if ($DB) {
-            echo "$stmt\n";
-        }
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $statuses_to_print = mysqli_num_rows($rslt);
-
-        $o = 0;
-        $lead_list['count'] = 0;
-        $lead_list['Y_count'] = 0;
-        $lead_list['N_count'] = 0;
-        while ($statuses_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
-
-            $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-            if ($rowx[1] == 'N') {
-                $since_reset = 'N';
-                $since_resetX = 'Y';
-            } else {
-                $since_reset = 'Y';
-                $since_resetX = 'N';
-            }
-            $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-            $lead_list[$since_reset . '_count'] = ($lead_list[$since_reset . '_count'] + $rowx[2]);
-            #If opposite side is not set, it may not in the future so give it a value of zero
-            if (!isset($lead_list[$since_resetX][$rowx[0]])) {
-                $lead_list[$since_resetX][$rowx[0]] = 0;
-            }
-            $o++;
-        }
-
-        $o = 0;
-        if ($lead_list['count'] > 0) {
-            #while (list($dispo,) = each($lead_list[$since_reset]))
-            foreach ($lead_list[$since_reset] as $dispo => $blank) {
-                if ($dispo == 'count' || $dispo == 'Y_count' || $dispo == 'N_count') continue;
-                
-                if ($SSexpanded_list_stats > 0) {
-                    ### call function to calculate dialable leads
-                    $single_status = 1;
-                    $only_return = 0;
-                    $dial_statuses = " $dispo -";
-                    $camp_lists = $list_id;
-                    if ($statuses_complete_list[$dispo] == 'Y') {
-                        $Xdialable_count = 0;
-                    } else {
-                        $Xdialable_count = dialable_leads($DB, $link, $local_call_time, $dial_statuses, $camp_lists, $drop_lockout_time, $call_count_limit, $single_status, $fSQL, $only_return);
-                    }
-                    $dialable_total = ($dialable_total + $Xdialable_count);
-
-                    ### get number of complete calls of this status for penetration calculations
-                    $Xcomplete_count = complete_leads($DB, $link, $dial_statuses, $camp_lists, $call_count_limit, $single_status, $campaign_id);
-                    $complete_total = ($complete_total + $Xcomplete_count);
-                    $dispo_total = ($lead_list['Y'][$dispo] + $lead_list['N'][$dispo]);
-                    if (($Xcomplete_count < 1) or ($dispo_total < 1)) {
-                        $complete_pct = "0";
-                    } else {
-                        $complete_pct = intval(($Xcomplete_count / $dispo_total) * 100);
-                    }
-
-                    echo "<tr><td>$dispo</td><td>$statuses_list[$dispo]</td><td>" . $lead_list['Y'][$dispo] . "</td><td>" . $lead_list['N'][$dispo] . "</td><td>$Xdialable_count</td><td class='text-right'>$complete_pct%</td></tr>\n";
-                } else {
-                    echo "<tr><td>$dispo</td><td>$statuses_list[$dispo]</td><td>" . $lead_list['Y'][$dispo] . "</td><td>" . $lead_list['N'][$dispo] . "</td></tr>\n";
-                }
-                $o++;
-            }
-        }
-
-        if ($SSexpanded_list_stats > 0) {
-            if (($complete_total < 1) or ($lead_list['count'] < 1)) {
-                $total_complete_pct = "0";
-            } else {
-                $total_complete_pct = intval(($complete_total / $lead_list['count']) * 100);
-            }
-            echo "<tr><td colspan=2><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td><td></td><td></td></tr>\n";
-            echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=3 class='text-center'><strong>" . $lead_list['count'] . "</strong></td><td><strong>$dialable_total</strong></td><td class='text-right'><strong> $total_complete_pct%</strong></td></tr>\n";
-        } else {
-            echo "<tr><td colspan=2><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td></tr>\n";
-            echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=3 class='text-center'><strong>" . $lead_list['count'] . "</strong></td></tr>\n";
-        }
-        echo "</table></div>\n";
-        unset($lead_list);
-        echo "</div>"; // End Statuses Section
-
-        // Time Zones Section
-        echo "<div class='mt-5'>";
-        echo "<h3 class='section-title'><i class='fas fa-globe-americas'></i> " . _QXZ("TIME ZONES WITHIN THIS LIST") . "</h3>\n";
-        echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-        echo "<thead><tr><th>" . _QXZ("GMT OFFSET NOW (local time)") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th></tr></thead>\n";
-
-        $stmt = "SELECT gmt_offset_now,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by gmt_offset_now,called_since_last_reset order by gmt_offset_now,called_since_last_reset;";
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $statuses_to_print = mysqli_num_rows($rslt);
-
-        $o = 0;
-        $plus = '+';
-        $lead_list['count'] = 0;
-        $lead_list['Y_count'] = 0;
-        $lead_list['N_count'] = 0;
-        while ($statuses_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
-
-            $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-            if ($rowx[1] == 'N') {
-                $since_reset = 'N';
-                $since_resetX = 'Y';
-            } else {
-                $since_reset = 'Y';
-                $since_resetX = 'N';
-            }
-            $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-            $lead_list[$since_reset . '_count'] = ($lead_list[$since_reset . '_count'] + $rowx[2]);
-            #If opposite side is not set, it may not in the future so give it a value of zero
-            if (!isset($lead_list[$since_resetX][$rowx[0]])) {
-                $lead_list[$since_resetX][$rowx[0]] = 0;
-            }
-            $o++;
-        }
-
-        if ($lead_list['count'] > 0) {
-            #while (list($tzone,) = each($lead_list[$since_reset]))
-            foreach ($lead_list[$since_reset] as $tzone => $blank) {
-                if ($tzone == 'count' || $tzone == 'Y_count' || $tzone == 'N_count') continue;
-                
-                $LOCALzone = 3600 * $tzone;
-                $LOCALdate = gmdate("D j M Y H:i", time() + $LOCALzone);
-
-                if ($tzone >= 0) {
-                    $DISPtzone = "$plus$tzone";
-                } else {
-                    $DISPtzone = "$tzone";
-                }
-
-                echo "<tr><td>$DISPtzone &nbsp; &nbsp; ($LOCALdate)</td><td>" . $lead_list['Y'][$tzone] . "</td><td>" . $lead_list['N'][$tzone] . "</td></tr>\n";
-            }
-        }
-
-        echo "<tr><td><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td></tr>\n";
-        echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=2 class='text-center'><strong>" . $lead_list['count'] . "</strong></td></tr>\n";
-
-        echo "</table></div>\n";
-        unset($lead_list);
-        echo "</div>"; // End Time Zones Section
-
-        // Owners Section
-        echo "<div class='mt-5'>";
-        echo "<h3 class='section-title'><i class='fas fa-user'></i> " . _QXZ("OWNERS WITHIN THIS LIST") . "</h3>\n";
-        if ($SSuser_territories_active > 0) {
-            ### if territories are active in the system then allow for selected-territory called-since-last-reset resetting
-            echo "</form>\n";
-            echo "<form action=$PHP_SELF method=POST>\n";
-            echo "<input type=hidden name=ADD value=411>\n";
-            echo "<input type=hidden name=DB value=$DB>\n";
-            echo "<input type=hidden name=stage value=territory_reset>\n";
-            echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            echo "<thead><tr><th>" . _QXZ("OWNER") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th><th class='text-center'>" . _QXZ("RESET") . "</th></tr></thead>\n";
-
-            $leads_in_list = 0;
-            $leads_in_list_N = 0;
-            $leads_in_list_Y = 0;
-            $stmt = "SELECT owner,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by owner,called_since_last_reset order by owner,called_since_last_reset;";
-            if ($DB) {
-                echo "$stmt\n";
-            }
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $owners_to_print = mysqli_num_rows($rslt);
-
-            $o = 0;
-            $lead_list['count'] = 0;
-            $lead_list['Y_count'] = 0;
-            $lead_list['N_count'] = 0;
-            while ($owners_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-
-                $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-                if ($rowx[1] == 'N') {
-                    $since_reset = 'N';
-                    $since_resetX = 'Y';
-                } else {
-                    $since_reset = 'Y';
-                    $since_resetX = 'N';
-                }
-                $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-                $lead_list[$since_reset . '_count'] = ($lead_list[$since_reset . '_count'] + $rowx[2]);
-                #If opposite side is not set, it may not in the future so give it a value of zero
-                if (!isset($lead_list[$since_resetX][$rowx[0]])) {
-                    $lead_list[$since_resetX][$rowx[0]] = 0;
-                }
-                $o++;
-            }
-
-            $o = 0;
-            if ($lead_list['count'] > 0) {
-                #while (list($owner,) = each($lead_list[$since_reset]))
-                foreach ($lead_list[$since_reset] as $owner => $blank) {
-                    if ($owner == 'count' || $owner == 'Y_count' || $owner == 'N_count') continue;
-                    
-                    echo "<tr><td><a href=\"./user_territories.php?action=MODIFY_TERRITORY&territory=$owner\">$owner</a></td><td>" . $lead_list['Y'][$owner] . "</td><td>" . $lead_list['N'][$owner] . "</td><td class='text-center'><input type=\"checkbox\" name=\"territory_reset[]\" value=\"$owner\"></td></tr>\n";
-                    $o++;
-                }
-            }
-
-            echo "<tr><td><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td>\n";
-            echo "<td rowspan=2 class='align-middle text-center'><button type='submit' class='btn btn-primary'>" . _QXZ("SUBMIT") . "</button></td></tr>\n";
-            echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=3 class='text-center'><strong>" . $lead_list['count'] . "</strong></td></tr>\n";
-            echo "</form>\n";
-        } else {
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            echo "<thead><tr><th>" . _QXZ("OWNER") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th></tr></thead>\n";
-
-            $leads_in_list = 0;
-            $leads_in_list_N = 0;
-            $leads_in_list_Y = 0;
-            $stmt = "SELECT owner,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by owner,called_since_last_reset order by owner,called_since_last_reset;";
-            if ($DB) {
-                echo "$stmt\n";
-            }
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $owners_to_print = mysqli_num_rows($rslt);
-
-            $o = 0;
-            $lead_list['count'] = 0;
-            $lead_list['Y_count'] = 0;
-            $lead_list['N_count'] = 0;
-            while ($owners_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-
-                $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-                if ($rowx[1] == 'N') {
-                    $since_reset = 'N';
-                    $since_resetX = 'Y';
-                } else {
-                    $since_reset = 'Y';
-                    $since_resetX = 'N';
-                }
-                $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-                $lead_list[$since_reset . '_count'] = ($lead_list[$since_reset . '_count'] + $rowx[2]);
-                #If opposite side is not set, it may not in the future so give it a value of zero
-                if (!isset($lead_list[$since_resetX][$rowx[0]])) {
-                    $lead_list[$since_resetX][$rowx[0]] = 0;
-                }
-                $o++;
-            }
-
-            $o = 0;
-            if ($lead_list['count'] > 0) {
-                #while (list($owner,) = each($lead_list[$since_reset]))
-                foreach ($lead_list[$since_reset] as $owner => $blank) {
-                    if ($owner == 'count' || $owner == 'Y_count' || $owner == 'N_count') continue;
-                    
-                    echo "<tr><td>$owner</td><td>" . $lead_list['Y'][$owner] . "</td><td>" . $lead_list['N'][$owner] . "</td></tr>\n";
-                    $o++;
-                }
-            }
-
-            echo "<tr><td><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td></tr>\n";
-            echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=3 class='text-center'><strong>" . $lead_list['count'] . "</strong></td></tr>\n";
-        }
-        echo "</table></div>\n";
-        unset($lead_list);
-        echo "</div>"; // End Owners Section
-
-        // Ranks Section
-        echo "<div class='mt-5'>";
-        echo "<h3 class='section-title'><i class='fas fa-sort-numeric-up'></i> " . _QXZ("RANKS WITHIN THIS LIST") . "</h3>\n";
-        echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-        echo "<thead><tr><th>" . _QXZ("RANK") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th></tr></thead>\n";
-
-        $leads_in_list = 0;
-        $leads_in_list_N = 0;
-        $leads_in_list_Y = 0;
-        $stmt = "SELECT rank,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by rank,called_since_last_reset order by rank,called_since_last_reset;";
-        if ($DB) {
-            echo "$stmt\n";
-        }
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $ranks_to_print = mysqli_num_rows($rslt);
-
-        $o = 0;
-        $lead_list['count'] = 0;
-        $lead_list['Y_count'] = 0;
-        $lead_list['N_count'] = 0;
-        while ($ranks_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
-
-            $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-            if ($rowx[1] == 'N') {
-                $since_reset = 'N';
-                $since_resetX = 'Y';
-            } else {
-                $since_reset = 'Y';
-                $since_resetX = 'N';
-            }
-            $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-            $lead_list[$since_reset . '_count'] = ($lead_list[$since_reset . '_count'] + $rowx[2]);
-            #If opposite side is not set, it may not in the future so give it a value of zero
-            if (!isset($lead_list[$since_resetX][$rowx[0]])) {
-                $lead_list[$since_resetX][$rowx[0]] = 0;
-            }
-            $o++;
-        }
-
-        $o = 0;
-        if ($lead_list['count'] > 0) {
-            #while (list($rank,) = each($lead_list[$since_reset]))
-            foreach ($lead_list[$since_reset] as $rank => $blank) {
-                if ($rank == 'count' || $rank == 'Y_count' || $rank == 'N_count') continue;
-                
-                echo "<tr><td>$rank</td><td>" . $lead_list['Y'][$rank] . "</td><td>" . $lead_list['N'][$rank] . "</td></tr>\n";
-                $o++;
-            }
-        }
-
-        echo "<tr><td><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td></tr>\n";
-        echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=3 class='text-center'><strong>" . $lead_list['count'] . "</strong></td></tr>\n";
-
-        echo "</table></div>\n";
-        unset($lead_list);
-        echo "</div>"; // End Ranks Section
-
-        if ($SScountry_code_list_stats > 0) {
-            echo "<div class='mt-5'>";
-            echo "<h3 class='section-title'><i class='fas fa-flag'></i> " . _QXZ("COUNTRY CODES WITHIN THIS LIST") . "</h3>\n";
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            echo "<thead><tr><th>" . _QXZ("CODE") . "</th><th>" . _QXZ("CALLED") . "</th><th>" . _QXZ("NOT CALLED") . "</th></tr></thead>\n";
-
-            $leads_in_list = 0;
-            $leads_in_list_N = 0;
-            $leads_in_list_Y = 0;
-            $stmt = "SELECT country_code,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by country_code,called_since_last_reset order by country_code,called_since_last_reset;";
-            if ($DB) {
-                echo "$stmt\n";
-            }
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $ranks_to_print = mysqli_num_rows($rslt);
-
-            $o = 0;
-            $lead_list['count'] = 0;
-            $lead_list['Y_count'] = 0;
-            $lead_list['N_count'] = 0;
-            while ($ranks_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-
-                $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
-                if ($rowx[1] == 'N') {
-                    $since_reset = 'N';
-                    $since_resetX = 'Y';
-                } else {
-                    $since_reset = 'Y';
-                    $since_resetX = 'N';
-                }
-                $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
-                $lead_list[$since_reset . '_count'] = ($lead_list[$since_reset . '_count'] + $rowx[2]);
-                #If opposite side is not set, it may not in the future so give it a value of zero
-                if (!isset($lead_list[$since_resetX][$rowx[0]])) {
-                    $lead_list[$since_resetX][$rowx[0]] = 0;
-                }
-                $o++;
-            }
-
-            $o = 0;
-            if ($lead_list['count'] > 0) {
-                #while (list($rank,) = each($lead_list[$since_reset]))
-                foreach ($lead_list[$since_reset] as $rank => $blank) {
-                    if ($rank == 'count' || $rank == 'Y_count' || $rank == 'N_count') continue;
-                    
-                    echo "<tr><td>$rank</td><td>" . $lead_list['Y'][$rank] . "</td><td>" . $lead_list['N'][$rank] . "</td></tr>\n";
-                    $o++;
-                }
-            }
-
-            echo "<tr><td><strong>" . _QXZ("SUBTOTALS") . "</strong></td><td>" . $lead_list['Y_count'] . "</td><td>" . $lead_list['N_count'] . "</td></tr>\n";
-            echo "<tr class='table-active'><td><strong>" . _QXZ("TOTAL") . "</strong></td><td colspan=3 class='text-center'><strong>" . $lead_list['count'] . "</strong></td></tr>\n";
-
-            echo "</table></div>\n";
-            unset($lead_list);
-            echo "</div>"; // End Country Codes Section
-        }
-
-        $leads_in_list = 0;
-        $leads_in_list_N = 0;
-        $leads_in_list_Y = 0;
-        $stmt = "SELECT status, if(called_count >= 100, 100, called_count), count(*) from vicidial_list where list_id='$list_id' group by status, if(called_count >= 100, 100, called_count) order by status,called_count;";
-        $rslt = mysql_to_mysqli($stmt, $link);
-        $status_called_to_print = mysqli_num_rows($rslt);
-
-        $status = $MT;
-        $o = 0;
-        $sts = 0;
-        $first_row = 1;
-        $all_called_first = 1000;
-        $all_called_last = 0;
-        while ($status_called_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
-            $leads_in_list = ($leads_in_list + $rowx[2]);
-            $count_statuses[$o] = $rowx[0];
-            $count_called[$o] = $rowx[1];
-            $count_count[$o] = $rowx[2];
-            $all_called_count[$rowx[1]] = ($all_called_count[$rowx[1]] + $rowx[2]);
-
-            if ((strlen($status[$sts]) < 1) or ($status[$sts] != "$rowx[0]")) {
-                if ($first_row) {
-                    $first_row = 0;
-                } else {
-                    $sts++;
-                }
-                $status[$sts] = "$rowx[0]";
-                $status_called_first[$sts] = "$rowx[1]";
-                if ($status_called_first[$sts] < $all_called_first) {
-                    $all_called_first = $status_called_first[$sts];
-                }
-            }
-            $leads_in_sts[$sts] = ($leads_in_sts[$sts] + $rowx[2]);
-            $status_called_last[$sts] = "$rowx[1]";
-            if ($status_called_last[$sts] > $all_called_last) {
-                $all_called_last = $status_called_last[$sts];
-            }
-
-            $o++;
-        }
-
-        echo "<div class='mt-5'>";
-        echo "<h3 class='section-title'><i class='fas fa-phone-alt'></i> " . _QXZ("CALLED COUNTS WITHIN THIS LIST") . "</h3>\n";
-        echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-        echo "<thead><tr><th>" . _QXZ("STATUS") . "</th><th class='text-center'>" . _QXZ("STATUS NAME") . "</th>";
-        $first = $all_called_first;
-        while ($first <= $all_called_last) {
-            if ($first >= 100) {
-                $Fplus = '+';
-            } else {
-                $Fplus = '';
-            }
-            echo "<th class='text-center'>$first$Fplus</th>";
-            $first++;
-        }
-        echo "<th class='text-center'>" . _QXZ("SUBTOTAL") . "</th></tr></thead>\n";
-
-        $sts = 0;
-        $statuses_called_to_print = count($status);
-        while ($statuses_called_to_print > $sts) {
-            $Pstatus = $status[$sts];
-            echo "<tr><td>$Pstatus</td><td>$statuses_list[$Pstatus]</td>";
-
-            $first = $all_called_first;
-            while ($first <= $all_called_last) {
-                $called_printed = 0;
-                $o = 0;
-                while ($status_called_to_print > $o) {
-                    if (($count_statuses[$o] == "$Pstatus") and ($count_called[$o] == "$first")) {
-                        $called_printed++;
-                        echo "<td class='text-center'> <a href=\"admin_search_lead.php?list_id=$list_id&status=$Pstatus&called_count=$first\">$count_count[$o]</a></td>";
-                    }
-                    $o++;
-                }
-                if (!$called_printed) {
-                    echo "<td class='text-center'> &nbsp;</td>";
-                }
-                $first++;
-            }
-            echo "<td class='text-center'><a href=\"admin_search_lead.php?list_id=$list_id&status=$Pstatus\">$leads_in_sts[$sts]</a></td></tr>\n\n";
-
-            $sts++;
-        }
-
-        echo "<tr class='table-active'><td class='text-center' colspan=2><strong>" . _QXZ("TOTAL") . "</strong></td>";
-        $first = $all_called_first;
-        while ($first <= $all_called_last) {
-            echo "<td class='text-center'><strong><a href=\"admin_search_lead.php?list_id=$list_id&called_count=$first\">$all_called_count[$first]</a></strong></td>";
-            $first++;
-        }
-        echo "<td class='text-center'><strong>$leads_in_list</strong></td></tr>\n";
-
-        echo "</table></div>\n";
-        echo "</div>"; // End Called Counts Section
-
-        if ($SSdaily_call_count_limit > 0) {
-            echo "<div class='mt-5'>";
-            echo "<h3 class='section-title'><i class='fas fa-calendar-day'></i> " . _QXZ("TODAY CALLED COUNTS FOR LEADS CALLED TODAY WITHIN THIS LIST") . "</h3>\n";
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            echo "<thead><tr><th class='text-center'>" . _QXZ("TODAY CALLED COUNT") . "</th><th>" . _QXZ("CALLED") . "</th><th class='text-center'>" . _QXZ("SUBTOTAL") . "</th></tr></thead>\n";
-
-            $stmt = "SELECT LEFT(called_since_last_reset,1) as cslr,called_count_total,count(*) from vicidial_list LEFT OUTER JOIN vicidial_lead_call_daily_counts on vicidial_list.lead_id=vicidial_lead_call_daily_counts.lead_id where vicidial_list.list_id='$list_id' group by cslr,called_count_total order by called_count_total;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $counts_to_print = mysqli_num_rows($rslt);
-            $o = 0;
-            while ($counts_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-                $cslr[$o] = $rowx[0];
-                $counts[$o] = $rowx[1];
-                $tallies[$o] = $rowx[2];
-                if (($counts[$o] == '') or ($counts[$o] == 'NULL') or (strlen($counts[$o]) < 1)) {
-                    $counts[$o] = 0;
-                }
-                echo "<tr><td class='text-center'>$counts[$o]</td><td>$cslr[$o]</td><td class='text-center'>$tallies[$o]</td></tr>\n";
-
-                $o++;
-            }
-            echo "<tr class='table-active'><td class='text-center'><strong> &nbsp; </strong></td><td class='text-center'><strong> " . _QXZ("TOTAL") . " </strong></td><td class='text-center'><strong>$leads_in_list</strong></td></tr>\n";
-
-            echo "</table></div>\n";
-            echo "</div>"; // End Today Called Counts Section
-        }
-
-        if ($SScall_limit_24hour > 0) {
-            $temp_zero_called = $leads_in_list;
-            $temp_24hour_output = '';
-            echo "<div class='mt-5'>";
-            echo "<h3 class='section-title'><i class='fas fa-clock'></i> " . _QXZ("24-HOUR CALLED COUNTS FOR LEADS WITHIN THIS LIST") . "</h3>\n";
-            echo "<div class='table-responsive'><table class='table table-striped table-hover'>\n";
-            echo "<thead><tr><th class='text-center'>" . _QXZ("24-HOUR CALLED COUNT") . "</th><th class='text-center'>" . _QXZ("LEADS") . "</th></tr></thead>\n";
-
-            $stmt = "SELECT count(tally) as lead_tally,tally FROM(select count(*) as tally,t.lead_id from vicidial_lead_24hour_calls t where list_id='$list_id' and (call_date >= NOW() - INTERVAL 1 DAY) group by t.lead_id) t group by tally order by tally;";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $counts_to_print = mysqli_num_rows($rslt);
-            $o = 0;
-            while ($counts_to_print > $o) {
-                $rowx = mysqli_fetch_row($rslt);
-                $counts[$o] = $rowx[1];
-                $tallies[$o] = $rowx[0];
-                $temp_zero_called = ($temp_zero_called - $rowx[0]);
-                $temp_24hour_output .= "<tr><td class='text-center'>$counts[$o]</td><td class='text-center'>$tallies[$o]</td></tr>\n";
-
-                $o++;
-            }
-            echo "<tr><td class='text-center'>0</td><td class='text-center'>$temp_zero_called</td></tr>\n";
-            echo $temp_24hour_output;
-            echo "<tr class='table-active'><td class='text-center'><strong> " . _QXZ("TOTAL") . " </strong></td><td class='text-center'><strong>$leads_in_list</strong></td></tr>\n";
-
-            echo "</table></div>\n";
-            echo "</div>"; // End 24-Hour Called Counts Section
-        }
-
-        // Action Buttons Section
-        echo "<div class='mt-5 text-center'>";
-        if ($SScustom_fields_enabled > 0) {
-            $stmt = "SELECT count(*) from vicidial_lists_fields where list_id='$list_id';";
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $rowx = mysqli_fetch_row($rslt);
-
-            echo "<div class='mb-3'><a href=\"./$admin_lists_custom?action=MODIFY_CUSTOM_FIELDS&list_id=$list_id\" class='btn btn-info'><i class='fas fa-database'></i> " . _QXZ("Custom fields defined for this list") . ": $rowx[0]</a></div>\n";
-        }
-
-        echo "<div class='mb-3'><a href=\"$PHP_SELF?ADD=811&list_id=$list_id\" class='btn btn-info'><i class='fas fa-phone-slash'></i> " . _QXZ("Click here to see all CallBack Holds in this list") . "</a></div>\n";
-        echo "<div class='mb-3'><a href=\"./list_download.php?list_id=$list_id\" class='btn btn-success'><i class='fas fa-download'></i> " . _QXZ("Click here to download this list") . "</a></div>\n";
-
-        if ($LOGdelete_lists > 0) {
-            echo "<div class='mb-3'><a href=\"$PHP_SELF?ADD=511&list_id=$list_id\" class='btn btn-danger'><i class='fas fa-trash-alt'></i> " . _QXZ("DELETE THIS LIST") . "</a></div>\n";
-        }
-        if (($LOGuser_level >= 9) and ($LOGdelete_lists > 0) and ($LOGmodify_lists > 0) and ($LOGmodify_leads > 0)) {
-            echo "<div class='mb-3'><a href=\"$PHP_SELF?ADD=512&list_id=$list_id\" class='btn btn-warning'><i class='fas fa-eraser'></i> " . _QXZ("CLEAR THIS LIST") . "</a></div>\n";
-        }
-        if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/", $LOGallowed_reports)) or (preg_match("/ALL REPORTS/", $LOGallowed_reports)))) {
-            echo "<div class='mb-3'><a href=\"$PHP_SELF?ADD=720000000000000&category=LISTS&stage=$list_id\" class='btn btn-secondary'><i class='fas fa-history'></i> " . _QXZ("Click here to see Admin changes to this list") . "</a></div>\n";
-        }
-        echo "</div>"; // End Action Buttons Section
-        
-        echo "</div>"; // End card-body
-        echo "</div>"; // End card
-        echo "</div>"; // End container
+echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("STATUSES WITHIN THIS LIST")."</h3>";
+
+if ($SSexpanded_list_stats > 0) {
+    $dialable_total=0;
+    $complete_total=0;
+    $fSQL = '';
+    $stmt="SELECT dial_statuses,local_call_time,lead_filter_id,drop_lockout_time,call_count_limit from vicidial_campaigns where campaign_id='$campaign_id' $LOGallowed_campaignsSQL;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $row=mysqli_fetch_row($rslt);
+    $dial_statuses = $row[0];
+    $local_call_time = $row[1];
+    $lead_filter_id = $row[2];
+    $drop_lockout_time = $row[3];
+    $call_count_limit = $row[4];
+
+    $stmt="SELECT lead_filter_sql from vicidial_lead_filters where lead_filter_id='$lead_filter_id' $LOGadmin_viewable_groupsSQL;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $filters_to_print = mysqli_num_rows($rslt);
+    if ($filters_to_print > 0) {
+        $rowx=mysqli_fetch_row($rslt);
+        $filterSQL = $rowx[0];
+        $filterSQL = preg_replace("/\\\\/","",$filterSQL);
+        $filterSQL = preg_replace('/^and|and$|^or|or$/i', '',$filterSQL);
+        if (strlen($filterSQL)>4)
+            {$fSQL = "and ($filterSQL)";}
+        else
+            {$fSQL = '';}
+    }
+    
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("STATUS")."</th>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("STATUS NAME")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("DIALABLE")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("PENETRATION")."</th>";
+    echo "</tr></thead><tbody>";
+} else {
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("STATUS")."</th>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("STATUS NAME")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+    echo "</tr></thead><tbody>";
+}
+
+$leads_in_list = 0;
+$leads_in_list_N = 0;
+$leads_in_list_Y = 0;
+$stmt="SELECT status,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by status,called_since_last_reset order by status,called_since_last_reset;";
+if ($DB) {echo "$stmt\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+$statuses_to_print = mysqli_num_rows($rslt);
+
+$o=0;
+$lead_list['count'] = 0;
+$lead_list['Y_count'] = 0;
+$lead_list['N_count'] = 0;
+while ($statuses_to_print > $o) {
+    $rowx=mysqli_fetch_row($rslt);
+    $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
+    if ($rowx[1] == 'N') {
+        $since_reset = 'N';
+        $since_resetX = 'Y';
     } else {
-        echo "<div class='alert alert-danger'>" . _QXZ("You do not have permission to view this page") . "</div>\n";
-        exit;
+        $since_reset = 'Y';
+        $since_resetX = 'N';
+    } 
+    $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
+    $lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
+    if (!isset($lead_list[$since_resetX][$rowx[0]])) {
+        $lead_list[$since_resetX][$rowx[0]]=0;
+    }
+    $o++;
+}
+
+$o=0;
+if ($lead_list['count'] > 0) {
+    foreach($lead_list[$since_reset] as $dispo => $blank) {
+        $bgcolor = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
+        
+        if ($dispo == 'CBHOLD') {
+            $CLB="<a href='$PHP_SELF?ADD=811&list_id=$list_id' style='color:#007bff;text-decoration:none;'>";
+            $CLE="</a>";
+        } else {
+            $CLB=''; $CLE='';
+        }
+        
+        if ($SSexpanded_list_stats > 0) {
+            $single_status=1;
+            $only_return=0;
+            $dial_statuses=" $dispo -";
+            $camp_lists=$list_id;
+            if ($statuses_complete_list[$dispo] == 'Y') {
+                $Xdialable_count=0;
+            } else {
+                $Xdialable_count = dialable_leads($DB,$link,$local_call_time,$dial_statuses,$camp_lists,$drop_lockout_time,$call_count_limit,$single_status,$fSQL,$only_return);
+            }
+            $dialable_total = ($dialable_total + $Xdialable_count);
+            
+            $Xcomplete_count = complete_leads($DB,$link,$dial_statuses,$camp_lists,$call_count_limit,$single_status,$campaign_id);
+            $complete_total = ($complete_total + $Xcomplete_count);
+            $dispo_total = ($lead_list['Y'][$dispo] + $lead_list['N'][$dispo]);
+            if ( ($Xcomplete_count < 1) or ($dispo_total < 1) ) {
+                $complete_pct = "0";
+            } else {
+                $complete_pct = intval(($Xcomplete_count / $dispo_total) * 100);
+            }
+            
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+            echo "<td style='padding:10px;'>$CLB$dispo$CLE</td>";
+            echo "<td style='padding:10px;'>$statuses_list[$dispo]</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$dispo]."</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$dispo]."</td>";
+            echo "<td style='padding:10px;text-align:right;'>$Xdialable_count</td>";
+            echo "<td style='padding:10px;text-align:right;'>$complete_pct%</td>";
+            echo "</tr>";
+        } else {
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+            echo "<td style='padding:10px;'>$CLB$dispo$CLE</td>";
+            echo "<td style='padding:10px;'>$statuses_list[$dispo]</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$dispo]."</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$dispo]."</td>";
+            echo "</tr>";
+        }
+        $o++;
     }
 }
 
+if ($SSexpanded_list_stats > 0) {
+    if ( ($complete_total < 1) or ($lead_list['count'] < 1) ) {
+        $total_complete_pct = "0";
+    } else {
+        $total_complete_pct = intval(($complete_total / $lead_list['count']) * 100);
+    }
+    echo "<tr style='background:#e9ecef;font-weight:600;'>";
+    echo "<td colspan='2' style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+    echo "<td style='padding:10px;'></td><td style='padding:10px;'></td>";
+    echo "</tr>";
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+    echo "<td colspan='3' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+    echo "<td style='padding:10px;text-align:right;'>$dialable_total</td>";
+    echo "<td style='padding:10px;text-align:right;'>$total_complete_pct%</td>";
+    echo "</tr>";
+} else {
+    echo "<tr style='background:#e9ecef;font-weight:600;'>";
+    echo "<td colspan='2' style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+    echo "</tr>";
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+    echo "<td colspan='3' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+    echo "</tr>";
+}
 
+echo "</tbody></table></div></div>";
+unset($lead_list);
+
+// Time Zones Section
+echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("TIME ZONES WITHIN THIS LIST")."</h3>";
+
+echo "<div style='overflow-x:auto;'>";
+echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("GMT OFFSET NOW (local time)")."</th>";
+echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+echo "</tr></thead><tbody>";
+
+$stmt="SELECT gmt_offset_now,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by gmt_offset_now,called_since_last_reset order by gmt_offset_now,called_since_last_reset;";
+$rslt=mysql_to_mysqli($stmt, $link);
+$statuses_to_print = mysqli_num_rows($rslt);
+
+$o=0;
+$plus='+';
+$lead_list['count'] = 0;
+$lead_list['Y_count'] = 0;
+$lead_list['N_count'] = 0;
+while ($statuses_to_print > $o) {
+    $rowx=mysqli_fetch_row($rslt);
+    $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
+    if ($rowx[1] == 'N') {
+        $since_reset = 'N';
+        $since_resetX = 'Y';
+    } else {
+        $since_reset = 'Y';
+        $since_resetX = 'N';
+    } 
+    $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
+    $lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
+    if (!isset($lead_list[$since_resetX][$rowx[0]])) {
+        $lead_list[$since_resetX][$rowx[0]]=0;
+    }
+    $o++;
+}
+
+$o=0;
+if ($lead_list['count'] > 0) {
+    foreach($lead_list[$since_reset] as $tzone => $blank) {
+        $LOCALzone=3600 * $tzone;
+        $LOCALdate=gmdate("D j M Y H:i", time() + $LOCALzone);
+        if ($tzone >= 0) {$DISPtzone = "$plus$tzone";}
+        else {$DISPtzone = "$tzone";}
+        
+        $bgcolor = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+        echo "<td style='padding:10px;'>".$DISPtzone." &nbsp; <span style='color:#6c757d;'>($LOCALdate)</span></td>";
+        echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$tzone]."</td>";
+        echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$tzone]."</td>";
+        echo "</tr>";
+        $o++;
+    }
+}
+
+echo "<tr style='background:#e9ecef;font-weight:600;'>";
+echo "<td style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+echo "</tr>";
+echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+echo "<td colspan='2' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+echo "</tr>";
+echo "</tbody></table></div></div>";
+unset($lead_list);
+
+// Owners Section
+echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("OWNERS WITHIN THIS LIST")."</h3>";
+
+if ($SSuser_territories_active > 0) {
+    echo "</form>";
+    echo "<form action='$PHP_SELF' method='POST'>";
+    echo "<input type='hidden' name='ADD' value='411'>";
+    echo "<input type='hidden' name='DB' value='$DB'>";
+    echo "<input type='hidden' name='stage' value='territory_reset'>";
+    echo "<input type='hidden' name='list_id' value='$list_id'>";
+    
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("OWNER")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("RESET")."</th>";
+    echo "</tr></thead><tbody>";
+} else {
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("OWNER")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+    echo "</tr></thead><tbody>";
+}
+
+$leads_in_list = 0;
+$leads_in_list_N = 0;
+$leads_in_list_Y = 0;
+$stmt="SELECT owner,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by owner,called_since_last_reset order by owner,called_since_last_reset;";
+if ($DB) {echo "$stmt\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+$owners_to_print = mysqli_num_rows($rslt);
+
+$o=0;
+$lead_list['count'] = 0;
+$lead_list['Y_count'] = 0;
+$lead_list['N_count'] = 0;
+while ($owners_to_print > $o) {
+    $rowx=mysqli_fetch_row($rslt);
+    $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
+    if ($rowx[1] == 'N') {
+        $since_reset = 'N';
+        $since_resetX = 'Y';
+    } else {
+        $since_reset = 'Y';
+        $since_resetX = 'N';
+    } 
+    $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
+    $lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
+    if (!isset($lead_list[$since_resetX][$rowx[0]])) {
+        $lead_list[$since_resetX][$rowx[0]]=0;
+    }
+    $o++;
+}
+
+$o=0;
+if ($lead_list['count'] > 0) {
+    foreach($lead_list[$since_reset] as $owner => $blank) {
+        $bgcolor = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
+        
+        if ($SSuser_territories_active > 0) {
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+            echo "<td style='padding:10px;'><a href='./user_territories.php?action=MODIFY_TERRITORY&territory=$owner' style='color:#007bff;text-decoration:none;'>$owner</a></td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$owner]."</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$owner]."</td>";
+            echo "<td style='padding:10px;text-align:center;'><input type='checkbox' name='territory_reset[]' value='$owner' style='width:18px;height:18px;cursor:pointer;'></td>";
+            echo "</tr>";
+        } else {
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+            echo "<td style='padding:10px;'>$owner</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$owner]."</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$owner]."</td>";
+            echo "</tr>";
+        }
+        $o++;
+    }
+}
+
+if ($SSuser_territories_active > 0) {
+    echo "<tr style='background:#e9ecef;font-weight:600;'>";
+    echo "<td style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+    echo "<td rowspan='2' style='padding:10px;text-align:center;background:#f8f9fa;'>";
+    echo "<button type='submit' style='background:#28a745;color:#fff;padding:10px 24px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;'>"._QXZ("SUBMIT")."</button>";
+    echo "</td></tr>";
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+    echo "<td colspan='2' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+    echo "</tr>";
+    echo "</tbody></table></div></form>";
+} else {
+    echo "<tr style='background:#e9ecef;font-weight:600;'>";
+    echo "<td style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+    echo "</tr>";
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+    echo "<td colspan='2' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+    echo "</tr>";
+    echo "</tbody></table></div>";
+}
+echo "</div>";
+unset($lead_list);
+
+// Ranks Section
+echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("RANKS WITHIN THIS LIST")."</h3>";
+echo "<div style='overflow-x:auto;'>";
+echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("RANK")."</th>";
+echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+echo "</tr></thead><tbody>";
+
+// Continue Ranks table body (from previous section)
+$leads_in_list = 0;
+$leads_in_list_N = 0;
+$leads_in_list_Y = 0;
+$stmt="SELECT rank,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by rank,called_since_last_reset order by rank,called_since_last_reset;";
+if ($DB) {echo "$stmt\n";}
+$rslt=mysql_to_mysqli($stmt, $link);
+$ranks_to_print = mysqli_num_rows($rslt);
+
+$o=0;
+$lead_list['count'] = 0;
+$lead_list['Y_count'] = 0;
+$lead_list['N_count'] = 0;
+while ($ranks_to_print > $o) {
+    $rowx=mysqli_fetch_row($rslt);
+    $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
+    if ($rowx[1] == 'N') {
+        $since_reset = 'N';
+        $since_resetX = 'Y';
+    } else {
+        $since_reset = 'Y';
+        $since_resetX = 'N';
+    } 
+    $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
+    $lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
+    if (!isset($lead_list[$since_resetX][$rowx[0]])) {
+        $lead_list[$since_resetX][$rowx[0]]=0;
+    }
+    $o++;
+}
+
+$o=0;
+if ($lead_list['count'] > 0) {
+    foreach($lead_list[$since_reset] as $rank => $blank) {
+        $bgcolor = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+        echo "<td style='padding:10px;'>$rank</td>";
+        echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$rank]."</td>";
+        echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$rank]."</td>";
+        echo "</tr>";
+        $o++;
+    }
+}
+
+echo "<tr style='background:#e9ecef;font-weight:600;'>";
+echo "<td style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+echo "</tr>";
+echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+echo "<td colspan='2' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+echo "</tr>";
+echo "</tbody></table></div></div>";
+unset($lead_list);
+
+// Country Codes Section
+if ($SScountry_code_list_stats > 0) {
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+    echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("COUNTRY CODES WITHIN THIS LIST")."</h3>";
+    
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("CODE")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:right;font-weight:600;color:#495057;'>"._QXZ("NOT CALLED")."</th>";
+    echo "</tr></thead><tbody>";
+    
+    $leads_in_list = 0;
+    $leads_in_list_N = 0;
+    $leads_in_list_Y = 0;
+    $stmt="SELECT country_code,called_since_last_reset,count(*) from vicidial_list where list_id='$list_id' group by country_code,called_since_last_reset order by country_code,called_since_last_reset;";
+    if ($DB) {echo "$stmt\n";}
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $ranks_to_print = mysqli_num_rows($rslt);
+
+    $o=0;
+    $lead_list['count'] = 0;
+    $lead_list['Y_count'] = 0;
+    $lead_list['N_count'] = 0;
+    while ($ranks_to_print > $o) {
+        $rowx=mysqli_fetch_row($rslt);
+        $lead_list['count'] = ($lead_list['count'] + $rowx[2]);
+        if ($rowx[1] == 'N') {
+            $since_reset = 'N';
+            $since_resetX = 'Y';
+        } else {
+            $since_reset = 'Y';
+            $since_resetX = 'N';
+        } 
+        $lead_list[$since_reset][$rowx[0]] = ($lead_list[$since_reset][$rowx[0]] + $rowx[2]);
+        $lead_list[$since_reset.'_count'] = ($lead_list[$since_reset.'_count'] + $rowx[2]);
+        if (!isset($lead_list[$since_resetX][$rowx[0]])) {
+            $lead_list[$since_resetX][$rowx[0]]=0;
+        }
+        $o++;
+    }
+    
+    $o=0;
+    if ($lead_list['count'] > 0) {
+        foreach($lead_list[$since_reset] as $rank => $blank) {
+            $bgcolor = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+            echo "<td style='padding:10px;'>$rank</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['Y'][$rank]."</td>";
+            echo "<td style='padding:10px;text-align:right;'>".$lead_list['N'][$rank]."</td>";
+            echo "</tr>";
+            $o++;
+        }
+    }
+
+    echo "<tr style='background:#e9ecef;font-weight:600;'>";
+    echo "<td style='padding:10px;'>"._QXZ("SUBTOTALS")."</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[Y_count]</td>";
+    echo "<td style='padding:10px;text-align:right;'>$lead_list[N_count]</td>";
+    echo "</tr>";
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;'>"._QXZ("TOTAL")."</td>";
+    echo "<td colspan='2' style='padding:10px;text-align:center;'>$lead_list[count]</td>";
+    echo "</tr>";
+    echo "</tbody></table></div></div>";
+    unset($lead_list);
+}
+
+// Called Counts Section
+$leads_in_list = 0;
+$leads_in_list_N = 0;
+$leads_in_list_Y = 0;
+$stmt="SELECT status, if(called_count >= 100, 100, called_count), count(*) from vicidial_list where list_id='$list_id' group by status, if(called_count >= 100, 100, called_count) order by status,called_count;";
+$rslt=mysql_to_mysqli($stmt, $link);
+$status_called_to_print = mysqli_num_rows($rslt);
+
+$status = $MT;
+$o=0;
+$sts=0;
+$first_row=1;
+$all_called_first=1000;
+$all_called_last=0;
+while ($status_called_to_print > $o) {
+    $rowx=mysqli_fetch_row($rslt);
+    $leads_in_list = ($leads_in_list + $rowx[2]);
+    $count_statuses[$o] = $rowx[0];
+    $count_called[$o] = $rowx[1];
+    $count_count[$o] = $rowx[2];
+    $all_called_count[$rowx[1]] = ($all_called_count[$rowx[1]] + $rowx[2]);
+
+    if ( (strlen($status[$sts]) < 1) or ($status[$sts] != "$rowx[0]") ) {
+        if ($first_row) {$first_row=0;}
+        else {$sts++;}
+        $status[$sts] = "$rowx[0]";
+        $status_called_first[$sts] = "$rowx[1]";
+        if ($status_called_first[$sts] < $all_called_first) {$all_called_first = $status_called_first[$sts];}
+    }
+    $leads_in_sts[$sts] = ($leads_in_sts[$sts] + $rowx[2]);
+    $status_called_last[$sts] = "$rowx[1]";
+    if ($status_called_last[$sts] > $all_called_last) {$all_called_last = $status_called_last[$sts];}
+    $o++;
+}
+
+echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("CALLED COUNTS WITHIN THIS LIST")."</h3>";
+echo "<div style='overflow-x:auto;'>";
+echo "<table style='width:100%;border-collapse:collapse;font-size:13px;'>";
+echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+echo "<th style='padding:10px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("STATUS")."</th>";
+echo "<th style='padding:10px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("STATUS NAME")."</th>";
+
+$first = $all_called_first;
+while ($first <= $all_called_last) {
+    $header_bg = ($first % 2 == 0) ? '#e0f7fa' : '#b2ebf2';
+    if ($first >= 100) {$Fplus='+';} else {$Fplus='';}
+    echo "<th style='padding:10px;text-align:center;font-weight:600;background:$header_bg;color:#00695c;'>$first$Fplus</th>";
+    $first++;
+}
+echo "<th style='padding:10px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("SUBTOTAL")."</th>";
+echo "</tr></thead><tbody>";
+
+$sts=0;
+$statuses_called_to_print = count($status);
+while ($statuses_called_to_print > $sts) {
+    $Pstatus = $status[$sts];
+    $row_bg = ($sts % 2 == 0) ? '#fff' : '#f8f9fa';
+    echo "<tr style='background:$row_bg;border-bottom:1px solid #e9ecef;'>";
+    echo "<td style='padding:8px;'>$Pstatus</td>";
+    echo "<td style='padding:8px;'>$statuses_list[$Pstatus]</td>";
+
+    $first = $all_called_first;
+    while ($first <= $all_called_last) {
+        $cell_bg = (($sts + $first) % 2 == 0) ? '#fff' : '#f8f9fa';
+        $called_printed=0;
+        $o=0;
+        while ($status_called_to_print > $o) {
+            if ( ($count_statuses[$o] == "$Pstatus") and ($count_called[$o] == "$first") ) {
+                $called_printed++;
+                echo "<td style='padding:8px;text-align:center;background:$cell_bg;'><a href='admin_search_lead.php?list_id=$list_id&status=$Pstatus&called_count=$first' style='color:#007bff;text-decoration:none;'>$count_count[$o]</a></td>";
+            }
+            $o++;
+        }
+        if (!$called_printed) {
+            echo "<td style='padding:8px;background:$cell_bg;'>&nbsp;</td>";
+        }
+        $first++;
+    }
+    echo "<td style='padding:8px;text-align:center;'><a href='admin_search_lead.php?list_id=$list_id&status=$Pstatus' style='color:#007bff;text-decoration:none;font-weight:600;'>$leads_in_sts[$sts]</a></td>";
+    echo "</tr>";
+    $sts++;
+}
+
+echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+echo "<td colspan='2' style='padding:10px;text-align:center;'>"._QXZ("TOTAL")."</td>";
+$first = $all_called_first;
+while ($first <= $all_called_last) {
+    $header_bg = ($first % 2 == 0) ? '#546e7a' : '#607d8b';
+    echo "<td style='padding:10px;text-align:center;background:$header_bg;'><a href='admin_search_lead.php?list_id=$list_id&called_count=$first' style='color:#fff;text-decoration:none;'>$all_called_count[$first]</a></td>";
+    $first++;
+}
+echo "<td style='padding:10px;text-align:center;'>$leads_in_list</td>";
+echo "</tr>";
+echo "</tbody></table></div></div>";
+
+// Today Called Counts
+if ($SSdaily_call_count_limit > 0) {
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+    echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("TODAY CALLED COUNTS FOR LEADS CALLED TODAY WITHIN THIS LIST")."</h3>";
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("TODAY CALLED COUNT")."</th>";
+    echo "<th style='padding:12px;text-align:left;font-weight:600;color:#495057;'>"._QXZ("CALLED")."</th>";
+    echo "<th style='padding:12px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("SUBTOTAL")."</th>";
+    echo "</tr></thead><tbody>";
+
+    $stmt="SELECT LEFT(called_since_last_reset,1) as cslr,called_count_total,count(*) from vicidial_list LEFT OUTER JOIN vicidial_lead_call_daily_counts on vicidial_list.lead_id=vicidial_lead_call_daily_counts.lead_id where vicidial_list.list_id='$list_id' group by cslr,called_count_total order by called_count_total;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $counts_to_print = mysqli_num_rows($rslt);
+    $o=0;
+    while ($counts_to_print > $o) {
+        $bgcolor = ($o % 2 == 0) ? '#fff' : '#f8f9fa';
+        $rowx=mysqli_fetch_row($rslt);
+        $cslr[$o] = $rowx[0];
+        $counts[$o] = $rowx[1];
+        $tallies[$o] = $rowx[2];
+        if ( ($counts[$o]=='') or ($counts[$o]=='NULL') or (strlen($counts[$o]) < 1) ) {$counts[$o]=0;}
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+        echo "<td style='padding:10px;text-align:center;'>$counts[$o]</td>";
+        echo "<td style='padding:10px;'>$cslr[$o]</td>";
+        echo "<td style='padding:10px;text-align:center;'>$tallies[$o]</td>";
+        echo "</tr>";
+        $o++;
+    }
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;'>&nbsp;</td>";
+    echo "<td style='padding:10px;text-align:center;'>"._QXZ("TOTAL")."</td>";
+    echo "<td style='padding:10px;text-align:center;'>$leads_in_list</td>";
+    echo "</tr>";
+    echo "</tbody></table></div></div>";
+}
+
+// 24-Hour Called Counts
+if ($SScall_limit_24hour > 0) {
+    $temp_zero_called = $leads_in_list;
+    $temp_24hour_output='';
+    
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;'>";
+    echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;text-align:center;'>"._QXZ("24-HOUR CALLED COUNTS FOR LEADS WITHIN THIS LIST")."</h3>";
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;font-size:14px;'>";
+    echo "<thead><tr style='background:#f8f9fa;border-bottom:2px solid #e9ecef;'>";
+    echo "<th style='padding:12px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("24-HOUR CALLED COUNT")."</th>";
+    echo "<th style='padding:12px;text-align:center;font-weight:600;color:#495057;'>"._QXZ("LEADS")."</th>";
+    echo "</tr></thead><tbody>";
+
+    $stmt="SELECT count(tally) as lead_tally,tally FROM(select count(*) as tally,t.lead_id from vicidial_lead_24hour_calls t where list_id='$list_id' and (call_date >= NOW() - INTERVAL 1 DAY) group by t.lead_id) t group by tally order by tally;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $counts_to_print = mysqli_num_rows($rslt);
+    $o=0;
+    while ($counts_to_print > $o) {
+        $bgcolor = ($o % 2 == 0) ? '#f8f9fa' : '#fff';
+        $rowx=mysqli_fetch_row($rslt);
+        $counts[$o] = $rowx[1];
+        $tallies[$o] = $rowx[0];
+        $temp_zero_called = ($temp_zero_called - $rowx[0]);
+        $temp_24hour_output .= "<tr style='background:$bgcolor;border-bottom:1px solid #e9ecef;'>";
+        $temp_24hour_output .= "<td style='padding:10px;text-align:center;'>$counts[$o]</td>";
+        $temp_24hour_output .= "<td style='padding:10px;text-align:center;'>$tallies[$o]</td>";
+        $temp_24hour_output .= "</tr>";
+        $o++;
+    }
+    echo "<tr style='background:#fff;border-bottom:1px solid #e9ecef;'>";
+    echo "<td style='padding:10px;text-align:center;'>0</td>";
+    echo "<td style='padding:10px;text-align:center;'>$temp_zero_called</td>";
+    echo "</tr>";
+    echo $temp_24hour_output;
+    echo "<tr style='background:#495057;color:#fff;font-weight:bold;'>";
+    echo "<td style='padding:10px;text-align:center;'>"._QXZ("TOTAL")."</td>";
+    echo "<td style='padding:10px;text-align:center;'>$leads_in_list</td>";
+    echo "</tr>";
+    echo "</tbody></table></div></div>";
+}
+
+// Action Links Section
+echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;margin-top:30px;text-align:center;'>";
+echo "<h3 style='margin:0 0 20px 0;font-size:18px;color:#2c3e50;font-weight:600;'>"._QXZ("List Actions")."</h3>";
+echo "<div style='display:flex;flex-direction:column;gap:12px;max-width:600px;margin:0 auto;'>";
+
+if ($SScustom_fields_enabled > 0) {
+    $stmt="SELECT count(*) from vicidial_lists_fields where list_id='$list_id';";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $rowx=mysqli_fetch_row($rslt);
+    echo "<a href='./$admin_lists_custom?action=MODIFY_CUSTOM_FIELDS&list_id=$list_id' style='background:#17a2b8;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;display:block;'>"._QXZ("Custom fields defined for this list").": $rowx[0]</a>";
+}
+
+echo "<a href='$PHP_SELF?ADD=811&list_id=$list_id' style='background:#007bff;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;display:block;'>"._QXZ("Click here to see all CallBack Holds in this list")."</a>";
+
+echo "<a href='./list_download.php?list_id=$list_id' style='background:#28a745;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;display:block;'>"._QXZ("Click here to download this list")."</a>";
+
+if ($LOGdelete_lists > 0) {
+    echo "<a href='$PHP_SELF?ADD=511&list_id=$list_id' style='background:#dc3545;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;display:block;'>"._QXZ("DELETE THIS LIST")."</a>";
+}
+	}
 ######################
 # ADD=431 modify drop list, add new drop status to the drop list drop statuses
 ######################
