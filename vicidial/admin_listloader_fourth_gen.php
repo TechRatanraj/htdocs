@@ -1,51 +1,88 @@
 <?php
-// Modernized admin_listloader - view replaced with a modern UI
-// Original PHP logic preserved (raw HTML outside PHP was removed).
-// Backup of original saved at: admin_listloader_fourth_gen.php.bak
-?>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>List Loader — Modern UI</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root{
-      --bg:#f6f7fb;--card:#ffffff;--muted:#6b7280;--primary:#2563eb;
-      --success:#16a34a;--danger:#dc2626;--radius:10px;--shadow:0 6px 18px rgba(15,23,42,.06);
-      --ui-font: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:var(--ui-font);background:linear-gradient(180deg,var(--bg),#eef2ff);color:#0f1724}
-    .shell{max-width:1100px;margin:18px auto;padding:18px}
-    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand .logo{width:46px;height:46px;border-radius:8px;background:linear-gradient(135deg,var(--primary),#7c3aed);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
-    .card{background:var(--card);padding:18px;border-radius:10px;box-shadow:var(--shadow)}
-    .muted{color:var(--muted)}
-    .controls{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{padding:8px 12px;border-radius:8px;border:0;background:var(--primary);color:#fff;cursor:pointer}
-    footer{margin-top:12px;text-align:center;color:var(--muted);font-size:.85rem}
-    /* responsive */
-    @media (max-width:880px){.shell{padding:12px}}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <div class="brand"><div class="logo"><i class="fa-solid fa-layer-group"></i></div><div><h1 style="margin:0;font-size:1.05rem">List Loader</h1><div class="muted">Lead Upload</div></div></div>
-      <div class="controls"><button class="btn" onclick="location.reload()"><i class="fa-solid fa-sync"></i> Reload</button></div>
-    </header>
-
-    <main class="card" id="main-card">
-      <!-- Begin preserved PHP logic output -->
-
-<?php
-// --- BEGIN PRESERVED PHP BLOCKS ---
-
 # admin_listloader_fourth_gen.php - version 2.14
-
+#  (based upon - new_listloader_superL.php script)
+# 
+# Copyright (C) 2024  Matt Florell,Joe Johnson <vicidial@gmail.com>    LICENSE: AGPLv2
+#
+# ViciDial web-based lead loader from formatted file
+# 
+# CHANGES
+# 50602-1640 - First version created by Joe Johnson
+# 51128-1108 - Removed PHP global vars requirement
+# 60113-1603 - Fixed a few bugs in Excel import
+# 60421-1624 - check GET/POST vars lines with isset to not trigger PHP NOTICES
+# 60616-1240 - added listID override
+# 60616-1604 - added gmt lookup for each lead
+# 60619-1651 - Added variable filtering to eliminate SQL injection attack threat
+# 60822-1121 - fixed for nonwritable directories
+# 60906-1100 - added filter of non-digits in alt_phone field
+# 61110-1222 - added new USA-Canada DST scheme and Brazil DST scheme
+# 61128-1149 - added postal code GMT lookup and duplicate check options
+# 70417-1059 - Fixed default phone_code bug
+# 70510-1518 - Added campaign and system duplicate check and phonecode override
+# 80428-0417 - UTF8 changes
+# 80514-1030 - removed filesize limit and raised number of errors to be displayed
+# 80713-0023 - added last_local_call_time field default of 2008-01-01
+# 81011-2009 - a few bug fixes
+# 90309-1831 - Added admin_log logging
+# 90310-2128 - Added admin header
+# 90508-0644 - Changed to PHP long tags
+# 90522-0506 - Security fix
+# 90721-1339 - Added rank and owner as vicidial_list fields
+# 91112-0616 - Added title/alt-phone duplicate checking
+# 100118-0543 - Added new Australian and New Zealand DST schemes (FSO-FSA and LSS-FSA)
+# 100621-1026 - Added admin_web_directory variable
+# 100630-1609 - Added a check for invalid ListIds and filtered out ' " ; ` \ from the field <mikec>
+# 100705-1507 - Added custom fields to field chooser, only when liast_id_override is used and only with TXT and CSV file formats
+# 100706-1250 - Forked script to create new script that will only load TXT(tab-
+#				delimited files) and use a perl script to convert others to TXT
+# 100707-1040 - Converted List Id Override and Phone Code Override to drop downs <mikec>
+# 100707-1156 - Made it so you cannot submit with no lead file selected. Also fixed Start Over Link <mikec>
+# 100712-1416 - Added entry_list_id field to vicidial_list to preserve link to custom fields if any
+# 100728-0900 - Filtered uploaded filenames for unsupported characters
+# 110424-0926 - Added option for time zone code in the owner field
+# 110705-1947 - Added USACAN check for prefix and areacode
+# 120221-0140 - Added User Group restrictions
+# 120223-2318 - Removed logging of good login passwords if webroot writable is enabled
+# 120402-2128 - Added template options
+# 120525-1038 - Added uploaded filename filtering
+# 120529-1348 - Filename filter fix
+# 130420-2056 - Added NANPA prefix validation and timezone options
+# 130610-0920 - Finalized changing of all ereg instances to preg
+# 130621-1817 - Added filtering of input to prevent SQL injection attacks and new user auth
+# 130719-1914 - Added SQL to filter by template statuses, if template has specific statuses to dedupe against
+# 130802-0619 - Added status deduping option without template
+# 130824-2322 - Changed to mysqli PHP functions
+# 140214-1022 - Fixed status dedupe bug
+# 140328-0007 - Converted division calculations to use MathZDC function
+# 141001-2200 - Finalized adding QXZ translation to all admin files
+# 141118-1955 - Added more debug output
+# 141229-1814 - Added code for on-the-fly language translations display
+# 150209-2113 - Added master_list_override option to override template setting
+# 150312-1505 - Allow for single quotes in vicidial_list data fields
+# 150516-1136 - Fixed conflict with functions.php
+# 150728-0732 - Added state fullname to abbreviation conversion feature (state_conversion)
+# 150810-0750 - Added compatibility for custom fields data option
+# 160102-1039 - Better special characters support
+# 160428-2359 - Fixed custom table bug
+# 160508-0757 - Added colors features
+# 161103-2224 - Added web_loader_phone_length option
+# 161114-2315 - Added file upload error checking
+# 170219-1427 - Added last-90-day duplicate check options
+# 170409-1553 - Added IP List validation code
+# 171001-0908 - Fixed issue #1041
+# 171204-1517 - Fix for custom field duplicate issue, removed link to old lead loader
+# 180324-0943 - Enforce User Group campaign permissions for templates based on list_id
+# 180502-2215 - Added new help display
+# 180927-0702 - Fixed translation-related issue #1114
+# 190503-1547 - Added enable_status_mismatch_leadloader_option
+# 200812-1745 - Added international DNC scrub option
+# 200922-1013 - Added web_loader_phone_strip system setting feature
+# 210210-1602 - Added duplicate check with more X-day options
+# 220222-1002 - Added allow_web_debug system setting
+# 231207-1445 - Fix for web_loader_phone_strip duplicate check, issue #1498
+# 240320-1033 - Added misssing input variable filtering
+# 240801-1131 - Code updates for PHP8 compatibility
 #
 
 $version = '2.14-81';
@@ -566,101 +603,96 @@ A.employee_standard {  font-family: garamond, sans-serif; font-size: ".macfontfi
 ?>
 
 
-<script>
-/* Modernized JS replacements for legacy JavaScript1.2.
-   Keep function names so existing PHP-generated calls work. */
-
-// Parse selected file name into hidden input
-function ParseFileName() {
-  try {
-    var f = document.forms[0].leadfile;
-    var hidden = document.forms[0].leadfile_name;
-    if (f && f.files && f.files.length>0 && hidden) {
-      hidden.value = f.files[0].name;
-    } else if (f && f.value && hidden) {
-      var end = f.value.lastIndexOf('\\');
-      if (end > -1) hidden.value = f.value.substring(end+1); else hidden.value = f.value;
-    }
-  } catch(e) { console.error('ParseFileName error', e); }
-}
-
-# Force custom green theme regardless of DB settings
-$SSmenu_background      = '66A182';
-$SSframe_background     = 'E6F4EA';
-$SSstd_row1_background  = 'C8E6C9';
-$SSstd_row2_background  = 'A5D6A7';
-$SSstd_row3_background  = '81C784';
-$SSstd_row4_background  = '66BB6A';
-$SSstd_row5_background  = '4CAF50';
-$SSalt_row1_background  = 'F1F8E9';
-$SSalt_row2_background  = 'DCEDC8';
-$SSalt_row3_background  = 'AED581';
-
-
-
-// Fetch template specs via POST and alert the response (keeps original behavior)
+<script language="JavaScript1.2">
+function openNewWindow(url) 
+	{
+	window.open (url,"",'width=700,height=300,scrollbars=yes,menubar=yes,address=yes');
+	}
+function ShowProgress(good, bad, total, dup, inv, post, moved) 
+	{
+	parent.lead_count.document.open();
+	parent.lead_count.document.write('<html><body><table border=0 width=200 cellpadding=10 cellspacing=0 align=center valign=top><tr bgcolor="#000000"><th colspan=2><font face="arial, helvetica" size=3 color=white><?php echo _QXZ("Current file status"); ?>:</font></th></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Good"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+good+'</B></font></td></tr><tr bgcolor="#990000"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Bad"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+bad+'</B></font></td></tr><tr bgcolor="#000099"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Total"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+total+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Duplicate"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+dup+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Moved"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+moved+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Invalid"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+inv+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Postal Match"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+post+'</B></font></td></tr></table><body></html>');
+	parent.lead_count.document.close();
+	}
+function ParseFileName() 
+	{
+	if (!document.forms[0].OK_to_process) 
+		{	
+		var endstr=document.forms[0].leadfile.value.lastIndexOf('\\');
+		if (endstr>-1) 
+			{
+			endstr++;
+			var filename=document.forms[0].leadfile.value.substring(endstr);
+			document.forms[0].leadfile_name.value=filename;
+			}
+		}
+	}
 function TemplateSpecs() {
-  var template_field = document.getElementById("template_id");
-  if (!template_field) return;
-  var template_id_value = template_field.options[template_field.selectedIndex].value;
-  if (!template_id_value) return;
-  fetch('leadloader_template_display.php', {
-    method: 'POST',
-    headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},
-    body: 'template_id=' + encodeURIComponent(template_id_value)
-  }).then(r => r.text()).then(t => { if (t.length>0) alert(t); }).catch(e=>console.error(e));
+	var template_field = document.getElementById("template_id");
+	var template_id_value = template_field.options[template_field.selectedIndex].value;
+	var xmlhttp=false;
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (E) {
+			xmlhttp = false;
+		}
+	}
+	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+		xmlhttp = new XMLHttpRequest();
+	}
+	if (xmlhttp && template_id_value!="") { 
+		var vs_query = "&template_id="+template_id_value;
+		xmlhttp.open('POST', 'leadloader_template_display.php'); 
+		xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
+		xmlhttp.send(vs_query); 
+		xmlhttp.onreadystatechange = function() { 
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var TemplateInfo = null;
+				TemplateInfo = xmlhttp.responseText;
+				if (TemplateInfo.length>0)
+				{
+				alert(TemplateInfo);
+				}
+			}
+		}
+		delete xmlhttp;
+	}
 }
-
-// Populate statuses area when list override changes
 function PopulateStatuses(list_id) {
-  if (!list_id) return;
-  fetch('leadloader_template_display.php', {
-    method: 'POST',
-    headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},
-    body: 'form_action=no_template&list_id=' + encodeURIComponent(list_id)
-  }).then(r => r.text()).then(html => {
-    var el = document.getElementById('statuses_display');
-    if (el) el.innerHTML = html;
-  }).catch(e=>console.error(e));
+	
+	var xmlhttp=false;
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (E) {
+			xmlhttp = false;
+		}
+	}
+	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+		xmlhttp = new XMLHttpRequest();
+	}
+	if (xmlhttp) { 
+		var vs_query = "&form_action=no_template&list_id="+list_id;
+		xmlhttp.open('POST', 'leadloader_template_display.php'); 
+		xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
+		xmlhttp.send(vs_query); 
+		xmlhttp.onreadystatechange = function() { 
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var StatSpanText = null;
+				StatSpanText = xmlhttp.responseText;
+				document.getElementById("statuses_display").innerHTML = StatSpanText;
+			}
+		}
+		delete xmlhttp;
+	}
+
 }
 
-// ShowProgress writes to parent.lead_count iframe if available, otherwise to local #lead_count
-function ShowProgress(good, bad, total, dup, inv, post, moved) {
-  var html = '<div style="font-family: Arial, Helvetica, sans-serif; max-width:300px;padding:8px">'
-    + '<h4 style="margin:0 0 6px 0;color:green;"><?php echo _QXZ("Current file status"); ?>:</h4>'
-    + '<div><strong><?php echo _QXZ("Good"); ?>:</strong> '+good+'</div>'
-    + '<div><strong><?php echo _QXZ("Bad"); ?>:</strong> '+bad+'</div>'
-    + '<div><strong><?php echo _QXZ("Total"); ?>:</strong> '+total+'</div>'
-    + '<div><strong><?php echo _QXZ("Duplicate"); ?>:</strong> '+dup+'</div>'
-    + '<div><strong><?php echo _QXZ("Moved"); ?>:</strong> '+moved+'</div>'
-    + '<div><strong><?php echo _QXZ("Invalid"); ?>:</strong> '+inv+'</div>'
-    + '<div><strong><?php echo _QXZ("Postal Match"); ?>:</strong> '+post+'</div>'
-    + '</div>';
-  try {
-    if (parent && parent.lead_count && parent.lead_count.document) {
-      parent.lead_count.document.open();
-      parent.lead_count.document.write(html);
-      parent.lead_count.document.close();
-      return;
-    }
-  } catch (e) {}
-  var local = document.getElementById('lead_count');
-  if (local) local.innerHTML = html; else console.log('Lead progress', good,bad,total,dup,inv,post,moved);
-}
-
-// keep old openNewWindow for help links
-function openNewWindow(url) {
-  window.open(url, '', 'width=700,height=300,scrollbars=yes,menubar=yes,address=yes');
-}
-
-// keep compatibility: if some code calls FillAndShowHelpDiv, leave a simple wrapper
-function FillAndShowHelpDiv(e, id) {
-  // original help.js may define actual behavior. Fallback to openNewWindow with help.php if available.
-  try {
-    if (typeof FillAndShowHelpDiv_original === 'function') return FillAndShowHelpDiv_original(e, id);
-  } catch (ex) {}
-  openNewWindow('help.php?ADD=' + encodeURIComponent(id));
-}
 </script>
 <title><?php echo _QXZ("ADMINISTRATION: Lead Loader"); ?></title>
 </head>
@@ -669,7 +701,7 @@ function FillAndShowHelpDiv(e, id) {
 <?php
 $short_header=1;
 
-//require("admin_header.php");
+require("admin_header.php");
 
 echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
 
@@ -3449,70 +3481,5 @@ if (($leadfile) && ($LF_path))
 
 ?>
 </form>
-</body>
-</html>
-
-
-<style>
-  body {
-    background-color: #F9FAFB !important; /* light neutral gray */
-    font-family: "Inter", Arial, sans-serif;
-    color: #111827; /* modern dark gray text */
-  }
-  table {
-    background-color: #FFFFFF !important; /* clean white frames */
-    border-collapse: collapse;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  td {
-    background-color: #F9FAFB !important; /* neutral gray cells */
-    padding: 8px;
-  }
-  tr:nth-child(even) td {
-    background-color: #F3F4F6 !important; /* light gray for alt rows */
-  }
-  tr.alt td {
-    background-color: #ECFDF5 !important; /* soft mint for highlighted rows */
-  }
-  input[type=submit], input[type=button], button {
-    background-color: #10B981 !important; /* emerald green */
-    border: none;
-    color: white !important;
-    padding: 8px 16px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
-  }
-  input[type=submit]:hover, input[type=button]:hover, button:hover {
-    background-color: #059669 !important; /* darker emerald */
-    transform: translateY(-1px);
-  }
-  select, input[type=text], input[type=file] {
-    border: 1px solid #D1D5DB;
-    border-radius: 4px;
-    padding: 6px;
-    background-color: #FFFFFF;
-  }
-  select:focus, input:focus {
-    outline: none;
-    border-color: #2563EB; /* vivid blue accent */
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-  }
-</style>
-
-
-
-      <!-- End preserved PHP logic output -->
-    </main>
-
-  </div>
-
-  <script>
-    // Small helper: forward postMessage events from preserved PHP if any.
-    window.addEventListener('message', (e)=>console.log('msg', e.data));
-
-  </script>
 </body>
 </html>
