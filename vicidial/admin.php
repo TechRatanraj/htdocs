@@ -9333,65 +9333,98 @@ if ($ADD == 12) {
 ######################
 # ADD=111 display the ADD NEW LIST FORM SCREEN
 ######################
-if ($ADD==111)
-	{
-	if ($LOGmodify_lists==1)
-		{
-		##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-		$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_lists' and active='1';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$voi_ct = mysqli_num_rows($rslt);
-		if ($voi_ct > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$voi_count = "$row[0]";
-			}
-		##### END ID override optional section #####
+if ($ADD == 111) {
+    if ($LOGmodify_lists == 1) {
+        ##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
+        $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_lists' and active='1';";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $voi_ct = mysqli_num_rows($rslt);
+        if ($voi_ct > 0) {
+            $row = mysqli_fetch_row($rslt);
+            $voi_count = "$row[0]";
+        }
+        ##### END ID override optional section #####
 
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_black_lists.png\" alt=\"Lists\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        // Modern UI Container
+        echo "<div class='container'>";
+        echo "<div class='card'>";
+        echo "<div class='card-header'><h2>" . _QXZ("ADD A NEW LIST") . "</h2></div>";
+        echo "<div class='card-body'>";
+        
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=211>\n";
+        
+        // Modern Form Layout
+        echo "<div class='form-grid'>";
+        
+        // Basic Information Section
+        echo "<div class='form-section'>";
+        echo "<h3 class='section-title'><i class='fas fa-info-circle'></i> " . _QXZ("Basic Information") . "</h3>";
+        
+        if ($voi_count > 0) {
+            echo "<div class='form-group'>";
+            echo "<label>" . _QXZ("List ID") . "</label>";
+            echo "<div class='form-control-static'>" . _QXZ("Auto-Generated") . " $NWB#lists-list_id$NWE</div>";
+            echo "</div>\n";
+        } else {
+            echo "<div class='form-group'>";
+            echo "<label>" . _QXZ("List ID") . "</label>";
+            echo "<input type=text name=list_id class='form-control' size=19 maxlength=19> (" . _QXZ("digits only") . ")$NWB#lists-list_id$NWE";
+            echo "</div>\n";
+        }
+        
+        echo "<div class='form-group'>";
+        echo "<label>" . _QXZ("List Name") . "</label>";
+        echo "<input type=text name=list_name class='form-control' size=30 maxlength=30>$NWB#lists-list_name$NWE";
+        echo "</div>\n";
+        
+        echo "<div class='form-group'>";
+        echo "<label>" . _QXZ("List Description") . "</label>";
+        echo "<input type=text name=list_description class='form-control' size=30 maxlength=255>$NWB#lists-list_description$NWE";
+        echo "</div>\n";
+        
+        echo "<div class='form-group'>";
+        echo "<label>" . _QXZ("Campaign") . "</label>";
+        echo "<select name=campaign_id class='form-control'>\n";
 
-		echo "<br>"._QXZ("ADD A NEW LIST")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=211>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		if ($voi_count > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List ID").": </td><td align=left>"._QXZ("Auto-Generated")." $NWB#lists-list_id$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List ID").": </td><td align=left><input type=text name=list_id size=19 maxlength=19> ("._QXZ("digits only").")$NWB#lists-list_id$NWE</td></tr>\n";
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Name").": </td><td align=left><input type=text name=list_name size=30 maxlength=30>$NWB#lists-list_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("List Description").": </td><td align=left><input type=text name=list_description size=30 maxlength=255>$NWB#lists-list_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Campaign").": </td><td align=left><select size=1 name=campaign_id>\n";
+        $stmt = "SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $campaigns_to_print = mysqli_num_rows($rslt);
+        $campaigns_list = '';
 
-		$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$campaigns_to_print = mysqli_num_rows($rslt);
-		$campaigns_list='';
-
-		$o=0;
-		while ($campaigns_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "$campaigns_list";
-		echo "<option SELECTED>$campaign_id</option>\n";
-		echo "</select>$NWB#lists-campaign_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#lists-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+        $o = 0;
+        while ($campaigns_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            $campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+        }
+        echo "$campaigns_list";
+        echo "<option SELECTED>$campaign_id</option>\n";
+        echo "</select>$NWB#lists-campaign_id$NWE";
+        echo "</div>\n";
+        
+        echo "<div class='form-group'>";
+        echo "<label>" . _QXZ("Active") . "</label>";
+        echo "<select name=active class='form-control'><option value='Y'>" . _QXZ("Y") . "</option><option value=\"N\" SELECTED>" . _QXZ("N") . "</option></select>$NWB#lists-active$NWE";
+        echo "</div>\n";
+        
+        echo "</div>"; // End Basic Information Section
+        
+        echo "<div class='form-actions'>";
+        echo "<button type='submit' name='SUBMIT' class='btn btn-primary'><i class='fas fa-plus'></i> " . _QXZ("SUBMIT") . "</button>";
+        echo "</div>\n";
+        
+        echo "</div>"; // End form-grid
+        echo "</form>\n";
+        
+        echo "</div>"; // End card-body
+        echo "</div>"; // End card
+        echo "</div>"; // End container
+    } else {
+        echo "<div class='alert alert-danger'>" . _QXZ("You do not have permission to view this page") . "</div>\n";
+        exit;
+    }
+}
 
 ######################
 # ADD=121 display the ADD NUMBER TO DNC FORM SCREEN and add a new number
