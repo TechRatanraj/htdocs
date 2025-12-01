@@ -3347,7 +3347,7 @@ if ($lead_id != 'NEW') {
         }
         
         echo '</div>'; // Close card
-    }
+    
 
 
 echo '</div>'; // Close modern-container
