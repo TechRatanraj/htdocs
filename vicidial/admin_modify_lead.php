@@ -4128,380 +4128,341 @@ if (($SSrecording_dtmf_detection > 0) and ($SSrecording_dtmf_muting > 0)) {
 
 
 
-		echo "<B>"._QXZ("RECORDINGS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=800 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("LEAD")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("SECONDS")." </td><td align=left><font size=2> &nbsp; "._QXZ("RECID")."</td><td align=center><font size=2>"._QXZ("FILENAME")."</td><td align=left><font size=2>"._QXZ("LOCATION")."</td><td align=left><font size=2>"._QXZ("TSR")."</td>$mute_column$stereo_column$dtmf_detect_column$dtmf_mute_column<td align=left><font size=2> </td></tr>\n";
+		// RECORDINGS FOR THIS LEAD Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">🎙️ ' . _QXZ("RECORDINGS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("SECONDS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECID") . '</th>';
+echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("FILENAME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LOCATION") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo $mute_column . $stereo_column . $dtmf_detect_column . $dtmf_mute_column;
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PLAY") . '</th>';
+echo '</tr></thead><tbody>';
 
-		$stmt="SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_id desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
+$stmt = "SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_id desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-		$u=0;   $rec_ids="''";
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
+$u = 0;
+$rec_ids = "''";
+while ($logs_to_print > $u) {
+    $row = mysqli_fetch_row($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    
+    $stereo_flag = $row[3];
+    $location = $row[11];
+    
+    if (strlen($location) > 2) {
+        $URLserver_ip = $location;
+        $URLserver_ip = preg_replace('/http:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/https:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/\/.*/i', '', $URLserver_ip);
+        $stmt = "SELECT count(*) from servers where server_ip='$URLserver_ip';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $rowx = mysqli_fetch_row($rsltx);
+        
+        if ($rowx[0] > 0) {
+            $stmt = "SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
+            $rsltx = mysql_to_mysqli($stmt, $link);
+            $rowx = mysqli_fetch_row($rsltx);
+            
+            if (preg_match("/ALT_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
+            }
+            if (preg_match("/EXTERNAL_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
+            }
+        }
+    }
+    
+    if ($SSmute_recordings > 0) {
+        $mute_events = 0;
+        $stmt = "SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]' and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $flogs_to_print = mysqli_num_rows($rsltx);
+        if ($flogs_to_print > 0) {
+            $rowx = mysqli_fetch_row($rsltx);
+            $mute_events = $rowx[0];
+        }
+    }
+    
+    if (mb_strlen($location, 'utf-8') > 30) {
+        $locat = mb_substr($location, 0, 27, 'utf-8');
+        $locat = "$locat...";
+    } else {
+        $locat = $location;
+    }
+    
+    $play_audio = '<td style="padding:10px;"></td>';
+    if ((preg_match('/ftp/i', $location)) or (preg_match('/http/i', $location))) {
+        if ($log_recording_access < 1) {
+            $play_audio = "<td style='padding:10px;'><audio controls preload='none' style='max-width:200px;height:30px;'><source src='$location' type='audio/wav'><source src='$location' type='audio/mpeg'>" . _QXZ("No browser audio playback support") . "</audio></td>\n";
+            $location = "<a href=\"$location\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        } else {
+            $location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=0\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        }
+    } else {
+        $location = $locat;
+    }
+    
+    $u++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[12]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[4]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[8]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#6b7280;'>$row[0]</td>";
+    echo "<td style='padding:10px;text-align:center;font-size:12px;color:#1f2937;font-family:monospace;'>$row[10]</td>";
+    echo "<td style='padding:10px;font-size:13px;'>$location</td>";
+    echo "<td style='padding:10px;'><a href=\"user_stats.php?user=$row[13]\" target=\"_blank\" style='color:#3b82f6;text-decoration:none;font-weight:600;'>$row[13]</a></td>";
+    
+    if ($SSmute_recordings > 0) {
+        if ($mute_events < 1) { $mute_events = ''; }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$mute_events</td>";
+    }
+    if ($SSstereo_recording > 0) {
+        if (!preg_match("/^S/", $stereo_flag)) { $stereo_flag = ''; }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$stereo_flag</td>";
+    }
+    if ($SSrecording_dtmf_detection > 0) {
+        $dtmf_detected = '';
+        $dtmf_muting = '';
+        $dtmf_muting_seconds = '';
+        
+        $stmtDTMF = "SELECT dtmf_detected,dtmf_muting,dtmf_muting_seconds from recording_live_log where recording_id='$row[0]' limit 1;";
+        $rsltDTMF = mysql_to_mysqli($stmtDTMF, $link);
+        $DTMF_to_print = mysqli_num_rows($rsltDTMF);
+        if ($DB) { echo "$DTMF_to_print|$stmtDTMF|\n"; }
+        if ($DTMF_to_print > 0) {
+            $DTMFrow = mysqli_fetch_row($rsltDTMF);
+            $dtmf_detected = $DTMFrow[0];
+            $dtmf_muting = $DTMFrow[1];
+            $dtmf_muting_seconds = $DTMFrow[2];
+            
+            if ($dtmf_detected < 1) { $dtmf_detected = ''; }
+            if ($SSrecording_dtmf_muting > 0) {
+                if ($dtmf_muting > 0) {
+                    $dtmf_muting = "$dtmf_muting - $dtmf_muting_seconds";
+                } else {
+                    $dtmf_muting = '';
+                }
+            }
+        }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$dtmf_detected</td>";
+        if ($SSrecording_dtmf_muting > 0) {
+            echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$dtmf_muting</td>";
+        }
+    }
+    
+    echo "$play_audio";
+    echo "</tr>";
+    $rec_ids .= ",'$row[0]'";
+}
 
-			$stereo_flag =	$row[3];
-			$location =		$row[11];
+// Archive recordings
+$stmt = "SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and recording_id NOT IN($rec_ids) order by recording_id desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
 
-			if (strlen($location)>2)
-				{
-				$URLserver_ip = $location;
-				$URLserver_ip = preg_replace('/http:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/https:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/\/.*/i', '',$URLserver_ip);
-				$stmt="SELECT count(*) from servers where server_ip='$URLserver_ip';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$rowx=mysqli_fetch_row($rsltx);
-				
-				if ($rowx[0] > 0)
-					{
-					$stmt="SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
-					$rsltx=mysql_to_mysqli($stmt, $link);
-					$rowx=mysqli_fetch_row($rsltx);
-					
-					if (preg_match("/ALT_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
-						}
-					if (preg_match("/EXTERNAL_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
-						}
-					}
-				}
+$v = 0;
+while ($logs_to_print > $v) {
+    $row = mysqli_fetch_row($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    
+    $location = $row[11];
+    
+    if (strlen($location) > 2) {
+        $URLserver_ip = $location;
+        $URLserver_ip = preg_replace('/http:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/https:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/\/.*/i', '', $URLserver_ip);
+        $stmt = "SELECT count(*) from servers where server_ip='$URLserver_ip';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $rowx = mysqli_fetch_row($rsltx);
+        
+        if ($rowx[0] > 0) {
+            $stmt = "SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
+            $rsltx = mysql_to_mysqli($stmt, $link);
+            $rowx = mysqli_fetch_row($rsltx);
+            
+            if (preg_match("/ALT_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
+            }
+            if (preg_match("/EXTERNAL_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
+            }
+        }
+    }
+    
+    if ($SSmute_recordings > 0) {
+        $mute_events = 0;
+        $stmt = "SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]' and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $flogs_to_print = mysqli_num_rows($rsltx);
+        if ($flogs_to_print > 0) {
+            $rowx = mysqli_fetch_row($rsltx);
+            $mute_events = $rowx[0];
+        }
+    }
+    
+    if (mb_strlen($location, 'utf-8') > 30) {
+        $locat = mb_substr($location, 0, 27, 'utf-8');
+        $locat = "$locat...";
+    } else {
+        $locat = $location;
+    }
+    
+    $play_audio = '<td style="padding:10px;"></td>';
+    if ((preg_match('/ftp/i', $location)) or (preg_match('/http/i', $location))) {
+        if ($log_recording_access < 1) {
+            $play_audio = "<td style='padding:10px;'><audio controls preload='none' style='max-width:200px;height:30px;'><source src='$location' type='audio/wav'><source src='$location' type='audio/mpeg'>" . _QXZ("No browser audio playback support") . "</audio></td>\n";
+            $location = "<a href=\"$location\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        } else {
+            $location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=1\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        }
+    } else {
+        $location = $locat;
+    }
+    
+    $u++;
+    $v++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[12]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[4]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[8]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#6b7280;'>$row[0]</td>";
+    echo "<td style='padding:10px;text-align:center;font-size:12px;color:#1f2937;font-family:monospace;'>$row[10]</td>";
+    echo "<td style='padding:10px;font-size:13px;'>$location <span style='color:#ef4444;font-weight:600;'>*</span></td>";
+    echo "<td style='padding:10px;'><a href=\"user_stats.php?user=$row[13]\" target=\"_blank\" style='color:#3b82f6;text-decoration:none;font-weight:600;'>$row[13]</a></td>";
+    
+    if ($SSmute_recordings > 0) {
+        if ($mute_events < 1) { $mute_events = ''; }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$mute_events</td>";
+    }
+    
+    echo "$play_audio";
+    echo "</tr>";
+}
 
-			if ($SSmute_recordings > 0)
-				{
-				$mute_events=0;
-				$stmt="SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]'  and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$flogs_to_print = mysqli_num_rows($rsltx);
-				if ($flogs_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rsltx);
-					$mute_events = $rowx[0];
-					}
-				}
+echo '</tbody></table></div></div>';
 
-			if (mb_strlen($location,'utf-8')>30)
-				{$locat = mb_substr($location,0,27,'utf-8');  $locat = "$locat...";}
-			else
-				{$locat = $location;}
-			$play_audio='<td align=left><font size=2> </font></td>';
-			if ( (preg_match('/ftp/i',$location)) or (preg_match('/http/i',$location)) )
-				{
-				if ($log_recording_access<1) 
-					{
-					$play_audio = "<td align=left><font size=2> <audio controls preload=\"none\"> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >"._QXZ("No browser audio playback support")."</audio> </td>\n";
-					$location = "<a href=\"$location\">$locat</a>";
-					}
-				else
-					{
-					$location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=0\">$locat</a>";
-					}
-				}
-			else
-				{$location = $locat;}
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[12] </td>";
-			echo "<td align=left><font size=1> $row[4] </td>\n";
-			echo "<td align=left><font size=2> $row[8] </td>\n";
-			echo "<td align=left><font size=2> $row[0] &nbsp;</td>\n";
-			echo "<td align=center><font size=1> $row[10] </td>\n";
-			echo "<td align=left><font size=2> $location </td>\n";
-			echo "<td align=left><font size=2> <A HREF=\"user_stats.php?user=$row[13]\" target=\"_blank\">$row[13]</A> </td>";
-			if ($SSmute_recordings > 0)
-				{
-				if ($mute_events < 1) {$mute_events='';}
-				echo "<td align=center><font size=1> $mute_events &nbsp; </td>\n";
-				}
-			if ($SSstereo_recording > 0)
-				{
-				if (!preg_match("/^S/",$stereo_flag)) {$stereo_flag='';}
-				echo "<td align=center><font size=1> $stereo_flag &nbsp; </td>\n";
-				}
-			if ($SSrecording_dtmf_detection > 0)
-				{
-				$dtmf_detected='';
-				$dtmf_muting='';
-				$dtmf_muting_seconds='';
+// RECORDING ACCESS LOG Section
+if ($log_recording_access > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">🔐 ' . _QXZ("RECORDING ACCESS LOG FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECORDING ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RESULT") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("IP") . '</th>';
+    echo '</tr></thead><tbody>';
+    
+    $stmt = "SELECT recording_id,lead_id,user,access_datetime,access_result,ip from vicidial_recording_access_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_access_log_id desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+    
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[3]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#6b7280;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+        echo "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;'>$row[4]</span></td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[5]</td>";
+        echo "</tr>";
+    }
+    echo '</tbody></table></div></div>';
+}
 
-				$stmtDTMF="SELECT dtmf_detected,dtmf_muting,dtmf_muting_seconds from recording_live_log where recording_id='$row[0]' limit 1;";
-				$rsltDTMF=mysql_to_mysqli($stmtDTMF, $link);
-				$DTMF_to_print = mysqli_num_rows($rsltDTMF);
-				if ($DB) {echo "$DTMF_to_print|$stmtDTMF|\n";}
-				if ($DTMF_to_print > 0) 
-					{
-					$DTMFrow=mysqli_fetch_row($rsltDTMF);
-					$dtmf_detected =		$DTMFrow[0];
-					$dtmf_muting =			$DTMFrow[1];
-					$dtmf_muting_seconds =	$DTMFrow[2];
+// Admin & QC Links
+$stmt = "SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level >= 9 and modify_leads IN('1','2','3','4','5','6');";
+if ($DB) { echo "|$stmt|\n"; }
+$rslt = mysql_to_mysqli($stmt, $link);
+$row = mysqli_fetch_row($rslt);
+$admin_display = $row[0];
 
-					if ($dtmf_detected < 1)
-						{$dtmf_detected='';}
-					if ($SSrecording_dtmf_muting > 0)
-						{
-						if ($dtmf_muting > 0)
-							{$dtmf_muting = "$dtmf_muting - $dtmf_muting_seconds";}
-						else 
-							{$dtmf_muting='';}
-						}
-					}
-				echo "<td align=center><font size=1> $dtmf_detected &nbsp; </td>\n";
-				if ($SSrecording_dtmf_muting > 0)
-					{echo "<td align=center><font size=1> $dtmf_muting &nbsp; </td>\n";}
-				}
+if ($admin_display > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div style="padding:20px;text-align:center;background:#f0f9ff;border-radius:8px;">';
+    echo '<a href="./admin.php?ADD=720000000000000&stage=' . $lead_id . '&category=LEADS" style="color:#1e40af;font-weight:600;text-decoration:none;font-size:14px;">📝 ' . _QXZ("Click here to see Lead Modify changes to this lead") . '</a>';
+    echo '</div></div>';
+}
 
-			echo "$play_audio";
-			echo "</tr>\n";
-			$rec_ids .= ",'$row[0]'";
-			}
+// QC Link
+$stmt = "SELECT qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit from vicidial_users where user='$PHP_AUTH_USER' and user_level > 1 and active='Y' and qc_enabled='1';";
+if ($DB) { echo "|$stmt|\n"; }
+$rslt = mysql_to_mysqli($stmt, $link);
+$row = mysqli_fetch_row($rslt);
+$qc_auth = $row[0];
 
-		$stmt="SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and recording_id NOT IN($rec_ids) order by recording_id desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
+if ($qc_auth == '1') {
+    $qcuser_level = $row[1];
+    if ($qcuser_level > 0) {
+        echo '<div class="card" style="margin-top:25px;">';
+        echo '<div style="padding:20px;text-align:center;background:#f0fdf4;border-radius:8px;">';
+        echo '<a href="qc_modify_lead.php?lead_id=' . $lead_id . '" style="color:#15803d;font-weight:600;text-decoration:none;font-size:14px;">✅ ' . _QXZ("Click here to QC Modify this lead") . '</a>';
+        echo '</div></div>';
+    }
+}
 
-		$v=0;
-		while ($logs_to_print > $v) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
+// GDPR Compliance
+if ($enable_gdpr_download_deletion > 0) {
+    if ($gdpr_display >= 1) {
+        echo '<div class="card" style="margin-top:25px;">';
+        echo '<div class="card-header"><h2 class="card-title">🔐 ' . _QXZ("GDPR compliance") . '</h2></div>';
+        echo '<div style="display:grid;gap:15px;padding:10px;">';
+        echo '<div style="padding:15px;background:#dbeafe;border-radius:8px;border-left:4px solid #3b82f6;">';
+        echo '<a href="admin_modify_lead.php?lead_id=' . $lead_id . '&gdpr_action=download" style="color:#1e40af;font-weight:600;text-decoration:none;font-size:14px;">📥 ' . _QXZ("Click here to download GDPR-formatted data for this lead") . '</a>';
+        echo '</div>';
+        if ($gdpr_display >= 2) {
+            echo '<div style="padding:15px;background:#fee2e2;border-radius:8px;border-left:4px solid #ef4444;">';
+            echo '<a href="admin_modify_lead.php?lead_id=' . $lead_id . '&gdpr_action=purge" style="color:#991b1b;font-weight:600;text-decoration:none;font-size:14px;">🗑️ ' . _QXZ("Click here to review and purge customer data on lead") . '</a>';
+            echo '</div>';
+        }
+        echo '</div></div>';
+    }
+}
 
-			$location = $row[11];
-
-			if (strlen($location)>2)
-				{
-				$URLserver_ip = $location;
-				$URLserver_ip = preg_replace('/http:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/https:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/\/.*/i', '',$URLserver_ip);
-				$stmt="SELECT count(*) from servers where server_ip='$URLserver_ip';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$rowx=mysqli_fetch_row($rsltx);
-				
-				if ($rowx[0] > 0)
-					{
-					$stmt="SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
-					$rsltx=mysql_to_mysqli($stmt, $link);
-					$rowx=mysqli_fetch_row($rsltx);
-					
-					if (preg_match("/ALT_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
-						}
-					if (preg_match("/EXTERNAL_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
-						}
-					}
-				}
-
-			if ($SSmute_recordings > 0)
-				{
-				$mute_events=0;
-				$stmt="SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]'  and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$flogs_to_print = mysqli_num_rows($rsltx);
-				if ($flogs_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rsltx);
-					$mute_events = $rowx[0];
-					}
-				}
-
-			if (mb_strlen($location,'utf-8')>30)
-				{$locat = mb_substr($location,0,27,'utf-8');  $locat = "$locat...";}
-			else
-				{$locat = $location;}
-			$play_audio='<td align=left><font size=2> </font></td>';
-			if ( (preg_match('/ftp/i',$location)) or (preg_match('/http/i',$location)) )
-				{
-				if ($log_recording_access<1) 
-					{
-					$play_audio = "<td align=left><font size=2> <audio controls preload=\"none\"> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >"._QXZ("No browser audio playback support")."</audio> </td>\n";
-					$location = "<a href=\"$location\">$locat</a>";
-					}
-				else
-					{
-					$location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=1\">$locat</a>";
-					}
-				}
-			else
-				{$location = $locat;}
-			$u++;
-			$v++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[12] </td>";
-			echo "<td align=left><font size=1> $row[4] </td>\n";
-			echo "<td align=left><font size=2> $row[8] </td>\n";
-			echo "<td align=left><font size=2> $row[0] &nbsp;</td>\n";
-			echo "<td align=center><font size=1> $row[10] </td>\n";
-			echo "<td align=left><font size=2> $location *</td>\n";
-			echo "<td align=left><font size=2> <A HREF=\"user_stats.php?user=$row[13]\" target=\"_blank\">$row[13]</A> </td>";
-			if ($SSmute_recordings > 0)
-				{
-				if ($mute_events < 1) {$mute_events='';}
-				echo "<td align=center><font size=2> $mute_events &nbsp; </td>\n";
-				}
-			echo "$play_audio";
-			echo "</tr>\n";
-			}
-
-
-		echo "</TABLE><BR><BR>\n";
-
-
-	if ($log_recording_access > 0) 
-		{
-		echo "<B>"._QXZ("RECORDING ACCESS LOG FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("LEAD")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("RECORDING ID")."</td><td align=left><font size=2>"._QXZ("USER")."</td><td align=left><font size=2>"._QXZ("RESULT")." </td><td align=left><font size=2>"._QXZ("IP")." </td></tr>\n";
-
-		$stmt="SELECT recording_id,lead_id,user,access_datetime,access_result,ip from vicidial_recording_access_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_access_log_id desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		$u=0;
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[1] </td>";
-			echo "<td align=left><font size=2> $row[3] </td>\n";
-			echo "<td align=left><font size=2> $row[0] </td>\n";
-			echo "<td align=left><font size=2> $row[2] </td>\n";
-			echo "<td align=left><font size=2> $row[4] </td>\n";
-			echo "<td align=left><font size=2> $row[5] </td>\n";
-			echo "</tr>\n";
-			}
-
-		echo "</TABLE><BR><BR>\n";
-		}
-
-		$stmt="SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level >= 9 and modify_leads IN('1','2','3','4','5','6');";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$admin_display=$row[0];
-		if ($admin_display > 0)
-			{
-			echo "<a href=\"./admin.php?ADD=720000000000000&stage=$lead_id&category=LEADS\">"._QXZ("Click here to see Lead Modify changes to this lead")."</a>\n";
-			}
-		//Display link to QC if user has QC permissions
-		//Get QC User permissions
-		$stmt="SELECT qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit from vicidial_users where user='$PHP_AUTH_USER' and user_level > 1 and active='Y' and qc_enabled='1';";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$qc_auth=$row[0];
-		//Not "qc_" as it will interfere with ADD=4A storage of modified user.
-		if ($qc_auth=='1') 
-			{
-			$qcuser_level=$row[1];
-			$qcpass=$row[2];
-			$qcfinish=$row[3];
-			$qccommit=$row[4];
-			}
-		//Modify menuing to allow qc users into the system (if they have no permission otherwise)
-		//Copied Reports-Only user setup for QC-Only user (Poundteam QC setup)
-		$qc_only_user=0;
-		if ( ($qc_auth > 0) and ($auth < 1) )
-			{
-			if ($ADD != '881')
-				{
-				$ADD=100000000000000;
-				}
-			$qc_only_user=1;
-			}
-
-		if ($qcuser_level > 0)
-			{
-			echo "<br><br><a href=\"qc_modify_lead.php?lead_id=$lead_id\">"._QXZ("Click here to QC Modify this lead")."</a>\n";
-			}
-		echo "\n";
-		}
-
-	if ($enable_gdpr_download_deletion > 0)
-		{
-		if ($gdpr_display>=1) 
-			{
-			echo "<br><br><br>";
-			echo "<B>"._QXZ("GDPR compliance").":</B>\n";
-			echo "<TABLE width=750 cellspacing=2 cellpadding=5>\n";
-			echo "<tr bgcolor='#$SSstd_row2_background'>";
-			echo "<td><font size=2>";
-			echo "<a href=\"admin_modify_lead.php?lead_id=$lead_id&gdpr_action=download\">"._QXZ("Click here to download GDPR-formatted data for this lead")."</a><BR>\n";
-			echo "</font></td>";
-			echo "<tr bgcolor='#$SSstd_row1_background'>";
-			echo "<td><font size=2>";
-			if ($gdpr_display>=2) 
-				{
-				echo "<a href=\"admin_modify_lead.php?lead_id=$lead_id&gdpr_action=purge\">"._QXZ("Click here to review and purge customer data on lead")."</a>\n";
-				}
-			echo "</font></td>";
-			echo "</tr>";
-			echo "</table>";
-			}
-		}
-	echo "\n";
-	}
-
+echo '</div>'; // Close modern-container
 
 $ENDtime = date("U");
-
 $RUNtime = ($ENDtime - $STARTtime);
 
-echo "\n\n\n<br><br><br>\n\n";
+echo '<div style="text-align:center;padding:40px 20px;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb;margin-top:40px;">';
+echo _QXZ("script runtime") . ": <strong>$RUNtime</strong> " . _QXZ("seconds");
+echo '</div>';
+echo '<span id="debugbottomspan"></span>';
+echo "</body></html>";
 
+exit;
 
-echo "<font size=0>\n\n\n<br><br><br>\n"._QXZ("script runtime").": $RUNtime "._QXZ("seconds")."</font>";
-echo "</span>\n";
-
-echo "<br><span id=debugbottomspan></span>\n";
-
-?>
-
-
-</body>
-</html>
-
-<?php
-	
-exit; 
-
-function htmlparse($text) 
-	{
-	global $htmlconvert;
-	if ($htmlconvert > 0)
-		{
-		return htmlentities($text);
-		}
-	else
-		{
-		return $text;
-		}
-	}
-
-
+function htmlparse($text) {
+    global $htmlconvert;
+    if ($htmlconvert > 0) {
+        return htmlentities($text);
+    } else {
+        return $text;
+    }
+}
 ?>
