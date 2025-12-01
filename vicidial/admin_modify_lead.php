@@ -1441,7 +1441,7 @@ if ($gdpr_display==2 && preg_match("/purge$/", $gdpr_action))
 
 	$short_header=1;
 
-	//require("admin_header.php");
+	require("admin_header.php");
 
 	echo "</span>\n";
 	echo $HTML_text;
