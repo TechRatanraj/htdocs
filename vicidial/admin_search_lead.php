@@ -479,6 +479,7 @@ if ((!$vendor_id) and (!$phone) and (!$lead_id) and (!$log_phone) and (!$log_lea
         // Continue with closer log results...
     }
 }
+
 echo "</div>"; // Close search-container
 
 
@@ -635,7 +636,7 @@ echo "</div>"; // Close search-container
 		echo "\n\n\n</body></html>";
 
 		exit;
-		}
+	
 	##### END Log search #####
 
 
