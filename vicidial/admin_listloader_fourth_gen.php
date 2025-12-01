@@ -1659,7 +1659,7 @@ while (!feof($file)) {
 						}
 					}
 				//Done till here 
-
+				
 
 				##### Check for duplicate title and alt-phone in vicidial_list table for one list_id #####
 				if (preg_match("/DUPTITLEALTPHONELIST/i",$dupcheck))
@@ -2060,262 +2060,181 @@ if (($leadfile) && ($LF_path))
 			flush();
 			$file=fopen("$lead_file", "r");
 			$total=0; $good=0; $bad=0; $dup=0; $inv=0; $post=0; $moved=0; $phone_list='';
-			echo '<div style="max-width:900px;margin:30px auto;padding:30px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">';
-echo '<div style="text-align:center;margin-bottom:25px;">';
-echo '<div style="display:inline-block;padding:15px 30px;background:#d1fae5;border-radius:8px;border-left:4px solid #10b981;">';
-echo '<span style="font-size:18px;color:#065f46;font-weight:600;">⚙️ ' . _QXZ("Processing") . ' ' . $delim_name . ' ' . _QXZ("file using template") . ' ' . $template_id . '... (' . $tab_count . '|' . $pipe_count . ')</span>';
-echo '</div>';
-echo '</div>';
+			print "<center><font face='arial, helvetica' size=3 color='#009900'><B>"._QXZ("Processing")." $delim_name "._QXZ("file using template")." $template_id... ($tab_count|$pipe_count)\n";
+			if (strlen($list_id_override)>0) 
+				{
+				print "<BR>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").": $list_id_override<BR>";
+				}
+			if (strlen($phone_code_override)>0) 
+				{
+				print "<BR>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").": $phone_code_override<BR>\n";
+				}
+			if (strlen($dupcheck)>0) 
+				{
+				print "<BR>"._QXZ("LEAD DUPLICATE CHECK").": $dupcheck<BR>\n";
+				}
+			if (strlen($international_dnc_scrub)>0) 
+				{
+				print "<BR>"._QXZ("INTERNATIONAL DNC SCRUB").": $international_dnc_scrub<BR>\n";
+				}
+			if (strlen($template_statuses)>0) 
+				{
+				print "<BR>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").": ".preg_replace('/\'/', '', $template_statuses)."<BR>\n";
+				}
+			if (strlen($status_mismatch_action)>0) 
+				{
+				print "<BR>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").": $status_mismatch_action<BR>\n";
+				}
+			if (strlen($state_conversion)>9)
+				{
+				print "<BR>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").": $state_conversion<BR>\n";
+				}
+			if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
+				{
+				print "<BR>"._QXZ("REQUIRED PHONE NUMBER LENGTH").": $web_loader_phone_length<BR>\n";
+				}
+			if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
+				{
+				print "<BR>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").": $SSweb_loader_phone_strip<BR>\n";
+				}
+			$multidaySQL='';
+			if (preg_match("/30DAY|60DAY|90DAY|180DAY|360DAY/i",$dupcheck))
+				{
+				$day_val=30;
+				if (preg_match("/30DAY/i",$dupcheck)) {$day_val=30;}
+				if (preg_match("/60DAY/i",$dupcheck)) {$day_val=60;}
+				if (preg_match("/90DAY/i",$dupcheck)) {$day_val=90;}
+				if (preg_match("/180DAY/i",$dupcheck)) {$day_val=180;}
+				if (preg_match("/360DAY/i",$dupcheck)) {$day_val=360;}
+				$multiday = date("Y-m-d H:i:s", mktime(date("H"),date("i"),date("s"),date("m"),date("d")-$day_val,date("Y")));
+				$multidaySQL = "and entry_date > \"$multiday\"";
+				if ($DB > 0) {echo "DEBUG: $day_val day SQL: |$multidaySQL|";}
+				}
 
-echo '<div style="background:#f9fafb;padding:20px;border-radius:8px;margin-bottom:20px;">';
+			#  If a list is being scrubbed against a country's DNC list, block the list from being dialed and purge any lead from the hopper that belongs to that list.
+			if (strlen($international_dnc_scrub)>0 && strlen($list_id_override)>0 && $SSenable_international_dncs)
+				{
+				$upd_dnc_stmt="update vicidial_settings_containers set container_entry=concat('$list_id_override => $international_dnc_scrub', if(length(container_entry)>0, '\r\n', ''), if(container_entry is null, '', container_entry)) where container_id='DNC_CURRENT_BLOCKED_LISTS'";
+				$upd_dnc_rslt=mysql_to_mysqli($upd_dnc_stmt, $link);
 
-// List ID Override
-if (strlen($list_id_override) > 0) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("LIST ID OVERRIDE FOR THIS FILE") . ':</span> ';
-    echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $list_id_override . '</span>';
-    echo '</div>';
-}
+				$delete_hopper_stmt="delete from vicidial_hopper where list_id='$list_id_override'";
+				$delete_hopper_rslt=mysql_to_mysqli($delete_hopper_stmt, $link);
+				}
 
-// Phone Code Override
-if (strlen($phone_code_override) > 0) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("PHONE CODE OVERRIDE FOR THIS FILE") . ':</span> ';
-    echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $phone_code_override . '</span>';
-    echo '</div>';
-}
 
-// Duplicate Check
-if (strlen($dupcheck) > 0) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#92400e;font-weight:600;">' . _QXZ("LEAD DUPLICATE CHECK") . ':</span> ';
-    echo '<span style="font-size:14px;color:#78350f;">' . $dupcheck . '</span>';
-    echo '</div>';
-}
+			while (!feof($file)) 
+				{
+				$record++;
+				$buffer=rtrim(fgets($file, 4096));
+				$buffer=stripslashes($buffer);
 
-// International DNC Scrub
-if (strlen($international_dnc_scrub) > 0) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#991b1b;font-weight:600;">' . _QXZ("INTERNATIONAL DNC SCRUB") . ':</span> ';
-    echo '<span style="font-size:14px;color:#7f1d1d;">' . $international_dnc_scrub . '</span>';
-    echo '</div>';
-}
+				if (strlen($buffer)>0) 
+					{
+					$row=explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
+					$custom_fields_row=$row;
+					$pulldate=date("Y-m-d H:i:s");
+					$entry_date =			"$pulldate";
+					$modify_date =			"";
+					$status =				"NEW";
+					$user ="";
+					$vendor_lead_code =		$row[$vendor_lead_code_field];
+					$source_code =			$row[$source_id_field];
+					$source_id=$source_code;
+					$list_id =				$row[$list_id_field];
+					# Added 2/9/2015 to allow dropdown to override template
+					if ($master_list_override) {
+						$list_id=$list_id_override;
+					}
+					$gmt_offset =			'0';
+					$called_since_last_reset='N';
+					$phone_code =			preg_replace('/[^0-9]/i', '', $row[$phone_code_field]);
+					$phone_number =			preg_replace('/[^0-9]/i', '', $row[$phone_number_field]);
+					$title =				$row[$title_field];
+					$first_name =			$row[$first_name_field];
+					$middle_initial =		$row[$middle_initial_field];
+					$last_name =			$row[$last_name_field];
+					$address1 =				$row[$address1_field];
+					$address2 =				$row[$address2_field];
+					$address3 =				$row[$address3_field];
+					$city =$row[$city_field];
+					$state =				$row[$state_field];
+					$province =				$row[$province_field];
+					$postal_code =			$row[$postal_code_field];
+					$country_code =			$row[$country_code_field];
+					$gender =				$row[$gender_field];
+					$date_of_birth =		$row[$date_of_birth_field];
+					$alt_phone =			preg_replace('/[^0-9]/i', '', $row[$alt_phone_field]);
+					$email =				$row[$email_field];
+					$security_phrase =		$row[$security_phrase_field];
+					$comments =				trim($row[$comments_field]);
+					$rank =					$row[$rank_field];
+					$owner =				$row[$owner_field];
+					
+					# replace ' " ` \ ; with nothing
+					$vendor_lead_code =		preg_replace("/$field_regx/i", "", $vendor_lead_code);
+					$source_code =			preg_replace("/$field_regx/i", "", $source_code);
+					$source_id = 			preg_replace("/$field_regx/i", "", $source_id);
+					$list_id =				preg_replace("/$field_regx/i", "", $list_id);
+					$phone_code =			preg_replace("/$field_regx/i", "", $phone_code);
+					$phone_number =			preg_replace("/$field_regx/i", "", $phone_number);
+					$title =				preg_replace("/$field_regx/i", "", $title);
+					$first_name =			preg_replace("/$field_regx/i", "", $first_name);
+					$middle_initial =		preg_replace("/$field_regx/i", "", $middle_initial);
+					$last_name =			preg_replace("/$field_regx/i", "", $last_name);
+					$address1 =				preg_replace("/$field_regx/i", "", $address1);
+					$address2 =				preg_replace("/$field_regx/i", "", $address2);
+					$address3 =				preg_replace("/$field_regx/i", "", $address3);
+					$city =					preg_replace("/$field_regx/i", "", $city);
+					$state =				preg_replace("/$field_regx/i", "", $state);
+					$province =				preg_replace("/$field_regx/i", "", $province);
+					$postal_code =			preg_replace("/$field_regx/i", "", $postal_code);
+					$country_code =			preg_replace("/$field_regx/i", "", $country_code);
+					$gender =				preg_replace("/$field_regx/i", "", $gender);
+					$date_of_birth =		preg_replace("/$field_regx/i", "", $date_of_birth);
+					$alt_phone =			preg_replace("/$field_regx/i", "", $alt_phone);
+					$email =				preg_replace("/$field_regx/i", "", $email);
+					$security_phrase =		preg_replace("/$field_regx/i", "", $security_phrase);
+					$comments =				preg_replace("/$field_regx/i", "", $comments);
+					$rank =					preg_replace("/$field_regx/i", "", $rank);
+					$owner =				preg_replace("/$field_regx/i", "", $owner);
+					
+					$USarea = 			substr($phone_number, 0, 3);
+					$USprefix = 		substr($phone_number, 3, 3);
 
-// Template Statuses
-if (strlen($template_statuses) > 0) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#e0e7ff;border-left:4px solid #6366f1;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#3730a3;font-weight:600;">' . _QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY") . ':</span><br>';
-    echo '<span style="font-size:13px;color:#4338ca;margin-top:5px;display:block;">' . preg_replace('/\'/', '', $template_statuses) . '</span>';
-    echo '</div>';
-}
+					if (strlen($list_id_override)>0) 
+						{
+						$list_id = $list_id_override;
+						}
+					if (strlen($phone_code_override)>0) 
+						{
+						$phone_code = $phone_code_override;
+						}
+					if (strlen($phone_code)<1) {$phone_code = '1';}
 
-// Status Mismatch Action
-if (strlen($status_mismatch_action) > 0) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fce7f3;border-left:4px solid #ec4899;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#831843;font-weight:600;">' . _QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST") . ':</span> ';
-    echo '<span style="font-size:14px;color:#9f1239;">' . $status_mismatch_action . '</span>';
-    echo '</div>';
-}
+					if ( ($state_conversion == 'STATELOOKUP') and (strlen($state) > 3) )
+						{
+						$stmt = "SELECT state from vicidial_phone_codes where geographic_description='$state' and country_code='$phone_code' limit 1;";
+						if ($DB>0) {echo "DEBUG: state conversion query - $stmt\n";}
+						$rslt=mysql_to_mysqli($stmt, $link);
+						$sc_recs = mysqli_num_rows($rslt);
+						if ($sc_recs > 0)
+							{
+							$row=mysqli_fetch_row($rslt);
+							$state_abbr=$row[0];
+							if ( (strlen($state_abbr) > 0) and (strlen($state_abbr) < 3 ) )
+								{
+								if ($DB>0) {echo "DEBUG: state conversion found - $state|$state_abbr\n";}
+								$state = $state_abbr;
+								}
+							}
+						}
 
-// State Conversion
-if (strlen($state_conversion) > 9) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#d1fae5;border-left:4px solid #10b981;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#065f46;font-weight:600;">' . _QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED") . ':</span> ';
-    echo '<span style="font-size:14px;color:#047857;">' . $state_conversion . '</span>';
-    echo '</div>';
-}
+					if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
+						{
+						$phone_number = preg_replace("/^$SSweb_loader_phone_strip/",'',$phone_number);
+						}
 
-// Phone Length Requirement
-if ((strlen($web_loader_phone_length) > 0) && (strlen($web_loader_phone_length) < 3)) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#075985;font-weight:600;">' . _QXZ("REQUIRED PHONE NUMBER LENGTH") . ':</span> ';
-    echo '<span style="font-size:14px;color:#0c4a6e;font-weight:700;">' . $web_loader_phone_length . '</span>';
-    echo '</div>';
-}
-
-// Phone Strip System Setting
-if ((strlen($SSweb_loader_phone_strip) > 0) && ($SSweb_loader_phone_strip != 'DISABLED')) {
-    echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fef9c3;border-left:4px solid #eab308;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#713f12;font-weight:600;">' . _QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED") . ':</span> ';
-    echo '<span style="font-size:14px;color:#854d0e;">' . $SSweb_loader_phone_strip . '</span>';
-    echo '</div>';
-}
-
-echo '</div>'; // Close settings container
-
-// Multi-day duplicate check handling
-$multidaySQL = '';
-if (preg_match("/30DAY|60DAY|90DAY|180DAY|360DAY/i", $dupcheck)) {
-    $day_val = 30;
-    if (preg_match("/30DAY/i", $dupcheck)) { $day_val = 30; }
-    if (preg_match("/60DAY/i", $dupcheck)) { $day_val = 60; }
-    if (preg_match("/90DAY/i", $dupcheck)) { $day_val = 90; }
-    if (preg_match("/180DAY/i", $dupcheck)) { $day_val = 180; }
-    if (preg_match("/360DAY/i", $dupcheck)) { $day_val = 360; }
-    
-    $multiday = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d") - $day_val, date("Y")));
-    $multidaySQL = "and entry_date > \"$multiday\"";
-    
-    if ($DB > 0) {
-        echo "<div style='padding:8px 12px;background:#fef3c7;border-radius:6px;font-size:12px;color:#78350f;margin-bottom:10px;'>DEBUG: $day_val day SQL: |$multidaySQL|</div>";
-    }
-}
-
-# If a list is being scrubbed against a country's DNC list, block the list from being dialed and purge any lead from the hopper that belongs to that list.
-if (strlen($international_dnc_scrub) > 0 && strlen($list_id_override) > 0 && $SSenable_international_dncs) {
-    $upd_dnc_stmt = "UPDATE vicidial_settings_containers SET container_entry=CONCAT('$list_id_override => $international_dnc_scrub', IF(LENGTH(container_entry)>0, '\r\n', ''), IF(container_entry IS NULL, '', container_entry)) WHERE container_id='DNC_CURRENT_BLOCKED_LISTS'";
-    $upd_dnc_rslt = mysql_to_mysqli($upd_dnc_stmt, $link);
-
-    $delete_hopper_stmt = "DELETE FROM vicidial_hopper WHERE list_id='$list_id_override'";
-    $delete_hopper_rslt = mysql_to_mysqli($delete_hopper_stmt, $link);
-    
-    echo '<div style="padding:12px 15px;margin:15px 0;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#991b1b;font-weight:600;">🚫 ' . _QXZ("DNC List Blocked") . ':</span> ';
-    echo '<span style="font-size:14px;color:#7f1d1d;">' . _QXZ("List") . ' ' . $list_id_override . ' ' . _QXZ("blocked and removed from hopper") . '</span>';
-    echo '</div>';
-}
-
-// Processing indicator with progress bar
-echo '<div style="margin:20px 0;padding:15px;background:#f0f9ff;border-left:4px solid #0284c7;border-radius:6px;text-align:center;">';
-echo '<div style="display:inline-block;width:100%;max-width:600px;">';
-echo '<div style="height:8px;background:#dbeafe;border-radius:4px;overflow:hidden;">';
-echo '<div id="progress-bar" style="height:100%;width:0%;background:#0284c7;transition:width 0.3s;"></div>';
-echo '</div>';
-echo '<div id="progress-text" style="margin-top:10px;font-size:14px;color:#075985;font-weight:600;">' . _QXZ("Processing leads") . '...</div>';
-echo '</div>';
-echo '</div>';
-
-$record = 0;
-while (!feof($file)) {
-    $record++;
-    $buffer = rtrim(fgets($file, 4096));
-    $buffer = stripslashes($buffer);
-
-    if (strlen($buffer) > 0) {
-        $row = explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
-        $custom_fields_row = $row;
-        $pulldate = date("Y-m-d H:i:s");
-        $entry_date = "$pulldate";
-        $modify_date = "";
-        $status = "NEW";
-        $user = "";
-        $vendor_lead_code = $row[$vendor_lead_code_field];
-        $source_code = $row[$source_id_field];
-        $source_id = $source_code;
-        $list_id = $row[$list_id_field];
-        
-        # Added 2/9/2015 to allow dropdown to override template
-        if ($master_list_override) {
-            $list_id = $list_id_override;
-        }
-        
-        $gmt_offset = '0';
-        $called_since_last_reset = 'N';
-        $phone_code = preg_replace('/[^0-9]/i', '', $row[$phone_code_field]);
-        $phone_number = preg_replace('/[^0-9]/i', '', $row[$phone_number_field]);
-        $title = $row[$title_field];
-        $first_name = $row[$first_name_field];
-        $middle_initial = $row[$middle_initial_field];
-        $last_name = $row[$last_name_field];
-        $address1 = $row[$address1_field];
-        $address2 = $row[$address2_field];
-        $address3 = $row[$address3_field];
-        $city = $row[$city_field];
-        $state = $row[$state_field];
-        $province = $row[$province_field];
-        $postal_code = $row[$postal_code_field];
-        $country_code = $row[$country_code_field];
-        $gender = $row[$gender_field];
-        $date_of_birth = $row[$date_of_birth_field];
-        $alt_phone = preg_replace('/[^0-9]/i', '', $row[$alt_phone_field]);
-        $email = $row[$email_field];
-        $security_phrase = $row[$security_phrase_field];
-        $comments = trim($row[$comments_field]);
-        $rank = $row[$rank_field];
-        $owner = $row[$owner_field];
-        
-        # Replace ' " ` \ ; with nothing
-        $vendor_lead_code = preg_replace("/$field_regx/i", "", $vendor_lead_code);
-        $source_code = preg_replace("/$field_regx/i", "", $source_code);
-        $source_id = preg_replace("/$field_regx/i", "", $source_id);
-        $list_id = preg_replace("/$field_regx/i", "", $list_id);
-        $phone_code = preg_replace("/$field_regx/i", "", $phone_code);
-        $phone_number = preg_replace("/$field_regx/i", "", $phone_number);
-        $title = preg_replace("/$field_regx/i", "", $title);
-        $first_name = preg_replace("/$field_regx/i", "", $first_name);
-        $middle_initial = preg_replace("/$field_regx/i", "", $middle_initial);
-        $last_name = preg_replace("/$field_regx/i", "", $last_name);
-        $address1 = preg_replace("/$field_regx/i", "", $address1);
-        $address2 = preg_replace("/$field_regx/i", "", $address2);
-        $address3 = preg_replace("/$field_regx/i", "", $address3);
-        $city = preg_replace("/$field_regx/i", "", $city);
-        $state = preg_replace("/$field_regx/i", "", $state);
-        $province = preg_replace("/$field_regx/i", "", $province);
-        $postal_code = preg_replace("/$field_regx/i", "", $postal_code);
-        $country_code = preg_replace("/$field_regx/i", "", $country_code);
-        $gender = preg_replace("/$field_regx/i", "", $gender);
-        $date_of_birth = preg_replace("/$field_regx/i", "", $date_of_birth);
-        $alt_phone = preg_replace("/$field_regx/i", "", $alt_phone);
-        $email = preg_replace("/$field_regx/i", "", $email);
-        $security_phrase = preg_replace("/$field_regx/i", "", $security_phrase);
-        $comments = preg_replace("/$field_regx/i", "", $comments);
-        $rank = preg_replace("/$field_regx/i", "", $rank);
-        $owner = preg_replace("/$field_regx/i", "", $owner);
-        
-        $USarea = substr($phone_number, 0, 3);
-        $USprefix = substr($phone_number, 3, 3);
-
-        if (strlen($list_id_override) > 0) {
-            $list_id = $list_id_override;
-        }
-        if (strlen($phone_code_override) > 0) {
-            $phone_code = $phone_code_override;
-        }
-        if (strlen($phone_code) < 1) {
-            $phone_code = '1';
-        }
-
-        // State conversion lookup
-        if (($state_conversion == 'STATELOOKUP') && (strlen($state) > 3)) {
-            $stmt = "SELECT state FROM vicidial_phone_codes WHERE geographic_description='$state' AND country_code='$phone_code' LIMIT 1;";
-            if ($DB > 0) {
-                echo "<div style='padding:6px 10px;background:#f3f4f6;border-radius:4px;font-size:11px;color:#6b7280;margin:5px 0;font-family:monospace;'>DEBUG: state conversion query - $stmt</div>";
-            }
-            $rslt = mysql_to_mysqli($stmt, $link);
-            $sc_recs = mysqli_num_rows($rslt);
-            
-            if ($sc_recs > 0) {
-                $row = mysqli_fetch_row($rslt);
-                $state_abbr = $row[0];
-                
-                if ((strlen($state_abbr) > 0) && (strlen($state_abbr) < 3)) {
-                    if ($DB > 0) {
-                        echo "<div style='padding:6px 10px;background:#d1fae5;border-radius:4px;font-size:11px;color:#065f46;margin:5px 0;'>✓ DEBUG: state conversion found - $state → $state_abbr</div>";
-                    }
-                    $state = $state_abbr;
-                }
-            }
-        }
-
-        // Phone strip processing
-        if ((strlen($SSweb_loader_phone_strip) > 0) && ($SSweb_loader_phone_strip != 'DISABLED')) {
-            $phone_number = preg_replace("/^$SSweb_loader_phone_strip/", '', $phone_number);
-        }
-        
-        // Progress update every 100 records
-        if ($record % 100 == 0) {
-            echo "<script>
-                if(document.getElementById('progress-text')) {
-                    document.getElementById('progress-text').innerHTML = '" . _QXZ("Processing lead") . " #$record...';
-                }
-            </script>";
-            flush();
-        }
-
-			
-			
-			
-			##### Check for duplicate phone numbers in vicidial_list table for all lists in a campaign #####
+					##### Check for duplicate phone numbers in vicidial_list table for all lists in a campaign #####
 					if (preg_match("/DUPCAMP/i",$dupcheck))
 						{
 							$dup_lead=0; $moved_lead=0;
