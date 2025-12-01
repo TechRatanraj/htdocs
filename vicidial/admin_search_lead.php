@@ -619,161 +619,87 @@ if (
 }
 
 
-else
-	{
-	##### BEGIN Log search #####
-	if ( (strlen($log_lead_id)>0) or (strlen($log_phone)>0) )
-		{
-		if (strlen($log_lead_id)>0)
-			{
-			$stmtA="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log where lead_id='" . mysqli_real_escape_string($link, $log_lead_id) . "' $LOGallowed_listsSQL";
-			$stmtB="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log where lead_id='" . mysqli_real_escape_string($link, $log_lead_id) . "' $LOGallowed_listsSQL";
-			}
-		if (strlen($log_phone)>0)
-			{
-			$stmtA="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec,alt_dial from vicidial_log where phone_number='" . mysqli_real_escape_string($link, $log_phone) . "' $LOGallowed_listsSQL";
-			$stmtB="SELECT lead_id,phone_number,campaign_id,call_date,status,user,list_id,length_in_sec from vicidial_closer_log where phone_number='" . mysqli_real_escape_string($link, $log_phone) . "' $LOGallowed_listsSQL";
-			$stmtC="SELECT extension,caller_id_number,did_id,call_date from vicidial_did_log where caller_id_number='" . mysqli_real_escape_string($link, $log_phone) . "'";
-			}
+// ... run queries as you do now ...
 
-		if ( (strlen($slave_db_server)>5) and (preg_match("/$report_name/",$reports_use_slave_db)) )
-			{
-			mysqli_close($link);
-			$use_slave_server=1;
-			$db_source = 'S';
-			require("dbconnect_mysqli.php");
-			echo "<!-- Using slave server $slave_db_server $db_source -->\n";
-			}
+$rslt = mysql_to_mysqli("$stmtA", $link);
+$results_to_print = mysqli_num_rows($rslt);
 
-		$rslt=mysql_to_mysqli("$stmtA", $link);
-		$results_to_print = mysqli_num_rows($rslt);
-		if ( ($results_to_print < 1) and ($results_to_printX < 1) )
-			{
-			echo "\n<br><br><center>\n";
-			echo "<b>There are no outbound calls matching your search criteria</b><br><br>\n";
-			echo "</center>\n";
-			}
-		else
-			{
-			echo "<BR><b>"._QXZ("OUTBOUND LOG RESULTS").": $results_to_print</b><BR>\n";
-			echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
-			echo "<TR BGCOLOR=BLACK>\n";
-			echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LEAD ID")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CAMPAIGN")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("STATUS")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("USER")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LIST ID")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LENGTH")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("DIAL")."</B></FONT></TD>\n";
-			echo "</TR>\n";
-			$o=0;
-			while ($results_to_print > $o)
-				{
-				$row=mysqli_fetch_row($rslt);
-				if ($LOGadmin_hide_phone_data != '0')
-					{
-					if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
-					$phone_temp = $row[1];
-					if (strlen($phone_temp) > 0)
-						{
-						if ($LOGadmin_hide_phone_data == '4_DIGITS')
-							{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
-						elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
-							{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
-						elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
-							{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
-						else
-							{$row[1] = preg_replace("/./",'X',$phone_temp);}
-						}
-					}
-				$o++;
-				$search_lead = $row[0];
-				if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-					{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-				else
-					{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-				echo "<TR $bgcolor>\n";
-				echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1><A HREF=\"admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search\" onclick=\"javascript:window.open('admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search', '_blank');return false;\">$row[0]</A></FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[4]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[5]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[6]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[7]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[8]</FONT></TD>\n";
-				echo "</TR>\n";
-				}
-			echo "</TABLE>\n";
-			}
+echo '
+<div style="max-width:1100px;margin:30px auto;">
+    <div style="background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.10);padding:30px;">
+        <h2 style="font-size:22px;font-weight:700;color:#1f2937;margin-bottom:22px;">
+            '._QXZ("OUTBOUND LOG RESULTS").': <span style="color:#10b981;">'.$results_to_print.'</span>
+        </h2>';
 
-		$rslt=mysql_to_mysqli("$stmtB", $link);
-		$results_to_print = mysqli_num_rows($rslt);
-		if ( ($results_to_print < 1) and ($results_to_printX < 1) )
-			{
-			echo "\n<br><br><center>\n";
-			echo "<b>"._QXZ("There are no inbound calls matching your search criteria")."</b><br><br>\n";
-			echo "</center>\n";
-			}
-		else
-			{
-			echo "<BR><b>INBOUND LOG RESULTS: $results_to_print</b><BR>\n";
-			echo "<TABLE BGCOLOR=WHITE CELLPADDING=1 CELLSPACING=0 WIDTH=770>\n";
-			echo "<TR BGCOLOR=BLACK>\n";
-			echo "<TD ALIGN=LEFT VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>#</B></FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LEAD ID")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("PHONE")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("INGROUP")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("CALL DATE")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("STATUS")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("USER")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LIST ID")."</B> &nbsp;</FONT></TD>\n";
-			echo "<TD ALIGN=CENTER VALIGN=TOP><FONT FACE=\"ARIAL,HELVETICA\" COLOR=WHITE><B>"._QXZ("LENGTH")."</B> &nbsp;</FONT></TD>\n";
-			echo "</TR>\n";
-			$o=0;
-			while ($results_to_print > $o)
-				{
-				$row=mysqli_fetch_row($rslt);
-				if ($LOGadmin_hide_phone_data != '0')
-					{
-					if ($DB > 0) {echo "HIDEPHONEDATA|$row[1]|$LOGadmin_hide_phone_data|\n";}
-					$phone_temp = $row[1];
-					if (strlen($phone_temp) > 0)
-						{
-						if ($LOGadmin_hide_phone_data == '4_DIGITS')
-							{$row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp,-4,4);}
-						elseif ($LOGadmin_hide_phone_data == '3_DIGITS')
-							{$row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp,-3,3);}
-						elseif ($LOGadmin_hide_phone_data == '2_DIGITS')
-							{$row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp,-2,2);}
-						else
-							{$row[1] = preg_replace("/./",'X',$phone_temp);}
-						}
-					}
-				$o++;
-				$search_lead = $row[0];
-				if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-					{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-				else
-					{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-				echo "<TR $bgcolor>\n";
-				echo "<TD ALIGN=LEFT><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$o</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1><A HREF=\"admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search\" onclick=\"javascript:window.open('admin_modify_lead.php?lead_id=$row[0]&archive_search=$archive_search', '_blank');return false;\">$row[0]</A></FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[1]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[2]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[3]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[4]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[5]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[6]</FONT></TD>\n";
-				echo "<TD ALIGN=CENTER><FONT FACE=\"ARIAL,HELVETICA\" SIZE=1>$row[7]</FONT></TD>\n";
-				echo "</TR>\n";
-				}
-			echo "</TABLE>\n";
-			}
+if ($results_to_print < 1 && $results_to_printX < 1) {
+    echo '
+    <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:22px;margin:18px 0 12px 0;border-radius:8px;text-align:center;">
+        <span style="color:#856404;font-weight:600;">'._QXZ("There are no outbound calls matching your search criteria").'</span>
+    </div>';
+} else {
+    echo '
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:15px;">
+                <thead>
+                    <tr style="background:#374151;color:#fff;">
+                        <th style="padding:10px;font-weight:700;text-align:left;">#</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("LEAD ID").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("PHONE").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("CAMPAIGN").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("CALL DATE").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("STATUS").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("USER").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("LIST ID").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("LENGTH").'</th>
+                        <th style="padding:10px;text-align:center;">'._QXZ("DIAL").'</th>
+                    </tr>
+                </thead>
+                <tbody>';
+    $o=0;
+    while ($results_to_print > $o) {
+        $row = mysqli_fetch_row($rslt);
+
+        // Mask phone if needed
+        if ($LOGadmin_hide_phone_data != '0') {
+            $phone_temp = $row[1];
+            if (strlen($phone_temp) > 0) {
+                if ($LOGadmin_hide_phone_data == '4_DIGITS') {
+                    $row[1] = str_repeat("X", (strlen($phone_temp) - 4)) . substr($phone_temp, -4);
+                } elseif ($LOGadmin_hide_phone_data == '3_DIGITS') {
+                    $row[1] = str_repeat("X", (strlen($phone_temp) - 3)) . substr($phone_temp, -3);
+                } elseif ($LOGadmin_hide_phone_data == '2_DIGITS') {
+                    $row[1] = str_repeat("X", (strlen($phone_temp) - 2)) . substr($phone_temp, -2);
+                } else {
+                    $row[1] = preg_replace("/./", "X", $phone_temp);
+                }
+            }
+        }
+        $o++;
+        $search_lead = $row[0];
+        $bg = ($o % 2 == 0) ? "#f9fafb" : "#fff";
+        echo '
+        <tr style="background:'.$bg.';border-bottom:1px solid #e5e7eb;">
+            <td style="padding:8px;"><b>'.$o.'</b></td>
+            <td style="padding:8px;text-align:center;">
+                <a href="admin_modify_lead.php?lead_id='.$row[0].'&archive_search='.$archive_search.'" target="_blank" style="color:#3b82f6;font-weight:500;text-decoration:none">'.$row[0].'</a>
+            </td>
+            <td style="padding:8px;text-align:center;">'.$row[1].'</td>
+            <td style="padding:8px;text-align:center;">'.$row[2].'</td>
+            <td style="padding:8px;text-align:center;font-size:14px;">'.$row[3].'</td>
+            <td style="padding:8px;text-align:center;"><span style="background:#e5e7eb;padding:3px 10px;border-radius:4px;">'.$row[4].'</span></td>
+            <td style="padding:8px;text-align:center;">'.$row[5].'</td>
+            <td style="padding:8px;text-align:center;">'.$row[6].'</td>
+            <td style="padding:8px;text-align:center;">'.$row[7].'</td>
+            <td style="padding:8px;text-align:center;">'.$row[8].'</td>
+        </tr>';
+    }
+    echo '
+                </tbody>
+            </table>
+        </div>';
+}
+echo '</div></div>';
+
 
 		if (strlen($stmtC) > 10)
 			{
