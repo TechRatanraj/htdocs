@@ -4122,7 +4122,8 @@ if ($SSrecording_dtmf_detection > 0) {
 $dtmf_mute_column = '';
 if (($SSrecording_dtmf_detection > 0) and ($SSrecording_dtmf_muting > 0)) {
     $dtmf_mute_column = '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("D-MUTE") . '</th>';
-
+}
+}
 
 
 
