@@ -1050,7 +1050,6 @@ if ((!$OK_to_process) or (($leadfile) and ($file_layout != "standard" && $file_l
 
 <?php
 
-
 ##### BEGIN custom fields submission #####
 if ($OK_to_process) {
     print "<script language='JavaScript1.2'>\n";
@@ -3665,152 +3664,151 @@ else if ($file_layout == "custom") {
     $file = fopen("$lead_file", "r");
     
     echo '<div style="text-align:center;margin:20px 0;">';
-    echo '<div style="display:inline-block;padding:12px 25px;background:#d1fae5;border-radius:8px;border-left:4px solid #10b981;">';
-    echo '<span style="font-size:16px;color:#065f46;font-weight:600;">⚙️ ' . _QXZ("Processing") . ' ' . $delim_name . ' ' . _QXZ("file") . '...</span>';
+echo '<div style="display:inline-block;padding:12px 25px;background:#d1fae5;border-radius:8px;border-left:4px solid #10b981;">';
+echo '<span style="font-size:16px;color:#065f46;font-weight:600;">⚙️ ' . _QXZ("Processing") . ' ' . $delim_name . ' ' . _QXZ("file") . '...</span>';
+echo '</div>';
+echo '</div>';
+
+// Settings display in 2-column grid
+echo '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0;">';
+
+if (strlen($list_id_override) > 0) {
+    echo '<div style="padding:10px 15px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("LIST ID OVERRIDE FOR THIS FILE") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $list_id_override . '</span>';
     echo '</div>';
+}
+
+if (strlen($phone_code_override) > 0) {
+    echo '<div style="padding:10px 15px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("PHONE CODE OVERRIDE FOR THIS FILE") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $phone_code_override . '</span>';
     echo '</div>';
+}
 
-    echo '<div style="background:#f9fafb;padding:20px;border-radius:8px;margin:20px 0;">';
+if (strlen($dupcheck) > 0) {
+    echo '<div style="padding:10px 15px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#92400e;font-weight:600;">' . _QXZ("LEAD DUPLICATE CHECK") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#78350f;">' . $dupcheck . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($list_id_override) > 0) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("LIST ID OVERRIDE FOR THIS FILE") . ':</span> ';
-        echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $list_id_override . '</span>';
-        echo '</div>';
-    }
+if (strlen($international_dnc_scrub) > 0) {
+    echo '<div style="padding:10px 15px;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#991b1b;font-weight:600;">' . _QXZ("INTERNATIONAL DNC SCRUB") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#7f1d1d;">' . $international_dnc_scrub . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($phone_code_override) > 0) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("PHONE CODE OVERRIDE FOR THIS FILE") . ':</span> ';
-        echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $phone_code_override . '</span>';
-        echo '</div>';
-    }
+if (strlen($status_dedupe_str) > 0) {
+    echo '<div style="padding:10px 15px;background:#e0e7ff;border-left:4px solid #6366f1;border-radius:6px;grid-column:1/-1;">';
+    echo '<span style="font-size:14px;color:#3730a3;font-weight:600;">' . _QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY") . ':</span><br>';
+    echo '<span style="font-size:13px;color:#4338ca;margin-top:5px;display:block;">' . $status_dedupe_str . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($dupcheck) > 0) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#92400e;font-weight:600;">' . _QXZ("LEAD DUPLICATE CHECK") . ':</span> ';
-        echo '<span style="font-size:14px;color:#78350f;">' . $dupcheck . '</span>';
-        echo '</div>';
-    }
+if (strlen($status_mismatch_action) > 0) {
+    echo '<div style="padding:10px 15px;background:#fce7f3;border-left:4px solid #ec4899;border-radius:6px;grid-column:1/-1;">';
+    echo '<span style="font-size:14px;color:#831843;font-weight:600;">' . _QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#9f1239;">' . $status_mismatch_action . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($international_dnc_scrub) > 0) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#991b1b;font-weight:600;">' . _QXZ("INTERNATIONAL DNC SCRUB") . ':</span> ';
-        echo '<span style="font-size:14px;color:#7f1d1d;">' . $international_dnc_scrub . '</span>';
-        echo '</div>';
-    }
+if (strlen($state_conversion) > 9) {
+    echo '<div style="padding:10px 15px;background:#d1fae5;border-left:4px solid #10b981;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#065f46;font-weight:600;">' . _QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#047857;">' . $state_conversion . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($status_dedupe_str) > 0) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#e0e7ff;border-left:4px solid #6366f1;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#3730a3;font-weight:600;">' . _QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY") . ':</span><br>';
-        echo '<span style="font-size:13px;color:#4338ca;margin-top:5px;display:block;">' . $status_dedupe_str . '</span>';
-        echo '</div>';
-    }
+if ((strlen($web_loader_phone_length) > 0) && (strlen($web_loader_phone_length) < 3)) {
+    echo '<div style="padding:10px 15px;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#075985;font-weight:600;">' . _QXZ("REQUIRED PHONE NUMBER LENGTH") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#0c4a6e;font-weight:700;">' . $web_loader_phone_length . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($status_mismatch_action) > 0) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fce7f3;border-left:4px solid #ec4899;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#831843;font-weight:600;">' . _QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST") . ':</span> ';
-        echo '<span style="font-size:14px;color:#9f1239;">' . $status_mismatch_action . '</span>';
-        echo '</div>';
-    }
+if ((strlen($SSweb_loader_phone_strip) > 0) && ($SSweb_loader_phone_strip != 'DISABLED')) {
+    echo '<div style="padding:10px 15px;background:#fef9c3;border-left:4px solid #eab308;border-radius:6px;">';
+    echo '<span style="font-size:14px;color:#713f12;font-weight:600;">' . _QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED") . ':</span><br>';
+    echo '<span style="font-size:14px;color:#854d0e;">' . $SSweb_loader_phone_strip . '</span>';
+    echo '</div>';
+}
 
-    if (strlen($state_conversion) > 9) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#d1fae5;border-left:4px solid #10b981;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#065f46;font-weight:600;">' . _QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED") . ':</span> ';
-        echo '<span style="font-size:14px;color:#047857;">' . $state_conversion . '</span>';
-        echo '</div>';
-    }
+echo '</div>'; // Close 2-column grid
 
-    if ((strlen($web_loader_phone_length) > 0) && (strlen($web_loader_phone_length) < 3)) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#075985;font-weight:600;">' . _QXZ("REQUIRED PHONE NUMBER LENGTH") . ':</span> ';
-        echo '<span style="font-size:14px;color:#0c4a6e;font-weight:700;">' . $web_loader_phone_length . '</span>';
-        echo '</div>';
-    }
+$buffer = rtrim(fgets($file, 4096));
+$buffer = stripslashes($buffer);
+$row = explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
 
-    if ((strlen($SSweb_loader_phone_strip) > 0) && ($SSweb_loader_phone_strip != 'DISABLED')) {
-        echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fef9c3;border-left:4px solid #eab308;border-radius:6px;">';
-        echo '<span style="font-size:14px;color:#713f12;font-weight:600;">' . _QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED") . ':</span> ';
-        echo '<span style="font-size:14px;color:#854d0e;">' . $SSweb_loader_phone_strip . '</span>';
-        echo '</div>';
-    }
+// Field mapping table
+echo '<div style="margin:25px 0;">';
+echo '<table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">';
+echo '<thead>';
+echo '<tr style="background:linear-gradient(135deg,#3b82f6,#2563eb);">';
+echo '<th style="padding:15px 20px;text-align:right;width:35%;color:#fff;font-size:14px;font-weight:600;border-right:1px solid rgba(255,255,255,0.2);">' . _QXZ("VICIDIAL Column") . '</th>';
+echo '<th style="padding:15px 20px;text-align:center;color:#fff;font-size:14px;font-weight:600;">' . _QXZ("File data") . '</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
 
-    echo '</div>'; // Close settings container
-
-    $buffer = rtrim(fgets($file, 4096));
-    $buffer = stripslashes($buffer);
-    $row = explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
+$row_count = 0;
+while ($fieldinfo = mysqli_fetch_field($rslt)) {
+    $rslt_field_name = $fieldinfo->name;
     
-    // Field mapping table
-    echo '<div style="margin:25px 0;">';
-    echo '<table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">';
-    echo '<thead>';
-    echo '<tr style="background:linear-gradient(135deg,#3b82f6,#2563eb);">';
-    echo '<th style="padding:15px 20px;text-align:right;width:35%;color:#fff;font-size:14px;font-weight:600;border-right:1px solid rgba(255,255,255,0.2);">' . _QXZ("VICIDIAL Column") . '</th>';
-    echo '<th style="padding:15px 20px;text-align:center;color:#fff;font-size:14px;font-weight:600;">' . _QXZ("File data") . '</th>';
-    echo '</tr>';
-    echo '</thead>';
-    echo '<tbody>';
+    if (($rslt_field_name == "list_id" && $list_id_override != "") || 
+        ($rslt_field_name == "phone_code" && $phone_code_override != "")) {
+        print "<!-- skipping " . $rslt_field_name . " -->\n";
+    } else {
+        $row_bg = ($row_count % 2 == 0) ? '#fff' : '#f9fafb';
+        echo '<tr style="background:' . $row_bg . ';border-bottom:1px solid #e5e7eb;">';
+        echo '<td style="padding:12px 20px;text-align:right;vertical-align:middle;">';
+        echo '<label style="font-size:14px;color:#374151;font-weight:600;">' . strtoupper(preg_replace('/_/i', ' ', $rslt_field_name)) . ':</label>';
+        echo '</td>';
+        echo '<td style="padding:12px 20px;text-align:center;vertical-align:middle;">';
+        echo '<select name="' . $rslt_field_name . '_field" style="padding:10px 14px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;min-width:300px;background:#fff;">';
+        echo '<option value="-1">' . _QXZ("(none)") . '</option>';
 
-    $row_count = 0;
-    while ($fieldinfo = mysqli_fetch_field($rslt)) {
-        $rslt_field_name = $fieldinfo->name;
-        
-        if (($rslt_field_name == "list_id" && $list_id_override != "") || 
-            ($rslt_field_name == "phone_code" && $phone_code_override != "")) {
-            print "<!-- skipping " . $rslt_field_name . " -->\n";
-        } else {
-            $row_bg = ($row_count % 2 == 0) ? '#fff' : '#f9fafb';
-            echo '<tr style="background:' . $row_bg . ';border-bottom:1px solid #e5e7eb;">';
-            echo '<td style="padding:12px 20px;text-align:right;vertical-align:middle;">';
-            echo '<label style="font-size:14px;color:#374151;font-weight:600;">' . strtoupper(preg_replace('/_/i', ' ', $rslt_field_name)) . ':</label>';
-            echo '</td>';
-            echo '<td style="padding:12px 20px;text-align:center;vertical-align:middle;">';
-            echo '<select name="' . $rslt_field_name . '_field" style="padding:10px 14px;border:2px solid #d1d5db;border-radius:8px;font-size:14px;min-width:300px;background:#fff;">';
-            echo '<option value="-1">' . _QXZ("(none)") . '</option>';
-
-            for ($j = 0; $j < count($row); $j++) {
-                preg_replace('/\"/i', '', $row[$j]);
-                echo '<option value="' . $j . '">\"' . $row[$j] . '\"</option>';
-            }
-
-            echo '</select>';
-            echo '</td>';
-            echo '</tr>';
-            $row_count++;
+        for ($j = 0; $j < count($row); $j++) {
+            preg_replace('/\"/i', '', $row[$j]);
+            echo '<option value="' . $j . '">\"' . $row[$j] . '\"</option>';
         }
+
+        echo '</select>';
+        echo '</td>';
+        echo '</tr>';
+        $row_count++;
     }
-    
-    echo '</tbody>';
-    echo '</table>';
-    echo '</div>';
+}
 
-    // Hidden fields and submit buttons
-    echo '<div style="margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;text-align:center;">';
-    print '<input type="hidden" name="international_dnc_scrub" value="' . $international_dnc_scrub . '">';
-    print '<input type="hidden" name="dedupe_statuses_override" value="' . $status_dedupe_str . '">';
-    print '<input type="hidden" name="status_mismatch_action" value="' . $status_mismatch_action . '">';
-    print '<input type="hidden" name="dupcheck" value="' . $dupcheck . '">';
-    print '<input type="hidden" name="usacan_check" value="' . $usacan_check . '">';
-    print '<input type="hidden" name="state_conversion" value="' . $state_conversion . '">';
-    print '<input type="hidden" name="web_loader_phone_length" value="' . $web_loader_phone_length . '">';
-    print '<input type="hidden" name="postalgmt" value="' . $postalgmt . '">';
-    print '<input type="hidden" name="lead_file" value="' . $lead_file . '">';
-    print '<input type="hidden" name="list_id_override" value="' . $list_id_override . '">';
-    print '<input type="hidden" name="phone_code_override" value="' . $phone_code_override . '">';
-    print '<input type="hidden" name="DB" value="' . $DB . '">';
-    
-    echo '<input type="submit" name="OK_to_process" value="' . _QXZ("OK TO PROCESS") . '" style="padding:14px 48px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;border:none;border-radius:8px;margin-right:20px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.1);">';
-    echo '<input type="button" onClick="javascript:document.location=\'admin_listloader_fourth_gen.php\'" value="' . _QXZ("START OVER") . '" name="reload_page" style="padding:14px 32px;background:#f3f4f6;color:#1f2937;font-size:15px;font-weight:600;border:2px solid #d1d5db;border-radius:8px;cursor:pointer;">';
-    echo '</div>';
-    
-    echo '</div>'; // Close main container
+echo '</tbody>';
+echo '</table>';
+echo '</div>';
 
-    print "<script language='JavaScript1.2'>\n";
-    print "if(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false;}\n";
-    print "if(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\n";
-    print "if(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n";
-    print "</script>";
+// Hidden fields and submit buttons
+echo '<div style="margin-top:30px;padding:20px;background:#f9fafb;border-radius:8px;text-align:center;">';
+print '<input type="hidden" name="international_dnc_scrub" value="' . $international_dnc_scrub . '">';
+print '<input type="hidden" name="dedupe_statuses_override" value="' . $status_dedupe_str . '">';
+print '<input type="hidden" name="status_mismatch_action" value="' . $status_mismatch_action . '">';
+print '<input type="hidden" name="dupcheck" value="' . $dupcheck . '">';
+print '<input type="hidden" name="usacan_check" value="' . $usacan_check . '">';
+print '<input type="hidden" name="state_conversion" value="' . $state_conversion . '">';
+print '<input type="hidden" name="web_loader_phone_length" value="' . $web_loader_phone_length . '">';
+print '<input type="hidden" name="postalgmt" value="' . $postalgmt . '">';
+print '<input type="hidden" name="lead_file" value="' . $lead_file . '">';
+print '<input type="hidden" name="list_id_override" value="' . $list_id_override . '">';
+print '<input type="hidden" name="phone_code_override" value="' . $phone_code_override . '">';
+print '<input type="hidden" name="DB" value="' . $DB . '">';
+
+echo '<input type="submit" name="OK_to_process" value="' . _QXZ("OK TO PROCESS") . '" style="padding:12px 45px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;border:none;border-radius:6px;margin-right:15px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.1);">';
+echo '<input type="button" onClick="javascript:document.location=\'admin_listloader_fourth_gen.php\'" value="' . _QXZ("START OVER") . '" name="reload_page" style="padding:12px 32px;background:#f3f4f6;color:#1f2937;font-size:15px;font-weight:600;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;">';
+echo '</div>';
+
+print "<script language='JavaScript1.2'>\n";
+print "if(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false;}\n";
+print "if(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\n";
+print "if(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n";
+print "</script>";
 }
 ##### END field chooser #####
 
