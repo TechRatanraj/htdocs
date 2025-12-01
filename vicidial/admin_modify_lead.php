@@ -3352,188 +3352,203 @@ if ($lead_id != 'NEW') {
 
 echo '</div>'; // Close modern-container
 	
-	
 
 
-			### find any vicidial_callback records for this lead 
-			$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
-			if ($DB) {echo "|$stmt|\n";}
-			$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-			$CB_to_print = mysqli_num_rows($cb_rslt);
 
-			$cb=0;
-			$callbacks_log='';
-			while ($CB_to_print > $cb)
-				{
-				if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-				$rowx=mysqli_fetch_row($cb_rslt);
-				$cb++;
-				$callbacks_log .= "<tr $bgcolor>";
-				$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-				$callbacks_log .= "<td><font size=2>$rowx[0]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-				$callbacks_log .= "</tr><tr>";
-				$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-				$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-				$callbacks_log .= "</tr>\n";
-				}
+		### find any vicidial_callback records for this lead (non-active)
+$cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
+if ($DB) { echo "|$cb_stmt|\n"; }
+$cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+$CB_to_print = mysqli_num_rows($cb_rslt);
 
-			if ($archive_log=="Yes") 
-				{
-				### find any vicidial_callbacks_archive records for this lead 
-				$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
-				if ($DB) {echo "|$stmt|\n";}
-				$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-				$CBA_to_print = mysqli_num_rows($cb_rslt);
+$cb = 0;
+$callbacks_log = '';
+while ($CB_to_print > $cb) {
+    $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+    $rowx = mysqli_fetch_row($cb_rslt);
+    $cb++;
+    $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[0]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+    $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+    $callbacks_log .= "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+    $callbacks_log .= "</tr>";
+    if (strlen($rowx[8]) > 0) {
+        $callbacks_log .= "<tr style='background:$bgcolor;'>";
+        $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+        $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+        $callbacks_log .= "</tr>";
+    }
+}
 
-				$cba=0;
-				while ($CBA_to_print > $cba)
-					{
-					if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-					$rowx=mysqli_fetch_row($cb_rslt);
-					$cb++;
-					$cba++;
-					$callbacks_log .= "<tr $bgcolor>";
-					$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-					$callbacks_log .= "<td><font size=2 color='#FF0000'>$rowx[0]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-					$callbacks_log .= "</tr><tr>";
-					$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-					$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-					$callbacks_log .= "</tr>\n";
-					}
-				}
+if ($archive_log == "Yes") {
+    ### find any vicidial_callbacks_archive records for this lead
+    $cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
+    if ($DB) { echo "|$cb_stmt|\n"; }
+    $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+    $CBA_to_print = mysqli_num_rows($cb_rslt);
 
-			if ($cb > 0)
-				{
-				echo "<B>"._QXZ("CALLBACKS LOG").":</B>\n";
-				echo "<TABLE width=750 cellspacing=0 cellpadding=1>\n";
-				echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("ENTRY TIME")." </td><td><font size=2>"._QXZ("CALLBACK TIME")." </td><td align=left><font size=2>"._QXZ("USER")."</td><td align=left><font size=2> "._QXZ("RECIPIENT")."</td><td align=left><font size=2> "._QXZ("LEAD STATUS")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("LIST")."</td><td align=left><font size=2> "._QXZ("CAMPAIGN")."</td></tr>\n";
+    $cba = 0;
+    while ($CBA_to_print > $cba) {
+        $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+        $rowx = mysqli_fetch_row($cb_rslt);
+        $cb++;
+        $cba++;
+        $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$rowx[0]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+        $callbacks_log .= "</tr>";
+        if (strlen($rowx[8]) > 0) {
+            $callbacks_log .= "<tr style='background:$bgcolor;'>";
+            $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+            $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+            $callbacks_log .= "</tr>";
+        }
+    }
+}
 
-				echo "$callbacks_log";
+if ($cb > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📋 ' . _QXZ("CALLBACKS LOG") . '</h2><span class="info-badge">' . $cb . ' ' . _QXZ("records") . '</span></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ENTRY TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALLBACK TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECIPIENT") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD STATUS") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '</tr></thead><tbody>';
+    echo "$callbacks_log";
+    echo '</tbody></table></div></div>';
+}
 
-				echo "</TABLE>\n";
-				}
-			echo "<BR><BR>\n";
-			}
-		else
-			{
-			echo "<BR>"._QXZ("If you want to change this lead to a scheduled callback, first change the Disposition to CBHOLD, then submit and you will be able to set the callback date and time").".<BR>\n";
-			echo "</TD></TR></table>\n";
+} else {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">ℹ️ ' . _QXZ("Callback Information") . '</h2></div>';
+    echo '<div class="alert-info">' . _QXZ("If you want to change this lead to a scheduled callback, first change the Disposition to CBHOLD, then submit and you will be able to set the callback date and time") . '.</div>';
+    echo '</div>';
 
-			echo "<br><br>\n";
+    ### find any vicidial_callback records for this lead (all statuses)
+    $cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
+    if ($DB) { echo "|$cb_stmt|\n"; }
+    $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+    $CB_to_print = mysqli_num_rows($cb_rslt);
 
-			### find any vicidial_callback records for this lead 
-			$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
-			if ($DB) {echo "|$stmt|\n";}
-			$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-			$CB_to_print = mysqli_num_rows($cb_rslt);
+    $cb = 0;
+    $callbacks_log = '';
+    while ($CB_to_print > $cb) {
+        $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+        $rowx = mysqli_fetch_row($cb_rslt);
+        $cb++;
+        $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[0]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+        $callbacks_log .= "</tr>";
+        if (strlen($rowx[8]) > 0) {
+            $callbacks_log .= "<tr style='background:$bgcolor;'>";
+            $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+            $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+            $callbacks_log .= "</tr>";
+        }
+    }
 
-			$cb=0;
-			$callbacks_log='';
-			while ($CB_to_print > $cb)
-				{
-				if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-				$rowx=mysqli_fetch_row($cb_rslt);
-				$cb++;
-				$callbacks_log .= "<tr $bgcolor>";
-				$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-				$callbacks_log .= "<td><font size=2>$rowx[0]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-				$callbacks_log .= "</tr><tr>";
-				$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-				$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-				$callbacks_log .= "</tr>\n";
-				}
-			
-			if ($archive_log=="Yes") 
-				{
-				### find any vicidial_callbacks_archive records for this lead 
-				$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
-				if ($DB) {echo "|$stmt|\n";}
-				$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-				$CBA_to_print = mysqli_num_rows($cb_rslt);
+    if ($archive_log == "Yes") {
+        ### find any vicidial_callbacks_archive records for this lead
+        $cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
+        if ($DB) { echo "|$cb_stmt|\n"; }
+        $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+        $CBA_to_print = mysqli_num_rows($cb_rslt);
 
-				$cba=0;
-				while ($CBA_to_print > $cba)
-					{
-					if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-					$rowx=mysqli_fetch_row($cb_rslt);
-					$cb++;
-					$cba++;
-					$callbacks_log .= "<tr $bgcolor>";
-					$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-					$callbacks_log .= "<td><font size=2 color='#FF0000'>$rowx[0]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-					$callbacks_log .= "</tr><tr>";
-					$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-					$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-					$callbacks_log .= "</tr>\n";
-					}
-				}
+        $cba = 0;
+        while ($CBA_to_print > $cba) {
+            $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+            $rowx = mysqli_fetch_row($cb_rslt);
+            $cb++;
+            $cba++;
+            $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$rowx[0]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+            $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+            $callbacks_log .= "<td style='padding:10px;'><span style='background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+            $callbacks_log .= "</tr>";
+            if (strlen($rowx[8]) > 0) {
+                $callbacks_log .= "<tr style='background:$bgcolor;'>";
+                $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+                $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+                $callbacks_log .= "</tr>";
+            }
+        }
+    }
 
-			if ($cb > 0)
-				{
-				echo "<B>"._QXZ("CALLBACKS LOG").":</B>\n";
-				echo "<TABLE width=750 cellspacing=0 cellpadding=1>\n";
-				echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("ENTRY TIME")." </td><td><font size=2>"._QXZ("CALLBACK TIME")." </td><td align=left><font size=2>"._QXZ("USER")."</td><td align=left><font size=2> "._QXZ("RECIPIENT")."</td><td align=left><font size=2> "._QXZ("LEAD STATUS")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("LIST")."</td><td align=left><font size=2> "._QXZ("CAMPAIGN")."</td></tr>\n";
+    if ($cb > 0) {
+        echo '<div class="card" style="margin-top:25px;">';
+        echo '<div class="card-header"><h2 class="card-title">📋 ' . _QXZ("CALLBACKS LOG") . '</h2><span class="info-badge">' . $cb . ' ' . _QXZ("records") . '</span></div>';
+        echo '<div style="overflow-x:auto;">';
+        echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+        echo '<thead><tr style="background:#374151;color:#fff;">';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ENTRY TIME") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALLBACK TIME") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECIPIENT") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD STATUS") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+        echo '</tr></thead><tbody>';
+        echo "$callbacks_log";
+        echo '</tbody></table></div></div>';
+    }
+}
 
-				echo "$callbacks_log";
+// Extended Alternate Phone Numbers Section
+if ($c > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📞 ' . _QXZ("EXTENDED ALTERNATE PHONE NUMBERS FOR THIS LEAD") . '</h2><span class="info-badge">' . $c . ' ' . _QXZ("numbers") . '</span></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ALT PHONE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ALT NOTE") . '</th>';
+    echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("ALT COUNT") . '</th>';
+    echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("ACTIVE") . '</th>';
+    echo '</tr></thead><tbody>';
+    echo "$alts_output\n";
+    echo '</tbody></table></div></div>';
+}
 
-				echo "</TABLE>\n";
-				}
-			echo "<BR><BR>\n";
-			}
-
-
-		if ($c > 0)
-			{
-			echo "<B>"._QXZ("EXTENDED ALTERNATE PHONE NUMBERS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=550 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("ALT PHONE")." </td><td align=left><font size=2>"._QXZ("ALT NOTE")."</td><td align=left><font size=2> "._QXZ("ALT COUNT")."</td><td align=left><font size=2> "._QXZ("ACTIVE")."</td></tr>\n";
-
-			echo "$alts_output\n";
-
-			echo "</TABLE>\n";
-			echo "<BR><BR>\n";
-			}
-
+echo '</div>'; // Close modern-container
+echo '</body></html>';
 
 
 		### iframe for custom fields display/editing
