@@ -786,9 +786,9 @@ if ((!$OK_to_process) or (($leadfile) and ($file_layout != "standard" && $file_l
                 </table>
             </div>
         </div>
-    <?php } ?>
+   
+						
 
-	
 <?php
 if ($SSenable_international_dncs)
 	{
