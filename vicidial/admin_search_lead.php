@@ -841,11 +841,6 @@ else {
             require("dbconnect_mysqli.php");
         }
         
-        // Continue with logging and exit...
-        
-    } // Close: if ((strlen($log_lead_id) > 0) or (strlen($log_phone) > 0))
-    ##### END Log search #####
-} // Close: else block
 
 
 		if (strlen($stmtC) > 10)
