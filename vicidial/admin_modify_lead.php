@@ -1556,7 +1556,7 @@ else
 
 		$short_header=1;
 
-		require("admin_header.php");
+		//require("admin_header.php");
 
 		echo "</span>\n";
 		echo "<BR><BR><b>"._QXZ("lead does not exist").": $lead_id</b><BR><BR>\n";
@@ -1751,7 +1751,7 @@ if ($end_call > 0)
 
 	$short_header=1;
 
-	require("admin_header.php");
+	//require("admin_header.php");
 
 	echo "</span>\n";
 	echo "$messagesHTML\n";
@@ -1850,7 +1850,7 @@ else
 
 			$short_header=1;
 
-			require("admin_header.php");
+			//require("admin_header.php");
 
 			echo "</span>\n";
 			echo "<BR><BR><b>"._QXZ("lead does not exist").": $lead_id</b><BR><BR>\n";
@@ -2792,1615 +2792,1679 @@ else
 		}
 
 	##### grab today call count for lead #####
-	$call_count_today=0;
-	$stmt="SELECT called_count_total from vicidial_lead_call_daily_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' $LOGallowed_listsSQL";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	if ($DB) {echo "$stmt\n";}
-	$counts_to_print = mysqli_num_rows($rslt);
-	if ($counts_to_print > 0)
-		{
-		$row=mysqli_fetch_row($rslt);
-		$call_count_today		= $row[0];
-		}
-
-
-	if ($lead_id == 'NEW')
-		{
-		##### create a select list of lists if a NEW lead_id #####
-		$stmt="SELECT list_id,campaign_id,list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id limit 5000;";
-		if ($DB) {echo "$stmt\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-
-		$Lc=0;
-		$select_list = '<select size=1 name=list_id>';
-		while ($lists_to_print > $Lc)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$select_list .= "<option value='$row[0]'>$row[0] - $row[1] - $row[2]</option>";
-
-			$Lc++;
-			}
-		$select_list .= "</select>";
-
-		$list_id=$select_list;
-		}
-
-	if (strlen($HTML_inline_script) > 0)
-		{
-		echo "$HTML_inline_script\n";
-		}
-
-	echo "</script>\n";
-	echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
-	echo "</head><BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-	echo "<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
-	echo "<span style=\"position:absolute;left:0px;top:0px;z-index:20;\" id=admin_header>";
-	echo "<div id='LogModDisplayDiv' style='position:absolute; top:0; left:0; z-index:21; background-color:white display:none;'></div>\n";
-	echo "<div id='DetailDisplayDiv' style='position:absolute; top:0; left:0; z-index:20; background-color:white display:none;'></div>\n";
-
-	$short_header=1;
-
-	require("admin_header.php");
-
-	echo "</span>\n";
-	echo "$messagesHTML\n";
-
-
-	if ($lead_id == 'NEW')
-		{
-		if ($LOGmodify_leads == '5')
-			{
-			echo "ERROR: "._QXZ("You do not have permission to add new leads").": $LOGmodify_leads \n";
-			exit;
-			}
-		echo "<br><b>"._QXZ("Add A New Lead")."</B>\n";
-		}
-	else
-		{
-		if ($lead_count > 0)
-			{echo "<br>"._QXZ("Lead information").": $first_name $last_name - $phone_number\n";}
-		}
-
-	if ( ($lead_count > 0) or ($lead_id == 'NEW') )
-		{
-		if ($campaign_id=='---NONE') {$campaign_id='';}
-		echo "<br><br><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=end_call value=1>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
-		echo "<input type=hidden name=dispo value=\"$dispo\">\n";
-		echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
-		echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-		echo "<input type=hidden name=extension value=\"$extension\">\n";
-		echo "<input type=hidden name=channel value=\"$channel\">\n";
-		echo "<input type=hidden name=call_began value=\"$call_began\">\n";
-		echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
-		echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
-		echo "<table cellpadding=1 cellspacing=0>\n";
-		echo "<tr><td colspan=2>$label_lead_id: $lead_id &nbsp; &nbsp; $label_list_id:  $list_id &nbsp; &nbsp; <font size=2>$label_gmt_offset_now: $gmt_offset_now &nbsp; &nbsp; $label_called_since_last_reset: $called_since_last_reset</td></tr>\n";
-		echo "<tr><td colspan=2>$label_user: <A HREF=\"user_stats.php?user=$tsr\">$tsr</A> &nbsp; &nbsp; $label_called_count: $called_count <font size=2>("._QXZ("today").": $call_count_today)</font> &nbsp; &nbsp; $label_last_local_call_time: $last_local_call_time</td></tr>\n";
-		if ($archive_search=="Yes") 
-			{
-			echo "<tr><td colspan=2 align='center'>";
-			echo "<B><font color='#FF0000'>*** "._QXZ("ARCHIVED LEAD")." ***</font></B>";
-			echo "<input type='hidden' name='archive_search' value='Yes'>";
-			echo "</td></tr>\n";
-			}
-		if ($archive_log=="Yes") 
-			{
-			echo "<tr><td colspan=2 align='center'>";
-			echo "<B><font color='#FF0000'>*** "._QXZ("ARCHIVED LOG SEARCH ENABLED")." ***</font></B> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=No&CIDdisplay=$CIDdisplay\">"._QXZ("Turn off archived logs display")."</a><BR>";
-			echo "<B><font color='#FF0000'>*** "._QXZ("ARCHIVED LOGS SHOWN IN RED, THERE MAY BE DUPLICATES WITH NON-ARCHIVED LOG ENTRIES")." ***</font></B>";
-			echo "<input type='hidden' name='archive_log' value='Yes'>";
-			echo "</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr><td colspan=2 align='center'>";
-			echo "<a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=Yes&CIDdisplay=$CIDdisplay\">"._QXZ("Turn on archived logs display")."</a>";
-			echo "</td></tr>\n";
-			}
-
-		if ($lead_id == 'NEW') {$list_id='';}
-
-		if ($LOGadmin_hide_lead_data != '0')
-			{
-			echo "<tr><td align=right>$label_title: </td><td align=left>$title &nbsp; \n";
-			echo "$label_first_name: $first_name </td></tr>\n";
-			echo "<tr><td align=right>$label_middle_initial:  </td><td align=left>$middle_initial &nbsp; \n";
-			echo " $label_last_name: $last_name </td></tr>\n";
-			echo "<tr><td align=right>$label_address1 : </td><td align=left>$address1</td></tr>\n";
-			echo "<tr><td align=right>$label_address2 : </td><td align=left>$address2</td></tr>\n";
-			echo "<tr><td align=right>$label_address3 : </td><td align=left>$address3</td></tr>\n";
-			echo "<tr><td align=right>$label_city : </td><td align=left>$city</td></tr>\n";
-			echo "<tr><td align=right>$label_state: </td><td align=left>$state &nbsp; \n";
-			echo " $label_postal_code: $postal_code </td></tr>\n";
-
-			echo "<tr><td align=right>$label_province : </td><td align=left>$province</td></tr>\n";
-			echo "<tr><td align=right>$label_country_code : </td><td align=left>$country_code &nbsp; \n";
-			echo " $label_date_of_birth: $date_of_birth </td></tr>\n";
-			echo "<tr><td align=right>$label_phone_number : </td><td align=left>$phone_number</td></tr>\n";
-			echo "<tr><td align=right>$label_phone_code : </td><td align=left>$phone_code</td></tr>\n";
-			echo "<tr><td align=right>$label_alt_phone : </td><td align=left>$alt_phone</td></tr>\n";
-			echo "<tr><td align=right>$label_email : </td><td align=left>$email</td></tr>\n";
-			echo "<tr><td align=right>$label_security_phrase : </td><td align=left>$security</td></tr>\n";
-			echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left>$vendor_id></td></tr>\n";
-			if ($SSsource_id_display > 0)
-				{echo "<tr><td align=right>$label_source_id : </td><td align=left>$source_id></td></tr>\n";}
-			echo "<tr><td align=right>$label_rank : </td><td align=left>$rank</td></tr>\n";
-			echo "<tr><td align=right>$label_owner : </td><td align=left>$owner</td></tr>\n";
-			echo "<tr><td align=right>$label_comments : </td><td align=left>$comments</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr><td align=right>$label_title: </td><td align=left><input type=text name=title id=title size=4 maxlength=$MAXtitle value=\"$title\"> &nbsp; \n";
-			echo "$label_first_name: <input type=text name=first_name id=first_name size=15 maxlength=$MAXfirst_name value=\"".htmlparse($first_name)."\"> </td></tr>\n";
-			echo "<tr><td align=right>$label_middle_initial:  </td><td align=left><input type=text name=middle_initial id=middle_initial size=4 maxlength=$MAXmiddle_initial value=\"".htmlparse($middle_initial)."\"> &nbsp; \n";
-			echo " $label_last_name: <input type=text name=last_name id=last_name size=15 maxlength=$MAXlast_name value=\"".htmlparse($last_name)."\"> </td></tr>\n";
-			echo "<tr><td align=right>$label_address1 : </td><td align=left><input type=text name=address1 id=address1 size=40 maxlength=$MAXaddress1 value=\"".htmlparse($address1)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_address2 : </td><td align=left><input type=text name=address2 id=address2 size=40 maxlength=$MAXaddress2 value=\"".htmlparse($address2)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_address3 : </td><td align=left><input type=text name=address3 id=address3 size=40 maxlength=$MAXaddress3 value=\"".htmlparse($address3)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_city : </td><td align=left><input type=text name=city id=city size=40 maxlength=$MAXcity value=\"".htmlparse($city)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_state: </td><td align=left><input type=text name=state id=state size=2 maxlength=$MAXstate value=\"".htmlparse($state)."\"> &nbsp; \n";
-			echo " $label_postal_code: <input type=text name=postal_code id=postal_code size=10 maxlength=$MAXpostal_code value=\"".htmlparse($postal_code)."\"> </td></tr>\n";
-
-			echo "<tr><td align=right>$label_province : </td><td align=left><input type=text name=province id=province size=40 maxlength=$MAXprovince value=\"".htmlparse($province)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_country_code : </td><td align=left><input type=text name=country_code id=country_code size=3 maxlength=$MAXcountry_code value=\"".htmlparse($country_code)."\"> &nbsp; \n";
-			echo " $label_date_of_birth: <input type=text name=date_of_birth id=date_of_birth size=12 maxlength=10 value=\"".htmlparse($date_of_birth)."\"></td></tr>\n";
-
-			if ( ($LOGmodify_leads == '1') or ($LOGmodify_leads == '3') or ($lead_id == 'NEW') )
-				{
-				echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=text name=phone_number id=phone_number size=18 maxlength=$MAXphone_number value=\"".htmlparse($phone_number)."\"></td></tr>\n";
-				echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=text name=phone_code id=phone_code size=10 maxlength=$MAXphone_code value=\"".htmlparse($phone_code)."\"></td></tr>\n";
-				echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=text name=alt_phone id=alt_phone size=12 maxlength=$MAXalt_phone value=\"".htmlparse($alt_phone)."\"></td></tr>\n";
-				}
-			else
-				{
-				echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=hidden name=phone_number value=\"".htmlparse($phone_number)."\">".htmlparse($phone_number)."</td></tr>\n";
-				echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=hidden name=phone_code value=\"".htmlparse($phone_code)."\">".htmlparse($phone_code)."</td></tr>\n";
-				echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=hidden name=alt_phone value=\"".htmlparse($alt_phone)."\">".htmlparse($alt_phone)."</td></tr>\n";
-				}
-
-			echo "<tr><td align=right>$label_email : </td><td align=left><input type=text name=email size=40 maxlength=$MAXemail value=\"".htmlparse($email)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_security_phrase : </td><td align=left><input type=text name=security id=security_phrase size=30 maxlength=$MAXsecurity_phrase value=\"".htmlparse($security)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left><input type=text name=vendor_id id=vendor_lead_code size=30 maxlength=$MAXvendor_lead_code value=\"".htmlparse($vendor_id)."\"></td></tr>\n";
-			if ($SSsource_id_display > 0)
-				{echo "<tr><td align=right>$label_source_id : </td><td align=left><input type=text name=source_id id=source_id size=30 maxlength=$MAXsource_id value=\"".htmlparse($source_id)."\"></td></tr>\n";}
-			echo "<tr><td align=right>$label_rank : </td><td align=left><input type=text name=rank id=rank size=7 maxlength=5 value=\"".htmlparse($rank)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_owner : </td><td align=left><input type=text name=owner id=owner size=22 maxlength=$MAXowner value=\"".htmlparse($owner)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_comments : </td><td align=left><TEXTAREA name=comments id=comments ROWS=3 COLS=65>".htmlparse($comments)."</TEXTAREA></td></tr>\n";
-			}
-		}
-	else
-		{
-		echo "<!-- "._QXZ("no lead fields form display lead does not exist")." -->\n";
-		echo "<br><br><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=end_call value=1>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
-		echo "<input type=hidden name=dispo value=\"$dispo\">\n";
-		echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
-		echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-		echo "<input type=hidden name=extension value=\"$extension\">\n";
-		echo "<input type=hidden name=channel value=\"$channel\">\n";
-		echo "<input type=hidden name=call_began value=\"$call_began\">\n";
-		echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
-		echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
-		echo "<table cellpadding=1 cellspacing=0>\n";
-		}
-
-	if ($lead_id != 'NEW') 
-		{
-		$stmt="SELECT user_id, timestamp, list_id, campaign_id, comment from vicidial_comments where lead_id='$lead_id' order by timestamp;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row_count = mysqli_num_rows($rslt);
-		$audit_comments=false;
-		$o=0;
-		while ($row_count > $o)
-			{
-			if (!$audit_comments) 
-				{
-				echo "<tr><td colspan='2' align=center><b>"._QXZ("Comment History")."</b></td></tr>\n";
-				$audit_comments=true;
-				}
-			$rowx=mysqli_fetch_row($rslt);
-			$Auser[$o] =		$rowx[0];
-			$Atimestamp[$o] =	$rowx[1];
-			$Acomment[$o] =		$rowx[4];
-			$o++;
-			}
-		$o=0;
-		while ($row_count > $o)
-			{
-			$Afull_name='';
-			$stmt="SELECT full_name from vicidial_users where user='$Auser[$o]';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$FNrow_count = mysqli_num_rows($rslt);
-			if ($FNrow_count > 0)
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$Afull_name = $rowx[0];
-				}
-			echo "<tr><td align=right><font size=2>$Atimestamp[$o]: </td><td align=left><font size=2><hr> &nbsp; $Acomment[$o]<br> &nbsp; </font><font size=1><i>by user: $Auser[$o] - $Afull_name</i></td></tr>\n";
-			$o++;
-			}
-
-		if ($audit_comments) 
-			{
-			echo "<tr><td align=center></td><td><hr></td></tr>\n";
-			}
-
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
-
-		### find out if status(dispo) is a scheduled callback status
-		$scheduled_callback='';
-		$stmt="SELECT scheduled_callback from vicidial_statuses where status='$dispo';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$scb_count_to_print = mysqli_num_rows($rslt);
-		if ($scb_count_to_print > 0) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (strlen($row[0])>0)	{$scheduled_callback =	$row[0];}
-			}
-		$stmt="SELECT scheduled_callback from vicidial_campaign_statuses where status='$dispo';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$scb_count_to_print = mysqli_num_rows($rslt);
-		if ($scb_count_to_print > 0) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (strlen($row[0])>0)	{$scheduled_callback =	$row[0];}
-			}
-
-		$list_campaign='';
-		$stmt="SELECT campaign_id from vicidial_lists where list_id='$list_id'";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		if ($DB) {echo "$stmt\n";}
-		$Cstatuses_to_print = mysqli_num_rows($rslt);
-		if ($Cstatuses_to_print > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$list_campaign = $row[0];
-			}
-
-		$stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_statuses $selectableSQL order by status";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$statuses_to_print = mysqli_num_rows($rslt);
-		$statuses_listMODLOG='';
-		$statuses_list='';
-
-		$o=0;
-		$DS=0;
-		while ($statuses_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
-				{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-			else
-				{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-			$statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
-			$o++;
-			}
-
-		$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$list_campaign' $selectableSQLand order by status";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$CAMPstatuses_to_print = mysqli_num_rows($rslt);
-
-		$o=0;
-		$CBhold_set=0;
-		while ($CAMPstatuses_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
-				{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-			else
-				{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-			$statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
-			if ($rowx[0] == 'CBHOLD') {$CBhold_set++;}
-			$o++;
-			}
-
-		if (strlen($VU_status_group_id) > 0)
-			{
-			$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' $selectableSQLand order by status";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$USERstatuses_to_print = mysqli_num_rows($rslt);
-
-			$o=0;
-			$CBhold_set=0;
-			while ($USERstatuses_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
-					{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-				else
-					{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-				$statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
-				if ($rowx[0] == 'CBHOLD') {$CBhold_set++;}
-				$o++;
-				}
-			}	
-
-		if ($dispo == 'CBHOLD') {$CBhold_set++;}
-
-		if ($DS < 1) 
-			{$statuses_list .= "<option SELECTED value=\"$dispo\">$dispo</option>\n";}
-		if ($CBhold_set < 1)
-			{$statuses_list .= "<option value=\"CBHOLD\">CBHOLD - "._QXZ("Scheduled Callback")."</option>\n";}
-		echo "$statuses_list";
-		echo "</select> <i>("._QXZ("with")." $list_campaign "._QXZ("statuses").")</i></td></tr>\n";
-
-
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Modify vicidial log")." </td><td align=left><input type=checkbox name=modify_logs value=\"1\" CHECKED></td></tr>\n";
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Modify agent log")." </td><td align=left><input type=checkbox name=modify_agent_logs value=\"1\" CHECKED></td></tr>\n";
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Modify closer log")." </td><td align=left><input type=checkbox name=modify_closer_logs value=\"1\"></td></tr>\n";
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Add closer log record")." </td><td align=left><input type=checkbox name=add_closer_record value=\"1\"></td></tr>\n";
-		}
-	else
-		{
-		echo "<input type=hidden name=status value=\"NEW\">\n";
-		}
-
-	if ( ($LOGadmin_hide_lead_data == '0') or ($lead_id == 'NEW') )
-		{
-		echo "<tr><td colspan=2 align=center><input style='background-color:#$SSbutton_color' type=submit name=submit value=\""._QXZ("SUBMIT")."\"></td></tr>\n";
-		}
-
-	if ( ($LOGmodify_leads == '3') or ($LOGmodify_leads == '4') )
-		{echo "<span id='statuses_listMODLOG' style=\"display:none\">$statuses_listMODLOG</span>\n";}
-
-	echo "</table></form>\n";
-	echo "<BR><BR><BR>\n";
-
-	if ($lead_id != 'NEW') 
-		{
-		echo "<TABLE BGCOLOR=#".$SSstd_row4_background." WIDTH=750><TR><TD>\n";
-		echo _QXZ("Callback Details").":<BR>\n";
-		if ( ($dispo == 'CALLBK') or ($dispo == 'CBHOLD') or ($scheduled_callback == 'Y') )
-			{
-			### find any vicidial_callback records for this lead 
-			$cb_stmt="SELECT callback_id,lead_id,list_id,campaign_id,status,entry_time,callback_time,modify_date,user,recipient,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
-			if ($DB) {echo "|$stmt|\n";}
-			$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-			$CB_to_print = mysqli_num_rows($cb_rslt);
-
-			if ($CB_to_print>0)
-				{
-				echo "<form action='$PHP_SELF' method='POST' name='vsn' id='vsn'>";
-				echo "<TABLE BGCOLOR=#".$SSstd_row4_background." WIDTH=800>";
-				echo "<tr>";
-				echo "<td><font size=2>"._QXZ("CallBack Date/Time").":</font></td>";
-				echo "<td><font size=2>"._QXZ("CallBack Disposition").":</font></td>";
-				echo "<td><font size=2>"._QXZ("Owner").":</font></td>";
-				echo "<td><font size=2>"._QXZ("Comments").":</font></td>";
-				echo "<td>&nbsp;</td>";
-				echo "</tr>";
-
-				$u=0;
-				while ($cb_row=mysqli_fetch_row($cb_rslt)) {
-					$callback_id = $cb_row[0];
-					$CBcomments = $cb_row[10];
-					$lead_status = $cb_row[12];
-					$appointment_datetimeARRAY = explode(" ",$cb_row[6]);
-					$appointment_date = $appointment_datetimeARRAY[0];
-					$appointment_timeARRAY = explode(":",$appointment_datetimeARRAY[1]);
-					$appointment_hour = $appointment_timeARRAY[0];
-					$appointment_min = $appointment_timeARRAY[1];
-
-					$stmt="SELECT status,status_name from vicidial_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') order by status";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$statuses_to_print = mysqli_num_rows($rslt);
-					$statuses_list='';
-
-					$o=0;
-					$DS=0;
-					while ($statuses_to_print > $o) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						if ( (strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i",$rowx[0])) )
-							{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-						else
-							{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-						$o++;
-						}
-
-					$stmt="SELECT status,status_name from vicidial_campaign_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') and campaign_id='$list_campaign' order by status";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$CAMPstatuses_to_print = mysqli_num_rows($rslt);
-
-					$o=0;
-					$CBhold_set=0;
-					while ($CAMPstatuses_to_print > $o) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						if ( (strlen($lead_status) ==  strlen($rowx[0])) and (preg_match("/$lead_status/i",$rowx[0])) )
-							{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-						else
-							{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-						$o++;
-						}
-
-
-					if (strlen($VU_status_group_id) > 0)
-						{
-						$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' and scheduled_callback='Y' $selectableSQLand order by status";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$USERstatuses_to_print = mysqli_num_rows($rslt);
-
-						$o=0;
-						$CBhold_set=0;
-						while ($USERstatuses_to_print > $o) 
-							{
-							$rowx=mysqli_fetch_row($rslt);
-							if ( (strlen($lead_status) ==  strlen($rowx[0])) and (preg_match("/$lead_status/i",$rowx[0])) )
-								{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-							else
-								{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-							$o++;
-							}
-						}	
-
-					if ($DS < 1) 
-						{$statuses_list .= "<option SELECTED value=\"$lead_status\">$lead_status</option>\n";}
-
-					if ($u%2==0)
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-					$u++;
-
-					echo "<tr $bgcolor>";
-					echo "<td><input class='form_field' name='appointment_date_".$callback_id."' id='appointment_date_".$callback_id."' size=10 maxlength=10 value='$appointment_date'>";
-					echo "					<script language=\"JavaScript\">
-					var o_cal = new tcal ({
-						// form name
-						'formname': 'vsn',
-						// input name
-						'controlname': 'appointment_date_".$callback_id."'
-					});
-					o_cal.a_tpl.yearscroll = false;
-					// o_cal.a_tpl.weekstart = 1; // Monday week start
-					</script>";
-					echo "<BR>";
-					echo "<SELECT class='form_field' name='appointment_hour_".$callback_id."' id='appointment_hour_".$callback_id."'>\n";
-					for ($i=0; $i<=23; $i++) {
-						$hr=substr("0$i", -2);
-						echo "<OPTION value='$hr'>$hr</option>\n";
-					}
-					echo "<OPTION value='$appointment_hour' selected>$appointment_hour</OPTION>";
-					echo "</SELECT>:";
-					echo "<SELECT class='form_field' name='appointment_min_".$callback_id."' id='appointment_min_".$callback_id."'>";
-					for ($i=0; $i<=55; $i+=5) {
-						$min=substr("0$i", -2);
-						echo "<OPTION value='$min'>$min</option>\n";
-					}
-					echo "<OPTION value='$appointment_min' selected>$appointment_min</OPTION>";
-					echo "</SELECT>";
-					echo "</td>";
-					echo "<td><FONT FACE='ARIAL,HELVETICA'><select class='form_field' size=1 name='CBstatus_".$callback_id."' id='CBstatus_".$callback_id."'>\n";
-					echo "$statuses_list";
-					echo "</td>";
-					echo "<td><font size='2'>";
-					if ($cb_row[9] == 'USERONLY') {$ucheck="checked"; $acheck="";} else {$acheck="checked"; $ucheck="";}
-
-					echo "<input type='radio' name='CBchangeRecipient_".$callback_id."' id='CBchangeRecipient_".$callback_id."A' value=\"A\" $acheck>Anyone<BR>";
-					echo "<input type='radio' name='CBchangeRecipient_".$callback_id."' id='CBchangeRecipient_".$callback_id."U' value=\"U\" $ucheck>Useronly<BR><BR>";
-					echo _QXZ("New CB Owner UserID").":<BR><input type=text class='form_field' name='CBuser_".$callback_id."' id='CBuser_".$callback_id."' size=6 maxlength=20 value=\"$cb_row[8]\"> \n";
-					echo "<input type=hidden id='recipient_".$callback_id."' name='recipient_".$callback_id."' value=\"YES\">";
-					echo "</font></td>";
-					echo "<td><TEXTAREA class='form_field' name='comments_".$callback_id."' id='comments_".$callback_id."' ROWS=6 COLS=50>$CBcomments</TEXTAREA></td>";
-					echo "<td><input type='button' value='UPDATE' onClick='UpdateCallback($callback_id)'></td>";
-					echo "</tr>";
-
-					}
-				}
-			else
-				{
-				echo "<BR>"._QXZ("No Callback records found")."<BR>\n";
-				}
-			echo "</TABLE>";
-			echo "<input type=hidden name=DB value=\"$DB\">\n";
-			echo "<input type=hidden id=lead_id name=lead_id value=\"$lead_id\">\n";
-			echo "<input type=hidden id=CBchangeDATE name=CBchangeDATE value=\"YES\">";
-			echo "</form>\n";
-
-			echo "</TD></TR></table>\n";
-
-			### find any vicidial_callback records for this lead 
-			$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
-			if ($DB) {echo "|$stmt|\n";}
-			$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-			$CB_to_print = mysqli_num_rows($cb_rslt);
-
-			$cb=0;
-			$callbacks_log='';
-			while ($CB_to_print > $cb)
-				{
-				if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-				$rowx=mysqli_fetch_row($cb_rslt);
-				$cb++;
-				$callbacks_log .= "<tr $bgcolor>";
-				$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-				$callbacks_log .= "<td><font size=2>$rowx[0]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-				$callbacks_log .= "</tr><tr>";
-				$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-				$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-				$callbacks_log .= "</tr>\n";
-				}
-
-			if ($archive_log=="Yes") 
-				{
-				### find any vicidial_callbacks_archive records for this lead 
-				$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
-				if ($DB) {echo "|$stmt|\n";}
-				$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-				$CBA_to_print = mysqli_num_rows($cb_rslt);
-
-				$cba=0;
-				while ($CBA_to_print > $cba)
-					{
-					if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-					$rowx=mysqli_fetch_row($cb_rslt);
-					$cb++;
-					$cba++;
-					$callbacks_log .= "<tr $bgcolor>";
-					$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-					$callbacks_log .= "<td><font size=2 color='#FF0000'>$rowx[0]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-					$callbacks_log .= "</tr><tr>";
-					$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-					$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-					$callbacks_log .= "</tr>\n";
-					}
-				}
-
-			if ($cb > 0)
-				{
-				echo "<B>"._QXZ("CALLBACKS LOG").":</B>\n";
-				echo "<TABLE width=750 cellspacing=0 cellpadding=1>\n";
-				echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("ENTRY TIME")." </td><td><font size=2>"._QXZ("CALLBACK TIME")." </td><td align=left><font size=2>"._QXZ("USER")."</td><td align=left><font size=2> "._QXZ("RECIPIENT")."</td><td align=left><font size=2> "._QXZ("LEAD STATUS")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("LIST")."</td><td align=left><font size=2> "._QXZ("CAMPAIGN")."</td></tr>\n";
-
-				echo "$callbacks_log";
-
-				echo "</TABLE>\n";
-				}
-			echo "<BR><BR>\n";
-			}
-		else
-			{
-			echo "<BR>"._QXZ("If you want to change this lead to a scheduled callback, first change the Disposition to CBHOLD, then submit and you will be able to set the callback date and time").".<BR>\n";
-			echo "</TD></TR></table>\n";
-
-			echo "<br><br>\n";
-
-			### find any vicidial_callback records for this lead 
-			$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
-			if ($DB) {echo "|$stmt|\n";}
-			$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-			$CB_to_print = mysqli_num_rows($cb_rslt);
-
-			$cb=0;
-			$callbacks_log='';
-			while ($CB_to_print > $cb)
-				{
-				if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-				$rowx=mysqli_fetch_row($cb_rslt);
-				$cb++;
-				$callbacks_log .= "<tr $bgcolor>";
-				$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-				$callbacks_log .= "<td><font size=2>$rowx[0]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-				$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-				$callbacks_log .= "</tr><tr>";
-				$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-				$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-				$callbacks_log .= "</tr>\n";
-				}
-			
-			if ($archive_log=="Yes") 
-				{
-				### find any vicidial_callbacks_archive records for this lead 
-				$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
-				if ($DB) {echo "|$stmt|\n";}
-				$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-				$CBA_to_print = mysqli_num_rows($cb_rslt);
-
-				$cba=0;
-				while ($CBA_to_print > $cba)
-					{
-					if (preg_match("/1$|3$|5$|7$|9$/i", $cb))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-					$rowx=mysqli_fetch_row($cb_rslt);
-					$cb++;
-					$cba++;
-					$callbacks_log .= "<tr $bgcolor>";
-					$callbacks_log .= "<td><font size=1>$cb &nbsp; </td>";
-					$callbacks_log .= "<td><font size=2 color='#FF0000'>$rowx[0]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[1]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[2]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[3]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[4]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[5]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[6]</font></td>";
-					$callbacks_log .= "<td><font size=2>$rowx[7]</font></td>";
-					$callbacks_log .= "</tr><tr>";
-					$callbacks_log .= "<td><font size=1> &nbsp; </td>";
-					$callbacks_log .= "<td colspan=8 align=left $bgcolor><font size=1>"._QXZ("comments").": </font><font size=2>$rowx[8]</font></td>";
-					$callbacks_log .= "</tr>\n";
-					}
-				}
-
-			if ($cb > 0)
-				{
-				echo "<B>"._QXZ("CALLBACKS LOG").":</B>\n";
-				echo "<TABLE width=750 cellspacing=0 cellpadding=1>\n";
-				echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("ENTRY TIME")." </td><td><font size=2>"._QXZ("CALLBACK TIME")." </td><td align=left><font size=2>"._QXZ("USER")."</td><td align=left><font size=2> "._QXZ("RECIPIENT")."</td><td align=left><font size=2> "._QXZ("LEAD STATUS")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("LIST")."</td><td align=left><font size=2> "._QXZ("CAMPAIGN")."</td></tr>\n";
-
-				echo "$callbacks_log";
-
-				echo "</TABLE>\n";
-				}
-			echo "<BR><BR>\n";
-			}
-
-
-		if ($c > 0)
-			{
-			echo "<B>"._QXZ("EXTENDED ALTERNATE PHONE NUMBERS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=550 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("ALT PHONE")." </td><td align=left><font size=2>"._QXZ("ALT NOTE")."</td><td align=left><font size=2> "._QXZ("ALT COUNT")."</td><td align=left><font size=2> "._QXZ("ACTIVE")."</td></tr>\n";
-
-			echo "$alts_output\n";
-
-			echo "</TABLE>\n";
-			echo "<BR><BR>\n";
-			}
-
+$call_count_today = 0;
+$stmt = "SELECT called_count_total from vicidial_lead_call_daily_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' $LOGallowed_listsSQL";
+$rslt = mysql_to_mysqli($stmt, $link);
+if ($DB) { echo "$stmt\n"; }
+$counts_to_print = mysqli_num_rows($rslt);
+if ($counts_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $call_count_today = $row[0];
+}
+
+if ($lead_id == 'NEW') {
+    ##### create a select list of lists if a NEW lead_id #####
+    $stmt = "SELECT list_id,campaign_id,list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id limit 5000;";
+    if ($DB) { echo "$stmt\n"; }
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $lists_to_print = mysqli_num_rows($rslt);
+
+    $Lc = 0;
+    $select_list = '<select size=1 name=list_id style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#1f2937;">';
+    while ($lists_to_print > $Lc) {
+        $row = mysqli_fetch_row($rslt);
+        $select_list .= "<option value='$row[0]'>$row[0] - $row[1] - $row[2]</option>";
+        $Lc++;
+    }
+    $select_list .= "</select>";
+    $list_id = $select_list;
+}
+
+if (strlen($HTML_inline_script) > 0) {
+    echo "$HTML_inline_script\n";
+}
+
+echo "</script>\n";
+echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
+echo '<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 0; }
+.modern-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+.card { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 30px 40px; margin-bottom: 25px; }
+.card-header { display: flex; align-items: center; padding-bottom: 20px; border-bottom: 2px solid #e5e7eb; margin-bottom: 25px; }
+.card-title { font-size: 24px; font-weight: 700; color: #1f2937; margin: 0; }
+.info-badge { background: #dbeafe; color: #1e40af; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; margin-left: 12px; }
+.alert-info { background: #dbeafe; border-left: 4px solid #3b82f6; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; color: #1e40af; font-weight: 500; }
+.alert-warning { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; color: #92400e; font-weight: 500; }
+.alert-danger { background: #fee2e2; border-left: 4px solid #ef4444; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; color: #991b1b; font-weight: 600; }
+.form-group { display: grid; grid-template-columns: 200px 1fr; gap: 20px; margin-bottom: 18px; align-items: center; }
+.form-label { font-size: 14px; font-weight: 600; color: #374151; text-align: right; }
+.form-input { width: 100%; padding: 10px 14px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; color: #1f2937; transition: border-color 0.2s; }
+.form-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.form-textarea { width: 100%; padding: 10px 14px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; color: #1f2937; resize: vertical; min-height: 80px; font-family: inherit; }
+.form-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.read-only-value { padding: 10px 0; color: #1f2937; font-size: 14px; }
+.stats-row { display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid #e5e7eb; margin-bottom: 15px; flex-wrap: wrap; }
+.stat-item { font-size: 14px; color: #6b7280; }
+.stat-value { font-weight: 600; color: #1f2937; }
+.comment-history { background: #f9fafb; border-radius: 8px; padding: 15px; margin-top: 20px; }
+.comment-item { background: #fff; border-left: 3px solid #3b82f6; padding: 15px; margin-bottom: 12px; border-radius: 6px; }
+.comment-meta { font-size: 12px; color: #6b7280; font-style: italic; margin-top: 8px; }
+.comment-timestamp { font-weight: 600; color: #374151; font-size: 13px; }
+.section-divider { height: 1px; background: #e5e7eb; margin: 25px 0; }
+</style>';
+echo "</head><BODY>\n";
+echo "<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
+echo "<div id='LogModDisplayDiv' style='position:fixed; top:0; left:0; z-index:9999; background-color:#fff; display:none; width:100%; height:100%; overflow:auto;'></div>\n";
+echo "<div id='DetailDisplayDiv' style='position:fixed; top:0; left:0; z-index:9998; background-color:#fff; display:none; width:100%; height:100%; overflow:auto;'></div>\n";
+
+$short_header = 1;
+//require("admin_header.php");
+
+echo "$messagesHTML\n";
+
+echo '<div class="modern-container">';
+
+if ($lead_id == 'NEW') {
+    if ($LOGmodify_leads == '5') {
+        echo '<div class="alert-danger">ERROR: ' . _QXZ("You do not have permission to add new leads") . '</div>';
+        exit;
+    }
+    echo '<div class="card"><div class="card-header"><h1 class="card-title">➕ ' . _QXZ("Add A New Lead") . '</h1></div>';
+} else {
+    if ($lead_count > 0) {
+        echo '<div class="card"><div class="card-header"><h1 class="card-title">👤 ' . _QXZ("Lead information") . '</h1><span class="info-badge">' . htmlspecialchars($first_name . ' ' . $last_name) . '</span></div>';
+    }
+}
+
+if (($lead_count > 0) or ($lead_id == 'NEW')) {
+    if ($campaign_id == '---NONE') { $campaign_id = ''; }
+    
+    echo '<form action="' . $PHP_SELF . '" method="POST">';
+    echo '<input type="hidden" name="end_call" value="1">';
+    echo '<input type="hidden" name="DB" value="' . $DB . '">';
+    echo '<input type="hidden" name="lead_id" value="' . $lead_id . '">';
+    echo '<input type="hidden" name="dispo" value="' . $dispo . '">';
+    echo '<input type="hidden" name="list_id" value="' . $list_id . '">';
+    echo '<input type="hidden" name="campaign_id" value="' . $campaign_id . '">';
+    echo '<input type="hidden" name="old_phone" value="' . $phone_number . '">';
+    echo '<input type="hidden" name="server_ip" value="' . $server_ip . '">';
+    echo '<input type="hidden" name="extension" value="' . $extension . '">';
+    echo '<input type="hidden" name="channel" value="' . $channel . '">';
+    echo '<input type="hidden" name="call_began" value="' . $call_began . '">';
+    echo '<input type="hidden" name="parked_time" value="' . $parked_time . '">';
+    echo '<input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />';
+    
+    // Stats row
+    echo '<div class="stats-row">';
+    echo '<div class="stat-item">' . $label_lead_id . ': <span class="stat-value">' . $lead_id . '</span></div>';
+    echo '<div class="stat-item">' . $label_list_id . ': <span class="stat-value">' . $list_id . '</span></div>';
+    echo '<div class="stat-item">' . $label_gmt_offset_now . ': <span class="stat-value">' . $gmt_offset_now . '</span></div>';
+    echo '<div class="stat-item">' . $label_called_since_last_reset . ': <span class="stat-value">' . $called_since_last_reset . '</span></div>';
+    echo '</div>';
+    
+    echo '<div class="stats-row">';
+    echo '<div class="stat-item">' . $label_user . ': <a href="user_stats.php?user=' . $tsr . '" style="color:#3b82f6;font-weight:600;text-decoration:none;">' . $tsr . '</a></div>';
+    echo '<div class="stat-item">' . $label_called_count . ': <span class="stat-value">' . $called_count . '</span> <small>(' . _QXZ("today") . ': ' . $call_count_today . ')</small></div>';
+    echo '<div class="stat-item">' . $label_last_local_call_time . ': <span class="stat-value">' . $last_local_call_time . '</span></div>';
+    echo '</div>';
+    
+    if ($archive_search == "Yes") {
+        echo '<div class="alert-danger">*** ' . _QXZ("ARCHIVED LEAD") . ' ***<input type="hidden" name="archive_search" value="Yes"></div>';
+    }
+    
+    if ($archive_log == "Yes") {
+        echo '<div class="alert-warning">*** ' . _QXZ("ARCHIVED LOG SEARCH ENABLED") . ' *** <a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=No&CIDdisplay=' . $CIDdisplay . '" style="color:#92400e;text-decoration:underline;">' . _QXZ("Turn off archived logs display") . '</a><br><small>*** ' . _QXZ("ARCHIVED LOGS SHOWN IN RED, THERE MAY BE DUPLICATES WITH NON-ARCHIVED LOG ENTRIES") . ' ***</small><input type="hidden" name="archive_log" value="Yes"></div>';
+    } else {
+        echo '<div class="alert-info"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=Yes&CIDdisplay=' . $CIDdisplay . '" style="color:#1e40af;text-decoration:underline;">' . _QXZ("Turn on archived logs display") . '</a></div>';
+    }
+
+    if ($lead_id == 'NEW') { $list_id = ''; }
+
+    echo '<div class="section-divider"></div>';
+
+    if ($LOGadmin_hide_lead_data != '0') {
+        // Read-only display
+        echo '<div class="form-group"><div class="form-label">' . $label_title . ':</div><div class="read-only-value">' . htmlspecialchars($title) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_first_name . ':</div><div class="read-only-value">' . htmlspecialchars($first_name) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_middle_initial . ':</div><div class="read-only-value">' . htmlspecialchars($middle_initial) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_last_name . ':</div><div class="read-only-value">' . htmlspecialchars($last_name) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address1 . ':</div><div class="read-only-value">' . htmlspecialchars($address1) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address2 . ':</div><div class="read-only-value">' . htmlspecialchars($address2) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address3 . ':</div><div class="read-only-value">' . htmlspecialchars($address3) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_city . ':</div><div class="read-only-value">' . htmlspecialchars($city) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_state . ':</div><div class="read-only-value">' . htmlspecialchars($state) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_postal_code . ':</div><div class="read-only-value">' . htmlspecialchars($postal_code) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_province . ':</div><div class="read-only-value">' . htmlspecialchars($province) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_country_code . ':</div><div class="read-only-value">' . htmlspecialchars($country_code) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_date_of_birth . ':</div><div class="read-only-value">' . htmlspecialchars($date_of_birth) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_phone_number . ':</div><div class="read-only-value">' . htmlspecialchars($phone_number) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_phone_code . ':</div><div class="read-only-value">' . htmlspecialchars($phone_code) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_alt_phone . ':</div><div class="read-only-value">' . htmlspecialchars($alt_phone) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_email . ':</div><div class="read-only-value">' . htmlspecialchars($email) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_security_phrase . ':</div><div class="read-only-value">' . htmlspecialchars($security) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_vendor_lead_code . ':</div><div class="read-only-value">' . htmlspecialchars($vendor_id) . '</div></div>';
+        if ($SSsource_id_display > 0) {
+            echo '<div class="form-group"><div class="form-label">' . $label_source_id . ':</div><div class="read-only-value">' . htmlspecialchars($source_id) . '</div></div>';
+        }
+        echo '<div class="form-group"><div class="form-label">' . $label_rank . ':</div><div class="read-only-value">' . htmlspecialchars($rank) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_owner . ':</div><div class="read-only-value">' . htmlspecialchars($owner) . '</div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_comments . ':</div><div class="read-only-value">' . htmlspecialchars($comments) . '</div></div>';
+    } else {
+        // Editable fields
+        echo '<div class="form-group"><div class="form-label">' . $label_title . ':</div><div><input type="text" name="title" id="title" class="form-input" style="max-width:150px;" maxlength="' . $MAXtitle . '" value="' . htmlparse($title) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_first_name . ':</div><div><input type="text" name="first_name" id="first_name" class="form-input" maxlength="' . $MAXfirst_name . '" value="' . htmlparse($first_name) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_middle_initial . ':</div><div><input type="text" name="middle_initial" id="middle_initial" class="form-input" style="max-width:150px;" maxlength="' . $MAXmiddle_initial . '" value="' . htmlparse($middle_initial) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_last_name . ':</div><div><input type="text" name="last_name" id="last_name" class="form-input" maxlength="' . $MAXlast_name . '" value="' . htmlparse($last_name) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address1 . ':</div><div><input type="text" name="address1" id="address1" class="form-input" maxlength="' . $MAXaddress1 . '" value="' . htmlparse($address1) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address2 . ':</div><div><input type="text" name="address2" id="address2" class="form-input" maxlength="' . $MAXaddress2 . '" value="' . htmlparse($address2) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_address3 . ':</div><div><input type="text" name="address3" id="address3" class="form-input" maxlength="' . $MAXaddress3 . '" value="' . htmlparse($address3) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_city . ':</div><div><input type="text" name="city" id="city" class="form-input" maxlength="' . $MAXcity . '" value="' . htmlparse($city) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_state . ':</div><div><input type="text" name="state" id="state" class="form-input" style="max-width:150px;" maxlength="' . $MAXstate . '" value="' . htmlparse($state) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_postal_code . ':</div><div><input type="text" name="postal_code" id="postal_code" class="form-input" style="max-width:250px;" maxlength="' . $MAXpostal_code . '" value="' . htmlparse($postal_code) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_province . ':</div><div><input type="text" name="province" id="province" class="form-input" maxlength="' . $MAXprovince . '" value="' . htmlparse($province) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_country_code . ':</div><div><input type="text" name="country_code" id="country_code" class="form-input" style="max-width:150px;" maxlength="' . $MAXcountry_code . '" value="' . htmlparse($country_code) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_date_of_birth . ':</div><div><input type="text" name="date_of_birth" id="date_of_birth" class="form-input" style="max-width:250px;" maxlength="10" value="' . htmlparse($date_of_birth) . '"></div></div>';
+
+        if (($LOGmodify_leads == '1') or ($LOGmodify_leads == '3') or ($lead_id == 'NEW')) {
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_number . ':</div><div><input type="text" name="phone_number" id="phone_number" class="form-input" maxlength="' . $MAXphone_number . '" value="' . htmlparse($phone_number) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_code . ':</div><div><input type="text" name="phone_code" id="phone_code" class="form-input" style="max-width:250px;" maxlength="' . $MAXphone_code . '" value="' . htmlparse($phone_code) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_alt_phone . ':</div><div><input type="text" name="alt_phone" id="alt_phone" class="form-input" maxlength="' . $MAXalt_phone . '" value="' . htmlparse($alt_phone) . '"></div></div>';
+        } else {
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_number . ':</div><div class="read-only-value">' . htmlparse($phone_number) . '<input type="hidden" name="phone_number" value="' . htmlparse($phone_number) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_phone_code . ':</div><div class="read-only-value">' . htmlparse($phone_code) . '<input type="hidden" name="phone_code" value="' . htmlparse($phone_code) . '"></div></div>';
+            echo '<div class="form-group"><div class="form-label">' . $label_alt_phone . ':</div><div class="read-only-value">' . htmlparse($alt_phone) . '<input type="hidden" name="alt_phone" value="' . htmlparse($alt_phone) . '"></div></div>';
+        }
+
+        echo '<div class="form-group"><div class="form-label">' . $label_email . ':</div><div><input type="text" name="email" class="form-input" maxlength="' . $MAXemail . '" value="' . htmlparse($email) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_security_phrase . ':</div><div><input type="text" name="security" id="security_phrase" class="form-input" maxlength="' . $MAXsecurity_phrase . '" value="' . htmlparse($security) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_vendor_lead_code . ':</div><div><input type="text" name="vendor_id" id="vendor_lead_code" class="form-input" maxlength="' . $MAXvendor_lead_code . '" value="' . htmlparse($vendor_id) . '"></div></div>';
+        if ($SSsource_id_display > 0) {
+            echo '<div class="form-group"><div class="form-label">' . $label_source_id . ':</div><div><input type="text" name="source_id" id="source_id" class="form-input" maxlength="' . $MAXsource_id . '" value="' . htmlparse($source_id) . '"></div></div>';
+        }
+        echo '<div class="form-group"><div class="form-label">' . $label_rank . ':</div><div><input type="text" name="rank" id="rank" class="form-input" style="max-width:150px;" maxlength="5" value="' . htmlparse($rank) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_owner . ':</div><div><input type="text" name="owner" id="owner" class="form-input" maxlength="' . $MAXowner . '" value="' . htmlparse($owner) . '"></div></div>';
+        echo '<div class="form-group"><div class="form-label">' . $label_comments . ':</div><div><textarea name="comments" id="comments" class="form-textarea">' . htmlparse($comments) . '</textarea></div></div>';
+    }
+} else {
+    echo '<!-- ' . _QXZ("no lead fields form display lead does not exist") . ' -->';
+    echo '<div class="card"><form action="' . $PHP_SELF . '" method="POST">';
+    echo '<input type="hidden" name="end_call" value="1">';
+    echo '<input type="hidden" name="DB" value="' . $DB . '">';
+    echo '<input type="hidden" name="lead_id" value="' . $lead_id . '">';
+    echo '<input type="hidden" name="dispo" value="' . $dispo . '">';
+    echo '<input type="hidden" name="list_id" value="' . $list_id . '">';
+    echo '<input type="hidden" name="campaign_id" value="' . $campaign_id . '">';
+    echo '<input type="hidden" name="old_phone" value="' . $phone_number . '">';
+    echo '<input type="hidden" name="server_ip" value="' . $server_ip . '">';
+    echo '<input type="hidden" name="extension" value="' . $extension . '">';
+    echo '<input type="hidden" name="channel" value="' . $channel . '">';
+    echo '<input type="hidden" name="call_began" value="' . $call_began . '">';
+    echo '<input type="hidden" name="parked_time" value="' . $parked_time . '">';
+    echo '<input type="hidden" name="FORM_LOADED" id="FORM_LOADED" value="0" />';
+}
+
+// Comment History Section
+if ($lead_id != 'NEW') {
+    $stmt = "SELECT user_id, timestamp, list_id, campaign_id, comment from vicidial_comments where lead_id='$lead_id' order by timestamp;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $row_count = mysqli_num_rows($rslt);
+    $audit_comments = false;
+    $o = 0;
+    
+    while ($row_count > $o) {
+        if (!$audit_comments) {
+            echo '<div class="section-divider"></div>';
+            echo '<h2 style="font-size:20px;font-weight:700;color:#1f2937;margin:25px 0 15px 0;">💬 ' . _QXZ("Comment History") . '</h2>';
+            echo '<div class="comment-history">';
+            $audit_comments = true;
+        }
+        $rowx = mysqli_fetch_row($rslt);
+        $Auser[$o] = $rowx[0];
+        $Atimestamp[$o] = $rowx[1];
+        $Acomment[$o] = $rowx[4];
+        $o++;
+    }
+    
+    $o = 0;
+    while ($row_count > $o) {
+        $Afull_name = '';
+        $stmt = "SELECT full_name from vicidial_users where user='$Auser[$o]';";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $FNrow_count = mysqli_num_rows($rslt);
+        if ($FNrow_count > 0) {
+            $rowx = mysqli_fetch_row($rslt);
+            $Afull_name = $rowx[0];
+        }
+        echo '<div class="comment-item">';
+        echo '<div class="comment-timestamp">🕒 ' . htmlspecialchars($Atimestamp[$o]) . '</div>';
+        echo '<div style="margin:10px 0;color:#1f2937;font-size:14px;line-height:1.6;">' . nl2br(htmlspecialchars($Acomment[$o])) . '</div>';
+        echo '<div class="comment-meta">by user: ' . htmlspecialchars($Auser[$o]) . ' - ' . htmlspecialchars($Afull_name) . '</div>';
+        echo '</div>';
+        $o++;
+    }
+
+    if ($audit_comments) {
+        echo '</div>'; // Close comment-history
+    }
+
+echo '</form></div></div>'; // Close card and container
+
+	
+	
+	
+// Disposition Section
+echo '<div class="section-divider"></div>';
+echo '<div class="form-group" style="background:#f9fafb;padding:15px;border-radius:8px;">';
+echo '<div class="form-label">' . _QXZ("Disposition") . ':</div>';
+echo '<div><select size="1" name="status" class="form-input" style="max-width:400px;">';
+
+### find out if status(dispo) is a scheduled callback status
+$scheduled_callback = '';
+$stmt = "SELECT scheduled_callback from vicidial_statuses where status='$dispo';";
+$rslt = mysql_to_mysqli($stmt, $link);
+$scb_count_to_print = mysqli_num_rows($rslt);
+if ($scb_count_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    if (strlen($row[0]) > 0) { $scheduled_callback = $row[0]; }
+}
+$stmt = "SELECT scheduled_callback from vicidial_campaign_statuses where status='$dispo';";
+$rslt = mysql_to_mysqli($stmt, $link);
+$scb_count_to_print = mysqli_num_rows($rslt);
+if ($scb_count_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    if (strlen($row[0]) > 0) { $scheduled_callback = $row[0]; }
+}
+
+$list_campaign = '';
+$stmt = "SELECT campaign_id from vicidial_lists where list_id='$list_id'";
+$rslt = mysql_to_mysqli($stmt, $link);
+if ($DB) { echo "$stmt\n"; }
+$Cstatuses_to_print = mysqli_num_rows($rslt);
+if ($Cstatuses_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $list_campaign = $row[0];
+}
+
+$stmt = "SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_statuses $selectableSQL order by status";
+$rslt = mysql_to_mysqli($stmt, $link);
+$statuses_to_print = mysqli_num_rows($rslt);
+$statuses_listMODLOG = '';
+$statuses_list = '';
+
+$o = 0;
+$DS = 0;
+while ($statuses_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    if ((strlen($dispo) == strlen($rowx[0])) and (preg_match("/$dispo/i", $rowx[0]))) {
+        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $DS++;
+    } else {
+        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+    }
+    $statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
+    $o++;
+}
+
+$stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$list_campaign' $selectableSQLand order by status";
+$rslt = mysql_to_mysqli($stmt, $link);
+$CAMPstatuses_to_print = mysqli_num_rows($rslt);
+
+$o = 0;
+$CBhold_set = 0;
+while ($CAMPstatuses_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    if ((strlen($dispo) == strlen($rowx[0])) and (preg_match("/$dispo/i", $rowx[0]))) {
+        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $DS++;
+    } else {
+        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+    }
+    $statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
+    if ($rowx[0] == 'CBHOLD') { $CBhold_set++; }
+    $o++;
+}
+
+if (strlen($VU_status_group_id) > 0) {
+    $stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' $selectableSQLand order by status";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $USERstatuses_to_print = mysqli_num_rows($rslt);
+
+    $o = 0;
+    $CBhold_set = 0;
+    while ($USERstatuses_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        if ((strlen($dispo) == strlen($rowx[0])) and (preg_match("/$dispo/i", $rowx[0]))) {
+            $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $DS++;
+        } else {
+            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        }
+        $statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
+        if ($rowx[0] == 'CBHOLD') { $CBhold_set++; }
+        $o++;
+    }
+}
+
+if ($dispo == 'CBHOLD') { $CBhold_set++; }
+
+if ($DS < 1) {
+    $statuses_list .= "<option SELECTED value=\"$dispo\">$dispo</option>\n";
+}
+if ($CBhold_set < 1) {
+    $statuses_list .= "<option value=\"CBHOLD\">CBHOLD - " . _QXZ("Scheduled Callback") . "</option>\n";
+}
+echo "$statuses_list";
+echo "</select> <i style='color:#6b7280;font-size:13px;'>(" . _QXZ("with") . " $list_campaign " . _QXZ("statuses") . ")</i></div>";
+echo '</div>';
+
+// Log Modification Options
+echo '<div class="section-divider"></div>';
+echo '<h3 style="font-size:18px;font-weight:600;color:#1f2937;margin:20px 0 15px 0;">📝 ' . _QXZ("Log Modification Options") . '</h3>';
+
+echo '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;">';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="modify_logs" value="1" CHECKED style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Modify vicidial log") . '</span></label>';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="modify_agent_logs" value="1" CHECKED style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Modify agent log") . '</span></label>';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="modify_closer_logs" value="1" style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Modify closer log") . '</span></label>';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="add_closer_record" value="1" style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Add closer log record") . '</span></label>';
+echo '</div>';
+
+} else {
+    echo "<input type=hidden name=status value=\"NEW\">\n";
+}
+
+if (($LOGadmin_hide_lead_data == '0') or ($lead_id == 'NEW')) {
+    echo '<div style="text-align:center;margin:30px 0 20px 0;">';
+    echo '<button type="submit" name="submit" style="padding:14px 40px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 2px 4px rgba(16,185,129,0.3);transition:all 0.2s;" onmouseover="this.style.background=\'#059669\'" onmouseout="this.style.background=\'#10b981\'">' . _QXZ("SUBMIT") . '</button>';
+    echo '</div>';
+}
+
+if (($LOGmodify_leads == '3') or ($LOGmodify_leads == '4')) {
+    echo "<span id='statuses_listMODLOG' style=\"display:none\">$statuses_listMODLOG</span>\n";
+}
+
+echo "</form></div>\n"; // Close card
+echo "<BR><BR>\n";
+
+// Callback Details Section
+if ($lead_id != 'NEW') {
+    if (($dispo == 'CALLBK') or ($dispo == 'CBHOLD') or ($scheduled_callback == 'Y')) {
+        ### find any vicidial_callback records for this lead
+        $cb_stmt = "SELECT callback_id,lead_id,list_id,campaign_id,status,entry_time,callback_time,modify_date,user,recipient,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
+        if ($DB) { echo "|$cb_stmt|\n"; }
+        $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+        $CB_to_print = mysqli_num_rows($cb_rslt);
+
+        echo '<div class="card">';
+        echo '<div class="card-header"><h2 class="card-title">📅 ' . _QXZ("Callback Details") . '</h2></div>';
+
+        if ($CB_to_print > 0) {
+            echo "<form action='$PHP_SELF' method='POST' name='vsn' id='vsn'>";
+            echo '<div style="overflow-x:auto;">';
+            echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+            echo '<thead><tr style="background:#374151;color:#fff;">';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CallBack Date/Time") . '</th>';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CallBack Disposition") . '</th>';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("Owner") . '</th>';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("Comments") . '</th>';
+            echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("Action") . '</th>';
+            echo '</tr></thead><tbody>';
+
+            $u = 0;
+            while ($cb_row = mysqli_fetch_row($cb_rslt)) {
+                $callback_id = $cb_row[0];
+                $CBcomments = $cb_row[10];
+                $lead_status = $cb_row[12];
+                $appointment_datetimeARRAY = explode(" ", $cb_row[6]);
+                $appointment_date = $appointment_datetimeARRAY[0];
+                $appointment_timeARRAY = explode(":", $appointment_datetimeARRAY[1]);
+                $appointment_hour = $appointment_timeARRAY[0];
+                $appointment_min = $appointment_timeARRAY[1];
+
+                $stmt = "SELECT status,status_name from vicidial_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') order by status";
+                $rslt = mysql_to_mysqli($stmt, $link);
+                $statuses_to_print = mysqli_num_rows($rslt);
+                $statuses_list = '';
+
+                $o = 0;
+                $DS = 0;
+                while ($statuses_to_print > $o) {
+                    $rowx = mysqli_fetch_row($rslt);
+                    if ((strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i", $rowx[0]))) {
+                        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                        $DS++;
+                    } else {
+                        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                    }
+                    $o++;
+                }
+
+                $stmt = "SELECT status,status_name from vicidial_campaign_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') and campaign_id='$list_campaign' order by status";
+                $rslt = mysql_to_mysqli($stmt, $link);
+                $CAMPstatuses_to_print = mysqli_num_rows($rslt);
+
+                $o = 0;
+                while ($CAMPstatuses_to_print > $o) {
+                    $rowx = mysqli_fetch_row($rslt);
+                    if ((strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i", $rowx[0]))) {
+                        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                        $DS++;
+                    } else {
+                        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                    }
+                    $o++;
+                }
+
+                if (strlen($VU_status_group_id) > 0) {
+                    $stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' and scheduled_callback='Y' $selectableSQLand order by status";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $USERstatuses_to_print = mysqli_num_rows($rslt);
+
+                    $o = 0;
+                    while ($USERstatuses_to_print > $o) {
+                        $rowx = mysqli_fetch_row($rslt);
+                        if ((strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i", $rowx[0]))) {
+                            $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                            $DS++;
+                        } else {
+                            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                        }
+                        $o++;
+                    }
+                }
+
+                if ($DS < 1) {
+                    $statuses_list .= "<option SELECTED value=\"$lead_status\">$lead_status</option>\n";
+                }
+
+                $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+                $u++;
+
+                echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+                
+                // Date/Time column
+                echo "<td style='padding:12px;'>";
+                echo "<input class='form-input' style='margin-bottom:8px;max-width:150px;' name='appointment_date_$callback_id' id='appointment_date_$callback_id' size=10 maxlength=10 value='$appointment_date'>";
+                echo "<script language=\"JavaScript\">
+                var o_cal = new tcal ({
+                    'formname': 'vsn',
+                    'controlname': 'appointment_date_$callback_id'
+                });
+                o_cal.a_tpl.yearscroll = false;
+                </script>";
+                echo "<div style='display:flex;gap:5px;align-items:center;'>";
+                echo "<SELECT class='form-input' style='max-width:70px;' name='appointment_hour_$callback_id' id='appointment_hour_$callback_id'>\n";
+                for ($i = 0; $i <= 23; $i++) {
+                    $hr = substr("0$i", -2);
+                    echo "<OPTION value='$hr'>$hr</option>\n";
+                }
+                echo "<OPTION value='$appointment_hour' selected>$appointment_hour</OPTION>";
+                echo "</SELECT><span>:</span>";
+                echo "<SELECT class='form-input' style='max-width:70px;' name='appointment_min_$callback_id' id='appointment_min_$callback_id'>";
+                for ($i = 0; $i <= 55; $i += 5) {
+                    $min = substr("0$i", -2);
+                    echo "<OPTION value='$min'>$min</option>\n";
+                }
+                echo "<OPTION value='$appointment_min' selected>$appointment_min</OPTION>";
+                echo "</SELECT></div>";
+                echo "</td>";
+
+                // Disposition column
+                echo "<td style='padding:12px;'><select class='form-input' size=1 name='CBstatus_$callback_id' id='CBstatus_$callback_id'>$statuses_list</select></td>";
+
+                // Owner column
+                echo "<td style='padding:12px;'>";
+                if ($cb_row[9] == 'USERONLY') {
+                    $ucheck = "checked";
+                    $acheck = "";
+                } else {
+                    $acheck = "checked";
+                    $ucheck = "";
+                }
+                echo "<label style='display:block;margin-bottom:5px;'><input type='radio' name='CBchangeRecipient_$callback_id' id='CBchangeRecipient_" . $callback_id . "A' value='A' $acheck style='margin-right:5px;'> " . _QXZ("Anyone") . "</label>";
+                echo "<label style='display:block;margin-bottom:8px;'><input type='radio' name='CBchangeRecipient_$callback_id' id='CBchangeRecipient_" . $callback_id . "U' value='U' $ucheck style='margin-right:5px;'> " . _QXZ("Useronly") . "</label>";
+                echo "<label style='font-size:12px;color:#6b7280;display:block;margin-bottom:4px;'>" . _QXZ("New CB Owner UserID") . ":</label>";
+                echo "<input type=text class='form-input' style='max-width:120px;' name='CBuser_$callback_id' id='CBuser_$callback_id' maxlength=20 value=\"$cb_row[8]\">";
+                echo "<input type=hidden id='recipient_$callback_id' name='recipient_$callback_id' value=\"YES\">";
+                echo "</td>";
+
+                // Comments column
+                echo "<td style='padding:12px;'><TEXTAREA class='form-textarea' name='comments_$callback_id' id='comments_$callback_id' ROWS=4 COLS=40>$CBcomments</TEXTAREA></td>";
+
+                // Action column
+                echo "<td style='padding:12px;text-align:center;'>";
+                echo "<button type='button' onclick='UpdateCallback($callback_id)' style='padding:8px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;'>UPDATE</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+            
+            echo '</tbody></table></div>';
+            echo "<input type=hidden name=DB value=\"$DB\">\n";
+            echo "<input type=hidden id=lead_id name=lead_id value=\"$lead_id\">\n";
+            echo "<input type=hidden id=CBchangeDATE name=CBchangeDATE value=\"YES\">";
+            echo "</form>\n";
+        } else {
+            echo '<div class="alert-info" style="text-align:center;">' . _QXZ("No Callback records found") . '</div>';
+        }
+        
+        echo '</div>'; // Close card
+    
+
+
+echo '</div>'; // Close modern-container
+	
+
+
+
+		### find any vicidial_callback records for this lead (non-active)
+$cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
+if ($DB) { echo "|$cb_stmt|\n"; }
+$cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+$CB_to_print = mysqli_num_rows($cb_rslt);
+
+$cb = 0;
+$callbacks_log = '';
+while ($CB_to_print > $cb) {
+    $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+    $rowx = mysqli_fetch_row($cb_rslt);
+    $cb++;
+    $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[0]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+    $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+    $callbacks_log .= "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+    $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+    $callbacks_log .= "</tr>";
+    if (strlen($rowx[8]) > 0) {
+        $callbacks_log .= "<tr style='background:$bgcolor;'>";
+        $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+        $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+        $callbacks_log .= "</tr>";
+    }
+}
+
+if ($archive_log == "Yes") {
+    ### find any vicidial_callbacks_archive records for this lead
+    $cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
+    if ($DB) { echo "|$cb_stmt|\n"; }
+    $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+    $CBA_to_print = mysqli_num_rows($cb_rslt);
+
+    $cba = 0;
+    while ($CBA_to_print > $cba) {
+        $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+        $rowx = mysqli_fetch_row($cb_rslt);
+        $cb++;
+        $cba++;
+        $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$rowx[0]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+        $callbacks_log .= "</tr>";
+        if (strlen($rowx[8]) > 0) {
+            $callbacks_log .= "<tr style='background:$bgcolor;'>";
+            $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+            $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+            $callbacks_log .= "</tr>";
+        }
+    }
+}
+
+if ($cb > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📋 ' . _QXZ("CALLBACKS LOG") . '</h2><span class="info-badge">' . $cb . ' ' . _QXZ("records") . '</span></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ENTRY TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALLBACK TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECIPIENT") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD STATUS") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '</tr></thead><tbody>';
+    echo "$callbacks_log";
+    echo '</tbody></table></div></div>';
+}
+
+} else {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">ℹ️ ' . _QXZ("Callback Information") . '</h2></div>';
+    echo '<div class="alert-info">' . _QXZ("If you want to change this lead to a scheduled callback, first change the Disposition to CBHOLD, then submit and you will be able to set the callback date and time") . '.</div>';
+    echo '</div>';
+
+    ### find any vicidial_callback records for this lead (all statuses)
+    $cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
+    if ($DB) { echo "|$cb_stmt|\n"; }
+    $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+    $CB_to_print = mysqli_num_rows($cb_rslt);
+
+    $cb = 0;
+    $callbacks_log = '';
+    while ($CB_to_print > $cb) {
+        $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+        $rowx = mysqli_fetch_row($cb_rslt);
+        $cb++;
+        $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[0]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+        $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+        $callbacks_log .= "</tr>";
+        if (strlen($rowx[8]) > 0) {
+            $callbacks_log .= "<tr style='background:$bgcolor;'>";
+            $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+            $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+            $callbacks_log .= "</tr>";
+        }
+    }
+
+    if ($archive_log == "Yes") {
+        ### find any vicidial_callbacks_archive records for this lead
+        $cb_stmt = "SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by callback_id desc limit 1000;";
+        if ($DB) { echo "|$cb_stmt|\n"; }
+        $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+        $CBA_to_print = mysqli_num_rows($cb_rslt);
+
+        $cba = 0;
+        while ($CBA_to_print > $cba) {
+            $bgcolor = ($cb % 2 == 0) ? "#f9fafb" : "#fff";
+            $rowx = mysqli_fetch_row($cb_rslt);
+            $cb++;
+            $cba++;
+            $callbacks_log .= "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            $callbacks_log .= "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$cb</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$rowx[0]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[1]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[2]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[3]</td>";
+            $callbacks_log .= "<td style='padding:10px;'><span style='background:#e5e7eb;padding:3px 10px;border-radius:4px;font-size:13px;'>$rowx[4]</span></td>";
+            $callbacks_log .= "<td style='padding:10px;'><span style='background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;'>$rowx[5]</span></td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[6]</td>";
+            $callbacks_log .= "<td style='padding:10px;font-size:14px;color:#1f2937;'>$rowx[7]</td>";
+            $callbacks_log .= "</tr>";
+            if (strlen($rowx[8]) > 0) {
+                $callbacks_log .= "<tr style='background:$bgcolor;'>";
+                $callbacks_log .= "<td style='padding:5px 10px;'></td>";
+                $callbacks_log .= "<td colspan='8' style='padding:5px 10px;font-size:13px;color:#6b7280;'><i>" . _QXZ("comments") . ":</i> <span style='color:#1f2937;'>$rowx[8]</span></td>";
+                $callbacks_log .= "</tr>";
+            }
+        }
+    }
+
+    if ($cb > 0) {
+        echo '<div class="card" style="margin-top:25px;">';
+        echo '<div class="card-header"><h2 class="card-title">📋 ' . _QXZ("CALLBACKS LOG") . '</h2><span class="info-badge">' . $cb . ' ' . _QXZ("records") . '</span></div>';
+        echo '<div style="overflow-x:auto;">';
+        echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+        echo '<thead><tr style="background:#374151;color:#fff;">';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ENTRY TIME") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALLBACK TIME") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECIPIENT") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD STATUS") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+        echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+        echo '</tr></thead><tbody>';
+        echo "$callbacks_log";
+        echo '</tbody></table></div></div>';
+    }
+}
+
+// Extended Alternate Phone Numbers Section
+if ($c > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📞 ' . _QXZ("EXTENDED ALTERNATE PHONE NUMBERS FOR THIS LEAD") . '</h2><span class="info-badge">' . $c . ' ' . _QXZ("numbers") . '</span></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ALT PHONE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ALT NOTE") . '</th>';
+    echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("ALT COUNT") . '</th>';
+    echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("ACTIVE") . '</th>';
+    echo '</tr></thead><tbody>';
+    echo "$alts_output\n";
+    echo '</tbody></table></div></div>';
+}
+
+echo '</div>'; // Close modern-container
+echo '</body></html>';
 
 
 		### iframe for custom fields display/editing
-		if ($custom_fields_enabled > 0)
-			{
-			$CLlist_id = $list_id;
-			if (strlen($entry_list_id) > 2)
-				{$CLlist_id = $entry_list_id;}
-			$stmt="SHOW TABLES LIKE \"custom_$CLlist_id\";";
-			if ($DB>0) {echo "$stmt";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$tablecount_to_print = mysqli_num_rows($rslt);
-			if ($tablecount_to_print > 0) 
-				{
-				$stmt="SELECT count(*) from custom_$CLlist_id where lead_id='$lead_id';";
-				if ($DB>0) {echo "$stmt";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$fieldscount_to_print = mysqli_num_rows($rslt);
-				if ($fieldscount_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$custom_records_count =	$rowx[0];
-					$submit_buttonURL = '&submit_button=YES';
-					if ($LOGmodify_leads == '5') {$submit_buttonURL = '&submit_button=READONLY';}
-
-					echo "<B>"._QXZ("CUSTOM FIELDS FOR THIS LEAD").":</B><BR>\n";
-					echo "<iframe src=\"../agc/$vdc_form_display?lead_id=$lead_id&list_id=$CLlist_id&stage=DISPLAY$submit_buttonURL&user=$PHP_AUTH_USER&pass=$PHP_AUTH_PW&bcrypt=OFF&bgcolor=E6E6E6\" style=\"background-color:transparent;\" scrolling=\"auto\" frameborder=\"2\" allowtransparency=\"true\" id=\"vcFormIFrame\" name=\"vcFormIFrame\" width=\"740\" height=\"300\" STYLE=\"z-index:18\"> </iframe>\n";
-					echo "<BR><BR>";
-					}
-				}
-			}
-
-
-		echo "<B>"._QXZ("CALLS TO THIS LEAD").":</B>\n";
-		if ($CIDdisplay=="Yes")
-			{
-			$out_log_width=1300;
-			if ($AMDcount > 0) {$out_log_width=1500;}
-			echo "<TABLE width=$out_log_width cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=center><font size=2> "._QXZ("PHONE")."</td><td align=center><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALLER ID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("UNIQUEID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("SERVER IP")."</a></td>";
-			if ($AMDcount > 0)
-				{echo "<td align=right><font size=2> "._QXZ("AMD STATUS")."</td><td align=right><font size=2> "._QXZ("AMD RESPONSE")."</td>";}
-			echo "</tr>\n";
-			}
-		else
-			{
-			echo "<TABLE width=850 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=center><font size=2> "._QXZ("PHONE")."</td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALLER ID")."</a></td></tr>\n";
-			}
-
-		echo "$call_log\n";
-
-		echo "</TABLE>\n";
-		echo "<BR><BR>\n";
-
-		echo "<B>"._QXZ("CLOSER RECORDS FOR THIS LEAD").":</B>\n";
-		if ($CIDdisplay=="Yes")
-			{
-			echo "<TABLE width=1150 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("WAIT")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=center><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALL ID")."</a></td><td align=center><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("DID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("UNIQUEID")."</a></td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("SERVER IP")."</a></td></tr>\n";
-			}
-		else
-			{
-			echo "<TABLE width=850 cellspacing=0 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("LENGTH")."</td><td align=left><font size=2> "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=right><font size=2> "._QXZ("LIST")."</td><td align=right><font size=2> "._QXZ("LEAD")."</td><td align=right><font size=2> "._QXZ("WAIT")."</td><td align=right><font size=2> "._QXZ("HANGUP REASON")."</td><td align=right><font size=2> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=$archive_log&CIDdisplay=$altCIDdisplay\">"._QXZ("CALL ID")."</a></td></tr>\n";
-			}
-
-		echo "$closer_log\n";
-
-		echo "</TABLE>\n";
-		echo "<BR><BR>\n";
-
-
-		echo "<B>"._QXZ("AGENT LOG RECORDS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=0 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("CAMPAIGN")."</td><td align=left><font size=2> "._QXZ("TSR")."</td><td align=left><font size=2> "._QXZ("PAUSE")."</td><td align=right><font size=2> "._QXZ("WAIT")."</td><td align=right><font size=2> "._QXZ("TALK")."</td><td align=right><font size=2> "._QXZ("DISPO")."</td><td align=right><font size=2> "._QXZ("STATUS")."</td><td align=right><font size=2> "._QXZ("GROUP")."</td><td align=right><font size=2> "._QXZ("SUB")."</td></tr>\n";
-
-			echo "$agent_log\n";
-
-		echo "</TABLE>\n";
-		echo "<BR><BR>\n";
-
-
-		echo "<B>"._QXZ("PARK LOGS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("PARK TIME")."</td><td><font size=2>"._QXZ("CHANNEL GROUP")." </td><td align=left><font size=2>"._QXZ("TSR")." </td><td align=left><font size=2> &nbsp; "._QXZ("STATUS")."</td><td align=left><font size=2> "._QXZ("GRAB TIME")."</td><td align=left><font size=2> "._QXZ("HANGUP TIME")."</td><td align=left><font size=2> "._QXZ("PARK SEC")."</td><td align=left><font size=2> "._QXZ("TALK SEC")."</td><td align=left><font size=2> "._QXZ("EXTENSION")."</td></tr>\n";
-
-		$stmt="SELECT * from park_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by parked_time, grab_time, hangup_time desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		$u=0;
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_array($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=1> $row[parked_time] </td>";
-			echo "<td align=left><font size=1> $row[channel_group] </td>\n";
-			echo "<td align=left><font size=2> $row[user] </td>\n";
-			echo "<td align=left><font size=2> $row[status] </td>\n";
-			echo "<td align=left><font size=1> $row[grab_time] </td>\n";
-			echo "<td align=left><font size=1> $row[hangup_time] </td>\n";
-			echo "<td align=left><font size=2> $row[parked_sec] </td>\n";
-			echo "<td align=left><font size=2> $row[talked_sec] </td>\n";
-			echo "<td align=left><font size=1> $row[extension] </td>\n";
-			echo "</tr>\n";
-			}
-
-		echo "</TABLE><BR><BR>\n";
-
-
-		echo "<B>"._QXZ("IVR LOGS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("CAMPAIGN")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("CALL MENU")." </td><td align=left><font size=2> &nbsp; "._QXZ("ACTION")."</td></tr>\n";
-
-		$stmt="SELECT campaign_id,event_date,menu_id,menu_action from vicidial_outbound_ivr_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by uniqueid,event_date,menu_action desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		$u=0;
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[0] </td>";
-			echo "<td align=left><font size=1> $row[1] </td>\n";
-			echo "<td align=left><font size=2> $row[2] </td>\n";
-			echo "<td align=left><font size=2> $row[3] &nbsp;</td>\n";
-			echo "</tr>\n";
-			}
-
-		if ($CIDdisplay=="Yes")
-			{
-			$stmt="SELECT start_time,caller_id,channel,server_ip,comment_d,uniqueid from live_inbound_log where uniqueid IN($uniqueidLIST) order by start_time desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-			if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-			if ($logs_to_print > 0)
-				{echo "<tr bgcolor=white><td align=left colspan=5><font size=2> "._QXZ("Inbound Call IVR entries").": </td></tr>";}
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=2> $row[5] </td>";
-				echo "<td align=left><font size=2> $row[0] </td>\n";
-				echo "<td align=left><font size=2> $row[4] </td>\n";
-				echo "<td align=left><font size=2> $row[1] &nbsp;</td>\n";
-				echo "</tr>\n";
-				}
-			}
-		echo "</TABLE><BR><BR>\n";
-
-
-		if ($CIDdisplay=="Yes")
-			{
-			echo "<B>"._QXZ("VOICEMAIL MESSAGE DAILY COUNT LOGS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2>"._QXZ("DATE")." </td><td align=left><font size=2>"._QXZ("MESSAGE STARTED COUNT")." </td><td align=left><font size=2> &nbsp; "._QXZ("MESSAGE COMPLETED COUNT")."</td></tr>\n";
-
-			$stmt="SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-			if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=2> $row[0] </td>";
-				echo "<td align=left><font size=2> $row[1] </td>\n";
-				echo "<td align=left><font size=2> $row[2] &nbsp; </td>\n";
-				echo "</tr>\n";
-				}
-
-			if ($archive_log=="Yes") 
-				{
-				$stmt="SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$logs_to_print = mysqli_num_rows($rslt);
-				if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-				$u=0;
-				while ($logs_to_print > $u) 
-					{
-					$row=mysqli_fetch_row($rslt);
-					if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-					$u++;
-					echo "<tr $bgcolor>";
-					echo "<td><font size=1>$u</td>";
-					echo "<td align=left><font size=2 color='#FF0000'> $row[0] </td>";
-					echo "<td align=left><font size=2> $row[1] </td>\n";
-					echo "<td align=left><font size=2> $row[2] &nbsp; </td>\n";
-					echo "</tr>\n";
-					}
-				}
-
-			echo "</TABLE><BR><BR>\n";
-			}
-
-
-		if ($CIDdisplay=="Yes")
-			{
-			echo "<B>"._QXZ("3-WAY PRESS LOGS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=1400 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("PHONE")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td><font size=2>"._QXZ("USER")." </td><td align=left><font size=2>"._QXZ("RESULT")." </td></tr>\n";
-
-			$stmt="SELECT phone_number,call_date,user,result from vicidial_3way_press_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-			if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=2> $row[0] </td>";
-				echo "<td align=left><font size=1> $row[1] </td>\n";
-				echo "<td align=left><font size=2> $row[2] </td>\n";
-				echo "<td align=left><font size=2> $row[3] &nbsp;</td>\n";
-				echo "</tr>\n";
-				}
-
-			if ($archive_log=="Yes") 
-				{
-				$stmt="SELECT phone_number,call_date,user,result from vicidial_3way_press_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$logs_to_print = mysqli_num_rows($rslt);
-				if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-				$u=0;
-				while ($logs_to_print > $u) 
-					{
-					$row=mysqli_fetch_row($rslt);
-					if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-					$u++;
-					echo "<tr $bgcolor>";
-					echo "<td><font size=1>$u</td>";
-					echo "<td align=left><font size=2 color='#FF0000'> $row[0] </td>";
-					echo "<td align=left><font size=1> $row[1] </td>\n";
-					echo "<td align=left><font size=2> $row[2] </td>\n";
-					echo "<td align=left><font size=2> $row[3] &nbsp;</td>\n";
-					echo "</tr>\n";
-					}
-				}
-			echo "</TABLE><BR><BR>\n";
-
-
-
-			if ($SShopper_hold_inserts > 0)
-				{
-				echo "<B>"._QXZ("HCI AGENT LOGS FOR THIS LEAD").":</B>\n";
-				echo "<TABLE width=800 cellspacing=1 cellpadding=1>\n";
-				echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("PHONE")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td><font size=2>"._QXZ("USER")." </td><td><font size=2>"._QXZ("IP")." </td><td align=left><font size=2>"._QXZ("CAMPAIGN")." </td></tr>\n";
-
-				$stmt="SELECT phone_number,call_date,user,user_ip,campaign_id from vicidial_hci_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$logs_to_print = mysqli_num_rows($rslt);
-				if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-				$u=0;
-				while ($logs_to_print > $u) 
-					{
-					$row=mysqli_fetch_row($rslt);
-					if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-					$u++;
-					echo "<tr $bgcolor>";
-					echo "<td><font size=1>$u</td>";
-					echo "<td align=left><font size=2> $row[0] </td>";
-					echo "<td align=left><font size=1> $row[1] </td>\n";
-					echo "<td align=left><font size=2> <A HREF=\"user_stats.php?user=$row[2]\" target=\"_blank\">$row[2]</A> </td>\n";
-					echo "<td align=left><font size=2> $row[3] </td>\n";
-					echo "<td align=left><font size=2> $row[4] &nbsp;</td>\n";
-					echo "</tr>\n";
-					}
-
-				if ($archive_log=="Yes") 
-					{
-					$stmt="SELECT phone_number,call_date,user,user_ip,campaign_id from vicidial_hci_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$logs_to_print = mysqli_num_rows($rslt);
-					if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-					$u=0;
-					while ($logs_to_print > $u) 
-						{
-						$row=mysqli_fetch_row($rslt);
-						if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-							{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-						else
-							{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-						$u++;
-						echo "<tr $bgcolor>";
-						echo "<td><font size=1>$u</td>";
-						echo "<td align=left><font size=2> $row[0] </td>";
-						echo "<td align=left><font size=1> $row[1] </td>\n";
-						echo "<td align=left><font size=2> $row[2] </td>\n";
-						echo "<td align=left><font size=2> $row[3] </td>\n";
-						echo "<td align=left><font size=2> $row[4] &nbsp;</td>\n";
-						echo "</tr>\n";
-						}
-					}
-				echo "</TABLE><BR><BR>\n";
-				}
-			}
-
-
-	##### BEGIN switch lead log entries #####
-		$stmt="SELECT * from vicidial_agent_function_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and function='switch_lead' order by event_time desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		if ($logs_to_print > 0)
-			{
-			echo "<B>"._QXZ("AGENT FROM SWITCH-LEADS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("SWITCH TIME")."</td><td><font size=2>"._QXZ("CAMPAIGN")." </td><td align=left><font size=2>"._QXZ("TSR")." </td><td align=left><font size=2> &nbsp; "._QXZ("TO LEAD ID")."</td><td align=left><font size=2> "._QXZ("CALL ID")."</td><td align=left><font size=2> "._QXZ("UNIQUEID")."</td><td align=left><font size=2> "._QXZ("PHONE NUMBER")."</td></tr>\n";
-
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_array($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=1> $row[event_time] </td>";
-				echo "<td align=left><font size=1> $row[campaign_id] </td>\n";
-				echo "<td align=left><font size=2> $row[user] </td>\n";
-				echo "<td align=left><font size=2> <a href=\"$PHP_SELF?lead_id=$row[stage]\">$row[stage]</a> </td>\n";
-				echo "<td align=left><font size=1> $row[caller_code] </td>\n";
-				echo "<td align=left><font size=1> $row[uniqueid] </td>\n";
-				echo "<td align=left><font size=2> $row[comments] </td>\n";
-				echo "</tr>\n";
-				}
-
-			echo "</TABLE><BR><BR>\n";
-			}
-
-		$stmt="SELECT * from vicidial_agent_function_log where stage='" . mysqli_real_escape_string($link, $lead_id) . "' and function='switch_lead' order by event_time desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		if ($logs_to_print > 0)
-			{
-			echo "<B>"._QXZ("AGENT TO SWITCH-LEADS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("SWITCH TIME")."</td><td><font size=2>"._QXZ("CAMPAIGN")." </td><td align=left><font size=2>"._QXZ("TSR")." </td><td align=left><font size=2> &nbsp; "._QXZ("FROM LEAD ID")."</td><td align=left><font size=2> "._QXZ("CALL ID")."</td><td align=left><font size=2> "._QXZ("UNIQUEID")."</td><td align=left><font size=2> "._QXZ("PHONE NUMBER")."</td></tr>\n";
-
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_array($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=1> $row[event_time] </td>";
-				echo "<td align=left><font size=1> $row[campaign_id] </td>\n";
-				echo "<td align=left><font size=2> $row[user] </td>\n";
-				echo "<td align=left><font size=2> <a href=\"$PHP_SELF?lead_id=$row[lead_id]\">$row[lead_id]</a> </td>\n";
-				echo "<td align=left><font size=1> $row[caller_code] </td>\n";
-				echo "<td align=left><font size=1> $row[uniqueid] </td>\n";
-				echo "<td align=left><font size=2> $row[comments] </td>\n";
-				echo "</tr>\n";
-				}
-
-			echo "</TABLE><BR><BR>\n";
-			}
-	##### END switch lead log entries #####
-
-
-	##### BEGIN switch list(for custom fields) log entries #####
-		$stmt="SELECT * from vicidial_agent_function_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and function='switch_list' order by event_time desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		if ($logs_to_print > 0)
-			{
-			echo "<B>"._QXZ("AGENT CUSTOM FIELDS SWITCH-LISTS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("SWITCH TIME")."</td><td><font size=2>"._QXZ("CAMPAIGN")." </td><td align=left><font size=2>"._QXZ("TSR")." </td><td align=left><font size=2> &nbsp; "._QXZ("TO LIST ID")."</td><td align=left><font size=2> "._QXZ("FROM LIST ID")."</td><td align=left><font size=2> "._QXZ("CALL ID")."</td></tr>\n";
-
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_array($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-				$u++;
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td align=left><font size=1> $row[event_time] </td>";
-				echo "<td align=left><font size=1> $row[campaign_id] </td>\n";
-				echo "<td align=left><font size=2> $row[user] </td>\n";
-				echo "<td align=left><font size=2> <a href=\"$PHP_SELF?ADD=311&list_id=$row[stage]\">$row[stage]</a> </td>\n";
-				echo "<td align=left><font size=2> <a href=\"$PHP_SELF?ADD=311&list_id=$row[stage]\">$row[comments]</a> </td>\n";
-				echo "<td align=left><font size=1> $row[caller_code] </td>\n";
-				echo "</tr>\n";
-				}
-
-			echo "</TABLE><BR><BR>\n";
-			}
-	##### END switch list log entries #####
-
-
-	##### vicidial agent outbound calls for this time period #####
-		if ($allow_emails>0) 
-			{
-			echo "<B>"._QXZ("OUTBOUND EMAILS FOR THIS LEAD").":</B>\n";
-			echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-			echo "<tr><td><font size=1># </td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=right><font size=2> "._QXZ("USER")."</td><td align=right><font size=2> "._QXZ("CAMPAIGN")."</td><td align=left><font size=2>"._QXZ("EMAIL TO")."</td><td align=left><font size=2> "._QXZ("MESSAGE")."</td><td align=right><font size=2> "._QXZ("ATTACHMENTS")."</td></tr>\n";
-
-			$stmt="SELECT * from vicidial_email_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by email_date desc limit 500;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$logs_to_print = mysqli_num_rows($rslt);
-
-			$u=0;
-			while ($logs_to_print > $u) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-					{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-				else
-					{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-				if (mb_strlen($row[6],'utf-8')>100) {$row[6]=mb_substr($row[6],0,100,'utf-8')."...";}
-				$row[8]=preg_replace('/\|/', ', ', $row[8]);
-				$row[8]=preg_replace('/,\s+$/', '', $row[8]);
-				$u++;
-
-				echo "<tr $bgcolor>";
-				echo "<td><font size=1>$u</td>";
-				echo "<td><font size=1>$row[3]</td>";
-				echo "<td align=right><font size=2> <A HREF=\"user_stats.php?user=$row[4]\" target=\"_blank\">$row[4]</A> </td>\n";
-				echo "<td align=left><font size=2> $row[7]</td>\n";
-				echo "<td align=left><font size=1> $row[5]</td>\n";
-				echo "<td align=left><font size=1> $row[6] </td>\n";
-				echo "<td align=right><font size=1> $row[8] </td></tr>\n";
-				}
-
-
-			echo "</TABLE><BR><BR>\n";
-			}
-
-
-		$mute_column='';
-		if ($SSmute_recordings > 0)
-			{
-			$mute_column = "<td align=left NOWRAP><font size=1>"._QXZ("MUTE")." &nbsp; </td>";
-			}
-		$stereo_column='';
-		if ($SSstereo_recording > 0)
-			{
-			$stereo_column = "<td align=left NOWRAP><font size=1>"._QXZ("STEREO")."</td>";
-			}
-		$dtmf_detect_column='';
-		if ($SSrecording_dtmf_detection > 0)
-			{
-			$dtmf_detect_column = "<td align=left NOWRAP><font size=1>"._QXZ("DTMF GRP")." &nbsp; </td>";
-			}
-		$dtmf_mute_column='';
-		if ( ($SSrecording_dtmf_detection > 0) and ($SSrecording_dtmf_muting > 0) )
-			{
-			$dtmf_mute_column = "<td align=left NOWRAP><font size=1>"._QXZ("D-MUTE")." &nbsp; </td>";
-			}
-
-
-		echo "<B>"._QXZ("RECORDINGS FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=800 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("LEAD")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("SECONDS")." </td><td align=left><font size=2> &nbsp; "._QXZ("RECID")."</td><td align=center><font size=2>"._QXZ("FILENAME")."</td><td align=left><font size=2>"._QXZ("LOCATION")."</td><td align=left><font size=2>"._QXZ("TSR")."</td>$mute_column$stereo_column$dtmf_detect_column$dtmf_mute_column<td align=left><font size=2> </td></tr>\n";
-
-		$stmt="SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_id desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		$u=0;   $rec_ids="''";
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-			$stereo_flag =	$row[3];
-			$location =		$row[11];
-
-			if (strlen($location)>2)
-				{
-				$URLserver_ip = $location;
-				$URLserver_ip = preg_replace('/http:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/https:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/\/.*/i', '',$URLserver_ip);
-				$stmt="SELECT count(*) from servers where server_ip='$URLserver_ip';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$rowx=mysqli_fetch_row($rsltx);
-				
-				if ($rowx[0] > 0)
-					{
-					$stmt="SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
-					$rsltx=mysql_to_mysqli($stmt, $link);
-					$rowx=mysqli_fetch_row($rsltx);
-					
-					if (preg_match("/ALT_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
-						}
-					if (preg_match("/EXTERNAL_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
-						}
-					}
-				}
-
-			if ($SSmute_recordings > 0)
-				{
-				$mute_events=0;
-				$stmt="SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]'  and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$flogs_to_print = mysqli_num_rows($rsltx);
-				if ($flogs_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rsltx);
-					$mute_events = $rowx[0];
-					}
-				}
-
-			if (mb_strlen($location,'utf-8')>30)
-				{$locat = mb_substr($location,0,27,'utf-8');  $locat = "$locat...";}
-			else
-				{$locat = $location;}
-			$play_audio='<td align=left><font size=2> </font></td>';
-			if ( (preg_match('/ftp/i',$location)) or (preg_match('/http/i',$location)) )
-				{
-				if ($log_recording_access<1) 
-					{
-					$play_audio = "<td align=left><font size=2> <audio controls preload=\"none\"> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >"._QXZ("No browser audio playback support")."</audio> </td>\n";
-					$location = "<a href=\"$location\">$locat</a>";
-					}
-				else
-					{
-					$location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=0\">$locat</a>";
-					}
-				}
-			else
-				{$location = $locat;}
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[12] </td>";
-			echo "<td align=left><font size=1> $row[4] </td>\n";
-			echo "<td align=left><font size=2> $row[8] </td>\n";
-			echo "<td align=left><font size=2> $row[0] &nbsp;</td>\n";
-			echo "<td align=center><font size=1> $row[10] </td>\n";
-			echo "<td align=left><font size=2> $location </td>\n";
-			echo "<td align=left><font size=2> <A HREF=\"user_stats.php?user=$row[13]\" target=\"_blank\">$row[13]</A> </td>";
-			if ($SSmute_recordings > 0)
-				{
-				if ($mute_events < 1) {$mute_events='';}
-				echo "<td align=center><font size=1> $mute_events &nbsp; </td>\n";
-				}
-			if ($SSstereo_recording > 0)
-				{
-				if (!preg_match("/^S/",$stereo_flag)) {$stereo_flag='';}
-				echo "<td align=center><font size=1> $stereo_flag &nbsp; </td>\n";
-				}
-			if ($SSrecording_dtmf_detection > 0)
-				{
-				$dtmf_detected='';
-				$dtmf_muting='';
-				$dtmf_muting_seconds='';
-
-				$stmtDTMF="SELECT dtmf_detected,dtmf_muting,dtmf_muting_seconds from recording_live_log where recording_id='$row[0]' limit 1;";
-				$rsltDTMF=mysql_to_mysqli($stmtDTMF, $link);
-				$DTMF_to_print = mysqli_num_rows($rsltDTMF);
-				if ($DB) {echo "$DTMF_to_print|$stmtDTMF|\n";}
-				if ($DTMF_to_print > 0) 
-					{
-					$DTMFrow=mysqli_fetch_row($rsltDTMF);
-					$dtmf_detected =		$DTMFrow[0];
-					$dtmf_muting =			$DTMFrow[1];
-					$dtmf_muting_seconds =	$DTMFrow[2];
-
-					if ($dtmf_detected < 1)
-						{$dtmf_detected='';}
-					if ($SSrecording_dtmf_muting > 0)
-						{
-						if ($dtmf_muting > 0)
-							{$dtmf_muting = "$dtmf_muting - $dtmf_muting_seconds";}
-						else 
-							{$dtmf_muting='';}
-						}
-					}
-				echo "<td align=center><font size=1> $dtmf_detected &nbsp; </td>\n";
-				if ($SSrecording_dtmf_muting > 0)
-					{echo "<td align=center><font size=1> $dtmf_muting &nbsp; </td>\n";}
-				}
-
-			echo "$play_audio";
-			echo "</tr>\n";
-			$rec_ids .= ",'$row[0]'";
-			}
-
-		$stmt="SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and recording_id NOT IN($rec_ids) order by recording_id desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		$v=0;
-		while ($logs_to_print > $v) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-			$location = $row[11];
-
-			if (strlen($location)>2)
-				{
-				$URLserver_ip = $location;
-				$URLserver_ip = preg_replace('/http:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/https:\/\//i', '',$URLserver_ip);
-				$URLserver_ip = preg_replace('/\/.*/i', '',$URLserver_ip);
-				$stmt="SELECT count(*) from servers where server_ip='$URLserver_ip';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$rowx=mysqli_fetch_row($rsltx);
-				
-				if ($rowx[0] > 0)
-					{
-					$stmt="SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
-					$rsltx=mysql_to_mysqli($stmt, $link);
-					$rowx=mysqli_fetch_row($rsltx);
-					
-					if (preg_match("/ALT_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
-						}
-					if (preg_match("/EXTERNAL_IP/i",$rowx[0]))
-						{
-						$location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
-						}
-					}
-				}
-
-			if ($SSmute_recordings > 0)
-				{
-				$mute_events=0;
-				$stmt="SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]'  and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
-				$rsltx=mysql_to_mysqli($stmt, $link);
-				$flogs_to_print = mysqli_num_rows($rsltx);
-				if ($flogs_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rsltx);
-					$mute_events = $rowx[0];
-					}
-				}
-
-			if (mb_strlen($location,'utf-8')>30)
-				{$locat = mb_substr($location,0,27,'utf-8');  $locat = "$locat...";}
-			else
-				{$locat = $location;}
-			$play_audio='<td align=left><font size=2> </font></td>';
-			if ( (preg_match('/ftp/i',$location)) or (preg_match('/http/i',$location)) )
-				{
-				if ($log_recording_access<1) 
-					{
-					$play_audio = "<td align=left><font size=2> <audio controls preload=\"none\"> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >"._QXZ("No browser audio playback support")."</audio> </td>\n";
-					$location = "<a href=\"$location\">$locat</a>";
-					}
-				else
-					{
-					$location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=1\">$locat</a>";
-					}
-				}
-			else
-				{$location = $locat;}
-			$u++;
-			$v++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[12] </td>";
-			echo "<td align=left><font size=1> $row[4] </td>\n";
-			echo "<td align=left><font size=2> $row[8] </td>\n";
-			echo "<td align=left><font size=2> $row[0] &nbsp;</td>\n";
-			echo "<td align=center><font size=1> $row[10] </td>\n";
-			echo "<td align=left><font size=2> $location *</td>\n";
-			echo "<td align=left><font size=2> <A HREF=\"user_stats.php?user=$row[13]\" target=\"_blank\">$row[13]</A> </td>";
-			if ($SSmute_recordings > 0)
-				{
-				if ($mute_events < 1) {$mute_events='';}
-				echo "<td align=center><font size=2> $mute_events &nbsp; </td>\n";
-				}
-			echo "$play_audio";
-			echo "</tr>\n";
-			}
-
-
-		echo "</TABLE><BR><BR>\n";
-
-
-	if ($log_recording_access > 0) 
-		{
-		echo "<B>"._QXZ("RECORDING ACCESS LOG FOR THIS LEAD").":</B>\n";
-		echo "<TABLE width=750 cellspacing=1 cellpadding=1>\n";
-		echo "<tr><td><font size=1># </td><td align=left><font size=2> "._QXZ("LEAD")."</td><td><font size=2>"._QXZ("DATE/TIME")." </td><td align=left><font size=2>"._QXZ("RECORDING ID")."</td><td align=left><font size=2>"._QXZ("USER")."</td><td align=left><font size=2>"._QXZ("RESULT")." </td><td align=left><font size=2>"._QXZ("IP")." </td></tr>\n";
-
-		$stmt="SELECT recording_id,lead_id,user,access_datetime,access_result,ip from vicidial_recording_access_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_access_log_id desc limit 500;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$logs_to_print = mysqli_num_rows($rslt);
-		if ($DB) {echo "$logs_to_print|$stmt|\n";}
-
-		$u=0;
-		while ($logs_to_print > $u) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (preg_match("/1$|3$|5$|7$|9$/i", $u))
-				{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-			else
-				{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-
-			$u++;
-			echo "<tr $bgcolor>";
-			echo "<td><font size=1>$u</td>";
-			echo "<td align=left><font size=2> $row[1] </td>";
-			echo "<td align=left><font size=2> $row[3] </td>\n";
-			echo "<td align=left><font size=2> $row[0] </td>\n";
-			echo "<td align=left><font size=2> $row[2] </td>\n";
-			echo "<td align=left><font size=2> $row[4] </td>\n";
-			echo "<td align=left><font size=2> $row[5] </td>\n";
-			echo "</tr>\n";
-			}
-
-		echo "</TABLE><BR><BR>\n";
-		}
-
-		$stmt="SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level >= 9 and modify_leads IN('1','2','3','4','5','6');";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$admin_display=$row[0];
-		if ($admin_display > 0)
-			{
-			echo "<a href=\"./admin.php?ADD=720000000000000&stage=$lead_id&category=LEADS\">"._QXZ("Click here to see Lead Modify changes to this lead")."</a>\n";
-			}
-		//Display link to QC if user has QC permissions
-		//Get QC User permissions
-		$stmt="SELECT qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit from vicidial_users where user='$PHP_AUTH_USER' and user_level > 1 and active='Y' and qc_enabled='1';";
-		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$qc_auth=$row[0];
-		//Not "qc_" as it will interfere with ADD=4A storage of modified user.
-		if ($qc_auth=='1') 
-			{
-			$qcuser_level=$row[1];
-			$qcpass=$row[2];
-			$qcfinish=$row[3];
-			$qccommit=$row[4];
-			}
-		//Modify menuing to allow qc users into the system (if they have no permission otherwise)
-		//Copied Reports-Only user setup for QC-Only user (Poundteam QC setup)
-		$qc_only_user=0;
-		if ( ($qc_auth > 0) and ($auth < 1) )
-			{
-			if ($ADD != '881')
-				{
-				$ADD=100000000000000;
-				}
-			$qc_only_user=1;
-			}
-
-		if ($qcuser_level > 0)
-			{
-			echo "<br><br><a href=\"qc_modify_lead.php?lead_id=$lead_id\">"._QXZ("Click here to QC Modify this lead")."</a>\n";
-			}
-		echo "\n";
-		}
-
-	if ($enable_gdpr_download_deletion > 0)
-		{
-		if ($gdpr_display>=1) 
-			{
-			echo "<br><br><br>";
-			echo "<B>"._QXZ("GDPR compliance").":</B>\n";
-			echo "<TABLE width=750 cellspacing=2 cellpadding=5>\n";
-			echo "<tr bgcolor='#$SSstd_row2_background'>";
-			echo "<td><font size=2>";
-			echo "<a href=\"admin_modify_lead.php?lead_id=$lead_id&gdpr_action=download\">"._QXZ("Click here to download GDPR-formatted data for this lead")."</a><BR>\n";
-			echo "</font></td>";
-			echo "<tr bgcolor='#$SSstd_row1_background'>";
-			echo "<td><font size=2>";
-			if ($gdpr_display>=2) 
-				{
-				echo "<a href=\"admin_modify_lead.php?lead_id=$lead_id&gdpr_action=purge\">"._QXZ("Click here to review and purge customer data on lead")."</a>\n";
-				}
-			echo "</font></td>";
-			echo "</tr>";
-			echo "</table>";
-			}
-		}
-	echo "\n";
-	}
-
+if ($custom_fields_enabled > 0) {
+    $CLlist_id = $list_id;
+    if (strlen($entry_list_id) > 2) { $CLlist_id = $entry_list_id; }
+    
+    $stmt = "SHOW TABLES LIKE \"custom_$CLlist_id\";";
+    if ($DB > 0) { echo "$stmt"; }
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $tablecount_to_print = mysqli_num_rows($rslt);
+    
+    if ($tablecount_to_print > 0) {
+        $stmt = "SELECT count(*) from custom_$CLlist_id where lead_id='$lead_id';";
+        if ($DB > 0) { echo "$stmt"; }
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $fieldscount_to_print = mysqli_num_rows($rslt);
+        
+        if ($fieldscount_to_print > 0) {
+            $rowx = mysqli_fetch_row($rslt);
+            $custom_records_count = $rowx[0];
+            $submit_buttonURL = '&submit_button=YES';
+            if ($LOGmodify_leads == '5') { $submit_buttonURL = '&submit_button=READONLY'; }
+
+            echo '<div class="card" style="margin-top:25px;">';
+            echo '<div class="card-header"><h2 class="card-title">📝 ' . _QXZ("CUSTOM FIELDS FOR THIS LEAD") . '</h2></div>';
+            echo '<div style="padding:10px;background:#f9fafb;border-radius:8px;">';
+            echo "<iframe src=\"../agc/$vdc_form_display?lead_id=$lead_id&list_id=$CLlist_id&stage=DISPLAY$submit_buttonURL&user=$PHP_AUTH_USER&pass=$PHP_AUTH_PW&bcrypt=OFF&bgcolor=E6E6E6\" style=\"background-color:transparent;width:100%;border:1px solid #d1d5db;border-radius:8px;\" scrolling=\"auto\" allowtransparency=\"true\" id=\"vcFormIFrame\" name=\"vcFormIFrame\" height=\"300\"></iframe>\n";
+            echo '</div></div>';
+        }
+    }
+}
+
+// CALLS TO THIS LEAD Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">📞 ' . _QXZ("CALLS TO THIS LEAD") . '</h2>';
+if ($CIDdisplay == "Yes") {
+    echo '<a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#3b82f6;text-decoration:none;font-size:14px;">🔄 ' . _QXZ("Toggle Details") . '</a>';
+}
+echo '</div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LENGTH") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("HANGUP REASON") . '</th>';
+echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("PHONE") . '</th>';
+
+if ($CIDdisplay == "Yes") {
+    echo '<th style="padding:12px;text-align:center;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALLER ID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("UNIQUEID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("SERVER IP") . '</a></th>';
+    if ($AMDcount > 0) {
+        echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("AMD STATUS") . '</th>';
+        echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("AMD RESPONSE") . '</th>';
+    }
+} else {
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALLER ID") . '</a></th>';
+}
+echo '</tr></thead><tbody>';
+echo "$call_log\n";
+echo '</tbody></table></div></div>';
+
+// CLOSER RECORDS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">📥 ' . _QXZ("CLOSER RECORDS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LENGTH") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LIST") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("WAIT") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("HANGUP REASON") . '</th>';
+
+if ($CIDdisplay == "Yes") {
+    echo '<th style="padding:12px;text-align:center;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALL ID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:center;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("DID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("UNIQUEID") . '</a></th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("SERVER IP") . '</a></th>';
+} else {
+    echo '<th style="padding:12px;text-align:right;font-weight:600;"><a href="' . $PHP_SELF . '?lead_id=' . $lead_id . '&archive_search=' . $archive_search . '&archive_log=' . $archive_log . '&CIDdisplay=' . $altCIDdisplay . '" style="color:#fff;text-decoration:none;">' . _QXZ("CALL ID") . '</a></th>';
+}
+echo '</tr></thead><tbody>';
+echo "$closer_log\n";
+echo '</tbody></table></div></div>';
+
+// AGENT LOG RECORDS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">👤 ' . _QXZ("AGENT LOG RECORDS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PAUSE") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("WAIT") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("TALK") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("DISPO") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("GROUP") . '</th>';
+echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("SUB") . '</th>';
+echo '</tr></thead><tbody>';
+echo "$agent_log\n";
+echo '</tbody></table></div></div>';
+
+// PARK LOGS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">🅿️ ' . _QXZ("PARK LOGS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PARK TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CHANNEL GROUP") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("STATUS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("GRAB TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("HANGUP TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PARK SEC") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TALK SEC") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("EXTENSION") . '</th>';
+echo '</tr></thead><tbody>';
+
+$stmt = "SELECT * from park_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by parked_time, grab_time, hangup_time desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+$u = 0;
+while ($logs_to_print > $u) {
+    $row = mysqli_fetch_array($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    $u++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[parked_time]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[channel_group]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[user]</td>";
+    echo "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;'>$row[status]</span></td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[grab_time]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[hangup_time]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[parked_sec]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[talked_sec]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[extension]</td>";
+    echo "</tr>";
+}
+echo '</tbody></table></div></div>';
+
+// IVR LOGS Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">🔢 ' . _QXZ("IVR LOGS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALL MENU") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("ACTION") . '</th>';
+echo '</tr></thead><tbody>';
+
+$stmt = "SELECT campaign_id,event_date,menu_id,menu_action from vicidial_outbound_ivr_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by uniqueid,event_date,menu_action desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+$u = 0;
+while ($logs_to_print > $u) {
+    $row = mysqli_fetch_row($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    $u++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+    echo "</tr>";
+}
+
+if ($CIDdisplay == "Yes") {
+    $stmt = "SELECT start_time,caller_id,channel,server_ip,comment_d,uniqueid from live_inbound_log where uniqueid IN($uniqueidLIST) order by start_time desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+    if ($logs_to_print > 0) {
+        echo "<tr style='background:#fff3cd;'><td colspan='5' style='padding:12px;font-size:14px;font-weight:600;color:#856404;'>" . _QXZ("Inbound Call IVR entries") . "</td></tr>";
+    }
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[5]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[4]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+        echo "</tr>";
+    }
+}
+echo '</tbody></table></div></div>';
+
+// VOICEMAIL MESSAGE LOGS
+if ($CIDdisplay == "Yes") {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📧 ' . _QXZ("VOICEMAIL MESSAGE DAILY COUNT LOGS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("MESSAGE STARTED COUNT") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("MESSAGE COMPLETED COUNT") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $stmt = "SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+        echo "</tr>";
+    }
+
+    if ($archive_log == "Yes") {
+        $stmt = "SELECT call_date,vmm_count,vmm_played from vicidial_vmm_counts_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+        if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+        $u = 0;
+        while ($logs_to_print > $u) {
+            $row = mysqli_fetch_row($rslt);
+            $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+            $u++;
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$row[0]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+            echo "</tr>";
+        }
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// 3-WAY PRESS LOGS
+if ($CIDdisplay == "Yes") {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">☎️ ' . _QXZ("3-WAY PRESS LOGS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PHONE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RESULT") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $stmt = "SELECT phone_number,call_date,user,result from vicidial_3way_press_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+        echo "</tr>";
+    }
+
+    if ($archive_log == "Yes") {
+        $stmt = "SELECT phone_number,call_date,user,result from vicidial_3way_press_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+        if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+        $u = 0;
+        while ($logs_to_print > $u) {
+            $row = mysqli_fetch_row($rslt);
+            $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+            $u++;
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$row[0]</td>";
+            echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+            echo "</tr>";
+        }
+    }
+    echo '</tbody></table></div></div>';
+
+
+echo '</div>'; // Close modern-container
+echo '</body></html>';
+
+
+
+
+			// HCI AGENT LOGS Section
+if ($SShopper_hold_inserts > 0) {
+    $stmt = "SELECT phone_number,call_date,user,user_ip,campaign_id from vicidial_hci_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">🔒 ' . _QXZ("HCI AGENT LOGS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PHONE") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("IP") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;'><a href=\"user_stats.php?user=$row[2]\" target=\"_blank\" style='color:#3b82f6;text-decoration:none;font-weight:600;'>$row[2]</a></td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[4]</td>";
+        echo "</tr>";
+    }
+
+    if ($archive_log == "Yes") {
+        $stmt = "SELECT phone_number,call_date,user,user_ip,campaign_id from vicidial_hci_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by call_date desc limit 500;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $logs_to_print = mysqli_num_rows($rslt);
+        if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+        while ($logs_to_print > 0) {
+            $row = mysqli_fetch_row($rslt);
+            $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+            $u++;
+            $logs_to_print--;
+            echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+            echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#ef4444;font-weight:600;'>$row[0]</td>";
+            echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[1]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[3]</td>";
+            echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[4]</td>";
+            echo "</tr>";
+        }
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// SWITCH LEADS - FROM Section
+$stmt = "SELECT * from vicidial_agent_function_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and function='switch_lead' order by event_time desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+if ($logs_to_print > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">🔄 ' . _QXZ("AGENT FROM SWITCH-LEADS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("SWITCH TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TO LEAD ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALL ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("UNIQUEID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PHONE NUMBER") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_array($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[event_time]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[campaign_id]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[user]</td>";
+        echo "<td style='padding:10px;'><a href=\"$PHP_SELF?lead_id=$row[stage]\" style='color:#3b82f6;font-weight:600;text-decoration:none;'>$row[stage]</a></td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[caller_code]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[uniqueid]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[comments]</td>";
+        echo "</tr>";
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// SWITCH LEADS - TO Section
+$stmt = "SELECT * from vicidial_agent_function_log where stage='" . mysqli_real_escape_string($link, $lead_id) . "' and function='switch_lead' order by event_time desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+if ($logs_to_print > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">🔄 ' . _QXZ("AGENT TO SWITCH-LEADS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("SWITCH TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("FROM LEAD ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALL ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("UNIQUEID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PHONE NUMBER") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_array($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[event_time]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[campaign_id]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[user]</td>";
+        echo "<td style='padding:10px;'><a href=\"$PHP_SELF?lead_id=$row[lead_id]\" style='color:#3b82f6;font-weight:600;text-decoration:none;'>$row[lead_id]</a></td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[caller_code]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[uniqueid]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[comments]</td>";
+        echo "</tr>";
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// SWITCH LIST Section
+$stmt = "SELECT * from vicidial_agent_function_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and function='switch_list' order by event_time desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+if ($logs_to_print > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📋 ' . _QXZ("AGENT CUSTOM FIELDS SWITCH-LISTS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("SWITCH TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TO LIST ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("FROM LIST ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CALL ID") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_array($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[event_time]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[campaign_id]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[user]</td>";
+        echo "<td style='padding:10px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[stage]\" style='color:#3b82f6;font-weight:600;text-decoration:none;'>$row[stage]</a></td>";
+        echo "<td style='padding:10px;'><a href=\"$PHP_SELF?ADD=311&list_id=$row[comments]\" style='color:#3b82f6;font-weight:600;text-decoration:none;'>$row[comments]</a></td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[caller_code]</td>";
+        echo "</tr>";
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// OUTBOUND EMAILS Section
+if ($allow_emails > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">📧 ' . _QXZ("OUTBOUND EMAILS FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("CAMPAIGN") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("EMAIL TO") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("MESSAGE") . '</th>';
+    echo '<th style="padding:12px;text-align:right;font-weight:600;">' . _QXZ("ATTACHMENTS") . '</th>';
+    echo '</tr></thead><tbody>';
+
+    $stmt = "SELECT * from vicidial_email_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by email_date desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        if (mb_strlen($row[6], 'utf-8') > 100) { $row[6] = mb_substr($row[6], 0, 100, 'utf-8') . "..."; }
+        $row[8] = preg_replace('/\|/', ', ', $row[8]);
+        $row[8] = preg_replace('/,\s+$/', '', $row[8]);
+        $u++;
+
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[3]</td>";
+        echo "<td style='padding:10px;text-align:right;'><a href=\"user_stats.php?user=$row[4]\" target=\"_blank\" style='color:#3b82f6;font-weight:600;text-decoration:none;'>$row[4]</a></td>";
+        echo "<td style='padding:10px;text-align:right;font-size:14px;color:#1f2937;'>$row[7]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[5]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#6b7280;font-style:italic;'>$row[6]</td>";
+        echo "<td style='padding:10px;text-align:right;font-size:13px;color:#1f2937;'>$row[8]</td>";
+        echo "</tr>";
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// Setup column headers for recordings table
+$mute_column = '';
+if ($SSmute_recordings > 0) {
+    $mute_column = '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("MUTE") . '</th>';
+}
+$stereo_column = '';
+if ($SSstereo_recording > 0) {
+    $stereo_column = '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("STEREO") . '</th>';
+}
+$dtmf_detect_column = '';
+if ($SSrecording_dtmf_detection > 0) {
+    $dtmf_detect_column = '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("DTMF GRP") . '</th>';
+}
+$dtmf_mute_column = '';
+if (($SSrecording_dtmf_detection > 0) and ($SSrecording_dtmf_muting > 0)) {
+    $dtmf_mute_column = '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("D-MUTE") . '</th>';
+}
+}
+
+
+
+
+		// RECORDINGS FOR THIS LEAD Section
+echo '<div class="card" style="margin-top:25px;">';
+echo '<div class="card-header"><h2 class="card-title">🎙️ ' . _QXZ("RECORDINGS FOR THIS LEAD") . '</h2></div>';
+echo '<div style="overflow-x:auto;">';
+echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+echo '<thead><tr style="background:#374151;color:#fff;">';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("SECONDS") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECID") . '</th>';
+echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("FILENAME") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LOCATION") . '</th>';
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("TSR") . '</th>';
+echo $mute_column . $stereo_column . $dtmf_detect_column . $dtmf_mute_column;
+echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("PLAY") . '</th>';
+echo '</tr></thead><tbody>';
+
+$stmt = "SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_id desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+$u = 0;
+$rec_ids = "''";
+while ($logs_to_print > $u) {
+    $row = mysqli_fetch_row($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    
+    $stereo_flag = $row[3];
+    $location = $row[11];
+    
+    if (strlen($location) > 2) {
+        $URLserver_ip = $location;
+        $URLserver_ip = preg_replace('/http:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/https:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/\/.*/i', '', $URLserver_ip);
+        $stmt = "SELECT count(*) from servers where server_ip='$URLserver_ip';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $rowx = mysqli_fetch_row($rsltx);
+        
+        if ($rowx[0] > 0) {
+            $stmt = "SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
+            $rsltx = mysql_to_mysqli($stmt, $link);
+            $rowx = mysqli_fetch_row($rsltx);
+            
+            if (preg_match("/ALT_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
+            }
+            if (preg_match("/EXTERNAL_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
+            }
+        }
+    }
+    
+    if ($SSmute_recordings > 0) {
+        $mute_events = 0;
+        $stmt = "SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]' and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $flogs_to_print = mysqli_num_rows($rsltx);
+        if ($flogs_to_print > 0) {
+            $rowx = mysqli_fetch_row($rsltx);
+            $mute_events = $rowx[0];
+        }
+    }
+    
+    if (mb_strlen($location, 'utf-8') > 30) {
+        $locat = mb_substr($location, 0, 27, 'utf-8');
+        $locat = "$locat...";
+    } else {
+        $locat = $location;
+    }
+    
+    $play_audio = '<td style="padding:10px;"></td>';
+    if ((preg_match('/ftp/i', $location)) or (preg_match('/http/i', $location))) {
+        if ($log_recording_access < 1) {
+            $play_audio = "<td style='padding:10px;'><audio controls preload='none' style='max-width:200px;height:30px;'><source src='$location' type='audio/wav'><source src='$location' type='audio/mpeg'>" . _QXZ("No browser audio playback support") . "</audio></td>\n";
+            $location = "<a href=\"$location\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        } else {
+            $location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=0\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        }
+    } else {
+        $location = $locat;
+    }
+    
+    $u++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[12]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[4]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[8]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#6b7280;'>$row[0]</td>";
+    echo "<td style='padding:10px;text-align:center;font-size:12px;color:#1f2937;font-family:monospace;'>$row[10]</td>";
+    echo "<td style='padding:10px;font-size:13px;'>$location</td>";
+    echo "<td style='padding:10px;'><a href=\"user_stats.php?user=$row[13]\" target=\"_blank\" style='color:#3b82f6;text-decoration:none;font-weight:600;'>$row[13]</a></td>";
+    
+    if ($SSmute_recordings > 0) {
+        if ($mute_events < 1) { $mute_events = ''; }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$mute_events</td>";
+    }
+    if ($SSstereo_recording > 0) {
+        if (!preg_match("/^S/", $stereo_flag)) { $stereo_flag = ''; }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$stereo_flag</td>";
+    }
+    if ($SSrecording_dtmf_detection > 0) {
+        $dtmf_detected = '';
+        $dtmf_muting = '';
+        $dtmf_muting_seconds = '';
+        
+        $stmtDTMF = "SELECT dtmf_detected,dtmf_muting,dtmf_muting_seconds from recording_live_log where recording_id='$row[0]' limit 1;";
+        $rsltDTMF = mysql_to_mysqli($stmtDTMF, $link);
+        $DTMF_to_print = mysqli_num_rows($rsltDTMF);
+        if ($DB) { echo "$DTMF_to_print|$stmtDTMF|\n"; }
+        if ($DTMF_to_print > 0) {
+            $DTMFrow = mysqli_fetch_row($rsltDTMF);
+            $dtmf_detected = $DTMFrow[0];
+            $dtmf_muting = $DTMFrow[1];
+            $dtmf_muting_seconds = $DTMFrow[2];
+            
+            if ($dtmf_detected < 1) { $dtmf_detected = ''; }
+            if ($SSrecording_dtmf_muting > 0) {
+                if ($dtmf_muting > 0) {
+                    $dtmf_muting = "$dtmf_muting - $dtmf_muting_seconds";
+                } else {
+                    $dtmf_muting = '';
+                }
+            }
+        }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$dtmf_detected</td>";
+        if ($SSrecording_dtmf_muting > 0) {
+            echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$dtmf_muting</td>";
+        }
+    }
+    
+    echo "$play_audio";
+    echo "</tr>";
+    $rec_ids .= ",'$row[0]'";
+}
+
+// Archive recordings
+$stmt = "SELECT recording_id,channel,server_ip,extension,start_time,start_epoch,end_time,end_epoch,length_in_sec,length_in_min,filename,location,lead_id,user,vicidial_id from recording_log_archive where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and recording_id NOT IN($rec_ids) order by recording_id desc limit 500;";
+$rslt = mysql_to_mysqli($stmt, $link);
+$logs_to_print = mysqli_num_rows($rslt);
+if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+
+$v = 0;
+while ($logs_to_print > $v) {
+    $row = mysqli_fetch_row($rslt);
+    $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+    
+    $location = $row[11];
+    
+    if (strlen($location) > 2) {
+        $URLserver_ip = $location;
+        $URLserver_ip = preg_replace('/http:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/https:\/\//i', '', $URLserver_ip);
+        $URLserver_ip = preg_replace('/\/.*/i', '', $URLserver_ip);
+        $stmt = "SELECT count(*) from servers where server_ip='$URLserver_ip';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $rowx = mysqli_fetch_row($rsltx);
+        
+        if ($rowx[0] > 0) {
+            $stmt = "SELECT recording_web_link,alt_server_ip,external_server_ip from servers where server_ip='$URLserver_ip';";
+            $rsltx = mysql_to_mysqli($stmt, $link);
+            $rowx = mysqli_fetch_row($rsltx);
+            
+            if (preg_match("/ALT_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[1]", $location);
+            }
+            if (preg_match("/EXTERNAL_IP/i", $rowx[0])) {
+                $location = preg_replace("/$URLserver_ip/i", "$rowx[2]", $location);
+            }
+        }
+    }
+    
+    if ($SSmute_recordings > 0) {
+        $mute_events = 0;
+        $stmt = "SELECT count(*) from vicidial_agent_function_log where user='$row[13]' and event_time >= '$row[4]' and event_time <= '$row[6]' and function='mute_rec' and lead_id='$row[12]' and stage='on';";
+        $rsltx = mysql_to_mysqli($stmt, $link);
+        $flogs_to_print = mysqli_num_rows($rsltx);
+        if ($flogs_to_print > 0) {
+            $rowx = mysqli_fetch_row($rsltx);
+            $mute_events = $rowx[0];
+        }
+    }
+    
+    if (mb_strlen($location, 'utf-8') > 30) {
+        $locat = mb_substr($location, 0, 27, 'utf-8');
+        $locat = "$locat...";
+    } else {
+        $locat = $location;
+    }
+    
+    $play_audio = '<td style="padding:10px;"></td>';
+    if ((preg_match('/ftp/i', $location)) or (preg_match('/http/i', $location))) {
+        if ($log_recording_access < 1) {
+            $play_audio = "<td style='padding:10px;'><audio controls preload='none' style='max-width:200px;height:30px;'><source src='$location' type='audio/wav'><source src='$location' type='audio/mpeg'>" . _QXZ("No browser audio playback support") . "</audio></td>\n";
+            $location = "<a href=\"$location\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        } else {
+            $location = "<a href=\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=1\" style='color:#3b82f6;text-decoration:none;font-weight:500;'>$locat</a>";
+        }
+    } else {
+        $location = $locat;
+    }
+    
+    $u++;
+    $v++;
+    echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+    echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[12]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[4]</td>";
+    echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[8]</td>";
+    echo "<td style='padding:10px;font-size:13px;color:#6b7280;'>$row[0]</td>";
+    echo "<td style='padding:10px;text-align:center;font-size:12px;color:#1f2937;font-family:monospace;'>$row[10]</td>";
+    echo "<td style='padding:10px;font-size:13px;'>$location <span style='color:#ef4444;font-weight:600;'>*</span></td>";
+    echo "<td style='padding:10px;'><a href=\"user_stats.php?user=$row[13]\" target=\"_blank\" style='color:#3b82f6;text-decoration:none;font-weight:600;'>$row[13]</a></td>";
+    
+    if ($SSmute_recordings > 0) {
+        if ($mute_events < 1) { $mute_events = ''; }
+        echo "<td style='padding:10px;text-align:center;font-size:13px;color:#1f2937;'>$mute_events</td>";
+    }
+    
+    echo "$play_audio";
+    echo "</tr>";
+}
+
+echo '</tbody></table></div></div>';
+
+// RECORDING ACCESS LOG Section
+if ($log_recording_access > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div class="card-header"><h2 class="card-title">🔐 ' . _QXZ("RECORDING ACCESS LOG FOR THIS LEAD") . '</h2></div>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+    echo '<thead><tr style="background:#374151;color:#fff;">';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">#</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("LEAD") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("DATE/TIME") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RECORDING ID") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("USER") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("RESULT") . '</th>';
+    echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("IP") . '</th>';
+    echo '</tr></thead><tbody>';
+    
+    $stmt = "SELECT recording_id,lead_id,user,access_datetime,access_result,ip from vicidial_recording_access_log where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' order by recording_access_log_id desc limit 500;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $logs_to_print = mysqli_num_rows($rslt);
+    if ($DB) { echo "$logs_to_print|$stmt|\n"; }
+    
+    $u = 0;
+    while ($logs_to_print > $u) {
+        $row = mysqli_fetch_row($rslt);
+        $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+        $u++;
+        echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+        echo "<td style='padding:10px;font-size:13px;font-weight:600;color:#6b7280;'>$u</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[1]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[3]</td>";
+        echo "<td style='padding:10px;font-size:13px;color:#6b7280;'>$row[0]</td>";
+        echo "<td style='padding:10px;font-size:14px;color:#1f2937;'>$row[2]</td>";
+        echo "<td style='padding:10px;'><span style='background:#dbeafe;color:#1e40af;padding:3px 10px;border-radius:4px;font-size:13px;'>$row[4]</span></td>";
+        echo "<td style='padding:10px;font-size:13px;color:#1f2937;'>$row[5]</td>";
+        echo "</tr>";
+    }
+    echo '</tbody></table></div></div>';
+}
+
+// Admin & QC Links
+$stmt = "SELECT count(*) from vicidial_users where user='$PHP_AUTH_USER' and user_level >= 9 and modify_leads IN('1','2','3','4','5','6');";
+if ($DB) { echo "|$stmt|\n"; }
+$rslt = mysql_to_mysqli($stmt, $link);
+$row = mysqli_fetch_row($rslt);
+$admin_display = $row[0];
+
+if ($admin_display > 0) {
+    echo '<div class="card" style="margin-top:25px;">';
+    echo '<div style="padding:20px;text-align:center;background:#f0f9ff;border-radius:8px;">';
+    echo '<a href="./admin.php?ADD=720000000000000&stage=' . $lead_id . '&category=LEADS" style="color:#1e40af;font-weight:600;text-decoration:none;font-size:14px;">📝 ' . _QXZ("Click here to see Lead Modify changes to this lead") . '</a>';
+    echo '</div></div>';
+}
+
+// QC Link
+$stmt = "SELECT qc_enabled,qc_user_level,qc_pass,qc_finish,qc_commit from vicidial_users where user='$PHP_AUTH_USER' and user_level > 1 and active='Y' and qc_enabled='1';";
+if ($DB) { echo "|$stmt|\n"; }
+$rslt = mysql_to_mysqli($stmt, $link);
+$row = mysqli_fetch_row($rslt);
+$qc_auth = $row[0];
+
+if ($qc_auth == '1') {
+    $qcuser_level = $row[1];
+    if ($qcuser_level > 0) {
+        echo '<div class="card" style="margin-top:25px;">';
+        echo '<div style="padding:20px;text-align:center;background:#f0fdf4;border-radius:8px;">';
+        echo '<a href="qc_modify_lead.php?lead_id=' . $lead_id . '" style="color:#15803d;font-weight:600;text-decoration:none;font-size:14px;">✅ ' . _QXZ("Click here to QC Modify this lead") . '</a>';
+        echo '</div></div>';
+    }
+}
+
+// GDPR Compliance
+if ($enable_gdpr_download_deletion > 0) {
+    if ($gdpr_display >= 1) {
+        echo '<div class="card" style="margin-top:25px;">';
+        echo '<div class="card-header"><h2 class="card-title">🔐 ' . _QXZ("GDPR compliance") . '</h2></div>';
+        echo '<div style="display:grid;gap:15px;padding:10px;">';
+        echo '<div style="padding:15px;background:#dbeafe;border-radius:8px;border-left:4px solid #3b82f6;">';
+        echo '<a href="admin_modify_lead.php?lead_id=' . $lead_id . '&gdpr_action=download" style="color:#1e40af;font-weight:600;text-decoration:none;font-size:14px;">📥 ' . _QXZ("Click here to download GDPR-formatted data for this lead") . '</a>';
+        echo '</div>';
+        if ($gdpr_display >= 2) {
+            echo '<div style="padding:15px;background:#fee2e2;border-radius:8px;border-left:4px solid #ef4444;">';
+            echo '<a href="admin_modify_lead.php?lead_id=' . $lead_id . '&gdpr_action=purge" style="color:#991b1b;font-weight:600;text-decoration:none;font-size:14px;">🗑️ ' . _QXZ("Click here to review and purge customer data on lead") . '</a>';
+            echo '</div>';
+        }
+        echo '</div></div>';
+    }
+}
+
+echo '</div>'; // Close modern-container
 
 $ENDtime = date("U");
-
 $RUNtime = ($ENDtime - $STARTtime);
 
-echo "\n\n\n<br><br><br>\n\n";
+echo '<div style="text-align:center;padding:40px 20px;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb;margin-top:40px;">';
+echo _QXZ("script runtime") . ": <strong>$RUNtime</strong> " . _QXZ("seconds");
+echo '</div>';
+echo '<span id="debugbottomspan"></span>';
+echo "</body></html>";
 
+exit;
 
-echo "<font size=0>\n\n\n<br><br><br>\n"._QXZ("script runtime").": $RUNtime "._QXZ("seconds")."</font>";
-echo "</span>\n";
-
-echo "<br><span id=debugbottomspan></span>\n";
-
-?>
-
-
-</body>
-</html>
-
-<?php
-	
-exit; 
-
-function htmlparse($text) 
-	{
-	global $htmlconvert;
-	if ($htmlconvert > 0)
-		{
-		return htmlentities($text);
-		}
-	else
-		{
-		return $text;
-		}
+function htmlparse($text) {
+    global $htmlconvert;
+    if ($htmlconvert > 0) {
+        return htmlentities($text);
+    } else {
+        return $text;
+    }
+}
+}
 	}
-
-
 ?>
