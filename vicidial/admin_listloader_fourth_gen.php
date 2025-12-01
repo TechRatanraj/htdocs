@@ -4030,7 +4030,7 @@ print "if(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false
 print "if(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\n";
 print "if(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n";
 print "</script>";
-}
+
 ##### END field chooser #####
 }
 ?>
