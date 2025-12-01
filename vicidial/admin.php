@@ -9333,98 +9333,122 @@ if ($ADD == 12) {
 ######################
 # ADD=111 display the ADD NEW LIST FORM SCREEN
 ######################
-if ($ADD == 111) {
-    if ($LOGmodify_lists == 1) {
+
+if ($ADD==111) {
+    if ($LOGmodify_lists==1) {
         ##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
         $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='vicidial_lists' and active='1';";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        $rslt=mysql_to_mysqli($stmt, $link);
         $voi_ct = mysqli_num_rows($rslt);
         if ($voi_ct > 0) {
-            $row = mysqli_fetch_row($rslt);
+            $row=mysqli_fetch_row($rslt);
             $voi_count = "$row[0]";
         }
         ##### END ID override optional section #####
 
-        // Modern UI Container
-        echo "<div class='container'>";
-        echo "<div class='card'>";
-        echo "<div class='card-header'><h2>" . _QXZ("ADD A NEW LIST") . "</h2></div>";
-        echo "<div class='card-body'>";
+        // Modern Add List Section
+        echo "<div style='max-width:100%;margin:30px auto;box-sizing:border-box;'>";
         
-        echo "<form action=$PHP_SELF method=POST>\n";
-        echo "<input type=hidden name=ADD value=211>\n";
+        // Header
+        echo "<div style='display:flex;align-items:center;gap:15px;margin-bottom:20px;'>";
+        echo "<div style='background:#495057;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;'>";
+        echo "<img src='images/icon_black_lists.png' alt='Lists' width='24' height='24' style='filter:brightness(0) invert(1);'>";
+        echo "</div>";
+        echo "<div>";
+        echo "<h2 style='margin:0;font-size:22px;color:#2c3e50;font-weight:600;'>"._QXZ("ADD A NEW LIST")."</h2>";
+        echo "</div>";
+        echo "</div>";
         
-        // Modern Form Layout
-        echo "<div class='form-grid'>";
+        // Form Container
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:30px;'>";
+        echo "<form action='$PHP_SELF' method='POST'>";
+        echo "<input type='hidden' name='ADD' value='211'>";
         
-        // Basic Information Section
-        echo "<div class='form-section'>";
-        echo "<h3 class='section-title'><i class='fas fa-info-circle'></i> " . _QXZ("Basic Information") . "</h3>";
+        // Two-column grid layout
+        echo "<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;box-sizing:border-box;'>";
         
+        // List ID
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List ID")."</label>";
         if ($voi_count > 0) {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("List ID") . "</label>";
-            echo "<div class='form-control-static'>" . _QXZ("Auto-Generated") . " $NWB#lists-list_id$NWE</div>";
-            echo "</div>\n";
+            echo "<div style='padding:10px;background:#f8f9fa;border:1.5px solid #e9ecef;border-radius:8px;font-size:14px;color:#6c757d;box-sizing:border-box;'>"._QXZ("Auto-Generated")."</div>";
         } else {
-            echo "<div class='form-group'>";
-            echo "<label>" . _QXZ("List ID") . "</label>";
-            echo "<input type=text name=list_id class='form-control' size=19 maxlength=19> (" . _QXZ("digits only") . ")$NWB#lists-list_id$NWE";
-            echo "</div>\n";
+            echo "<input type='text' name='list_id' size='19' maxlength='19' placeholder='"._QXZ("digits only")."' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
         }
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_id$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List Name") . "</label>";
-        echo "<input type=text name=list_name class='form-control' size=30 maxlength=30>$NWB#lists-list_name$NWE";
-        echo "</div>\n";
+        // List Name
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List Name")."</label>";
+        echo "<input type='text' name='list_name' size='30' maxlength='30' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_name$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("List Description") . "</label>";
-        echo "<input type=text name=list_description class='form-control' size=30 maxlength=255>$NWB#lists-list_description$NWE";
-        echo "</div>\n";
+        // List Description (full width)
+        echo "<div style='grid-column:1/-1;box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("List Description")."</label>";
+        echo "<input type='text' name='list_description' size='30' maxlength='255' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;box-sizing:border-box;'>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-list_description$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Campaign") . "</label>";
-        echo "<select name=campaign_id class='form-control'>\n";
-
-        $stmt = "SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
-        $rslt = mysql_to_mysqli($stmt, $link);
+        // Campaign
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Campaign")."</label>";
+        echo "<select size='1' name='campaign_id' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        
+        $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns $whereLOGallowed_campaignsSQL order by campaign_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
         $campaigns_to_print = mysqli_num_rows($rslt);
-        $campaigns_list = '';
-
-        $o = 0;
+        $campaigns_list='';
+        
+        $o=0;
         while ($campaigns_to_print > $o) {
-            $rowx = mysqli_fetch_row($rslt);
-            $campaigns_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $rowx=mysqli_fetch_row($rslt);
+            $campaigns_list .= "<option value='$rowx[0]'>$rowx[0] - $rowx[1]</option>\n";
             $o++;
         }
         echo "$campaigns_list";
         echo "<option SELECTED>$campaign_id</option>\n";
-        echo "</select>$NWB#lists-campaign_id$NWE";
-        echo "</div>\n";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-campaign_id$NWE</div>";
+        echo "</div>";
         
-        echo "<div class='form-group'>";
-        echo "<label>" . _QXZ("Active") . "</label>";
-        echo "<select name=active class='form-control'><option value='Y'>" . _QXZ("Y") . "</option><option value=\"N\" SELECTED>" . _QXZ("N") . "</option></select>$NWB#lists-active$NWE";
-        echo "</div>\n";
+        // Active
+        echo "<div style='box-sizing:border-box;'>";
+        echo "<label style='display:block;font-size:13px;font-weight:600;color:#2c3e50;margin-bottom:6px;'>"._QXZ("Active")."</label>";
+        echo "<select size='1' name='active' style='width:100%;padding:10px;border:1.5px solid #d2d6e2;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;'>";
+        echo "<option value='Y'>"._QXZ("Y")."</option>";
+        echo "<option value='N' SELECTED>"._QXZ("N")."</option>";
+        echo "</select>";
+        echo "<div style='font-size:11px;color:#6c757d;margin-top:4px;'>$NWB#lists-active$NWE</div>";
+        echo "</div>";
         
-        echo "</div>"; // End Basic Information Section
+        echo "</div>"; // End grid
         
-        echo "<div class='form-actions'>";
-        echo "<button type='submit' name='SUBMIT' class='btn btn-primary'><i class='fas fa-plus'></i> " . _QXZ("SUBMIT") . "</button>";
-        echo "</div>\n";
+        // Submit Button - Green
+        echo "<div style='margin-top:30px;text-align:center;'>";
+        echo "<button type='submit' name='SUBMIT' style='background:#28a745;color:#fff;padding:12px 40px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 2px 4px rgba(40,167,69,0.3);transition:all 0.3s;'>"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
         
-        echo "</div>"; // End form-grid
-        echo "</form>\n";
+        echo "</form>";
+        echo "</div>"; // End form container
+        echo "</div>"; // End main container
         
-        echo "</div>"; // End card-body
-        echo "</div>"; // End card
-        echo "</div>"; // End container
     } else {
-        echo "<div class='alert alert-danger'>" . _QXZ("You do not have permission to view this page") . "</div>\n";
+        // Permission Denied
+        echo "<div style='max-width:100%;margin:50px auto;background:#f8d7da;border-radius:12px;padding:30px;box-shadow:0 3px 12px rgba(0,0,0,0.08);border-left:6px solid #dc3545;box-sizing:border-box;'>";
+        echo "<div style='display:flex;align-items:center;gap:20px;'>";
+        echo "<div style='font-size:48px;color:#721c24;'>⛔</div>";
+        echo "<div>";
+        echo "<div style='font-size:20px;font-weight:bold;color:#721c24;margin-bottom:8px;'>"._QXZ("Permission Denied")."</div>";
+        echo "<div style='color:#721c24;font-size:14px;'>"._QXZ("You do not have permission to view this page")."</div>";
+        echo "</div></div></div>";
         exit;
     }
 }
+
+
 
 ######################
 # ADD=121 display the ADD NUMBER TO DNC FORM SCREEN and add a new number
