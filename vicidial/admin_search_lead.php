@@ -1,7 +1,60 @@
 <?php
 # admin_search_lead.php   version 2.14
 #
-ring
+# Copyright (C) 2024  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+#
+# AST GUI database administration search for lead info
+# admin_modify_lead.php
+#
+# this is the administration lead information search screen, the administrator
+# just needs to enter the leadID and then they can view and modify the information
+# in the record for that lead
+#
+# changes:
+# 60620-1055 - Added variable filtering to eliminate SQL injection attack threat
+#            - Added required user/pass to gain access to this page
+#            - Changed results to multi-record
+# 80710-0023 - Added searching by list, user, status
+# 90121-0500 - Added filter for phone to remove non-digits
+# 90309-1828 - Added admin_log logging
+# 90310-2146 - Added admin header
+# 90508-0644 - Changed to PHP long tags
+# 90917-2307 - Added alternate phone number searching option
+# 90921-0713 - Removed SELECT STAR
+# 100224-1621 - Added first/last name search and changed format of the page
+# 100405-1331 - Added log search ability
+# 100622-0928 - Added field labels
+# 110218-1237 - Added vicidial_lead_search_log logging
+# 111103-1239 - Added admin_hide_phone_data and admin_hide_lead_data options
+# 120221-0118 - Added User Group campaign list restrictions to search queries
+# 120223-2249 - Removed logging of good login passwords if webroot writable is enabled
+# 120409-1131 - Added option for log searches done through slave DB server
+# 121025-1732 - Added owner field search option
+# 130610-1054 - Finalized changing of all ereg instances to preg
+# 130621-1714 - Added filtering of input to prevent SQL injection attacks and new user auth
+# 130902-0747 - Changed to mysqli PHP functions
+# 130926-2048 - Added option to search vicidial_list_archive table
+# 140724-1240 - Added the abilty to search the log archive tables
+# 140808-1117 - Added more admin logging
+# 140817-0941 - Added archive_log variable to modify page link
+# 141001-2200 - Finalized adding QXZ translation to all admin files
+# 141124-1747 - Fixed issue #790
+# 141229-1748 - Added code for on-the-fly language translations display
+# 150107-1728 - Added ignore_group_on_search user option
+# 150312-1507 - Allow for single quotes in vicidial_list data fields
+# 150602-1207 - Allow for searching by email address
+# 151203-2104 - Added option for called_count as search variable
+# 160325-1427 - Changes for sidebar update
+# 160508-0753 - Added colors features
+# 170409-1541 - Added IP List validation code
+# 180421-0813 - Fix for slave db use, issue #1092
+# 191014-1316 - Fix for foreign language, issue #1187
+# 201111-1957 - Fix for side menu issue #1233
+# 201117-2353 - Changes for better compatibility with non-latin data input
+# 210316-2344 - Changed lead-modify page links to javascript because of Chrome
+# 220222-1947 - Added allow_web_debug system setting
+# 220303-0124 - Fix for Issue #1353
+# 220331-0926 - Small fix for $phone variable filtering
 # 240704-2358 - Added cold-storage archive logs search option
 # 240705-0849 - Added archive_type option
 #
