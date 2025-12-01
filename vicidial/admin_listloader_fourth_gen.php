@@ -982,7 +982,7 @@ if ($SSenable_international_dncs)
 	<BR><BR><BR><BR>
 	<?php
 	}
-
+}
 
 ##### BEGIN custom fields submission #####
 if ($OK_to_process) 
