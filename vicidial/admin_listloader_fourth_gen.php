@@ -1003,10 +1003,11 @@ if ($SSenable_international_dncs) {
             </td>
           </tr>
         </table>
-    <?php } ?>
-    
-    <?php
-} else {
+    <?php 
+        }
+    }
+else
+    {
     ?>
     <table style="width:100%;max-width:900px;margin:0 auto;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
       <tr>
@@ -1107,15 +1108,15 @@ if ($SSenable_international_dncs) {
     </table>
     <br><br>
     <?php
-}
+    }
 ?>
 
 </form>
 </div>
 </body>
 </html>
-
 <?php
+
 
 ##### BEGIN custom fields submission #####
 if ($OK_to_process) 
