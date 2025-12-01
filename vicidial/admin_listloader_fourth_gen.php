@@ -3669,69 +3669,78 @@ echo '<span style="font-size:16px;color:#065f46;font-weight:600;">⚙️ ' . _QX
 echo '</div>';
 echo '</div>';
 
-// Settings display in 2-column grid
+// Start 2-column grid container
 echo '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0;">';
 
+// List ID Override
 if (strlen($list_id_override) > 0) {
-    echo '<div style="padding:10px 15px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("LIST ID OVERRIDE FOR THIS FILE") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $list_id_override . '</span>';
+    echo '<div style="padding:12px 15px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#1e40af;font-weight:600;margin-bottom:4px;">' . _QXZ("LIST ID OVERRIDE FOR THIS FILE") . '</div>';
+    echo '<div style="font-size:15px;color:#1e3a8a;font-weight:700;">' . $list_id_override . '</div>';
     echo '</div>';
 }
 
+// Phone Code Override
 if (strlen($phone_code_override) > 0) {
-    echo '<div style="padding:10px 15px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("PHONE CODE OVERRIDE FOR THIS FILE") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $phone_code_override . '</span>';
+    echo '<div style="padding:12px 15px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#1e40af;font-weight:600;margin-bottom:4px;">' . _QXZ("PHONE CODE OVERRIDE FOR THIS FILE") . '</div>';
+    echo '<div style="font-size:15px;color:#1e3a8a;font-weight:700;">' . $phone_code_override . '</div>';
     echo '</div>';
 }
 
+// Lead Duplicate Check
 if (strlen($dupcheck) > 0) {
-    echo '<div style="padding:10px 15px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#92400e;font-weight:600;">' . _QXZ("LEAD DUPLICATE CHECK") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#78350f;">' . $dupcheck . '</span>';
+    echo '<div style="padding:12px 15px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#92400e;font-weight:600;margin-bottom:4px;">' . _QXZ("LEAD DUPLICATE CHECK") . '</div>';
+    echo '<div style="font-size:14px;color:#78350f;">' . $dupcheck . '</div>';
     echo '</div>';
 }
 
+// International DNC Scrub
 if (strlen($international_dnc_scrub) > 0) {
-    echo '<div style="padding:10px 15px;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#991b1b;font-weight:600;">' . _QXZ("INTERNATIONAL DNC SCRUB") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#7f1d1d;">' . $international_dnc_scrub . '</span>';
+    echo '<div style="padding:12px 15px;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#991b1b;font-weight:600;margin-bottom:4px;">' . _QXZ("INTERNATIONAL DNC SCRUB") . '</div>';
+    echo '<div style="font-size:14px;color:#7f1d1d;">' . $international_dnc_scrub . '</div>';
     echo '</div>';
 }
 
-if (strlen($status_dedupe_str) > 0) {
-    echo '<div style="padding:10px 15px;background:#e0e7ff;border-left:4px solid #6366f1;border-radius:6px;grid-column:1/-1;">';
-    echo '<span style="font-size:14px;color:#3730a3;font-weight:600;">' . _QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY") . ':</span><br>';
-    echo '<span style="font-size:13px;color:#4338ca;margin-top:5px;display:block;">' . $status_dedupe_str . '</span>';
-    echo '</div>';
-}
-
-if (strlen($status_mismatch_action) > 0) {
-    echo '<div style="padding:10px 15px;background:#fce7f3;border-left:4px solid #ec4899;border-radius:6px;grid-column:1/-1;">';
-    echo '<span style="font-size:14px;color:#831843;font-weight:600;">' . _QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#9f1239;">' . $status_mismatch_action . '</span>';
-    echo '</div>';
-}
-
+// State Conversion
 if (strlen($state_conversion) > 9) {
-    echo '<div style="padding:10px 15px;background:#d1fae5;border-left:4px solid #10b981;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#065f46;font-weight:600;">' . _QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#047857;">' . $state_conversion . '</span>';
+    echo '<div style="padding:12px 15px;background:#d1fae5;border-left:4px solid #10b981;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#065f46;font-weight:600;margin-bottom:4px;">' . _QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED") . '</div>';
+    echo '<div style="font-size:14px;color:#047857;">' . $state_conversion . '</div>';
     echo '</div>';
 }
 
+// Phone Number Length
 if ((strlen($web_loader_phone_length) > 0) && (strlen($web_loader_phone_length) < 3)) {
-    echo '<div style="padding:10px 15px;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#075985;font-weight:600;">' . _QXZ("REQUIRED PHONE NUMBER LENGTH") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#0c4a6e;font-weight:700;">' . $web_loader_phone_length . '</span>';
+    echo '<div style="padding:12px 15px;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#075985;font-weight:600;margin-bottom:4px;">' . _QXZ("REQUIRED PHONE NUMBER LENGTH") . '</div>';
+    echo '<div style="font-size:15px;color:#0c4a6e;font-weight:700;">' . $web_loader_phone_length . '</div>';
     echo '</div>';
 }
 
+// Phone Strip Setting
 if ((strlen($SSweb_loader_phone_strip) > 0) && ($SSweb_loader_phone_strip != 'DISABLED')) {
-    echo '<div style="padding:10px 15px;background:#fef9c3;border-left:4px solid #eab308;border-radius:6px;">';
-    echo '<span style="font-size:14px;color:#713f12;font-weight:600;">' . _QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED") . ':</span><br>';
-    echo '<span style="font-size:14px;color:#854d0e;">' . $SSweb_loader_phone_strip . '</span>';
+    echo '<div style="padding:12px 15px;background:#fef9c3;border-left:4px solid #eab308;border-radius:6px;">';
+    echo '<div style="font-size:13px;color:#713f12;font-weight:600;margin-bottom:4px;">' . _QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED") . '</div>';
+    echo '<div style="font-size:14px;color:#854d0e;">' . $SSweb_loader_phone_strip . '</div>';
+    echo '</div>';
+}
+
+// Status Dedupe (full width - 2 columns)
+if (strlen($status_dedupe_str) > 0) {
+    echo '<div style="padding:12px 15px;background:#e0e7ff;border-left:4px solid #6366f1;border-radius:6px;grid-column:1/-1;">';
+    echo '<div style="font-size:13px;color:#3730a3;font-weight:600;margin-bottom:6px;">' . _QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY") . '</div>';
+    echo '<div style="font-size:13px;color:#4338ca;line-height:1.6;">' . $status_dedupe_str . '</div>';
+    echo '</div>';
+}
+
+// Status Mismatch Action (full width - 2 columns)
+if (strlen($status_mismatch_action) > 0) {
+    echo '<div style="padding:12px 15px;background:#fce7f3;border-left:4px solid #ec4899;border-radius:6px;grid-column:1/-1;">';
+    echo '<div style="font-size:13px;color:#831843;font-weight:600;margin-bottom:4px;">' . _QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST") . '</div>';
+    echo '<div style="font-size:14px;color:#9f1239;">' . $status_mismatch_action . '</div>';
     echo '</div>';
 }
 
@@ -3811,9 +3820,7 @@ print "if(document.forms[0].reload_page) {document.forms[0].reload_page.disabled
 print "</script>";
 }
 ##### END field chooser #####
-
 }
-
 ?>
 </form>
 </body>
