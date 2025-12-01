@@ -3046,7 +3046,7 @@ if ($lead_id != 'NEW') {
     if ($audit_comments) {
         echo '</div>'; // Close comment-history
     }
-}
+
 
 echo '</form></div></div>'; // Close card and container
 
