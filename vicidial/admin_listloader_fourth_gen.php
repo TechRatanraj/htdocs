@@ -1049,150 +1049,235 @@ else {
 }
 
 
-
 ##### BEGIN custom fields submission #####
-if ($OK_to_process) 
-	{
-	print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\ndocument.forms[0].list_id_override.disabled=true;\ndocument.forms[0].phone_code_override.disabled=true;\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=true;}\n</script>";
-	flush();
-	$total=0; $good=0; $bad=0; $dup=0; $inv=0; $post=0; $moved=0; $phone_list='';
+if ($OK_to_process) {
+    print "<script language='JavaScript1.2'>\n";
+    print "if(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\n";
+    print "document.forms[0].list_id_override.disabled=true;\n";
+    print "document.forms[0].phone_code_override.disabled=true;\n";
+    print "if(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\n";
+    print "if(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=true;}\n";
+    print "</script>";
+    flush();
+    
+    $total = 0;
+    $good = 0;
+    $bad = 0;
+    $dup = 0;
+    $inv = 0;
+    $post = 0;
+    $moved = 0;
+    $phone_list = '';
 
-	$file=fopen("$lead_file", "r");
-	if ($webroot_writable > 0)
-		{
-		$stmt_file=fopen("listloader_stmts.txt", "w");
-		}
-	$buffer=fgets($file, 4096);
-	$tab_count=substr_count($buffer, "\t");
-	$pipe_count=substr_count($buffer, "|");
+    $file = fopen("$lead_file", "r");
+    if ($webroot_writable > 0) {
+        $stmt_file = fopen("listloader_stmts.txt", "w");
+    }
+    
+    $buffer = fgets($file, 4096);
+    $tab_count = substr_count($buffer, "\t");
+    $pipe_count = substr_count($buffer, "|");
 
-	if ($tab_count>$pipe_count) {$delimiter="\t";  $delim_name="tab";} else {$delimiter="|";  $delim_name="pipe";}
-	$field_check=explode($delimiter, $buffer);
+    if ($tab_count > $pipe_count) {
+        $delimiter = "\t";
+        $delim_name = "tab";
+    } else {
+        $delimiter = "|";
+        $delim_name = "pipe";
+    }
+    
+    $field_check = explode($delimiter, $buffer);
 
-	if (count($field_check)>=2) 
-		{
-		flush();
-		$file=fopen("$lead_file", "r");
-		print "<center><font face='arial, helvetica' size=3 color='#009900'><B>"._QXZ("Processing file")."...\n";
+    if (count($field_check) >= 2) {
+        flush();
+        $file = fopen("$lead_file", "r");
+        
+        echo '<div style="max-width:900px;margin:30px auto;padding:30px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">';
+        echo '<div style="text-align:center;margin-bottom:25px;">';
+        echo '<div style="display:inline-block;padding:15px 30px;background:#d1fae5;border-radius:8px;border-left:4px solid #10b981;">';
+        echo '<span style="font-size:18px;color:#065f46;font-weight:600;">⚙️ ' . _QXZ("Processing file") . '...</span>';
+        echo '</div>';
+        echo '</div>';
 
-		if (is_array($dedupe_statuses) && count($dedupe_statuses)>0) 
-			{
-			$statuses_clause=" and status in (";
-			$status_dedupe_str="";
-			for($ds=0; $ds<count($dedupe_statuses); $ds++) 
-				{
-				$dedupe_statuses[$ds] = preg_replace('/[^-_0-9\p{L}]/u', '', $dedupe_statuses[$ds]);
-				$statuses_clause.="'$dedupe_statuses[$ds]',";
-				$status_dedupe_str.="$dedupe_statuses[$ds], ";
-				if (preg_match('/\-\-ALL\-\-/', $dedupe_statuses[$ds])) 
-					{
-					$status_mismatch_action="";  # Important - if user selects all dispositions, then there is no possibility of the status mismatch being needed
-					$statuses_clause="";
-					$status_dedupe_str="";
-					break;
-					}
-				}
-			$statuses_clause=preg_replace('/,$/', "", $statuses_clause);
-			$status_dedupe_str=preg_replace('/,\s$/', "", $status_dedupe_str);
-			if ($statuses_clause!="") {$statuses_clause.=")";}
-	
-			if ($status_mismatch_action) 
-				{
-				$mismatch_clause=" and status not in ('".implode("','", $dedupe_statuses)."') ";
-				if (preg_match('/RECENT/', $status_mismatch_action)) {$mismatch_limit=" limit 1 ";} else {$mismatch_limit="";}
-				}
-			}
-		
+        // Status duplicate check handling
+        if (is_array($dedupe_statuses) && count($dedupe_statuses) > 0) {
+            $statuses_clause = " and status in (";
+            $status_dedupe_str = "";
+            
+            for($ds = 0; $ds < count($dedupe_statuses); $ds++) {
+                $dedupe_statuses[$ds] = preg_replace('/[^-_0-9\p{L}]/u', '', $dedupe_statuses[$ds]);
+                $statuses_clause .= "'$dedupe_statuses[$ds]',";
+                $status_dedupe_str .= "$dedupe_statuses[$ds], ";
+                
+                if (preg_match('/\-\-ALL\-\-/', $dedupe_statuses[$ds])) {
+                    $status_mismatch_action = "";  // Important - if user selects all dispositions, then there is no possibility of the status mismatch being needed
+                    $statuses_clause = "";
+                    $status_dedupe_str = "";
+                    break;
+                }
+            }
+            
+            $statuses_clause = preg_replace('/,$/', "", $statuses_clause);
+            $status_dedupe_str = preg_replace('/,\s$/', "", $status_dedupe_str);
+            if ($statuses_clause != "") {
+                $statuses_clause .= ")";
+            }
+    
+            if ($status_mismatch_action) {
+                $mismatch_clause = " and status not in ('".implode("','", $dedupe_statuses)."') ";
+                if (preg_match('/RECENT/', $status_mismatch_action)) {
+                    $mismatch_limit = " limit 1 ";
+                } else {
+                    $mismatch_limit = "";
+                }
+            }
+        }
 
-		if (strlen($list_id_override)>0) 
-			{
-			print "<BR><BR>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").": $list_id_override<BR><BR>";
-			}
+        echo '<div style="background:#f9fafb;padding:20px;border-radius:8px;margin-bottom:20px;">';
+        
+        // List ID Override
+        if (strlen($list_id_override) > 0) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("LIST ID OVERRIDE FOR THIS FILE") . ':</span> ';
+            echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $list_id_override . '</span>';
+            echo '</div>';
+        }
 
-		if (strlen($phone_code_override)>0) 
-			{
-			print "<BR><BR>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").": $phone_code_override<BR><BR>";
-			}
-		if (strlen($dupcheck)>0) 
-			{
-			print "<BR>"._QXZ("LEAD DUPLICATE CHECK").": $dupcheck<BR>\n";
-			}
-		if (strlen($international_dnc_scrub)>0) 
-			{
-			print "<BR>"._QXZ("INTERNATIONAL DNC SCRUB").": $international_dnc_scrub<BR>\n";
-			}
-		if (strlen($status_dedupe_str)>0) 
-			{
-			print "<BR>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").": $status_dedupe_str<BR>\n";
-			}
-		if (strlen($status_mismatch_action)>0) 
-			{
-			print "<BR>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").": $status_mismatch_action<BR>\n";
-			}
-		if (strlen($state_conversion)>9)
-			{
-			print "<BR>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").": $state_conversion<BR>\n";
-			}
-		if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
-			{
-			print "<BR>"._QXZ("REQUIRED PHONE NUMBER LENGTH").": $web_loader_phone_length<BR>\n";
-			}
-		if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
-			{
-			print "<BR>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").": $SSweb_loader_phone_strip<BR>\n";
-			}
-		$multidaySQL='';
-		if (preg_match("/30DAY|60DAY|90DAY|180DAY|360DAY/i",$dupcheck))
-			{
-			$day_val=30;
-			if (preg_match("/30DAY/i",$dupcheck)) {$day_val=30;}
-			if (preg_match("/60DAY/i",$dupcheck)) {$day_val=60;}
-			if (preg_match("/90DAY/i",$dupcheck)) {$day_val=90;}
-			if (preg_match("/180DAY/i",$dupcheck)) {$day_val=180;}
-			if (preg_match("/360DAY/i",$dupcheck)) {$day_val=360;}
-			$multiday = date("Y-m-d H:i:s", mktime(date("H"),date("i"),date("s"),date("m"),date("d")-$day_val,date("Y")));
-			$multidaySQL = "and entry_date > \"$multiday\"";
-			if ($DB > 0) {echo "DEBUG: $day_val day SQL: |$multidaySQL|";}
-			}
+        // Phone Code Override
+        if (strlen($phone_code_override) > 0) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#dbeafe;border-left:4px solid #3b82f6;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#1e40af;font-weight:600;">' . _QXZ("PHONE CODE OVERRIDE FOR THIS FILE") . ':</span> ';
+            echo '<span style="font-size:14px;color:#1e3a8a;font-weight:700;">' . $phone_code_override . '</span>';
+            echo '</div>';
+        }
+        
+        // Duplicate Check
+        if (strlen($dupcheck) > 0) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#92400e;font-weight:600;">' . _QXZ("LEAD DUPLICATE CHECK") . ':</span> ';
+            echo '<span style="font-size:14px;color:#78350f;">' . $dupcheck . '</span>';
+            echo '</div>';
+        }
+        
+        // International DNC Scrub
+        if (strlen($international_dnc_scrub) > 0) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fee2e2;border-left:4px solid #ef4444;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#991b1b;font-weight:600;">' . _QXZ("INTERNATIONAL DNC SCRUB") . ':</span> ';
+            echo '<span style="font-size:14px;color:#7f1d1d;">' . $international_dnc_scrub . '</span>';
+            echo '</div>';
+        }
+        
+        // Status Dedupe
+        if (strlen($status_dedupe_str) > 0) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#e0e7ff;border-left:4px solid #6366f1;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#3730a3;font-weight:600;">' . _QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY") . ':</span><br>';
+            echo '<span style="font-size:13px;color:#4338ca;margin-top:5px;display:block;">' . $status_dedupe_str . '</span>';
+            echo '</div>';
+        }
+        
+        // Status Mismatch Action
+        if (strlen($status_mismatch_action) > 0) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fce7f3;border-left:4px solid #ec4899;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#831843;font-weight:600;">' . _QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST") . ':</span> ';
+            echo '<span style="font-size:14px;color:#9f1239;">' . $status_mismatch_action . '</span>';
+            echo '</div>';
+        }
+        
+        // State Conversion
+        if (strlen($state_conversion) > 9) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#d1fae5;border-left:4px solid #10b981;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#065f46;font-weight:600;">' . _QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED") . ':</span> ';
+            echo '<span style="font-size:14px;color:#047857;">' . $state_conversion . '</span>';
+            echo '</div>';
+        }
+        
+        // Phone Length Requirement
+        if ((strlen($web_loader_phone_length) > 0) && (strlen($web_loader_phone_length) < 3)) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#075985;font-weight:600;">' . _QXZ("REQUIRED PHONE NUMBER LENGTH") . ':</span> ';
+            echo '<span style="font-size:14px;color:#0c4a6e;font-weight:700;">' . $web_loader_phone_length . '</span>';
+            echo '</div>';
+        }
+        
+        // Phone Strip System Setting
+        if ((strlen($SSweb_loader_phone_strip) > 0) && ($SSweb_loader_phone_strip != 'DISABLED')) {
+            echo '<div style="padding:10px 15px;margin-bottom:12px;background:#fef9c3;border-left:4px solid #eab308;border-radius:6px;">';
+            echo '<span style="font-size:14px;color:#713f12;font-weight:600;">' . _QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED") . ':</span> ';
+            echo '<span style="font-size:14px;color:#854d0e;">' . $SSweb_loader_phone_strip . '</span>';
+            echo '</div>';
+        }
+        
+        echo '</div>'; // Close settings container
 
-		if ($custom_fields_enabled > 0)
-			{
-			$tablecount_to_print=0;
-			$fieldscount_to_print=0;
-			$fields_to_print=0;
+        // Multi-day duplicate check handling
+        $multidaySQL = '';
+        if (preg_match("/30DAY|60DAY|90DAY|180DAY|360DAY/i", $dupcheck)) {
+            $day_val = 30;
+            if (preg_match("/30DAY/i", $dupcheck)) { $day_val = 30; }
+            if (preg_match("/60DAY/i", $dupcheck)) { $day_val = 60; }
+            if (preg_match("/90DAY/i", $dupcheck)) { $day_val = 90; }
+            if (preg_match("/180DAY/i", $dupcheck)) { $day_val = 180; }
+            if (preg_match("/360DAY/i", $dupcheck)) { $day_val = 360; }
+            
+            $multiday = date("Y-m-d H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d") - $day_val, date("Y")));
+            $multidaySQL = "and entry_date > \"$multiday\"";
+            
+            if ($DB > 0) {
+                echo "<div style='padding:8px 12px;background:#fef3c7;border-radius:6px;font-size:12px;color:#78350f;margin-bottom:10px;'>";
+                echo "DEBUG: $day_val day SQL: |$multidaySQL|";
+                echo "</div>";
+            }
+        }
 
-			$stmt="SHOW TABLES LIKE \"custom_$list_id_override\";";
-			if ($DB>0) {echo "$stmt\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$tablecount_to_print = mysqli_num_rows($rslt);
+        // Custom fields handling
+        if ($custom_fields_enabled > 0) {
+            $tablecount_to_print = 0;
+            $fieldscount_to_print = 0;
+            $fields_to_print = 0;
 
-			if ($tablecount_to_print > 0) 
-				{
-				$stmt="SELECT count(*) from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y';";
-				if ($DB>0) {echo "$stmt\n";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$fieldscount_to_print = mysqli_num_rows($rslt);
+            $stmt = "SHOW TABLES LIKE \"custom_$list_id_override\";";
+            if ($DB > 0) {
+                echo "<div style='padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:12px;color:#374151;margin-bottom:8px;font-family:monospace;'>$stmt</div>";
+            }
+            $rslt = mysql_to_mysqli($stmt, $link);
+            $tablecount_to_print = mysqli_num_rows($rslt);
 
-				if ($fieldscount_to_print > 0) 
-					{
-					$stmt="SELECT field_label,field_type,field_encrypt from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y' order by field_rank,field_order,field_label;";
-					if ($DB>0) {echo "$stmt\n";}
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$fields_to_print = mysqli_num_rows($rslt);
-					$fields_list='';
-					$o=0;
-					while ($fields_to_print > $o) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						$A_field_label[$o] =	$rowx[0];
-						$A_field_type[$o] =		$rowx[1];
-						$A_field_encrypt[$o] =	$rowx[2];
-						$A_field_value[$o] =	'';
-						$o++;
-						}
-					}
-				}
-			}
+            if ($tablecount_to_print > 0) {
+                $stmt = "SELECT count(*) from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y';";
+                if ($DB > 0) {
+                    echo "<div style='padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:12px;color:#374151;margin-bottom:8px;font-family:monospace;'>$stmt</div>";
+                }
+                $rslt = mysql_to_mysqli($stmt, $link);
+                $fieldscount_to_print = mysqli_num_rows($rslt);
+
+                if ($fieldscount_to_print > 0) {
+                    $stmt = "SELECT field_label,field_type,field_encrypt from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y' order by field_rank,field_order,field_label;";
+                    if ($DB > 0) {
+                        echo "<div style='padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:12px;color:#374151;margin-bottom:8px;font-family:monospace;'>$stmt</div>";
+                    }
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $fields_to_print = mysqli_num_rows($rslt);
+                    $fields_list = '';
+                    $o = 0;
+                    
+                    while ($fields_to_print > $o) {
+                        $rowx = mysqli_fetch_row($rslt);
+                        $A_field_label[$o] = $rowx[0];
+                        $A_field_type[$o] = $rowx[1];
+                        $A_field_encrypt[$o] = $rowx[2];
+                        $A_field_value[$o] = '';
+                        $o++;
+                    }
+                    
+                    echo '<div style="padding:12px 15px;margin-top:15px;background:#ecfdf5;border-left:4px solid #10b981;border-radius:6px;">';
+                    echo '<span style="font-size:14px;color:#065f46;font-weight:600;">✅ ' . _QXZ("Custom fields detected") . ':</span> ';
+                    echo '<span style="font-size:14px;color:#047857;font-weight:700;">' . $fields_to_print . ' ' . _QXZ("fields") . '</span>';
+                    echo '</div>';
+                }
+            }
+        }
+        
+        echo '</div>'; // Close main processing container
 
 		#  If a list is being scrubbed against a country's DNC list, block the list from being dialed and purge any lead from the hopper that belongs to that list.
 		if (strlen($international_dnc_scrub)>0 && strlen($list_id_override)>0 && $SSenable_international_dncs)
