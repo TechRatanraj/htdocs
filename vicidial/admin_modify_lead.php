@@ -1441,7 +1441,7 @@ if ($gdpr_display==2 && preg_match("/purge$/", $gdpr_action))
 
 	$short_header=1;
 
-	//require("admin_header.php");
+	require("admin_header.php");
 
 	echo "</span>\n";
 	echo $HTML_text;
@@ -1556,7 +1556,7 @@ else
 
 		$short_header=1;
 
-		require("admin_header.php");
+		//require("admin_header.php");
 
 		echo "</span>\n";
 		echo "<BR><BR><b>"._QXZ("lead does not exist").": $lead_id</b><BR><BR>\n";
@@ -1751,7 +1751,7 @@ if ($end_call > 0)
 
 	$short_header=1;
 
-	require("admin_header.php");
+	//require("admin_header.php");
 
 	echo "</span>\n";
 	echo "$messagesHTML\n";
@@ -1850,7 +1850,7 @@ else
 
 			$short_header=1;
 
-			require("admin_header.php");
+			//require("admin_header.php");
 
 			echo "</span>\n";
 			echo "<BR><BR><b>"._QXZ("lead does not exist").": $lead_id</b><BR><BR>\n";
@@ -2841,7 +2841,7 @@ else
 
 	$short_header=1;
 
-	require("admin_header.php");
+	//require("admin_header.php");
 
 	echo "</span>\n";
 	echo "$messagesHTML\n";
