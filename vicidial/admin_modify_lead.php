@@ -3047,287 +3047,313 @@ if ($lead_id != 'NEW') {
         echo '</div>'; // Close comment-history
     }
 
-
 echo '</form></div></div>'; // Close card and container
 
 	
 	
 	
+// Disposition Section
+echo '<div class="section-divider"></div>';
+echo '<div class="form-group" style="background:#f9fafb;padding:15px;border-radius:8px;">';
+echo '<div class="form-label">' . _QXZ("Disposition") . ':</div>';
+echo '<div><select size="1" name="status" class="form-input" style="max-width:400px;">';
+
+### find out if status(dispo) is a scheduled callback status
+$scheduled_callback = '';
+$stmt = "SELECT scheduled_callback from vicidial_statuses where status='$dispo';";
+$rslt = mysql_to_mysqli($stmt, $link);
+$scb_count_to_print = mysqli_num_rows($rslt);
+if ($scb_count_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    if (strlen($row[0]) > 0) { $scheduled_callback = $row[0]; }
+}
+$stmt = "SELECT scheduled_callback from vicidial_campaign_statuses where status='$dispo';";
+$rslt = mysql_to_mysqli($stmt, $link);
+$scb_count_to_print = mysqli_num_rows($rslt);
+if ($scb_count_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    if (strlen($row[0]) > 0) { $scheduled_callback = $row[0]; }
+}
+
+$list_campaign = '';
+$stmt = "SELECT campaign_id from vicidial_lists where list_id='$list_id'";
+$rslt = mysql_to_mysqli($stmt, $link);
+if ($DB) { echo "$stmt\n"; }
+$Cstatuses_to_print = mysqli_num_rows($rslt);
+if ($Cstatuses_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $list_campaign = $row[0];
+}
+
+$stmt = "SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_statuses $selectableSQL order by status";
+$rslt = mysql_to_mysqli($stmt, $link);
+$statuses_to_print = mysqli_num_rows($rslt);
+$statuses_listMODLOG = '';
+$statuses_list = '';
+
+$o = 0;
+$DS = 0;
+while ($statuses_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    if ((strlen($dispo) == strlen($rowx[0])) and (preg_match("/$dispo/i", $rowx[0]))) {
+        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $DS++;
+    } else {
+        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+    }
+    $statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
+    $o++;
+}
+
+$stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$list_campaign' $selectableSQLand order by status";
+$rslt = mysql_to_mysqli($stmt, $link);
+$CAMPstatuses_to_print = mysqli_num_rows($rslt);
+
+$o = 0;
+$CBhold_set = 0;
+while ($CAMPstatuses_to_print > $o) {
+    $rowx = mysqli_fetch_row($rslt);
+    if ((strlen($dispo) == strlen($rowx[0])) and (preg_match("/$dispo/i", $rowx[0]))) {
+        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        $DS++;
+    } else {
+        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+    }
+    $statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
+    if ($rowx[0] == 'CBHOLD') { $CBhold_set++; }
+    $o++;
+}
+
+if (strlen($VU_status_group_id) > 0) {
+    $stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' $selectableSQLand order by status";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $USERstatuses_to_print = mysqli_num_rows($rslt);
+
+    $o = 0;
+    $CBhold_set = 0;
+    while ($USERstatuses_to_print > $o) {
+        $rowx = mysqli_fetch_row($rslt);
+        if ((strlen($dispo) == strlen($rowx[0])) and (preg_match("/$dispo/i", $rowx[0]))) {
+            $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $DS++;
+        } else {
+            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+        }
+        $statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
+        if ($rowx[0] == 'CBHOLD') { $CBhold_set++; }
+        $o++;
+    }
+}
+
+if ($dispo == 'CBHOLD') { $CBhold_set++; }
+
+if ($DS < 1) {
+    $statuses_list .= "<option SELECTED value=\"$dispo\">$dispo</option>\n";
+}
+if ($CBhold_set < 1) {
+    $statuses_list .= "<option value=\"CBHOLD\">CBHOLD - " . _QXZ("Scheduled Callback") . "</option>\n";
+}
+echo "$statuses_list";
+echo "</select> <i style='color:#6b7280;font-size:13px;'>(" . _QXZ("with") . " $list_campaign " . _QXZ("statuses") . ")</i></div>";
+echo '</div>';
+
+// Log Modification Options
+echo '<div class="section-divider"></div>';
+echo '<h3 style="font-size:18px;font-weight:600;color:#1f2937;margin:20px 0 15px 0;">📝 ' . _QXZ("Log Modification Options") . '</h3>';
+
+echo '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;">';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="modify_logs" value="1" CHECKED style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Modify vicidial log") . '</span></label>';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="modify_agent_logs" value="1" CHECKED style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Modify agent log") . '</span></label>';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="modify_closer_logs" value="1" style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Modify closer log") . '</span></label>';
+echo '<label style="display:flex;align-items:center;padding:12px;background:#f9fafb;border-radius:8px;cursor:pointer;"><input type="checkbox" name="add_closer_record" value="1" style="width:18px;height:18px;margin-right:10px;cursor:pointer;"><span style="font-size:14px;color:#374151;font-weight:500;">' . _QXZ("Add closer log record") . '</span></label>';
+echo '</div>';
+
+} else {
+    echo "<input type=hidden name=status value=\"NEW\">\n";
+}
+
+if (($LOGadmin_hide_lead_data == '0') or ($lead_id == 'NEW')) {
+    echo '<div style="text-align:center;margin:30px 0 20px 0;">';
+    echo '<button type="submit" name="submit" style="padding:14px 40px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 2px 4px rgba(16,185,129,0.3);transition:all 0.2s;" onmouseover="this.style.background=\'#059669\'" onmouseout="this.style.background=\'#10b981\'">' . _QXZ("SUBMIT") . '</button>';
+    echo '</div>';
+}
+
+if (($LOGmodify_leads == '3') or ($LOGmodify_leads == '4')) {
+    echo "<span id='statuses_listMODLOG' style=\"display:none\">$statuses_listMODLOG</span>\n";
+}
+
+echo "</form></div>\n"; // Close card
+echo "<BR><BR>\n";
+
+// Callback Details Section
+if ($lead_id != 'NEW') {
+    if (($dispo == 'CALLBK') or ($dispo == 'CBHOLD') or ($scheduled_callback == 'Y')) {
+        ### find any vicidial_callback records for this lead
+        $cb_stmt = "SELECT callback_id,lead_id,list_id,campaign_id,status,entry_time,callback_time,modify_date,user,recipient,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
+        if ($DB) { echo "|$cb_stmt|\n"; }
+        $cb_rslt = mysql_to_mysqli($cb_stmt, $link);
+        $CB_to_print = mysqli_num_rows($cb_rslt);
+
+        echo '<div class="card">';
+        echo '<div class="card-header"><h2 class="card-title">📅 ' . _QXZ("Callback Details") . '</h2></div>';
+
+        if ($CB_to_print > 0) {
+            echo "<form action='$PHP_SELF' method='POST' name='vsn' id='vsn'>";
+            echo '<div style="overflow-x:auto;">';
+            echo '<table style="width:100%;border-collapse:collapse;font-size:14px;">';
+            echo '<thead><tr style="background:#374151;color:#fff;">';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CallBack Date/Time") . '</th>';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("CallBack Disposition") . '</th>';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("Owner") . '</th>';
+            echo '<th style="padding:12px;text-align:left;font-weight:600;">' . _QXZ("Comments") . '</th>';
+            echo '<th style="padding:12px;text-align:center;font-weight:600;">' . _QXZ("Action") . '</th>';
+            echo '</tr></thead><tbody>';
+
+            $u = 0;
+            while ($cb_row = mysqli_fetch_row($cb_rslt)) {
+                $callback_id = $cb_row[0];
+                $CBcomments = $cb_row[10];
+                $lead_status = $cb_row[12];
+                $appointment_datetimeARRAY = explode(" ", $cb_row[6]);
+                $appointment_date = $appointment_datetimeARRAY[0];
+                $appointment_timeARRAY = explode(":", $appointment_datetimeARRAY[1]);
+                $appointment_hour = $appointment_timeARRAY[0];
+                $appointment_min = $appointment_timeARRAY[1];
+
+                $stmt = "SELECT status,status_name from vicidial_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') order by status";
+                $rslt = mysql_to_mysqli($stmt, $link);
+                $statuses_to_print = mysqli_num_rows($rslt);
+                $statuses_list = '';
+
+                $o = 0;
+                $DS = 0;
+                while ($statuses_to_print > $o) {
+                    $rowx = mysqli_fetch_row($rslt);
+                    if ((strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i", $rowx[0]))) {
+                        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                        $DS++;
+                    } else {
+                        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                    }
+                    $o++;
+                }
+
+                $stmt = "SELECT status,status_name from vicidial_campaign_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') and campaign_id='$list_campaign' order by status";
+                $rslt = mysql_to_mysqli($stmt, $link);
+                $CAMPstatuses_to_print = mysqli_num_rows($rslt);
+
+                $o = 0;
+                while ($CAMPstatuses_to_print > $o) {
+                    $rowx = mysqli_fetch_row($rslt);
+                    if ((strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i", $rowx[0]))) {
+                        $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                        $DS++;
+                    } else {
+                        $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                    }
+                    $o++;
+                }
+
+                if (strlen($VU_status_group_id) > 0) {
+                    $stmt = "SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' and scheduled_callback='Y' $selectableSQLand order by status";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $USERstatuses_to_print = mysqli_num_rows($rslt);
+
+                    $o = 0;
+                    while ($USERstatuses_to_print > $o) {
+                        $rowx = mysqli_fetch_row($rslt);
+                        if ((strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i", $rowx[0]))) {
+                            $statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                            $DS++;
+                        } else {
+                            $statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+                        }
+                        $o++;
+                    }
+                }
+
+                if ($DS < 1) {
+                    $statuses_list .= "<option SELECTED value=\"$lead_status\">$lead_status</option>\n";
+                }
+
+                $bgcolor = ($u % 2 == 0) ? "#f9fafb" : "#fff";
+                $u++;
+
+                echo "<tr style='background:$bgcolor;border-bottom:1px solid #e5e7eb;'>";
+                
+                // Date/Time column
+                echo "<td style='padding:12px;'>";
+                echo "<input class='form-input' style='margin-bottom:8px;max-width:150px;' name='appointment_date_$callback_id' id='appointment_date_$callback_id' size=10 maxlength=10 value='$appointment_date'>";
+                echo "<script language=\"JavaScript\">
+                var o_cal = new tcal ({
+                    'formname': 'vsn',
+                    'controlname': 'appointment_date_$callback_id'
+                });
+                o_cal.a_tpl.yearscroll = false;
+                </script>";
+                echo "<div style='display:flex;gap:5px;align-items:center;'>";
+                echo "<SELECT class='form-input' style='max-width:70px;' name='appointment_hour_$callback_id' id='appointment_hour_$callback_id'>\n";
+                for ($i = 0; $i <= 23; $i++) {
+                    $hr = substr("0$i", -2);
+                    echo "<OPTION value='$hr'>$hr</option>\n";
+                }
+                echo "<OPTION value='$appointment_hour' selected>$appointment_hour</OPTION>";
+                echo "</SELECT><span>:</span>";
+                echo "<SELECT class='form-input' style='max-width:70px;' name='appointment_min_$callback_id' id='appointment_min_$callback_id'>";
+                for ($i = 0; $i <= 55; $i += 5) {
+                    $min = substr("0$i", -2);
+                    echo "<OPTION value='$min'>$min</option>\n";
+                }
+                echo "<OPTION value='$appointment_min' selected>$appointment_min</OPTION>";
+                echo "</SELECT></div>";
+                echo "</td>";
+
+                // Disposition column
+                echo "<td style='padding:12px;'><select class='form-input' size=1 name='CBstatus_$callback_id' id='CBstatus_$callback_id'>$statuses_list</select></td>";
+
+                // Owner column
+                echo "<td style='padding:12px;'>";
+                if ($cb_row[9] == 'USERONLY') {
+                    $ucheck = "checked";
+                    $acheck = "";
+                } else {
+                    $acheck = "checked";
+                    $ucheck = "";
+                }
+                echo "<label style='display:block;margin-bottom:5px;'><input type='radio' name='CBchangeRecipient_$callback_id' id='CBchangeRecipient_" . $callback_id . "A' value='A' $acheck style='margin-right:5px;'> " . _QXZ("Anyone") . "</label>";
+                echo "<label style='display:block;margin-bottom:8px;'><input type='radio' name='CBchangeRecipient_$callback_id' id='CBchangeRecipient_" . $callback_id . "U' value='U' $ucheck style='margin-right:5px;'> " . _QXZ("Useronly") . "</label>";
+                echo "<label style='font-size:12px;color:#6b7280;display:block;margin-bottom:4px;'>" . _QXZ("New CB Owner UserID") . ":</label>";
+                echo "<input type=text class='form-input' style='max-width:120px;' name='CBuser_$callback_id' id='CBuser_$callback_id' maxlength=20 value=\"$cb_row[8]\">";
+                echo "<input type=hidden id='recipient_$callback_id' name='recipient_$callback_id' value=\"YES\">";
+                echo "</td>";
+
+                // Comments column
+                echo "<td style='padding:12px;'><TEXTAREA class='form-textarea' name='comments_$callback_id' id='comments_$callback_id' ROWS=4 COLS=40>$CBcomments</TEXTAREA></td>";
+
+                // Action column
+                echo "<td style='padding:12px;text-align:center;'>";
+                echo "<button type='button' onclick='UpdateCallback($callback_id)' style='padding:8px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;'>UPDATE</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+            
+            echo '</tbody></table></div>';
+            echo "<input type=hidden name=DB value=\"$DB\">\n";
+            echo "<input type=hidden id=lead_id name=lead_id value=\"$lead_id\">\n";
+            echo "<input type=hidden id=CBchangeDATE name=CBchangeDATE value=\"YES\">";
+            echo "</form>\n";
+        } else {
+            echo '<div class="alert-info" style="text-align:center;">' . _QXZ("No Callback records found") . '</div>';
+        }
+        
+        echo '</div>'; // Close card
+    }
+}
+
+echo '</div>'; // Close modern-container
 	
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
+	
 
-		### find out if status(dispo) is a scheduled callback status
-		$scheduled_callback='';
-		$stmt="SELECT scheduled_callback from vicidial_statuses where status='$dispo';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$scb_count_to_print = mysqli_num_rows($rslt);
-		if ($scb_count_to_print > 0) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (strlen($row[0])>0)	{$scheduled_callback =	$row[0];}
-			}
-		$stmt="SELECT scheduled_callback from vicidial_campaign_statuses where status='$dispo';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$scb_count_to_print = mysqli_num_rows($rslt);
-		if ($scb_count_to_print > 0) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			if (strlen($row[0])>0)	{$scheduled_callback =	$row[0];}
-			}
-
-		$list_campaign='';
-		$stmt="SELECT campaign_id from vicidial_lists where list_id='$list_id'";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		if ($DB) {echo "$stmt\n";}
-		$Cstatuses_to_print = mysqli_num_rows($rslt);
-		if ($Cstatuses_to_print > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$list_campaign = $row[0];
-			}
-
-		$stmt="SELECT status,status_name,selectable,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_statuses $selectableSQL order by status";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$statuses_to_print = mysqli_num_rows($rslt);
-		$statuses_listMODLOG='';
-		$statuses_list='';
-
-		$o=0;
-		$DS=0;
-		while ($statuses_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
-				{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-			else
-				{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-			$statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
-			$o++;
-			}
-
-		$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$list_campaign' $selectableSQLand order by status";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$CAMPstatuses_to_print = mysqli_num_rows($rslt);
-
-		$o=0;
-		$CBhold_set=0;
-		while ($CAMPstatuses_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
-				{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-			else
-				{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-			$statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
-			if ($rowx[0] == 'CBHOLD') {$CBhold_set++;}
-			$o++;
-			}
-
-		if (strlen($VU_status_group_id) > 0)
-			{
-			$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' $selectableSQLand order by status";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$USERstatuses_to_print = mysqli_num_rows($rslt);
-
-			$o=0;
-			$CBhold_set=0;
-			while ($USERstatuses_to_print > $o) 
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
-					{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-				else
-					{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-				$statuses_listMODLOG .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>";
-				if ($rowx[0] == 'CBHOLD') {$CBhold_set++;}
-				$o++;
-				}
-			}	
-
-		if ($dispo == 'CBHOLD') {$CBhold_set++;}
-
-		if ($DS < 1) 
-			{$statuses_list .= "<option SELECTED value=\"$dispo\">$dispo</option>\n";}
-		if ($CBhold_set < 1)
-			{$statuses_list .= "<option value=\"CBHOLD\">CBHOLD - "._QXZ("Scheduled Callback")."</option>\n";}
-		echo "$statuses_list";
-		echo "</select> <i>("._QXZ("with")." $list_campaign "._QXZ("statuses").")</i></td></tr>\n";
-
-
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Modify vicidial log")." </td><td align=left><input type=checkbox name=modify_logs value=\"1\" CHECKED></td></tr>\n";
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Modify agent log")." </td><td align=left><input type=checkbox name=modify_agent_logs value=\"1\" CHECKED></td></tr>\n";
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Modify closer log")." </td><td align=left><input type=checkbox name=modify_closer_logs value=\"1\"></td></tr>\n";
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=left>"._QXZ("Add closer log record")." </td><td align=left><input type=checkbox name=add_closer_record value=\"1\"></td></tr>\n";
-		}
-	else
-		{
-		echo "<input type=hidden name=status value=\"NEW\">\n";
-		}
-
-	if ( ($LOGadmin_hide_lead_data == '0') or ($lead_id == 'NEW') )
-		{
-		echo "<tr><td colspan=2 align=center><input style='background-color:#$SSbutton_color' type=submit name=submit value=\""._QXZ("SUBMIT")."\"></td></tr>\n";
-		}
-
-	if ( ($LOGmodify_leads == '3') or ($LOGmodify_leads == '4') )
-		{echo "<span id='statuses_listMODLOG' style=\"display:none\">$statuses_listMODLOG</span>\n";}
-
-	echo "</table></form>\n";
-	echo "<BR><BR><BR>\n";
-
-	if ($lead_id != 'NEW') 
-		{
-		echo "<TABLE BGCOLOR=#".$SSstd_row4_background." WIDTH=750><TR><TD>\n";
-		echo _QXZ("Callback Details").":<BR>\n";
-		if ( ($dispo == 'CALLBK') or ($dispo == 'CBHOLD') or ($scheduled_callback == 'Y') )
-			{
-			### find any vicidial_callback records for this lead 
-			$cb_stmt="SELECT callback_id,lead_id,list_id,campaign_id,status,entry_time,callback_time,modify_date,user,recipient,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
-			if ($DB) {echo "|$stmt|\n";}
-			$cb_rslt=mysql_to_mysqli($cb_stmt, $link);
-			$CB_to_print = mysqli_num_rows($cb_rslt);
-
-			if ($CB_to_print>0)
-				{
-				echo "<form action='$PHP_SELF' method='POST' name='vsn' id='vsn'>";
-				echo "<TABLE BGCOLOR=#".$SSstd_row4_background." WIDTH=800>";
-				echo "<tr>";
-				echo "<td><font size=2>"._QXZ("CallBack Date/Time").":</font></td>";
-				echo "<td><font size=2>"._QXZ("CallBack Disposition").":</font></td>";
-				echo "<td><font size=2>"._QXZ("Owner").":</font></td>";
-				echo "<td><font size=2>"._QXZ("Comments").":</font></td>";
-				echo "<td>&nbsp;</td>";
-				echo "</tr>";
-
-				$u=0;
-				while ($cb_row=mysqli_fetch_row($cb_rslt)) {
-					$callback_id = $cb_row[0];
-					$CBcomments = $cb_row[10];
-					$lead_status = $cb_row[12];
-					$appointment_datetimeARRAY = explode(" ",$cb_row[6]);
-					$appointment_date = $appointment_datetimeARRAY[0];
-					$appointment_timeARRAY = explode(":",$appointment_datetimeARRAY[1]);
-					$appointment_hour = $appointment_timeARRAY[0];
-					$appointment_min = $appointment_timeARRAY[1];
-
-					$stmt="SELECT status,status_name from vicidial_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') order by status";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$statuses_to_print = mysqli_num_rows($rslt);
-					$statuses_list='';
-
-					$o=0;
-					$DS=0;
-					while ($statuses_to_print > $o) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						if ( (strlen($lead_status) == strlen($rowx[0])) and (preg_match("/$lead_status/i",$rowx[0])) )
-							{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-						else
-							{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-						$o++;
-						}
-
-					$stmt="SELECT status,status_name from vicidial_campaign_statuses where scheduled_callback='Y' $selectableSQLand and status NOT IN('CBHOLD') and campaign_id='$list_campaign' order by status";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$CAMPstatuses_to_print = mysqli_num_rows($rslt);
-
-					$o=0;
-					$CBhold_set=0;
-					while ($CAMPstatuses_to_print > $o) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						if ( (strlen($lead_status) ==  strlen($rowx[0])) and (preg_match("/$lead_status/i",$rowx[0])) )
-							{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-						else
-							{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-						$o++;
-						}
-
-
-					if (strlen($VU_status_group_id) > 0)
-						{
-						$stmt="SELECT status,status_name,selectable,campaign_id,human_answered,category,sale,dnc,customer_contact,not_interested,unworkable from vicidial_campaign_statuses where campaign_id='$VU_status_group_id' and scheduled_callback='Y' $selectableSQLand order by status";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$USERstatuses_to_print = mysqli_num_rows($rslt);
-
-						$o=0;
-						$CBhold_set=0;
-						while ($USERstatuses_to_print > $o) 
-							{
-							$rowx=mysqli_fetch_row($rslt);
-							if ( (strlen($lead_status) ==  strlen($rowx[0])) and (preg_match("/$lead_status/i",$rowx[0])) )
-								{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
-							else
-								{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-							$o++;
-							}
-						}	
-
-					if ($DS < 1) 
-						{$statuses_list .= "<option SELECTED value=\"$lead_status\">$lead_status</option>\n";}
-
-					if ($u%2==0)
-						{$bgcolor="bgcolor=\"#$SSstd_row2_background\"";} 
-					else
-						{$bgcolor="bgcolor=\"#$SSstd_row1_background\"";}
-					$u++;
-
-					echo "<tr $bgcolor>";
-					echo "<td><input class='form_field' name='appointment_date_".$callback_id."' id='appointment_date_".$callback_id."' size=10 maxlength=10 value='$appointment_date'>";
-					echo "					<script language=\"JavaScript\">
-					var o_cal = new tcal ({
-						// form name
-						'formname': 'vsn',
-						// input name
-						'controlname': 'appointment_date_".$callback_id."'
-					});
-					o_cal.a_tpl.yearscroll = false;
-					// o_cal.a_tpl.weekstart = 1; // Monday week start
-					</script>";
-					echo "<BR>";
-					echo "<SELECT class='form_field' name='appointment_hour_".$callback_id."' id='appointment_hour_".$callback_id."'>\n";
-					for ($i=0; $i<=23; $i++) {
-						$hr=substr("0$i", -2);
-						echo "<OPTION value='$hr'>$hr</option>\n";
-					}
-					echo "<OPTION value='$appointment_hour' selected>$appointment_hour</OPTION>";
-					echo "</SELECT>:";
-					echo "<SELECT class='form_field' name='appointment_min_".$callback_id."' id='appointment_min_".$callback_id."'>";
-					for ($i=0; $i<=55; $i+=5) {
-						$min=substr("0$i", -2);
-						echo "<OPTION value='$min'>$min</option>\n";
-					}
-					echo "<OPTION value='$appointment_min' selected>$appointment_min</OPTION>";
-					echo "</SELECT>";
-					echo "</td>";
-					echo "<td><FONT FACE='ARIAL,HELVETICA'><select class='form_field' size=1 name='CBstatus_".$callback_id."' id='CBstatus_".$callback_id."'>\n";
-					echo "$statuses_list";
-					echo "</td>";
-					echo "<td><font size='2'>";
-					if ($cb_row[9] == 'USERONLY') {$ucheck="checked"; $acheck="";} else {$acheck="checked"; $ucheck="";}
-
-					echo "<input type='radio' name='CBchangeRecipient_".$callback_id."' id='CBchangeRecipient_".$callback_id."A' value=\"A\" $acheck>Anyone<BR>";
-					echo "<input type='radio' name='CBchangeRecipient_".$callback_id."' id='CBchangeRecipient_".$callback_id."U' value=\"U\" $ucheck>Useronly<BR><BR>";
-					echo _QXZ("New CB Owner UserID").":<BR><input type=text class='form_field' name='CBuser_".$callback_id."' id='CBuser_".$callback_id."' size=6 maxlength=20 value=\"$cb_row[8]\"> \n";
-					echo "<input type=hidden id='recipient_".$callback_id."' name='recipient_".$callback_id."' value=\"YES\">";
-					echo "</font></td>";
-					echo "<td><TEXTAREA class='form_field' name='comments_".$callback_id."' id='comments_".$callback_id."' ROWS=6 COLS=50>$CBcomments</TEXTAREA></td>";
-					echo "<td><input type='button' value='UPDATE' onClick='UpdateCallback($callback_id)'></td>";
-					echo "</tr>";
-
-					}
-				}
-			else
-				{
-				echo "<BR>"._QXZ("No Callback records found")."<BR>\n";
-				}
-			echo "</TABLE>";
-			echo "<input type=hidden name=DB value=\"$DB\">\n";
-			echo "<input type=hidden id=lead_id name=lead_id value=\"$lead_id\">\n";
-			echo "<input type=hidden id=CBchangeDATE name=CBchangeDATE value=\"YES\">";
-			echo "</form>\n";
-
-			echo "</TD></TR></table>\n";
 
 			### find any vicidial_callback records for this lead 
 			$cb_stmt="SELECT entry_time,callback_time,user,recipient,lead_status,status,list_id,campaign_id,comments,user_group,lead_status from vicidial_callbacks where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' and status NOT IN('ACTIVE','LIVE') order by callback_id desc limit 1000;";
