@@ -618,7 +618,6 @@ if (
     exit;
 }
 
-
 else
 	{
 	##### BEGIN Log search #####
