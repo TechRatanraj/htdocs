@@ -1382,46 +1382,24 @@ if ( ($CIDdisplay == "Yes") and ($SSsip_event_logging > 0) )
 #######################################
 
 if ($gdpr_display==2 && preg_match("/purge$/", $gdpr_action))
-{
-    echo "</script>\n";
-    echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
-    echo "</head><BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	{
+	echo "</script>\n";
+	echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
+	echo "</head><BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	echo "<span style=\"position:absolute;left:0px;top:0px;z-index:20;\" id=admin_header>";
 
-    // FULL SCREEN + CENTERED
-    echo "<span id='admin_header' style='
-        position: fixed;
-        inset: 0; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        height: 100vh;
-        z-index: 20;
-    '>";
+	$short_header=1;
 
-    $short_header = 1;
+	require("admin_header.php");
 
-    require("admin_header.php");
+	echo "</span>\n";
+	echo $HTML_text;
+	echo "</body></html>";
+	exit;
+	}
 
-    echo "</span>\n";
-    echo $HTML_text;
-    echo "</body></html>";
-    exit;
-}
-
-// SECOND SPAN ALSO FULL SCREEN + CENTERED
-$messagesHTML = '';
-$messagesHTML .= "<span id='agent_status_stats' style='
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    z-index: 19;
-'>\n";
-
+$messagesHTML='';
+$messagesHTML .= "<span style=\"position:absolute;left:3px;top:30px;z-index:19;\" id=agent_status_stats>\n";
 
 ### BEGIN - Add a new lead in the system ###
 if ($lead_id == 'NEW')
