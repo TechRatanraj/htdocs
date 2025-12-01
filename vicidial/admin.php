@@ -39208,6 +39208,7 @@ if ($LOGdelete_lists > 0) {
     echo "<a href='$PHP_SELF?ADD=511&list_id=$list_id' style='background:#dc3545;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;display:block;'>"._QXZ("DELETE THIS LIST")."</a>";
 }
 	}
+}
 ######################
 # ADD=431 modify drop list, add new drop status to the drop list drop statuses
 ######################
