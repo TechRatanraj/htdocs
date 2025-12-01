@@ -1,88 +1,6 @@
 <?php
 # admin_listloader_fourth_gen.php - version 2.14
 #  (based upon - new_listloader_superL.php script)
-# 
-# Copyright (C) 2024  Matt Florell,Joe Johnson <vicidial@gmail.com>    LICENSE: AGPLv2
-#
-# ViciDial web-based lead loader from formatted file
-# 
-# CHANGES
-# 50602-1640 - First version created by Joe Johnson
-# 51128-1108 - Removed PHP global vars requirement
-# 60113-1603 - Fixed a few bugs in Excel import
-# 60421-1624 - check GET/POST vars lines with isset to not trigger PHP NOTICES
-# 60616-1240 - added listID override
-# 60616-1604 - added gmt lookup for each lead
-# 60619-1651 - Added variable filtering to eliminate SQL injection attack threat
-# 60822-1121 - fixed for nonwritable directories
-# 60906-1100 - added filter of non-digits in alt_phone field
-# 61110-1222 - added new USA-Canada DST scheme and Brazil DST scheme
-# 61128-1149 - added postal code GMT lookup and duplicate check options
-# 70417-1059 - Fixed default phone_code bug
-# 70510-1518 - Added campaign and system duplicate check and phonecode override
-# 80428-0417 - UTF8 changes
-# 80514-1030 - removed filesize limit and raised number of errors to be displayed
-# 80713-0023 - added last_local_call_time field default of 2008-01-01
-# 81011-2009 - a few bug fixes
-# 90309-1831 - Added admin_log logging
-# 90310-2128 - Added admin header
-# 90508-0644 - Changed to PHP long tags
-# 90522-0506 - Security fix
-# 90721-1339 - Added rank and owner as vicidial_list fields
-# 91112-0616 - Added title/alt-phone duplicate checking
-# 100118-0543 - Added new Australian and New Zealand DST schemes (FSO-FSA and LSS-FSA)
-# 100621-1026 - Added admin_web_directory variable
-# 100630-1609 - Added a check for invalid ListIds and filtered out ' " ; ` \ from the field <mikec>
-# 100705-1507 - Added custom fields to field chooser, only when liast_id_override is used and only with TXT and CSV file formats
-# 100706-1250 - Forked script to create new script that will only load TXT(tab-
-#				delimited files) and use a perl script to convert others to TXT
-# 100707-1040 - Converted List Id Override and Phone Code Override to drop downs <mikec>
-# 100707-1156 - Made it so you cannot submit with no lead file selected. Also fixed Start Over Link <mikec>
-# 100712-1416 - Added entry_list_id field to vicidial_list to preserve link to custom fields if any
-# 100728-0900 - Filtered uploaded filenames for unsupported characters
-# 110424-0926 - Added option for time zone code in the owner field
-# 110705-1947 - Added USACAN check for prefix and areacode
-# 120221-0140 - Added User Group restrictions
-# 120223-2318 - Removed logging of good login passwords if webroot writable is enabled
-# 120402-2128 - Added template options
-# 120525-1038 - Added uploaded filename filtering
-# 120529-1348 - Filename filter fix
-# 130420-2056 - Added NANPA prefix validation and timezone options
-# 130610-0920 - Finalized changing of all ereg instances to preg
-# 130621-1817 - Added filtering of input to prevent SQL injection attacks and new user auth
-# 130719-1914 - Added SQL to filter by template statuses, if template has specific statuses to dedupe against
-# 130802-0619 - Added status deduping option without template
-# 130824-2322 - Changed to mysqli PHP functions
-# 140214-1022 - Fixed status dedupe bug
-# 140328-0007 - Converted division calculations to use MathZDC function
-# 141001-2200 - Finalized adding QXZ translation to all admin files
-# 141118-1955 - Added more debug output
-# 141229-1814 - Added code for on-the-fly language translations display
-# 150209-2113 - Added master_list_override option to override template setting
-# 150312-1505 - Allow for single quotes in vicidial_list data fields
-# 150516-1136 - Fixed conflict with functions.php
-# 150728-0732 - Added state fullname to abbreviation conversion feature (state_conversion)
-# 150810-0750 - Added compatibility for custom fields data option
-# 160102-1039 - Better special characters support
-# 160428-2359 - Fixed custom table bug
-# 160508-0757 - Added colors features
-# 161103-2224 - Added web_loader_phone_length option
-# 161114-2315 - Added file upload error checking
-# 170219-1427 - Added last-90-day duplicate check options
-# 170409-1553 - Added IP List validation code
-# 171001-0908 - Fixed issue #1041
-# 171204-1517 - Fix for custom field duplicate issue, removed link to old lead loader
-# 180324-0943 - Enforce User Group campaign permissions for templates based on list_id
-# 180502-2215 - Added new help display
-# 180927-0702 - Fixed translation-related issue #1114
-# 190503-1547 - Added enable_status_mismatch_leadloader_option
-# 200812-1745 - Added international DNC scrub option
-# 200922-1013 - Added web_loader_phone_strip system setting feature
-# 210210-1602 - Added duplicate check with more X-day options
-# 220222-1002 - Added allow_web_debug system setting
-# 231207-1445 - Fix for web_loader_phone_strip duplicate check, issue #1498
-# 240320-1033 - Added misssing input variable filtering
-# 240801-1131 - Code updates for PHP8 compatibility
 #
 
 $version = '2.14-81';
@@ -701,7 +619,7 @@ function PopulateStatuses(list_id) {
 <?php
 $short_header=1;
 
-require("admin_header.php");
+//require("admin_header.php");
 
 echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
 
