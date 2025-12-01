@@ -1661,6 +1661,7 @@ exit;
         require("dbconnect_mysqli.php");
         echo "<!-- Using slave server $slave_db_server $db_source -->\n";
         }
+		
 
     $rslt=mysql_to_mysqli("$stmt", $link);
     $results_to_print = mysqli_num_rows($rslt);
