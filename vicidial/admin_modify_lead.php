@@ -2792,250 +2792,228 @@ else
 		}
 
 	##### grab today call count for lead #####
-	$call_count_today=0;
-	$stmt="SELECT called_count_total from vicidial_lead_call_daily_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' $LOGallowed_listsSQL";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	if ($DB) {echo "$stmt\n";}
-	$counts_to_print = mysqli_num_rows($rslt);
-	if ($counts_to_print > 0)
-		{
-		$row=mysqli_fetch_row($rslt);
-		$call_count_today		= $row[0];
-		}
+$call_count_today = 0;
+$stmt = "SELECT called_count_total from vicidial_lead_call_daily_counts where lead_id='" . mysqli_real_escape_string($link, $lead_id) . "' $LOGallowed_listsSQL";
+$rslt = mysql_to_mysqli($stmt, $link);
+if ($DB) { echo "$stmt\n"; }
+$counts_to_print = mysqli_num_rows($rslt);
+if ($counts_to_print > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $call_count_today = $row[0];
+}
 
+if ($lead_id == 'NEW') {
+    ##### create a select list of lists if a NEW lead_id #####
+    $stmt = "SELECT list_id,campaign_id,list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id limit 5000;";
+    if ($DB) { echo "$stmt\n"; }
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $lists_to_print = mysqli_num_rows($rslt);
 
-	if ($lead_id == 'NEW')
-		{
-		##### create a select list of lists if a NEW lead_id #####
-		$stmt="SELECT list_id,campaign_id,list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id limit 5000;";
-		if ($DB) {echo "$stmt\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
+    $Lc = 0;
+    $select_list = '<select size=1 name=list_id>';
+    while ($lists_to_print > $Lc) {
+        $row = mysqli_fetch_row($rslt);
+        $select_list .= "<option value='$row[0]'>$row[0] - $row[1] - $row[2]</option>";
+        $Lc++;
+    }
+    $select_list .= "</select>";
+    $list_id = $select_list;
+}
 
-		$Lc=0;
-		$select_list = '<select size=1 name=list_id>';
-		while ($lists_to_print > $Lc)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$select_list .= "<option value='$row[0]'>$row[0] - $row[1] - $row[2]</option>";
+if (strlen($HTML_inline_script) > 0) {
+    echo "$HTML_inline_script\n";
+}
 
-			$Lc++;
-			}
-		$select_list .= "</select>";
+echo "</script>\n";
+echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
+echo "</head><BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+echo "<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
+echo "<span style=\"position:absolute;left:0px;top:0px;z-index:20;\" id=admin_header>";
+echo "<div id='LogModDisplayDiv' style='position:absolute; top:0; left:0; z-index:21; background-color:white display:none;'></div>\n";
+echo "<div id='DetailDisplayDiv' style='position:absolute; top:0; left:0; z-index:20; background-color:white display:none;'></div>\n";
 
-		$list_id=$select_list;
-		}
+$short_header = 1;
 
-	if (strlen($HTML_inline_script) > 0)
-		{
-		echo "$HTML_inline_script\n";
-		}
+//require("admin_header.php");
 
-	echo "</script>\n";
-	echo "<link rel=\"stylesheet\" href=\"calendar.css\">\n";
-	echo "</head><BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-	echo "<script language=\"JavaScript\" src=\"calendar_db.js\"></script>\n";
-	echo "<span style=\"position:absolute;left:0px;top:0px;z-index:20;\" id=admin_header>";
-	echo "<div id='LogModDisplayDiv' style='position:absolute; top:0; left:0; z-index:21; background-color:white display:none;'></div>\n";
-	echo "<div id='DetailDisplayDiv' style='position:absolute; top:0; left:0; z-index:20; background-color:white display:none;'></div>\n";
+echo "</span>\n";
+echo "$messagesHTML\n";
 
-	$short_header=1;
+if ($lead_id == 'NEW') {
+    if ($LOGmodify_leads == '5') {
+        echo "ERROR: " . _QXZ("You do not have permission to add new leads") . ": $LOGmodify_leads \n";
+        exit;
+    }
+    echo "<br><b>" . _QXZ("Add A New Lead") . "</B>\n";
+} else {
+    if ($lead_count > 0) {
+        echo "<br>" . _QXZ("Lead information") . ": $first_name $last_name - $phone_number\n";
+    }
+}
 
-	//require("admin_header.php");
+if (($lead_count > 0) or ($lead_id == 'NEW')) {
+    if ($campaign_id == '---NONE') { $campaign_id = ''; }
+    
+    echo "<br><br><form action=$PHP_SELF method=POST>\n";
+    echo "<input type=hidden name=end_call value=1>\n";
+    echo "<input type=hidden name=DB value=\"$DB\">\n";
+    echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
+    echo "<input type=hidden name=dispo value=\"$dispo\">\n";
+    echo "<input type=hidden name=list_id value=\"$list_id\">\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
+    echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
+    echo "<input type=hidden name=extension value=\"$extension\">\n";
+    echo "<input type=hidden name=channel value=\"$channel\">\n";
+    echo "<input type=hidden name=call_began value=\"$call_began\">\n";
+    echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
+    echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
+    echo "<table cellpadding=1 cellspacing=0>\n";
+    echo "<tr><td colspan=2>$label_lead_id: $lead_id &nbsp; &nbsp; $label_list_id: $list_id &nbsp; &nbsp; <font size=2>$label_gmt_offset_now: $gmt_offset_now &nbsp; &nbsp; $label_called_since_last_reset: $called_since_last_reset</td></tr>\n";
+    echo "<tr><td colspan=2>$label_user: <A HREF=\"user_stats.php?user=$tsr\">$tsr</A> &nbsp; &nbsp; $label_called_count: $called_count <font size=2>(" . _QXZ("today") . ": $call_count_today)</font> &nbsp; &nbsp; $label_last_local_call_time: $last_local_call_time</td></tr>\n";
+    
+    if ($archive_search == "Yes") {
+        echo "<tr><td colspan=2 align='center'>";
+        echo "<B><font color='#FF0000'>*** " . _QXZ("ARCHIVED LEAD") . " ***</font></B>";
+        echo "<input type='hidden' name='archive_search' value='Yes'>";
+        echo "</td></tr>\n";
+    }
+    
+    if ($archive_log == "Yes") {
+        echo "<tr><td colspan=2 align='center'>";
+        echo "<B><font color='#FF0000'>*** " . _QXZ("ARCHIVED LOG SEARCH ENABLED") . " ***</font></B> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=No&CIDdisplay=$CIDdisplay\">" . _QXZ("Turn off archived logs display") . "</a><BR>";
+        echo "<B><font color='#FF0000'>*** " . _QXZ("ARCHIVED LOGS SHOWN IN RED, THERE MAY BE DUPLICATES WITH NON-ARCHIVED LOG ENTRIES") . " ***</font></B>";
+        echo "<input type='hidden' name='archive_log' value='Yes'>";
+        echo "</td></tr>\n";
+    } else {
+        echo "<tr><td colspan=2 align='center'>";
+        echo "<a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=Yes&CIDdisplay=$CIDdisplay\">" . _QXZ("Turn on archived logs display") . "</a>";
+        echo "</td></tr>\n";
+    }
 
-	echo "</span>\n";
-	echo "$messagesHTML\n";
+    if ($lead_id == 'NEW') { $list_id = ''; }
 
+    if ($LOGadmin_hide_lead_data != '0') {
+        // Display-only mode (read-only)
+        echo "<tr><td align=right>$label_title: </td><td align=left>$title &nbsp; \n";
+        echo "$label_first_name: $first_name </td></tr>\n";
+        echo "<tr><td align=right>$label_middle_initial: </td><td align=left>$middle_initial &nbsp; \n";
+        echo " $label_last_name: $last_name </td></tr>\n";
+        echo "<tr><td align=right>$label_address1 : </td><td align=left>$address1</td></tr>\n";
+        echo "<tr><td align=right>$label_address2 : </td><td align=left>$address2</td></tr>\n";
+        echo "<tr><td align=right>$label_address3 : </td><td align=left>$address3</td></tr>\n";
+        echo "<tr><td align=right>$label_city : </td><td align=left>$city</td></tr>\n";
+        echo "<tr><td align=right>$label_state: </td><td align=left>$state &nbsp; \n";
+        echo " $label_postal_code: $postal_code </td></tr>\n";
+        echo "<tr><td align=right>$label_province : </td><td align=left>$province</td></tr>\n";
+        echo "<tr><td align=right>$label_country_code : </td><td align=left>$country_code &nbsp; \n";
+        echo " $label_date_of_birth: $date_of_birth </td></tr>\n";
+        echo "<tr><td align=right>$label_phone_number : </td><td align=left>$phone_number</td></tr>\n";
+        echo "<tr><td align=right>$label_phone_code : </td><td align=left>$phone_code</td></tr>\n";
+        echo "<tr><td align=right>$label_alt_phone : </td><td align=left>$alt_phone</td></tr>\n";
+        echo "<tr><td align=right>$label_email : </td><td align=left>$email</td></tr>\n";
+        echo "<tr><td align=right>$label_security_phrase : </td><td align=left>$security</td></tr>\n";
+        echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left>$vendor_id</td></tr>\n";
+        if ($SSsource_id_display > 0) {
+            echo "<tr><td align=right>$label_source_id : </td><td align=left>$source_id</td></tr>\n";
+        }
+        echo "<tr><td align=right>$label_rank : </td><td align=left>$rank</td></tr>\n";
+        echo "<tr><td align=right>$label_owner : </td><td align=left>$owner</td></tr>\n";
+        echo "<tr><td align=right>$label_comments : </td><td align=left>$comments</td></tr>\n";
+    } else {
+        // Editable mode
+        echo "<tr><td align=right>$label_title: </td><td align=left><input type=text name=title id=title size=4 maxlength=$MAXtitle value=\"$title\"> &nbsp; \n";
+        echo "$label_first_name: <input type=text name=first_name id=first_name size=15 maxlength=$MAXfirst_name value=\"" . htmlparse($first_name) . "\"> </td></tr>\n";
+        echo "<tr><td align=right>$label_middle_initial: </td><td align=left><input type=text name=middle_initial id=middle_initial size=4 maxlength=$MAXmiddle_initial value=\"" . htmlparse($middle_initial) . "\"> &nbsp; \n";
+        echo " $label_last_name: <input type=text name=last_name id=last_name size=15 maxlength=$MAXlast_name value=\"" . htmlparse($last_name) . "\"> </td></tr>\n";
+        echo "<tr><td align=right>$label_address1 : </td><td align=left><input type=text name=address1 id=address1 size=40 maxlength=$MAXaddress1 value=\"" . htmlparse($address1) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_address2 : </td><td align=left><input type=text name=address2 id=address2 size=40 maxlength=$MAXaddress2 value=\"" . htmlparse($address2) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_address3 : </td><td align=left><input type=text name=address3 id=address3 size=40 maxlength=$MAXaddress3 value=\"" . htmlparse($address3) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_city : </td><td align=left><input type=text name=city id=city size=40 maxlength=$MAXcity value=\"" . htmlparse($city) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_state: </td><td align=left><input type=text name=state id=state size=2 maxlength=$MAXstate value=\"" . htmlparse($state) . "\"> &nbsp; \n";
+        echo " $label_postal_code: <input type=text name=postal_code id=postal_code size=10 maxlength=$MAXpostal_code value=\"" . htmlparse($postal_code) . "\"> </td></tr>\n";
+        echo "<tr><td align=right>$label_province : </td><td align=left><input type=text name=province id=province size=40 maxlength=$MAXprovince value=\"" . htmlparse($province) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_country_code : </td><td align=left><input type=text name=country_code id=country_code size=3 maxlength=$MAXcountry_code value=\"" . htmlparse($country_code) . "\"> &nbsp; \n";
+        echo " $label_date_of_birth: <input type=text name=date_of_birth id=date_of_birth size=12 maxlength=10 value=\"" . htmlparse($date_of_birth) . "\"></td></tr>\n";
 
-	if ($lead_id == 'NEW')
-		{
-		if ($LOGmodify_leads == '5')
-			{
-			echo "ERROR: "._QXZ("You do not have permission to add new leads").": $LOGmodify_leads \n";
-			exit;
-			}
-		echo "<br><b>"._QXZ("Add A New Lead")."</B>\n";
-		}
-	else
-		{
-		if ($lead_count > 0)
-			{echo "<br>"._QXZ("Lead information").": $first_name $last_name - $phone_number\n";}
-		}
+        if (($LOGmodify_leads == '1') or ($LOGmodify_leads == '3') or ($lead_id == 'NEW')) {
+            echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=text name=phone_number id=phone_number size=18 maxlength=$MAXphone_number value=\"" . htmlparse($phone_number) . "\"></td></tr>\n";
+            echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=text name=phone_code id=phone_code size=10 maxlength=$MAXphone_code value=\"" . htmlparse($phone_code) . "\"></td></tr>\n";
+            echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=text name=alt_phone id=alt_phone size=12 maxlength=$MAXalt_phone value=\"" . htmlparse($alt_phone) . "\"></td></tr>\n";
+        } else {
+            echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=hidden name=phone_number value=\"" . htmlparse($phone_number) . "\">" . htmlparse($phone_number) . "</td></tr>\n";
+            echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=hidden name=phone_code value=\"" . htmlparse($phone_code) . "\">" . htmlparse($phone_code) . "</td></tr>\n";
+            echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=hidden name=alt_phone value=\"" . htmlparse($alt_phone) . "\">" . htmlparse($alt_phone) . "</td></tr>\n";
+        }
 
-	if ( ($lead_count > 0) or ($lead_id == 'NEW') )
-		{
-		if ($campaign_id=='---NONE') {$campaign_id='';}
-		echo "<br><br><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=end_call value=1>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
-		echo "<input type=hidden name=dispo value=\"$dispo\">\n";
-		echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
-		echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-		echo "<input type=hidden name=extension value=\"$extension\">\n";
-		echo "<input type=hidden name=channel value=\"$channel\">\n";
-		echo "<input type=hidden name=call_began value=\"$call_began\">\n";
-		echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
-		echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
-		echo "<table cellpadding=1 cellspacing=0>\n";
-		echo "<tr><td colspan=2>$label_lead_id: $lead_id &nbsp; &nbsp; $label_list_id:  $list_id &nbsp; &nbsp; <font size=2>$label_gmt_offset_now: $gmt_offset_now &nbsp; &nbsp; $label_called_since_last_reset: $called_since_last_reset</td></tr>\n";
-		echo "<tr><td colspan=2>$label_user: <A HREF=\"user_stats.php?user=$tsr\">$tsr</A> &nbsp; &nbsp; $label_called_count: $called_count <font size=2>("._QXZ("today").": $call_count_today)</font> &nbsp; &nbsp; $label_last_local_call_time: $last_local_call_time</td></tr>\n";
-		if ($archive_search=="Yes") 
-			{
-			echo "<tr><td colspan=2 align='center'>";
-			echo "<B><font color='#FF0000'>*** "._QXZ("ARCHIVED LEAD")." ***</font></B>";
-			echo "<input type='hidden' name='archive_search' value='Yes'>";
-			echo "</td></tr>\n";
-			}
-		if ($archive_log=="Yes") 
-			{
-			echo "<tr><td colspan=2 align='center'>";
-			echo "<B><font color='#FF0000'>*** "._QXZ("ARCHIVED LOG SEARCH ENABLED")." ***</font></B> <a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=No&CIDdisplay=$CIDdisplay\">"._QXZ("Turn off archived logs display")."</a><BR>";
-			echo "<B><font color='#FF0000'>*** "._QXZ("ARCHIVED LOGS SHOWN IN RED, THERE MAY BE DUPLICATES WITH NON-ARCHIVED LOG ENTRIES")." ***</font></B>";
-			echo "<input type='hidden' name='archive_log' value='Yes'>";
-			echo "</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr><td colspan=2 align='center'>";
-			echo "<a href=\"$PHP_SELF?lead_id=$lead_id&archive_search=$archive_search&archive_log=Yes&CIDdisplay=$CIDdisplay\">"._QXZ("Turn on archived logs display")."</a>";
-			echo "</td></tr>\n";
-			}
+        echo "<tr><td align=right>$label_email : </td><td align=left><input type=text name=email size=40 maxlength=$MAXemail value=\"" . htmlparse($email) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_security_phrase : </td><td align=left><input type=text name=security id=security_phrase size=30 maxlength=$MAXsecurity_phrase value=\"" . htmlparse($security) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left><input type=text name=vendor_id id=vendor_lead_code size=30 maxlength=$MAXvendor_lead_code value=\"" . htmlparse($vendor_id) . "\"></td></tr>\n";
+        if ($SSsource_id_display > 0) {
+            echo "<tr><td align=right>$label_source_id : </td><td align=left><input type=text name=source_id id=source_id size=30 maxlength=$MAXsource_id value=\"" . htmlparse($source_id) . "\"></td></tr>\n";
+        }
+        echo "<tr><td align=right>$label_rank : </td><td align=left><input type=text name=rank id=rank size=7 maxlength=5 value=\"" . htmlparse($rank) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_owner : </td><td align=left><input type=text name=owner id=owner size=22 maxlength=$MAXowner value=\"" . htmlparse($owner) . "\"></td></tr>\n";
+        echo "<tr><td align=right>$label_comments : </td><td align=left><TEXTAREA name=comments id=comments ROWS=3 COLS=65>" . htmlparse($comments) . "</TEXTAREA></td></tr>\n";
+    }
+} else {
+    echo "<!-- " . _QXZ("no lead fields form display lead does not exist") . " -->\n";
+    echo "<br><br><form action=$PHP_SELF method=POST>\n";
+    echo "<input type=hidden name=end_call value=1>\n";
+    echo "<input type=hidden name=DB value=\"$DB\">\n";
+    echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
+    echo "<input type=hidden name=dispo value=\"$dispo\">\n";
+    echo "<input type=hidden name=list_id value=\"$list_id\">\n";
+    echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
+    echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
+    echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
+    echo "<input type=hidden name=extension value=\"$extension\">\n";
+    echo "<input type=hidden name=channel value=\"$channel\">\n";
+    echo "<input type=hidden name=call_began value=\"$call_began\">\n";
+    echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
+    echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
+    echo "<table cellpadding=1 cellspacing=0>\n";
+}
 
-		if ($lead_id == 'NEW') {$list_id='';}
+if ($lead_id != 'NEW') {
+    $stmt = "SELECT user_id, timestamp, list_id, campaign_id, comment from vicidial_comments where lead_id='$lead_id' order by timestamp;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $row_count = mysqli_num_rows($rslt);
+    $audit_comments = false;
+    $o = 0;
+    
+    while ($row_count > $o) {
+        if (!$audit_comments) {
+            echo "<tr><td colspan='2' align=center><b>" . _QXZ("Comment History") . "</b></td></tr>\n";
+            $audit_comments = true;
+        }
+        $rowx = mysqli_fetch_row($rslt);
+        $Auser[$o] = $rowx[0];
+        $Atimestamp[$o] = $rowx[1];
+        $Acomment[$o] = $rowx[4];
+        $o++;
+    }
+    
+    $o = 0;
+    while ($row_count > $o) {
+        $Afull_name = '';
+        $stmt = "SELECT full_name from vicidial_users where user='$Auser[$o]';";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $FNrow_count = mysqli_num_rows($rslt);
+        if ($FNrow_count > 0) {
+            $rowx = mysqli_fetch_row($rslt);
+            $Afull_name = $rowx[0];
+        }
+        echo "<tr><td align=right><font size=2>$Atimestamp[$o]: </td><td align=left><font size=2><hr> &nbsp; $Acomment[$o]<br> &nbsp; </font><font size=1><i>by user: $Auser[$o] - $Afull_name</i></td></tr>\n";
+        $o++;
+    }
 
-		if ($LOGadmin_hide_lead_data != '0')
-			{
-			echo "<tr><td align=right>$label_title: </td><td align=left>$title &nbsp; \n";
-			echo "$label_first_name: $first_name </td></tr>\n";
-			echo "<tr><td align=right>$label_middle_initial:  </td><td align=left>$middle_initial &nbsp; \n";
-			echo " $label_last_name: $last_name </td></tr>\n";
-			echo "<tr><td align=right>$label_address1 : </td><td align=left>$address1</td></tr>\n";
-			echo "<tr><td align=right>$label_address2 : </td><td align=left>$address2</td></tr>\n";
-			echo "<tr><td align=right>$label_address3 : </td><td align=left>$address3</td></tr>\n";
-			echo "<tr><td align=right>$label_city : </td><td align=left>$city</td></tr>\n";
-			echo "<tr><td align=right>$label_state: </td><td align=left>$state &nbsp; \n";
-			echo " $label_postal_code: $postal_code </td></tr>\n";
+    if ($audit_comments) {
+        echo "<tr><td align=center></td><td><hr></td></tr>\n";
+    }
+}
 
-			echo "<tr><td align=right>$label_province : </td><td align=left>$province</td></tr>\n";
-			echo "<tr><td align=right>$label_country_code : </td><td align=left>$country_code &nbsp; \n";
-			echo " $label_date_of_birth: $date_of_birth </td></tr>\n";
-			echo "<tr><td align=right>$label_phone_number : </td><td align=left>$phone_number</td></tr>\n";
-			echo "<tr><td align=right>$label_phone_code : </td><td align=left>$phone_code</td></tr>\n";
-			echo "<tr><td align=right>$label_alt_phone : </td><td align=left>$alt_phone</td></tr>\n";
-			echo "<tr><td align=right>$label_email : </td><td align=left>$email</td></tr>\n";
-			echo "<tr><td align=right>$label_security_phrase : </td><td align=left>$security</td></tr>\n";
-			echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left>$vendor_id></td></tr>\n";
-			if ($SSsource_id_display > 0)
-				{echo "<tr><td align=right>$label_source_id : </td><td align=left>$source_id></td></tr>\n";}
-			echo "<tr><td align=right>$label_rank : </td><td align=left>$rank</td></tr>\n";
-			echo "<tr><td align=right>$label_owner : </td><td align=left>$owner</td></tr>\n";
-			echo "<tr><td align=right>$label_comments : </td><td align=left>$comments</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr><td align=right>$label_title: </td><td align=left><input type=text name=title id=title size=4 maxlength=$MAXtitle value=\"$title\"> &nbsp; \n";
-			echo "$label_first_name: <input type=text name=first_name id=first_name size=15 maxlength=$MAXfirst_name value=\"".htmlparse($first_name)."\"> </td></tr>\n";
-			echo "<tr><td align=right>$label_middle_initial:  </td><td align=left><input type=text name=middle_initial id=middle_initial size=4 maxlength=$MAXmiddle_initial value=\"".htmlparse($middle_initial)."\"> &nbsp; \n";
-			echo " $label_last_name: <input type=text name=last_name id=last_name size=15 maxlength=$MAXlast_name value=\"".htmlparse($last_name)."\"> </td></tr>\n";
-			echo "<tr><td align=right>$label_address1 : </td><td align=left><input type=text name=address1 id=address1 size=40 maxlength=$MAXaddress1 value=\"".htmlparse($address1)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_address2 : </td><td align=left><input type=text name=address2 id=address2 size=40 maxlength=$MAXaddress2 value=\"".htmlparse($address2)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_address3 : </td><td align=left><input type=text name=address3 id=address3 size=40 maxlength=$MAXaddress3 value=\"".htmlparse($address3)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_city : </td><td align=left><input type=text name=city id=city size=40 maxlength=$MAXcity value=\"".htmlparse($city)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_state: </td><td align=left><input type=text name=state id=state size=2 maxlength=$MAXstate value=\"".htmlparse($state)."\"> &nbsp; \n";
-			echo " $label_postal_code: <input type=text name=postal_code id=postal_code size=10 maxlength=$MAXpostal_code value=\"".htmlparse($postal_code)."\"> </td></tr>\n";
-
-			echo "<tr><td align=right>$label_province : </td><td align=left><input type=text name=province id=province size=40 maxlength=$MAXprovince value=\"".htmlparse($province)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_country_code : </td><td align=left><input type=text name=country_code id=country_code size=3 maxlength=$MAXcountry_code value=\"".htmlparse($country_code)."\"> &nbsp; \n";
-			echo " $label_date_of_birth: <input type=text name=date_of_birth id=date_of_birth size=12 maxlength=10 value=\"".htmlparse($date_of_birth)."\"></td></tr>\n";
-
-			if ( ($LOGmodify_leads == '1') or ($LOGmodify_leads == '3') or ($lead_id == 'NEW') )
-				{
-				echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=text name=phone_number id=phone_number size=18 maxlength=$MAXphone_number value=\"".htmlparse($phone_number)."\"></td></tr>\n";
-				echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=text name=phone_code id=phone_code size=10 maxlength=$MAXphone_code value=\"".htmlparse($phone_code)."\"></td></tr>\n";
-				echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=text name=alt_phone id=alt_phone size=12 maxlength=$MAXalt_phone value=\"".htmlparse($alt_phone)."\"></td></tr>\n";
-				}
-			else
-				{
-				echo "<tr><td align=right>$label_phone_number : </td><td align=left><input type=hidden name=phone_number value=\"".htmlparse($phone_number)."\">".htmlparse($phone_number)."</td></tr>\n";
-				echo "<tr><td align=right>$label_phone_code : </td><td align=left><input type=hidden name=phone_code value=\"".htmlparse($phone_code)."\">".htmlparse($phone_code)."</td></tr>\n";
-				echo "<tr><td align=right>$label_alt_phone : </td><td align=left><input type=hidden name=alt_phone value=\"".htmlparse($alt_phone)."\">".htmlparse($alt_phone)."</td></tr>\n";
-				}
-
-			echo "<tr><td align=right>$label_email : </td><td align=left><input type=text name=email size=40 maxlength=$MAXemail value=\"".htmlparse($email)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_security_phrase : </td><td align=left><input type=text name=security id=security_phrase size=30 maxlength=$MAXsecurity_phrase value=\"".htmlparse($security)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_vendor_lead_code : </td><td align=left><input type=text name=vendor_id id=vendor_lead_code size=30 maxlength=$MAXvendor_lead_code value=\"".htmlparse($vendor_id)."\"></td></tr>\n";
-			if ($SSsource_id_display > 0)
-				{echo "<tr><td align=right>$label_source_id : </td><td align=left><input type=text name=source_id id=source_id size=30 maxlength=$MAXsource_id value=\"".htmlparse($source_id)."\"></td></tr>\n";}
-			echo "<tr><td align=right>$label_rank : </td><td align=left><input type=text name=rank id=rank size=7 maxlength=5 value=\"".htmlparse($rank)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_owner : </td><td align=left><input type=text name=owner id=owner size=22 maxlength=$MAXowner value=\"".htmlparse($owner)."\"></td></tr>\n";
-			echo "<tr><td align=right>$label_comments : </td><td align=left><TEXTAREA name=comments id=comments ROWS=3 COLS=65>".htmlparse($comments)."</TEXTAREA></td></tr>\n";
-			}
-		}
-	else
-		{
-		echo "<!-- "._QXZ("no lead fields form display lead does not exist")." -->\n";
-		echo "<br><br><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=end_call value=1>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=lead_id value=\"$lead_id\">\n";
-		echo "<input type=hidden name=dispo value=\"$dispo\">\n";
-		echo "<input type=hidden name=list_id value=\"$list_id\">\n";
-		echo "<input type=hidden name=campaign_id value=\"$campaign_id\">\n";
-		echo "<input type=hidden name=old_phone value=\"$phone_number\">\n";
-		echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-		echo "<input type=hidden name=extension value=\"$extension\">\n";
-		echo "<input type=hidden name=channel value=\"$channel\">\n";
-		echo "<input type=hidden name=call_began value=\"$call_began\">\n";
-		echo "<input type=hidden name=parked_time value=\"$parked_time\">\n";
-		echo "<input type=hidden name=FORM_LOADED id=FORM_LOADED value=\"0\" />\n";
-		echo "<table cellpadding=1 cellspacing=0>\n";
-		}
-
-	if ($lead_id != 'NEW') 
-		{
-		$stmt="SELECT user_id, timestamp, list_id, campaign_id, comment from vicidial_comments where lead_id='$lead_id' order by timestamp;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row_count = mysqli_num_rows($rslt);
-		$audit_comments=false;
-		$o=0;
-		while ($row_count > $o)
-			{
-			if (!$audit_comments) 
-				{
-				echo "<tr><td colspan='2' align=center><b>"._QXZ("Comment History")."</b></td></tr>\n";
-				$audit_comments=true;
-				}
-			$rowx=mysqli_fetch_row($rslt);
-			$Auser[$o] =		$rowx[0];
-			$Atimestamp[$o] =	$rowx[1];
-			$Acomment[$o] =		$rowx[4];
-			$o++;
-			}
-		$o=0;
-		while ($row_count > $o)
-			{
-			$Afull_name='';
-			$stmt="SELECT full_name from vicidial_users where user='$Auser[$o]';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$FNrow_count = mysqli_num_rows($rslt);
-			if ($FNrow_count > 0)
-				{
-				$rowx=mysqli_fetch_row($rslt);
-				$Afull_name = $rowx[0];
-				}
-			echo "<tr><td align=right><font size=2>$Atimestamp[$o]: </td><td align=left><font size=2><hr> &nbsp; $Acomment[$o]<br> &nbsp; </font><font size=1><i>by user: $Auser[$o] - $Afull_name</i></td></tr>\n";
-			$o++;
-			}
-
-		if ($audit_comments) 
-			{
-			echo "<tr><td align=center></td><td><hr></td></tr>\n";
-			}
-
-		echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
+echo "<tr bgcolor=#".$SSstd_row4_background."><td align=right>"._QXZ("Disposition").": </td><td align=left><select size=1 name=status>\n";
 
 		### find out if status(dispo) is a scheduled callback status
 		$scheduled_callback='';
