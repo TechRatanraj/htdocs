@@ -52427,52 +52427,91 @@ if ($ADD==396111111111)
 ######################
 # ADD=3111111111111 modify conference record in the system
 ######################
-if ($ADD==3111111111111)
-	{
-	if ($LOGast_admin_access==1)
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=3111111111111&conf_exten=$conf_exten&server_ip=$server_ip";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-		$stmt="SELECT conf_exten,server_ip,extension from conferences where conf_exten='$conf_exten' and server_ip='$server_ip';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$conf_exten = $row[0];
-		$server_ip = $row[1];
+if ($ADD == 3111111111111) {
+    if ($LOGast_admin_access == 1) {
+        if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
+            $modify_url = "$PHP_SELF?ADD=3111111111111&conf_exten=$conf_exten&server_ip=$server_ip";
+            $modify_footer_refresh = 1;
+        }
+        
+        // Fetch conference data
+        $stmt = "SELECT conf_exten,server_ip,extension from conferences where conf_exten='$conf_exten' and server_ip='$server_ip';";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        $conf_exten = $row[0];
+        $server_ip = $row[1];
+?>
+<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>
+    <div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>
+        
+        <!-- Header Section -->
+        <div style='background:#3498db;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>
+            <img src="images/icon_conferences.png" alt="Conferences" width=42 height=42>
+            <h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:700;'><?php echo _QXZ("MODIFY A CONFERENCE RECORD") . ": " . $row[0]; ?></h2>
+        </div>
 
-		echo "<br>"._QXZ("MODIFY A CONFERENCE RECORD").": $row[0]<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=4111111111111>\n";
-		echo "<input type=hidden name=old_conf_exten value=\"$row[0]\">\n";
-		echo "<input type=hidden name=old_server_ip value=\"$row[1]\">\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conference").": </td><td align=left><input type=text name=conf_exten size=10 maxlength=7 value=\"$row[0]\">$NWB#conferences-conf_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=311111111111&server_ip=$row[1]\">"._QXZ("Server IP")."</a>: </td><td align=left><select size=1 name=server_ip>\n";
-
-		echo "$servers_list";
-		echo "<option SELECTED>$row[1]</option>\n";
-		echo "</select>$NWB#conferences-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Current Extension").": </td><td align=left><input type=text name=extension size=20 maxlength=20 value=\"$row[2]\"></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-
-		echo "<center><b>\n";
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=5111111111111&conf_exten=$conf_exten&server_ip=$server_ip\">"._QXZ("DELETE THIS CONFERENCE")."</a>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+        <!-- Form Section -->
+        <div style='padding:2rem;'>
+            <form action="<?php echo $PHP_SELF; ?>" method="POST" style='display:flex;flex-direction:column;gap:1.5rem;'>
+                <input type="hidden" name="ADD" value="4111111111111">
+                <input type="hidden" name="old_conf_exten" value="<?php echo $row[0]; ?>">
+                <input type="hidden" name="old_server_ip" value="<?php echo $row[1]; ?>">
+                
+                <!-- Conference Number -->
+                <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                    <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Conference Number"); ?> <span style='color:#e74c3c;'>*</span></label>
+                    <input type="text" name="conf_exten" size="10" maxlength="7" value="<?php echo $row[0]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' required pattern='[0-9]+' title='Digits only'>
+                    <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("digits only"); ?></small>
+                </div>
+                
+                <!-- Server IP -->
+                <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                    <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Server IP"); ?> <span style='color:#e74c3c;'>*</span></label>
+                    <select size="1" name="server_ip" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                        <?php echo $servers_list; ?>
+                        <option selected><?php echo $row[1]; ?></option>
+                    </select>
+                    <small style='color:#6c757d;font-size:0.8rem;'>Select the server where this conference is hosted</small>
+                </div>
+                
+                <!-- Current Extension -->
+                <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                    <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Current Extension"); ?></label>
+                    <input type="text" name="extension" size="20" maxlength="20" value="<?php echo $row[2]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                    <small style='color:#6c757d;font-size:0.8rem;'>The extension associated with this conference</small>
+                </div>
+                
+                <!-- Submit Button -->
+                <div style='margin-top:1rem;text-align:center;'>
+                    <button type="submit" name="submit" style='padding:0.75rem 2rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 6px rgba(52,152,219,0.3);transition:all 0.3s;'><?php echo _QXZ("SUBMIT"); ?></button>
+                </div>
+            </form>
+            
+            <!-- Delete Option -->
+            <div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:1px solid #eee;'>
+                <?php if ($LOGast_delete_phones > 0): ?>
+                <a href="<?php echo "$PHP_SELF?ADD=5111111111111&conf_exten=$conf_exten&server_ip=$server_ip"; ?>" style='display:inline-block;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>
+                    <i class="fas fa-trash"></i> <?php echo _QXZ("DELETE THIS CONFERENCE"); ?>
+                </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+    } else {
+?>
+<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>
+    <div style='font-size:3rem;margin-bottom:1rem;color:#e74c3c;'>🚫</div>
+    <h2 style='color:#e74c3c;margin:0 0 1rem 0;'><?php echo _QXZ("Access Denied"); ?></h2>
+    <p style='color:#64748b;'><?php echo _QXZ("You do not have permission to view this page"); ?></p>
+    <a href='javascript:history.back()' style='display:inline-block;margin-top:1rem;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>Go Back</a>
+</div>
+<?php
+        exit;
+    }
+}
 
 ######################
 # ADD=31111111111111 modify vicidial conference record in the system
