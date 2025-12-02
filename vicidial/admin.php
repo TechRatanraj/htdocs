@@ -11548,44 +11548,139 @@ if ($ADD==1211111111)
 # ADD=131111111 display the ADD NEW SHIFT SCREEN
 ######################
 if ($ADD==131111111)
-	{
-	if ( ($LOGmodify_call_times==1) or ($LOGmodify_shifts==1) )
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_shifts.png\" alt=\"Shifts\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ( ($LOGmodify_call_times==1) or ($LOGmodify_shifts==1) )
+        {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_shifts.png\" alt=\"Shifts\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD NEW SHIFT")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW SHIFT")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=231111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift ID").": </td><td align=left><input type=text name=shift_id size=22 maxlength=20> ("._QXZ("no spaces or punctuation").")$NWB#shifts-shift_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Name").": </td><td align=left><input type=text name=shift_name size=50 maxlength=50> ("._QXZ("short description of the shift").")$NWB#shifts-shift_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#shifts-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Start Time").": </td><td align=left><input type=text name=shift_start_time size=5 maxlength=4 id=shift_start_time>\n";
-		echo " &nbsp; "._QXZ("Shift End Time").": <input type=text name=shift_end_time size=5 maxlength=4 id=shift_end_time>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=button name=shift_calc value=\""._QXZ("Calculate Shift Length")."\" onClick=\"shift_time();\"> $NWB#shifts-shift_start_time$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Length").": </td><td align=left><input type=text name=shift_length id=shift_length size=6 maxlength=5> $NWB#shifts-shift_length$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Weekdays").": <BR>$NWB#shifts-shift_weekdays$NWE</td><td align=left>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"0\">Sunday<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"1\">Monday<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"2\">Tuesday<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"3\">Wednesday<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"4\">Thursday<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"5\">Friday<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"6\">Saturday<BR>\n";
-		echo "</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Report Option").": </td><td align=left><select size=1 name=report_option><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#shifts-report_option$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=231111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Shift ID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Shift ID").":</label>";
+        echo "<div><input type=text name=shift_id size=22 maxlength=20 style='width:100%;max-width:350px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("no spaces or punctuation").")$NWB#shifts-shift_id$NWE</div></div>";
+        echo "</div>";
+        
+        // Shift Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Shift Name").":</label>";
+        echo "<div><input type=text name=shift_name size=50 maxlength=50 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("short description of the shift").")$NWB#shifts-shift_name$NWE</div></div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#shifts-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Shift Times with Calculator
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #3b82f6;'>";
+        echo "<div style='display:grid;gap:1rem;'>";
+        
+        echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;'>";
+        
+        // Start Time
+        echo "<div>";
+        echo "<label style='display:block;color:#1e293b;font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;'>"._QXZ("Shift Start Time").":</label>";
+        echo "<div style='position:relative;'><input type=text name=shift_start_time size=5 maxlength=4 id=shift_start_time style='width:100%;padding:0.75rem 0.75rem 0.75rem 3rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><span style='position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:1.2rem;'>🕐</span></div>";
+        echo "</div>";
+        
+        // End Time
+        echo "<div>";
+        echo "<label style='display:block;color:#1e293b;font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;'>"._QXZ("Shift End Time").":</label>";
+        echo "<div style='position:relative;'><input type=text name=shift_end_time size=5 maxlength=4 id=shift_end_time style='width:100%;padding:0.75rem 0.75rem 0.75rem 3rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><span style='position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:1.2rem;'>🕐</span></div>";
+        echo "</div>";
+        
+        echo "</div>";
+        
+        // Calculate Button
+        echo "<div style='margin-top:0.5rem;'>";
+        echo "<button type='button' onClick=\"shift_time();\" style='padding:0.75rem 1.5rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 8px rgba(59,130,246,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(59,130,246,0.3)';\">"._QXZ("Calculate Shift Length")."</button>";
+        echo "</div>";
+        
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>$NWB#shifts-shift_start_time$NWE</div>";
+        echo "</div>";
+        echo "</div>";
+        
+        // Shift Length
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Shift Length").":</label>";
+        echo "<div><input type=text name=shift_length id=shift_length size=6 maxlength=5 style='width:150px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'> <span style='color:#64748b;font-size:0.85rem;'>(hours)</span> $NWB#shifts-shift_length$NWE</div>";
+        echo "</div>";
+        
+        // Shift Weekdays with Modern Checkboxes
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:600;font-size:0.9rem;margin-bottom:1rem;'>"._QXZ("Shift Weekdays").":</label>";
+        echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;'>";
+        
+        $weekdays = [
+            ['value' => '0', 'label' => 'Sunday', 'icon' => '☀️'],
+            ['value' => '1', 'label' => 'Monday', 'icon' => '📌'],
+            ['value' => '2', 'label' => 'Tuesday', 'icon' => '📌'],
+            ['value' => '3', 'label' => 'Wednesday', 'icon' => '📌'],
+            ['value' => '4', 'label' => 'Thursday', 'icon' => '📌'],
+            ['value' => '5', 'label' => 'Friday', 'icon' => '📌'],
+            ['value' => '6', 'label' => 'Saturday', 'icon' => '🎉']
+        ];
+        
+        foreach ($weekdays as $day) {
+            echo "<label style='display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:#fff;border:2px solid #e2e8f0;border-radius:6px;cursor:pointer;transition:all 0.3s;' onmouseover=\"this.style.borderColor='#3b82f6';this.style.background='#eff6ff';\" onmouseout=\"this.style.borderColor='#e2e8f0';this.style.background='#fff';\">";
+            echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"{$day['value']}\" style='width:18px;height:18px;cursor:pointer;'>";
+            echo "<span style='font-size:1.2rem;'>{$day['icon']}</span>";
+            echo "<span style='color:#000000;font-weight:500;font-size:0.9rem;'>{$day['label']}</span>";
+            echo "</label>";
+        }
+        
+        echo "</div>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#shifts-shift_weekdays$NWE</div>";
+        echo "</div>";
+        
+        // Report Option
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Report Option").":</label>";
+        echo "<div><select size=1 name=report_option style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value=\"N\" SELECTED>"._QXZ("N")."</option></select>$NWB#shifts-report_option$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 
 ######################
@@ -47523,134 +47618,236 @@ if ($ADD==3211111111)
 # ADD=331111111 modify shift definition info in the system
 ######################
 if ($ADD==331111111)
-	{
-	if ( ($LOGmodify_call_times==1) or ($LOGmodify_shifts==1) )
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=331111111&shift_id=$shift_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ( ($LOGmodify_call_times==1) or ($LOGmodify_shifts==1) )
+        {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
+            {
+            $modify_url = "$PHP_SELF?ADD=331111111&shift_id=$shift_id";
+            $modify_footer_refresh=1;
+            }
 
-		$stmt="SELECT shift_id,shift_name,shift_start_time,shift_length,shift_weekdays,report_option,user_group,report_rank from vicidial_shifts where shift_id='$shift_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$shift_name =		$row[1];
-		$shift_start_time =	$row[2];
-		$shift_length =		$row[3];
-		$shift_weekdays =	$row[4];
-		$report_option =	$row[5];
-		$user_group =		$row[6];
-		$report_rank =		$row[7];
+        $stmt="SELECT shift_id,shift_name,shift_start_time,shift_length,shift_weekdays,report_option,user_group,report_rank from vicidial_shifts where shift_id='$shift_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $shift_name =       $row[1];
+        $shift_start_time = $row[2];
+        $shift_length =     $row[3];
+        $shift_weekdays =   $row[4];
+        $report_option =    $row[5];
+        $user_group =       $row[6];
+        $report_rank =      $row[7];
 
-		$shift_start_hour = substr($shift_start_time,0,2);
-		$shift_start_min = substr($shift_start_time,2,2);
-		$shift_length_hour = substr($shift_length,0,2);
-		$shift_length_min = substr($shift_length,3,2);
-		$shift_end_hour = ($shift_start_hour + $shift_length_hour);
-		$shift_end_min = ($shift_start_min + $shift_length_min);
-		if ($shift_end_min >=60) 
-			{
-			$shift_end_min = ($shift_end_min - 60);
-			$shift_end_hour++;
-			}
-		if ($shift_end_hour >=24) 
-			{
-			$shift_end_hour = ($shift_end_hour - 24);
-			}
-		$shift_end_hour = sprintf("%02s", $shift_end_hour);	
-		$shift_end_min = sprintf("%02s", $shift_end_min);	
-		$shift_end = "$shift_end_hour$shift_end_min";
+        $shift_start_hour = substr($shift_start_time,0,2);
+        $shift_start_min = substr($shift_start_time,2,2);
+        $shift_length_hour = substr($shift_length,0,2);
+        $shift_length_min = substr($shift_length,3,2);
+        $shift_end_hour = ($shift_start_hour + $shift_length_hour);
+        $shift_end_min = ($shift_start_min + $shift_length_min);
+        if ($shift_end_min >=60) 
+            {
+            $shift_end_min = ($shift_end_min - 60);
+            $shift_end_hour++;
+            }
+        if ($shift_end_hour >=24) 
+            {
+            $shift_end_hour = ($shift_end_hour - 24);
+            }
+        $shift_end_hour = sprintf("%02s", $shift_end_hour); 
+        $shift_end_min = sprintf("%02s", $shift_end_min);   
+        $shift_end = "$shift_end_hour$shift_end_min";
 
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<div style='font-size:2.5rem;'>📅</div>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("MODIFY A SHIFT")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("MODIFY A SHIFT")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=431111111>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=shift_id value=\"$shift_id\">\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift ID").": </td><td align=left><B>$shift_id</B></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Name").": </td><td align=left><input type=text name=shift_name size=50 maxlength=50 value=\"$shift_name\"> ("._QXZ("short description of the shift").")$NWB#shifts-shift_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">"._QXZ("$user_group")."</option>\n";
-		echo "</select>$NWB#shifts-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Start Time").": </td><td align=left><input type=text name=shift_start_time size=5 maxlength=4 id=shift_start_time value=\"$shift_start_time\">\n";
-		echo " &nbsp; "._QXZ("Shift End Time").": <input type=text name=shift_end_time size=5 maxlength=4 id=shift_end_time value=\"$shift_end\">\n";
-		echo "<input style='background-color:#$SSbutton_color' type=button name=shift_calc value=\""._QXZ("Calculate Shift Length")."\" onClick=\"shift_time();\"> $NWB#shifts-shift_start_time$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Length").": </td><td align=left><input type=text name=shift_length id=shift_length size=6 maxlength=5 value=\"$shift_length\"> $NWB#shifts-shift_length$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Shift Weekdays").": <BR>$NWB#shifts-shift_weekdays$NWE</td><td align=left>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"0\"";
-			if (preg_match('/0/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Sunday")."<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"1\"";
-			if (preg_match('/1/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Monday")."<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"2\"";
-			if (preg_match('/2/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Tuesday")."<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"3\"";
-			if (preg_match('/3/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Wednesday")."<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"4\"";
-			if (preg_match('/4/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Thursday")."<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"5\"";
-			if (preg_match('/5/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Friday")."<BR>\n";
-		echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"6\"";
-			if (preg_match('/6/',$shift_weekdays)) {echo " CHECKED";}
-		echo ">"._QXZ("Saturday")."<BR>\n";
-		echo "</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Report Option").": </td><td align=left><select size=1 name=report_option><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$report_option' SELECTED>"._QXZ("$report_option")."</option></select>$NWB#shifts-report_option$NWE</td></tr>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=431111111>\n";
+        echo "<input type=hidden name=DB value=\"$DB\">\n";
+        echo "<input type=hidden name=shift_id value=\"$shift_id\">\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Shift ID (Read-only)
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Shift ID").":</label>";
+        echo "<div style='color:#000000;font-weight:700;font-size:1rem;'>$shift_id</div>";
+        echo "</div>";
+        
+        // Shift Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Shift Name").":</label>";
+        echo "<div><input type=text name=shift_name size=50 maxlength=50 value=\"$shift_name\" style='width:100%;max-width:600px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("short description of the shift").")$NWB#shifts-shift_name$NWE</div></div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"$user_group\">"._QXZ("$user_group")."</option>\n";
+        echo "</select>$NWB#shifts-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Shift Times with Calculator
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #3b82f6;'>";
+        echo "<div style='display:grid;gap:1rem;'>";
+        
+        echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;'>";
+        
+        // Start Time
+        echo "<div>";
+        echo "<label style='display:block;color:#1e293b;font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;'>"._QXZ("Shift Start Time").":</label>";
+        echo "<div style='position:relative;'><input type=text name=shift_start_time size=5 maxlength=4 id=shift_start_time value=\"$shift_start_time\" style='width:100%;padding:0.75rem 0.75rem 0.75rem 3rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><span style='position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:1.2rem;'>🕐</span></div>";
+        echo "</div>";
+        
+        // End Time
+        echo "<div>";
+        echo "<label style='display:block;color:#1e293b;font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;'>"._QXZ("Shift End Time").":</label>";
+        echo "<div style='position:relative;'><input type=text name=shift_end_time size=5 maxlength=4 id=shift_end_time value=\"$shift_end\" style='width:100%;padding:0.75rem 0.75rem 0.75rem 3rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><span style='position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:1.2rem;'>🕐</span></div>";
+        echo "</div>";
+        
+        echo "</div>";
+        
+        // Calculate Button
+        echo "<div style='margin-top:0.5rem;'>";
+        echo "<button type='button' onClick=\"shift_time();\" style='padding:0.75rem 1.5rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 8px rgba(59,130,246,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(59,130,246,0.3)';\">"._QXZ("Calculate Shift Length")."</button>";
+        echo "</div>";
+        
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>$NWB#shifts-shift_start_time$NWE</div>";
+        echo "</div>";
+        echo "</div>";
+        
+        // Shift Length
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Shift Length").":</label>";
+        echo "<div><input type=text name=shift_length id=shift_length size=6 maxlength=5 value=\"$shift_length\" style='width:150px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'> <span style='color:#64748b;font-size:0.85rem;'>(hours)</span> $NWB#shifts-shift_length$NWE</div>";
+        echo "</div>";
+        
+        // Shift Weekdays with Modern Checkboxes
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:600;font-size:0.9rem;margin-bottom:1rem;'>"._QXZ("Shift Weekdays").":</label>";
+        echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;'>";
+        
+        $weekdays = [
+            ['value' => '0', 'label' => _QXZ("Sunday"), 'icon' => '☀️'],
+            ['value' => '1', 'label' => _QXZ("Monday"), 'icon' => '📌'],
+            ['value' => '2', 'label' => _QXZ("Tuesday"), 'icon' => '📌'],
+            ['value' => '3', 'label' => _QXZ("Wednesday"), 'icon' => '📌'],
+            ['value' => '4', 'label' => _QXZ("Thursday"), 'icon' => '📌'],
+            ['value' => '5', 'label' => _QXZ("Friday"), 'icon' => '📌'],
+            ['value' => '6', 'label' => _QXZ("Saturday"), 'icon' => '🎉']
+        ];
+        
+        foreach ($weekdays as $day) {
+            $checked = preg_match('/'.$day['value'].'/',$shift_weekdays) ? ' checked' : '';
+            echo "<label style='display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:#fff;border:2px solid ".($checked ? "#3b82f6" : "#e2e8f0").";border-radius:6px;cursor:pointer;transition:all 0.3s;' onmouseover=\"this.style.borderColor='#3b82f6';this.style.background='#eff6ff';\" onmouseout=\"if(!this.querySelector('input').checked) {this.style.borderColor='#e2e8f0';this.style.background='#fff';}\">";
+            echo "<input type=\"checkbox\" name=\"shift_weekdays[]\" value=\"{$day['value']}\"$checked style='width:18px;height:18px;cursor:pointer;'>";
+            echo "<span style='font-size:1.2rem;'>{$day['icon']}</span>";
+            echo "<span style='color:#000000;font-weight:500;font-size:0.9rem;'>{$day['label']}</span>";
+            echo "</label>";
+        }
+        
+        echo "</div>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#shifts-shift_weekdays$NWE</div>";
+        echo "</div>";
+        
+        // Report Option
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Report Option").":</label>";
+        echo "<div><select size=1 name=report_option style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$report_option' SELECTED>"._QXZ("$report_option")."</option></select>$NWB#shifts-report_option$NWE</div>";
+        echo "</div>";
+        
+        // Report Rank
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Report Rank").":</label>";
+        echo "<div><select size=1 name=report_rank style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option SELECTED>$report_rank</option>";
+        $k=1;
+        while ($k < 100)
+            {
+            echo "<option>$k</option>\n";
+            $k++;
+            }
+        echo "</select>$NWB#shifts-report_rank$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End main card
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Report Rank").": </td><td align=left><select size=1 name=report_rank><option SELECTED>$report_rank</option>";
-		$k=1;
-		while ($k < 100)
-			{
-			echo "<option>$k</option>\n";
-			$k++;
-			}
-		echo "</select>$NWB#shifts-report_rank$NWE</td></tr>\n";
-		
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
+        // User Groups Using This Shift
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>👥</span>"._QXZ("USER GROUPS USING THIS SHIFT")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		echo "</TABLE><BR><BR>\n";
-		echo "<B>"._QXZ("USER GROUPS USING THIS SHIFT").":</B><BR>\n";
-		echo "<TABLE>\n";
+        $stmt="SELECT user_group,group_name from vicidial_user_groups where group_shifts LIKE\"% $shift_id %\" $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $camps_to_print = mysqli_num_rows($rslt);
+        
+        if ($camps_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($camps_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=311111&user_group=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No user groups using this shift")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		$stmt="SELECT user_group,group_name from vicidial_user_groups where group_shifts LIKE\"% $shift_id %\" $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><a href=\"$PHP_SELF?ADD=311111&user_group=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
-
-		echo "</TABLE>\n";
-		echo "</center><BR><BR>\n";
-
-		if ($LOGdelete_call_times > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=531111111&shift_id=$shift_id\">"._QXZ("DELETE THIS SHIFT DEFINITION")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=SHIFTS&stage=$shift_id\">"._QXZ("Click here to see Admin changes to this shift")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You are not authorized to view this page. Please go back.");
-		}
-
-	}
+        // Action Links
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;text-align:center;'>";
+        
+        if ($LOGdelete_call_times > 0)
+            {
+            echo "<a href=\"$PHP_SELF?ADD=531111111&shift_id=$shift_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(239,68,68,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.3)';\">"._QXZ("DELETE THIS SHIFT DEFINITION")."</a>\n";
+            }
+        if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            {
+            echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=SHIFTS&stage=$shift_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(59,130,246,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';\">"._QXZ("Click here to see Admin changes to this shift")."</a>\n";
+            }
+        
+        echo "</div>";
+        
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You are not authorized to view this page. Please go back.")."</p>";
+        echo "</div>";
+        }
+    }
 
 
 ######################
