@@ -48847,447 +48847,326 @@ if ($ADD==311111111111)
 		$disk_usage = preg_replace("/ /"," - ",$disk_usage);
 		$disk_usage = preg_replace("/\|/","% &nbsp; &nbsp; ",$disk_usage);
 
-		echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
-
-echo "<form action=$PHP_SELF method=POST>\n";
-echo "<input type=hidden name=ADD value=411111111111>\n";
-echo "<input type=hidden name=old_server_id value=\"$server_id\">\n";
-echo "<input type=hidden name=old_server_ip value=\"$server_ip\">\n";
-echo "<input type=hidden name=DB value=$DB>\n";
-
-// Main Card
-echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
-
-// Header Section
-echo "<div style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);padding:2rem;color:#fff;'>";
-echo "<div style='display:flex;align-items:center;gap:1rem;'>";
-echo "<div style='font-size:3rem;'>🖥️</div>";
-echo "<div><h2 style='color:#fff;margin:0;font-size:1.8rem;font-weight:700;'>"._QXZ("MODIFY A SERVER RECORD")."</h2><p style='color:rgba(255,255,255,0.9);margin:0.25rem 0 0 0;font-size:1rem;font-family:monospace;'>$server_id</p></div>";
-echo "</div></div>";
-
-// Form Content
-echo "<div style='padding:2rem;'>";
-
-// === BASIC INFORMATION ===
-echo "<div style='background:#f8fafc;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #3b82f6;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>⚙️</span>"._QXZ("Basic Information")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Server ID
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server ID").":</label>";
-echo "<div><input type=text name=server_id size=10 maxlength=10 value=\"$server_id\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;max-width:200px;'>$NWB#servers-server_id$NWE</div>";
-echo "</div>";
-
-// Server Description
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server Description").":</label>";
-echo "<div><input type=text name=server_description size=30 maxlength=255 value=\"$server_description\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#servers-server_description$NWE</div>";
-echo "</div>";
-
-// Server IP Address
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP Address").":</label>";
-echo "<div><input type=text name=server_ip size=20 maxlength=15 value=\"$server_ip\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-server_ip$NWE</div>";
-echo "</div>";
-
-// Active
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active").":</label>";
-echo "<div><select size=1 name=active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#servers-active$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End basic section
-
-// === SYSTEM STATUS (Read-only) ===
-echo "<div style='background:#f0fdf4;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #10b981;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>📊</span>"._QXZ("System Status")."</h3>";
-echo "<div style='display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1rem;'>";
-
-// System Load
-echo "<div style='background:#fff;padding:1.25rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);'>";
-echo "<div style='color:#64748b;font-size:0.85rem;margin-bottom:0.5rem;'>"._QXZ("System Load")."</div>";
-echo "<div style='color:#000000;font-size:1.5rem;font-weight:700;'>$sysload <span style='font-size:1rem;color:#64748b;'>- $cpu%</span></div>";
-echo "<div style='color:#64748b;font-size:0.75rem;margin-top:0.25rem;'>$NWB#servers-sysload$NWE</div>";
-echo "</div>";
-
-// Live Channels
-echo "<div style='background:#fff;padding:1.25rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);'>";
-echo "<div style='color:#64748b;font-size:0.85rem;margin-bottom:0.5rem;'>"._QXZ("Live Channels")."</div>";
-echo "<div style='color:#000000;font-size:1.5rem;font-weight:700;'>$channels_total <span style='font-size:0.9rem;color:#64748b;'>"._QXZ("Agents").": $live_agents</span></div>";
-echo "<div style='color:#64748b;font-size:0.75rem;margin-top:0.25rem;'>$NWB#servers-channels_total$NWE</div>";
-echo "</div>";
-
-// Disk Usage
-echo "<div style='background:#fff;padding:1.25rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);grid-column:span 2;'>";
-echo "<div style='color:#64748b;font-size:0.85rem;margin-bottom:0.5rem;'>"._QXZ("Disk Usage")."</div>";
-echo "<div style='color:#000000;font-size:0.75rem;font-family:monospace;line-height:1.6;'>$disk_usage</div>";
-echo "<div style='color:#64748b;font-size:0.75rem;margin-top:0.25rem;'>$NWB#servers-disk_usage$NWE</div>";
-echo "</div>";
-
-// System Uptime
-echo "<div style='background:#fff;padding:1.25rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);grid-column:span 2;'>";
-echo "<div style='color:#64748b;font-size:0.85rem;margin-bottom:0.5rem;'>"._QXZ("System Uptime")."</div>";
-echo "<div style='color:#000000;font-size:1rem;font-weight:600;'>$system_uptime</div>";
-echo "<div style='color:#64748b;font-size:0.75rem;margin-top:0.25rem;'>$NWB#servers-system_uptime$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End system status
-
-// === ADMINISTRATIVE SETTINGS ===
-echo "<div style='background:#fef3c7;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #f59e0b;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>👥</span>"._QXZ("Administrative Settings")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Admin User Group
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
-echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
-echo "$UUgroups_list";
-echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-\ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
-echo "</select>$NWB#servers-user_group$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End admin settings
-
-// === ASTERISK CONFIGURATION ===
-echo "<div style='background:#dbeafe;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #2563eb;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>📞</span>"._QXZ("Asterisk Configuration")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Asterisk Version
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Asterisk Version").":</label>";
-echo "<div><input type=text name=asterisk_version size=20 maxlength=20 value=\"$asterisk_version\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:250px;'>$NWB#servers-asterisk_version$NWE</div>";
-echo "</div>";
-
-// Max Trunks
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Max Trunks").":</label>";
-echo "<div><input type=text name=max_vicidial_trunks size=5 maxlength=4 value=\"$max_vicidial_trunks\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:150px;'>$NWB#servers-max_trunks$NWE</div>";
-echo "</div>";
-
-// Max Calls per Second
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Max Calls per Second").":</label>";
-echo "<div><input type=text name=outbound_calls_per_second size=5 maxlength=4 value=\"$outbound_calls_per_second\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:150px;'>$NWB#servers-outbound_calls_per_second$NWE</div>";
-echo "</div>";
-
-// Balance Dialing
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Balance Dialing").":</label>";
-echo "<div><select size=1 name=vicidial_balance_active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$vicidial_balance_active'>"._QXZ("$vicidial_balance_active")."</option></select>$NWB#servers-balance_active$NWE</div>";
-echo "</div>";
-
-// Balance Rank
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Balance Rank").":</label>";
-echo "<div><input type=text name=vicidial_balance_rank size=4 maxlength=2 value=\"$vicidial_balance_rank\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:150px;'>$NWB#servers-balance_rank$NWE</div>";
-echo "</div>";
-
-// Balance Offlimits
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Balance Offlimits").":</label>";
-echo "<div><input type=text name=balance_trunks_offlimits size=5 maxlength=4 value=\"$balance_trunks_offlimits\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:150px;'>$NWB#servers-balance_trunks_offlimits$NWE</div>";
-echo "</div>";
-
-// Telnet Host
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Telnet Host").":</label>";
-echo "<div><input type=text name=telnet_host size=20 maxlength=20 value=\"$telnet_host\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-telnet_host$NWE</div>";
-echo "</div>";
-
-// Telnet Port
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Telnet Port").":</label>";
-echo "<div><input type=text name=telnet_port size=6 maxlength=5 value=\"$telnet_port\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:150px;'>$NWB#servers-telnet_port$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End Asterisk section
-
-// === MANAGER INTERFACE ===
-echo "<div style='background:#f3e8ff;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #8b5cf6;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>🔐</span>"._QXZ("Asterisk Manager Interface")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Manager User
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Manager User").":</label>";
-echo "<div><input type=text name=ASTmgrUSERNAME size=20 maxlength=20 value=\"$ASTmgrUSERNAME\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-ASTmgrUSERNAME$NWE</div>";
-echo "</div>";
-
-// Manager Secret
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Manager Secret").":</label>";
-echo "<div><input type=text name=ASTmgrSECRET size=20 maxlength=20 value=\"$ASTmgrSECRET\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-ASTmgrSECRET$NWE</div>";
-echo "</div>";
-
-// Manager Update User
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Manager Update User").":</label>";
-echo "<div><input type=text name=ASTmgrUSERNAMEupdate size=20 maxlength=20 value=\"$ASTmgrUSERNAMEupdate\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-ASTmgrUSERNAMEupdate$NWE</div>";
-echo "</div>";
-
-// Manager Listen User
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Manager Listen User").":</label>";
-echo "<div><input type=text name=ASTmgrUSERNAMElisten size=20 maxlength=20 value=\"$ASTmgrUSERNAMElisten\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-ASTmgrUSERNAMElisten$NWE</div>";
-echo "</div>";
-
-// Manager Send User
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Manager Send User").":</label>";
-echo "<div><input type=text name=ASTmgrUSERNAMEsend size=20 maxlength=20 value=\"$ASTmgrUSERNAMEsend\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-ASTmgrUSERNAMEsend$NWE</div>";
-echo "</div>";
-
-// Conf File Secret with Password Strength
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Conf File Secret").":</label>";
-echo "<div><input type=text id=reg_pass name=conf_secret size=40 maxlength=100 value=\"$conf_secret\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-conf_secret$NWE<div style='display:flex;align-items:center;gap:1rem;margin-top:0.5rem;'><span style='font-size:0.85rem;color:#64748b;'>"._QXZ("Strength").":</span><IMG id=reg_pass_img src='images/pixel.gif' style='vertical-align:middle;' onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"><span style='font-size:0.85rem;color:#64748b;'>"._QXZ("Length").": <span id=pass_length name=pass_length>0</span></span></div></div>";
-echo "</div>";
-
-echo "</div></div>"; // End Manager section
-
-// === DIALING & ROUTING ===
-echo "<div style='background:#fce7f3;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #ec4899;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>📍</span>"._QXZ("Dialing & Routing")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Local GMT
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Local GMT").":</label>";
-echo "<div><select size=1 name=local_gmt style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;'><option>12.75</option><option>12.00</option><option>11.00</option><option>10.00</option><option>9.50</option><option>9.00</option><option>8.00</option><option>7.00</option><option>6.50</option><option>6.00</option><option>5.75</option><option>5.50</option><option>5.00</option><option>4.50</option><option>4.00</option><option>3.50</option><option>3.00</option><option>2.00</option><option>1.00</option><option>0.00</option><option>-1.00</option><option>-2.00</option><option>-3.00</option><option>-3.50</option><option>-4.00</option><option>-5.00</option><option>-6.00</option><option>-7.00</option><option>-8.00</option><option>-9.00</option><option>-10.00</option><option>-11.00</option><option>-12.00</option><option selected>$local_gmt</option></select> <span style='color:#64748b;font-size:0.85rem;font-style:italic;'>("._QXZ("Do NOT Adjust for DST").")</span>$NWB#servers-local_gmt$NWE</div>";
-echo "</div>";
-
-// VMail Dump Exten
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("VMail Dump Exten").":</label>";
-echo "<div><input type=text name=voicemail_dump_exten size=20 maxlength=20 value=\"$voicemail_dump_exten\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-voicemail_dump_exten$NWE</div>";
-echo "</div>";
-
-// VMail Dump Exten NI
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("VMail Dump Exten NI").":</label>";
-echo "<div><input type=text name=voicemail_dump_exten_no_inst size=20 maxlength=20 value=\"$voicemail_dump_exten_no_inst\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-voicemail_dump_exten_no_inst$NWE</div>";
-echo "</div>";
-
-// Auto dial extension with prefix
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("auto dial extension").":</label>";
-echo "<div style='display:flex;gap:1rem;flex-wrap:wrap;align-items:center;'><input type=text name=answer_transfer_agent size=20 maxlength=20 value=\"$answer_transfer_agent\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-answer_transfer_agent$NWE";
-
-$major_version = explode('.',$asterisk_version);
-if ($major_version[0] >= 12)
-    {
-    echo "<span style='color:#64748b;'>"._QXZ("prefix").":</span><input type=text name=routing_prefix size=10 maxlength=10 value=\"$routing_prefix\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:150px;'>$NWB#servers-routing_prefix$NWE";
-    }
-else
-    {echo "<input type=hidden name=routing_prefix value=\"$routing_prefix\">";}
-echo "</div></div>";
-
-// Default Context
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Default Context").":</label>";
-echo "<div><input type=text name=ext_context size=20 maxlength=20 value=\"$ext_context\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-ext_context$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End Dialing section
-
-// === LOGGING & DEBUGGING ===
-echo "<div style='background:#e0e7ff;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #6366f1;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>📝</span>"._QXZ("Logging & Debugging")."</h3>";
-echo "<div style='display:grid;grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));gap:1.25rem;'>";
-
-// System Performance
-echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("System Performance").":</label>";
-echo "<div><select size=1 name=sys_perf_log style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$sys_perf_log' selected>"._QXZ("$sys_perf_log")."</option></select>$NWB#servers-sys_perf_log$NWE</div>";
-echo "</div>";
-
-// Server Logs
-echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server Logs").":</label>";
-echo "<div><select size=1 name=vd_server_logs style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$vd_server_logs' selected>"._QXZ("$vd_server_logs")."</option></select>$NWB#servers-vd_server_logs$NWE</div>";
-echo "</div>";
-
-// AGI Output
-echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("AGI Output").":</label>";
-echo "<div><select size=1 name=agi_output style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:180px;'><option value='NONE'>"._QXZ("NONE")."</option><option value='STDERR'>"._QXZ("STDERR")."</option><option value='FILE'>"._QXZ("FILE")."</option><option value='BOTH'>"._QXZ("BOTH")."</option><option value='$agi_output' selected>"._QXZ("$agi_output")."</option></select>$NWB#servers-agi_output$NWE</div>";
-echo "</div>";
-
-// Carrier Logging Active
-echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier Logging Active").":</label>";
-echo "<div><select size=1 name=carrier_logging_active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$carrier_logging_active' selected>"._QXZ("$carrier_logging_active")."</option></select>$NWB#servers-carrier_logging_active$NWE</div>";
-echo "</div>";
-
-// Gather Asterisk Output
-echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Gather Asterisk Output").":</label>";
-echo "<div><select size=1 name=gather_asterisk_output style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$gather_asterisk_output' selected>"._QXZ("$gather_asterisk_output")."</option></select>$NWB#servers-gather_asterisk_output$NWE</div>";
-echo "</div>";
-
-// Conf Qualify
-echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Conf Qualify").":</label>";
-echo "<div><select size=1 name=conf_qualify style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$conf_qualify' selected>"._QXZ("$conf_qualify")."</option></select>$NWB#servers-conf_qualify$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End Logging section
-
-// === RECORDING & IP SETTINGS ===
-echo "<div style='background:#dcfce7;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #16a34a;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>🎙️</span>"._QXZ("Recording & IP Settings")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Recording Web Link
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Recording Web Link").":</label>";
-echo "<div><select size=1 name=recording_web_link style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;'><option value='SERVER_IP'>"._QXZ("SERVER_IP")."</option><option value='ALT_IP'>"._QXZ("ALT_IP")."</option><option value='EXTERNAL_IP'>"._QXZ("EXTERNAL_IP")."</option><option value='$recording_web_link' selected>"._QXZ("$recording_web_link")."</option></select>$NWB#servers-recording_web_link$NWE</div>";
-echo "</div>";
-
-// Alternate Recording Server IP
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Alternate Recording Server IP").":</label>";
-echo "<div><input type=text name=alt_server_ip size=30 maxlength=100 value=\"$alt_server_ip\" style='width:100%;max-width:400px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-alt_server_ip$NWE</div>";
-echo "</div>";
-
-// External Server IP
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("External Server IP").":</label>";
-echo "<div><input type=text name=external_server_ip size=30 maxlength=100 value=\"$external_server_ip\" style='width:100%;max-width:400px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-external_server_ip$NWE</div>";
-echo "</div>";
-
-// Web Socket URL
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Web Socket URL").":</label>";
-echo "<div><input type=text name=web_socket_url size=30 maxlength=255 value=\"$web_socket_url\" style='width:100%;max-width:500px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-web_socket_url$NWE</div>";
-echo "</div>";
-
-// External Web Socket URL
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("External Web Socket URL").":</label>";
-echo "<div><input type=text name=external_web_socket_url size=30 maxlength=255 value=\"$external_web_socket_url\" style='width:100%;max-width:500px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-external_web_socket_url$NWE</div>";
-echo "</div>";
-
-// Active Twin Server IP
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active Twin Server IP").":</label>";
-echo "<div><input type=text name=active_twin_server_ip size=16 maxlength=15 value=\"$active_twin_server_ip\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;max-width:250px;'>$NWB#servers-active_twin_server_ip$NWE</div>";
-echo "</div>";
-
-// Recording Limit
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Recording Limit").":</label>";
-echo "<div><input type=text name=vicidial_recording_limit size=8 maxlength=6 value=\"$vicidial_recording_limit\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:150px;'>$NWB#servers-recording_limit$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End Recording section
-
-// === CONFERENCING ===
-echo "<div style='background:#fef3c7;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #f59e0b;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>🎧</span>"._QXZ("Conferencing")."</h3>";
-echo "<div style='display:grid;gap:1.25rem;'>";
-
-// Conferencing Engine
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Conferencing Engine").":</label>";
-echo "<div><select size=1 name=conf_engine style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'><option value='MEETME'>"._QXZ("MEETME")."</option><option value='CONFBRIDGE'>"._QXZ("CONFBRIDGE")."</option><option selected value='$conf_engine'>"._QXZ("$conf_engine")."</option></select>$NWB#servers-conf_engine$NWE</div>";
-echo "</div>";
-
-// Conf Update Interval
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Conf Update Interval").":</label>";
-echo "<div><input type=text name=conf_update_interval size=5 maxlength=6 value=\"$conf_update_interval\" style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;max-width:150px;'>$NWB#servers-conf_update_interval$NWE</div>";
-echo "</div>";
-
-echo "</div></div>"; // End Conferencing section
-
-// === SERVER OPTIONS ===
-echo "<div style='background:#f1f5f9;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #64748b;'>";
-echo "<h3 style='color:#1e293b;margin:0 0 1.5rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>⚡</span>"._QXZ("Server Options")."</h3>";
-echo "<div style='display:grid;grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));gap:1.25rem;'>";
-
-// Active Asterisk Server
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active Asterisk Server").":</label>";
-echo "<div><select size=1 name=active_asterisk_server style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$active_asterisk_server'>"._QXZ("$active_asterisk_server")."</option></select>$NWB#servers-active_asterisk_server$NWE</div>";
-echo "</div>";
-
-// Auto-Restart Asterisk
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Auto-Restart Asterisk").":</label>";
-echo "<div><select size=1 name=auto_restart_asterisk style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$auto_restart_asterisk'>"._QXZ("$auto_restart_asterisk")."</option></select>$NWB#servers-auto_restart_asterisk$NWE</div>";
-echo "</div>";
-
-// Temp No-Restart Asterisk
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Temp No-Restart Asterisk").":</label>";
-echo "<div><select size=1 name=asterisk_temp_no_restart style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$asterisk_temp_no_restart'>"._QXZ("$asterisk_temp_no_restart")."</option></select>$NWB#servers-asterisk_temp_no_restart$NWE</div>";
-echo "</div>";
-
-// Active Agent Server
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active Agent Server").":</label>";
-echo "<div><select size=1 name=active_agent_login_server style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$active_agent_login_server'>"._QXZ("$active_agent_login_server")."</option></select>$NWB#servers-active_agent_login_server$NWE</div>";
-echo "</div>";
-
-// Generate conf files
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Generate conf files").":</label>";
-echo "<div><select size=1 name=generate_vicidial_conf style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$generate_vicidial_conf'>"._QXZ("$generate_vicidial_conf")."</option></select>$NWB#servers-generate_conf$NWE</div>";
-echo "</div>";
-
-// Rebuild conf files
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Rebuild conf files").":</label>";
-echo "<div><select size=1 name=rebuild_conf_files style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$rebuild_conf_files'>"._QXZ("$rebuild_conf_files")."</option></select>$NWB#servers-rebuild_conf_files$NWE</div>";
-echo "</div>";
-
-// Rebuild Music On Hold
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Rebuild Music On Hold").":</label>";
-echo "<div><select size=1 name=rebuild_music_on_hold style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$rebuild_music_on_hold'>"._QXZ("$rebuild_music_on_hold")."</option></select>$NWB#servers-rebuild_music_on_hold$NWE</div>";
-echo "</div>";
-
-// Sounds Update
-echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Sounds Update").":</label>";
-echo "<div><select size=1 name=sounds_update style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$sounds_update' selected>"._QXZ("$sounds_update")."</option></select>$NWB#servers-sounds_update$NWE</div>";
-echo "</div>";
-
-echo "</div>";
-
-// Asterisk Restart URL (Full Width)
-echo "<div style='display:grid;grid-template-columns:240px 1fr;gap:1rem;align-items:center;margin-top:1.25rem;'>";
-echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Asterisk Restart URL").":</label>";
-echo "<div><input type=text name=ara_url size=40 maxlength=1000 value=\"$ara_url\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-ara_url$NWE</div>";
-echo "</div>";
-
-echo "</div>"; // End Server Options
-
-// === CUSTOM DIALPLAN ===
-if ( ($SSallow_custom_dialplan > 0) and ($LOGmodify_custom_dialplans > 0) )
-    {
-    echo "<div style='background:#fce7f3;border-radius:12px;padding:2rem;margin-bottom:1.5rem;border-left:4px solid #ec4899;'>";
-    echo "<h3 style='color:#1e293b;margin:0 0 1rem 0;font-size:1.2rem;display:flex;align-items:center;gap:0.5rem;'><span>🔌</span>"._QXZ("Custom Dialplan Entry")."</h3>";
-    echo "<textarea name=custom_dialplan_entry rows=5 cols=80 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:150px;'>$custom_dialplan_entry</textarea>$NWB#servers-custom_dialplan_entry$NWE";
-    echo "</div>";
-    }
-else
-    {
-    echo "<input type=hidden name=custom_dialplan_entry value=\"\">";
-    }
-
-// Submit Button
-echo "<div style='text-align:center;padding:2rem 0;'>";
-echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
-echo "</div>";
-
-echo "</div>"; // End form content
-echo "</div>"; // End main card
-echo "</form>\n";
+		echo "<br>"._QXZ("MODIFY A SERVER RECORD").": $server_id<form action=$PHP_SELF method=POST>\n";
+		echo "<input type=hidden name=ADD value=411111111111>\n";
+		echo "<input type=hidden name=old_server_id value=\"$server_id\">\n";
+		echo "<input type=hidden name=old_server_ip value=\"$server_ip\">\n";
+		echo "<input type=hidden name=DB value=$DB>\n";
+		echo "<center><TABLE width=$section_width cellspacing=3>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server ID").": </td><td align=left><input type=text name=server_id size=10 maxlength=10 value=\"$server_id\">$NWB#servers-server_id$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server Description").": </td><td align=left><input type=text name=server_description size=30 maxlength=255 value=\"$server_description\">$NWB#servers-server_description$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP Address").": </td><td align=left><input type=text name=server_ip size=20 maxlength=15 value=\"$server_ip\">$NWB#servers-server_ip$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#servers-active$NWE</td></tr>\n";
+
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("System Load").": </td><td align=left>$sysload - $cpu% &nbsp; $NWB#servers-sysload$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Live Channels").": </td><td align=left>$channels_total &nbsp; &nbsp; "._QXZ("Agents").": $live_agents &nbsp; $NWB#servers-channels_total$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Disk Usage").": </td><td align=left><font size=0>$disk_usage</font> &nbsp; $NWB#servers-disk_usage$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("System Uptime").": </td><td align=left>$system_uptime &nbsp; $NWB#servers-system_uptime$NWE</td></tr>\n";
+
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
+		echo "$UUgroups_list";
+		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-\ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
+		echo "</select>$NWB#servers-user_group$NWE</td></tr>\n";
+
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Asterisk Version").": </td><td align=left><input type=text name=asterisk_version size=20 maxlength=20 value=\"$asterisk_version\">$NWB#servers-asterisk_version$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Trunks").": </td><td align=left><input type=text name=max_vicidial_trunks size=5 maxlength=4 value=\"$max_vicidial_trunks\">$NWB#servers-max_trunks$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Calls per Second").": </td><td align=left><input type=text name=outbound_calls_per_second size=5 maxlength=4 value=\"$outbound_calls_per_second\">$NWB#servers-outbound_calls_per_second$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Balance Dialing").": </td><td align=left><select size=1 name=vicidial_balance_active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$vicidial_balance_active'>"._QXZ("$vicidial_balance_active")."</option></select>$NWB#servers-balance_active$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Balance Rank").": </td><td align=left><input type=text name=vicidial_balance_rank size=4 maxlength=2 value=\"$vicidial_balance_rank\">$NWB#servers-balance_rank$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Balance Offlimits").": </td><td align=left><input type=text name=balance_trunks_offlimits size=5 maxlength=4 value=\"$balance_trunks_offlimits\">$NWB#servers-balance_trunks_offlimits$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Telnet Host").": </td><td align=left><input type=text name=telnet_host size=20 maxlength=20 value=\"$telnet_host\">$NWB#servers-telnet_host$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Telnet Port").": </td><td align=left><input type=text name=telnet_port size=6 maxlength=5 value=\"$telnet_port\">$NWB#servers-telnet_port$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager User").": </td><td align=left><input type=text name=ASTmgrUSERNAME size=20 maxlength=20 value=\"$ASTmgrUSERNAME\">$NWB#servers-ASTmgrUSERNAME$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Secret").": </td><td align=left><input type=text name=ASTmgrSECRET size=20 maxlength=20 value=\"$ASTmgrSECRET\">$NWB#servers-ASTmgrSECRET$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Update User").": </td><td align=left><input type=text name=ASTmgrUSERNAMEupdate size=20 maxlength=20 value=\"$ASTmgrUSERNAMEupdate\">$NWB#servers-ASTmgrUSERNAMEupdate$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Listen User").": </td><td align=left><input type=text name=ASTmgrUSERNAMElisten size=20 maxlength=20 value=\"$ASTmgrUSERNAMElisten\">$NWB#servers-ASTmgrUSERNAMElisten$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Send User").": </td><td align=left><input type=text name=ASTmgrUSERNAMEsend size=20 maxlength=20 value=\"$ASTmgrUSERNAMEsend\">$NWB#servers-ASTmgrUSERNAMEsend$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf File Secret").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=conf_secret size=40 maxlength=100 value=\"$conf_secret\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#servers-conf_secret$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Local GMT").": </td><td align=left><select size=1 name=local_gmt><option>12.75</option><option>12.00</option><option>11.00</option><option>10.00</option><option>9.50</option><option>9.00</option><option>8.00</option><option>7.00</option><option>6.50</option><option>6.00</option><option>5.75</option><option>5.50</option><option>5.00</option><option>4.50</option><option>4.00</option><option>3.50</option><option>3.00</option><option>2.00</option><option>1.00</option><option>0.00</option><option>-1.00</option><option>-2.00</option><option>-3.00</option><option>-3.50</option><option>-4.00</option><option>-5.00</option><option>-6.00</option><option>-7.00</option><option>-8.00</option><option>-9.00</option><option>-10.00</option><option>-11.00</option><option>-12.00</option><option selected>$local_gmt</option></select> ("._QXZ("Do NOT Adjust for DST").")$NWB#servers-local_gmt$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMail Dump Exten").": </td><td align=left><input type=text name=voicemail_dump_exten size=20 maxlength=20 value=\"$voicemail_dump_exten\">$NWB#servers-voicemail_dump_exten$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMail Dump Exten NI").": </td><td align=left><input type=text name=voicemail_dump_exten_no_inst size=20 maxlength=20 value=\"$voicemail_dump_exten_no_inst\">$NWB#servers-voicemail_dump_exten_no_inst$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("auto dial extension").": </td><td align=left><input type=text name=answer_transfer_agent size=20 maxlength=20 value=\"$answer_transfer_agent\">$NWB#servers-answer_transfer_agent$NWE";
+
+		$major_version = explode('.',$asterisk_version);
+		if ($major_version[0] >= 12)
+			{
+			echo " &nbsp; &nbsp; "._QXZ("prefix").": <input type=text name=routing_prefix size=10 maxlength=10 value=\"$routing_prefix\">$NWB#servers-routing_prefix$NWE";
+			}
+		else
+			{echo "<input type=hidden name=routing_prefix value=\"$routing_prefix\">";}
+		echo "</td></tr>\n";
+
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Default Context").": </td><td align=left><input type=text name=ext_context size=20 maxlength=20 value=\"$ext_context\">$NWB#servers-ext_context$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("System Performance").": </td><td align=left><select size=1 name=sys_perf_log><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$sys_perf_log' selected>"._QXZ("$sys_perf_log")."</option></select>$NWB#servers-sys_perf_log$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server Logs").": </td><td align=left><select size=1 name=vd_server_logs><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$vd_server_logs' selected>"._QXZ("$vd_server_logs")."</option></select>$NWB#servers-vd_server_logs$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("AGI Output").": </td><td align=left><select size=1 name=agi_output><option value='NONE'>"._QXZ("NONE")."</option><option value='STDERR'>"._QXZ("STDERR")."</option><option value='FILE'>"._QXZ("FILE")."</option><option value='BOTH'>"._QXZ("BOTH")."</option><option value='$agi_output' selected>"._QXZ("$agi_output")."</option></select>$NWB#servers-agi_output$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Logging Active").": </td><td align=left><select size=1 name=carrier_logging_active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$carrier_logging_active' selected>"._QXZ("$carrier_logging_active")."</option></select>$NWB#servers-carrier_logging_active$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Gather Asterisk Output").": </td><td align=left><select size=1 name=gather_asterisk_output><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$gather_asterisk_output' selected>"._QXZ("$gather_asterisk_output")."</option></select>$NWB#servers-gather_asterisk_output$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf Qualify").": </td><td align=left><select size=1 name=conf_qualify><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$conf_qualify' selected>"._QXZ("$conf_qualify")."</option></select>$NWB#servers-conf_qualify$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Recording Web Link").": </td><td align=left><select size=1 name=recording_web_link><option value='SERVER_IP'>"._QXZ("SERVER_IP")."</option><option value='ALT_IP'>"._QXZ("ALT_IP")."</option><option value='EXTERNAL_IP'>"._QXZ("EXTERNAL_IP")."</option><option value='$recording_web_link' selected>"._QXZ("$recording_web_link")."</option></select>$NWB#servers-recording_web_link$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Alternate Recording Server IP").": </td><td align=left><input type=text name=alt_server_ip size=30 maxlength=100 value=\"$alt_server_ip\">$NWB#servers-alt_server_ip$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("External Server IP").": </td><td align=left><input type=text name=external_server_ip size=30 maxlength=100 value=\"$external_server_ip\">$NWB#servers-external_server_ip$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Socket URL").": </td><td align=left><input type=text name=web_socket_url size=30 maxlength=255 value=\"$web_socket_url\">$NWB#servers-web_socket_url$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("External Web Socket URL").": </td><td align=left><input type=text name=external_web_socket_url size=30 maxlength=255 value=\"$external_web_socket_url\">$NWB#servers-external_web_socket_url$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Twin Server IP").": </td><td align=left><input type=text name=active_twin_server_ip size=16 maxlength=15 value=\"$active_twin_server_ip\">$NWB#servers-active_twin_server_ip$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Conferencing Engine").": </td><td align=left><select size=1 name=conf_engine><option value='MEETME'>"._QXZ("MEETME")."</option><option value='CONFBRIDGE'>"._QXZ("CONFBRIDGE")."</option><option selected value='$conf_engine'>"._QXZ("$conf_engine")."</option></select>$NWB#servers-conf_engine$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Conf Update Interval").": </td><td align=left><input type=text name=conf_update_interval size=5 maxlength=6 value=\"$conf_update_interval\">$NWB#servers-conf_update_interval$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Asterisk Server").": </td><td align=left><select size=1 name=active_asterisk_server><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$active_asterisk_server'>"._QXZ("$active_asterisk_server")."</option></select>$NWB#servers-active_asterisk_server$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Auto-Restart Asterisk").": </td><td align=left> &nbsp; &nbsp; <select size=1 name=auto_restart_asterisk><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$auto_restart_asterisk'>"._QXZ("$auto_restart_asterisk")."</option></select>$NWB#servers-auto_restart_asterisk$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Temp No-Restart Asterisk").": </td><td align=left> &nbsp; &nbsp; <select size=1 name=asterisk_temp_no_restart><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$asterisk_temp_no_restart'>"._QXZ("$asterisk_temp_no_restart")."</option></select>$NWB#servers-asterisk_temp_no_restart$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Asterisk Restart URL").": </td><td align=left> &nbsp; &nbsp; <input type=text name=ara_url size=40 maxlength=1000 value=\"$ara_url\">$NWB#servers-ara_url$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Agent Server").": </td><td align=left><select size=1 name=active_agent_login_server><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$active_agent_login_server'>"._QXZ("$active_agent_login_server")."</option></select>$NWB#servers-active_agent_login_server$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Generate conf files").": </td><td align=left><select size=1 name=generate_vicidial_conf><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$generate_vicidial_conf'>"._QXZ("$generate_vicidial_conf")."</option></select>$NWB#servers-generate_conf$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Rebuild conf files").": </td><td align=left><select size=1 name=rebuild_conf_files><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$rebuild_conf_files'>"._QXZ("$rebuild_conf_files")."</option></select>$NWB#servers-rebuild_conf_files$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Rebuild Music On Hold").": </td><td align=left><select size=1 name=rebuild_music_on_hold><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$rebuild_music_on_hold'>"._QXZ("$rebuild_music_on_hold")."</option></select>$NWB#servers-rebuild_music_on_hold$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Sounds Update").": </td><td align=left><select size=1 name=sounds_update><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$sounds_update' selected>"._QXZ("$sounds_update")."</option></select>$NWB#servers-sounds_update$NWE</td></tr>\n";
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Recording Limit").": </td><td align=left><input type=text name=vicidial_recording_limit size=8 maxlength=6 value=\"$vicidial_recording_limit\">$NWB#servers-recording_limit$NWE</td></tr>\n";
+
+		if ( ($SSallow_custom_dialplan > 0) and ($LOGmodify_custom_dialplans > 0) )
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Custom Dialplan Entry").": $NWB#servers-custom_dialplan_entry$NWE <TEXTAREA NAME=custom_dialplan_entry ROWS=5 COLS=80>$custom_dialplan_entry</TEXTAREA></td></tr>\n";
+			}
+		else
+			{
+			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom Dialplan Entry").": </td><td align=left>Disabled <input type=hidden name=custom_dialplan_entry value=\"\">$NWB#servers-custom_dialplan_entry$NWE</td></tr>\n";
+			}
+
+
+
+		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
+		echo "</TABLE></center></form>\n";
+
+
+		### vicidial server trunk records for this server
+		echo "<br><br><b>"._QXZ("TRUNKS FOR THIS SERVER").": &nbsp; $NWB#server_trunks$NWE</b><br>\n";
+		echo "<TABLE width=500 cellspacing=3>\n";
+		echo "<tr><td> "._QXZ("CAMPAIGN")."</td><td> "._QXZ("TRUNKS")." </td><td> "._QXZ("RESTRICTION")." </td><td> </td><td> "._QXZ("DELETE")." </td></tr>\n";
+
+		$stmt="SELECT server_ip,campaign_id,dedicated_trunks,trunk_restriction from vicidial_server_trunks where server_ip='$server_ip' $LOGallowed_campaignsSQL order by campaign_id;";
+		$rslt=mysql_to_mysqli($stmt, $link);
+		$recycle_to_print = mysqli_num_rows($rslt);
+		$o=0;
+		while ($recycle_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rslt);
+			$o++;
+
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+			echo "<tr $bgcolor><td><font size=1>$rowx[1]<form action=$PHP_SELF method=POST>\n";
+			echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
+			echo "<input type=hidden name=campaign_id value=\"$rowx[1]\">\n";
+			echo "<input type=hidden name=ADD value=421111111111></td>\n";
+			echo "<td><font size=1><input size=6 maxlength=4 name=dedicated_trunks value=\"$rowx[2]\"></td>\n";
+			echo "<td><select size=1 name=trunk_restriction><option value='MAXIMUM_LIMIT'>"._QXZ("MAXIMUM_LIMIT")."</option><option value='OVERFLOW_ALLOWED'>"._QXZ("OVERFLOW_ALLOWED")."</option><option value='$rowx[3]' SELECTED>"._QXZ("$rowx[3]")."</option></select></td>\n";
+			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'></form></td>\n";
+			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=621111111111&campaign_id=$rowx[1]&server_ip=$server_ip\">"._QXZ("DELETE")."</a></td></tr>\n";
+			}
+
+		echo "</table>\n";
+
+		echo "<br><b>"._QXZ("ADD NEW SERVER TRUNK RECORD")."</b><BR><form action=$PHP_SELF method=POST>\n";
+		echo "<input type=hidden name=ADD value=221111111111>\n";
+		echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
+		echo _QXZ("TRUNKS").": <input size=6 maxlength=4 name=dedicated_trunks><BR>\n";
+		echo _QXZ("CAMPAIGN").": <select size=1 name=campaign_id>\n";
+		echo "$campaigns_list\n";
+		echo "</select><BR>\n";
+		echo _QXZ("RESTRICTION").": <select size=1 name=trunk_restriction><option value='MAXIMUM_LIMIT'>"._QXZ("MAXIMUM_LIMIT")."</option><option value='OVERFLOW_ALLOWED'>"._QXZ("OVERFLOW_ALLOWED")."</option></select><BR>\n";
+		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
+
+		echo "</center></FORM><br>\n";
+
+
+		### list of carriers on this server
+		echo "<center>\n";
+		echo "<br><b>"._QXZ("CARRIERS WITHIN THIS SERVER").":</b><br>\n";
+		echo "<TABLE width=600 cellspacing=3>\n";
+		echo "<tr><td>"._QXZ("CARRIER ID")."</td><td>"._QXZ("NAME")."</td><td>"._QXZ("REGISTRATION")."</td><td>"._QXZ("ACTIVE")."</td></tr>\n";
+
+		$active_carriers = 0;
+		$inactive_carriers = 0;
+		$stmt="SELECT carrier_id,carrier_name,registration_string,active from vicidial_server_carriers where server_ip IN('$server_ip','0.0.0.0') $LOGadmin_viewable_groupsSQL;";
+		$rsltx=mysql_to_mysqli($stmt, $link);
+		$carriers_to_print = mysqli_num_rows($rsltx);
+		if ($DB > 0) {echo "|$carriers_to_print|$stmt|\n";}
+		$camp_lists='';
+
+		$o=0;
+		while ($carriers_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rsltx);
+			$o++;
+			if (preg_match('/Y/', $rowx[3])) {$active_carriers++;}
+			if (preg_match('/N/', $rowx[3])) {$inactive_carriers++;}
+
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$rowx[0]\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td><td><font size=1>$rowx[2]</td><td><font size=1>"._QXZ("$rowx[3]")."</td></tr>\n";
+			}
+
+		echo "</table></center><br>\n";
+
+
+		### list of phones on this server
+		echo "<center>\n";
+		echo "<br><b>"._QXZ("PHONES WITHIN THIS SERVER").":</b><br>\n";
+		echo "<TABLE width=400 cellspacing=3>\n";
+		echo "<tr><td>"._QXZ("EXTENSION")."</td><td>"._QXZ("NAME")."</td><td>"._QXZ("ACTIVE")."</td></tr>\n";
+
+		$active_phones = 0;
+		$inactive_phones = 0;
+		$stmt="SELECT extension,active,fullname from phones where server_ip='$server_ip' $LOGadmin_viewable_groupsSQL;";
+		$rsltx=mysql_to_mysqli($stmt, $link);
+		$lists_to_print = mysqli_num_rows($rsltx);
+		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
+		$camp_lists='';
+
+		$o=0;
+		while ($lists_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rsltx);
+			$o++;
+			if (preg_match('/Y/', $rowx[1])) {$active_phones++;   $camp_lists .= "'$rowx[0]',";}
+			if (preg_match('/N/', $rowx[1])) {$inactive_phones++;}
+
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=31111111111&extension=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[2]</td><td><font size=1>"._QXZ("$rowx[1]")."</td></tr>\n";
+			}
+
+		echo "</table></center><br>\n";
+
+
+		### list of conferences on this server
+		echo "<center>\n";
+		echo "<br><b>"._QXZ("CONFERENCES WITHIN THIS SERVER").":</b><br>\n";
+		echo "<TABLE width=400 cellspacing=3>\n";
+		echo "<tr><td>"._QXZ("CONFERENCE")."</td><td>"._QXZ("EXTENSION")."</td></tr>\n";
+
+		$active_confs = 0;
+		$stmt="SELECT conf_exten,extension from conferences where server_ip='$server_ip'";
+		$rsltx=mysql_to_mysqli($stmt, $link);
+		$lists_to_print = mysqli_num_rows($rsltx);
+		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
+		$camp_lists='';
+
+		$o=0;
+		while ($lists_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rsltx);
+			$o++;
+			$active_confs++;
+
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=3111111111111&conf_exten=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td></tr>\n";
+			}
+
+		echo "</table></center><br>\n";
+
+
+		### list of vicidial conferences on this server
+		echo "<center>\n";
+		echo "<br><b>"._QXZ("AGENT CONFERENCES WITHIN THIS SERVER").":</b><br>\n";
+		echo "<TABLE width=400 cellspacing=3>\n";
+		echo "<tr><td>"._QXZ("VD CONFERENCE")."</td><td>"._QXZ("EXTENSION")."</td></tr>\n";
+
+		$active_vdconfs = 0;
+		$stmt="SELECT conf_exten,extension from vicidial_conferences where server_ip='$server_ip'";
+		$rsltx=mysql_to_mysqli($stmt, $link);
+		$lists_to_print = mysqli_num_rows($rsltx);
+		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
+		$camp_lists='';
+
+		$o=0;
+		while ($lists_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rsltx);
+			$o++;
+			$active_vdconfs++;
+
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=31111111111111&conf_exten=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td></tr>\n";
+			}
+
+		echo "</table></center><br>\n";
+
+
+		### list of vicidial confbridges on this server
+		echo "<center>\n";
+		echo "<br><b>"._QXZ("AGENT CONFBRIDGES WITHIN THIS SERVER").":</b><br>\n";
+		echo "<TABLE width=400 cellspacing=3>\n";
+		echo "<tr><td>"._QXZ("VD CONFBRIDGE")."</td><td>"._QXZ("EXTENSION")."</td></tr>\n";
+
+		$active_vdconfs = 0;
+		$stmt="SELECT conf_exten,extension from vicidial_confbridges where server_ip='$server_ip'";
+		$rsltx=mysql_to_mysqli($stmt, $link);
+		$lists_to_print = mysqli_num_rows($rsltx);
+		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
+		$camp_lists='';
+
+		$o=0;
+		while ($lists_to_print > $o) 
+			{
+			$rowx=mysqli_fetch_row($rsltx);
+			$o++;
+			$active_vdconfs++;
+
+			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
+			else
+				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+
+			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=32111111111111&conf_exten=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td></tr>\n";
+			}
+
+		echo "</table></center><br>\n";
+
+
+		echo "<center><b>\n";
+
+			$camp_lists = preg_replace('/.$/i','',$camp_lists);
+		echo _QXZ("This server has %1s active carriers and %2s inactive carriers",0,'',$active_carriers,$inactive_carriers)."<br><br>\n";
+		echo _QXZ("This server has %1s active phones and %2s inactive phones",0,'',$active_phones,$inactive_phones)."<br><br>\n";
+		echo _QXZ("This server has %1s active conferences",0,'',$active_confs)."<br><br>\n";
+		echo _QXZ("This server has %1s active vicidial conferences",0,'',$active_vdconfs)."<br><br>\n";
+		echo "</b></center>\n";
+		if ($LOGast_delete_phones > 0)
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=521111111111&server_id=$server_id&server_ip=$server_ip\">"._QXZ("CLEAR ALL AGENT CONFERENCES")."</a>\n";
+			}
+		if ($LOGast_delete_phones > 0)
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=511111111111&server_id=$server_id&server_ip=$server_ip\">"._QXZ("DELETE THIS SERVER")."</a>\n";
+			}
+		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+			{
+			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=SERVERS&stage=$server_id\">"._QXZ("Click here to see Admin changes to this server")."</FONT>\n";
+			}
+		}
+	else
+		{
+		echo _QXZ("You do not have permission to view this page")."\n";
+		exit;
+		}
+	}
 
 
 ######################
