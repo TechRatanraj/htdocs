@@ -49394,253 +49394,193 @@ if ($ADD==331111111111)
 ######################
 # ADD=341111111111 modify carrier record in the system
 ######################
+######################
+# ADD=341111111111 modify carrier record in the system
+######################
 if ($ADD==341111111111)
-	{
-	if ( ( ($LOGast_admin_access==1) or ($LOGmodify_carriers==1) ) and ($x_ra_carrier < 1) )
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=341111111111&carrier_id=$carrier_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ( ( ($LOGast_admin_access==1) or ($LOGmodify_carriers==1) ) and ($x_ra_carrier < 1) )
+        {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
+            {
+            $modify_url = "$PHP_SELF?ADD=341111111111&carrier_id=$carrier_id";
+            $modify_footer_refresh=1;
+            }
 
-		$stmt="SELECT carrier_id,carrier_name,registration_string,template_id,account_entry,protocol,globals_string,dialplan_entry,server_ip,active,carrier_description,user_group from vicidial_server_carriers where carrier_id='$carrier_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$carrier_id =			$row[0];
-		$carrier_name =			$row[1];
-		$registration_string =	$row[2];
-		$template_id =			$row[3];
-		$account_entry =		$row[4];
-		$protocol =				$row[5];
-		$globals_string =		$row[6];
-		$dialplan_entry =		$row[7];
-		$server_ip =			$row[8];
-		$active =				$row[9];
-		$carrier_description =	$row[10];
-		$user_group =			$row[11];
+        $stmt="SELECT carrier_id,carrier_name,registration_string,template_id,account_entry,protocol,globals_string,dialplan_entry,server_ip,active,carrier_description,user_group from vicidial_server_carriers where carrier_id='$carrier_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $carrier_id =           $row[0];
+        $carrier_name =         $row[1];
+        $registration_string =  $row[2];
+        $template_id =          $row[3];
+        $account_entry =        $row[4];
+        $protocol =             $row[5];
+        $globals_string =       $row[6];
+        $dialplan_entry =       $row[7];
+        $server_ip =            $row[8];
+        $active =               $row[9];
+        $carrier_description =  $row[10];
+        $user_group =           $row[11];
 
-		echo "<br>"._QXZ("MODIFY A CARRIER RECORD").": $row[0]<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=441111111111>\n";
-		echo "<input type=hidden name=carrier_id value=\"$carrier_id\">\n";
+        echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<div style='font-size:2.5rem;'>📡</div>";
+        echo "<div><h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("MODIFY A CARRIER RECORD")."</h2><p style='color:#64748b;margin:0.25rem 0 0 0;font-size:0.9rem;'>$row[0]</p></div>";
+        echo "</div>";
 
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier ID").": </td><td align=left><B>$carrier_id</B></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Name").": </td><td align=left><input type=text name=carrier_name size=40 maxlength=50 value=\"$carrier_name\">$NWB#server_carriers-carrier_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Description").": </td><td align=left><input type=text name=carrier_description size=70 maxlength=255 value=\"$carrier_description\">$NWB#server_carriers-carrier_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
-		echo "</select>$NWB#server_carriers-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Registration String").": </td><td align=left><input type=text name=registration_string size=50 maxlength=255 value=\"$registration_string\">$NWB#server_carriers-registration_string$NWE</td></tr>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=441111111111>\n";
+        echo "<input type=hidden name=carrier_id value=\"$carrier_id\">\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Carrier ID (Read-only)
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier ID").":</label>";
+        echo "<div style='color:#000000;font-weight:700;font-size:1rem;font-family:monospace;'>$carrier_id</div>";
+        echo "</div>";
+        
+        // Carrier Name
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier Name").":</label>";
+        echo "<div><input type=text name=carrier_name size=40 maxlength=50 value=\"$carrier_name\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#server_carriers-carrier_name$NWE</div>";
+        echo "</div>";
+        
+        // Carrier Description
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier Description").":</label>";
+        echo "<div><input type=text name=carrier_description size=70 maxlength=255 value=\"$carrier_description\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#server_carriers-carrier_description$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
+        echo "</select>$NWB#server_carriers-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Registration String
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Registration String").":</label>";
+        echo "<div><input type=text name=registration_string size=50 maxlength=255 value=\"$registration_string\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#server_carriers-registration_string$NWE</div>";
+        echo "</div>";
+        
+        // Template ID
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'><a href=\"$PHP_SELF?ADD=331111111111&template_id=$template_id\" style='color:#3b82f6;text-decoration:none;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("Template ID")."</a>:</label>";
+        echo "<div><select size=1 name=template_id style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        $stmt="SELECT template_id,template_name from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $templates_to_print = mysqli_num_rows($rslt);
+        $templates_list='<option value=\'--NONE--\' SELECTED>--'._QXZ("NONE").'--</option>';
+        $o=0;
+        while ($templates_to_print > $o) 
+            {
+            $rowx=mysqli_fetch_row($rslt);
+            $templates_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+            }
+        echo "$templates_list";
+        echo "<option SELECTED value='$template_id'>".(preg_match('/\-\-NONE\-\-/', $template_id) ? _QXZ("$template_id") : $template_id)."</option>\n";
+        echo "</select>$NWB#server_carriers-template_id$NWE</div>";
+        echo "</div>";
+        
+        // Account Entry - Full Width
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #3b82f6;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>📝</span>"._QXZ("Account Entry").":</label>";
+        echo "<textarea name=account_entry rows=10 cols=70 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:250px;'>$account_entry</textarea>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#server_carriers-account_entry$NWE</div>";
+        echo "</div>";
+        
+        // Protocol
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Protocol").":</label>";
+        echo "<div><select size=1 name=protocol style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>";
+        if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
+        if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>PJSIP</option><option>PJSIP_WIZ</option>";}
+        echo "<option>Zap</option>";
+        echo "<option>IAX2</option>";
+        echo "<option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option>";
+        echo "<option SELECTED value='$protocol'>".(!preg_match('/^SIP|^PJSIP|^Zap|^IAX2/i', $protocol) ? _QXZ("$protocol") : $protocol)."</option></select>$NWB#server_carriers-protocol$NWE</div>";
+        echo "</div>";
+        
+        // Globals String
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Globals String").":</label>";
+        echo "<div><input type=text name=globals_string size=50 maxlength=255 value=\"$globals_string\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#server_carriers-globals_string$NWE</div>";
+        echo "</div>";
+        
+        // Dialplan Entry - Full Width
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #8b5cf6;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>🔌</span>"._QXZ("Dialplan Entry").":</label>";
+        echo "<textarea name=dialplan_entry rows=10 cols=70 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:250px;'>$dialplan_entry</textarea>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#server_carriers-dialplan_entry$NWE</div>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").":</label>";
+        echo "<div><select size=1 name=server_ip style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;font-family:monospace;min-width:200px;'>\n";
+        echo "$servers_list";
+        echo "<option value=\"0.0.0.0\">0.0.0.0 - ALL SERVERS</option>\n";
+        echo "<option SELECTED>$server_ip</option>\n";
+        echo "</select> <span style='color:#64748b;font-size:0.85rem;font-style:italic;'>(0.0.0.0 "._QXZ("is all servers").")</span>$NWB#server_carriers-server_ip$NWE</div>";
+        echo "</div>";
+        
+        // Active
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active").":</label>";
+        echo "<div><select size=1 name=active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#server_carriers-active$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End main card
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=331111111111&template_id=$template_id\">"._QXZ("Template ID")."</a>: </td><td align=left><select size=1 name=template_id>\n";
-		$stmt="SELECT template_id,template_name from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$templates_to_print = mysqli_num_rows($rslt);
-		$templates_list='<option value=\'--NONE--\' SELECTED>--'._QXZ("NONE").'--</option>';
-		$o=0;
-		while ($templates_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$templates_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "$templates_list";
-		echo "<option SELECTED value='$template_id'>".(preg_match('/\-\-NONE\-\-/', $template_id) ? _QXZ("$template_id") : $template_id)."</option>\n";
-		echo "</select>$NWB#server_carriers-template_id$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Account Entry").": </td><td align=left><TEXTAREA NAME=account_entry ROWS=10 COLS=70>$account_entry</TEXTAREA> $NWB#server_carriers-account_entry$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Protocol").": </td><td align=left><select size=1 name=protocol>";
-		if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
-		if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>PJSIP</option><option>PJSIP_WIZ</option>";}
-		echo "<option>Zap</option>";
-		echo "<option>IAX2</option>";
-		echo "<option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option>";
-		echo "<option SELECTED value='$protocol'>".(!preg_match('/^SIP|^PJSIP|^Zap|^IAX2/i', $protocol) ? _QXZ("$protocol") : $protocol)."</option></select>$NWB#server_carriers-protocol$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Globals String").": </td><td align=left><input type=text name=globals_string size=50 maxlength=255 value=\"$globals_string\">$NWB#server_carriers-globals_string$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Dialplan Entry").": </td><td align=left><TEXTAREA NAME=dialplan_entry ROWS=10 COLS=70>$dialplan_entry</TEXTAREA> $NWB#server_carriers-dialplan_entry$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		echo "$servers_list";
-		echo "<option value=\"0.0.0.0\">0.0.0.0 - ALL SERVERS</option>\n";
-		echo "<option SELECTED>$server_ip</option>\n";
-		echo "</select> <i>(0.0.0.0 "._QXZ("is all servers").")</i>$NWB#server_carriers-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#server_carriers-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-
-		echo "<center><b>\n";
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=541111111111&carrier_id=$carrier_id&carrier_name=$carrier_name\">"._QXZ("DELETE THIS CARRIER")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CARRIERS&stage=$carrier_id\">"._QXZ("Click here to see Admin changes to this carrier")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
-
-######################
-# ADD=351111111111 modify tts record in the system
-######################
-if ($ADD==351111111111)
-	{
-	if ( ($LOGast_admin_access==1) or ($LOGmodify_tts==1) )
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=351111111111&tts_id=$tts_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-		$stmt="SELECT tts_id,tts_name,active,tts_text,tts_voice,user_group from vicidial_tts_prompts where tts_id='$tts_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$tts_id =		$row[0];
-		$tts_name =		$row[1];
-		$active =		$row[2];
-		$tts_text =		$row[3];
-		$tts_voice =	$row[4];
-		$user_group =	$row[5];
-
-		echo "<br>"._QXZ("MODIFY A TTS RECORD").": $tts_id<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=451111111111>\n";
-		echo "<input type=hidden name=tts_id value=\"$tts_id\">\n";
-
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("TTS ID").": </td><td align=left><B>$tts_id</B></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("TTS Name").": </td><td align=left><input type=text name=tts_name size=50 maxlength=100 value=\"$tts_name\">$NWB#tts_prompts-tts_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='N'>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#tts_prompts-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
-		echo "</select>$NWB#tts_prompts-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("TTS Voice").": </td><td align=left><input type=text name=tts_voice size=20 maxlength=100 value=\"$tts_voice\">$NWB#tts_prompts-tts_voice$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("TTS Text").": </td><td align=left><TEXTAREA NAME=tts_text ROWS=20 COLS=70>$tts_text</TEXTAREA> $NWB#tts_prompts-tts_text$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-
-		echo "<center><b>\n";
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=551111111111&tts_id=$tts_id&tts_name=$tts_name\">"._QXZ("DELETE THIS TTS ENTRY")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=TTS&stage=$tts_id\">"._QXZ("Click here to see Admin changes to this TTS entry")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
-
-######################
-# ADD=361111111111 modify music on hold record in the system
-######################
-if ($ADD==361111111111)
-	{
-	if ( ($LOGast_admin_access==1) or ($LOGmodify_moh==1) )
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=361111111111&moh_id=$moh_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-		$stmt="SELECT moh_id,moh_name,active,random,user_group from vicidial_music_on_hold where moh_id='$moh_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$moh_id =		$row[0];
-		$moh_name =		$row[1];
-		$active =		$row[2];
-		$random =		$row[3];
-		$user_group =	(preg_match('/\-\-ALL\-\-/', $row[4]) ? _QXZ("$row[4]") : $row[4]);
-
-		echo "<br>"._QXZ("MODIFY A MUSIC ON HOLD RECORD").": $moh_id<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=461111111111>\n";
-		echo "<input type=hidden name=moh_id value=\"$moh_id\">\n";
-
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Music On Hold ID").": </td><td align=left><B>$moh_id</B></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Music On Hold Name").": </td><td align=left><input type=text name=moh_name size=50 maxlength=100 value=\"$moh_name\">$NWB#music_on_hold-moh_name$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">$user_group</option>\n";
-		echo "</select>$NWB#music_on_hold-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='N'>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#music_on_hold-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Random Order").": </td><td align=left><select size=1 name=random><option value='N'>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option><option value='$random' SELECTED>"._QXZ("$random")."</option></select>$NWB#music_on_hold-random$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Audio Files").": </td><td align=left>\n";
-		##### get files listing for rank/delete options
-		$stmt="SELECT filename,rank from vicidial_music_on_hold_files where moh_id='$moh_id' order by rank;";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$mohfiles_to_print = mysqli_num_rows($rsltx);
-		$ranks = ($mohfiles_to_print + 2);
-		$o=0;
-		while ($mohfiles_to_print > $o)
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			echo "<font size=2>"._QXZ("Rank").": </font><select size=1 name=$rowx[0]>\n";
-			echo "<option SELECTED>$rowx[1]</option>\n";
-			$k=1;
-			while ($ranks > $k)
-				{
-				echo "<option>$k</option>\n";
-				$k++;
-				}
-			echo "</select>\n";
-
-			echo " &nbsp; <B>$rowx[0]</B> - <a href=\"$PHP_SELF?ADD=461111111111&moh_id=$moh_id&stage=FILEDELETE&filename=$rowx[0]\">"._QXZ("DELETE")."</a><BR>\n";
-			$o++;
-			}
-
-		echo "</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row2_background><td align=right>"._QXZ("Add An Audio File").": </td><td><input type=text size=50 maxlength=50 name=filename id=filename value=\"\"> <a href=\"javascript:launch_chooser('filename','date');\">"._QXZ("audio chooser")."</a>  $NWB#music_on_hold-filename$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-
-		echo "<center><b>\n";
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=561111111111&moh_id=$moh_id&moh_name=$moh_name\">"._QXZ("DELETE MUSIC ON HOLD ENTRY")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=MOH&stage=$moh_id\">"._QXZ("Click here to see Admin changes to this Music On Hold entry")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+        // Action Links
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;text-align:center;'>";
+        
+        if ($LOGast_delete_phones > 0)
+            {
+            echo "<a href=\"$PHP_SELF?ADD=541111111111&carrier_id=$carrier_id&carrier_name=$carrier_name\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(239,68,68,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.3)';\">"._QXZ("DELETE THIS CARRIER")."</a>\n";
+            }
+        if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            {
+            echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CARRIERS&stage=$carrier_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(59,130,246,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';\">"._QXZ("Click here to see Admin changes to this carrier")."</a>\n";
+            }
+        
+        echo "</div>";
+        
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 
 ######################
