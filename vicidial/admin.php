@@ -45790,234 +45790,378 @@ if ($ADD==311111)
 # ADD=3111111 modify script info in the system
 ######################
 if ($ADD==3111111)
-	{
-	if ($LOGmodify_scripts==1)
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=3111111&script_id=$script_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGmodify_scripts==1)
+        {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
+            {
+            $modify_url = "$PHP_SELF?ADD=3111111&script_id=$script_id";
+            $modify_footer_refresh=1;
+            }
 
-		$stmt="SELECT script_id,script_name,script_comments,script_text,active,user_group,script_color from vicidial_scripts where script_id='$script_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$script_name =		$row[1];
-		$script_comments =	$row[2];
-		$script_text =		stripslashes($row[3]);
-		$active =			$row[4];
-		$user_group =		$row[5];
-		$script_color =		$row[6];
+        $stmt="SELECT script_id,script_name,script_comments,script_text,active,user_group,script_color from vicidial_scripts where script_id='$script_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $script_name =      $row[1];
+        $script_comments =  $row[2];
+        $script_text =      stripslashes($row[3]);
+        $active =           $row[4];
+        $user_group =       $row[5];
+        $script_color =     $row[6];
 
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<div style='font-size:2.5rem;'>✏️</div>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("MODIFY A SCRIPT")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("MODIFY A SCRIPT")."<form name=scriptForm action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=4111111>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=script_id value=\"$script_id\">\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script ID").": </td><td align=left><B>$script_id</B>$NWB#scripts-script_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script Name").": </td><td align=left><input type=text name=script_name size=40 maxlength=50 value=\"$script_name\"> ("._QXZ("title of the script").")$NWB#scripts-script_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script Comments").": </td><td align=left><input type=text name=script_comments size=50 maxlength=255 value=\"$script_comments\"> $NWB#scripts-script_comments$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
-		echo "</select>$NWB#scripts-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y' SELECTED>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' selected>"._QXZ("$active")."</option></select>$NWB#scripts-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script Color")." <font size=2>(<a href=\"javascript:launch_color_chooser('script_color','color','1');\">"._QXZ("color chooser")."</a>)</font>: </td><td align=left bgcolor=\"$script_color\" id=\"script_color_td\"><input type=text name=script_color id=script_color size=7 maxlength=20 value=\"$script_color\"> $NWB#scripts-script_color$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Script Text").": <BR><BR><B><a href=\"javascript:openNewWindow('$PHP_SELF?ADD=7111111&script_id=$script_id')\">"._QXZ("Preview Script")."</a></B> </td><td align=left>";
-		# BEGIN Insert Field
-		echo "<select id=\"selectedField\" name=\"selectedField\">";
-		echo "<option value=\"fullname\">"._QXZ("Agent Name")."(fullname)</option>";
-		echo "<option>vendor_lead_code</option>";
-		echo "<option>source_id</option>";
-		echo "<option>list_id</option>";
-		echo "<option>list_name</option>";
-		echo "<option>list_description</option>";
-		echo "<option>gmt_offset_now</option>";
-		echo "<option>called_since_last_reset</option>";
-		echo "<option>phone_code</option>";
-		echo "<option>phone_number</option>";
-		echo "<option>title</option>";
-		echo "<option>first_name</option>";
-		echo "<option>middle_initial</option>";
-		echo "<option>last_name</option>";
-		echo "<option>address1</option>";
-		echo "<option>address2</option>";
-		echo "<option>address3</option>";
-		echo "<option>city</option>";
-		echo "<option>state</option>";
-		echo "<option>province</option>";
-		echo "<option>postal_code</option>";
-		echo "<option>country_code</option>";
-		echo "<option>gender</option>";
-		echo "<option>date_of_birth</option>";
-		echo "<option>alt_phone</option>";
-		echo "<option>email</option>";
-		echo "<option>security_phrase</option>";
-		echo "<option>comments</option>";
-		echo "<option>lead_id</option>";
-		echo "<option>campaign</option>";
-		echo "<option>phone_login</option>";
-		echo "<option>group</option>";
-		echo "<option>channel_group</option>";
-		echo "<option>SQLdate</option>";
-		echo "<option>epoch</option>";
-		echo "<option>uniqueid</option>";
-		echo "<option>customer_zap_channel</option>";
-		echo "<option>server_ip</option>";
-		echo "<option>SIPexten</option>";
-		echo "<option>session_id</option>";
-		echo "<option>dialed_number</option>";
-		echo "<option>dialed_label</option>";
-		echo "<option>rank</option>";
-		echo "<option>owner</option>";
-		echo "<option>camp_script</option>";
-		echo "<option>in_script</option>";
-		echo "<option>script_width</option>";
-		echo "<option>script_height</option>";
-		echo "<option>recording_filename</option>";
-		echo "<option>recording_id</option>";
-		echo "<option>user_custom_one</option>";
-		echo "<option>user_custom_two</option>";
-		echo "<option>user_custom_three</option>";
-		echo "<option>user_custom_four</option>";
-		echo "<option>user_custom_five</option>";
-		echo "<option>preset_number_a</option>";
-		echo "<option>preset_number_b</option>";
-		echo "<option>preset_number_c</option>";
-		echo "<option>preset_number_d</option>";
-		echo "<option>preset_number_e</option>";
-		echo "<option>preset_number_f</option>";
-		echo "<option>preset_dtmf_a</option>";
-		echo "<option>preset_dtmf_b</option>";
-		echo "<option>did_id</option>";
-		echo "<option>did_extension</option>";
-		echo "<option>did_pattern</option>";
-		echo "<option>did_description</option>";
-		echo "<option>closecallid</option>";
-		echo "<option>xfercallid</option>";
-		echo "<option>agent_log_id</option>";
-		echo "<option>entry_list_id</option>";
-		echo "<option>call_id</option>";
-		echo "<option>user_group</option>";
-		echo "<option>called_count</option>";
-		echo "<option>TABLEper_call_notes</option>";
-		echo "<option>agent_email</option>";
-		echo "</select>";
-		echo "<input type=\"button\" name=\"insertField\" value=\""._QXZ("Insert")."\" onClick=\"scriptInsertField();\"><BR>";
-		# END Insert Field
-		echo "<TEXTAREA NAME=script_text ROWS=20 COLS=50>$script_text</TEXTAREA> $NWB#scripts-script_text$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form name=scriptForm action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=4111111>\n";
+        echo "<input type=hidden name=DB value=\"$DB\">\n";
+        echo "<input type=hidden name=script_id value=\"$script_id\">\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Script ID (Read-only)
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Script ID").":</label>";
+        echo "<div style='color:#000000;font-weight:700;font-size:1rem;'>$script_id $NWB#scripts-script_name$NWE</div>";
+        echo "</div>";
+        
+        // Script Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Script Name").":</label>";
+        echo "<div><input type=text name=script_name size=40 maxlength=50 value=\"$script_name\" style='width:100%;max-width:500px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("title of the script").")$NWB#scripts-script_name$NWE</div></div>";
+        echo "</div>";
+        
+        // Script Comments
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Script Comments").":</label>";
+        echo "<div><input type=text name=script_comments size=50 maxlength=255 value=\"$script_comments\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'> $NWB#scripts-script_comments$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
+        echo "</select>$NWB#scripts-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Active Status
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active").":</label>";
+        echo "<div><select size=1 name=active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'><option value='Y' SELECTED>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' selected>"._QXZ("$active")."</option></select>$NWB#scripts-active$NWE</div>";
+        echo "</div>";
+        
+        // Script Color
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Script Color")." <span style='font-size:0.8rem;'>(<a href=\"javascript:launch_color_chooser('script_color','color','1');\" style='color:#3b82f6;text-decoration:none;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("color chooser")."</a>)</span>:</label>";
+        echo "<div style='display:flex;align-items:center;gap:1rem;'><div id=\"script_color_td\" style='background:$script_color;padding:0.75rem;border-radius:6px;border:2px solid #e2e8f0;'><input type=text name=script_color id=script_color size=7 maxlength=20 value=\"$script_color\" style='background:transparent;border:none;color:#000000;font-weight:600;font-family:monospace;'></div><div style='width:40px;height:40px;background:$script_color;border:2px solid #e2e8f0;border-radius:6px;box-shadow:0 2px 4px rgba(0,0,0,0.1);'></div> $NWB#scripts-script_color$NWE</div>";
+        echo "</div>";
+        
+        // Script Text
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Script Text").":<br><br><a href=\"javascript:openNewWindow('$PHP_SELF?ADD=7111111&script_id=$script_id')\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(59,130,246,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(59,130,246,0.3)';\">"._QXZ("Preview Script")."</a></label>";
+        echo "<div>";
+        
+        // Insert Field Selector
+        echo "<div style='display:flex;gap:0.5rem;margin-bottom:1rem;'>";
+        echo "<select id=\"selectedField\" name=\"selectedField\" style='flex:1;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;'>";
+        echo "<option value=\"fullname\">"._QXZ("Agent Name")."(fullname)</option>";
+        echo "<option>vendor_lead_code</option>";
+        echo "<option>source_id</option>";
+        echo "<option>list_id</option>";
+        echo "<option>list_name</option>";
+        echo "<option>list_description</option>";
+        echo "<option>gmt_offset_now</option>";
+        echo "<option>called_since_last_reset</option>";
+        echo "<option>phone_code</option>";
+        echo "<option>phone_number</option>";
+        echo "<option>title</option>";
+        echo "<option>first_name</option>";
+        echo "<option>middle_initial</option>";
+        echo "<option>last_name</option>";
+        echo "<option>address1</option>";
+        echo "<option>address2</option>";
+        echo "<option>address3</option>";
+        echo "<option>city</option>";
+        echo "<option>state</option>";
+        echo "<option>province</option>";
+        echo "<option>postal_code</option>";
+        echo "<option>country_code</option>";
+        echo "<option>gender</option>";
+        echo "<option>date_of_birth</option>";
+        echo "<option>alt_phone</option>";
+        echo "<option>email</option>";
+        echo "<option>security_phrase</option>";
+        echo "<option>comments</option>";
+        echo "<option>lead_id</option>";
+        echo "<option>campaign</option>";
+        echo "<option>phone_login</option>";
+        echo "<option>group</option>";
+        echo "<option>channel_group</option>";
+        echo "<option>SQLdate</option>";
+        echo "<option>epoch</option>";
+        echo "<option>uniqueid</option>";
+        echo "<option>customer_zap_channel</option>";
+        echo "<option>server_ip</option>";
+        echo "<option>SIPexten</option>";
+        echo "<option>session_id</option>";
+        echo "<option>dialed_number</option>";
+        echo "<option>dialed_label</option>";
+        echo "<option>rank</option>";
+        echo "<option>owner</option>";
+        echo "<option>camp_script</option>";
+        echo "<option>in_script</option>";
+        echo "<option>script_width</option>";
+        echo "<option>script_height</option>";
+        echo "<option>recording_filename</option>";
+        echo "<option>recording_id</option>";
+        echo "<option>user_custom_one</option>";
+        echo "<option>user_custom_two</option>";
+        echo "<option>user_custom_three</option>";
+        echo "<option>user_custom_four</option>";
+        echo "<option>user_custom_five</option>";
+        echo "<option>preset_number_a</option>";
+        echo "<option>preset_number_b</option>";
+        echo "<option>preset_number_c</option>";
+        echo "<option>preset_number_d</option>";
+        echo "<option>preset_number_e</option>";
+        echo "<option>preset_number_f</option>";
+        echo "<option>preset_dtmf_a</option>";
+        echo "<option>preset_dtmf_b</option>";
+        echo "<option>did_id</option>";
+        echo "<option>did_extension</option>";
+        echo "<option>did_pattern</option>";
+        echo "<option>did_description</option>";
+        echo "<option>closecallid</option>";
+        echo "<option>xfercallid</option>";
+        echo "<option>agent_log_id</option>";
+        echo "<option>entry_list_id</option>";
+        echo "<option>call_id</option>";
+        echo "<option>user_group</option>";
+        echo "<option>called_count</option>";
+        echo "<option>TABLEper_call_notes</option>";
+        echo "<option>agent_email</option>";
+        echo "</select>";
+        echo "<button type=\"button\" name=\"insertField\" onClick=\"scriptInsertField();\" style='padding:0.75rem 1.5rem;background:#10b981;color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.3s;' onmouseover=\"this.style.background='#059669';\" onmouseout=\"this.style.background='#10b981';\">"._QXZ("Insert")."</button>";
+        echo "</div>";
+        
+        echo "<textarea name=script_text rows=20 cols=50 style='width:100%;padding:1rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;resize:vertical;'>$script_text</textarea> $NWB#scripts-script_text$NWE";
+        echo "</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End main card
 
+        // Usage Tables
+        // Campaigns Using This Script
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📋</span>"._QXZ("CAMPAIGNS USING THIS SCRIPT")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
+        $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where ( (campaign_script='$script_id') or (campaign_script_two='$script_id') ) $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $camps_to_print = mysqli_num_rows($rslt);
+        
+        if ($camps_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($camps_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No campaigns using this script")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR><BR>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><B> "._QXZ("CAMPAIGNS USING THIS SCRIPT").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // In-Groups Using This Script
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📞</span>"._QXZ("IN-GROUPS USING THIS SCRIPT")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where ( (campaign_script='$script_id') or (campaign_script_two='$script_id') ) $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\">$row[0] </a></TD><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+        $stmt="SELECT group_id,group_name from vicidial_inbound_groups where ( (ingroup_script='$script_id') or (ingroup_script_two='$script_id') ) $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $groups_to_print = mysqli_num_rows($rslt);
+        
+        if ($groups_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($groups_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No in-groups using this script")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR><BR>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><B> "._QXZ("IN-GROUPS USING THIS SCRIPT").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // List Overrides Using This Script
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📝</span>"._QXZ("LIST OVERRIDES USING THIS SCRIPT")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT group_id,group_name from vicidial_inbound_groups where ( (ingroup_script='$script_id') or (ingroup_script_two='$script_id') ) $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\">$row[0] </a></TD><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+        $stmt="SELECT list_id,list_name from vicidial_lists where agent_script_override='$script_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rslt);
+        
+        if ($lists_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($lists_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No list overrides using this script")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR><BR>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><B> "._QXZ("LIST OVERRIDES USING THIS SCRIPT").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // User Group Overrides Using This Script
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>👥</span>"._QXZ("USER GROUP OVERRIDES USING THIS SCRIPT")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT list_id,list_name from vicidial_lists where agent_script_override='$script_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0] </a></TD><TD> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>$row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+        $stmt="SELECT user_group,group_name from vicidial_user_groups where script_id='$script_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $usergroups_to_print = mysqli_num_rows($rslt);
+        
+        if ($usergroups_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($usergroups_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=311111&user_group=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No user group overrides using this script")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR><BR>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><B> "._QXZ("USER GROUP OVERRIDES USING THIS SCRIPT").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // Soundboard Check
+        if ( ($SSagent_soundboards > 0) and (preg_match("/vdc_soundboard_display/",$script_text)) )
+            {
+            $sb_check = preg_replace('~[\r\n]+~', '', $script_text);
+            $sb_lines = explode("vdc_soundboard_display",$sb_check);
+            $sb_content = explode('"',$sb_lines[1]);
+            $sb_id = explode('soundboard_id=',$sb_content[0]);
+            if ($DB) {echo "|$sb_check|\n|$sb_lines[1]|\n|$sb_content[0]|\n|$sb_id[1]|\n";}
+            
+            echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+            echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+            echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>🔊</span>"._QXZ("AGENT SOUNDBOARD USED WITHIN THIS SCRIPT")."</h3>";
+            echo "</div>";
+            echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT user_group,group_name from vicidial_user_groups where script_id='$script_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><a href=\"$PHP_SELF?ADD=311111&user_group=$row[0]\">$row[0] </a></TD><TD> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>$row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+            $stmt="SELECT avatar_id,avatar_name from vicidial_avatars where avatar_id='$sb_id[1]' $LOGadmin_viewable_groupsSQL;";
+            if ($DB) {echo "|$stmt|\n";}
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $sb_to_print = mysqli_num_rows($rslt);
+            
+            if ($sb_to_print > 0) {
+                echo "<div style='display:grid;gap:0.5rem;'>";
+                $o=0;
+                while ($sb_to_print > $o) 
+                    {
+                    $row=mysqli_fetch_row($rslt);
+                    echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                    echo "<a href=\"admin_soundboard.php?ADD=362111111111&soundboard_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                    echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                    echo "</div>";
+                    $o++;
+                    }
+                echo "</div>";
+            }
+            
+            echo "</div>";
+            echo "</div>";
+            }
 
-
-		if ( ($SSagent_soundboards > 0) and (preg_match("/vdc_soundboard_display/",$script_text)) )
-			{
-			$sb_check = preg_replace('~[\r\n]+~', '', $script_text);
-			$sb_lines = explode("vdc_soundboard_display",$sb_check);
-			$sb_content = explode('"',$sb_lines[1]);
-			$sb_id = explode('soundboard_id=',$sb_content[0]);
-			if ($DB) {echo "|$sb_check|\n|$sb_lines[1]|\n|$sb_content[0]|\n|$sb_id[1]|\n";}
-			echo "</TABLE><BR><BR>\n";
-			echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><B> "._QXZ("AGENT SOUNDBOARD USED WITHIN THIS SCRIPT").":</B><BR>\n";
-			echo "<TABLE>\n";
-
-			$stmt="SELECT avatar_id,avatar_name from vicidial_avatars where avatar_id='$sb_id[1]' $LOGadmin_viewable_groupsSQL;";
-			if ($DB) {echo "|$stmt|\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$sb_to_print = mysqli_num_rows($rslt);
-			$o=0;
-			while ($sb_to_print > $o) 
-				{
-				$row=mysqli_fetch_row($rslt);
-				echo "<TR><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2><a href=\"admin_soundboard.php?ADD=362111111111&soundboard_id=$row[0]\">$row[0] </a></TD><TD><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2> $row[1]<BR></TD></TR>\n";
-				$o++;
-				}
-			}
-
-		echo "</TABLE><TABLE><TR><TD><BR><BR><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>\n";
-
-		if ($LOGdelete_scripts > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=5111111&script_id=$script_id\">"._QXZ("DELETE THIS SCRIPT")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=SCRIPTS&stage=$script_id\">"._QXZ("Click here to see Admin changes to this script")."</FONT>\n";
-			}
-
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+        // Action Links
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;text-align:center;'>";
+        
+        if ($LOGdelete_scripts > 0)
+            {
+            echo "<a href=\"$PHP_SELF?ADD=5111111&script_id=$script_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(239,68,68,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.3)';\">"._QXZ("DELETE THIS SCRIPT")."</a>\n";
+            }
+        if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            {
+            echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=SCRIPTS&stage=$script_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(59,130,246,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';\">"._QXZ("Click here to see Admin changes to this script")."</a>\n";
+            }
+        
+        echo "</div>";
+        
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 
 ######################
