@@ -55800,142 +55800,291 @@ if ($ADD==100000000000)
 ######################
 # ADD=130000000000 display all conf templates
 ######################
+######################
+# ADD=130000000000 display all conf templates
+######################
 if ($ADD==130000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_templates.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
 
-	$stmt="SELECT template_id,template_name,user_group from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$templates_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT template_id,template_name,user_group from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $templates_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("CONF TEMPLATE LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("Template ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Template Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+    echo "<img src=\"images/icon_templates.png\" width=42 height=42>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("CONF TEMPLATE LISTINGS")."</h2>";
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Template ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Template Name")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($templates_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';\" onmouseout=\"this.style.background='$bg_color';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=331111111111&template_id=$row[0]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=331111111111&template_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;font-family:monospace;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:600;'>$row[1]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>"._QXZ("$row[2]")."</td>";
+        echo "<td style='padding:1rem;text-align:center;'><a href=\"$PHP_SELF?ADD=331111111111&template_id=$row[0]\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(102,126,234,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(102,126,234,0.3)';\">"._QXZ("MODIFY")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    
+    if ($templates_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>📋</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No Templates Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no conf templates to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>\n";
+    }
 
-	$o=0;
-	while ($templates_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=331111111111&template_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=331111111111&template_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>"._QXZ("$row[2]")."</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=331111111111&template_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
 # ADD=140000000000 display all carriers
 ######################
 if ($ADD==140000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_carriers.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1400px;margin:2rem auto;padding:0 1rem;'>\n";
 
-	$stmt="SELECT carrier_id,carrier_name,server_ip,protocol,registration_string,active,user_group from vicidial_server_carriers $whereLOGadmin_viewable_groupsSQL order by carrier_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$carriers_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT carrier_id,carrier_name,server_ip,protocol,registration_string,active,user_group from vicidial_server_carriers $whereLOGadmin_viewable_groupsSQL order by carrier_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $carriers_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("CARRIER LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("Carrier ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Carrier Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Server IP")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Protocol")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Registration")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Active")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+    echo "<img src=\"images/icon_carriers.png\" width=42 height=42>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("CARRIER LISTINGS")."</h2>";
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Carrier ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Carrier Name")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Server IP")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Protocol")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Registration")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Active")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($carriers_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        if (mb_strlen($row[4],'utf-8')>14)
+            {
+            while (mb_strlen($row[4],'utf-8')>14) {$row[4] = mb_substr("$row[4]", 0, -1,'utf-8');}
+            $row[4] .= '...';
+            }
+        if ($row[2] == '0.0.0.0') {$row[2]='ALL SERVERS';}
+        
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';\" onmouseout=\"this.style.background='$bg_color';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=341111111111&carrier_id=$row[0]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        // Active Status Badge
+        $active_val = $row[5];
+        if ($active_val == 'Y') {
+            $status_bg = '#dcfce7'; $status_color = '#166534';
+        } else {
+            $status_bg = '#fee2e2'; $status_color = '#991b1b';
+        }
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;font-family:monospace;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:600;'>$row[1]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-family:monospace;'>".(preg_match('/[A-Z]/', $row[2]) ? _QXZ("$row[2]") : $row[2])."</td>";
+        echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.5rem;background:#e0e7ff;color:#3730a3;border-radius:4px;font-size:0.75rem;font-weight:700;'>".(!preg_match('/^SIP|IAX2/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</span></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-family:monospace;'>$row[4]</td>";
+        echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$status_bg;color:$status_color;border-radius:9999px;font-size:0.75rem;font-weight:700;'>"._QXZ("$active_val")."</span></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>"._QXZ("$row[6]")."</td>";
+        echo "<td style='padding:1rem;text-align:center;'><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$row[0]\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(102,126,234,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(102,126,234,0.3)';\">"._QXZ("MODIFY")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    
+    if ($carriers_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>📡</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No Carriers Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no carriers to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>\n";
+    }
 
-	$o=0;
-	while ($carriers_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (mb_strlen($row[4],'utf-8')>14)
-			{
-			while (mb_strlen($row[4],'utf-8')>14) {$row[4] = mb_substr("$row[4]", 0, -1,'utf-8');}
-			$row[4] .= '...';
-			}
-		if ($row[2] == '0.0.0.0') {$row[2]='ALL SERVERS';}
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=341111111111&carrier_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>".(preg_match('/[A-Z]/', $row[2]) ? _QXZ("$row[2]") : $row[2])."</td>";
-		echo "<td><font size=1>".(!preg_match('/^SIP|IAX2/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>";
-		echo "<td><font size=1>$row[4]</td>";
-		echo "<td><font size=1>"._QXZ("$row[5]")."</td>";
-		echo "<td><font size=1>"._QXZ("$row[6]")."</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
 # ADD=150000000000 display all tts entries
 ######################
 if ($ADD==150000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_texttospeech.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1400px;margin:2rem auto;padding:0 1rem;'>\n";
 
-	$stmt="SELECT tts_id,tts_name,active,tts_text,tts_voice,user_group from vicidial_tts_prompts $whereLOGadmin_viewable_groupsSQL order by tts_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$tts_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT tts_id,tts_name,active,tts_text,tts_voice,user_group from vicidial_tts_prompts $whereLOGadmin_viewable_groupsSQL order by tts_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $tts_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("TEXT-TO-SPEECH(TTS) LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("TTS ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("TTS Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Active")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("TTS Voice")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("TTS Text")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($tts_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		$row[3]=preg_replace('/;|<|>/', '', $row[3]);
-		while(mb_strlen($row[3],'utf-8') > 50) {$row[3] = mb_substr("$row[3]", 0, -1,'utf-8');}
-		if(mb_strlen($row[3],'utf-8') > 47) {$row[3] = "$row[3]...";}
-
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=351111111111&tts_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=351111111111&tts_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>"._QXZ("$row[2]")."</td>";
-		echo "<td><font size=1>$row[4]</td>";
-		echo "<td><font size=1>$row[3]</td>";
-		echo "<td><font size=1>".(preg_match('/\-\-ALL\-\-/', $row[5]) ? _QXZ("$row[5]") : $row[5])."</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=351111111111&tts_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+    echo "<img src=\"images/icon_texttospeech.png\" width=42 height=42>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("TEXT-TO-SPEECH(TTS) LISTINGS")."</h2>";
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("TTS ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("TTS Name")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("Active")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("TTS Voice")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("TTS Text")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($tts_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        $row[3]=preg_replace('/;|<|>/', '', $row[3]);
+        while(mb_strlen($row[3],'utf-8') > 50) {$row[3] = mb_substr("$row[3]", 0, -1,'utf-8');}
+        if(mb_strlen($row[3],'utf-8') > 47) {$row[3] = "$row[3]...";}
+        
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';\" onmouseout=\"this.style.background='$bg_color';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=351111111111&tts_id=$row[0]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        // Active Status Badge
+        $active_val = $row[2];
+        if ($active_val == 'Y') {
+            $status_bg = '#dcfce7'; $status_color = '#166534';
+        } else {
+            $status_bg = '#fee2e2'; $status_color = '#991b1b';
+        }
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=351111111111&tts_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;font-family:monospace;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:600;'>$row[1]</td>";
+        echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$status_bg;color:$status_color;border-radius:9999px;font-size:0.75rem;font-weight:700;'>"._QXZ("$active_val")."</span></td>";
+        echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:#ddd6fe;color:#5b21b6;border-radius:6px;font-size:0.85rem;font-weight:600;'>🎤 $row[4]</span></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-style:italic;'>\"$row[3]\"</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>".(preg_match('/\-\-ALL\-\-/', $row[5]) ? _QXZ("$row[5]") : $row[5])."</td>";
+        echo "<td style='padding:1rem;text-align:center;'><a href=\"$PHP_SELF?ADD=351111111111&tts_id=$row[0]\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(102,126,234,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(102,126,234,0.3)';\">"._QXZ("MODIFY")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    
+    if ($tts_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>🎤</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No TTS Entries Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no text-to-speech entries to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>\n";
+    }
 
 
 ######################
