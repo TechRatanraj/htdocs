@@ -48766,408 +48766,1376 @@ if ($ADD==33111111111)
 ######################
 # ADD=311111111111 modify server record in the system
 ######################
-if ($ADD==311111111111)
-	{
-	if ($LOGmodify_servers==1)
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=311111111111&server_id=$server_id&server_ip=$server_ip";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-		$stmt="SELECT server_id,server_description,server_ip,active,asterisk_version,max_vicidial_trunks,telnet_host,telnet_port,ASTmgrUSERNAME,ASTmgrSECRET,ASTmgrUSERNAMEupdate,ASTmgrUSERNAMElisten,ASTmgrUSERNAMEsend,local_gmt,voicemail_dump_exten,answer_transfer_agent,ext_context,sys_perf_log,vd_server_logs,agi_output,vicidial_balance_active,balance_trunks_offlimits,recording_web_link,alt_server_ip,active_asterisk_server,generate_vicidial_conf,rebuild_conf_files,outbound_calls_per_second,sysload,channels_total,cpu_idle_percent,disk_usage,sounds_update,vicidial_recording_limit,carrier_logging_active,vicidial_balance_rank,rebuild_music_on_hold,active_agent_login_server,conf_secret,external_server_ip,custom_dialplan_entry,active_twin_server_ip,user_group,system_uptime,auto_restart_asterisk,asterisk_temp_no_restart,voicemail_dump_exten_no_inst,gather_asterisk_output,web_socket_url,conf_qualify,routing_prefix,external_web_socket_url,conf_engine,conf_update_interval,ara_url from servers where ( (server_id='$server_id') or (server_ip='$server_ip') ) $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$server_id =					$row[0];
-		$server_description =			$row[1];
-		$server_ip =					$row[2];
-		$active =						$row[3];
-		$asterisk_version =				$row[4];
-		$max_vicidial_trunks =			$row[5];
-		$telnet_host =					$row[6];
-		$telnet_port =					$row[7];
-		$ASTmgrUSERNAME =				$row[8];
-		$ASTmgrSECRET =					$row[9];
-		$ASTmgrUSERNAMEupdate =			$row[10];
-		$ASTmgrUSERNAMElisten =			$row[11];
-		$ASTmgrUSERNAMEsend =			$row[12];
-		$local_gmt =					$row[13];
-		$voicemail_dump_exten =			$row[14];
-		$answer_transfer_agent =		$row[15];
-		$ext_context =					$row[16];
-		$sys_perf_log =					$row[17];
-		$vd_server_logs =				$row[18];
-		$agi_output =					$row[19];
-		$vicidial_balance_active =		$row[20];
-		$balance_trunks_offlimits =		$row[21];
-		$recording_web_link =			$row[22];
-		$alt_server_ip =				$row[23];
-		$active_asterisk_server =		$row[24];
-		$generate_vicidial_conf =		$row[25];
-		$rebuild_conf_files =			$row[26];
-		$outbound_calls_per_second =	$row[27];
-		$sysload =						$row[28];
-		$channels_total =				$row[29];
-		$cpu_idle_percent =				$row[30];
-		$disk_usage =					$row[31];
-		$sounds_update =				$row[32];
-		$vicidial_recording_limit =		$row[33];
-		$carrier_logging_active =		$row[34];
-		$vicidial_balance_rank =		$row[35];
-		$rebuild_music_on_hold =		$row[36];
-		$active_agent_login_server =	$row[37];
-		$conf_secret =					$row[38];
-		$external_server_ip =			$row[39];
-		$custom_dialplan_entry =		$row[40];
-		$active_twin_server_ip =		$row[41];
-		$user_group =					$row[42];
-		$system_uptime =				$row[43];
-		$auto_restart_asterisk =		$row[44];
-		$asterisk_temp_no_restart =		$row[45];
-		$voicemail_dump_exten_no_inst = $row[46];
-		$gather_asterisk_output =		$row[47];
-		$web_socket_url =				$row[48];
-		$conf_qualify =					$row[49];
-		$routing_prefix =				$row[50];
-		$external_web_socket_url =		$row[51];
-		$conf_engine = 					$row[52];
-		$conf_update_interval = 		$row[53];
-		$ara_url =						$row[54];
+if ($ADD == 311111111111) {
+    if ($LOGmodify_servers == 1) {
+        if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
+            $modify_url = "$PHP_SELF?ADD=311111111111&server_id=$server_id&server_ip=$server_ip";
+            $modify_footer_refresh = 1;
+        }
+        
+        // Fetch server data
+        $stmt = "SELECT server_id,server_description,server_ip,active,asterisk_version,max_vicidial_trunks,telnet_host,telnet_port,ASTmgrUSERNAME,ASTmgrSECRET,ASTmgrUSERNAMEupdate,ASTmgrUSERNAMElisten,ASTmgrUSERNAMEsend,local_gmt,voicemail_dump_exten,answer_transfer_agent,ext_context,sys_perf_log,vd_server_logs,agi_output,vicidial_balance_active,balance_trunks_offlimits,recording_web_link,alt_server_ip,active_asterisk_server,generate_vicidial_conf,rebuild_conf_files,outbound_calls_per_second,sysload,channels_total,cpu_idle_percent,disk_usage,sounds_update,vicidial_recording_limit,carrier_logging_active,vicidial_balance_rank,rebuild_music_on_hold,active_agent_login_server,conf_secret,external_server_ip,custom_dialplan_entry,active_twin_server_ip,user_group,system_uptime,auto_restart_asterisk,asterisk_temp_no_restart,voicemail_dump_exten_no_inst,gather_asterisk_output,web_socket_url,conf_qualify,routing_prefix,external_web_socket_url,conf_engine,conf_update_interval,ara_url from servers where ( (server_id='$server_id') or (server_ip='$server_ip') ) $LOGadmin_viewable_groupsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        
+        // Extract all server variables
+        $server_id = $row[0];
+        $server_description = $row[1];
+        $server_ip = $row[2];
+        $active = $row[3];
+        $asterisk_version = $row[4];
+        $max_vicidial_trunks = $row[5];
+        $telnet_host = $row[6];
+        $telnet_port = $row[7];
+        $ASTmgrUSERNAME = $row[8];
+        $ASTmgrSECRET = $row[9];
+        $ASTmgrUSERNAMEupdate = $row[10];
+        $ASTmgrUSERNAMElisten = $row[11];
+        $ASTmgrUSERNAMEsend = $row[12];
+        $local_gmt = $row[13];
+        $voicemail_dump_exten = $row[14];
+        $answer_transfer_agent = $row[15];
+        $ext_context = $row[16];
+        $sys_perf_log = $row[17];
+        $vd_server_logs = $row[18];
+        $agi_output = $row[19];
+        $vicidial_balance_active = $row[20];
+        $balance_trunks_offlimits = $row[21];
+        $recording_web_link = $row[22];
+        $alt_server_ip = $row[23];
+        $active_asterisk_server = $row[24];
+        $generate_vicidial_conf = $row[25];
+        $rebuild_conf_files = $row[26];
+        $outbound_calls_per_second = $row[27];
+        $sysload = $row[28];
+        $channels_total = $row[29];
+        $cpu_idle_percent = $row[30];
+        $disk_usage = $row[31];
+        $sounds_update = $row[32];
+        $vicidial_recording_limit = $row[33];
+        $carrier_logging_active = $row[34];
+        $vicidial_balance_rank = $row[35];
+        $rebuild_music_on_hold = $row[36];
+        $active_agent_login_server = $row[37];
+        $conf_secret = $row[38];
+        $external_server_ip = $row[39];
+        $custom_dialplan_entry = $row[40];
+        $active_twin_server_ip = $row[41];
+        $user_group = $row[42];
+        $system_uptime = $row[43];
+        $auto_restart_asterisk = $row[44];
+        $asterisk_temp_no_restart = $row[45];
+        $voicemail_dump_exten_no_inst = $row[46];
+        $gather_asterisk_output = $row[47];
+        $web_socket_url = $row[48];
+        $conf_qualify = $row[49];
+        $routing_prefix = $row[50];
+        $external_web_socket_url = $row[51];
+        $conf_engine = $row[52];
+        $conf_update_interval = $row[53];
+        $ara_url = $row[54];
 
-		$stmt="SELECT count(*) from vicidial_live_agents where server_ip='$server_ip';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$live_agents = $row[0];
-		if ($DB > 0) {echo "|$live_agents|$stmt|\n";}
+        // Get live agents count
+        $stmt = "SELECT count(*) from vicidial_live_agents where server_ip='$server_ip';";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        $live_agents = $row[0];
+        
+        $cpu = (100 - $cpu_idle_percent);
+        $disk_usage = preg_replace("/ /", " - ", $disk_usage);
+        $disk_usage = preg_replace("/\|/", "% &nbsp; &nbsp; ", $disk_usage);
+        
+        // Check Asterisk version for routing prefix field
+        $major_version = explode('.', $asterisk_version);
+        $showRoutingPrefix = ($major_version[0] >= 12);
+?>
 
-		$cpu = (100 - $cpu_idle_percent);
-		$disk_usage = preg_replace("/ /"," - ",$disk_usage);
-		$disk_usage = preg_replace("/\|/","% &nbsp; &nbsp; ",$disk_usage);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Management - <?php echo $server_id; ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header h1 i {
+            margin-right: 10px;
+        }
+        
+        .server-status {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .status-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-card h3 i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .status-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        .tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab:hover {
+            background-color: #e9ecef;
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        select.form-control {
+            cursor: pointer;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .data-table th {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .data-table tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+        
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .badge-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .password-strength {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+        
+        .password-strength-meter {
+            height: 5px;
+            width: 100px;
+            background-color: #eee;
+            border-radius: 3px;
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        
+        .password-strength-meter-fill {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .weak {
+            background-color: var(--danger-color);
+            width: 33%;
+        }
+        
+        .medium {
+            background-color: var(--warning-color);
+            width: 66%;
+        }
+        
+        .strong {
+            background-color: var(--success-color);
+            width: 100%;
+        }
+        
+        .password-strength-text {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .notification {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .notification-info {
+            background-color: #d9edf7;
+            color: #31708f;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .notification-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .notification-warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .notification-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .add-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .form-col {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .server-status {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-server"></i> Server Management: <?php echo $server_id; ?></h1>
+        </div>
+        
+        <div class="notification notification-info">
+            <i class="fas fa-info-circle"></i>
+            <span>Use this interface to modify server settings and manage related resources.</span>
+        </div>
+        
+        <div class="server-status">
+            <div class="status-card">
+                <h3><i class="fas fa-microchip"></i> System Load</h3>
+                <div class="status-value"><?php echo $sysload; ?></div>
+                <div>CPU Usage: <?php echo $cpu; ?>%</div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-phone"></i> Live Channels</h3>
+                <div class="status-value"><?php echo $channels_total; ?></div>
+                <div>Active Agents: <?php echo $live_agents; ?></div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-hdd"></i> Disk Usage</h3>
+                <div class="status-value"><?php echo $disk_usage; ?></div>
+            </div>
+            
+            <div class="status-card">
+                <h3><i class="fas fa-clock"></i> System Uptime</h3>
+                <div class="status-value"><?php echo $system_uptime; ?></div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'server-settings')">
+                <i class="fas fa-cog"></i> Server Settings
+            </button>
+            <button class="tab" onclick="openTab(event, 'trunks')">
+                <i class="fas fa-sitemap"></i> Trunks
+            </button>
+            <button class="tab" onclick="openTab(event, 'carriers')">
+                <i class="fas fa-globe"></i> Carriers
+            </button>
+            <button class="tab" onclick="openTab(event, 'phones')">
+                <i class="fas fa-phone-alt"></i> Phones
+            </button>
+            <button class="tab" onclick="openTab(event, 'conferences')">
+                <i class="fas fa-users"></i> Conferences
+            </button>
+        </div>
+        
+        <!-- Server Settings Tab -->
+        <div id="server-settings" class="tab-content active">
+            <form action="<?php echo $PHP_SELF; ?>" method="POST">
+                <input type="hidden" name="ADD" value="411111111111">
+                <input type="hidden" name="old_server_id" value="<?php echo $server_id; ?>">
+                <input type="hidden" name="old_server_ip" value="<?php echo $server_ip; ?>">
+                <input type="hidden" name="DB" value="<?php echo $DB; ?>">
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="server_id">Server ID</label>
+                        <input type="text" id="server_id" name="server_id" class="form-control" value="<?php echo $server_id; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="server_description">Server Description</label>
+                        <input type="text" id="server_description" name="server_description" class="form-control" value="<?php echo $server_description; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="server_ip">Server IP Address</label>
+                        <input type="text" id="server_ip" name="server_ip" class="form-control" value="<?php echo $server_ip; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="active">Active</label>
+                        <select id="active" name="active" class="form-control">
+                            <option value="Y" <?php echo ($active == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($active == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user_group">Admin User Group</label>
+                        <select id="user_group" name="user_group" class="form-control">
+                            <?php echo $UUgroups_list; ?>
+                            <option value="<?php echo $user_group; ?>" selected><?php echo (preg_match('/\-\-\ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group); ?></option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="asterisk_version">Asterisk Version</label>
+                        <input type="text" id="asterisk_version" name="asterisk_version" class="form-control" value="<?php echo $asterisk_version; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="max_vicidial_trunks">Max Trunks</label>
+                        <input type="text" id="max_vicidial_trunks" name="max_vicidial_trunks" class="form-control" value="<?php echo $max_vicidial_trunks; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="outbound_calls_per_second">Max Calls per Second</label>
+                        <input type="text" id="outbound_calls_per_second" name="outbound_calls_per_second" class="form-control" value="<?php echo $outbound_calls_per_second; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vicidial_balance_active">Balance Dialing</label>
+                        <select id="vicidial_balance_active" name="vicidial_balance_active" class="form-control">
+                            <option value="Y" <?php echo ($vicidial_balance_active == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($vicidial_balance_active == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vicidial_balance_rank">Balance Rank</label>
+                        <input type="text" id="vicidial_balance_rank" name="vicidial_balance_rank" class="form-control" value="<?php echo $vicidial_balance_rank; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="balance_trunks_offlimits">Balance Offlimits</label>
+                        <input type="text" id="balance_trunks_offlimits" name="balance_trunks_offlimits" class="form-control" value="<?php echo $balance_trunks_offlimits; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telnet_host">Telnet Host</label>
+                        <input type="text" id="telnet_host" name="telnet_host" class="form-control" value="<?php echo $telnet_host; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telnet_port">Telnet Port</label>
+                        <input type="text" id="telnet_port" name="telnet_port" class="form-control" value="<?php echo $telnet_port; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ASTmgrUSERNAME">Manager User</label>
+                        <input type="text" id="ASTmgrUSERNAME" name="ASTmgrUSERNAME" class="form-control" value="<?php echo $ASTmgrUSERNAME; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ASTmgrSECRET">Manager Secret</label>
+                        <input type="password" id="ASTmgrSECRET" name="ASTmgrSECRET" class="form-control" value="<?php echo $ASTmgrSECRET; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ASTmgrUSERNAMEupdate">Manager Update User</label>
+                        <input type="text" id="ASTmgrUSERNAMEupdate" name="ASTmgrUSERNAMEupdate" class="form-control" value="<?php echo $ASTmgrUSERNAMEupdate; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ASTmgrUSERNAMElisten">Manager Listen User</label>
+                        <input type="text" id="ASTmgrUSERNAMElisten" name="ASTmgrUSERNAMElisten" class="form-control" value="<?php echo $ASTmgrUSERNAMElisten; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ASTmgrUSERNAMEsend">Manager Send User</label>
+                        <input type="text" id="ASTmgrUSERNAMEsend" name="ASTmgrUSERNAMEsend" class="form-control" value="<?php echo $ASTmgrUSERNAMEsend; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="conf_secret">Conf File Secret</label>
+                        <input type="password" id="conf_secret" name="conf_secret" class="form-control" value="<?php echo $conf_secret; ?>">
+                        <div class="password-strength">
+                            <div class="password-strength-meter">
+                                <div class="password-strength-meter-fill" id="password-strength-meter"></div>
+                            </div>
+                            <span class="password-strength-text" id="password-strength-text">Password Strength</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="local_gmt">Local GMT</label>
+                        <select id="local_gmt" name="local_gmt" class="form-control">
+                            <option value="12.75">12.75</option>
+                            <option value="12.00">12.00</option>
+                            <option value="11.00">11.00</option>
+                            <option value="10.00">10.00</option>
+                            <option value="9.50">9.50</option>
+                            <option value="9.00">9.00</option>
+                            <option value="8.00">8.00</option>
+                            <option value="7.00">7.00</option>
+                            <option value="6.50">6.50</option>
+                            <option value="6.00">6.00</option>
+                            <option value="5.75">5.75</option>
+                            <option value="5.50">5.50</option>
+                            <option value="5.00">5.00</option>
+                            <option value="4.50">4.50</option>
+                            <option value="4.00">4.00</option>
+                            <option value="3.50">3.50</option>
+                            <option value="3.00">3.00</option>
+                            <option value="2.00">2.00</option>
+                            <option value="1.00">1.00</option>
+                            <option value="0.00">0.00</option>
+                            <option value="-1.00">-1.00</option>
+                            <option value="-2.00">-2.00</option>
+                            <option value="-3.00">-3.00</option>
+                            <option value="-3.50">-3.50</option>
+                            <option value="-4.00">-4.00</option>
+                            <option value="-5.00">-5.00</option>
+                            <option value="-6.00">-6.00</option>
+                            <option value="-7.00">-7.00</option>
+                            <option value="-8.00">-8.00</option>
+                            <option value="-9.00">-9.00</option>
+                            <option value="-10.00">-10.00</option>
+                            <option value="-11.00">-11.00</option>
+                            <option value="-12.00">-12.00</option>
+                            <option value="<?php echo $local_gmt; ?>" selected><?php echo $local_gmt; ?></option>
+                        </select>
+                        <small>(Do NOT Adjust for DST)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="voicemail_dump_exten">VMail Dump Exten</label>
+                        <input type="text" id="voicemail_dump_exten" name="voicemail_dump_exten" class="form-control" value="<?php echo $voicemail_dump_exten; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="voicemail_dump_exten_no_inst">VMail Dump Exten NI</label>
+                        <input type="text" id="voicemail_dump_exten_no_inst" name="voicemail_dump_exten_no_inst" class="form-control" value="<?php echo $voicemail_dump_exten_no_inst; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="answer_transfer_agent">Auto Dial Extension</label>
+                        <input type="text" id="answer_transfer_agent" name="answer_transfer_agent" class="form-control" value="<?php echo $answer_transfer_agent; ?>">
+                    </div>
+                    
+                    <?php if ($showRoutingPrefix): ?>
+                    <div class="form-group">
+                        <label for="routing_prefix">Prefix</label>
+                        <input type="text" id="routing_prefix" name="routing_prefix" class="form-control" value="<?php echo $routing_prefix; ?>">
+                    </div>
+                    <?php else: ?>
+                    <input type="hidden" name="routing_prefix" value="<?php echo $routing_prefix; ?>">
+                    <?php endif; ?>
+                    
+                    <div class="form-group">
+                        <label for="ext_context">Default Context</label>
+                        <input type="text" id="ext_context" name="ext_context" class="form-control" value="<?php echo $ext_context; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sys_perf_log">System Performance</label>
+                        <select id="sys_perf_log" name="sys_perf_log" class="form-control">
+                            <option value="Y" <?php echo ($sys_perf_log == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($sys_perf_log == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vd_server_logs">Server Logs</label>
+                        <select id="vd_server_logs" name="vd_server_logs" class="form-control">
+                            <option value="Y" <?php echo ($vd_server_logs == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($vd_server_logs == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agi_output">AGI Output</label>
+                        <select id="agi_output" name="agi_output" class="form-control">
+                            <option value="NONE" <?php echo ($agi_output == 'NONE') ? 'selected' : ''; ?>>NONE</option>
+                            <option value="STDERR" <?php echo ($agi_output == 'STDERR') ? 'selected' : ''; ?>>STDERR</option>
+                            <option value="FILE" <?php echo ($agi_output == 'FILE') ? 'selected' : ''; ?>>FILE</option>
+                            <option value="BOTH" <?php echo ($agi_output == 'BOTH') ? 'selected' : ''; ?>>BOTH</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carrier_logging_active">Carrier Logging Active</label>
+                        <select id="carrier_logging_active" name="carrier_logging_active" class="form-control">
+                            <option value="Y" <?php echo ($carrier_logging_active == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($carrier_logging_active == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gather_asterisk_output">Gather Asterisk Output</label>
+                        <select id="gather_asterisk_output" name="gather_asterisk_output" class="form-control">
+                            <option value="Y" <?php echo ($gather_asterisk_output == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($gather_asterisk_output == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="conf_qualify">Conf Qualify</label>
+                        <select id="conf_qualify" name="conf_qualify" class="form-control">
+                            <option value="Y" <?php echo ($conf_qualify == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($conf_qualify == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recording_web_link">Recording Web Link</label>
+                        <select id="recording_web_link" name="recording_web_link" class="form-control">
+                            <option value="SERVER_IP" <?php echo ($recording_web_link == 'SERVER_IP') ? 'selected' : ''; ?>>SERVER_IP</option>
+                            <option value="ALT_IP" <?php echo ($recording_web_link == 'ALT_IP') ? 'selected' : ''; ?>>ALT_IP</option>
+                            <option value="EXTERNAL_IP" <?php echo ($recording_web_link == 'EXTERNAL_IP') ? 'selected' : ''; ?>>EXTERNAL_IP</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alt_server_ip">Alternate Recording Server IP</label>
+                        <input type="text" id="alt_server_ip" name="alt_server_ip" class="form-control" value="<?php echo $alt_server_ip; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="external_server_ip">External Server IP</label>
+                        <input type="text" id="external_server_ip" name="external_server_ip" class="form-control" value="<?php echo $external_server_ip; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="web_socket_url">Web Socket URL</label>
+                        <input type="text" id="web_socket_url" name="web_socket_url" class="form-control" value="<?php echo $web_socket_url; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="external_web_socket_url">External Web Socket URL</label>
+                        <input type="text" id="external_web_socket_url" name="external_web_socket_url" class="form-control" value="<?php echo $external_web_socket_url; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="active_twin_server_ip">Active Twin Server IP</label>
+                        <input type="text" id="active_twin_server_ip" name="active_twin_server_ip" class="form-control" value="<?php echo $active_twin_server_ip; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="conf_engine">Conferencing Engine</label>
+                        <select id="conf_engine" name="conf_engine" class="form-control">
+                            <option value="MEETME" <?php echo ($conf_engine == 'MEETME') ? 'selected' : ''; ?>>MEETME</option>
+                            <option value="CONFBRIDGE" <?php echo ($conf_engine == 'CONFBRIDGE') ? 'selected' : ''; ?>>CONFBRIDGE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="conf_update_interval">Conf Update Interval</label>
+                        <input type="text" id="conf_update_interval" name="conf_update_interval" class="form-control" value="<?php echo $conf_update_interval; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="active_asterisk_server">Active Asterisk Server</label>
+                        <select id="active_asterisk_server" name="active_asterisk_server" class="form-control">
+                            <option value="Y" <?php echo ($active_asterisk_server == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($active_asterisk_server == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="auto_restart_asterisk">Auto-Restart Asterisk</label>
+                        <select id="auto_restart_asterisk" name="auto_restart_asterisk" class="form-control">
+                            <option value="Y" <?php echo ($auto_restart_asterisk == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($auto_restart_asterisk == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="asterisk_temp_no_restart">Temp No-Restart Asterisk</label>
+                        <select id="asterisk_temp_no_restart" name="asterisk_temp_no_restart" class="form-control">
+                            <option value="Y" <?php echo ($asterisk_temp_no_restart == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($asterisk_temp_no_restart == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ara_url">Asterisk Restart URL</label>
+                        <input type="text" id="ara_url" name="ara_url" class="form-control" value="<?php echo $ara_url; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="active_agent_login_server">Active Agent Server</label>
+                        <select id="active_agent_login_server" name="active_agent_login_server" class="form-control">
+                            <option value="Y" <?php echo ($active_agent_login_server == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($active_agent_login_server == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="generate_vicidial_conf">Generate conf files</label>
+                        <select id="generate_vicidial_conf" name="generate_vicidial_conf" class="form-control">
+                            <option value="Y" <?php echo ($generate_vicidial_conf == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($generate_vicidial_conf == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rebuild_conf_files">Rebuild conf files</label>
+                        <select id="rebuild_conf_files" name="rebuild_conf_files" class="form-control">
+                            <option value="Y" <?php echo ($rebuild_conf_files == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($rebuild_conf_files == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rebuild_music_on_hold">Rebuild Music On Hold</label>
+                        <select id="rebuild_music_on_hold" name="rebuild_music_on_hold" class="form-control">
+                            <option value="Y" <?php echo ($rebuild_music_on_hold == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($rebuild_music_on_hold == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sounds_update">Sounds Update</label>
+                        <select id="sounds_update" name="sounds_update" class="form-control">
+                            <option value="Y" <?php echo ($sounds_update == 'Y') ? 'selected' : ''; ?>>Y</option>
+                            <option value="N" <?php echo ($sounds_update == 'N') ? 'selected' : ''; ?>>N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vicidial_recording_limit">Recording Limit</label>
+                        <input type="text" id="vicidial_recording_limit" name="vicidial_recording_limit" class="form-control" value="<?php echo $vicidial_recording_limit; ?>">
+                    </div>
+                    
+                    <?php if (($SSallow_custom_dialplan > 0) and ($LOGmodify_custom_dialplans > 0)): ?>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label for="custom_dialplan_entry">Custom Dialplan Entry</label>
+                        <textarea id="custom_dialplan_entry" name="custom_dialplan_entry" class="form-control" rows="5"><?php echo $custom_dialplan_entry; ?></textarea>
+                    </div>
+                    <?php else: ?>
+                    <input type="hidden" name="custom_dialplan_entry" value="">
+                    <?php endif; ?>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" name="submit" class="btn">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    
+                    <?php if ($LOGast_delete_phones > 0): ?>
+                    <a href="<?php echo "$PHP_SELF?ADD=521111111111&server_id=$server_id&server_ip=$server_ip"; ?>" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Agent Conferences
+                    </a>
+                    
+                    <a href="<?php echo "$PHP_SELF?ADD=511111111111&server_id=$server_id&server_ip=$server_ip"; ?>" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete This Server
+                    </a>
+                    <?php endif; ?>
+                    
+                    <?php if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)))): ?>
+                    <a href="<?php echo "$PHP_SELF?ADD=720000000000000&category=SERVERS&stage=$server_id"; ?>" class="btn">
+                        <i class="fas fa-history"></i> Admin Changes History
+                    </a>
+                    <?php endif; ?>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Trunks Tab -->
+        <div id="trunks" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Trunks for This Server</h3>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Campaign</th>
+                                <th>Trunks</th>
+                                <th>Restriction</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $stmt = "SELECT server_ip,campaign_id,dedicated_trunks,trunk_restriction from vicidial_server_trunks where server_ip='$server_ip' $LOGallowed_campaignsSQL order by campaign_id;";
+                            $rslt = mysql_to_mysqli($stmt, $link);
+                            $recycle_to_print = mysqli_num_rows($rslt);
+                            $o = 0;
+                            
+                            while ($recycle_to_print > $o) {
+                                $rowx = mysqli_fetch_row($rslt);
+                                $o++;
+                            ?>
+                            <tr>
+                                <td><?php echo $rowx[1]; ?></td>
+                                <td>
+                                    <form action="<?php echo $PHP_SELF; ?>" method="POST">
+                                        <input type="hidden" name="server_ip" value="<?php echo $server_ip; ?>">
+                                        <input type="hidden" name="campaign_id" value="<?php echo $rowx[1]; ?>">
+                                        <input type="hidden" name="ADD" value="421111111111">
+                                        <input type="text" name="dedicated_trunks" value="<?php echo $rowx[2]; ?>" class="form-control" style="width: 80px;">
+                                    </form>
+                                </td>
+                                <td>
+                                    <select name="trunk_restriction" class="form-control">
+                                        <option value="MAXIMUM_LIMIT" <?php echo ($rowx[3] == 'MAXIMUM_LIMIT') ? 'selected' : ''; ?>>MAXIMUM_LIMIT</option>
+                                        <option value="OVERFLOW_ALLOWED" <?php echo ($rowx[3] == 'OVERFLOW_ALLOWED') ? 'selected' : ''; ?>>OVERFLOW_ALLOWED</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-edit"></i> Modify
+                                    </button>
+                                    <a href="<?php echo "$PHP_SELF?ADD=621111111111&campaign_id=$rowx[1]&server_ip=$server_ip"; ?>" class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Add New Server Trunk Record</h3>
+                </div>
+                
+                <form action="<?php echo $PHP_SELF; ?>" method="POST" class="add-form">
+                    <input type="hidden" name="ADD" value="221111111111">
+                    <input type="hidden" name="server_ip" value="<?php echo $server_ip; ?>">
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="new_dedicated_trunks">Trunks</label>
+                            <input type="text" id="new_dedicated_trunks" name="dedicated_trunks" class="form-control">
+                        </div>
+                        
+                        <div class="form-col">
+                            <label for="new_campaign_id">Campaign</label>
+                            <select id="new_campaign_id" name="campaign_id" class="form-control">
+                                <?php echo $campaigns_list; ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-col">
+                            <label for="new_trunk_restriction">Restriction</label>
+                            <select id="new_trunk_restriction" name="trunk_restriction" class="form-control">
+                                <option value="MAXIMUM_LIMIT">MAXIMUM_LIMIT</option>
+                                <option value="OVERFLOW_ALLOWED">OVERFLOW_ALLOWED</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" name="submit" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Add Trunk
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Carriers Tab -->
+        <div id="carriers" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Carriers Within This Server</h3>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Carrier ID</th>
+                                <th>Name</th>
+                                <th>Registration</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $active_carriers = 0;
+                            $inactive_carriers = 0;
+                            $stmt = "SELECT carrier_id,carrier_name,registration_string,active from vicidial_server_carriers where server_ip IN('$server_ip','0.0.0.0') $LOGadmin_viewable_groupsSQL;";
+                            $rsltx = mysql_to_mysqli($stmt, $link);
+                            $carriers_to_print = mysqli_num_rows($rsltx);
+                            
+                            $o = 0;
+                            while ($carriers_to_print > $o) {
+                                $rowx = mysqli_fetch_row($rsltx);
+                                $o++;
+                                
+                                if (preg_match('/Y/', $rowx[3])) {
+                                    $active_carriers++;
+                                }
+                                if (preg_match('/N/', $rowx[3])) {
+                                    $inactive_carriers++;
+                                }
+                            ?>
+                            <tr>
+                                <td><a href="<?php echo "$PHP_SELF?ADD=341111111111&carrier_id=$rowx[0]"; ?>"><?php echo $rowx[0]; ?></a></td>
+                                <td><?php echo $rowx[1]; ?></td>
+                                <td><?php echo $rowx[2]; ?></td>
+                                <td>
+                                    <?php if ($rowx[3] == 'Y'): ?>
+                                    <span class="badge badge-success">Active</span>
+                                    <?php else: ?>
+                                    <span class="badge badge-danger">Inactive</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="notification notification-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>This server has <?php echo $active_carriers; ?> active carriers and <?php echo $inactive_carriers; ?> inactive carriers</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Phones Tab -->
+        <div id="phones" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Phones Within This Server</h3>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Extension</th>
+                                <th>Name</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $active_phones = 0;
+                            $inactive_phones = 0;
+                            $stmt = "SELECT extension,active,fullname from phones where server_ip='$server_ip' $LOGadmin_viewable_groupsSQL;";
+                            $rsltx = mysql_to_mysqli($stmt, $link);
+                            $lists_to_print = mysqli_num_rows($rsltx);
+                            
+                            $o = 0;
+                            while ($lists_to_print > $o) {
+                                $rowx = mysqli_fetch_row($rsltx);
+                                $o++;
+                                
+                                if (preg_match('/Y/', $rowx[1])) {
+                                    $active_phones++;
+                                }
+                                if (preg_match('/N/', $rowx[1])) {
+                                    $inactive_phones++;
+                                }
+                            ?>
+                            <tr>
+                                <td><a href="<?php echo "$PHP_SELF?ADD=31111111111&extension=$rowx[0]&server_ip=$server_ip"; ?>"><?php echo $rowx[0]; ?></a></td>
+                                <td><?php echo $rowx[2]; ?></td>
+                                <td>
+                                    <?php if ($rowx[1] == 'Y'): ?>
+                                    <span class="badge badge-success">Active</span>
+                                    <?php else: ?>
+                                    <span class="badge badge-danger">Inactive</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="notification notification-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>This server has <?php echo $active_phones; ?> active phones and <?php echo $inactive_phones; ?> inactive phones</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conferences Tab -->
+        <div id="conferences" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Conferences Within This Server</h3>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Conference</th>
+                                <th>Extension</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $active_confs = 0;
+                            $stmt = "SELECT conf_exten,extension from conferences where server_ip='$server_ip'";
+                            $rsltx = mysql_to_mysqli($stmt, $link);
+                            $lists_to_print = mysqli_num_rows($rsltx);
+                            
+                            $o = 0;
+                            while ($lists_to_print > $o) {
+                                $rowx = mysqli_fetch_row($rsltx);
+                                $o++;
+                                $active_confs++;
+                            ?>
+                            <tr>
+                                <td><a href="<?php echo "$PHP_SELF?ADD=3111111111111&conf_exten=$rowx[0]&server_ip=$server_ip"; ?>"><?php echo $rowx[0]; ?></a></td>
+                                <td><?php echo $rowx[1]; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="notification notification-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>This server has <?php echo $active_confs; ?> active conferences</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Agent Conferences Within This Server</h3>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>VD Conference</th>
+                                <th>Extension</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $active_vdconfs = 0;
+                            $stmt = "SELECT conf_exten,extension from vicidial_conferences where server_ip='$server_ip'";
+                            $rsltx = mysql_to_mysqli($stmt, $link);
+                            $lists_to_print = mysqli_num_rows($rsltx);
+                            
+                            $o = 0;
+                            while ($lists_to_print > $o) {
+                                $rowx = mysqli_fetch_row($rsltx);
+                                $o++;
+                                $active_vdconfs++;
+                            ?>
+                            <tr>
+                                <td><a href="<?php echo "$PHP_SELF?ADD=31111111111111&conf_exten=$rowx[0]&server_ip=$server_ip"; ?>"><?php echo $rowx[0]; ?></a></td>
+                                <td><?php echo $rowx[1]; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="notification notification-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>This server has <?php echo $active_vdconfs; ?> active vicidial conferences</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Agent Confbridges Within This Server</h3>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>VD Confbridge</th>
+                                <th>Extension</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $active_vdconfs = 0;
+                            $stmt = "SELECT conf_exten,extension from vicidial_confbridges where server_ip='$server_ip'";
+                            $rsltx = mysql_to_mysqli($stmt, $link);
+                            $lists_to_print = mysqli_num_rows($rsltx);
+                            
+                            $o = 0;
+                            while ($lists_to_print > $o) {
+                                $rowx = mysqli_fetch_row($rsltx);
+                                $o++;
+                                $active_vdconfs++;
+                            ?>
+                            <tr>
+                                <td><a href="<?php echo "$PHP_SELF?ADD=32111111111111&conf_exten=$rowx[0]&server_ip=$server_ip"; ?>"><?php echo $rowx[0]; ?></a></td>
+                                <td><?php echo $rowx[1]; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Password strength meter
+        document.getElementById('conf_secret').addEventListener('input', function() {
+            var password = this.value;
+            var meter = document.getElementById('password-strength-meter');
+            var text = document.getElementById('password-strength-text');
+            
+            // Remove all classes
+            meter.classList.remove('weak', 'medium', 'strong');
+            
+            if (password.length === 0) {
+                meter.style.width = '0';
+                text.textContent = 'Password Strength';
+                return;
+            }
+            
+            // Check password strength
+            var strength = 0;
+            
+            // Length check
+            if (password.length >= 8) {
+                strength += 1;
+            }
+            
+            // Complexity checks
+            if (password.match(/[a-z]+/)) {
+                strength += 1;
+            }
+            
+            if (password.match(/[A-Z]+/)) {
+                strength += 1;
+            }
+            
+            if (password.match(/[0-9]+/)) {
+                strength += 1;
+            }
+            
+            if (password.match(/[$@#&!]+/)) {
+                strength += 1;
+            }
+            
+            // Update UI based on strength
+            switch (strength) {
+                case 0:
+                case 1:
+                case 2:
+                    meter.classList.add('weak');
+                    text.textContent = 'Weak';
+                    break;
+                case 3:
+                case 4:
+                    meter.classList.add('medium');
+                    text.textContent = 'Medium';
+                    break;
+                case 5:
+                    meter.classList.add('strong');
+                    text.textContent = 'Strong';
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
 
-		echo "<br>"._QXZ("MODIFY A SERVER RECORD").": $server_id<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=411111111111>\n";
-		echo "<input type=hidden name=old_server_id value=\"$server_id\">\n";
-		echo "<input type=hidden name=old_server_ip value=\"$server_ip\">\n";
-		echo "<input type=hidden name=DB value=$DB>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server ID").": </td><td align=left><input type=text name=server_id size=10 maxlength=10 value=\"$server_id\">$NWB#servers-server_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server Description").": </td><td align=left><input type=text name=server_description size=30 maxlength=255 value=\"$server_description\">$NWB#servers-server_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP Address").": </td><td align=left><input type=text name=server_ip size=20 maxlength=15 value=\"$server_ip\">$NWB#servers-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#servers-active$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("System Load").": </td><td align=left>$sysload - $cpu% &nbsp; $NWB#servers-sysload$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Live Channels").": </td><td align=left>$channels_total &nbsp; &nbsp; "._QXZ("Agents").": $live_agents &nbsp; $NWB#servers-channels_total$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Disk Usage").": </td><td align=left><font size=0>$disk_usage</font> &nbsp; $NWB#servers-disk_usage$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("System Uptime").": </td><td align=left>$system_uptime &nbsp; $NWB#servers-system_uptime$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-\ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
-		echo "</select>$NWB#servers-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Asterisk Version").": </td><td align=left><input type=text name=asterisk_version size=20 maxlength=20 value=\"$asterisk_version\">$NWB#servers-asterisk_version$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Trunks").": </td><td align=left><input type=text name=max_vicidial_trunks size=5 maxlength=4 value=\"$max_vicidial_trunks\">$NWB#servers-max_trunks$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Max Calls per Second").": </td><td align=left><input type=text name=outbound_calls_per_second size=5 maxlength=4 value=\"$outbound_calls_per_second\">$NWB#servers-outbound_calls_per_second$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Balance Dialing").": </td><td align=left><select size=1 name=vicidial_balance_active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$vicidial_balance_active'>"._QXZ("$vicidial_balance_active")."</option></select>$NWB#servers-balance_active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Balance Rank").": </td><td align=left><input type=text name=vicidial_balance_rank size=4 maxlength=2 value=\"$vicidial_balance_rank\">$NWB#servers-balance_rank$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Balance Offlimits").": </td><td align=left><input type=text name=balance_trunks_offlimits size=5 maxlength=4 value=\"$balance_trunks_offlimits\">$NWB#servers-balance_trunks_offlimits$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Telnet Host").": </td><td align=left><input type=text name=telnet_host size=20 maxlength=20 value=\"$telnet_host\">$NWB#servers-telnet_host$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Telnet Port").": </td><td align=left><input type=text name=telnet_port size=6 maxlength=5 value=\"$telnet_port\">$NWB#servers-telnet_port$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager User").": </td><td align=left><input type=text name=ASTmgrUSERNAME size=20 maxlength=20 value=\"$ASTmgrUSERNAME\">$NWB#servers-ASTmgrUSERNAME$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Secret").": </td><td align=left><input type=text name=ASTmgrSECRET size=20 maxlength=20 value=\"$ASTmgrSECRET\">$NWB#servers-ASTmgrSECRET$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Update User").": </td><td align=left><input type=text name=ASTmgrUSERNAMEupdate size=20 maxlength=20 value=\"$ASTmgrUSERNAMEupdate\">$NWB#servers-ASTmgrUSERNAMEupdate$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Listen User").": </td><td align=left><input type=text name=ASTmgrUSERNAMElisten size=20 maxlength=20 value=\"$ASTmgrUSERNAMElisten\">$NWB#servers-ASTmgrUSERNAMElisten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Send User").": </td><td align=left><input type=text name=ASTmgrUSERNAMEsend size=20 maxlength=20 value=\"$ASTmgrUSERNAMEsend\">$NWB#servers-ASTmgrUSERNAMEsend$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf File Secret").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=conf_secret size=40 maxlength=100 value=\"$conf_secret\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#servers-conf_secret$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Local GMT").": </td><td align=left><select size=1 name=local_gmt><option>12.75</option><option>12.00</option><option>11.00</option><option>10.00</option><option>9.50</option><option>9.00</option><option>8.00</option><option>7.00</option><option>6.50</option><option>6.00</option><option>5.75</option><option>5.50</option><option>5.00</option><option>4.50</option><option>4.00</option><option>3.50</option><option>3.00</option><option>2.00</option><option>1.00</option><option>0.00</option><option>-1.00</option><option>-2.00</option><option>-3.00</option><option>-3.50</option><option>-4.00</option><option>-5.00</option><option>-6.00</option><option>-7.00</option><option>-8.00</option><option>-9.00</option><option>-10.00</option><option>-11.00</option><option>-12.00</option><option selected>$local_gmt</option></select> ("._QXZ("Do NOT Adjust for DST").")$NWB#servers-local_gmt$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMail Dump Exten").": </td><td align=left><input type=text name=voicemail_dump_exten size=20 maxlength=20 value=\"$voicemail_dump_exten\">$NWB#servers-voicemail_dump_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMail Dump Exten NI").": </td><td align=left><input type=text name=voicemail_dump_exten_no_inst size=20 maxlength=20 value=\"$voicemail_dump_exten_no_inst\">$NWB#servers-voicemail_dump_exten_no_inst$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("auto dial extension").": </td><td align=left><input type=text name=answer_transfer_agent size=20 maxlength=20 value=\"$answer_transfer_agent\">$NWB#servers-answer_transfer_agent$NWE";
-
-		$major_version = explode('.',$asterisk_version);
-		if ($major_version[0] >= 12)
-			{
-			echo " &nbsp; &nbsp; "._QXZ("prefix").": <input type=text name=routing_prefix size=10 maxlength=10 value=\"$routing_prefix\">$NWB#servers-routing_prefix$NWE";
-			}
-		else
-			{echo "<input type=hidden name=routing_prefix value=\"$routing_prefix\">";}
-		echo "</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Default Context").": </td><td align=left><input type=text name=ext_context size=20 maxlength=20 value=\"$ext_context\">$NWB#servers-ext_context$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("System Performance").": </td><td align=left><select size=1 name=sys_perf_log><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$sys_perf_log' selected>"._QXZ("$sys_perf_log")."</option></select>$NWB#servers-sys_perf_log$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server Logs").": </td><td align=left><select size=1 name=vd_server_logs><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$vd_server_logs' selected>"._QXZ("$vd_server_logs")."</option></select>$NWB#servers-vd_server_logs$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("AGI Output").": </td><td align=left><select size=1 name=agi_output><option value='NONE'>"._QXZ("NONE")."</option><option value='STDERR'>"._QXZ("STDERR")."</option><option value='FILE'>"._QXZ("FILE")."</option><option value='BOTH'>"._QXZ("BOTH")."</option><option value='$agi_output' selected>"._QXZ("$agi_output")."</option></select>$NWB#servers-agi_output$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Logging Active").": </td><td align=left><select size=1 name=carrier_logging_active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$carrier_logging_active' selected>"._QXZ("$carrier_logging_active")."</option></select>$NWB#servers-carrier_logging_active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Gather Asterisk Output").": </td><td align=left><select size=1 name=gather_asterisk_output><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$gather_asterisk_output' selected>"._QXZ("$gather_asterisk_output")."</option></select>$NWB#servers-gather_asterisk_output$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf Qualify").": </td><td align=left><select size=1 name=conf_qualify><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$conf_qualify' selected>"._QXZ("$conf_qualify")."</option></select>$NWB#servers-conf_qualify$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Recording Web Link").": </td><td align=left><select size=1 name=recording_web_link><option value='SERVER_IP'>"._QXZ("SERVER_IP")."</option><option value='ALT_IP'>"._QXZ("ALT_IP")."</option><option value='EXTERNAL_IP'>"._QXZ("EXTERNAL_IP")."</option><option value='$recording_web_link' selected>"._QXZ("$recording_web_link")."</option></select>$NWB#servers-recording_web_link$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Alternate Recording Server IP").": </td><td align=left><input type=text name=alt_server_ip size=30 maxlength=100 value=\"$alt_server_ip\">$NWB#servers-alt_server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("External Server IP").": </td><td align=left><input type=text name=external_server_ip size=30 maxlength=100 value=\"$external_server_ip\">$NWB#servers-external_server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Web Socket URL").": </td><td align=left><input type=text name=web_socket_url size=30 maxlength=255 value=\"$web_socket_url\">$NWB#servers-web_socket_url$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("External Web Socket URL").": </td><td align=left><input type=text name=external_web_socket_url size=30 maxlength=255 value=\"$external_web_socket_url\">$NWB#servers-external_web_socket_url$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Twin Server IP").": </td><td align=left><input type=text name=active_twin_server_ip size=16 maxlength=15 value=\"$active_twin_server_ip\">$NWB#servers-active_twin_server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Conferencing Engine").": </td><td align=left><select size=1 name=conf_engine><option value='MEETME'>"._QXZ("MEETME")."</option><option value='CONFBRIDGE'>"._QXZ("CONFBRIDGE")."</option><option selected value='$conf_engine'>"._QXZ("$conf_engine")."</option></select>$NWB#servers-conf_engine$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Conf Update Interval").": </td><td align=left><input type=text name=conf_update_interval size=5 maxlength=6 value=\"$conf_update_interval\">$NWB#servers-conf_update_interval$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Asterisk Server").": </td><td align=left><select size=1 name=active_asterisk_server><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$active_asterisk_server'>"._QXZ("$active_asterisk_server")."</option></select>$NWB#servers-active_asterisk_server$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Auto-Restart Asterisk").": </td><td align=left> &nbsp; &nbsp; <select size=1 name=auto_restart_asterisk><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$auto_restart_asterisk'>"._QXZ("$auto_restart_asterisk")."</option></select>$NWB#servers-auto_restart_asterisk$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Temp No-Restart Asterisk").": </td><td align=left> &nbsp; &nbsp; <select size=1 name=asterisk_temp_no_restart><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$asterisk_temp_no_restart'>"._QXZ("$asterisk_temp_no_restart")."</option></select>$NWB#servers-asterisk_temp_no_restart$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Asterisk Restart URL").": </td><td align=left> &nbsp; &nbsp; <input type=text name=ara_url size=40 maxlength=1000 value=\"$ara_url\">$NWB#servers-ara_url$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Agent Server").": </td><td align=left><select size=1 name=active_agent_login_server><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$active_agent_login_server'>"._QXZ("$active_agent_login_server")."</option></select>$NWB#servers-active_agent_login_server$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Generate conf files").": </td><td align=left><select size=1 name=generate_vicidial_conf><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$generate_vicidial_conf'>"._QXZ("$generate_vicidial_conf")."</option></select>$NWB#servers-generate_conf$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Rebuild conf files").": </td><td align=left><select size=1 name=rebuild_conf_files><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$rebuild_conf_files'>"._QXZ("$rebuild_conf_files")."</option></select>$NWB#servers-rebuild_conf_files$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Rebuild Music On Hold").": </td><td align=left><select size=1 name=rebuild_music_on_hold><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$rebuild_music_on_hold'>"._QXZ("$rebuild_music_on_hold")."</option></select>$NWB#servers-rebuild_music_on_hold$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Sounds Update").": </td><td align=left><select size=1 name=sounds_update><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$sounds_update' selected>"._QXZ("$sounds_update")."</option></select>$NWB#servers-sounds_update$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Recording Limit").": </td><td align=left><input type=text name=vicidial_recording_limit size=8 maxlength=6 value=\"$vicidial_recording_limit\">$NWB#servers-recording_limit$NWE</td></tr>\n";
-
-		if ( ($SSallow_custom_dialplan > 0) and ($LOGmodify_custom_dialplans > 0) )
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Custom Dialplan Entry").": $NWB#servers-custom_dialplan_entry$NWE <TEXTAREA NAME=custom_dialplan_entry ROWS=5 COLS=80>$custom_dialplan_entry</TEXTAREA></td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Custom Dialplan Entry").": </td><td align=left>Disabled <input type=hidden name=custom_dialplan_entry value=\"\">$NWB#servers-custom_dialplan_entry$NWE</td></tr>\n";
-			}
-
-
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center></form>\n";
-
-
-		### vicidial server trunk records for this server
-		echo "<br><br><b>"._QXZ("TRUNKS FOR THIS SERVER").": &nbsp; $NWB#server_trunks$NWE</b><br>\n";
-		echo "<TABLE width=500 cellspacing=3>\n";
-		echo "<tr><td> "._QXZ("CAMPAIGN")."</td><td> "._QXZ("TRUNKS")." </td><td> "._QXZ("RESTRICTION")." </td><td> </td><td> "._QXZ("DELETE")." </td></tr>\n";
-
-		$stmt="SELECT server_ip,campaign_id,dedicated_trunks,trunk_restriction from vicidial_server_trunks where server_ip='$server_ip' $LOGallowed_campaignsSQL order by campaign_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$recycle_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($recycle_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$o++;
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=1>$rowx[1]<form action=$PHP_SELF method=POST>\n";
-			echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-			echo "<input type=hidden name=campaign_id value=\"$rowx[1]\">\n";
-			echo "<input type=hidden name=ADD value=421111111111></td>\n";
-			echo "<td><font size=1><input size=6 maxlength=4 name=dedicated_trunks value=\"$rowx[2]\"></td>\n";
-			echo "<td><select size=1 name=trunk_restriction><option value='MAXIMUM_LIMIT'>"._QXZ("MAXIMUM_LIMIT")."</option><option value='OVERFLOW_ALLOWED'>"._QXZ("OVERFLOW_ALLOWED")."</option><option value='$rowx[3]' SELECTED>"._QXZ("$rowx[3]")."</option></select></td>\n";
-			echo "<td><font size=1><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("MODIFY")."'></form></td>\n";
-			echo "<td><font size=1><a href=\"$PHP_SELF?ADD=621111111111&campaign_id=$rowx[1]&server_ip=$server_ip\">"._QXZ("DELETE")."</a></td></tr>\n";
-			}
-
-		echo "</table>\n";
-
-		echo "<br><b>"._QXZ("ADD NEW SERVER TRUNK RECORD")."</b><BR><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=221111111111>\n";
-		echo "<input type=hidden name=server_ip value=\"$server_ip\">\n";
-		echo _QXZ("TRUNKS").": <input size=6 maxlength=4 name=dedicated_trunks><BR>\n";
-		echo _QXZ("CAMPAIGN").": <select size=1 name=campaign_id>\n";
-		echo "$campaigns_list\n";
-		echo "</select><BR>\n";
-		echo _QXZ("RESTRICTION").": <select size=1 name=trunk_restriction><option value='MAXIMUM_LIMIT'>"._QXZ("MAXIMUM_LIMIT")."</option><option value='OVERFLOW_ALLOWED'>"._QXZ("OVERFLOW_ALLOWED")."</option></select><BR>\n";
-		echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("ADD")."'><BR>\n";
-
-		echo "</center></FORM><br>\n";
-
-
-		### list of carriers on this server
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("CARRIERS WITHIN THIS SERVER").":</b><br>\n";
-		echo "<TABLE width=600 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("CARRIER ID")."</td><td>"._QXZ("NAME")."</td><td>"._QXZ("REGISTRATION")."</td><td>"._QXZ("ACTIVE")."</td></tr>\n";
-
-		$active_carriers = 0;
-		$inactive_carriers = 0;
-		$stmt="SELECT carrier_id,carrier_name,registration_string,active from vicidial_server_carriers where server_ip IN('$server_ip','0.0.0.0') $LOGadmin_viewable_groupsSQL;";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$carriers_to_print = mysqli_num_rows($rsltx);
-		if ($DB > 0) {echo "|$carriers_to_print|$stmt|\n";}
-		$camp_lists='';
-
-		$o=0;
-		while ($carriers_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			if (preg_match('/Y/', $rowx[3])) {$active_carriers++;}
-			if (preg_match('/N/', $rowx[3])) {$inactive_carriers++;}
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$rowx[0]\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td><td><font size=1>$rowx[2]</td><td><font size=1>"._QXZ("$rowx[3]")."</td></tr>\n";
-			}
-
-		echo "</table></center><br>\n";
-
-
-		### list of phones on this server
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("PHONES WITHIN THIS SERVER").":</b><br>\n";
-		echo "<TABLE width=400 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("EXTENSION")."</td><td>"._QXZ("NAME")."</td><td>"._QXZ("ACTIVE")."</td></tr>\n";
-
-		$active_phones = 0;
-		$inactive_phones = 0;
-		$stmt="SELECT extension,active,fullname from phones where server_ip='$server_ip' $LOGadmin_viewable_groupsSQL;";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rsltx);
-		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
-		$camp_lists='';
-
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			if (preg_match('/Y/', $rowx[1])) {$active_phones++;   $camp_lists .= "'$rowx[0]',";}
-			if (preg_match('/N/', $rowx[1])) {$inactive_phones++;}
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=31111111111&extension=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[2]</td><td><font size=1>"._QXZ("$rowx[1]")."</td></tr>\n";
-			}
-
-		echo "</table></center><br>\n";
-
-
-		### list of conferences on this server
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("CONFERENCES WITHIN THIS SERVER").":</b><br>\n";
-		echo "<TABLE width=400 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("CONFERENCE")."</td><td>"._QXZ("EXTENSION")."</td></tr>\n";
-
-		$active_confs = 0;
-		$stmt="SELECT conf_exten,extension from conferences where server_ip='$server_ip'";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rsltx);
-		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
-		$camp_lists='';
-
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			$active_confs++;
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=3111111111111&conf_exten=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td></tr>\n";
-			}
-
-		echo "</table></center><br>\n";
-
-
-		### list of vicidial conferences on this server
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("AGENT CONFERENCES WITHIN THIS SERVER").":</b><br>\n";
-		echo "<TABLE width=400 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("VD CONFERENCE")."</td><td>"._QXZ("EXTENSION")."</td></tr>\n";
-
-		$active_vdconfs = 0;
-		$stmt="SELECT conf_exten,extension from vicidial_conferences where server_ip='$server_ip'";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rsltx);
-		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
-		$camp_lists='';
-
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			$active_vdconfs++;
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=31111111111111&conf_exten=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td></tr>\n";
-			}
-
-		echo "</table></center><br>\n";
-
-
-		### list of vicidial confbridges on this server
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("AGENT CONFBRIDGES WITHIN THIS SERVER").":</b><br>\n";
-		echo "<TABLE width=400 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("VD CONFBRIDGE")."</td><td>"._QXZ("EXTENSION")."</td></tr>\n";
-
-		$active_vdconfs = 0;
-		$stmt="SELECT conf_exten,extension from vicidial_confbridges where server_ip='$server_ip'";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rsltx);
-		if ($DB > 0) {echo "|$lists_to_print|$stmt|\n";}
-		$camp_lists='';
-
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			$active_vdconfs++;
-
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
-
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=32111111111111&conf_exten=$rowx[0]&server_ip=$server_ip\">$rowx[0]</a></td><td><font size=1>$rowx[1]</td></tr>\n";
-			}
-
-		echo "</table></center><br>\n";
-
-
-		echo "<center><b>\n";
-
-			$camp_lists = preg_replace('/.$/i','',$camp_lists);
-		echo _QXZ("This server has %1s active carriers and %2s inactive carriers",0,'',$active_carriers,$inactive_carriers)."<br><br>\n";
-		echo _QXZ("This server has %1s active phones and %2s inactive phones",0,'',$active_phones,$inactive_phones)."<br><br>\n";
-		echo _QXZ("This server has %1s active conferences",0,'',$active_confs)."<br><br>\n";
-		echo _QXZ("This server has %1s active vicidial conferences",0,'',$active_vdconfs)."<br><br>\n";
-		echo "</b></center>\n";
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=521111111111&server_id=$server_id&server_ip=$server_ip\">"._QXZ("CLEAR ALL AGENT CONFERENCES")."</a>\n";
-			}
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=511111111111&server_id=$server_id&server_ip=$server_ip\">"._QXZ("DELETE THIS SERVER")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=SERVERS&stage=$server_id\">"._QXZ("Click here to see Admin changes to this server")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+<?php
+    } else {
+        echo _QXZ("You do not have permission to view this page") . "\n";
+        exit;
+    }
+}
 
 ######################
 # ADD=331111111111 modify conf template record in the system
