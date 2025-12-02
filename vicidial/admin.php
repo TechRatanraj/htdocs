@@ -54742,161 +54742,264 @@ if ($ADD==1200000000)
 ######################
 # ADD=130000000 display all shifts
 ######################
+######################
+# ADD=130000000 display all shifts
+######################
 if ($ADD==130000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_shifts.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+    
+    $stmt="SELECT shift_id,shift_name,shift_start_time,shift_length,shift_weekdays,user_group from vicidial_shifts $whereLOGadmin_viewable_groupsSQL order by shift_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $shifts_to_print = mysqli_num_rows($rslt);
 
-	$stmt="SELECT shift_id,shift_name,shift_start_time,shift_length,shift_weekdays,user_group from vicidial_shifts $whereLOGadmin_viewable_groupsSQL order by shift_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$shifts_to_print = mysqli_num_rows($rslt);
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+    echo "<img src=\"images/icon_shifts.png\" alt=\"Shifts\" width=42 height=42>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("SHIFT LISTINGS")."</h2>";
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SHIFT ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SHIFT NAME")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SHIFT START")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SHIFT LENGTH")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("WEEKDAYS")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($shifts_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';this.style.transform='scale(1.01)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)';\" onmouseout=\"this.style.background='$bg_color';this.style.transform='scale(1)';this.style.boxShadow='none';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=331111111&shift_id=$row[0]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=331111111&shift_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:600;'>$row[1]</td>";
+        echo "<td style='padding:1rem;'><div style='display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1rem;'>🕐</span><span style='color:#000000;font-size:0.9rem;font-family:monospace;font-weight:600;'>$row[2]</span></div></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-family:monospace;font-weight:600;'>$row[3]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:500;'>$row[4]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-weight:500;'>$row[5]</td>";
+        echo "<td style='padding:1rem;text-align:center;'><a href=\"$PHP_SELF?ADD=331111111&shift_id=$row[0]\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(102,126,234,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(102,126,234,0.3)';\">"._QXZ("MODIFY")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    
+    if ($shifts_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>📅</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No Shifts Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no shifts to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>\n";
+    }
 
-	echo "<br>"._QXZ("SHIFT LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("SHIFT ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SHIFT NAME")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SHIFT START")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SHIFT LENGTH")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("WEEKDAYS")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($shifts_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=331111111&shift_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=331111111&shift_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> $row[2] </td>";
-		echo "<td><font size=1> $row[3] </td>";
-		echo "<td><font size=1> $row[4] </td>";
-		echo "<td><font size=1> $row[5] </td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=331111111&shift_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
 
 
 ######################
 # ADD=10000000000 display all phones
 ######################
 if ($ADD==10000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_phones.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1400px;margin:2rem auto;padding:0 1rem;'>\n";
 
-	$EXTENlink="stage=EXTENDOWN&status=$status";
-	$EXTENNUMlink="stage=EXTENNUMDOWN&status=$status";
-	$PROTOlink="stage=PROTODOWN&status=$status";
-	$SERVERlink="stage=SERVERDOWN&status=$status";
-	$STATUSlink="stage=STATUSDOWN&status=$status";
-	$SQLorder='order by extension,server_ip';
+    $EXTENlink="stage=EXTENDOWN&status=$status";
+    $EXTENNUMlink="stage=EXTENNUMDOWN&status=$status";
+    $PROTOlink="stage=PROTODOWN&status=$status";
+    $SERVERlink="stage=SERVERDOWN&status=$status";
+    $STATUSlink="stage=STATUSDOWN&status=$status";
+    $SQLorder='order by extension,server_ip';
 
-	if (preg_match("/EXTENUP/i",$stage)) {$SQLorder='order by extension asc';   $EXTENlink="stage=EXTENDOWN&status=$status";}
-	if (preg_match("/EXTENDOWN/i",$stage)) {$SQLorder='order by extension desc';   $EXTENlink="stage=EXTENUP&status=$status";}
-	if (preg_match("/EXTENNUMUP/i",$stage)) {$SQLorder='order by CAST(extension as SIGNED INTEGER) desc';   $EXTENNUMlink="stage=EXTENNUMDOWN&status=$status";}
-	if (preg_match("/EXTENNUMDOWN/i",$stage)) {$SQLorder='order by CAST(extension as SIGNED INTEGER) asc';   $EXTENNUMlink="stage=EXTENNUMUP&status=$status";}
-	if (preg_match("/PROTOUP/i",$stage)) {$SQLorder='order by protocol asc';   $PROTOlink="stage=PROTODOWN&status=$status";}
-	if (preg_match("/PROTODOWN/i",$stage)) {$SQLorder='order by protocol desc';   $PROTOlink="stage=PROTOUP&status=$status";}
-	if (preg_match("/SERVERUP/i",$stage)) {$SQLorder='order by server_ip asc';   $SERVERlink="stage=SERVERDOWN&status=$status";}
-	if (preg_match("/SERVERDOWN/i",$stage)) {$SQLorder='order by server_ip desc';   $SERVERlink="stage=SERVERUP&status=$status";}
-	if (preg_match("/STATUSUP/i",$stage)) {$SQLorder='order by status asc';   $STATUSlink="stage=STATUSDOWN&status=$status";}
-	if (preg_match("/STATUSDOWN/i",$stage)) {$SQLorder='order by status desc';   $STATUSlink="stage=STATUSUP&status=$status";}
+    if (preg_match("/EXTENUP/i",$stage)) {$SQLorder='order by extension asc';   $EXTENlink="stage=EXTENDOWN&status=$status";}
+    if (preg_match("/EXTENDOWN/i",$stage)) {$SQLorder='order by extension desc';   $EXTENlink="stage=EXTENUP&status=$status";}
+    if (preg_match("/EXTENNUMUP/i",$stage)) {$SQLorder='order by CAST(extension as SIGNED INTEGER) desc';   $EXTENNUMlink="stage=EXTENNUMDOWN&status=$status";}
+    if (preg_match("/EXTENNUMDOWN/i",$stage)) {$SQLorder='order by CAST(extension as SIGNED INTEGER) asc';   $EXTENNUMlink="stage=EXTENNUMUP&status=$status";}
+    if (preg_match("/PROTOUP/i",$stage)) {$SQLorder='order by protocol asc';   $PROTOlink="stage=PROTODOWN&status=$status";}
+    if (preg_match("/PROTODOWN/i",$stage)) {$SQLorder='order by protocol desc';   $PROTOlink="stage=PROTOUP&status=$status";}
+    if (preg_match("/SERVERUP/i",$stage)) {$SQLorder='order by server_ip asc';   $SERVERlink="stage=SERVERDOWN&status=$status";}
+    if (preg_match("/SERVERDOWN/i",$stage)) {$SQLorder='order by server_ip desc';   $SERVERlink="stage=SERVERUP&status=$status";}
+    if (preg_match("/STATUSUP/i",$stage)) {$SQLorder='order by status asc';   $STATUSlink="stage=STATUSDOWN&status=$status";}
+    if (preg_match("/STATUSDOWN/i",$stage)) {$SQLorder='order by status desc';   $STATUSlink="stage=STATUSUP&status=$status";}
 
-	$limitSQL='';
-	$next_prev_HTML='';
-	if ($SSentries_per_page > 0)
-		{
-		$stmt="SELECT count(*) from phones $whereLOGadmin_viewable_groupsSQL";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$phones_count = $row[0];
+    $limitSQL='';
+    $next_prev_HTML='';
+    if ($SSentries_per_page > 0)
+        {
+        $stmt="SELECT count(*) from phones $whereLOGadmin_viewable_groupsSQL";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $phones_count = $row[0];
 
-		if ( ($phones_count > $SSentries_per_page) and ($status != 'display_all') )
-			{
-			if (strlen($start_count) < 1) {$start_count=0;}
-			$next_count = ($start_count + $SSentries_per_page);
-			$nextnext_count = ($next_count + $SSentries_per_page);
-			if ($next_count > $phones_count) 
-				{$next_count = $phones_count;}
-			else
-				{
-				if ($nextnext_count > $phones_count) 
-					{
-					$next_temp = ($phones_count - $next_count);
-					$nextHTML = "<a href=\"$PHP_SELF?ADD=10000000000&start_count=$next_count&stage=$stage\">"._QXZ("NEXT")." $next_temp</a> &nbsp; ";
-					}
-				else
-					{
-					$nextHTML = "<a href=\"$PHP_SELF?ADD=10000000000&start_count=$next_count&stage=$stage\">"._QXZ("NEXT")." $SSentries_per_page</a> &nbsp; ";
-					}
-				}
-			$next_prev_HTML .= _QXZ("RECORDS")." $start_count - $next_count &nbsp; ";
-			$limitSQL="limit $SSentries_per_page";
-			if ($start_count > 0)
-				{
-				$prev_count = ($start_count - $SSentries_per_page);
-				$limitSQL="limit $start_count,$SSentries_per_page";
-				$next_prev_HTML .= "<a href=\"$PHP_SELF?ADD=10000000000&start_count=$prev_count&stage=$stage\">"._QXZ("PREVIOUS")." $SSentries_per_page</a> &nbsp; ";
-				}
-			$next_prev_HTML .= $nextHTML;
-			$next_prev_HTML .= " &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; </b><a href=\"$PHP_SELF?ADD=10000000000&status=display_all&stage=$stage\"><font size=1 color=black>"._QXZ("show all phones")."</font></a><b> &nbsp; ";
-			}
-		}
+        if ( ($phones_count > $SSentries_per_page) and ($status != 'display_all') )
+            {
+            if (strlen($start_count) < 1) {$start_count=0;}
+            $next_count = ($start_count + $SSentries_per_page);
+            $nextnext_count = ($next_count + $SSentries_per_page);
+            if ($next_count > $phones_count) 
+                {$next_count = $phones_count;}
+            else
+                {
+                if ($nextnext_count > $phones_count) 
+                    {
+                    $next_temp = ($phones_count - $next_count);
+                    $nextHTML = "<a href=\"$PHP_SELF?ADD=10000000000&start_count=$next_count&stage=$stage\" style='color:#3b82f6;text-decoration:none;font-weight:600;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("NEXT")." $next_temp</a> &nbsp; ";
+                    }
+                else
+                    {
+                    $nextHTML = "<a href=\"$PHP_SELF?ADD=10000000000&start_count=$next_count&stage=$stage\" style='color:#3b82f6;text-decoration:none;font-weight:600;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("NEXT")." $SSentries_per_page</a> &nbsp; ";
+                    }
+                }
+            $next_prev_HTML .= _QXZ("RECORDS")." $start_count - $next_count &nbsp; ";
+            $limitSQL="limit $SSentries_per_page";
+            if ($start_count > 0)
+                {
+                $prev_count = ($start_count - $SSentries_per_page);
+                $limitSQL="limit $start_count,$SSentries_per_page";
+                $next_prev_HTML .= "<a href=\"$PHP_SELF?ADD=10000000000&start_count=$prev_count&stage=$stage\" style='color:#3b82f6;text-decoration:none;font-weight:600;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("PREVIOUS")." $SSentries_per_page</a> &nbsp; ";
+                }
+            $next_prev_HTML .= $nextHTML;
+            $next_prev_HTML .= " &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; <a href=\"$PHP_SELF?ADD=10000000000&status=display_all&stage=$stage\" style='color:#3b82f6;text-decoration:none;font-size:0.85rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("show all phones")."</a> &nbsp; ";
+            }
+        }
 
-	$stmt="SELECT extension,protocol,server_ip,dialplan_number,voicemail_id,status,fullname,messages,old_messages,user_group,is_webphone from phones $whereLOGadmin_viewable_groupsSQL $SQLorder $limitSQL";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$phones_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT extension,protocol,server_ip,dialplan_number,voicemail_id,status,fullname,messages,old_messages,user_group,is_webphone from phones $whereLOGadmin_viewable_groupsSQL $SQLorder $limitSQL";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $phones_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("PHONE LISTINGS").":\n";
-	if (strlen($next_prev_HTML) > 10)
-		{echo "<br><br><b> &nbsp; $next_prev_HTML</b><br>";}
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><a href=\"$PHP_SELF?ADD=10000000000&$EXTENlink\"><font size=1 color=white><B>"._QXZ("EXTEN")."</B></a> &nbsp; ";
-	echo "<a href=\"$PHP_SELF?ADD=10000000000&$EXTENNUMlink\"><font size=1 color=white><B>- # -</B></a></td>";
-	echo "<td><a href=\"$PHP_SELF?ADD=10000000000&$PROTOlink\"><font size=1 color=white><B>"._QXZ("PROTO")."</B></a></td>";
-	echo "<td><a href=\"$PHP_SELF?ADD=10000000000&$SERVERlink\"><font size=1 color=white><B>"._QXZ("SERVER")."</B></a></td>";
-	echo "<td colspan=2><font size=1 color=white><B>"._QXZ("DIAL PLAN")."</B></td>";
-	echo "<td><a href=\"$PHP_SELF?ADD=10000000000&$STATUSlink\"><font size=1 color=white><B>"._QXZ("STATUS")."</B></a></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("NAME")."</B></td>";
-	echo "<td colspan=2><font size=1 color=white><B>"._QXZ("VMAIL")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("LINKS")."</B></td></tr>\n";
-
-	$o=0;
-	while ($phones_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		$TEMPprotocol = $row[1];
-		if ( ($row[10] == 'Y') or ($row[10] == 'Y_API_LAUNCH') ) {$TEMPprotocol = "$row[1]<i>(w)</i>";}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=31111111111&extension=$row[0]&server_ip=$row[2]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=31111111111&extension=$row[0]&server_ip=$row[2]\"><font size=1 color=black>$row[0]</font></a></td>
-		<td><font size=1>$TEMPprotocol</td>
-		<td><font size=1>"._QXZ("$row[2]")."</td>
-		<td><font size=1>$row[3]</td>
-		<td><font size=1>$row[4]</td>
-		<td><font size=1>"._QXZ("$row[5]")."</td>
-		<td><font size=1>$row[6]</td>
-		<td><font size=1>$row[7]</td>
-		<td><font size=1>$row[8]</td>
-		<td><font size=1>"._QXZ("$row[9]")."</td>";
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=31111111111&extension=$row[0]&server_ip=$row[2]\">"._QXZ("MODIFY")."</a> | <a href=\"./phone_stats.php?extension=$row[0]&server_ip=$row[2]\">"._QXZ("STATS")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e2e8f0;'>";
+    echo "<div style='display:flex;align-items:center;gap:1rem;'>";
+    echo "<img src=\"images/icon_phones.png\" alt=\"Phones\" width=42 height=42>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("PHONE LISTINGS")."</h2>";
+    echo "</div>";
+    if (strlen($next_prev_HTML) > 10)
+        {echo "<div style='color:#64748b;font-size:0.9rem;'>$next_prev_HTML</div>";}
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'><a href=\"$PHP_SELF?ADD=10000000000&$EXTENlink\" style='color:#1e293b;text-decoration:none;' onmouseover=\"this.style.color='#3b82f6';\" onmouseout=\"this.style.color='#1e293b';\">"._QXZ("EXTEN")."</a> &nbsp; <a href=\"$PHP_SELF?ADD=10000000000&$EXTENNUMlink\" style='color:#1e293b;text-decoration:none;' onmouseover=\"this.style.color='#3b82f6';\" onmouseout=\"this.style.color='#1e293b';\"># </a></th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'><a href=\"$PHP_SELF?ADD=10000000000&$PROTOlink\" style='color:#1e293b;text-decoration:none;' onmouseover=\"this.style.color='#3b82f6';\" onmouseout=\"this.style.color='#1e293b';\">"._QXZ("PROTO")."</a></th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'><a href=\"$PHP_SELF?ADD=10000000000&$SERVERlink\" style='color:#1e293b;text-decoration:none;' onmouseover=\"this.style.color='#3b82f6';\" onmouseout=\"this.style.color='#1e293b';\">"._QXZ("SERVER")."</a></th>";
+    echo "<th colspan=2 style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("DIAL PLAN")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'><a href=\"$PHP_SELF?ADD=10000000000&$STATUSlink\" style='color:#1e293b;text-decoration:none;' onmouseover=\"this.style.color='#3b82f6';\" onmouseout=\"this.style.color='#1e293b';\">"._QXZ("STATUS")."</a></th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("NAME")."</th>";
+    echo "<th colspan=2 style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("VMAIL")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("LINKS")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($phones_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';\" onmouseout=\"this.style.background='$bg_color';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=31111111111&extension=$row[0]&server_ip=$row[2]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        $TEMPprotocol = $row[1];
+        if ( ($row[10] == 'Y') or ($row[10] == 'Y_API_LAUNCH') ) {$TEMPprotocol = "$row[1]<span style='color:#3b82f6;font-style:italic;'>(w)</span>";}
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=31111111111&extension=$row[0]&server_ip=$row[2]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;font-family:monospace;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-weight:600;'>$TEMPprotocol</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-family:monospace;'>"._QXZ("$row[2]")."</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>$row[3]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>$row[4]</td>";
+        
+        // Status Badge
+        $status_val = $row[5];
+        if ($status_val == 'ACTIVE') {
+            $status_bg = '#dcfce7'; $status_color = '#166534';
+        } elseif ($status_val == 'INACTIVE') {
+            $status_bg = '#fee2e2'; $status_color = '#991b1b';
+        } else {
+            $status_bg = '#f3f4f6'; $status_color = '#374151';
+        }
+        echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$status_bg;color:$status_color;border-radius:9999px;font-size:0.75rem;font-weight:700;'>"._QXZ("$status_val")."</span></td>";
+        
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-weight:500;'>$row[6]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>$row[7]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>$row[8]</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;'>"._QXZ("$row[9]")."</td>";
+        echo "<td style='padding:1rem;text-align:center;white-space:nowrap;'><a href=\"$PHP_SELF?ADD=31111111111&extension=$row[0]&server_ip=$row[2]\" style='color:#3b82f6;text-decoration:none;font-size:0.85rem;font-weight:600;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("MODIFY")."</a> <span style='color:#cbd5e1;'>|</span> <a href=\"./phone_stats.php?extension=$row[0]&server_ip=$row[2]\" style='color:#10b981;text-decoration:none;font-size:0.85rem;font-weight:600;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">"._QXZ("STATS")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    
+    if ($phones_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>📞</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No Phones Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no phones to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>\n";
+    }
 
 
 ######################
