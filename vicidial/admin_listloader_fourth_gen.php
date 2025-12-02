@@ -3695,12 +3695,8 @@ if (($leadfile) && ($LF_path))
         print "  <input type=hidden name=DB value=\"$DB\">\r\n";
         print "</div>
                 <div class='button-group'>
-                    <button type='submit' name='OK_to_process' class='btn btn-primary'>
-                        <i class='material-icons'>check_circle</i> "._QXZ("OK TO PROCESS")."
-                    </button>
-                    <button type='button' onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" class='btn btn-secondary'>
-                        <i class='material-icons'>refresh</i> "._QXZ("START OVER")."
-                    </button>
+                    <input type='submit' name='OK_to_process' value='"._QXZ("OK TO PROCESS")."' class='btn btn-primary'>
+                    <input type='button' onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" value=\""._QXZ("START OVER")."\" name='reload_page' class='btn btn-secondary'>
                 </div>
             </div>";
 
