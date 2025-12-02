@@ -11266,115 +11266,283 @@ if ($ADD==11111111)
 ######################
 # ADD=111111111 display the ADD NEW CALL TIME SCREEN
 ######################
+######################
+# ADD=111111111 display the ADD NEW CALL TIME SCREEN
+######################
 if ($ADD==111111111)
-	{
-	if ($LOGmodify_call_times==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_calltimes.png\" alt=\"Call Times\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGmodify_call_times==1)
+        {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_calltimes.png\" alt=\"Call Times\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD NEW CALL TIME")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW CALL TIME")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=211111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Time ID").": </td><td align=left><input type=text name=call_time_id size=12 maxlength=10> ("._QXZ("no spaces or punctuation").")$NWB#call_times-call_time_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Time Name").": </td><td align=left><input type=text name=call_time_name size=30 maxlength=30> ("._QXZ("short description of the call time").")$NWB#call_times-call_time_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Time Comments").": </td><td align=left><input type=text name=call_time_comments size=50 maxlength=255> $NWB#call_times-call_time_comments$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#call_times-user_group$NWE</td></tr>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=211111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Call Time ID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Call Time ID").":</label>";
+        echo "<div><input type=text name=call_time_id size=12 maxlength=10 style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("no spaces or punctuation").")$NWB#call_times-call_time_id$NWE</div></div>";
+        echo "</div>";
+        
+        // Call Time Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Call Time Name").":</label>";
+        echo "<div><input type=text name=call_time_name size=30 maxlength=30 style='width:100%;max-width:500px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("short description of the call time").")$NWB#call_times-call_time_name$NWE</div></div>";
+        echo "</div>";
+        
+        // Call Time Comments
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Call Time Comments").":</label>";
+        echo "<div><input type=text name=call_time_comments size=50 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'> $NWB#call_times-call_time_comments$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#call_times-user_group$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Info Message
+        echo "<div style='margin-top:2rem;padding:1.5rem;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;'>";
+        echo "<div style='display:flex;align-items:center;gap:0.5rem;'>";
+        echo "<span style='font-size:1.5rem;'>ℹ️</span>";
+        echo "<p style='color:#075985;margin:0;font-weight:600;'>"._QXZ("Day and time options will appear once you have created the Call Time Definition")."</p>";
+        echo "</div>";
+        echo "</div>";
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Day and time options will appear once you have created the Call Time Definition")."</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
 
 
 ######################
 # ADD=1111111111 display the ADD NEW STATE CALL TIME SCREEN
 ######################
 if ($ADD==1111111111)
-	{
-	if ($LOGmodify_call_times==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_calltimes.png\" alt=\"State Call Times\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGmodify_call_times==1)
+        {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_calltimes.png\" alt=\"State Call Times\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD NEW STATE CALL TIME")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW STATE CALL TIME")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=2111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("State Call Time ID").": </td><td align=left><input type=text name=call_time_id size=12 maxlength=10> ("._QXZ("no spaces or punctuation").")$NWB#call_times-call_time_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("State Call Time State").": </td><td align=left><input type=text name=state_call_time_state size=4 maxlength=2> ("._QXZ("no spaces or punctuation").")$NWB#call_times-state_call_time_state$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("State Call Time Name").": </td><td align=left><input type=text name=call_time_name size=30 maxlength=30> ("._QXZ("short description of the call time").")$NWB#call_times-call_time_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("State Call Time Comments").": </td><td align=left><input type=text name=call_time_comments size=50 maxlength=255> $NWB#call_times-call_time_comments$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#call_times-user_group$NWE</td></tr>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=2111111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // State Call Time ID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("State Call Time ID").":</label>";
+        echo "<div><input type=text name=call_time_id size=12 maxlength=10 style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("no spaces or punctuation").")$NWB#call_times-call_time_id$NWE</div></div>";
+        echo "</div>";
+        
+        // State Call Time State
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("State Call Time State").":</label>";
+        echo "<div><input type=text name=state_call_time_state size=4 maxlength=2 style='width:100px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:700;text-transform:uppercase;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("no spaces or punctuation").")$NWB#call_times-state_call_time_state$NWE</div></div>";
+        echo "</div>";
+        
+        // State Call Time Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("State Call Time Name").":</label>";
+        echo "<div><input type=text name=call_time_name size=30 maxlength=30 style='width:100%;max-width:500px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("short description of the call time").")$NWB#call_times-call_time_name$NWE</div></div>";
+        echo "</div>";
+        
+        // State Call Time Comments
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("State Call Time Comments").":</label>";
+        echo "<div><input type=text name=call_time_comments size=50 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'> $NWB#call_times-call_time_comments$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#call_times-user_group$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Info Message
+        echo "<div style='margin-top:2rem;padding:1.5rem;background:#e0f2fe;border-left:4px solid #0284c7;border-radius:6px;'>";
+        echo "<div style='display:flex;align-items:center;gap:0.5rem;'>";
+        echo "<span style='font-size:1.5rem;'>ℹ️</span>";
+        echo "<p style='color:#075985;margin:0;font-weight:600;'>"._QXZ("Day and time options will appear once you have created the Call Time Definition")."</p>";
+        echo "</div>";
+        echo "</div>";
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Day and time options will appear once you have created the Call Time Definition")."</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
 
 
 ######################
 # ADD=1211111111 display the ADD NEW HOLIDAY SCREEN
 ######################
 if ($ADD==1211111111)
-	{
-	if ($LOGmodify_call_times==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_calltimes.png\" alt=\"Holidays\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGmodify_call_times==1)
+        {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<div style='font-size:2.5rem;'>🎄</div>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD NEW HOLIDAY")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW STATE CALL TIME")."<form action=$PHP_SELF method=POST name=vicidial_report id=vicidial_report>\n";
-		echo "<input type=hidden name=ADD value=2211111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Holiday ID").": </td><td align=left><input type=text name=holiday_id size=20 maxlength=30> ("._QXZ("no spaces or punctuation").")$NWB#call_times-holiday_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Holiday Name").": </td><td align=left><input type=text name=holiday_name size=50 maxlength=100> ("._QXZ("short description of the holiday").")$NWB#call_times-holiday_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Holiday Comments").": </td><td align=left><input type=text name=holiday_comments size=50 maxlength=255> $NWB#call_times-holiday_comments$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Holiday Date").": </td><td align=left><input type=text name=holiday_date id=holiday_date size=10 maxlength=10> $NWB#call_times-holiday_date$NWE\n";
-		echo "<script language=\"JavaScript\">\n";
-		echo "var o_cal = new tcal ({\n";
-		echo "	// form name\n";
-		echo "	'formname': 'vicidial_report',\n";
-		echo "	// input name\n";
-		echo "	'controlname': 'holiday_date'\n";
-		echo "});\n";
-		echo "o_cal.a_tpl.yearscroll = false;\n";
-		echo "// o_cal.a_tpl.weekstart = 1; // Monday week start\n";
-		echo "</script></td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#call_times-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2>"._QXZ("Day and time options will appear once you have created the Holiday Definition")."</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST name=vicidial_report id=vicidial_report>\n";
+        echo "<input type=hidden name=ADD value=2211111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Holiday ID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Holiday ID").":</label>";
+        echo "<div><input type=text name=holiday_id size=20 maxlength=30 style='width:100%;max-width:400px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("no spaces or punctuation").")$NWB#call_times-holiday_id$NWE</div></div>";
+        echo "</div>";
+        
+        // Holiday Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Holiday Name").":</label>";
+        echo "<div><input type=text name=holiday_name size=50 maxlength=100 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("short description of the holiday").")$NWB#call_times-holiday_name$NWE</div></div>";
+        echo "</div>";
+        
+        // Holiday Comments
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Holiday Comments").":</label>";
+        echo "<div><input type=text name=holiday_comments size=50 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'> $NWB#call_times-holiday_comments$NWE</div>";
+        echo "</div>";
+        
+        // Holiday Date with Calendar Picker
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Holiday Date").":</label>";
+        echo "<div><div style='position:relative;'><input type=text name=holiday_date id=holiday_date size=10 maxlength=10 style='width:200px;padding:0.75rem 0.75rem 0.75rem 3rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><span style='position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:1.2rem;'>📅</span></div> $NWB#call_times-holiday_date$NWE\n";
+        echo "<script language=\"JavaScript\">\n";
+        echo "var o_cal = new tcal ({\n";
+        echo "  // form name\n";
+        echo "  'formname': 'vicidial_report',\n";
+        echo "  // input name\n";
+        echo "  'controlname': 'holiday_date'\n";
+        echo "});\n";
+        echo "o_cal.a_tpl.yearscroll = false;\n";
+        echo "// o_cal.a_tpl.weekstart = 1; // Monday week start\n";
+        echo "</script></div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#call_times-user_group$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Info Message
+        echo "<div style='margin-top:2rem;padding:1.5rem;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;'>";
+        echo "<div style='display:flex;align-items:center;gap:0.5rem;'>";
+        echo "<span style='font-size:1.5rem;'>ℹ️</span>";
+        echo "<p style='color:#92400e;margin:0;font-weight:600;'>"._QXZ("Day and time options will appear once you have created the Holiday Definition")."</p>";
+        echo "</div>";
+        echo "</div>";
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 ######################
 # ADD=131111111 display the ADD NEW SHIFT SCREEN
