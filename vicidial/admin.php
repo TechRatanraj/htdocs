@@ -12396,90 +12396,158 @@ if ($ADD==13111111111)
 ######################
 # ADD=111111111111 display the ADD NEW SERVER SCREEN
 ######################
-if ($ADD==111111111111)
-    {
-    if ($LOGmodify_servers==1)
-        {
-        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>\n";
-        
-        // Main Card
-        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
-        
-        // Header Section
-        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
-        echo "<img src=\"images/icon_servers.png\" alt=\"Servers\" width=42 height=42>";
-        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD A NEW SERVER")."</h2>";
-        echo "</div>";
 
-        // Form Section
-        echo "<div style='padding:2rem;'>";
-        echo "<form action=$PHP_SELF method=POST>\n";
-        echo "<input type=hidden name=ADD value=211111111111>\n";
-        
-        // Form Fields Container
-        echo "<div style='display:grid;gap:1.5rem;'>";
-        
-        // Server ID
-        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
-        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server ID").":</label>";
-        echo "<div><input type=text name=server_id size=10 maxlength=10 style='width:200px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#servers-server_id$NWE</div>";
-        echo "</div>";
-        
-        // Server Description
-        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
-        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server Description").":</label>";
-        echo "<div><input type=text name=server_description size=30 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#servers-server_description$NWE</div>";
-        echo "</div>";
-        
-        // Server IP Address
-        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
-        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP Address").":</label>";
-        echo "<div><input type=text name=server_ip size=20 maxlength=15 style='width:250px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#servers-server_ip$NWE</div>";
-        echo "</div>";
-        
-        // Active
-        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
-        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active").":</label>";
-        echo "<div><select size=1 name=active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option></select>$NWB#servers-active$NWE</div>";
-        echo "</div>";
-        
-        // Asterisk Version
-        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
-        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Asterisk Version").":</label>";
-        echo "<div><input type=text name=asterisk_version size=20 maxlength=20 style='width:250px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#servers-asterisk_version$NWE</div>";
-        echo "</div>";
-        
-        // Admin User Group
-        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
-        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
-        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
-        echo "$UUgroups_list";
-        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-        echo "</select>$NWB#servers-user_group$NWE</div>";
-        echo "</div>";
-        
-        echo "</div>"; // End form fields grid
-        
-        // Submit Button
-        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
-        echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
-        echo "</div>";
-        
-        echo "</form>";
-        echo "</div>"; // End padding
-        echo "</div>"; // End card
-        echo "</div>\n"; // End container
-        }
-    else
-        {
-        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
-        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
-        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
-        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
-        echo "</div>";
+if ($ADD == 111111111111) {
+    if ($LOGmodify_servers == 1) {
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Server</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box;">
+    <div style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+        <div style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="background-color: #2c3e50; color: white; padding: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <i class="fas fa-server fa-2x"></i>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Add New Server</h2>
+            </div>
+            
+            <div style="padding: 2rem;">
+                <div style="padding: 1rem; margin-bottom: 1.5rem; border-radius: 8px; display: flex; align-items: center; background-color: #d9edf7; color: #31708f; border-left: 4px solid #3498db;">
+                    <i class="fas fa-info-circle" style="margin-right: 10px; font-size: 1.2rem;"></i>
+                    <span>Fill in the details below to add a new server to the system.</span>
+                </div>
+                
+                <form action="<?php echo $PHP_SELF; ?>" method="POST" id="addServerForm">
+                    <input type="hidden" name="ADD" value="211111111111">
+                    
+                    <div style="display: flex; gap: 1.5rem;">
+                        <div style="flex: 1;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <label for="server_id" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2c3e50;">Server ID <span style="color: #e74c3c;">*</span></label>
+                                <input type="text" id="server_id" name="server_id" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease;" required maxlength="10" pattern="[a-zA-Z0-9]+" title="Alphanumeric characters only">
+                                <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">Unique identifier for the server (alphanumeric only)</div>
+                            </div>
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <label for="server_ip" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2c3e50;">Server IP Address <span style="color: #e74c3c;">*</span></label>
+                                <input type="text" id="server_ip" name="server_ip" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease;" required maxlength="15" pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" title="Valid IP address format (e.g., 192.168.1.1)">
+                                <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">IPv4 address of the server</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label for="server_description" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2c3e50;">Server Description</label>
+                        <input type="text" id="server_description" name="server_description" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease;" maxlength="255">
+                        <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">Brief description of the server's purpose or location</div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1.5rem;">
+                        <div style="flex: 1;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <label for="active" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2c3e50;">Active Status</label>
+                                <select id="active" name="active" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease; cursor: pointer;">
+                                    <option value="Y">Active</option>
+                                    <option value="N">Inactive</option>
+                                </select>
+                                <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">Whether this server is currently active</div>
+                            </div>
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <label for="asterisk_version" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2c3e50;">Asterisk Version</label>
+                                <input type="text" id="asterisk_version" name="asterisk_version" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease;" maxlength="20" placeholder="e.g., 13.21.0">
+                                <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">Version of Asterisk installed on this server</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label for="user_group" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2c3e50;">Admin User Group</label>
+                        <select id="user_group" name="user_group" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; transition: all 0.3s ease; cursor: pointer;">
+                            <?php echo $UUgroups_list; ?>
+                            <option value="---ALL---" selected>All Admin User Groups</option>
+                        </select>
+                        <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">User group that can manage this server</div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee;">
+                        <button type="submit" name="submit" style="display: inline-block; padding: 0.75rem 2rem; background-color: #2ecc71; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none; box-shadow: 0 4px 6px rgba(46, 204, 113, 0.3); transition: all 0.3s ease;">
+                            <i class="fas fa-save"></i> Add Server
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('addServerForm').addEventListener('submit', function(e) {
+            const serverId = document.getElementById('server_id').value.trim();
+            const serverIp = document.getElementById('server_ip').value.trim();
+            
+            if (!serverId) {
+                alert('Please enter a Server ID');
+                e.preventDefault();
+                return false;
+            }
+            
+            if (!serverIp) {
+                alert('Please enter a Server IP Address');
+                e.preventDefault();
+                return false;
+            }
+            
+            // Basic IP validation
+            const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            if (!ipRegex.test(serverIp)) {
+                alert('Please enter a valid IP address');
+                e.preventDefault();
+                return false;
+            }
+            
+            return true;
+        });
+    </script>
+</body>
+</html>
+<?php
+    } else {
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+    <div style="max-width: 600px; margin: 4rem auto; background-color: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem; color: #e74c3c;">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h2 style="color: #e74c3c; margin-bottom: 1rem;">Access Denied</h2>
+        <p style="color: #64748b; margin-bottom: 1.5rem;">You do not have permission to view this page</p>
+        <a href="javascript:history.back()" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease;">Go Back</a>
+    </div>
+</body>
+</html>
+<?php
         exit;
-        }
     }
+}
+
 
 ######################
 # ADD=131111111111 display the ADD NEW CONF TEMPLATE SCREEN
