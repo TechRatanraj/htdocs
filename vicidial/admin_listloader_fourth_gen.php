@@ -2043,7 +2043,7 @@ if (($leadfile) && ($LF_path))
                         $phone_number = preg_replace("/^$SSweb_loader_phone_strip/",'',$phone_number);
                         }
 
-
+						
 					##### Check for duplicate phone numbers in vicidial_list table for all lists in a campaign #####
                     if (preg_match("/DUPCAMP/i",$dupcheck))
                         {
@@ -2449,8 +2449,9 @@ if (($leadfile) && ($LF_path))
                                 if ( ($webroot_writable > 0) and ($DB>0) )
                                     {fwrite($stmt_file, $custom_ins_stmt."\r\n");}
                                 }
-						}
-							//
+
+								/*								
+							} 
 						else 
 							{
 							$multistmt .= "('','$entry_date','$modify_date','$status','$user','$vendor_lead_code','$source_id','$list_id','$gmt_offset','$called_since_last_reset','$phone_code','$phone_number','$title','$first_name','$middle_initial','$last_name','$address1','$address2','$address3','$city','$state','$province','$postal_code','$country_code','$gender','$date_of_birth','$alt_phone','$email','$security_phrase','$comments',0,'2008-01-01 00:00:00','$rank','$owner','0'),";
