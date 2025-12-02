@@ -12485,33 +12485,78 @@ if ($ADD==111111111111)
 # ADD=131111111111 display the ADD NEW CONF TEMPLATE SCREEN
 ######################
 if ($ADD==131111111111)
-	{
-	if ($LOGmodify_servers==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_templates.png\" alt=\"Templates\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGmodify_servers==1)
+        {
+        echo "<div style='max-width:900px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_templates.png\" alt=\"Templates\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD NEW CONF TEMPLATE")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW CONF TEMPLATE")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=231111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template ID").": </td><td align=left><input type=text name=template_id size=15 maxlength=15>$NWB#conf_templates-template_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template Name").": </td><td align=left><input type=text name=template_name size=40 maxlength=50>$NWB#conf_templates-template_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#conf_templates-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template Contents").": </td><td align=left><TEXTAREA NAME=template_contents ROWS=12 COLS=70></TEXTAREA> $NWB#conf_templates-template_contents$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=231111111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Template ID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Template ID").":</label>";
+        echo "<div><input type=text name=template_id size=15 maxlength=15 style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#conf_templates-template_id$NWE</div>";
+        echo "</div>";
+        
+        // Template Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Template Name").":</label>";
+        echo "<div><input type=text name=template_name size=40 maxlength=50 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#conf_templates-template_name$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#conf_templates-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Template Contents - Full Width
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #8b5cf6;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>📝</span>"._QXZ("Template Contents").":</label>";
+        echo "<textarea name=template_contents rows=12 cols=70 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:300px;' placeholder='"._QXZ("Enter template configuration here...")."'></textarea>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#conf_templates-template_contents$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 ######################
 # ADD=141111111111 display the ADD NEW CARRIER SCREEN
@@ -48997,121 +49042,222 @@ if ($ADD==311111111111)
 # ADD=331111111111 modify conf template record in the system
 ######################
 if ($ADD==331111111111)
-	{
-	if ($LOGast_admin_access==1)
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=331111111111&template_id=$template_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGast_admin_access==1)
+        {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
+            {
+            $modify_url = "$PHP_SELF?ADD=331111111111&template_id=$template_id";
+            $modify_footer_refresh=1;
+            }
 
-		$stmt="SELECT template_id,template_name,template_contents,user_group from vicidial_conf_templates where template_id='$template_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$template_id =			$row[0];
-		$template_name =		$row[1];
-		$template_contents =	$row[2];
-		$user_group =			$row[3];
+        $stmt="SELECT template_id,template_name,template_contents,user_group from vicidial_conf_templates where template_id='$template_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $template_id =          $row[0];
+        $template_name =        $row[1];
+        $template_contents =    $row[2];
+        $user_group =           $row[3];
 
-		echo "<br>"._QXZ("MODIFY A CONF TEMPLATE RECORD").": $row[0]<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=431111111111>\n";
-		echo "<input type=hidden name=template_id value=\"$template_id\">\n";
+        echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<div style='font-size:2.5rem;'>📋</div>";
+        echo "<div><h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("MODIFY A CONF TEMPLATE RECORD")."</h2><p style='color:#64748b;margin:0.25rem 0 0 0;font-size:0.9rem;'>$row[0]</p></div>";
+        echo "</div>";
 
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template ID").": </td><td align=left><B>$template_id</B></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template Name").": </td><td align=left><input type=text name=template_name size=40 maxlength=50 value=\"$template_name\">$NWB#conf_templates-template_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">$user_group</option>\n";
-		echo "</select>$NWB#conf_templates-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template Contents").": </td><td align=left><TEXTAREA NAME=template_contents ROWS=12 COLS=70>$template_contents</TEXTAREA> $NWB#conf_templates-template_contents$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=431111111111>\n";
+        echo "<input type=hidden name=template_id value=\"$template_id\">\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Template ID (Read-only)
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Template ID").":</label>";
+        echo "<div style='color:#000000;font-weight:700;font-size:1rem;font-family:monospace;'>$template_id</div>";
+        echo "</div>";
+        
+        // Template Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Template Name").":</label>";
+        echo "<div><input type=text name=template_name size=40 maxlength=50 value=\"$template_name\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#conf_templates-template_name$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"$user_group\">$user_group</option>\n";
+        echo "</select>$NWB#conf_templates-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Template Contents - Full Width
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #8b5cf6;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>📝</span>"._QXZ("Template Contents").":</label>";
+        echo "<textarea name=template_contents rows=12 cols=70 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:300px;'>$template_contents</textarea>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#conf_templates-template_contents$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End main card
 
-		echo "<center><b>\n";
+        // Phones Using This Template
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📞</span>"._QXZ("PHONES USING THIS CONF TEMPLATE")."</h3>";
+        echo "</div>";
 
-		### list of phones using this conf template
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("PHONES USING THIS CONF TEMPLATE").":</b><br>\n";
-		echo "<TABLE width=500 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("EXTENSION")."</td><td>"._QXZ("NAME")."</td><td>"._QXZ("SERVER")."</td><td>"._QXZ("ACTIVE")."</td></tr>\n";
+        $active_phones = 0;
+        $inactive_phones = 0;
+        $stmt="SELECT extension,active,fullname,server_ip from phones where template_id='$template_id' $LOGadmin_viewable_groupsSQL;";
+        $rsltx=mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rsltx);
 
-		$active_phones = 0;
-		$inactive_phones = 0;
-		$stmt="SELECT extension,active,fullname,server_ip from phones where template_id='$template_id' $LOGadmin_viewable_groupsSQL;";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rsltx);
-		$camp_lists='';
+        if ($lists_to_print > 0) {
+            echo "<div style='overflow-x:auto;'>";
+            echo "<table style='width:100%;border-collapse:collapse;'>\n";
+            echo "<thead><tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("EXTENSION")."</th>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("NAME")."</th>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("SERVER")."</th>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("ACTIVE")."</th>";
+            echo "</tr></thead><tbody>";
 
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			if (preg_match('/Y/', $rowx[1])) {$active_phones++;   $camp_lists .= "'$rowx[0]',";}
-			if (preg_match('/N/', $rowx[1])) {$inactive_phones++;}
+            $o=0;
+            while ($lists_to_print > $o) 
+                {
+                $rowx=mysqli_fetch_row($rsltx);
+                $o++;
+                if (preg_match('/Y/', $rowx[1])) {$active_phones++;}
+                if (preg_match('/N/', $rowx[1])) {$inactive_phones++;}
 
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+                if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+                    {$bg_color='#ffffff';} 
+                else
+                    {$bg_color='#f8fafc';}
 
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=31111111111&extension=$rowx[0]&server_ip=$rowx[3]\">$rowx[0]</a></td><td><font size=1>$rowx[2]</td><td><font size=1>$rowx[3]</td><td><font size=1>$rowx[1]</td></tr>\n";
-			}
+                $active_val = $rowx[1];
+                if ($active_val == 'Y') {
+                    $status_bg = '#dcfce7'; $status_color = '#166534';
+                } else {
+                    $status_bg = '#fee2e2'; $status_color = '#991b1b';
+                }
 
-		echo "</table></center><br>\n";
+                echo "<tr style='background:$bg_color;border-bottom:1px solid #e2e8f0;'>";
+                echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=31111111111&extension=$rowx[0]&server_ip=$rowx[3]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-family:monospace;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$rowx[0]</a></td>";
+                echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;'>$rowx[2]</td>";
+                echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-family:monospace;'>$rowx[3]</td>";
+                echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$status_bg;color:$status_color;border-radius:9999px;font-size:0.75rem;font-weight:700;'>$rowx[1]</span></td>";
+                echo "</tr>\n";
+                }
 
-		### list of carriers using this conf template
-		echo "<center>\n";
-		echo "<br><b>"._QXZ("CARRIERS USING THIS CONF TEMPLATE").":</b><br>\n";
-		echo "<TABLE width=500 cellspacing=3>\n";
-		echo "<tr><td>"._QXZ("CARRIER")."</td><td>"._QXZ("NAME")."</td><td>"._QXZ("SERVER")."</td><td>"._QXZ("ACTIVE")."</td></tr>\n";
+            echo "</tbody></table></div>";
+        } else {
+            echo "<div style='padding:3rem;text-align:center;color:#94a3b8;'>"._QXZ("No phones using this template")."</div>";
+        }
+        
+        echo "</div>";
 
-		$active_phones = 0;
-		$inactive_phones = 0;
-		$stmt="SELECT carrier_id,active,carrier_name,server_ip from vicidial_server_carriers where template_id='$template_id' $LOGadmin_viewable_groupsSQL;";
-		$rsltx=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rsltx);
-		$camp_lists='';
+        // Carriers Using This Template
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📡</span>"._QXZ("CARRIERS USING THIS CONF TEMPLATE")."</h3>";
+        echo "</div>";
 
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rsltx);
-			$o++;
-			if (preg_match('/Y/', $rowx[1])) {$active_phones++;   $camp_lists .= "'$rowx[0]',";}
-			if (preg_match('/N/', $rowx[1])) {$inactive_phones++;}
+        $active_phones = 0;
+        $inactive_phones = 0;
+        $stmt="SELECT carrier_id,active,carrier_name,server_ip from vicidial_server_carriers where template_id='$template_id' $LOGadmin_viewable_groupsSQL;";
+        $rsltx=mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rsltx);
 
-			if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-				{$bgcolor='bgcolor="#'. $SSstd_row2_background .'"';} 
-			else
-				{$bgcolor='bgcolor="#'. $SSstd_row1_background .'"';}
+        if ($lists_to_print > 0) {
+            echo "<div style='overflow-x:auto;'>";
+            echo "<table style='width:100%;border-collapse:collapse;'>\n";
+            echo "<thead><tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("CARRIER")."</th>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("NAME")."</th>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("SERVER")."</th>";
+            echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;'>"._QXZ("ACTIVE")."</th>";
+            echo "</tr></thead><tbody>";
 
-			echo "<tr $bgcolor><td><font size=1><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$rowx[0]\">$rowx[0]</a></td><td><font size=1>$rowx[2]</td><td><font size=1>$rowx[3]</td><td><font size=1>$rowx[1]</td></tr>\n";
-			}
+            $o=0;
+            while ($lists_to_print > $o) 
+                {
+                $rowx=mysqli_fetch_row($rsltx);
+                $o++;
+                if (preg_match('/Y/', $rowx[1])) {$active_phones++;}
+                if (preg_match('/N/', $rowx[1])) {$inactive_phones++;}
 
-		echo "</table></center><br>\n";
+                if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+                    {$bg_color='#ffffff';} 
+                else
+                    {$bg_color='#f8fafc';}
 
+                $active_val = $rowx[1];
+                if ($active_val == 'Y') {
+                    $status_bg = '#dcfce7'; $status_color = '#166534';
+                } else {
+                    $status_bg = '#fee2e2'; $status_color = '#991b1b';
+                }
 
+                echo "<tr style='background:$bg_color;border-bottom:1px solid #e2e8f0;'>";
+                echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=341111111111&carrier_id=$rowx[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-family:monospace;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$rowx[0]</a></td>";
+                echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;'>$rowx[2]</td>";
+                echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-family:monospace;'>$rowx[3]</td>";
+                echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$status_bg;color:$status_color;border-radius:9999px;font-size:0.75rem;font-weight:700;'>$rowx[1]</span></td>";
+                echo "</tr>\n";
+                }
 
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=531111111111&template_id=$template_id&template_name=$template_name\">"._QXZ("DELETE THIS CONF TEMPLATE")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CONFTEMPLATES&stage=$template_id\">"._QXZ("Click here to see Admin changes to this conf template")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+            echo "</tbody></table></div>";
+        } else {
+            echo "<div style='padding:3rem;text-align:center;color:#94a3b8;'>"._QXZ("No carriers using this template")."</div>";
+        }
+        
+        echo "</div>";
+
+        // Action Links
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;text-align:center;'>";
+        
+        if ($LOGast_delete_phones > 0)
+            {
+            echo "<a href=\"$PHP_SELF?ADD=531111111111&template_id=$template_id&template_name=$template_name\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(239,68,68,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.3)';\">"._QXZ("DELETE THIS CONF TEMPLATE")."</a>\n";
+            }
+        if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            {
+            echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CONFTEMPLATES&stage=$template_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(59,130,246,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';\">"._QXZ("Click here to see Admin changes to this conf template")."</a>\n";
+            }
+        
+        echo "</div>";
+        
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 
 ######################
