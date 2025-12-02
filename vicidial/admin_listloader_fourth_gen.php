@@ -513,7 +513,7 @@ echo "<div class=\"admin-container\">\n";
 
 // Include header
  $short_header = 1;
-require("admin_header.php");
+//require("admin_header.php");
 
 // Check NANPA options
 if ((preg_match("/NANPA/", $usacan_check)) or (preg_match("/NANPA/", $tz_method))) {
