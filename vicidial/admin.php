@@ -53604,10 +53604,10 @@ if ($ADD==1000000)
 
     echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
     
-    // Header Section
-    echo "<div style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);padding:2rem;display:flex;align-items:center;gap:1rem;'>";
-    echo "<img src=\"images/icon_black_scripts.png\" alt=\"Scripts\" width=42 height=42 style='filter:brightness(0) invert(1);'>";
-    echo "<h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:600;'>"._QXZ("SCRIPTS LISTINGS")."</h2>";
+    // Header Section - WHITE BACKGROUND, BLACK TEXT
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+    echo "<img src=\"images/icon_black_scripts.png\" alt=\"Scripts\" width=42 height=42>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("SCRIPTS LISTINGS")."</h2>";
     echo "</div>";
     
     // Table Container
@@ -53617,12 +53617,12 @@ if ($ADD==1000000)
     // Table Header
     echo "<thead>";
     echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
-    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SCRIPT ID")."</th>";
-    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SCRIPT NAME")."</th>";
-    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ACTIVE")."</th>";
-    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
-    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("COLOR")."</th>";
-    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SCRIPT ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SCRIPT NAME")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ACTIVE")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("COLOR")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
     echo "</tr>";
     echo "</thead>\n";
     
@@ -53655,17 +53655,17 @@ if ($ADD==1000000)
         // Script ID
         echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=3111111&script_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
         
-        // Script Name
-        echo "<td style='padding:1rem;color:#334155;font-size:0.9rem;font-weight:500;'>$row[1]</td>";
+        // Script Name - BLACK TEXT
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:600;'>$row[1]</td>";
         
         // Active Status
         $active_badge_color = ($row[2] == 'Y') ? '#10b981' : '#ef4444';
         $active_badge_bg = ($row[2] == 'Y') ? '#d1fae5' : '#fee2e2';
         echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$active_badge_bg;color:$active_badge_color;border-radius:9999px;font-size:0.75rem;font-weight:600;'>"._QXZ("$row[2]")."</span></td>";
         
-        // Admin Group
+        // Admin Group - BLACK TEXT
         $group_text = preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3];
-        echo "<td style='padding:1rem;color:#64748b;font-size:0.85rem;'>$group_text</td>";
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-weight:500;'>$group_text</td>";
         
         // Color Swatch
         echo "<td style='padding:1rem;'><div style='width:40px;height:24px;background:$row[4];border:2px solid #e2e8f0;border-radius:6px;box-shadow:0 2px 4px rgba(0,0,0,0.1);'></div></td>";
