@@ -1428,7 +1428,28 @@ else
     <?php
     } // End of else block for $OK_to_process
 
+?>
+<script>
+        // Basic JavaScript for interactivity, can be expanded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Add confirmation before processing
+            const processButton = document.querySelector('button[type="submit"][name="OK_to_process"]');
+            if (processButton) {
+                processButton.addEventListener('click', function(e) {
+                    // You can add a confirmation dialog here if needed
+                    // if (!confirm('Are you sure you want to process this file with these settings?')) {
+                    //     e.preventDefault();
+                    // }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
 
+
+
+<?php
 
                 
                 
