@@ -12561,116 +12561,247 @@ if ($ADD==131111111111)
 ######################
 # ADD=141111111111 display the ADD NEW CARRIER SCREEN
 ######################
+######################
+# ADD=141111111111 display the ADD NEW CARRIER SCREEN
+######################
 if ($ADD==141111111111)
-	{
-	if ( ( ($LOGmodify_servers==1) or ($LOGmodify_carriers==1) ) and ($x_ra_carrier < 1) )
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_carriers.png\" alt=\"Carriers\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ( ( ($LOGmodify_servers==1) or ($LOGmodify_carriers==1) ) and ($x_ra_carrier < 1) )
+        {
+        echo "<div style='max-width:1000px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_carriers.png\" alt=\"Carriers\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD NEW CARRIER")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD NEW CARRIER")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=241111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=241111111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Carrier ID
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier ID").":</label>";
+        echo "<div><input type=text name=carrier_id size=15 maxlength=15 style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#server_carriers-carrier_id$NWE</div>";
+        echo "</div>";
+        
+        // Carrier Name
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier Name").":</label>";
+        echo "<div><input type=text name=carrier_name size=40 maxlength=50 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#server_carriers-carrier_name$NWE</div>";
+        echo "</div>";
+        
+        // Carrier Description
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier Description").":</label>";
+        echo "<div><input type=text name=carrier_description size=70 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#server_carriers-carrier_description$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#server_carriers-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Registration String
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Registration String").":</label>";
+        echo "<div><input type=text name=registration_string size=50 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#server_carriers-registration_string$NWE</div>";
+        echo "</div>";
+        
+        // Template ID
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Template ID").":</label>";
+        echo "<div><select size=1 name=template_id style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        $stmt="SELECT template_id,template_name from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $templates_to_print = mysqli_num_rows($rslt);
+        $templates_list='<option value=\'--NONE--\' SELECTED>--'._QXZ("NONE").'--</option>';
+        $o=0;
+        while ($templates_to_print > $o) 
+            {
+            $rowx=mysqli_fetch_row($rslt);
+            $templates_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+            }
+        echo "$templates_list";
+        echo "</select>$NWB#server_carriers-template_id$NWE</div>";
+        echo "</div>";
+        
+        // Account Entry - Full Width
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #3b82f6;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>📝</span>"._QXZ("Account Entry").":</label>";
+        echo "<textarea name=account_entry rows=10 cols=70 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:250px;' placeholder='"._QXZ("Enter account configuration here...")."'></textarea>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#server_carriers-account_entry$NWE</div>";
+        echo "</div>";
+        
+        // Protocol
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Protocol").":</label>";
+        echo "<div><select size=1 name=protocol style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>";
+        if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
+        if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>PJSIP</option><option>PJSIP_WIZ</option>";}
+        echo "<option>Zap</option>";
+        echo "<option>IAX2</option>";
+        echo "<option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option>";
+        echo "</select>$NWB#server_carriers-protocol$NWE</div>";
+        echo "</div>";
+        
+        // Globals String
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Globals String").":</label>";
+        echo "<div><input type=text name=globals_string size=50 maxlength=255 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#server_carriers-globals_string$NWE</div>";
+        echo "</div>";
+        
+        // Dialplan Entry - Full Width
+        echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #8b5cf6;'>";
+        echo "<label style='display:block;color:#1e293b;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>🔌</span>"._QXZ("Dialplan Entry").":</label>";
+        echo "<textarea name=dialplan_entry rows=10 cols=70 style='width:100%;padding:1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:0.9rem;color:#000000;font-family:monospace;line-height:1.6;resize:vertical;min-height:250px;' placeholder='"._QXZ("Enter dialplan configuration here...")."'></textarea>";
+        echo "<div style='color:#64748b;font-size:0.8rem;margin-top:0.75rem;'>$NWB#server_carriers-dialplan_entry$NWE</div>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").":</label>";
+        echo "<div><select size=1 name=server_ip style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;font-family:monospace;min-width:200px;'>\n";
+        echo "$servers_list";
+        echo "</select>$NWB#server_carriers-server_ip$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier ID").": </td><td align=left><input type=text name=carrier_id size=15 maxlength=15>$NWB#server_carriers-carrier_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Name").": </td><td align=left><input type=text name=carrier_name size=40 maxlength=50>$NWB#server_carriers-carrier_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Description").": </td><td align=left><input type=text name=carrier_description size=70 maxlength=255>$NWB#server_carriers-carrier_description$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#server_carriers-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Registration String").": </td><td align=left><input type=text name=registration_string size=50 maxlength=255>$NWB#server_carriers-registration_string$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Template ID").": </td><td align=left><select size=1 name=template_id>\n";
-		$stmt="SELECT template_id,template_name from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$templates_to_print = mysqli_num_rows($rslt);
-		$templates_list='<option value=\'--NONE--\' SELECTED>--'._QXZ("NONE").'--</option>';
-		$o=0;
-		while ($templates_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$templates_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "$templates_list";
-		echo "</select>$NWB#server_carriers-template_id$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Account Entry").": </td><td align=left><TEXTAREA NAME=account_entry ROWS=10 COLS=70></TEXTAREA> $NWB#server_carriers-account_entry$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Protocol").": </td><td align=left><select size=1 name=protocol>";
-		if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
-		if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>PJSIP</option><option>PJSIP_WIZ</option>";}
-		echo "<option>Zap</option>";
-		echo "<option>IAX2</option>";
-		echo "<option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option>";
-		echo "</select>$NWB#server_carriers-protocol$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Globals String").": </td><td align=left><input type=text name=globals_string size=50 maxlength=255>$NWB#server_carriers-globals_string$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Dialplan Entry").": </td><td align=left><TEXTAREA NAME=dialplan_entry ROWS=10 COLS=70></TEXTAREA> $NWB#server_carriers-dialplan_entry$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		echo "$servers_list";
-		echo "</select>$NWB#server_carriers-server_ip$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
 
 
 ######################
 # ADD=140111111111 display the ADD COPIED CARRIER SCREEN
 ######################
 if ($ADD==140111111111)
-	{
-	if ( ( ($LOGmodify_servers==1) or ($LOGmodify_carriers==1) ) and ($x_ra_carrier < 1) )
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_carriers.png\" alt=\"Carriers\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ( ( ($LOGmodify_servers==1) or ($LOGmodify_carriers==1) ) and ($x_ra_carrier < 1) )
+        {
+        echo "<div style='max-width:900px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_carriers.png\" alt=\"Carriers\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD COPIED CARRIER")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD COPIED CARRIER")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=240111111111>\n";
-		echo "<input type=hidden name=DB value='$DB'>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier ID").": </td><td align=left><input type=text name=carrier_id size=15 maxlength=15>$NWB#server_carriers-carrier_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Carrier Name").": </td><td align=left><input type=text name=carrier_name size=40 maxlength=50>$NWB#server_carriers-carrier_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		echo "$servers_list";
-		echo "</select>$NWB#server_carriers-server_ip$NWE</td></tr>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=240111111111>\n";
+        echo "<input type=hidden name=DB value='$DB'>\n";
+        
+        // Info Box
+        echo "<div style='margin-bottom:2rem;padding:1rem;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:6px;'>";
+        echo "<div style='display:flex;align-items:center;gap:0.5rem;'>";
+        echo "<span style='font-size:1.5rem;'>ℹ️</span>";
+        echo "<p style='color:#1e40af;margin:0;font-size:0.9rem;'>"._QXZ("Copy all settings from an existing carrier to create a new carrier configuration")."</p>";
+        echo "</div></div>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Carrier ID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier ID").":</label>";
+        echo "<div><input type=text name=carrier_id size=15 maxlength=15 style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#server_carriers-carrier_id$NWE</div>";
+        echo "</div>";
+        
+        // Carrier Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Carrier Name").":</label>";
+        echo "<div><input type=text name=carrier_name size=40 maxlength=50 style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#server_carriers-carrier_name$NWE</div>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").":</label>";
+        echo "<div><select size=1 name=server_ip style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;font-family:monospace;min-width:200px;'>\n";
+        echo "$servers_list";
+        echo "</select>$NWB#server_carriers-server_ip$NWE</div>";
+        echo "</div>";
+        
+        // Source Carrier - Highlighted Section
+        echo "<div style='padding:1.5rem;background:#fef3c7;border-radius:8px;border-left:4px solid #f59e0b;'>";
+        echo "<label style='display:block;color:#92400e;font-weight:700;font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1.5rem;'>📋</span>"._QXZ("Source Carrier").":</label>";
+        echo "<select size=1 name=source_carrier style='width:100%;padding:0.75rem;border:2px solid #f59e0b;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;font-family:monospace;background:#fff;'>\n";
 
+        $stmt="SELECT carrier_id,carrier_name,server_ip from vicidial_server_carriers $whereLOGadmin_viewable_groupsSQL order by carrier_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $menus_to_print = mysqli_num_rows($rslt);
+        $menus_list='';
 
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Source Carrier").": </td><td align=left><select size=1 name=source_carrier>\n";
-
-		$stmt="SELECT carrier_id,carrier_name,server_ip from vicidial_server_carriers $whereLOGadmin_viewable_groupsSQL order by carrier_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$menus_to_print = mysqli_num_rows($rslt);
-		$menus_list='';
-
-		$o=0;
-		while ($menus_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$menus_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1] - $rowx[2]</option>\n";
-			$o++;
-			}
-		echo "$menus_list";
-		echo "</select>$NWB#server_carriers-carrier_id$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+        $o=0;
+        while ($menus_to_print > $o) 
+            {
+            $rowx=mysqli_fetch_row($rslt);
+            $menus_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1] - $rowx[2]</option>\n";
+            $o++;
+            }
+        echo "$menus_list";
+        echo "</select>$NWB#server_carriers-carrier_id$NWE";
+        echo "<div style='color:#92400e;font-size:0.8rem;margin-top:0.75rem;font-weight:500;'>"._QXZ("Select the carrier you want to copy settings from")."</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(139,92,246,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(139,92,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(139,92,246,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
 ######################
 # ADD=151111111111 display the ADD NEW TTS ENTRY SCREEN
