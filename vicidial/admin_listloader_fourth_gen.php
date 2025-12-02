@@ -612,479 +612,311 @@ function PopulateStatuses(list_id) {
 
 </script>
 
+
 <title><?php echo _QXZ("ADMINISTRATION: Lead Loader"); ?></title>
 </head>
-<BODY style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin:0; padding:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<BODY BGCOLOR=WHITE marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>
 
 <?php
 $short_header=1;
+
 require("admin_header.php");
 
 echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
 
+
 if ( (preg_match("/NANPA/",$usacan_check)) or (preg_match("/NANPA/",$tz_method)) )
-    {
-    $stmt="SELECT count(*) from vicidial_nanpa_prefix_codes;";
-    $rslt=mysql_to_mysqli($stmt, $link);
-    $row=mysqli_fetch_row($rslt);
-    $vicidial_nanpa_prefix_codes_count = $row[0];
-    if ($vicidial_nanpa_prefix_codes_count < 10)
-        {
-        $usacan_check = preg_replace("/NANPA/",'',$usacan_check);
-        $tz_method = preg_replace("/NANPA/",'',$tz_method);
-        echo "<div style='background:#fef3c7; border-left:4px solid #f59e0b; padding:1rem; border-radius:6px; margin:1rem auto; max-width:1100px; color:#92400e;'><b>NOTICE:</b> NANPA options disabled, NANPA prefix data not loaded: $vicidial_nanpa_prefix_codes_count</div>";
-        }
-    }
+	{
+	$stmt="SELECT count(*) from vicidial_nanpa_prefix_codes;";
+	$rslt=mysql_to_mysqli($stmt, $link);
+	$row=mysqli_fetch_row($rslt);
+	$vicidial_nanpa_prefix_codes_count = $row[0];
+	if ($vicidial_nanpa_prefix_codes_count < 10)
+		{
+		$usacan_check = preg_replace("/NANPA/",'',$usacan_check);
+		$tz_method = preg_replace("/NANPA/",'',$tz_method);
+
+		echo "NOTICE: NANPA options disabled, NANPA prefix data not loaded: $vicidial_nanpa_prefix_codes_count<BR>\n";
+		}
+	}
 
 if ( (!$OK_to_process) or ( ($leadfile) and ($file_layout!="standard" && $file_layout!="template") ) )
-    {
-    ?>
-    
-<div style="max-width:1100px; margin:2rem auto; background:#fff; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.1); overflow:hidden;">
-    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color:#fff; padding:1.5rem 2rem; display:flex; align-items:center; justify-content:space-between;">
-        <h2 style="margin:0; font-size:1.5rem; font-weight:600;">📤 <?php echo _QXZ("Lead Loader"); ?></h2>
-        <span style="font-size:0.9rem; opacity:0.9;">v<?php echo $version ?> | Build <?php echo $build ?></span>
-    </div>
-    
-    <form action=<?php echo $PHP_SELF ?> method=post onSubmit="ParseFileName()" enctype="multipart/form-data">
-        <input type=hidden name='leadfile_name' value="<?php echo $leadfile_name ?>">
-        <input type=hidden name='DB' value="<?php echo $DB ?>">
-        
-        <div style="padding:2rem;">
-            <?php if ($file_layout!="custom") { ?>
-            
-            <!-- File Upload Section -->
-            <div style="background:#f8fafc; padding:1.5rem; border-radius:10px; margin-bottom:1.5rem; border:1px solid #e2e8f0;">
-                <div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:1rem;">
-                    📁 <?php echo _QXZ("Upload Lead File"); ?>
-                </div>
-                <div style="border:2px dashed #cbd5e1; border-radius:8px; padding:2rem; text-align:center; background:#f8fafc;">
-                    <div style="font-size:3rem; color:#2563eb; margin-bottom:1rem;">☁️</div>
-                    <input type=file name="leadfile" style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;" value="<?php echo $leadfile ?>">
-                    <small style="color:#64748b; display:block; margin-top:0.5rem;"><?php echo "$NWB#list_loader$NWE"; ?></small>
-                </div>
-            </div>
-            
-            <!-- Configuration Section -->
-            <div style="background:#f8fafc; padding:1.5rem; border-radius:10px; margin-bottom:1.5rem; border:1px solid #e2e8f0;">
-                <div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:1rem;">
-                    ⚙️ <?php echo _QXZ("Load Configuration"); ?>
-                </div>
-                
-                <table width="100%" cellpadding="8" cellspacing="0">
-                    <tr>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                📋 <?php echo _QXZ("List ID Override"); ?>
-                            </label>
-                            <select name='list_id_override' style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;" onchange="PopulateStatuses(this.value)">
-                                <option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
-                                <?php
-                                $stmt="SELECT list_id, list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id;";
-                                $rslt=mysql_to_mysqli($stmt, $link);
-                                $num_rows = mysqli_num_rows($rslt);
-                                $count=0;
-                                while ( $num_rows > $count ) 
-                                    {
-                                    $row = mysqli_fetch_row($rslt);
-                                    echo "<option value='$row[0]'>$row[0] - $row[1]</option>\n";
-                                    $count++;
-                                    }
-                                ?>
-                            </select>
-                            <div style="margin-top:0.5rem;">
-                                <input type='checkbox' name='master_list_override' value='1' id="master_override">
-                                <label for="master_override" style="font-size:0.9rem;"><?php echo _QXZ("override template setting"); ?></label>
-                            </div>
-                        </td>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                📞 <?php echo _QXZ("Phone Code Override"); ?>
-                            </label>
-                            <select name='phone_code_override' style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
-                                <?php
-                                $stmt="SELECT distinct country_code, country from vicidial_phone_codes;";
-                                $rslt=mysql_to_mysqli($stmt, $link);
-                                $num_rows = mysqli_num_rows($rslt);
-                                $count=0;
-                                while ( $num_rows > $count )
-                                    {
-                                    $row = mysqli_fetch_row($rslt);
-                                    echo "<option value='$row[0]'>$row[0] - $row[1]</option>\n";
-                                    $count++;
-                                    }
-                                ?>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                
-                <div style="margin-top:1.5rem;">
-                    <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                        📄 <?php echo _QXZ("File Layout to Use"); ?> <span style="background:#dbeafe; color:#1e40af; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.85rem; margin-left:0.5rem;"><?php echo "$NWB#list_loader-file_layout$NWE"; ?></span>
-                    </label>
-                    <div>
-                        <input type=radio name="file_layout" value="standard" id="layout_standard" checked>
-                        <label for="layout_standard" style="margin-right:1.5rem;"><?php echo _QXZ("Standard Format"); ?></label>
-                        
-                        <input type=radio name="file_layout" value="custom" id="layout_custom">
-                        <label for="layout_custom" style="margin-right:1.5rem;"><?php echo _QXZ("Custom layout"); ?></label>
-                        
-                        <input type=radio name="file_layout" value="template" id="layout_template">
-                        <label for="layout_template"><?php echo _QXZ("Custom Template"); ?></label>
-                    </div>
-                </div>
-                
-                <div style="margin-top:1.5rem;">
-                    <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                        🗂️ <?php echo _QXZ("Custom Layout to Use"); ?> <span style="background:#dbeafe; color:#1e40af; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.85rem; margin-left:0.5rem;"><?php echo "$NWB#list_loader-template_id$NWE"; ?></span>
-                    </label>
-                    <select name="template_id" id="template_id" style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                        <?php
-                        $template_stmt="SELECT template_id, template_name FROM vicidial_custom_leadloader_templates WHERE list_id IN (SELECT list_id FROM vicidial_lists $whereLOGallowed_campaignsSQL) ORDER BY template_id asc;";
-                        $template_rslt=mysql_to_mysqli($template_stmt, $link);
-                        if (mysqli_num_rows($template_rslt)>0) {
-                            echo "<option value='' selected>--"._QXZ("Select custom template")."--</option>";
-                            while ($row=mysqli_fetch_array($template_rslt)) {
-                                echo "<option value='$row[template_id]'>$row[template_id] - $row[template_name]</option>";
-                            }
-                        } else {
-                            echo "<option value='' selected>--"._QXZ("No custom templates defined")."--</option>";
-                        }
-                        ?>
-                    </select>
-                    <a href='AST_admin_template_maker.php' style="color:#2563eb; text-decoration:none; font-size:0.9rem; margin-left:0.5rem;">🔧 <?php echo _QXZ("template builder"); ?></a> | 
-                    <a href='#' onClick="TemplateSpecs()" style="color:#2563eb; text-decoration:none; font-size:0.9rem;">ℹ️ <?php echo _QXZ("View template info"); ?></a>
-                </div>
-            </div>
-            
-            <!-- Validation Section -->
-            <div style="background:#f8fafc; padding:1.5rem; border-radius:10px; margin-bottom:1.5rem; border:1px solid #e2e8f0;">
-                <div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:1rem;">
-                    🛡️ <?php echo _QXZ("Validation & Data Quality"); ?>
-                </div>
-                
-                <table width="100%" cellpadding="8" cellspacing="0">
-                    <tr>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                📋 <?php echo _QXZ("Lead Duplicate Check"); ?> <span style="background:#dbeafe; color:#1e40af; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.85rem; margin-left:0.5rem;"><?php echo "$NWB#list_loader-duplicate_check$NWE"; ?></span>
-                            </label>
-                            <select size=1 name=dupcheck style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <option selected value="NONE"><?php echo _QXZ("NO DUPLICATE CHECK"); ?></option>
-                                <option value="DUPLIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN LIST ID"); ?></option>
-                                <option value="DUPCAMP"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-                                <option value="DUPSYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ENTIRE SYSTEM"); ?></option>
-                                <option value="DUPLIST30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN LIST ID"); ?></option>
-                                <option value="DUPCAMP30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-                                <option value="DUPSYS30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-                                <option value="DUPLIST60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN LIST ID"); ?></option>
-                                <option value="DUPCAMP60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-                                <option value="DUPSYS60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-                                <option value="DUPLIST90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN LIST ID"); ?></option>
-                                <option value="DUPCAMP90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-                                <option value="DUPSYS90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-                                <option value="DUPLIST180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN LIST ID"); ?></option>
-                                <option value="DUPCAMP180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-                                <option value="DUPSYS180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-                                <option value="DUPLIST360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN LIST ID"); ?></option>
-                                <option value="DUPCAMP360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-                                <option value="DUPSYS360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-                                <option value="DUPTITLEALTPHONELIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN LIST ID"); ?></option>
-                                <option value="DUPTITLEALTPHONESYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN ENTIRE SYSTEM"); ?></option>
-                            </select>
-                        </td>
-                        
-                        <?php if ($SSenable_international_dncs) {
-                            $dnc_stmt="select iso3, country_name from vicidial_country_iso_tld where iso3 is not null and iso3!='' order by country_name asc";
-                            $dnc_rslt=mysql_to_mysqli($dnc_stmt, $link);
-                            $available_countries=0;
-                            $drop_down_dnc_options = "";
-                            while($dnc_row=mysqli_fetch_row($dnc_rslt)) {
-                                $iso=$dnc_row[0];
-                                $country_name=$dnc_row[1];
-                                $dnc_table_stmt="show tables like 'vicidial_dnc_".$iso."'";
-                                $dnc_table_rslt=mysql_to_mysqli($dnc_table_stmt, $link);
-                                if (mysqli_num_rows($dnc_table_rslt)>0) {
-                                    $available_countries++;
-                                    $drop_down_dnc_options.="<option value='$iso'>$iso - $country_name</option>\n";
-                                }
-                            }
-                        ?>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                🌍 <?php echo _QXZ("DNC Scrub by Country"); ?>
-                            </label>
-                            <select size=1 name='international_dnc_scrub' style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <?php
-                                if ($available_countries>0) {
-                                    echo "<option>-- SELECT COUNTRY DNC LIST--</option>\n";
-                                    echo $drop_down_dnc_options;
-                                } else {
-                                    echo "<option>-- NO COUNTRY DNC TABLES EXIST --</option>\n";
-                                }
-                                ?>
-                            </select>
-                        </td>
-                        <?php } ?>
-                    </tr>
-                    
-                    <tr bgcolor="#<?php echo $SSframe_background; ?>">
-                        <td width='50%' style="vertical-align:top; padding:0.75rem;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                🏷️ <?php echo _QXZ("Status Duplicate Check"); ?>
-                            </label>
-                            <span id='statuses_display'>
-                                <select id='dedupe_statuses' name='dedupe_statuses[]' size=5 multiple style="width:100%; padding:0.5rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                    <option value='--ALL--' selected>--<?php echo _QXZ("ALL DISPOSITIONS"); ?>--</option>
-                                    <?php echo $dedupe_status_select ?>
-                                </select>
-                            </span>
-                        </td>
-                        
-                        <?php if ($enable_status_mismatch_leadloader_option>0) { ?>
-                        <td width='50%' style="vertical-align:top; padding:0.75rem;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                🔄 <?php echo _QXZ("Status Mismatch Action"); ?> <span style="background:#dbeafe; color:#1e40af; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.85rem; margin-left:0.5rem;"><?php echo "$NWB#list_loader-status_mismatch_action$NWE"; ?></span>
-                            </label>
-                            <span id='status_mismatch_display'>
-                                <select id='status_mismatch_action' name='status_mismatch_action' style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                    <option value='' selected><?php echo _QXZ("NONE"); ?></option>
-                                    <option value='MOVE RECENT FROM SYSTEM'><?php echo _QXZ("MOVE MOST RECENT PHONE DUPLICATE, CHECK ENTIRE SYSTEM"); ?></option>
-                                    <option value='MOVE ALL FROM SYSTEM'><?php echo _QXZ("MOVE ALL PHONE DUPLICATES, CHECK ENTIRE SYSTEM"); ?></option>
-                                    <option value='MOVE RECENT USING CHECK'><?php echo _QXZ("MOVE MOST RECENT PHONE FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
-                                    <option value='MOVE ALL USING CHECK'><?php echo _QXZ("MOVE ALL PHONES FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
-                                </select>
-                            </span>
-                        </td>
-                        <?php } ?>
-                    </tr>
-                </table>
-            </div>
-            
-            <!-- Geographic Section -->
-            <div style="background:#f8fafc; padding:1.5rem; border-radius:10px; margin-bottom:1.5rem; border:1px solid #e2e8f0;">
-                <div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:1rem;">
-                    🗺️ <?php echo _QXZ("Geographic & Format Options"); ?>
-                </div>
-                
-                <table width="100%" cellpadding="8" cellspacing="0">
-                    <tr>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                🇺🇸 <?php echo _QXZ("USA-Canada Check"); ?>
-                            </label>
-                            <select size=1 name=usacan_check style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <option selected value="NONE"><?php echo _QXZ("NO USACAN VALID CHECK"); ?></option>
-                                <option value="PREFIX"><?php echo _QXZ("CHECK FOR VALID PREFIX"); ?></option>
-                                <option value="AREACODE"><?php echo _QXZ("CHECK FOR VALID AREACODE"); ?></option>
-                                <option value="PREFIX_AREACODE"><?php echo _QXZ("CHECK FOR VALID PREFIX and AREACODE"); ?></option>
-                                <option value="NANPA"><?php echo _QXZ("CHECK FOR VALID NANPA PREFIX and AREACODE"); ?></option>
-                            </select>
-                        </td>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                🕐 <?php echo _QXZ("Lead Time Zone Lookup"); ?>
-                            </label>
-                            <select size=1 name=postalgmt style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <option selected value="AREA"><?php echo _QXZ("COUNTRY CODE AND AREA CODE ONLY"); ?></option>
-                                <option value="POSTAL"><?php echo _QXZ("POSTAL CODE FIRST"); ?></option>
-                                <option value="TZCODE"><?php echo _QXZ("OWNER TIME ZONE CODE FIRST"); ?></option>
-                                <option value="NANPA"><?php echo _QXZ("NANPA AREACODE PREFIX FIRST"); ?></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                📍 <?php echo _QXZ("State Abbreviation Lookup"); ?>
-                            </label>
-                            <select size=1 name=state_conversion style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
-                                <option value="STATELOOKUP"><?php echo _QXZ("FULL STATE NAME TO ABBREVIATION"); ?></option>
-                            </select>
-                        </td>
-                        <td width="50%" style="vertical-align:top;">
-                            <label style="font-weight:600; color:#334155; margin-bottom:0.5rem; display:block; font-size:0.95rem;">
-                                📏 <?php echo _QXZ("Required Phone Number Length"); ?>
-                            </label>
-                            <select size=1 name=web_loader_phone_length style="width:100%; padding:0.75rem 1rem; border:2px solid #e2e8f0; border-radius:8px; font-size:0.95rem;">
-                                <?php if ($SSweb_loader_phone_length == 'DISABLED') { ?>
-                                <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
-                                <?php } 
-                                if ($SSweb_loader_phone_length == 'CHOOSE') { ?>
-                                <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
-                                <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
-                                <?php } 
-                                if ( (strlen($SSweb_loader_phone_length) > 0) and (strlen($SSweb_loader_phone_length) < 3) and ($SSweb_loader_phone_length > 4) and ($SSweb_loader_phone_length < 19) ) { ?>
-                                <option selected value="<?php echo $SSweb_loader_phone_length ?>"><?php echo $SSweb_loader_phone_length ?></option>
-                                <?php } ?>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            
-            <!-- Action Buttons -->
-            <div style="display:flex; gap:1rem; justify-content:center; padding-top:1.5rem; border-top:2px solid #e2e8f0; margin-top:2rem;">
-                <input type=submit value="<?php echo _QXZ("SUBMIT"); ?>" name='submit_file' style="background: linear-gradient(135deg, #667eea, #764ba2); color:#fff; padding:0.75rem 2rem; border:none; border-radius:8px; font-weight:600; font-size:1rem; cursor:pointer; box-shadow:0 4px 12px rgba(102,126,234,0.4);">
-                <input type=button onClick="javascript:document.location='admin_listloader_fourth_gen.php'" value="<?php echo _QXZ("START OVER"); ?>" name='reload_page' style="background:white; color:#64748b; padding:0.75rem 2rem; border:2px solid #e2e8f0; border-radius:8px; font-weight:600; font-size:1rem; cursor:pointer;">
-            </div>
-            
-            <?php 
-            } 
-            else  // THIS IS THE CUSTOM LAYOUT SECTION (HEADER MAPPING) THAT WAS MISSING
-            {
-            ?>
-            
-            <!-- Header Mapping Section for Custom Layout -->
-            <div style="background:#fff3cd; padding:1rem; border-radius:8px; margin-bottom:1rem; border-left:4px solid #ffc107;">
-                <strong>📊 Processing pipe-delimited file...</strong><br>
-                <span style="color:#856404;">LIST ID OVERRIDE FOR THIS FILE: <?php echo $list_id_override ?></span><br>
-                <span style="color:#856404;">LEAD DUPLICATE CHECK: <?php echo $dupcheck ?></span>
-            </div>
-            
-            <div style="background:#f8fafc; padding:1.5rem; border-radius:10px; border:1px solid #e2e8f0;">
-                <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
-                    <tr style="background:#0369a1; color:#fff;">
-                        <th style="padding:0.75rem; text-align:right; font-size:1rem;">VICIDIAL Column</th>
-                        <th style="padding:0.75rem; text-align:left; font-size:1rem;">File data</th>
-                    </tr>
-                    <?php
-                    // This is where the original code displays the mapping dropdowns
-                    // The backend code populates these - we just need to preserve the HTML structure
-                    ?>
-                </table>
-            </div>
-            
-            <!-- OK TO PROCESS and START OVER buttons for custom layout -->
-            <div style="display:flex; gap:1rem; justify-content:center; padding-top:1.5rem; margin-top:2rem;">
-                <input type=submit value="<?php echo _QXZ("OK TO PROCESS"); ?>" name='OK_to_process' style="background: linear-gradient(135deg, #10b981, #059669); color:#fff; padding:0.75rem 2.5rem; border:none; border-radius:8px; font-weight:600; font-size:1.1rem; cursor:pointer; box-shadow:0 4px 12px rgba(16,185,129,0.4);">
-                <input type=button onClick="javascript:document.location='admin_listloader_fourth_gen.php'" value="<?php echo _QXZ("START OVER"); ?>" name='reload_page' style="background:white; color:#64748b; padding:0.75rem 2rem; border:2px solid #e2e8f0; border-radius:8px; font-weight:600; font-size:1rem; cursor:pointer;">
-            </div>
-            
-            <?php
-            }
-            ?>
-        </div>
-        
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#f8fafc; border-top:1px solid #e2e8f0; font-size:0.9rem;">
-            <div>
-                <a href="admin.php?ADD=100" target="_parent" style="color:#2563eb; text-decoration:none; font-weight:500;">⬅️ <?php echo _QXZ("BACK TO ADMIN"); ?></a>
-            </div>
-            <div>
-                <?php echo _QXZ("LIST LOADER 4th Gen"); ?> | <a href="admin_listloader_fifth_gen.php" style="color:#2563eb; text-decoration:none; font-weight:500;"><?php echo _QXZ("5th Gen"); ?> ➡️</a>
-                <span style="color:#64748b; margin-left:1rem;">v<?php echo $version ?> | Build <?php echo $build ?></span>
-            </div>
-        </div>
-    </form>
-</div>
+	{
+	?>
+	<form action=<?php echo $PHP_SELF ?> method=post onSubmit="ParseFileName()" enctype="multipart/form-data">
+	<input type=hidden name='leadfile_name' value="<?php echo $leadfile_name ?>">
+	<input type=hidden name='DB' value="<?php echo $DB ?>">
+	<?php 
+	if ($file_layout!="custom") 
+		{
+		?>
+		<table align=center width="880" border=0 cellpadding=5 cellspacing=0 bgcolor=#<?php echo $SSframe_background; ?>>
+		  <tr>
+			<td align=right width="20%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Load leads from this file"); ?>:</font></B></td>
+			<td align=left width="80%"><input type=file name="leadfile" value="<?php echo $leadfile ?>"> <?php echo "$NWB#list_loader$NWE"; ?></td>
+		  </tr>
+		  <tr>
+			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("List ID Override"); ?>: </font></td>
+			<td align=left width="80%"><font face="arial, helvetica" size=1>
+			<select name='list_id_override' onchange="PopulateStatuses(this.value)">
+			<option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
+			<?php
+			$stmt="SELECT list_id, list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id;";
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$num_rows = mysqli_num_rows($rslt);
 
+			$count=0;
+			while ( $num_rows > $count ) 
+				{
+				$row = mysqli_fetch_row($rslt);
+				echo "<option value=\'$row[0]\'>$row[0] - $row[1]</option>\n";
+				$count++;
+				}
+			?>
+			</select><input type='checkbox' name='master_list_override' value='1'>(<?php echo _QXZ("override template setting"); ?>)
+			</font></td>
+		  </tr>
+		  <tr>
+			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("Phone Code Override"); ?>: </font></td>
+			<td align=left width="80%"><font face="arial, helvetica" size=1>
+			<select name='phone_code_override'>
+                        <option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
+			<?php
+			$stmt="SELECT distinct country_code, country from vicidial_phone_codes;";
+			$rslt=mysql_to_mysqli($stmt, $link);
+			$num_rows = mysqli_num_rows($rslt);
+			
+			$count=0;
+	                while ( $num_rows > $count )
+				{
+				$row = mysqli_fetch_row($rslt);
+				echo "<option value=\'$row[0]\'>$row[0] - $row[1]</option>\n";
+				$count++;
+				}
+			?>
+			</select>
+			</font></td>
+		  </tr>
+		  <tr>
+			<td align=right><B><font face="arial, helvetica" size=2><?php echo _QXZ("File layout to use"); ?>:</font></B></td>
+			<td align=left><font face="arial, helvetica" size=2><input type=radio name="file_layout" value="standard" checked><?php echo _QXZ("Standard Format"); ?>&nbsp;&nbsp;&nbsp;&nbsp;<input type=radio name="file_layout" value="custom"><?php echo _QXZ("Custom layout"); ?>&nbsp;&nbsp;&nbsp;&nbsp;<input type=radio name="file_layout" value="template"><?php echo _QXZ("Custom Template"); ?> <?php echo "$NWB#list_loader-file_layout$NWE"; ?></td>
+		  </tr>
+		  <tr>
+			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("Custom Layout to Use"); ?>: </font></td>
+			<td align=left><select name="template_id" id="template_id">
 <?php
-    }
-else
-    {
-    ?>
-    
-<div style="max-width:1100px; margin:2rem auto; background:#fff; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.1); overflow:hidden;">
-    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color:#fff; padding:1.5rem 2rem; display:flex; align-items:center; justify-content:space-between;">
-        <h2 style="margin:0; font-size:1.5rem; font-weight:600;">✅ <?php echo _QXZ("Lead File Processing Summary"); ?></h2>
-        <span style="font-size:0.9rem; opacity:0.9;">v<?php echo $version ?> | Build <?php echo $build ?></span>
-    </div>
-    
-    <div style="padding:2rem;">
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:10px; margin-bottom:1.5rem; border:1px solid #e2e8f0;">
-            <div style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:1rem;">
-                ℹ️ <?php echo _QXZ("Upload Configuration"); ?>
-            </div>
-            
-            <table width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;">
-                <tr>
-                    <td width="35%" style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">📄 <?php echo _QXZ("Lead file"); ?>:</td>
-                    <td width="65%" style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $leadfile_name ?></td>
-                </tr>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">📋 <?php echo _QXZ("List ID Override"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $list_id_override ?></td>
-                </tr>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">📞 <?php echo _QXZ("Phone Code Override"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $phone_code_override ?></td>
-                </tr>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">🇺🇸 <?php echo _QXZ("USA-Canada Check"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $usacan_check ?></td>
-                </tr>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">📋 <?php echo _QXZ("Lead Duplicate Check"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $dupcheck ?></td>
-                </tr>
-                <?php if ($SSenable_international_dncs) { ?>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">🌍 <?php echo _QXZ("International DNC scrub"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $international_dnc_scrub ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">🕐 <?php echo _QXZ("Lead Time Zone Lookup"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $postalgmt ?></td>
-                </tr>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">📍 <?php echo _QXZ("State Abbreviation Lookup"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $state_conversion ?></td>
-                </tr>
-                <tr>
-                    <td style="background:#f8fafc; font-weight:600; border:1px solid #e2e8f0; padding:0.75rem;">📏 <?php echo _QXZ("Required Phone Number Length"); ?>:</td>
-                    <td style="border:1px solid #e2e8f0; padding:0.75rem;"><?php echo $web_loader_phone_length ?></td>
-                </tr>
-            </table>
-        </div>
-        
-        <div style="text-align:center; margin-top:2rem;">
-            <form action=<?php echo $PHP_SELF ?> method=get onSubmit="ParseFileName()" enctype="multipart/form-data">
-                <input type=hidden name='leadfile_name' value="<?php echo $leadfile_name ?>">
-                <input type=hidden name='DB' value="<?php echo $DB ?>">
-                <a href="admin_listloader_fourth_gen.php" style="background: linear-gradient(135deg, #667eea, #764ba2); color:#fff; padding:0.75rem 2rem; border:none; border-radius:8px; font-weight:600; text-decoration:none; display:inline-block; box-shadow:0 4px 12px rgba(102,126,234,0.4);">
-                    📤 <?php echo _QXZ("Load Another Lead File"); ?>
-                </a>
-            </form>
-        </div>
-    </div>
-    
-    <div style="display:flex; justify-content:center; align-items:center; padding:1rem 2rem; background:#f8fafc; border-top:1px solid #e2e8f0; font-size:0.9rem;">
-        <span style="color:#64748b;">v<?php echo $version ?> | Build <?php echo $build ?></span>
-    </div>
-</div>
-
-<?php
-    }
+				$template_stmt="SELECT template_id, template_name FROM vicidial_custom_leadloader_templates WHERE list_id IN (SELECT list_id FROM vicidial_lists $whereLOGallowed_campaignsSQL) ORDER BY template_id asc;";
+				$template_rslt=mysql_to_mysqli($template_stmt, $link);
+				if (mysqli_num_rows($template_rslt)>0) {
+					echo "<option value='' selected>--"._QXZ("Select custom template")."--</option>";
+					while ($row=mysqli_fetch_array($template_rslt)) {
+						echo "<option value='$row[template_id]'>$row[template_id] - $row[template_name]</option>";
+					}
+				} else {
+					echo "<option value='' selected>--"._QXZ("No custom templates defined")."--</option>";
+				}
 ?>
-
-</TD></TR></TABLE>
-
-<script>
-function ParseFileName() {
-    return true;
-}
-
-function PopulateStatuses(list_id) {
-    // Original function preserved
-}
-
-function TemplateSpecs() {
-    var template_id = document.getElementById('template_id').value;
-    if(template_id) {
-        window.open('AST_admin_template_maker.php?template_id=' + template_id, 'template_specs', 'width=800,height=600,scrollbars=yes');
-    } else {
-        alert('<?php echo _QXZ("Please select a template first"); ?>');
-    }
-}
-</script>
-
-</BODY>
-</html>
+			</select> <a href='AST_admin_template_maker.php'><font face="arial, helvetica" size=1><?php echo _QXZ("template builder"); ?></font></a><?php echo "$NWB#list_loader-template_id$NWE"; ?><BR><a href='#' onClick="TemplateSpecs()"><font face="arial, helvetica" size=1><?php echo _QXZ("View template info"); ?></font></a></td>
+		  <tr>
+			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Duplicate Check"); ?>: </font></td>
+			<td align=left width="80%" nowrap><font face="arial, helvetica" size=1><select size=1 name=dupcheck>
+			<option selected value="NONE"><?php echo _QXZ("NO DUPLICATE CHECK"); ?></option>
+			<option value="DUPLIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN LIST ID"); ?></option>
+			<option value="DUPCAMP"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+			<option value="DUPSYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ENTIRE SYSTEM"); ?></option>
+			<option value="DUPLIST30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN LIST ID"); ?></option>
+			<option value="DUPCAMP30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+			<option value="DUPSYS30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+			<option value="DUPLIST60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN LIST ID"); ?></option>
+			<option value="DUPCAMP60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+			<option value="DUPSYS60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+			<option value="DUPLIST90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN LIST ID"); ?></option>
+			<option value="DUPCAMP90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+			<option value="DUPSYS90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+			<option value="DUPLIST180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN LIST ID"); ?></option>
+			<option value="DUPCAMP180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+			<option value="DUPSYS180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+			<option value="DUPLIST360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN LIST ID"); ?></option>
+			<option value="DUPCAMP360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+			<option value="DUPSYS360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+			<option value="DUPTITLEALTPHONELIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN LIST ID"); ?></option>
+			<option value="DUPTITLEALTPHONESYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN ENTIRE SYSTEM"); ?></option>
+			</select> <?php echo "$NWB#list_loader-duplicate_check$NWE"; ?></td>
+		  </tr>
 <?php
+if ($SSenable_international_dncs)
+	{
+	$dnc_stmt="select iso3, country_name from vicidial_country_iso_tld where iso3 is not null and iso3!='' order by country_name asc";
+	$dnc_rslt=mysql_to_mysqli($dnc_stmt, $link);
+	$available_countries=0;
+	while($dnc_row=mysqli_fetch_row($dnc_rslt)) 
+		{
+		$iso=$dnc_row[0];
+		$country_name=$dnc_row[1];
+		$dnc_table_stmt="show tables like 'vicidial_dnc_".$iso."'";
+		$dnc_table_rslt=mysql_to_mysqli($dnc_table_stmt, $link);
+		if (mysqli_num_rows($dnc_table_rslt)>0)
+			{
+			$available_countries++;
+			$drop_down_dnc_options.="\t\t\t\t<option value='$iso'>$iso - $country_name</option>\n";
+			}
+		}
+	echo "\t\t<tr>\n";
+	echo "\t\t\t<td align=right width='20%'><font face='arial, helvetica' size=2>"._QXZ("DNC Scrub by Country").": </font></td>\n";
+	echo "\t\t\t<td align=left width='80%' nowrap><font face='arial, helvetica' size=1><select size='1' name='international_dnc_scrub'>\n";
+	if ($available_countries>0)
+		{
+		echo "\t\t\t\t<option>-- SELECT COUNTRY DNC LIST--</option>\n";
+		echo $drop_down_dnc_options;
+		}
+	else
+		{
+		echo "\t\t\t\t<option>-- NO COUNTRY DNC TABLES EXIST --</option>\n";
+		}
+	echo "\t\t</tr>\n";
+	echo "\t\t<tr>\n";
+	}
+?>
+	<tr bgcolor="#<?php echo $SSframe_background; ?>">
+		<td width='20%' align="right"><font class="standard"><?php echo _QXZ("Status Duplicate Check"); ?>:</font></td>
+		<td width='80%'>
+		<span id='statuses_display'>
+			<select id='dedupe_statuses' name='dedupe_statuses[]' size=5 multiple>
+			<option value='--ALL--' selected>--<?php echo _QXZ("ALL DISPOSITIONS"); ?>--</option>
+			<?php echo $dedupe_status_select ?>
+			</select></font>		
+		</span>
+		</td>
+	</tr>
+<?php if ($enable_status_mismatch_leadloader_option>0) { ?>
+	<tr bgcolor="#<?php echo $SSframe_background; ?>">
+		<td width='20%' align="right"><font class="standard"><?php echo _QXZ("Status Mismatch Action"); ?>:</font></td>
+		<td width='80%'>
+		<span id='status_mismatch_display'>
+			<select id='status_mismatch_action' name='status_mismatch_action'>
+			<option value='' selected><?php echo _QXZ("NONE"); ?></option>
+			<option value='MOVE RECENT FROM SYSTEM'><?php echo _QXZ("MOVE MOST RECENT PHONE DUPLICATE, CHECK ENTIRE SYSTEM"); ?></option>
+			<option value='MOVE ALL FROM SYSTEM'><?php echo _QXZ("MOVE ALL PHONE DUPLICATES, CHECK ENTIRE SYSTEM"); ?></option>
+			<option value='MOVE RECENT USING CHECK'><?php echo _QXZ("MOVE MOST RECENT PHONE FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
+			<option value='MOVE ALL USING CHECK'><?php echo _QXZ("MOVE ALL PHONES FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
+			</select></font>		
+		</span> <?php echo "$NWB#list_loader-status_mismatch_action$NWE"; ?>
+		</td>
+	</tr>
+<?php } ?>
+		  <tr>
+			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("USA-Canada Check"); ?>: </font></td>
+			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=usacan_check>
+			<option selected value="NONE"><?php echo _QXZ("NO USACAN VALID CHECK"); ?></option>
+			<option value="PREFIX"><?php echo _QXZ("CHECK FOR VALID PREFIX"); ?></option>
+			<option value="AREACODE"><?php echo _QXZ("CHECK FOR VALID AREACODE"); ?></option>
+			<option value="PREFIX_AREACODE"><?php echo _QXZ("CHECK FOR VALID PREFIX and AREACODE"); ?></option>
+			<option value="NANPA"><?php echo _QXZ("CHECK FOR VALID NANPA PREFIX and AREACODE"); ?></option>
+			</select></td>
+		  </tr>
+		  <tr>
+			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Time Zone Lookup"); ?>: </font></td>
+			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=postalgmt>
+			<option selected value="AREA"><?php echo _QXZ("COUNTRY CODE AND AREA CODE ONLY"); ?></option>
+			<option value="POSTAL"><?php echo _QXZ("POSTAL CODE FIRST"); ?></option>
+			<option value="TZCODE"><?php echo _QXZ("OWNER TIME ZONE CODE FIRST"); ?></option>
+			<option value="NANPA"><?php echo _QXZ("NANPA AREACODE PREFIX FIRST"); ?></option>
+			</select></td>
+		  </tr>
+		  <tr>
+			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("State Abbreviation Lookup"); ?>: </font></td>
+			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=state_conversion>
+			<option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
+			<option value="STATELOOKUP"><?php echo _QXZ("FULL STATE NAME TO ABBREVIATION"); ?></option>
+			</select></td>
+		  </tr>
+		  <tr>
+			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("Required Phone Number Length"); ?>: </font></td>
+			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=web_loader_phone_length>
+			<?php if ($SSweb_loader_phone_length == 'DISABLED') { ?>
+			<option selected value=""><?php echo _QXZ("DISABLED"); ?>
+			<?php } 
+			 if ($SSweb_loader_phone_length == 'CHOOSE') { ?>
+			<option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
+			<option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
+			<?php } 
+			 if ( (strlen($SSweb_loader_phone_length) > 0) and (strlen($SSweb_loader_phone_length) < 3) and ($SSweb_loader_phone_length > 4) and ($SSweb_loader_phone_length < 19) ) { ?>
+			<option selected value="<?php echo $SSweb_loader_phone_length ?>"><?php echo $SSweb_loader_phone_length ?></option>
+			<?php } ?>
+			</select></td>
+		  </tr>
+
+		<tr>
+			<td align=center colspan=2><input style='background-color:#<?php echo "$SSbutton_color"; ?>' type=submit value="<?php echo _QXZ("SUBMIT"); ?>" name='submit_file'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style='background-color:#<?php echo "$SSbutton_color"; ?>' type=button onClick="javascript:document.location='admin_listloader_fourth_gen.php'" value="<?php echo _QXZ("START OVER"); ?>" name='reload_page'></td>
+		  </tr>
+		  <tr><td align=left><font size=1> &nbsp; &nbsp; &nbsp; &nbsp; <a href="admin.php?ADD=100" target="_parent"><?php echo _QXZ("BACK TO ADMIN"); ?></a> &nbsp; &nbsp; </font></td><td align=right><font size=1><?php echo _QXZ("LIST LOADER 4th Gen"); ?> | <a href="admin_listloader_fifth_gen.php"><?php echo _QXZ("5th Gen"); ?></a> &nbsp; &nbsp; <?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?> &nbsp; &nbsp; </td></tr>
+		</table>
+		<?php 
+
+		}
+	}
+else
+	{
+	?>
+	<table align=center width="700" border=0 cellpadding=5 cellspacing=0 bgcolor=#<?php echo $SSframe_background; ?>>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Lead file"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $leadfile_name ?></font></td>
+	</tr>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("List ID Override"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $list_id_override ?></font></td>
+	</tr>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Phone Code Override"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $phone_code_override ?></font></td>
+	</tr>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("USA-Canada Check"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $usacan_check ?></font></td>
+	</tr>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Duplicate Check"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $dupcheck ?></font></td>
+	</tr>
+<?php
+if ($SSenable_international_dncs)
+		{
+?>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("International DNC scrub"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $international_dnc_scrub ?></font></td>
+	</tr>
+<?php
+		}
+?>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $postalgmt ?></font></td>
+	</tr>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("State Abbreviation Lookup"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $state_conversion ?></font></td>
+	</tr>
+	<tr>
+	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Required Phone Number Length"); ?>:</font></B></td>
+	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $web_loader_phone_length ?></font></td>
+	</tr>
+
+
+
+	<tr>
+	<td align=center colspan=2><B><font face="arial, helvetica" size=2>
+	<form action=<?php echo $PHP_SELF ?> method=get onSubmit="ParseFileName()" enctype="multipart/form-data">
+	<input type=hidden name='leadfile_name' value="<?php echo $leadfile_name ?>">
+	<input type=hidden name='DB' value="<?php echo $DB ?>">
+	<a href="admin_listloader_fourth_gen.php"><?php echo _QXZ("Load Another Lead File"); ?></a> &nbsp; &nbsp; &nbsp; &nbsp;</font></B> <font size=1><?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?>
+	</font></td>
+	</tr></table>
+	<BR><BR><BR><BR>
+	<?php
+	}
+
 
 
 ##### BEGIN custom fields submission #####
