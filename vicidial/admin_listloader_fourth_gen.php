@@ -1288,10 +1288,9 @@ if ($OK_to_process)
                             }
                         }
                     }
-                ##### END custom fields columns list ###
+ ##### END custom fields columns list ###
 
-
-				$custom_SQL = preg_replace("/,$/","",$custom_SQL);
+$custom_SQL = preg_replace("/,$/","",$custom_SQL);
 
                 if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
                     {
@@ -1733,735 +1732,725 @@ if ($OK_to_process)
         print "<center><div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'><div style='font-size:3rem;margin-bottom:1rem;'>❌</div><h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("ERROR")."</h2><p style='color:#64748b;'>"._QXZ("The file does not have the required number of fields to process it").".</p></div></center>";
         }
     }
+				
+	
+##### END custom fields submission #####
 
 ##### END custom fields submission #####
 
 if (($leadfile) && ($LF_path))
-	{
-	$total=0; $good=0; $bad=0; $dup=0; $inv=0; $post=0; $moved=0; $phone_list='';
+    {
+    $total=0; $good=0; $bad=0; $dup=0; $inv=0; $post=0; $moved=0; $phone_list='';
 
-	### LOG INSERTION Admin Log Table ###
-	$stmt="INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='LOAD', record_id='$list_id_override', event_code='ADMIN LOAD LIST', event_sql='', event_notes='File Name: $leadfile_name, DEBUG: dedupe_statuses:$dedupe_statuses[0]| dedupe_statuses_override:$dedupe_statuses_override| dupcheck:$dupcheck | status mismatch action: $status_mismatch_action| lead_file:$lead_file| list_id_override:$list_id_override| phone_code_override:$phone_code_override| postalgmt:$postalgmt| template_id:$template_id| usacan_check:$usacan_check| dnc_country_scrub:$international_dnc_scrub| state_conversion:$state_conversion| web_loader_phone_length:$web_loader_phone_length| web_loader_phone_strip:$SSweb_loader_phone_strip|';";
-	if ($DB) {echo "|$stmt|\n";}
-	$rslt=mysql_to_mysqli($stmt, $link);
+    ### LOG INSERTION Admin Log Table ###
+    $stmt="INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LISTS', event_type='LOAD', record_id='$list_id_override', event_code='ADMIN LOAD LIST', event_sql='', event_notes='File Name: $leadfile_name, DEBUG: dedupe_statuses:$dedupe_statuses[0]| dedupe_statuses_override:$dedupe_statuses_override| dupcheck:$dupcheck | status mismatch action: $status_mismatch_action| lead_file:$lead_file| list_id_override:$list_id_override| phone_code_override:$phone_code_override| postalgmt:$postalgmt| template_id:$template_id| usacan_check:$usacan_check| dnc_country_scrub:$international_dnc_scrub| state_conversion:$state_conversion| web_loader_phone_length:$web_loader_phone_length| web_loader_phone_strip:$SSweb_loader_phone_strip|';";
+    if ($DB) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>|$stmt|</div>\n";}
+    $rslt=mysql_to_mysqli($stmt, $link);
 
-	##### BEGIN process TEMPLATE file layout #####
-	if ($file_layout=="template"  && $template_id) 
-		{
+    ##### BEGIN process TEMPLATE file layout #####
+    if ($file_layout=="template"  && $template_id) 
+        {
 
-		$template_stmt="SELECT * from vicidial_custom_leadloader_templates where template_id='$template_id'";
-		$template_rslt=mysql_to_mysqli($template_stmt, $link);
-		if (mysqli_num_rows($template_rslt)==0) 
-			{
-			echo _QXZ("Error - template no longer exists"); die;
-			} 
-		else 
-			{
-			$template_row=mysqli_fetch_array($template_rslt);
-			$template_id=$template_row["template_id"];
-			$template_name=$template_row["template_name"];
-			$template_description=$template_row["template_description"];
-			# Added 2/9/2015 to allow dropdown to override template
-			if (!$master_list_override) {
-				$list_id_override=$template_row["list_id"];
-			}
-			$standard_variables=$template_row["standard_variables"];
-#			$custom_table=$template_row["custom_table"];
-			if (!$master_list_override) {
-				$custom_table=$template_row["custom_table"];
-			}
-			else {
-				$custom_table= "custom_$list_id_override";
-			}
-			$custom_variables=$template_row["custom_variables"];
-			$template_statuses=$template_row["template_statuses"];
-			if (strlen($template_statuses)>0) {
-				$template_statuses=preg_replace('/\|/', "','", $template_statuses);
-				$statuses_clause=" and status in ('$template_statuses') ";
-			} else {
-				$status_mismatch_action="";
-			}
+        $template_stmt="SELECT * from vicidial_custom_leadloader_templates where template_id='$template_id'";
+        $template_rslt=mysql_to_mysqli($template_stmt, $link);
+        if (mysqli_num_rows($template_rslt)==0) 
+            {
+            echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'><div style='font-size:3rem;margin-bottom:1rem;'>❌</div><h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Error")."</h2><p style='color:#64748b;'>"._QXZ("Error - template no longer exists")."</p></div>"; die;
+            } 
+        else 
+            {
+            $template_row=mysqli_fetch_array($template_rslt);
+            $template_id=$template_row["template_id"];
+            $template_name=$template_row["template_name"];
+            $template_description=$template_row["template_description"];
+            # Added 2/9/2015 to allow dropdown to override template
+            if (!$master_list_override) {
+                $list_id_override=$template_row["list_id"];
+            }
+            $standard_variables=$template_row["standard_variables"];
+            if (!$master_list_override) {
+                $custom_table=$template_row["custom_table"];
+            }
+            else {
+                $custom_table= "custom_$list_id_override";
+            }
+            $custom_variables=$template_row["custom_variables"];
+            $template_statuses=$template_row["template_statuses"];
+            if (strlen($template_statuses)>0) {
+                $template_statuses=preg_replace('/\|/', "','", $template_statuses);
+                $statuses_clause=" and status in ('$template_statuses') ";
+            } else {
+                $status_mismatch_action="";
+            }
 
-			if ($status_mismatch_action) {
-				$mismatch_clause=" and status NOT in ('$template_statuses') ";
-				if (preg_match('/RECENT/', $status_mismatch_action)) {$mismatch_limit=" limit 1 ";} else {$mismatch_limit="";}
-			}
+            if ($status_mismatch_action) {
+                $mismatch_clause=" and status NOT in ('$template_statuses') ";
+                if (preg_match('/RECENT/', $status_mismatch_action)) {$mismatch_limit=" limit 1 ";} else {$mismatch_limit="";}
+            }
 
-			$standard_fields_ary=explode("|", $standard_variables);
-			for ($i=0; $i<count($standard_fields_ary); $i++) 
-				{
-				if (strlen($standard_fields_ary[$i])>0) 
-					{
-					$fieldno_ary=explode(",", $standard_fields_ary[$i]);
-					$varname=$fieldno_ary[0]."_field";
-					$$varname=$fieldno_ary[1];
-					} 
-				}
-			$custom_fields_ary=explode("|", $custom_variables);
-			if (count($custom_fields_ary)>0 && strlen($custom_table)>0) 
-				{
-				$custom_ins_stmt="INSERT INTO $custom_table(";
-				for ($i=0; $i<count($custom_fields_ary); $i++)
-					{
-					if (strlen($custom_fields_ary[$i])>0) 
-						{
-						$fieldno_ary=explode(",", $custom_fields_ary[$i]);
-						$custom_ins_stmt.="$fieldno_ary[0],";
-						$varname=$fieldno_ary[0]."_field";
-						$$varname=$fieldno_ary[1];
-						} 
-					}
-				$custom_ins_stmt=substr($custom_ins_stmt, 0, -1).") VALUES (";
-				}
-			}
+            $standard_fields_ary=explode("|", $standard_variables);
+            for ($i=0; $i<count($standard_fields_ary); $i++) 
+                {
+                if (strlen($standard_fields_ary[$i])>0) 
+                    {
+                    $fieldno_ary=explode(",", $standard_fields_ary[$i]);
+                    $varname=$fieldno_ary[0]."_field";
+                    $$varname=$fieldno_ary[1];
+                    } 
+                }
+            $custom_fields_ary=explode("|", $custom_variables);
+            if (count($custom_fields_ary)>0 && strlen($custom_table)>0) 
+                {
+                $custom_ins_stmt="INSERT INTO $custom_table(";
+                for ($i=0; $i<count($custom_fields_ary); $i++)
+                    {
+                    if (strlen($custom_fields_ary[$i])>0) 
+                        {
+                        $fieldno_ary=explode(",", $custom_fields_ary[$i]);
+                        $custom_ins_stmt.="$fieldno_ary[0],";
+                        $varname=$fieldno_ary[0]."_field";
+                        $$varname=$fieldno_ary[1];
+                        } 
+                    }
+                $custom_ins_stmt=substr($custom_ins_stmt, 0, -1).") VALUES (";
+                }
+            }
 
-		print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n</script>";
-		flush();
+        print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n</script>";
+        flush();
 
-		$delim_set=0;
-		# csv xls xlsx ods sxc conversion
-		if (preg_match("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", $leadfile_name)) 
-			{
-			$leadfile_name = preg_replace('/[^-\.\_0-9a-zA-Z]/','_',$leadfile_name);
-			copy($LF_path, "/tmp/$leadfile_name");
-			$new_filename = preg_replace("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", '.txt', $leadfile_name);
-			$convert_command = "$WeBServeRRooT/$admin_web_directory/sheet2tab.pl /tmp/$leadfile_name /tmp/$new_filename";
-			passthru("$convert_command");
-			$lead_file = "/tmp/$new_filename";
-			if ($DB > 0) {echo "|$convert_command|";}
+        $delim_set=0;
+        # csv xls xlsx ods sxc conversion
+        if (preg_match("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", $leadfile_name)) 
+            {
+            $leadfile_name = preg_replace('/[^-\.\_0-9a-zA-Z]/','_',$leadfile_name);
+            copy($LF_path, "/tmp/$leadfile_name");
+            $new_filename = preg_replace("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", '.txt', $leadfile_name);
+            $convert_command = "$WeBServeRRooT/$admin_web_directory/sheet2tab.pl /tmp/$leadfile_name /tmp/$new_filename";
+            passthru("$convert_command");
+            $lead_file = "/tmp/$new_filename";
+            if ($DB > 0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>|$convert_command|</div>";}
 
-			if (preg_match("/\.csv$/i", $leadfile_name)) {$delim_name="CSV: "._QXZ("Comma Separated Values");}
-			if (preg_match("/\.xls$/i", $leadfile_name)) {$delim_name="XLS: MS Excel 2000-XP";}
-			if (preg_match("/\.xlsx$/i", $leadfile_name)) {$delim_name="XLSX: MS Excel 2007+";}
-			if (preg_match("/\.ods$/i", $leadfile_name)) {$delim_name="ODS: OpenOffice.org OpenDocument "._QXZ("Spreadsheet");}
-			if (preg_match("/\.sxc$/i", $leadfile_name)) {$delim_name="SXC: OpenOffice.org "._QXZ("First Spreadsheet");}
-			$delim_set=1;
-			}
-		else
-			{
-			copy($LF_path, "/tmp/vicidial_temp_file.txt");
-			$lead_file = "/tmp/vicidial_temp_file.txt";
-			}
-		$file=fopen("$lead_file", "r");
-		if ($webroot_writable > 0)
-			{$stmt_file=fopen("$WeBServeRRooT/$admin_web_directory/listloader_stmts.txt", "w");}
+            if (preg_match("/\.csv$/i", $leadfile_name)) {$delim_name="CSV: "._QXZ("Comma Separated Values");}
+            if (preg_match("/\.xls$/i", $leadfile_name)) {$delim_name="XLS: MS Excel 2000-XP";}
+            if (preg_match("/\.xlsx$/i", $leadfile_name)) {$delim_name="XLSX: MS Excel 2007+";}
+            if (preg_match("/\.ods$/i", $leadfile_name)) {$delim_name="ODS: OpenOffice.org OpenDocument "._QXZ("Spreadsheet");}
+            if (preg_match("/\.sxc$/i", $leadfile_name)) {$delim_name="SXC: OpenOffice.org "._QXZ("First Spreadsheet");}
+            $delim_set=1;
+            }
+        else
+            {
+            copy($LF_path, "/tmp/vicidial_temp_file.txt");
+            $lead_file = "/tmp/vicidial_temp_file.txt";
+            }
+        $file=fopen("$lead_file", "r");
+        if ($webroot_writable > 0)
+            {$stmt_file=fopen("$WeBServeRRooT/$admin_web_directory/listloader_stmts.txt", "w");}
 
-		$buffer=fgets($file, 4096);
-		$tab_count=substr_count($buffer, "\t");
-		$pipe_count=substr_count($buffer, "|");
+        $buffer=fgets($file, 4096);
+        $tab_count=substr_count($buffer, "\t");
+        $pipe_count=substr_count($buffer, "|");
 
-		if ($delim_set < 1)
-			{
-			if ($tab_count>$pipe_count)
-				{$delim_name=_QXZ("tab-delimited");} 
-			else 
-				{$delim_name=_QXZ("pipe-delimited");}
-			} 
-		if ($tab_count>$pipe_count)
-			{$delimiter="\t";}
-		else 
-			{$delimiter="|";}
+        if ($delim_set < 1)
+            {
+            if ($tab_count>$pipe_count)
+                {$delim_name=_QXZ("tab-delimited");} 
+            else 
+                {$delim_name=_QXZ("pipe-delimited");}
+            } 
+        if ($tab_count>$pipe_count)
+            {$delimiter="\t";}
+        else 
+            {$delimiter="|";}
 
-		$field_check=explode($delimiter, $buffer);
+        $field_check=explode($delimiter, $buffer);
 
-		if (count($field_check)>=2) 
-			{
-			flush();
-			$file=fopen("$lead_file", "r");
-			$total=0; $good=0; $bad=0; $dup=0; $inv=0; $post=0; $moved=0; $phone_list='';
-			print "<center><font face='arial, helvetica' size=3 color='#009900'><B>"._QXZ("Processing")." $delim_name "._QXZ("file using template")." $template_id... ($tab_count|$pipe_count)\n";
-			if (strlen($list_id_override)>0) 
-				{
-				print "<BR>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").": $list_id_override<BR>";
-				}
-			if (strlen($phone_code_override)>0) 
-				{
-				print "<BR>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").": $phone_code_override<BR>\n";
-				}
-			if (strlen($dupcheck)>0) 
-				{
-				print "<BR>"._QXZ("LEAD DUPLICATE CHECK").": $dupcheck<BR>\n";
-				}
-			if (strlen($international_dnc_scrub)>0) 
-				{
-				print "<BR>"._QXZ("INTERNATIONAL DNC SCRUB").": $international_dnc_scrub<BR>\n";
-				}
-			if (strlen($template_statuses)>0) 
-				{
-				print "<BR>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").": ".preg_replace('/\'/', '', $template_statuses)."<BR>\n";
-				}
-			if (strlen($status_mismatch_action)>0) 
-				{
-				print "<BR>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").": $status_mismatch_action<BR>\n";
-				}
-			if (strlen($state_conversion)>9)
-				{
-				print "<BR>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").": $state_conversion<BR>\n";
-				}
-			if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
-				{
-				print "<BR>"._QXZ("REQUIRED PHONE NUMBER LENGTH").": $web_loader_phone_length<BR>\n";
-				}
-			if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
-				{
-				print "<BR>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").": $SSweb_loader_phone_strip<BR>\n";
-				}
-			$multidaySQL='';
-			if (preg_match("/30DAY|60DAY|90DAY|180DAY|360DAY/i",$dupcheck))
-				{
-				$day_val=30;
-				if (preg_match("/30DAY/i",$dupcheck)) {$day_val=30;}
-				if (preg_match("/60DAY/i",$dupcheck)) {$day_val=60;}
-				if (preg_match("/90DAY/i",$dupcheck)) {$day_val=90;}
-				if (preg_match("/180DAY/i",$dupcheck)) {$day_val=180;}
-				if (preg_match("/360DAY/i",$dupcheck)) {$day_val=360;}
-				$multiday = date("Y-m-d H:i:s", mktime(date("H"),date("i"),date("s"),date("m"),date("d")-$day_val,date("Y")));
-				$multidaySQL = "and entry_date > \"$multiday\"";
-				if ($DB > 0) {echo "DEBUG: $day_val day SQL: |$multidaySQL|";}
-				}
+        if (count($field_check)>=2) 
+            {
+            flush();
+            $file=fopen("$lead_file", "r");
+            $total=0; $good=0; $bad=0; $dup=0; $inv=0; $post=0; $moved=0; $phone_list='';
+            print "<center><div style='max-width:1100px;margin:2rem auto;background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;'><div style='text-align:center;margin-bottom:1.5rem;'><div style='font-size:3rem;margin-bottom:1rem;'>⚙️</div><h2 style='color:#10b981;margin:0;font-size:1.5rem;'>"._QXZ("Processing")." $delim_name "._QXZ("file using template")." <span style='background:#e0f2fe;color:#0284c7;padding:0.25rem 0.75rem;border-radius:6px;font-family:monospace;'>$template_id</span></h2><p style='color:#64748b;margin:0.5rem 0 0 0;font-size:0.9rem;'>($tab_count|$pipe_count)</p></div>\n";
+            if (strlen($list_id_override)>0) 
+                {
+                print "<div style='background:#e0f2fe;border-left:4px solid #0284c7;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#075985;margin:0;font-weight:600;'>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").": <span style='font-family:monospace;'>$list_id_override</span></p></div>";
+                }
+            if (strlen($phone_code_override)>0) 
+                {
+                print "<div style='background:#e0f2fe;border-left:4px solid #0284c7;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#075985;margin:0;font-weight:600;'>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").": <span style='font-family:monospace;'>$phone_code_override</span></p></div>\n";
+                }
+            if (strlen($dupcheck)>0) 
+                {
+                print "<div style='background:#fef3c7;border-left:4px solid #f59e0b;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#92400e;margin:0;font-weight:600;'>"._QXZ("LEAD DUPLICATE CHECK").": <span style='font-family:monospace;'>$dupcheck</span></p></div>\n";
+                }
+            if (strlen($international_dnc_scrub)>0) 
+                {
+                print "<div style='background:#fef3c7;border-left:4px solid #f59e0b;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#92400e;margin:0;font-weight:600;'>"._QXZ("INTERNATIONAL DNC SCRUB").": <span style='font-family:monospace;'>$international_dnc_scrub</span></p></div>\n";
+                }
+            if (strlen($template_statuses)>0) 
+                {
+                print "<div style='background:#f3e8ff;border-left:4px solid #9333ea;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#581c87;margin:0;font-weight:600;'>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").": <span style='font-family:monospace;'>".preg_replace('/\'/', '', $template_statuses)."</span></p></div>\n";
+                }
+            if (strlen($status_mismatch_action)>0) 
+                {
+                print "<div style='background:#f3e8ff;border-left:4px solid #9333ea;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#581c87;margin:0;font-weight:600;'>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").": <span style='font-family:monospace;'>$status_mismatch_action</span></p></div>\n";
+                }
+            if (strlen($state_conversion)>9)
+                {
+                print "<div style='background:#dbeafe;border-left:4px solid #3b82f6;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#1e40af;margin:0;font-weight:600;'>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").": <span style='font-family:monospace;'>$state_conversion</span></p></div>\n";
+                }
+            if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
+                {
+                print "<div style='background:#dbeafe;border-left:4px solid #3b82f6;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#1e40af;margin:0;font-weight:600;'>"._QXZ("REQUIRED PHONE NUMBER LENGTH").": <span style='font-family:monospace;'>$web_loader_phone_length</span></p></div>\n";
+                }
+            if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
+                {
+                print "<div style='background:#dbeafe;border-left:4px solid #3b82f6;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#1e40af;margin:0;font-weight:600;'>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").": <span style='font-family:monospace;'>$SSweb_loader_phone_strip</span></p></div>\n";
+                }
+            $multidaySQL='';
+            if (preg_match("/30DAY|60DAY|90DAY|180DAY|360DAY/i",$dupcheck))
+                {
+                $day_val=30;
+                if (preg_match("/30DAY/i",$dupcheck)) {$day_val=30;}
+                if (preg_match("/60DAY/i",$dupcheck)) {$day_val=60;}
+                if (preg_match("/90DAY/i",$dupcheck)) {$day_val=90;}
+                if (preg_match("/180DAY/i",$dupcheck)) {$day_val=180;}
+                if (preg_match("/360DAY/i",$dupcheck)) {$day_val=360;}
+                $multiday = date("Y-m-d H:i:s", mktime(date("H"),date("i"),date("s"),date("m"),date("d")-$day_val,date("Y")));
+                $multidaySQL = "and entry_date > \"$multiday\"";
+                if ($DB > 0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>DEBUG: $day_val day SQL: |$multidaySQL|</div>";}
+                }
 
-			#  If a list is being scrubbed against a country's DNC list, block the list from being dialed and purge any lead from the hopper that belongs to that list.
-			if (strlen($international_dnc_scrub)>0 && strlen($list_id_override)>0 && $SSenable_international_dncs)
-				{
-				$upd_dnc_stmt="update vicidial_settings_containers set container_entry=concat('$list_id_override => $international_dnc_scrub', if(length(container_entry)>0, '\r\n', ''), if(container_entry is null, '', container_entry)) where container_id='DNC_CURRENT_BLOCKED_LISTS'";
-				$upd_dnc_rslt=mysql_to_mysqli($upd_dnc_stmt, $link);
+            #  If a list is being scrubbed against a country's DNC list, block the list from being dialed and purge any lead from the hopper that belongs to that list.
+            if (strlen($international_dnc_scrub)>0 && strlen($list_id_override)>0 && $SSenable_international_dncs)
+                {
+                $upd_dnc_stmt="update vicidial_settings_containers set container_entry=concat('$list_id_override => $international_dnc_scrub', if(length(container_entry)>0, '\r\n', ''), if(container_entry is null, '', container_entry)) where container_id='DNC_CURRENT_BLOCKED_LISTS'";
+                $upd_dnc_rslt=mysql_to_mysqli($upd_dnc_stmt, $link);
 
-				$delete_hopper_stmt="delete from vicidial_hopper where list_id='$list_id_override'";
-				$delete_hopper_rslt=mysql_to_mysqli($delete_hopper_stmt, $link);
-				}
+                $delete_hopper_stmt="delete from vicidial_hopper where list_id='$list_id_override'";
+                $delete_hopper_rslt=mysql_to_mysqli($delete_hopper_stmt, $link);
+                }
 
+            while (!feof($file)) 
+                {
+                $record++;
+                $buffer=rtrim(fgets($file, 4096));
+                $buffer=stripslashes($buffer);
 
-			while (!feof($file)) 
-				{
-				$record++;
-				$buffer=rtrim(fgets($file, 4096));
-				$buffer=stripslashes($buffer);
+                if (strlen($buffer)>0) 
+                    {
+                    $row=explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
+                    $custom_fields_row=$row;
+                    $pulldate=date("Y-m-d H:i:s");
+                    $entry_date =           "$pulldate";
+                    $modify_date =          "";
+                    $status =               "NEW";
+                    $user ="";
+                    $vendor_lead_code =     $row[$vendor_lead_code_field];
+                    $source_code =          $row[$source_id_field];
+                    $source_id=$source_code;
+                    $list_id =              $row[$list_id_field];
+                    # Added 2/9/2015 to allow dropdown to override template
+                    if ($master_list_override) {
+                        $list_id=$list_id_override;
+                    }
+                    $gmt_offset =           '0';
+                    $called_since_last_reset='N';
+                    $phone_code =           preg_replace('/[^0-9]/i', '', $row[$phone_code_field]);
+                    $phone_number =         preg_replace('/[^0-9]/i', '', $row[$phone_number_field]);
+                    $title =                $row[$title_field];
+                    $first_name =           $row[$first_name_field];
+                    $middle_initial =       $row[$middle_initial_field];
+                    $last_name =            $row[$last_name_field];
+                    $address1 =             $row[$address1_field];
+                    $address2 =             $row[$address2_field];
+                    $address3 =             $row[$address3_field];
+                    $city =$row[$city_field];
+                    $state =                $row[$state_field];
+                    $province =             $row[$province_field];
+                    $postal_code =          $row[$postal_code_field];
+                    $country_code =         $row[$country_code_field];
+                    $gender =               $row[$gender_field];
+                    $date_of_birth =        $row[$date_of_birth_field];
+                    $alt_phone =            preg_replace('/[^0-9]/i', '', $row[$alt_phone_field]);
+                    $email =                $row[$email_field];
+                    $security_phrase =      $row[$security_phrase_field];
+                    $comments =             trim($row[$comments_field]);
+                    $rank =                 $row[$rank_field];
+                    $owner =                $row[$owner_field];
+                    
+                    # replace ' " ` \ ; with nothing
+                    $vendor_lead_code =     preg_replace("/$field_regx/i", "", $vendor_lead_code);
+                    $source_code =          preg_replace("/$field_regx/i", "", $source_code);
+                    $source_id =            preg_replace("/$field_regx/i", "", $source_id);
+                    $list_id =              preg_replace("/$field_regx/i", "", $list_id);
+                    $phone_code =           preg_replace("/$field_regx/i", "", $phone_code);
+                    $phone_number =         preg_replace("/$field_regx/i", "", $phone_number);
+                    $title =                preg_replace("/$field_regx/i", "", $title);
+                    $first_name =           preg_replace("/$field_regx/i", "", $first_name);
+                    $middle_initial =       preg_replace("/$field_regx/i", "", $middle_initial);
+                    $last_name =            preg_replace("/$field_regx/i", "", $last_name);
+                    $address1 =             preg_replace("/$field_regx/i", "", $address1);
+                    $address2 =             preg_replace("/$field_regx/i", "", $address2);
+                    $address3 =             preg_replace("/$field_regx/i", "", $address3);
+                    $city =                 preg_replace("/$field_regx/i", "", $city);
+                    $state =                preg_replace("/$field_regx/i", "", $state);
+                    $province =             preg_replace("/$field_regx/i", "", $province);
+                    $postal_code =          preg_replace("/$field_regx/i", "", $postal_code);
+                    $country_code =         preg_replace("/$field_regx/i", "", $country_code);
+                    $gender =               preg_replace("/$field_regx/i", "", $gender);
+                    $date_of_birth =        preg_replace("/$field_regx/i", "", $date_of_birth);
+                    $alt_phone =            preg_replace("/$field_regx/i", "", $alt_phone);
+                    $email =                preg_replace("/$field_regx/i", "", $email);
+                    $security_phrase =      preg_replace("/$field_regx/i", "", $security_phrase);
+                    $comments =             preg_replace("/$field_regx/i", "", $comments);
+                    $rank =                 preg_replace("/$field_regx/i", "", $rank);
+                    $owner =                preg_replace("/$field_regx/i", "", $owner);
+                    
+                    $USarea =           substr($phone_number, 0, 3);
+                    $USprefix =         substr($phone_number, 3, 3);
 
-				if (strlen($buffer)>0) 
-					{
-					$row=explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
-					$custom_fields_row=$row;
-					$pulldate=date("Y-m-d H:i:s");
-					$entry_date =			"$pulldate";
-					$modify_date =			"";
-					$status =				"NEW";
-					$user ="";
-					$vendor_lead_code =		$row[$vendor_lead_code_field];
-					$source_code =			$row[$source_id_field];
-					$source_id=$source_code;
-					$list_id =				$row[$list_id_field];
-					# Added 2/9/2015 to allow dropdown to override template
-					if ($master_list_override) {
-						$list_id=$list_id_override;
-					}
-					$gmt_offset =			'0';
-					$called_since_last_reset='N';
-					$phone_code =			preg_replace('/[^0-9]/i', '', $row[$phone_code_field]);
-					$phone_number =			preg_replace('/[^0-9]/i', '', $row[$phone_number_field]);
-					$title =				$row[$title_field];
-					$first_name =			$row[$first_name_field];
-					$middle_initial =		$row[$middle_initial_field];
-					$last_name =			$row[$last_name_field];
-					$address1 =				$row[$address1_field];
-					$address2 =				$row[$address2_field];
-					$address3 =				$row[$address3_field];
-					$city =$row[$city_field];
-					$state =				$row[$state_field];
-					$province =				$row[$province_field];
-					$postal_code =			$row[$postal_code_field];
-					$country_code =			$row[$country_code_field];
-					$gender =				$row[$gender_field];
-					$date_of_birth =		$row[$date_of_birth_field];
-					$alt_phone =			preg_replace('/[^0-9]/i', '', $row[$alt_phone_field]);
-					$email =				$row[$email_field];
-					$security_phrase =		$row[$security_phrase_field];
-					$comments =				trim($row[$comments_field]);
-					$rank =					$row[$rank_field];
-					$owner =				$row[$owner_field];
-					
-					# replace ' " ` \ ; with nothing
-					$vendor_lead_code =		preg_replace("/$field_regx/i", "", $vendor_lead_code);
-					$source_code =			preg_replace("/$field_regx/i", "", $source_code);
-					$source_id = 			preg_replace("/$field_regx/i", "", $source_id);
-					$list_id =				preg_replace("/$field_regx/i", "", $list_id);
-					$phone_code =			preg_replace("/$field_regx/i", "", $phone_code);
-					$phone_number =			preg_replace("/$field_regx/i", "", $phone_number);
-					$title =				preg_replace("/$field_regx/i", "", $title);
-					$first_name =			preg_replace("/$field_regx/i", "", $first_name);
-					$middle_initial =		preg_replace("/$field_regx/i", "", $middle_initial);
-					$last_name =			preg_replace("/$field_regx/i", "", $last_name);
-					$address1 =				preg_replace("/$field_regx/i", "", $address1);
-					$address2 =				preg_replace("/$field_regx/i", "", $address2);
-					$address3 =				preg_replace("/$field_regx/i", "", $address3);
-					$city =					preg_replace("/$field_regx/i", "", $city);
-					$state =				preg_replace("/$field_regx/i", "", $state);
-					$province =				preg_replace("/$field_regx/i", "", $province);
-					$postal_code =			preg_replace("/$field_regx/i", "", $postal_code);
-					$country_code =			preg_replace("/$field_regx/i", "", $country_code);
-					$gender =				preg_replace("/$field_regx/i", "", $gender);
-					$date_of_birth =		preg_replace("/$field_regx/i", "", $date_of_birth);
-					$alt_phone =			preg_replace("/$field_regx/i", "", $alt_phone);
-					$email =				preg_replace("/$field_regx/i", "", $email);
-					$security_phrase =		preg_replace("/$field_regx/i", "", $security_phrase);
-					$comments =				preg_replace("/$field_regx/i", "", $comments);
-					$rank =					preg_replace("/$field_regx/i", "", $rank);
-					$owner =				preg_replace("/$field_regx/i", "", $owner);
-					
-					$USarea = 			substr($phone_number, 0, 3);
-					$USprefix = 		substr($phone_number, 3, 3);
+                    if (strlen($list_id_override)>0) 
+                        {
+                        $list_id = $list_id_override;
+                        }
+                    if (strlen($phone_code_override)>0) 
+                        {
+                        $phone_code = $phone_code_override;
+                        }
+                    if (strlen($phone_code)<1) {$phone_code = '1';}
 
-					if (strlen($list_id_override)>0) 
-						{
-						$list_id = $list_id_override;
-						}
-					if (strlen($phone_code_override)>0) 
-						{
-						$phone_code = $phone_code_override;
-						}
-					if (strlen($phone_code)<1) {$phone_code = '1';}
+                    if ( ($state_conversion == 'STATELOOKUP') and (strlen($state) > 3) )
+                        {
+                        $stmt = "SELECT state from vicidial_phone_codes where geographic_description='$state' and country_code='$phone_code' limit 1;";
+                        if ($DB>0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>DEBUG: state conversion query - $stmt</div>\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $sc_recs = mysqli_num_rows($rslt);
+                        if ($sc_recs > 0)
+                            {
+                            $row=mysqli_fetch_row($rslt);
+                            $state_abbr=$row[0];
+                            if ( (strlen($state_abbr) > 0) and (strlen($state_abbr) < 3 ) )
+                                {
+                                if ($DB>0) {echo "<div style='background:#dcfce7;border-left:3px solid #10b981;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#065f46;'>DEBUG: state conversion found - $state|$state_abbr</div>\n";}
+                                $state = $state_abbr;
+                                }
+                            }
+                        }
 
-					if ( ($state_conversion == 'STATELOOKUP') and (strlen($state) > 3) )
-						{
-						$stmt = "SELECT state from vicidial_phone_codes where geographic_description='$state' and country_code='$phone_code' limit 1;";
-						if ($DB>0) {echo "DEBUG: state conversion query - $stmt\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$sc_recs = mysqli_num_rows($rslt);
-						if ($sc_recs > 0)
-							{
-							$row=mysqli_fetch_row($rslt);
-							$state_abbr=$row[0];
-							if ( (strlen($state_abbr) > 0) and (strlen($state_abbr) < 3 ) )
-								{
-								if ($DB>0) {echo "DEBUG: state conversion found - $state|$state_abbr\n";}
-								$state = $state_abbr;
-								}
-							}
-						}
+                    if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
+                        {
+                        $phone_number = preg_replace("/^$SSweb_loader_phone_strip/",'',$phone_number);
+                        }
 
-					if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
-						{
-						$phone_number = preg_replace("/^$SSweb_loader_phone_strip/",'',$phone_number);
-						}
 
 					##### Check for duplicate phone numbers in vicidial_list table for all lists in a campaign #####
-					if (preg_match("/DUPCAMP/i",$dupcheck))
-						{
-							$dup_lead=0; $moved_lead=0;
-							$dup_lists='';
-						$stmt="SELECT campaign_id from vicidial_lists where list_id='$list_id';";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$ci_recs = mysqli_num_rows($rslt);
-						if ($ci_recs > 0)
-							{
-							$row=mysqli_fetch_row($rslt);
-							$dup_camp =			$row[0];
+                    if (preg_match("/DUPCAMP/i",$dupcheck))
+                        {
+                            $dup_lead=0; $moved_lead=0;
+                            $dup_lists='';
+                        $stmt="SELECT campaign_id from vicidial_lists where list_id='$list_id';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $ci_recs = mysqli_num_rows($rslt);
+                        if ($ci_recs > 0)
+                            {
+                            $row=mysqli_fetch_row($rslt);
+                            $dup_camp =         $row[0];
 
-							$stmt="SELECT list_id from vicidial_lists where campaign_id='$dup_camp';";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$li_recs = mysqli_num_rows($rslt);
-							if ($li_recs > 0)
-								{
-								$L=0;
-								while ($li_recs > $L)
-									{
-									$row=mysqli_fetch_row($rslt);
-									$dup_lists .=	"'$row[0]',";
-									$L++;
-									}
-								$dup_lists = preg_replace('/,$/i', '',$dup_lists);
+                            $stmt="SELECT list_id from vicidial_lists where campaign_id='$dup_camp';";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $li_recs = mysqli_num_rows($rslt);
+                            if ($li_recs > 0)
+                                {
+                                $L=0;
+                                while ($li_recs > $L)
+                                    {
+                                    $row=mysqli_fetch_row($rslt);
+                                    $dup_lists .=   "'$row[0]',";
+                                    $L++;
+                                    }
+                                $dup_lists = preg_replace('/,$/i', '',$dup_lists);
 
-								if ($status_mismatch_action) 
-									{
-									if (preg_match('/USING CHECK/', $status_mismatch_action)) 
-										{
-										$stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
-										} 
-									else 
-										{
-										$stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' $mismatch_clause order by entry_date desc $mismatch_limit";
-										}
-									if ($DB>0) {print $stmt."<BR>";}
-									$rslt=mysql_to_mysqli($stmt, $link);
-									while ($row=mysqli_fetch_row($rslt)) # switch to upd_row if problem 
-										{
-										$upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
-										if ($DB>0) {print $upd_stmt."<BR>";}
-										$upd_rslt=mysql_to_mysqli($upd_stmt, $link);
-										$moved+=mysqli_affected_rows($link);
-										$moved_lead+=mysqli_affected_rows($link);
-										$dup_lead=1;
-										$dup_lead_list =	$row[0];
-										}
-									}
+                                if ($status_mismatch_action) 
+                                    {
+                                    if (preg_match('/USING CHECK/', $status_mismatch_action)) 
+                                        {
+                                        $stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
+                                        } 
+                                    else 
+                                        {
+                                        $stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' $mismatch_clause order by entry_date desc $mismatch_limit";
+                                        }
+                                    if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$stmt</div>";}
+                                    $rslt=mysql_to_mysqli($stmt, $link);
+                                    while ($row=mysqli_fetch_row($rslt))
+                                        {
+                                        $upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
+                                        if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$upd_stmt</div>";}
+                                        $upd_rslt=mysql_to_mysqli($upd_stmt, $link);
+                                        $moved+=mysqli_affected_rows($link);
+                                        $moved_lead+=mysqli_affected_rows($link);
+                                        $dup_lead=1;
+                                        $dup_lead_list =    $row[0];
+                                        }
+                                    }
 
-								if ($dup_lead < 1)
-									{
-									$stmt="SELECT list_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) $multidaySQL $statuses_clause limit 1;";
-									$rslt=mysql_to_mysqli($stmt, $link);
-									$pc_recs = mysqli_num_rows($rslt);
-									if ($pc_recs > 0)
-										{
-										$dup_lead=1;
-										$row=mysqli_fetch_row($rslt);
-										$dup_lead_list =	$row[0];
-										}
-									}
+                                if ($dup_lead < 1)
+                                    {
+                                    $stmt="SELECT list_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) $multidaySQL $statuses_clause limit 1;";
+                                    $rslt=mysql_to_mysqli($stmt, $link);
+                                    $pc_recs = mysqli_num_rows($rslt);
+                                    if ($pc_recs > 0)
+                                        {
+                                        $dup_lead=1;
+                                        $row=mysqli_fetch_row($rslt);
+                                        $dup_lead_list =    $row[0];
+                                        }
+                                    }
 
-								if ($dup_lead < 1)
-									{
-									if (preg_match("/$phone_number$US$list_id/i", $phone_list))
-										{$dup_lead++; $dup++;}
-									}
-								}
-							}
-						}
+                                if ($dup_lead < 1)
+                                    {
+                                    if (preg_match("/$phone_number$US$list_id/i", $phone_list))
+                                        {$dup_lead++; $dup++;}
+                                    }
+                                }
+                            }
+                        }
 
-					##### Check for duplicate phone numbers in vicidial_list table entire database #####
-					if (preg_match("/DUPSYS/i",$dupcheck))
-						{
-						$dup_lead=0; $moved_lead=0;
+                    ##### Check for duplicate phone numbers in vicidial_list table entire database #####
+                    if (preg_match("/DUPSYS/i",$dupcheck))
+                        {
+                        $dup_lead=0; $moved_lead=0;
 
-						if ($status_mismatch_action) 
-							{
-							if (preg_match('/USING CHECK/', $status_mismatch_action)) 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
-								} 
-							else 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' $mismatch_clause order by entry_date desc $mismatch_limit";
-								}
-							if ($DB>0) {print $stmt."<BR>";}
-							$rslt=mysql_to_mysqli($stmt, $link);
-							while ($row=mysqli_fetch_row($rslt)) # switch to upd_row if problem 
-								{
-								$upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
-								if ($DB>0) {print $upd_stmt."<BR>";}
-								$upd_rslt=mysql_to_mysqli($upd_stmt, $link);
-								$moved+=mysqli_affected_rows($link);
-								$moved_lead+=mysqli_affected_rows($link);
-								$dup_lead=1;
-								$dup_lead_list =	$row[0];
-								}
-							}
+                        if ($status_mismatch_action) 
+                            {
+                            if (preg_match('/USING CHECK/', $status_mismatch_action)) 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
+                                } 
+                            else 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' $mismatch_clause order by entry_date desc $mismatch_limit";
+                                }
+                            if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$stmt</div>";}
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            while ($row=mysqli_fetch_row($rslt))
+                                {
+                                $upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
+                                if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$upd_stmt</div>";}
+                                $upd_rslt=mysql_to_mysqli($upd_stmt, $link);
+                                $moved+=mysqli_affected_rows($link);
+                                $moved_lead+=mysqli_affected_rows($link);
+                                $dup_lead=1;
+                                $dup_lead_list =    $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							$stmt="SELECT list_id from vicidial_list where phone_number='$phone_number' $multidaySQL $statuses_clause;";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$pc_recs = mysqli_num_rows($rslt);
-							if ($pc_recs > 0)
-								{
-								$dup_lead=1;
-								$row=mysqli_fetch_row($rslt);
-								$dup_lead_list =	$row[0];
-								}
-							}
+                        if ($dup_lead < 1)
+                            {
+                            $stmt="SELECT list_id from vicidial_list where phone_number='$phone_number' $multidaySQL $statuses_clause;";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $pc_recs = mysqli_num_rows($rslt);
+                            if ($pc_recs > 0)
+                                {
+                                $dup_lead=1;
+                                $row=mysqli_fetch_row($rslt);
+                                $dup_lead_list =    $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							if (preg_match("/$phone_number$US$list_id/i", $phone_list))
-								{$dup_lead++; $dup++;}
-							}
-						}
+                        if ($dup_lead < 1)
+                            {
+                            if (preg_match("/$phone_number$US$list_id/i", $phone_list))
+                                {$dup_lead++; $dup++;}
+                            }
+                        }
 
-					##### Check for duplicate phone numbers in vicidial_list table for one list_id #####
-					if (preg_match("/DUPLIST/i",$dupcheck))
-						{
-						$dup_lead=0; $moved_lead=0;
+                    ##### Check for duplicate phone numbers in vicidial_list table for one list_id #####
+                    if (preg_match("/DUPLIST/i",$dupcheck))
+                        {
+                        $dup_lead=0; $moved_lead=0;
 
-						if ($status_mismatch_action) 
-							{
-							if (preg_match('/USING CHECK/', $status_mismatch_action)) 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' and list_id='$list_id' $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
-								} 
-							else 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' $mismatch_clause order by entry_date desc $mismatch_limit";
-								}
-							if ($DB>0) {print $stmt."<BR>";}
-							$rslt=mysql_to_mysqli($stmt, $link);
-							while ($row=mysqli_fetch_row($rslt)) # switch to upd_row if problem 
-								{
-								$upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
-								if ($DB>0) {print $upd_stmt."<BR>";}
-								$upd_rslt=mysql_to_mysqli($upd_stmt, $link);
-								$moved+=mysqli_affected_rows($link);
-								$moved_lead+=mysqli_affected_rows($link);
-								$dup_lead=1;
-								$dup_lead_list =	$row[0];
-								}
-							}
+                        if ($status_mismatch_action) 
+                            {
+                            if (preg_match('/USING CHECK/', $status_mismatch_action)) 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' and list_id='$list_id' $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
+                                } 
+                            else 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where phone_number='$phone_number' $mismatch_clause order by entry_date desc $mismatch_limit";
+                                }
+                            if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$stmt</div>";}
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            while ($row=mysqli_fetch_row($rslt))
+                                {
+                                $upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
+                                if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$upd_stmt</div>";}
+                                $upd_rslt=mysql_to_mysqli($upd_stmt, $link);
+                                $moved+=mysqli_affected_rows($link);
+                                $moved_lead+=mysqli_affected_rows($link);
+                                $dup_lead=1;
+                                $dup_lead_list =    $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							$stmt="SELECT count(*) from vicidial_list where phone_number='$phone_number' and list_id='$list_id' $multidaySQL $statuses_clause;";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$pc_recs = mysqli_num_rows($rslt);
-							if ($pc_recs > 0)
-								{
-								$row=mysqli_fetch_row($rslt);
-								$dup_lead =			$row[0];
-								}
-							}
+                        if ($dup_lead < 1)
+                            {
+                            $stmt="SELECT count(*) from vicidial_list where phone_number='$phone_number' and list_id='$list_id' $multidaySQL $statuses_clause;";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $pc_recs = mysqli_num_rows($rslt);
+                            if ($pc_recs > 0)
+                                {
+                                $row=mysqli_fetch_row($rslt);
+                                $dup_lead =         $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							if (preg_match("/$phone_number$US$list_id/i", $phone_list))
-								{$dup_lead++; $dup++;}
-							}
-						}
+                        if ($dup_lead < 1)
+                            {
+                            if (preg_match("/$phone_number$US$list_id/i", $phone_list))
+                                {$dup_lead++; $dup++;}
+                            }
+                        }
 
-					##### Check for duplicate title and alt-phone in vicidial_list table for one list_id #####
-					if (preg_match("/DUPTITLEALTPHONELIST/i",$dupcheck))
-						{
-						$dup_lead=0; $moved_lead=0;
+                    ##### Check for duplicate title and alt-phone in vicidial_list table for one list_id #####
+                    if (preg_match("/DUPTITLEALTPHONELIST/i",$dupcheck))
+                        {
+                        $dup_lead=0; $moved_lead=0;
 
-						if ($status_mismatch_action) 
-							{
-							if (preg_match('/USING CHECK/', $status_mismatch_action)) 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id' $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
-								} 
-							else 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $mismatch_clause order by entry_date desc $mismatch_limit";
-								}
-							if ($DB>0) {print $stmt."<BR>";}
-							$rslt=mysql_to_mysqli($stmt, $link);
-							while ($row=mysqli_fetch_row($rslt)) # switch to upd_row if problem 
-								{
-								$upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
-								if ($DB>0) {print $upd_stmt."<BR>";}
-								$upd_rslt=mysql_to_mysqli($upd_stmt, $link);
-								$moved+=mysqli_affected_rows($link);
-								$moved_lead+=mysqli_affected_rows($link);
-								$dup_lead=1;
-								$dup_lead_list =	$row[0];
-								}
-							}
+                        if ($status_mismatch_action) 
+                            {
+                            if (preg_match('/USING CHECK/', $status_mismatch_action)) 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id' $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
+                                } 
+                            else 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $mismatch_clause order by entry_date desc $mismatch_limit";
+                                }
+                            if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$stmt</div>";}
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            while ($row=mysqli_fetch_row($rslt))
+                                {
+                                $upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
+                                if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$upd_stmt</div>";}
+                                $upd_rslt=mysql_to_mysqli($upd_stmt, $link);
+                                $moved+=mysqli_affected_rows($link);
+                                $moved_lead+=mysqli_affected_rows($link);
+                                $dup_lead=1;
+                                $dup_lead_list =    $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							$stmt="SELECT count(*) from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id' $multidaySQL $statuses_clause;";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$pc_recs = mysqli_num_rows($rslt);
-							if ($pc_recs > 0)
-								{
-								$row=mysqli_fetch_row($rslt);
-								$dup_lead =			$row[0];
-								$dup_lead_list =	$list_id;
-								}
-							}
+                        if ($dup_lead < 1)
+                            {
+                            $stmt="SELECT count(*) from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id' $multidaySQL $statuses_clause;";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $pc_recs = mysqli_num_rows($rslt);
+                            if ($pc_recs > 0)
+                                {
+                                $row=mysqli_fetch_row($rslt);
+                                $dup_lead =         $row[0];
+                                $dup_lead_list =    $list_id;
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							if (preg_match("/$alt_phone$title$US$list_id/i",$phone_list))
-								{$dup_lead++; $dup++;}
-							}
-						}
+                        if ($dup_lead < 1)
+                            {
+                            if (preg_match("/$alt_phone$title$US$list_id/i",$phone_list))
+                                {$dup_lead++; $dup++;}
+                            }
+                        }
 
-					##### Check for duplicate phone numbers in vicidial_list table entire database #####
-					if (preg_match("/DUPTITLEALTPHONESYS/i",$dupcheck))
-						{
-						$dup_lead=0; $moved_lead=0;
+                    ##### Check for duplicate phone numbers in vicidial_list table entire database #####
+                    if (preg_match("/DUPTITLEALTPHONESYS/i",$dupcheck))
+                        {
+                        $dup_lead=0; $moved_lead=0;
 
-						if ($status_mismatch_action) 
-							{
-							if (preg_match('/USING CHECK/', $status_mismatch_action)) 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
-								} 
-							else 
-								{
-								$stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $mismatch_clause order by entry_date desc $mismatch_limit";
-								}
-							if ($DB>0) {print $stmt."<BR>";}
-							$rslt=mysql_to_mysqli($stmt, $link);
-							while ($row=mysqli_fetch_row($rslt)) # switch to upd_row if problem 
-								{
-								$upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
-								if ($DB>0) {print $upd_stmt."<BR>";}
-								$upd_rslt=mysql_to_mysqli($upd_stmt, $link);
-								$moved+=mysqli_affected_rows($link);
-								$moved_lead+=mysqli_affected_rows($link);
-								$dup_lead=1;
-								$dup_lead_list =	$row[0];
-								}
-							}
+                        if ($status_mismatch_action) 
+                            {
+                            if (preg_match('/USING CHECK/', $status_mismatch_action)) 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $multidaySQL $mismatch_clause order by entry_date desc $mismatch_limit";
+                                } 
+                            else 
+                                {
+                                $stmt="SELECT list_id, lead_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $mismatch_clause order by entry_date desc $mismatch_limit";
+                                }
+                            if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$stmt</div>";}
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            while ($row=mysqli_fetch_row($rslt))
+                                {
+                                $upd_stmt="update vicidial_list set list_id='$list_id' where lead_id='$row[1]'";
+                                if ($DB>0) {print "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>$upd_stmt</div>";}
+                                $upd_rslt=mysql_to_mysqli($upd_stmt, $link);
+                                $moved+=mysqli_affected_rows($link);
+                                $moved_lead+=mysqli_affected_rows($link);
+                                $dup_lead=1;
+                                $dup_lead_list =    $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							$stmt="SELECT list_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $multidaySQL $statuses_clause;";
-							$rslt=mysql_to_mysqli($stmt, $link);
-							$pc_recs = mysqli_num_rows($rslt);
-							if ($pc_recs > 0)
-								{
-								$dup_lead=1;
-								$row=mysqli_fetch_row($rslt);
-								$dup_lead_list =	$row[0];
-								}
-							}
+                        if ($dup_lead < 1)
+                            {
+                            $stmt="SELECT list_id from vicidial_list where title='$title' and alt_phone='$alt_phone' $multidaySQL $statuses_clause;";
+                            $rslt=mysql_to_mysqli($stmt, $link);
+                            $pc_recs = mysqli_num_rows($rslt);
+                            if ($pc_recs > 0)
+                                {
+                                $dup_lead=1;
+                                $row=mysqli_fetch_row($rslt);
+                                $dup_lead_list =    $row[0];
+                                }
+                            }
 
-						if ($dup_lead < 1)
-							{
-							if (preg_match("/$alt_phone$title$US$list_id/i",$phone_list))
-								{$dup_lead++; $dup++;}
-							}
-						}
+                        if ($dup_lead < 1)
+                            {
+                            if (preg_match("/$alt_phone$title$US$list_id/i",$phone_list))
+                                {$dup_lead++; $dup++;}
+                            }
+                        }
 
-					$valid_number=1;
-					$invalid_reason='';
-					if ( (strlen($phone_number)<5) || (strlen($phone_number)>18) )
-						{
-						$valid_number=0;
-						$invalid_reason = _QXZ("INVALID PHONE NUMBER LENGTH");
-						}
-					if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) and ( (strlen($phone_number) > $web_loader_phone_length) or (strlen($phone_number) < $web_loader_phone_length) ) )
-						{
-						$valid_number=0;
-						$invalid_reason = _QXZ("INVALID REQUIRED PHONE NUMBER LENGTH");
-						}
-					if ( (preg_match("/PREFIX/",$usacan_check)) and ($valid_number > 0) )
-						{
-						$USprefix = 	substr($phone_number, 3, 1);
-						if ($DB>0) {echo _QXZ("DEBUG: usacan prefix check")." - $USprefix|$phone_number\n";}
-						if ($USprefix < 2)
-							{
-							$valid_number=0;
-							$invalid_reason = _QXZ("INVALID PHONE NUMBER PREFIX");
-							}
-						}
-					if ( (preg_match("/AREACODE/",$usacan_check)) and ($valid_number > 0) )
-						{
-						$phone_areacode = substr($phone_number, 0, 3);
-						$stmt = "SELECT count(*) from vicidial_phone_codes where areacode='$phone_areacode' and country_code='1';";
-						if ($DB>0) {echo "DEBUG: usacan areacode query - $stmt\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$row=mysqli_fetch_row($rslt);
-						$valid_number=$row[0];
-						if ($valid_number < 1)
-							{
-							$invalid_reason = _QXZ("INVALID PHONE NUMBER AREACODE");
-							}
-						}
-					if ( (preg_match("/NANPA/",$usacan_check)) and ($valid_number > 0) )
-						{
-						$phone_areacode = substr($phone_number, 0, 3);
-						$phone_prefix = substr($phone_number, 3, 3);
-						$stmt = "SELECT count(*) from vicidial_nanpa_prefix_codes where areacode='$phone_areacode' and prefix='$phone_prefix';";
-						if ($DB>0) {echo "DEBUG: usacan nanpa query - $stmt\n";}
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$row=mysqli_fetch_row($rslt);
-						$valid_number=$row[0];
-						if ($valid_number < 1)
-							{
-							$invalid_reason = _QXZ("INVALID PHONE NUMBER NANPA AREACODE PREFIX");
-							}
-						}
-					if ($international_dnc_scrub and $valid_number > 0)
-						{
-						$dnc_table_name="vicidial_dnc_".$international_dnc_scrub;
-						$dnc_stmt="select count(*) from $dnc_table_name where phone_number='$phone_number'";
-						if ($DB>0) {echo "DEBUG: $international_dnc_scrub DNC query - $dnc_stmt\n";}
-						$dnc_rslt=mysql_to_mysqli($dnc_stmt, $link);
-						$dnc_row=mysqli_fetch_row($dnc_rslt);
-						$dnc_matches=$dnc_row[0];
-						if ($dnc_matches >0)
-							{
-							$invalid_reason = _QXZ("NUMBER FOUND IN $international_dnc_scrub DNC LIST");
-							}
-						}
+                    $valid_number=1;
+                    $invalid_reason='';
+                    if ( (strlen($phone_number)<5) || (strlen($phone_number)>18) )
+                        {
+                        $valid_number=0;
+                        $invalid_reason = _QXZ("INVALID PHONE NUMBER LENGTH");
+                        }
+                    if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) and ( (strlen($phone_number) > $web_loader_phone_length) or (strlen($phone_number) < $web_loader_phone_length) ) )
+                        {
+                        $valid_number=0;
+                        $invalid_reason = _QXZ("INVALID REQUIRED PHONE NUMBER LENGTH");
+                        }
+                    if ( (preg_match("/PREFIX/",$usacan_check)) and ($valid_number > 0) )
+                        {
+                        $USprefix =     substr($phone_number, 3, 1);
+                        if ($DB>0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>"._QXZ("DEBUG: usacan prefix check")." - $USprefix|$phone_number</div>\n";}
+                        if ($USprefix < 2)
+                            {
+                            $valid_number=0;
+                            $invalid_reason = _QXZ("INVALID PHONE NUMBER PREFIX");
+                            }
+                        }
+                    if ( (preg_match("/AREACODE/",$usacan_check)) and ($valid_number > 0) )
+                        {
+                        $phone_areacode = substr($phone_number, 0, 3);
+                        $stmt = "SELECT count(*) from vicidial_phone_codes where areacode='$phone_areacode' and country_code='1';";
+                        if ($DB>0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>DEBUG: usacan areacode query - $stmt</div>\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $row=mysqli_fetch_row($rslt);
+                        $valid_number=$row[0];
+                        if ($valid_number < 1)
+                            {
+                            $invalid_reason = _QXZ("INVALID PHONE NUMBER AREACODE");
+                            }
+                        }
+                    if ( (preg_match("/NANPA/",$usacan_check)) and ($valid_number > 0) )
+                        {
+                        $phone_areacode = substr($phone_number, 0, 3);
+                        $phone_prefix = substr($phone_number, 3, 3);
+                        $stmt = "SELECT count(*) from vicidial_nanpa_prefix_codes where areacode='$phone_areacode' and prefix='$phone_prefix';";
+                        if ($DB>0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>DEBUG: usacan nanpa query - $stmt</div>\n";}
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $row=mysqli_fetch_row($rslt);
+                        $valid_number=$row[0];
+                        if ($valid_number < 1)
+                            {
+                            $invalid_reason = _QXZ("INVALID PHONE NUMBER NANPA AREACODE PREFIX");
+                            }
+                        }
+                    if ($international_dnc_scrub and $valid_number > 0)
+                        {
+                        $dnc_table_name="vicidial_dnc_".$international_dnc_scrub;
+                        $dnc_stmt="select count(*) from $dnc_table_name where phone_number='$phone_number'";
+                        if ($DB>0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>DEBUG: $international_dnc_scrub DNC query - $dnc_stmt</div>\n";}
+                        $dnc_rslt=mysql_to_mysqli($dnc_stmt, $link);
+                        $dnc_row=mysqli_fetch_row($dnc_rslt);
+                        $dnc_matches=$dnc_row[0];
+                        if ($dnc_matches >0)
+                            {
+                            $invalid_reason = _QXZ("NUMBER FOUND IN $international_dnc_scrub DNC LIST");
+                            }
+                        }
 
-					if ( ($valid_number>0) and ($dnc_matches<1) and ($dup_lead<1) and ($list_id >= 100 ))
-						{
-						if (preg_match("/TITLEALTPHONE/i",$dupcheck))
-							{$phone_list .= "$alt_phone$title$US$list_id|";}
-						else
-							{$phone_list .= "$phone_number$US$list_id|";}
+                    if ( ($valid_number>0) and ($dnc_matches<1) and ($dup_lead<1) and ($list_id >= 100 ))
+                        {
+                        if (preg_match("/TITLEALTPHONE/i",$dupcheck))
+                            {$phone_list .= "$alt_phone$title$US$list_id|";}
+                        else
+                            {$phone_list .= "$phone_number$US$list_id|";}
 
-						$gmt_offset = lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$Ssec,$Smon,$Smday,$Syear,$postalgmt,$postal_code,$owner,$USprefix);
+                        $gmt_offset = lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$Ssec,$Smon,$Smday,$Syear,$postalgmt,$postal_code,$owner,$USprefix);
 
-/*						if ($multi_insert_counter > 8) 
-#							{
-							### insert good deal into pending_transactions table ###
-							$stmtZ = "INSERT INTO vicidial_list (lead_id,entry_date,modify_date,status,user,vendor_lead_code,source_id,list_id,gmt_offset_now,called_since_last_reset,phone_code,phone_number,title,first_name,middle_initial,last_name,address1,address2,address3,city,state,province,postal_code,country_code,gender,date_of_birth,alt_phone,email,security_phrase,comments,called_count,last_local_call_time,rank,owner,entry_list_id) values$multistmt('','$entry_date','$modify_date','$status','$user','$vendor_lead_code','$source_id','$list_id','$gmt_offset','$called_since_last_reset','$phone_code','$phone_number','$title','$first_name','$middle_initial','$last_name','$address1','$address2','$address3','$city','$state','$province','$postal_code','$country_code','$gender','$date_of_birth','$alt_phone','$email','$security_phrase','$comments',0,'2008-01-01 00:00:00','$rank','$owner','0');";
-							$rslt=mysql_to_mysqli($stmtZ, $link);
-							if ( ($webroot_writable > 0) and ($DB>0) )
-								{fwrite($stmt_file, $stmtZ."\r\n");}
-							$multistmt=''; */
-							$multi_insert_counter=0;
-							$stmtZ = "INSERT INTO vicidial_list (lead_id,entry_date,modify_date,status,user,vendor_lead_code,source_id,list_id,gmt_offset_now,called_since_last_reset,phone_code,phone_number,title,first_name,middle_initial,last_name,address1,address2,address3,city,state,province,postal_code,country_code,gender,date_of_birth,alt_phone,email,security_phrase,comments,called_count,last_local_call_time,rank,owner,entry_list_id) values('',\"$entry_date\",\"$modify_date\",\"$status\",\"$user\",\"$vendor_lead_code\",\"$source_id\",\"$list_id\",\"$gmt_offset\",\"$called_since_last_reset\",\"$phone_code\",\"$phone_number\",\"$title\",\"$first_name\",\"$middle_initial\",\"$last_name\",\"$address1\",\"$address2\",\"$address3\",\"$city\",\"$state\",\"$province\",\"$postal_code\",\"$country_code\",\"$gender\",\"$date_of_birth\",\"$alt_phone\",\"$email\",\"$security_phrase\",\"$comments\",0,\"2008-01-01 00:00:00\",\"$rank\",\"$owner\",'$list_id');";
-							$rslt=mysql_to_mysqli($stmtZ, $link);
-							$affected_rows = mysqli_affected_rows($link);
-							$lead_id = mysqli_insert_id($link);
-							if ($DB > 0) {echo "<!-- $affected_rows|$lead_id|$stmtZ -->";}
-							if ( ($webroot_writable > 0) and ($DB>0) )
-								{fwrite($stmt_file, $stmtZ."\r\n");}
-							$multistmt='';
+                            $multi_insert_counter=0;
+                            $stmtZ = "INSERT INTO vicidial_list (lead_id,entry_date,modify_date,status,user,vendor_lead_code,source_id,list_id,gmt_offset_now,called_since_last_reset,phone_code,phone_number,title,first_name,middle_initial,last_name,address1,address2,address3,city,state,province,postal_code,country_code,gender,date_of_birth,alt_phone,email,security_phrase,comments,called_count,last_local_call_time,rank,owner,entry_list_id) values('',\"$entry_date\",\"$modify_date\",\"$status\",\"$user\",\"$vendor_lead_code\",\"$source_id\",\"$list_id\",\"$gmt_offset\",\"$called_since_last_reset\",\"$phone_code\",\"$phone_number\",\"$title\",\"$first_name\",\"$middle_initial\",\"$last_name\",\"$address1\",\"$address2\",\"$address3\",\"$city\",\"$state\",\"$province\",\"$postal_code\",\"$country_code\",\"$gender\",\"$date_of_birth\",\"$alt_phone\",\"$email\",\"$security_phrase\",\"$comments\",0,\"2008-01-01 00:00:00\",\"$rank\",\"$owner\",'$list_id');";
+                            $rslt=mysql_to_mysqli($stmtZ, $link);
+                            $affected_rows = mysqli_affected_rows($link);
+                            $lead_id = mysqli_insert_id($link);
+                            if ($DB > 0) {echo "<!-- $affected_rows|$lead_id|$stmtZ -->";}
+                            if ( ($webroot_writable > 0) and ($DB>0) )
+                                {fwrite($stmt_file, $stmtZ."\r\n");}
+                            $multistmt='';
 
-							#$custom_SQL_query = "INSERT INTO custom_$list_id_override SET lead_id='$lead_id',$custom_SQL;";
-							#$rslt=mysql_to_mysqli($custom_SQL_query, $link);
-							#$affected_rows = mysqli_affected_rows($link);
+                            $custom_tbl_stmt="SHOW TABLES LIKE '$custom_table'";
+                            $custom_tbl_rslt=mysql_to_mysqli($custom_tbl_stmt, $link);
+                            if(mysqli_num_rows($custom_tbl_rslt)>0)
+                                {
+                                $custom_ins_stmt="INSERT INTO $custom_table(lead_id";
+                                $custom_SQL_values="";
+                                for ($q=0; $q<count($custom_fields_ary); $q++) 
+                                    {
+                                    if (strlen($custom_fields_ary[$q])>0) 
+                                        {
+                                        $fieldno_ary=explode(",", $custom_fields_ary[$q]);
+                                        $varname=$fieldno_ary[0]."_field";
+                                        $$varname=$fieldno_ary[1];
+                                        $custom_ins_stmt.=",$fieldno_ary[0]";
 
-							$custom_tbl_stmt="SHOW TABLES LIKE '$custom_table'";
-							$custom_tbl_rslt=mysql_to_mysqli($custom_tbl_stmt, $link);
-							if(mysqli_num_rows($custom_tbl_rslt)>0)
-								{
-								$custom_ins_stmt="INSERT INTO $custom_table(lead_id";
-								$custom_SQL_values="";
-								for ($q=0; $q<count($custom_fields_ary); $q++) 
-									{
-									if (strlen($custom_fields_ary[$q])>0) 
-										{
-										$fieldno_ary=explode(",", $custom_fields_ary[$q]);
-										$varname=$fieldno_ary[0]."_field";
-										$$varname=$fieldno_ary[1];
-										$custom_ins_stmt.=",$fieldno_ary[0]";
+                                        if ( (preg_match("/cf_encrypt/",$SSactive_modules)) and (strlen($custom_fields_row[$$varname]) > 0) )
+                                            {
+                                            $field_encrypt='N';
+                                            $stmt = "SELECT field_encrypt from vicidial_lists_fields where list_id='$list_id' and field_label='$fieldno_ary[0]' limit 1;";
+                                            if ($DB>0) {echo "<div style='background:#f8fafc;border-left:3px solid #3b82f6;padding:0.5rem 1rem;margin:0.5rem;font-family:monospace;font-size:0.85rem;color:#1e293b;'>DEBUG: cf_encrypt query - $stmt</div>\n";}
+                                            $rslt=mysql_to_mysqli($stmt, $link);
+                                            $sc_recs = mysqli_num_rows($rslt);
+                                            if ($sc_recs > 0)
+                                                {
+                                                $row=mysqli_fetch_row($rslt);
+                                                $field_encrypt = $row[0];
+                                                }
+                                            if ($field_encrypt == 'Y')
+                                                {
+                                                $field_enc=$MT;
+                                                $field_value = $custom_fields_row[$$varname];
+                                                $field_value = base64_encode($field_value);
+                                                exec("../agc/aes.pl --encrypt --text=$field_value", $field_enc);
+                                                $field_enc_ct = count($field_enc);
+                                                $k=0;
+                                                $field_enc_all='';
+                                                while ($field_enc_ct > $k)
+                                                    {
+                                                    $field_enc_all .= $field_enc[$k];
+                                                    $k++;
+                                                    }
+                                                $custom_fields_row[$$varname] = preg_replace("/CRYPT: |\n|\r|\t/",'',$field_enc_all);
+                                                }
+                                            }
 
-										if ( (preg_match("/cf_encrypt/",$SSactive_modules)) and (strlen($custom_fields_row[$$varname]) > 0) )
-											{
-											$field_encrypt='N';
-											$stmt = "SELECT field_encrypt from vicidial_lists_fields where list_id='$list_id' and field_label='$fieldno_ary[0]' limit 1;";
-											if ($DB>0) {echo "DEBUG: cf_encrypt query - $stmt\n";}
-											$rslt=mysql_to_mysqli($stmt, $link);
-											$sc_recs = mysqli_num_rows($rslt);
-											if ($sc_recs > 0)
-												{
-												$row=mysqli_fetch_row($rslt);
-												$field_encrypt = $row[0];
-												}
-											if ($field_encrypt == 'Y')
-												{
-												$field_enc=$MT;
-												$field_value = $custom_fields_row[$$varname];
-												$field_value = base64_encode($field_value);
-												exec("../agc/aes.pl --encrypt --text=$field_value", $field_enc);
-												$field_enc_ct = count($field_enc);
-												$k=0;
-												$field_enc_all='';
-												while ($field_enc_ct > $k)
-													{
-													$field_enc_all .= $field_enc[$k];
-													$k++;
-													}
-												$custom_fields_row[$$varname] = preg_replace("/CRYPT: |\n|\r|\t/",'',$field_enc_all);
-												}
-											}
-
-										$custom_SQL_values.=",\"".$custom_fields_row[$$varname]."\"";
-										} 
-									}
-								$custom_ins_stmt.=") VALUES('$lead_id'$custom_SQL_values)";
-								$custom_rslt=mysql_to_mysqli($custom_ins_stmt, $link);
-								$affected_rows = mysqli_affected_rows($link);
-								echo "<!-- $custom_ins_stmt //-->\n";
-								if ( ($webroot_writable > 0) and ($DB>0) )
-									{fwrite($stmt_file, $custom_ins_stmt."\r\n");}
-								}
-/*								
-							} 
+                                        $custom_SQL_values.=",\"".$custom_fields_row[$$varname]."\"";
+                                        } 
+                                    }
+                                $custom_ins_stmt.=") VALUES('$lead_id'$custom_SQL_values)";
+                                $custom_rslt=mysql_to_mysqli($custom_ins_stmt, $link);
+                                $affected_rows = mysqli_affected_rows($link);
+                                echo "<!-- $custom_ins_stmt //-->\n";
+                                if ( ($webroot_writable > 0) and ($DB>0) )
+                                    {fwrite($stmt_file, $custom_ins_stmt."\r\n");}
+                                }
+					
+							//
 						else 
 							{
 							$multistmt .= "('','$entry_date','$modify_date','$status','$user','$vendor_lead_code','$source_id','$list_id','$gmt_offset','$called_since_last_reset','$phone_code','$phone_number','$title','$first_name','$middle_initial','$last_name','$address1','$address2','$address3','$city','$state','$province','$postal_code','$country_code','$gender','$date_of_birth','$alt_phone','$email','$security_phrase','$comments',0,'2008-01-01 00:00:00','$rank','$owner','0'),";
