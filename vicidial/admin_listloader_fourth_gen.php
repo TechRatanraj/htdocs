@@ -514,152 +514,10 @@ echo "<style type=\"text/css\">\n
 A.employee_standard {  font-family: garamond, sans-serif; font-size: ".macfontfix(10)."pt; font-style: normal; font-variant: normal; font-weight: bold; text-decoration: none}\n
 .employee_standard {  font-family: garamond, sans-serif; font-size: ".macfontfix(10)."pt; font-weight: bold}\n
 .employee_title {  font-family: Garamond, sans-serif; font-size: ".macfontfix(14)."pt; font-weight: bold}\n
-
-/* --- New GDPR purge layout & status styles --- */\n
-body {\n
-  margin: 0;\n
-  font-family: Arial, Helvetica, sans-serif;\n
-  background: #f4f6fb;\n
-  color: #0f172a;\n
-}\n
-.gb-page {\n
-  min-height: 100vh;\n
-  display: flex;\n
-  flex-direction: column;\n
-}\n
-#admin_header {\n
-  position: sticky;\n
-  top: 0;\n
-  z-index: 20;\n
-}\n
-.gb-main {\n
-  flex: 1;\n
-  display: flex;\n
-  align-items: center;\n
-  justify-content: center;\n
-  padding: 32px 16px 40px;\n
-}\n
-.gb-card {\n
-  max-width: 720px;\n
-  width: 100%;\n
-  background: #ffffff;\n
-  border-radius: 16px;\n
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);\n
-  border: 1px solid #e2e8f0;\n
-  padding: 28px 28px 24px;\n
-}\n
-.gb-card-header {\n
-  display: flex;\n
-  align-items: center;\n
-  gap: 16px;\n
-  margin-bottom: 16px;\n
-}\n
-.gb-icon-danger {\n
-  width: 40px;\n
-  height: 40px;\n
-  border-radius: 999px;\n
-  display: inline-flex;\n
-  align-items: center;\n
-  justify-content: center;\n
-  border: 1px solid rgba(220, 38, 38, 0.18);\n
-  background: rgba(220, 38, 38, 0.08);\n
-  color: #dc2626;\n
-  font-weight: 700;\n
-  font-size: 22px;\n
-}\n
-.gb-title {\n
-  font-size: 18px;\n
-  font-weight: 650;\n
-}\n
-.gb-subtitle {\n
-  font-size: 12px;\n
-  color: #64748b;\n
-}\n
-.gb-body {\n
-  margin-top: 10px;\n
-  font-size: 13px;\n
-}\n
-.gb-body p {\n
-  margin: 0 0 6px 0;\n
-}\n
-.gb-html-wrapper {\n
-  margin-top: 14px;\n
-  padding: 12px 13px;\n
-  border-radius: 12px;\n
-  background: rgba(37, 99, 235, 0.06);\n
-  border: 1px dashed rgba(148, 163, 184, 0.9);\n
-  max-height: 420px;\n
-  overflow: auto;\n
-}\n
-.gb-footer {\n
-  margin-top: 16px;\n
-  display: flex;\n
-  justify-content: flex-end;\n
-  gap: 8px;\n
-  flex-wrap: wrap;\n
-}\n
-.gb-btn {\n
-  border-radius: 999px;\n
-  padding: 7px 16px;\n
-  font-size: 12px;\n
-  border: 1px solid transparent;\n
-  cursor: pointer;\n
-  outline: none;\n
-  display: inline-flex;\n
-  align-items: center;\n
-  gap: 6px;\n
-}\n
-.gb-btn-primary {\n
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);\n
-  color: #ffffff;\n
-}\n
-.gb-btn-primary:hover {\n
-  filter: brightness(1.05);\n
-}\n
-.gb-btn-ghost {\n
-  background: transparent;\n
-  border-color: #e2e8f0;\n
-  color: #64748b;\n
-}\n
-.gb-btn-ghost:hover {\n
-  background: rgba(15, 23, 42, 0.02);\n
-}\n
-#agent_status_stats {\n
-  position: fixed;\n
-  bottom: 16px;\n
-  right: 16px;\n
-  z-index: 19;\n
-  min-width: 260px;\n
-  max-width: 360px;\n
-  font-size: 11px;\n
-  background: #020617;\n
-  color: #e5e7eb;\n
-  padding: 9px 13px;\n
-  border-radius: 999px;\n
-  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.55);\n
-  opacity: 0.92;\n
-}\n
-#agent_status_stats a {\n
-  color: #93c5fd;\n
-}\n
-@media (max-width: 640px) {\n
-  .gb-card {\n
-    padding: 20px 16px 18px;\n
-    border-radius: 14px;\n
-  }\n
-  .gb-title {\n
-    font-size: 16px;\n
-  }\n
-  .gb-html-wrapper {\n
-    max-height: 320px;\n
-  }\n
-}\n
 \\\\-->\n
 </style>\n";
 
-
 ?>
-
 
 <script language="JavaScript1.2">
 function openNewWindow(url) 
@@ -761,7 +619,7 @@ function PopulateStatuses(list_id) {
 <?php
 $short_header=1;
 
-//require("admin_header.php");
+require("admin_header.php");
 
 echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
 
