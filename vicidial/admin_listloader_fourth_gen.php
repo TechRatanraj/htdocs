@@ -3221,19 +3221,16 @@ if (($leadfile) && ($LF_path))
     ##### END process standard file layout #####
 
         
-   ##### BEGIN field chooser #####
+    ##### BEGIN field chooser #####
     else if ($file_layout=="custom")
         {
-        print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=true;}\n</script>";
+        print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=true;}\n</script><HR>";
         flush();
-        
-        print "<div style='max-width:900px;margin:2rem auto;'>";
-        print "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
-        print "<div style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);padding:1.5rem;text-align:center;'>";
-        print "<div style='font-size:2.5rem;margin-bottom:0.5rem;'>🔗</div>";
-        print "<h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:600;'>"._QXZ("Field Mapping")."</h2>";
-        print "<p style='color:rgba(255,255,255,0.9);margin:0.5rem 0 0 0;font-size:0.9rem;'>"._QXZ("Map your file columns to VICIDIAL fields")."</p>";
-        print "</div>";
+        print "<table border=0 cellpadding=3 cellspacing=0 width=700 align=center>\r\n";
+        print "  <tr bgcolor='#$SSmenu_background'>\r\n";
+        print "    <th align=right><font class='standard' color='white'>"._QXZ("VICIDIAL Column")."</font></th>\r\n";
+        print "    <th><font class='standard' color='white'>"._QXZ("File data")."</font></th>\r\n";
+        print "  </tr>\r\n";
 
         $fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner from vicidial_list limit 1";
 
@@ -3359,14 +3356,7 @@ if (($leadfile) && ($LF_path))
 
         flush();
         $file=fopen("$lead_file", "r");
-        
-        print "<div style='padding:1.5rem;'>";
-        print "<div style='background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:1rem;margin-bottom:1.5rem;'>";
-        print "<div style='display:flex;align-items:center;gap:0.5rem;'>";
-        print "<span style='font-size:1.2rem;'>📄</span>";
-        print "<span style='color:#0c4a6e;font-weight:600;'>$delim_name "._QXZ("file detected")."</span>";
-        print "</div>";
-        print "</div>";
+        print "<center><div style='max-width:1100px;margin:2rem auto;background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;'><div style='text-align:center;margin-bottom:1.5rem;'><div style='font-size:3rem;margin-bottom:1rem;'>⚙️</div><h2 style='color:#10b981;margin:0;font-size:1.5rem;'>"._QXZ("Processing")." $delim_name "._QXZ("file")."...</h2></div>\n";
 
         if (strlen($list_id_override)>0) 
             {
@@ -3405,15 +3395,10 @@ if (($leadfile) && ($LF_path))
             print "<div style='background:#dbeafe;border-left:4px solid #3b82f6;padding:1rem;margin:1rem 0;border-radius:6px;'><p style='color:#1e40af;margin:0;font-weight:600;'>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").": <span style='font-family:monospace;'>$SSweb_loader_phone_strip</span></p></div>\n";
             }
 
-        print "<div style='margin-top:2rem;'>";
-        print "<h3 style='color:#334155;margin:0 0 1rem 0;font-size:1.1rem;font-weight:600;'>"._QXZ("Field Mapping")."</h3>";
-        print "<div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;'>";
-
         $buffer=rtrim(fgets($file, 4096));
         $buffer=stripslashes($buffer);
         $row=explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
         
-        $row_counter = 0;
         while ($fieldinfo=mysqli_fetch_field($rslt))
             {
             $rslt_field_name=$fieldinfo->name;
@@ -3423,51 +3408,37 @@ if (($leadfile) && ($LF_path))
                 }
             else 
                 {
-                $bg_color = ($row_counter % 2 == 0) ? '#ffffff' : '#f8fafc';
-                print "<div style='display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1rem;background:$bg_color;border-bottom:1px solid #e2e8f0;'>";
-                print "<div style='display:flex;align-items:center;'>";
-                print "<label style='color:#475569;font-weight:600;font-size:0.9rem;'>".strtoupper(preg_replace('/_/i', ' ', $rslt_field_name))."</label>";
-                print "</div>";
-                print "<div>";
-                print "<select name='".$rslt_field_name."_field' style='width:100%;padding:0.5rem;border:1px solid #cbd5e1;border-radius:6px;background:#fff;color:#334155;font-size:0.9rem;cursor:pointer;'>";
-                print "<option value='-1' style='color:#94a3b8;'>("._QXZ("none").")</option>";
+                print "  <tr bgcolor=#$SSframe_background>\r\n";
+                print "    <td align=right><font class=standard>".strtoupper(preg_replace('/_/i', ' ', $rslt_field_name)).": </font></td>\r\n";
+                print "    <td align=center><select name='".$rslt_field_name."_field'>\r\n";
+                print "     <option value='-1'>(none)</option>\r\n";
 
                 for ($j=0; $j<count($row); $j++) 
                     {
                     preg_replace('/\"/i', '', $row[$j]);
-                    print "<option value='$j'>\"$row[$j]\"</option>";
+                    print "     <option value='$j'>\"$row[$j]\"</option>\r\n";
                     }
 
-                print "</select>";
-                print "</div>";
-                print "</div>";
-                $row_counter++;
+                print "    </select></td>\r\n";
+                print "  </tr>\r\n";
                 }
             }
-        
-        print "</div>"; // End field mapping container
-        print "</div>"; // End margin-top div
-        
-        print "<div style='background:#f8fafc;padding:1.5rem;margin-top:2rem;border-top:1px solid #e2e8f0;display:flex;gap:1rem;justify-content:center;'>";
-        print "<input type=hidden name=international_dnc_scrub value=\"$international_dnc_scrub\">";
-        print "<input type=hidden name=dedupe_statuses_override value=\"$status_dedupe_str\">";
-        print "<input type=hidden name=status_mismatch_action value=\"$status_mismatch_action\">";
-        print "<input type=hidden name=dupcheck value=\"$dupcheck\">";
-        print "<input type=hidden name=usacan_check value=\"$usacan_check\">";
-        print "<input type=hidden name=state_conversion value=\"$state_conversion\">";
-        print "<input type=hidden name=web_loader_phone_length value=\"$web_loader_phone_length\">";
-        print "<input type=hidden name=postalgmt value=\"$postalgmt\">";
-        print "<input type=hidden name=lead_file value=\"$lead_file\">";
-        print "<input type=hidden name=list_id_override value=\"$list_id_override\">";
-        print "<input type=hidden name=phone_code_override value=\"$phone_code_override\">";
-        print "<input type=hidden name=DB value=\"$DB\">";
-        print "<button type='submit' name='OK_to_process' style='background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;padding:0.75rem 2rem;border:none;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("OK TO PROCESS")."</button>";
-        print "<button type='button' onclick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" name='reload_page' style='background:#fff;color:#64748b;padding:0.75rem 2rem;border:1px solid #cbd5e1;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;transition:all 0.3s;' onmouseover=\"this.style.background='#f8fafc';this.style.borderColor='#94a3b8';\" onmouseout=\"this.style.background='#fff';this.style.borderColor='#cbd5e1';\">"._QXZ("START OVER")."</button>";
-        print "</div>";
-        
-        print "</div>"; // End padding div
-        print "</div>"; // End white background card
-        print "</div>"; // End max-width container
+        print "  <tr bgcolor='#$SSmenu_background'>\r\n";
+        print "  <input type=hidden name=international_dnc_scrub value=\"$international_dnc_scrub\">\r\n";
+        print "  <input type=hidden name=dedupe_statuses_override value=\"$status_dedupe_str\">\r\n";
+        print "  <input type=hidden name=status_mismatch_action value=\"$status_mismatch_action\">\r\n";
+        print "  <input type=hidden name=dupcheck value=\"$dupcheck\">\r\n";
+        print "  <input type=hidden name=usacan_check value=\"$usacan_check\">\r\n";
+        print "  <input type=hidden name=state_conversion value=\"$state_conversion\">\r\n";
+        print "  <input type=hidden name=web_loader_phone_length value=\"$web_loader_phone_length\">\r\n";
+        print "  <input type=hidden name=postalgmt value=\"$postalgmt\">\r\n";
+        print "  <input type=hidden name=lead_file value=\"$lead_file\">\r\n";
+        print "  <input type=hidden name=list_id_override value=\"$list_id_override\">\r\n";
+        print "  <input type=hidden name=phone_code_override value=\"$phone_code_override\">\r\n";
+        print "  <input type=hidden name=DB value=\"$DB\">\r\n";
+        print "    <th colspan=2><input style='background-color:#$SSbutton_color' type=submit name='OK_to_process' value='"._QXZ("OK TO PROCESS")."'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=button onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" value=\""._QXZ("START OVER")."\" name='reload_page'></th>\r\n";
+        print "  </tr>\r\n";
+        print "</table>\r\n";
 
         print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n</script>";
         }
