@@ -3467,229 +3467,248 @@ if (($leadfile) && ($LF_path))
 
 		
 	##### BEGIN field chooser #####
-	else if ($file_layout=="custom")
-		{
-		print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=true;}\n</script><HR>";
-		flush();
-		print "<table border=0 cellpadding=3 cellspacing=0 width=700 align=center>\r\n";
-		print "  <tr bgcolor='#$SSmenu_background'>\r\n";
-		print "    <th align=right><font class='standard' color='white'>"._QXZ("VICIDIAL Column")."</font></th>\r\n";
-		print "    <th><font class='standard' color='white'>"._QXZ("File data")."</font></th>\r\n";
-		print "  </tr>\r\n";
+    else if ($file_layout=="custom")
+        {
+        print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=true;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=true;}\n</script>";
+        flush();
+        
+        print "<div class='card'>
+                <h2 class='card-title'><i class='material-icons'>swap_horiz</i> " . _QXZ("Field Mapping") . "</h2>
+                <div class='info-box'>
+                    <div class='info-item'>
+                        <i class='material-icons'>info</i>
+                        <span>" . _QXZ("Map your file columns to VICIDIAL database fields") . "</span>
+                    </div>
+                </div>
+                <div class='processing-info'>\r\n";
 
-		$fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner from vicidial_list limit 1";
+        $fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner from vicidial_list limit 1";
 
-		##### BEGIN custom fields columns list ###
-		if ($custom_fields_enabled > 0)
-			{
-			$stmt="SHOW TABLES LIKE \"custom_$list_id_override\";";
-			if ($DB>0) {echo "$stmt\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$tablecount_to_print = mysqli_num_rows($rslt);
-			if ($tablecount_to_print > 0) 
-				{
-				$stmt="SELECT count(*) from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y';";
-				if ($DB>0) {echo "$stmt\n";}
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$fieldscount_to_print = mysqli_num_rows($rslt);
-				if ($fieldscount_to_print > 0) 
-					{
-					$rowx=mysqli_fetch_row($rslt);
-					$custom_records_count =	$rowx[0];
+        ##### BEGIN custom fields columns list ###
+        if ($custom_fields_enabled > 0)
+            {
+            $stmt="SHOW TABLES LIKE \"custom_$list_id_override\";";
+            if ($DB>0) {echo "$stmt\n";}
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $tablecount_to_print = mysqli_num_rows($rslt);
+            if ($tablecount_to_print > 0) 
+                {
+                $stmt="SELECT count(*) from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y';";
+                if ($DB>0) {echo "$stmt\n";}
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $fieldscount_to_print = mysqli_num_rows($rslt);
+                if ($fieldscount_to_print > 0) 
+                    {
+                    $rowx=mysqli_fetch_row($rslt);
+                    $custom_records_count =	$rowx[0];
 
-					$custom_SQL='';
-					$stmt="SELECT field_id,field_label,field_name,field_description,field_rank,field_help,field_type,field_options,field_size,field_max,field_default,field_cost,field_required,multi_position,name_position,field_order,field_encrypt from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y' order by field_rank,field_order,field_label;";
-					if ($DB>0) {echo "$stmt\n";}
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$fields_to_print = mysqli_num_rows($rslt);
-					$fields_list='';
-					$o=0;
-					while ($fields_to_print > $o) 
-						{
-						$rowx=mysqli_fetch_row($rslt);
-						$A_field_label[$o] =	$rowx[1];
-						$A_field_type[$o] =		$rowx[6];
-						$A_field_encrypt[$o] =	$rowx[16];
+                    $custom_SQL='';
+                    $stmt="SELECT field_id,field_label,field_name,field_description,field_rank,field_help,field_type,field_options,field_size,field_max,field_default,field_cost,field_required,multi_position,name_position,field_order,field_encrypt from vicidial_lists_fields where list_id='$list_id_override' and field_duplicate!='Y' order by field_rank,field_order,field_label;";
+                    if ($DB>0) {echo "$stmt\n";}
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $fields_to_print = mysqli_num_rows($rslt);
+                    $fields_list='';
+                    $o=0;
+                    while ($fields_to_print > $o) 
+                        {
+                        $rowx=mysqli_fetch_row($rslt);
+                        $A_field_label[$o] =	$rowx[1];
+                        $A_field_type[$o] =		$rowx[6];
+                        $A_field_encrypt[$o] =	$rowx[16];
 
-						if ($DB>0) {echo "$A_field_label[$o]|$A_field_type[$o]\n";}
+                        if ($DB>0) {echo "$A_field_label[$o]|$A_field_type[$o]\n";}
 
-						if ( ($A_field_type[$o]!='DISPLAY') and ($A_field_type[$o]!='SCRIPT') and ($A_field_type[$o]!='SWITCH') and ($A_field_type[$o]!='BUTTON') )
-							{
-							if (!preg_match("/\|$A_field_label[$o]\|/",$vicidial_list_fields))
-								{
-								$custom_SQL .= ",$A_field_label[$o]";
-								}
-							}
-						$o++;
-						}
+                        if ( ($A_field_type[$o]!='DISPLAY') and ($A_field_type[$o]!='SCRIPT') and ($A_field_type[$o]!='SWITCH') and ($A_field_type[$o]!='BUTTON') )
+                            {
+                            if (!preg_match("/\|$A_field_label[$o]\|/",$vicidial_list_fields))
+                                {
+                                $custom_SQL .= ",$A_field_label[$o]";
+                                }
+                            }
+                        $o++;
+                        }
 
-					$fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner $custom_SQL from vicidial_list, custom_$list_id_override limit 1";
+                    $fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner $custom_SQL from vicidial_list, custom_$list_id_override limit 1";
 
-					}
-				}
-			}
-		##### END custom fields columns list ###
+                    }
+                }
+            }
+        ##### END custom fields columns list ###
 
-		if ($DB>0) {echo "$fields_stmt\n";}
-		$rslt=mysql_to_mysqli("$fields_stmt", $link);
+        if ($DB>0) {echo "$fields_stmt\n";}
+        $rslt=mysql_to_mysqli("$fields_stmt", $link);
 
-		# csv xls xlsx ods sxc conversion
-		$delim_set=0;
-		if (preg_match("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", $leadfile_name)) 
-			{
-			$leadfile_name = preg_replace('/[^-\.\_0-9a-zA-Z]/','_',$leadfile_name);
-			copy($LF_path, "/tmp/$leadfile_name");
-			$new_filename = preg_replace("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", '.txt', $leadfile_name);
-			$convert_command = "$WeBServeRRooT/$admin_web_directory/sheet2tab.pl /tmp/$leadfile_name /tmp/$new_filename";
-			passthru("$convert_command");
-			$lead_file = "/tmp/$new_filename";
-			if ($DB > 0) {echo "|$convert_command|";}
+        # csv xls xlsx ods sxc conversion
+        $delim_set=0;
+        if (preg_match("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", $leadfile_name)) 
+            {
+            $leadfile_name = preg_replace('/[^-\.\_0-9a-zA-Z]/','_',$leadfile_name);
+            copy($LF_path, "/tmp/$leadfile_name");
+            $new_filename = preg_replace("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", '.txt', $leadfile_name);
+            $convert_command = "$WeBServeRRooT/$admin_web_directory/sheet2tab.pl /tmp/$leadfile_name /tmp/$new_filename";
+            passthru("$convert_command");
+            $lead_file = "/tmp/$new_filename";
+            if ($DB > 0) {echo "|$convert_command|";}
 
-			if (preg_match("/\.csv$/i", $leadfile_name)) {$delim_name="CSV: "._QXZ("Comma Separated Values");}
-			if (preg_match("/\.xls$/i", $leadfile_name)) {$delim_name="XLS: MS Excel 2000-XP";}
-			if (preg_match("/\.xlsx$/i", $leadfile_name)) {$delim_name="XLSX: MS Excel 2007+";}
-			if (preg_match("/\.ods$/i", $leadfile_name)) {$delim_name="ODS: OpenOffice.org OpenDocument "._QXZ("Spreadsheet");}
-			if (preg_match("/\.sxc$/i", $leadfile_name)) {$delim_name="SXC: OpenOffice.org "._QXZ("First Spreadsheet");}
-			$delim_set=1;
-			}
-		else
-			{
-			copy($LF_path, "/tmp/vicidial_temp_file.txt");
-			$lead_file = "/tmp/vicidial_temp_file.txt";
-			}
-		$file=fopen("$lead_file", "r");
-		if ($webroot_writable > 0)
-			{$stmt_file=fopen("$WeBServeRRooT/$admin_web_directory/listloader_stmts.txt", "w");}
+            if (preg_match("/\.csv$/i", $leadfile_name)) {$delim_name="CSV: "._QXZ("Comma Separated Values");}
+            if (preg_match("/\.xls$/i", $leadfile_name)) {$delim_name="XLS: MS Excel 2000-XP";}
+            if (preg_match("/\.xlsx$/i", $leadfile_name)) {$delim_name="XLSX: MS Excel 2007+";}
+            if (preg_match("/\.ods$/i", $leadfile_name)) {$delim_name="ODS: OpenOffice.org OpenDocument "._QXZ("Spreadsheet");}
+            if (preg_match("/\.sxc$/i", $leadfile_name)) {$delim_name="SXC: OpenOffice.org "._QXZ("First Spreadsheet");}
+            $delim_set=1;
+            }
+        else
+            {
+            copy($LF_path, "/tmp/vicidial_temp_file.txt");
+            $lead_file = "/tmp/vicidial_temp_file.txt";
+            }
+        $file=fopen("$lead_file", "r");
+        if ($webroot_writable > 0)
+            {$stmt_file=fopen("$WeBServeRRooT/$admin_web_directory/listloader_stmts.txt", "w");}
 
-		$buffer=fgets($file, 4096);
-		$tab_count=substr_count($buffer, "\t");
-		$pipe_count=substr_count($buffer, "|");
+        $buffer=fgets($file, 4096);
+        $tab_count=substr_count($buffer, "\t");
+        $pipe_count=substr_count($buffer, "|");
 
-		if ($delim_set < 1)
-			{
-			if ($tab_count>$pipe_count)
-				{$delim_name=_QXZ("tab-delimited");} 
-			else 
-				{$delim_name=_QXZ("pipe-delimited");}
-			} 
-		if ($tab_count>$pipe_count)
-			{$delimiter="\t";}
-		else 
-			{$delimiter="|";}
+        if ($delim_set < 1)
+            {
+            if ($tab_count>$pipe_count)
+                {$delim_name=_QXZ("tab-delimited");} 
+            else 
+                {$delim_name=_QXZ("pipe-delimited");}
+            } 
+        if ($tab_count>$pipe_count)
+            {$delimiter="\t";}
+        else 
+            {$delimiter="|";}
 
-		$field_check=explode($delimiter, $buffer);
+        $field_check=explode($delimiter, $buffer);
 
-		if (count($dedupe_statuses)>0) {
-			$status_dedupe_str="";
-			for($ds=0; $ds<count($dedupe_statuses); $ds++) {
-				$dedupe_statuses[$ds] = preg_replace('/[^-_0-9\p{L}]/u', '', $dedupe_statuses[$ds]);
-				$status_dedupe_str.="$dedupe_statuses[$ds],";
-				if (preg_match('/\-\-ALL\-\-/', $dedupe_statuses[$ds])) {
-					$status_mismatch_action=""; # Important - if ALL statuses are selected there's no need for this feature
-					$status_dedupe_str="";
-					break;
-				}
-			}
-			$status_dedupe_str=preg_replace('/\,$/', "", $status_dedupe_str);
-		} 
-		
-		if ($status_mismatch_action) 
-			{
-			$mismatch_clause=" and status not in ('".implode("','", $dedupe_statuses)."') ";
-			if (preg_match('/RECENT/', $status_mismatch_action)) {$mismatch_limit=" limit 1 ";} else {$mismatch_limit="";}
-			}
+        if (count($dedupe_statuses)>0) {
+            $status_dedupe_str="";
+            for($ds=0; $ds<count($dedupe_statuses); $ds++) {
+                $dedupe_statuses[$ds] = preg_replace('/[^-_0-9\p{L}]/u', '', $dedupe_statuses[$ds]);
+                $status_dedupe_str.="$dedupe_statuses[$ds],";
+                if (preg_match('/\-\-ALL\-\-/', $dedupe_statuses[$ds])) {
+                    $status_mismatch_action=""; # Important - if ALL statuses are selected there's no need for this feature
+                    $status_dedupe_str="";
+                    break;
+                }
+            }
+            $status_dedupe_str=preg_replace('/\,$/', "", $status_dedupe_str);
+        } 
+        
+        if ($status_mismatch_action) 
+            {
+            $mismatch_clause=" and status not in ('".implode("','", $dedupe_statuses)."') ";
+            if (preg_match('/RECENT/', $status_mismatch_action)) {$mismatch_limit=" limit 1 ";} else {$mismatch_limit="";}
+            }
 
-		flush();
-		$file=fopen("$lead_file", "r");
-		print "<center><font face='arial, helvetica' size=3 color='#009900'><B>"._QXZ("Processing")." $delim_name "._QXZ("file")."...\n";
+        flush();
+        $file=fopen("$lead_file", "r");
+        print "<div class='status-box'><i class='material-icons'>autorenew</i> "._QXZ("Processing")." $delim_name "._QXZ("file")."...</div>\n";
 
-		if (strlen($list_id_override)>0) 
-			{
-			print "<BR><BR>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").": $list_id_override<BR><BR>";
-			}
-		if (strlen($phone_code_override)>0) 
-			{
-			print "<BR><BR>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").": $phone_code_override<BR><BR>";
-			}
-		if (strlen($dupcheck)>0) 
-			{
-			print "<BR>"._QXZ("LEAD DUPLICATE CHECK").": $dupcheck<BR>\n";
-			}
-		if (strlen($international_dnc_scrub)>0)
-			{
-			print "<BR>"._QXZ("INTERNATIONAL DNC SCRUB").": $international_dnc_scrub<BR>\n";
-			}
-		if (strlen($status_dedupe_str)>0) 
-			{
-			print "<BR>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").": $status_dedupe_str<BR>\n";
-			}
-		if (strlen($status_mismatch_action)>0) 
-			{
-			print "<BR>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").": $status_mismatch_action<BR>\n";
-			}
-		if (strlen($state_conversion)>9)
-			{
-			print "<BR>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").": $state_conversion<BR>\n";
-			}
-		if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
-			{
-			print "<BR>"._QXZ("REQUIRED PHONE NUMBER LENGTH").": $web_loader_phone_length<BR>\n";
-			}
-		if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
-			{
-			print "<BR>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").": $SSweb_loader_phone_strip<BR>\n";
-			}
+        if (strlen($list_id_override)>0) 
+            {
+            print "<div class='config-item'><i class='material-icons'>list</i> <strong>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").":</strong> $list_id_override</div>";
+            }
+        if (strlen($phone_code_override)>0) 
+            {
+            print "<div class='config-item'><i class='material-icons'>phone</i> <strong>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").":</strong> $phone_code_override</div>";
+            }
+        if (strlen($dupcheck)>0) 
+            {
+            print "<div class='config-item'><i class='material-icons'>content_copy</i> <strong>"._QXZ("LEAD DUPLICATE CHECK").":</strong> $dupcheck</div>";
+            }
+        if (strlen($international_dnc_scrub)>0)
+            {
+            print "<div class='config-item'><i class='material-icons'>block</i> <strong>"._QXZ("INTERNATIONAL DNC SCRUB").":</strong> $international_dnc_scrub</div>";
+            }
+        if (strlen($status_dedupe_str)>0) 
+            {
+            print "<div class='config-item'><i class='material-icons'>filter_list</i> <strong>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").":</strong> $status_dedupe_str</div>";
+            }
+        if (strlen($status_mismatch_action)>0) 
+            {
+            print "<div class='config-item'><i class='material-icons'>swap_vert</i> <strong>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").":</strong> $status_mismatch_action</div>";
+            }
+        if (strlen($state_conversion)>9)
+            {
+            print "<div class='config-item'><i class='material-icons'>location_on</i> <strong>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").":</strong> $state_conversion</div>";
+            }
+        if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
+            {
+            print "<div class='config-item'><i class='material-icons'>dialpad</i> <strong>"._QXZ("REQUIRED PHONE NUMBER LENGTH").":</strong> $web_loader_phone_length</div>";
+            }
+        if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
+            {
+            print "<div class='config-item'><i class='material-icons'>backspace</i> <strong>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").":</strong> $SSweb_loader_phone_strip</div>";
+            }
 
-		$buffer=rtrim(fgets($file, 4096));
-		$buffer=stripslashes($buffer);
-		$row=explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
-		
-		while ($fieldinfo=mysqli_fetch_field($rslt))
-			{
-			$rslt_field_name=$fieldinfo->name;
-			if ( ($rslt_field_name=="list_id" and $list_id_override!="") or ($rslt_field_name=="phone_code" and $phone_code_override!="") )
-				{
-				print "<!-- skipping " . $rslt_field_name . " -->\n";
-				}
-			else 
-				{
-				print "  <tr bgcolor=#$SSframe_background>\r\n";
-				print "    <td align=right><font class=standard>".strtoupper(preg_replace('/_/i', ' ', $rslt_field_name)).": </font></td>\r\n";
-				print "    <td align=center><select name='".$rslt_field_name."_field'>\r\n";
-				print "     <option value='-1'>(none)</option>\r\n";
+        print "</div>
+                <div class='mapping-container'>
+                    <div class='mapping-header'>
+                        <div class='header-cell'>"._QXZ("VICIDIAL Field")."</div>
+                        <div class='header-cell'>"._QXZ("File Column")."</div>
+                    </div>\r\n";
 
-				for ($j=0; $j<count($row); $j++) 
-					{
-					preg_replace('/\"/i', '', $row[$j]);
-					print "     <option value='$j'>\"$row[$j]\"</option>\r\n";
-					}
+        $buffer=rtrim(fgets($file, 4096));
+        $buffer=stripslashes($buffer);
+        $row=explode($delimiter, preg_replace('/[\"]/i', '', $buffer));
+        
+        while ($fieldinfo=mysqli_fetch_field($rslt))
+            {
+            $rslt_field_name=$fieldinfo->name;
+            if ( ($rslt_field_name=="list_id" and $list_id_override!="") or ($rslt_field_name=="phone_code" and $phone_code_override!="") )
+                {
+                print "<!-- skipping " . $rslt_field_name . " -->\n";
+                }
+            else 
+                {
+                print "<div class='mapping-row'>\r\n";
+                print "  <div class='field-cell'>".strtoupper(preg_replace('/_/i', ' ', $rslt_field_name))."</div>\r\n";
+                print "  <div class='value-cell'><select name='".$rslt_field_name."_field' class='field-select'>\r\n";
+                print "    <option value='-1'>(none)</option>\r\n";
 
-				print "    </select></td>\r\n";
-				print "  </tr>\r\n";
-				}
-			}
-		print "  <tr bgcolor='#$SSmenu_background'>\r\n";
-		print "  <input type=hidden name=international_dnc_scrub value=\"$international_dnc_scrub\">\r\n";
-		print "  <input type=hidden name=dedupe_statuses_override value=\"$status_dedupe_str\">\r\n";
-		print "  <input type=hidden name=status_mismatch_action value=\"$status_mismatch_action\">\r\n";
-		print "  <input type=hidden name=dupcheck value=\"$dupcheck\">\r\n";
-		print "  <input type=hidden name=usacan_check value=\"$usacan_check\">\r\n";
-		print "  <input type=hidden name=state_conversion value=\"$state_conversion\">\r\n";
-		print "  <input type=hidden name=web_loader_phone_length value=\"$web_loader_phone_length\">\r\n";
-		print "  <input type=hidden name=postalgmt value=\"$postalgmt\">\r\n";
-		print "  <input type=hidden name=lead_file value=\"$lead_file\">\r\n";
-		print "  <input type=hidden name=list_id_override value=\"$list_id_override\">\r\n";
-		print "  <input type=hidden name=phone_code_override value=\"$phone_code_override\">\r\n";
-		print "  <input type=hidden name=DB value=\"$DB\">\r\n";
-		print "    <th colspan=2><input style='background-color:#$SSbutton_color' type=submit name='OK_to_process' value='"._QXZ("OK TO PROCESS")."'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=button onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" value=\""._QXZ("START OVER")."\" name='reload_page'></th>\r\n";
-		print "  </tr>\r\n";
-		print "</table>\r\n";
+                for ($j=0; $j<count($row); $j++) 
+                    {
+                    preg_replace('/\"/i', '', $row[$j]);
+                    print "    <option value='$j'>\"$row[$j]\"</option>\r\n";
+                    }
 
-		print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n</script>";
-		}
-	##### END field chooser #####
+                print "  </select></div>\r\n";
+                print "</div>\r\n";
+                }
+            }
+        
+        print "  <input type=hidden name=international_dnc_scrub value=\"$international_dnc_scrub\">\r\n";
+        print "  <input type=hidden name=dedupe_statuses_override value=\"$status_dedupe_str\">\r\n";
+        print "  <input type=hidden name=status_mismatch_action value=\"$status_mismatch_action\">\r\n";
+        print "  <input type=hidden name=dupcheck value=\"$dupcheck\">\r\n";
+        print "  <input type=hidden name=usacan_check value=\"$usacan_check\">\r\n";
+        print "  <input type=hidden name=state_conversion value=\"$state_conversion\">\r\n";
+        print "  <input type=hidden name=web_loader_phone_length value=\"$web_loader_phone_length\">\r\n";
+        print "  <input type=hidden name=postalgmt value=\"$postalgmt\">\r\n";
+        print "  <input type=hidden name=lead_file value=\"$lead_file\">\r\n";
+        print "  <input type=hidden name=list_id_override value=\"$list_id_override\">\r\n";
+        print "  <input type=hidden name=phone_code_override value=\"$phone_code_override\">\r\n";
+        print "  <input type=hidden name=DB value=\"$DB\">\r\n";
+        print "</div>
+                <div class='button-group'>
+                    <button type='submit' name='OK_to_process' class='btn btn-primary'>
+                        <i class='material-icons'>check_circle</i> "._QXZ("OK TO PROCESS")."
+                    </button>
+                    <button type='button' onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" class='btn btn-secondary'>
+                        <i class='material-icons'>refresh</i> "._QXZ("START OVER")."
+                    </button>
+                </div>
+            </div>";
 
-	}
+        print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n</script>";
+        }
+    ##### END field chooser #####
+
+    }
 
 ?>
 </form>
