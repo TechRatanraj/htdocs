@@ -13341,88 +13341,171 @@ if ($ADD==198111111111)
 ######################
 # ADD=1111111111111 display the ADD NEW CONFERENCE SCREEN
 ######################
-if ($ADD==1111111111111)
-	{
-	if ($LOGast_admin_access==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_conferences.png\" alt=\"Conferences\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-		echo "<br>"._QXZ("ADD A NEW CONFERENCE")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=2111111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conference Number").": </td><td align=left><input type=text name=conf_exten size=8 maxlength=7> ("._QXZ("digits only").")$NWB#conferences-conf_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		echo "$servers_list";
-		echo "</select>$NWB#conferences-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+######################
+# ADD=1111111111111 display the ADD NEW CONFERENCE SCREEN
+######################
+if ($ADD == 1111111111111) {
+    if ($LOGast_admin_access == 1) {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>";
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#3498db;padding:2rem;display:flex;align-items:center;gap:1rem;'>";
+        echo "<img src=\"images/icon_conferences.png\" alt=\"Conferences\" width=42 height=42>";
+        echo "<h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD A NEW CONFERENCE")."</h2>";
+        echo "</div>";
 
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST style='display:flex;flex-direction:column;gap:1.5rem;'>\n";
+        echo "<input type=hidden name=ADD value=2111111111111>\n";
+        
+        // Conference Number
+        echo "<div style='display:flex;flex-direction:column;gap:0.5rem;'>";
+        echo "<label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'>"._QXZ("Conference Number").": <span style='color:#e74c3c;'>*</span></label>";
+        echo "<input type=text name=conf_exten size=8 maxlength=7 style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' required pattern='[0-9]+' title='Digits only'>";
+        echo "<small style='color:#6c757d;font-size:0.8rem;'>("._QXZ("digits only").")</small>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:flex;flex-direction:column;gap:0.5rem;'>";
+        echo "<label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").": <span style='color:#e74c3c;'>*</span></label>";
+        echo "<select size=1 name=server_ip style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>\n";
+        echo "$servers_list";
+        echo "</select>";
+        echo "<small style='color:#6c757d;font-size:0.8rem;'>Select the server where this conference will be hosted</small>";
+        echo "</div>";
+        
+        // Submit Button
+        echo "<div style='margin-top:1rem;text-align:center;'>";
+        echo "<button type=submit name=submit style='padding:0.75rem 2rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 6px rgba(52,152,219,0.3);transition:all 0.3s;'>"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>"; // End container
+    } else {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;color:#e74c3c;'>🚫</div>";
+        echo "<h2 style='color:#e74c3c;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "<a href='javascript:history.back()' style='display:inline-block;margin-top:1rem;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>Go Back</a>";
+        echo "</div>";
+        exit;
+    }
+}
 
 ######################
 # ADD=11111111111111 display the ADD NEW VICIDIAL CONFERENCE SCREEN
 ######################
-if ($ADD==11111111111111)
-	{
-	if ($LOGast_admin_access==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_conferences.png\" alt=\"Conferences\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD == 11111111111111) {
+    if ($LOGast_admin_access == 1) {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>";
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#16a085;padding:2rem;display:flex;align-items:center;gap:1rem;'>";
+        echo "<img src=\"images/icon_conferences.png\" alt=\"Conferences\" width=42 height=42>";
+        echo "<h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD A NEW AGENT CONFERENCE")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD A NEW AGENT CONFERENCE")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=21111111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conference Number").": </td><td align=left><input type=text name=conf_exten size=8 maxlength=7> ("._QXZ("digits only").")$NWB#conferences-conf_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		echo "$servers_list";
-		echo "</select>$NWB#conferences-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST style='display:flex;flex-direction:column;gap:1.5rem;'>\n";
+        echo "<input type=hidden name=ADD value=21111111111111>\n";
+        
+        // Conference Number
+        echo "<div style='display:flex;flex-direction:column;gap:0.5rem;'>";
+        echo "<label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'>"._QXZ("Conference Number").": <span style='color:#e74c3c;'>*</span></label>";
+        echo "<input type=text name=conf_exten size=8 maxlength=7 style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' required pattern='[0-9]+' title='Digits only'>";
+        echo "<small style='color:#6c757d;font-size:0.8rem;'>("._QXZ("digits only").")</small>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:flex;flex-direction:column;gap:0.5rem;'>";
+        echo "<label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").": <span style='color:#e74c3c;'>*</span></label>";
+        echo "<select size=1 name=server_ip style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>\n";
+        echo "$servers_list";
+        echo "</select>";
+        echo "<small style='color:#6c757d;font-size:0.8rem;'>Select the server where this agent conference will be hosted</small>";
+        echo "</div>";
+        
+        // Submit Button
+        echo "<div style='margin-top:1rem;text-align:center;'>";
+        echo "<button type=submit name=submit style='padding:0.75rem 2rem;background:#16a085;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 6px rgba(22,160,133,0.3);transition:all 0.3s;'>"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>"; // End container
+    } else {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;color:#e74c3c;'>🚫</div>";
+        echo "<h2 style='color:#e74c3c;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "<a href='javascript:history.back()' style='display:inline-block;margin-top:1rem;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>Go Back</a>";
+        echo "</div>";
+        exit;
+    }
+}
 
 ######################
 # ADD=12111111111111 display the ADD NEW VICIDIAL CONFBRIDGE SCREEN
 ######################
-if ($ADD==12111111111111)
-	{
-	if ($LOGast_admin_access==1)
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_conferences.png\" alt=\"ConfBridges\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD == 12111111111111) {
+    if ($LOGast_admin_access == 1) {
+        echo "<div style='max-width:800px;margin:2rem auto;padding:0 1rem;'>";
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#8e44ad;padding:2rem;display:flex;align-items:center;gap:1rem;'>";
+        echo "<img src=\"images/icon_conferences.png\" alt=\"ConfBridges\" width=42 height=42>";
+        echo "<h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD A NEW AGENT CONFBRIDGE")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("ADD A NEW AGENT CONFBRIDGE")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=22111111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("ConfBridge Number").": </td><td align=left><input type=text name=conf_exten size=8 maxlength=7> ("._QXZ("digits only").")$NWB#conferences-conf_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		echo "$servers_list";
-		echo "</select>$NWB#conferences-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
-
-
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST style='display:flex;flex-direction:column;gap:1.5rem;'>\n";
+        echo "<input type=hidden name=ADD value=22111111111111>\n";
+        
+        // ConfBridge Number
+        echo "<div style='display:flex;flex-direction:column;gap:0.5rem;'>";
+        echo "<label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'>"._QXZ("ConfBridge Number").": <span style='color:#e74c3c;'>*</span></label>";
+        echo "<input type=text name=conf_exten size=8 maxlength=7 style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' required pattern='[0-9]+' title='Digits only'>";
+        echo "<small style='color:#6c757d;font-size:0.8rem;'>("._QXZ("digits only").")</small>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:flex;flex-direction:column;gap:0.5rem;'>";
+        echo "<label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").": <span style='color:#e74c3c;'>*</span></label>";
+        echo "<select size=1 name=server_ip style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>\n";
+        echo "$servers_list";
+        echo "</select>";
+        echo "<small style='color:#6c757d;font-size:0.8rem;'>Select the server where this agent confbridge will be hosted</small>";
+        echo "</div>";
+        
+        // Submit Button
+        echo "<div style='margin-top:1rem;text-align:center;'>";
+        echo "<button type=submit name=submit style='padding:0.75rem 2rem;background:#8e44ad;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 6px rgba(142,68,173,0.3);transition:all 0.3s;'>"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>"; // End container
+    } else {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;color:#e74c3c;'>🚫</div>";
+        echo "<h2 style='color:#e74c3c;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "<a href='javascript:history.back()' style='display:inline-block;margin-top:1rem;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>Go Back</a>";
+        echo "</div>";
+        exit;
+    }
+}
 
 
 ######################################################################################################
