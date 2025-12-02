@@ -58095,278 +58095,401 @@ if ($ADD==198000000000)
 ######################
 # ADD=1000000000000 display all conferences
 ######################
-if ($ADD==1000000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_conferences.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-	$stmt="SELECT conf_exten,server_ip,extension from conferences order by conf_exten";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$conferences_to_print = mysqli_num_rows($rslt);
-
-	echo "<br>"._QXZ("CONFERENCE LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("CONFERENCE")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SERVER IP")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("EXTENSION")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($conferences_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3111111111111&conf_exten=$row[0]&server_ip=$row[1]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=3111111111111&conf_exten=$row[0]&server_ip=$row[1]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>$row[2]</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=3111111111111&conf_exten=$row[0]&server_ip=$row[1]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+######################
+# ADD=1000000000000 display all conferences
+######################
+if ($ADD == 1000000000000) {
+    $stmt = "SELECT conf_exten,server_ip,extension from conferences order by conf_exten";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $conferences_to_print = mysqli_num_rows($rslt);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Listings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box;">
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <div style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="background-color: #2c3e50; color: white; padding: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <i class="fas fa-users fa-2x"></i>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;"><?php echo _QXZ("Conference Listings"); ?></h2>
+            </div>
+            
+            <div style="padding: 2rem;">
+                <?php if ($conferences_to_print > 0): ?>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background-color: #2c3e50; color: white;">
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Conference"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Server IP"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Extension"); ?></th>
+                                <th style="padding: 12px 15px; text-align: center;"><?php echo _QXZ("Actions"); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $o = 0;
+                            while ($conferences_to_print > $o) {
+                                $row = mysqli_fetch_row($rslt);
+                                $rowColor = ($o % 2 == 0) ? '#f8f9fa' : '#ffffff';
+                            ?>
+                            <tr style="background-color: <?php echo $rowColor; ?>; cursor: pointer;" onclick="window.location.href='<?php echo "$PHP_SELF?ADD=3111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>'">
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=3111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>" style="color: #3498db; text-decoration: none; font-weight: 500;"><?php echo $row[0]; ?></a>
+                                </td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[1]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[2]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee; text-align: center;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=3111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>" style="background-color: #3498db; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; display: inline-block;">
+                                        <i class="fas fa-edit"></i> <?php echo _QXZ("Modify"); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                            $o++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <div style="text-align: center; padding: 2rem; color: #6c757d;">
+                    <i class="fas fa-users fa-3x" style="margin-bottom: 1rem; color: #ddd;"></i>
+                    <p><?php echo _QXZ("No conferences found"); ?></p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<?php
+}
 
 ######################
 # ADD=10000000000000 display all vicidial conferences
 ######################
-if ($ADD==10000000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_conferences.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-	$stmt="SELECT conf_exten,server_ip,extension from vicidial_conferences order by conf_exten";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$vicidialconf_to_print = mysqli_num_rows($rslt);
-
-	echo "<br>"._QXZ("AGENT CONFERENCE LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("CONFERENCE")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SERVER IP")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("EXTENSION")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($vicidialconf_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=31111111111111&conf_exten=$row[0]&server_ip=$row[1]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=31111111111111&conf_exten=$row[0]&server_ip=$row[1]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> $row[2]</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=31111111111111&conf_exten=$row[0]&server_ip=$row[1]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+if ($ADD == 10000000000000) {
+    $stmt = "SELECT conf_exten,server_ip,extension from vicidial_conferences order by conf_exten";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $vicidialconf_to_print = mysqli_num_rows($rslt);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Conference Listings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box;">
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <div style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="background-color: #16a085; color: white; padding: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <i class="fas fa-headset fa-2x"></i>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;"><?php echo _QXZ("Agent Conference Listings"); ?></h2>
+            </div>
+            
+            <div style="padding: 2rem;">
+                <?php if ($vicidialconf_to_print > 0): ?>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background-color: #16a085; color: white;">
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Conference"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Server IP"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Extension"); ?></th>
+                                <th style="padding: 12px 15px; text-align: center;"><?php echo _QXZ("Actions"); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $o = 0;
+                            while ($vicidialconf_to_print > $o) {
+                                $row = mysqli_fetch_row($rslt);
+                                $rowColor = ($o % 2 == 0) ? '#f8f9fa' : '#ffffff';
+                            ?>
+                            <tr style="background-color: <?php echo $rowColor; ?>; cursor: pointer;" onclick="window.location.href='<?php echo "$PHP_SELF?ADD=31111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>'">
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=31111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>" style="color: #16a085; text-decoration: none; font-weight: 500;"><?php echo $row[0]; ?></a>
+                                </td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[1]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[2]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee; text-align: center;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=31111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>" style="background-color: #16a085; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; display: inline-block;">
+                                        <i class="fas fa-edit"></i> <?php echo _QXZ("Modify"); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                            $o++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <div style="text-align: center; padding: 2rem; color: #6c757d;">
+                    <i class="fas fa-headset fa-3x" style="margin-bottom: 1rem; color: #ddd;"></i>
+                    <p><?php echo _QXZ("No agent conferences found"); ?></p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<?php
+}
 
 ######################
 # ADD=12000000000000 display all vicidial confbridges
 ######################
-if ($ADD==12000000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_conferences.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-	$stmt="SELECT conf_exten,server_ip,extension from vicidial_confbridges order by conf_exten";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$vicidialconf_to_print = mysqli_num_rows($rslt);
-
-	echo "<br>"._QXZ("AGENT CONFBRIDGE LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("CONFBRIDGE")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SERVER IP")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("EXTENSION")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($vicidialconf_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=32111111111111&conf_exten=$row[0]&server_ip=$row[1]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=32111111111111&conf_exten=$row[0]&server_ip=$row[1]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> $row[2]</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=32111111111111&conf_exten=$row[0]&server_ip=$row[1]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+if ($ADD == 12000000000000) {
+    $stmt = "SELECT conf_exten,server_ip,extension from vicidial_confbridges order by conf_exten";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $vicidialconf_to_print = mysqli_num_rows($rslt);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Confbridge Listings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box;">
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <div style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="background-color: #8e44ad; color: white; padding: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <i class="fas fa-phone-volume fa-2x"></i>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;"><?php echo _QXZ("Agent Confbridge Listings"); ?></h2>
+            </div>
+            
+            <div style="padding: 2rem;">
+                <?php if ($vicidialconf_to_print > 0): ?>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background-color: #8e44ad; color: white;">
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Confbridge"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Server IP"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Extension"); ?></th>
+                                <th style="padding: 12px 15px; text-align: center;"><?php echo _QXZ("Actions"); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $o = 0;
+                            while ($vicidialconf_to_print > $o) {
+                                $row = mysqli_fetch_row($rslt);
+                                $rowColor = ($o % 2 == 0) ? '#f8f9fa' : '#ffffff';
+                            ?>
+                            <tr style="background-color: <?php echo $rowColor; ?>; cursor: pointer;" onclick="window.location.href='<?php echo "$PHP_SELF?ADD=32111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>'">
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=32111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>" style="color: #8e44ad; text-decoration: none; font-weight: 500;"><?php echo $row[0]; ?></a>
+                                </td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[1]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[2]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee; text-align: center;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=32111111111111&conf_exten=$row[0]&server_ip=$row[1]"; ?>" style="background-color: #8e44ad; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; display: inline-block;">
+                                        <i class="fas fa-edit"></i> <?php echo _QXZ("Modify"); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                            $o++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <div style="text-align: center; padding: 2rem; color: #6c757d;">
+                    <i class="fas fa-phone-volume fa-3x" style="margin-bottom: 1rem; color: #ddd;"></i>
+                    <p><?php echo _QXZ("No agent confbridges found"); ?></p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<?php
+}
 
 ######################
 # ADD=100000000000000 display all qc campaigns
 ######################
-if (($ADD==100000000000000) && ($qc_auth=='1'))
-	{
-    echo "<TABLE><TR><TD>\n";
-    echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-
-    echo "<img src=\"images/icon_black_qc.png\" alt=\"Quality Control\" width=42 height=42> "._QXZ("Quality Control Listings").":\n";
-
-	if (!$qc_display_group_type) {$qc_display_group_type="CAMPAIGN";}
-
-	if ($qc_display_group_type=="CAMPAIGN")
-		{
-		$stmt="SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$vicidialconf_to_print = mysqli_num_rows($rslt);
-
-		echo "<BR><BR><B>"._QXZ("Campaigns").":</B><BR><center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr bgcolor=black>";
-		echo "<td><font size=1 color=white align=left><B>"._QXZ("CAMPAIGN ID")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("CAMPAIGN NAME")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("QC STATUSES")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("QUALIFYING CALLS")."</B></font></td>";
-		echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></font></td></tr>\n";
-
-		$count_column="campaign_id";
-		}
-	else if ($qc_display_group_type=="INGROUP") 
-		{
-		$stmt="SELECT group_id,group_name,qc_statuses_id from vicidial_inbound_groups where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by group_id";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$vicidialconf_to_print = mysqli_num_rows($rslt);
-
-		echo "<BR><BR><B>"._QXZ("Ingroups").":</B><BR><center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr bgcolor=black>";
-		echo "<td><font size=1 color=white align=left><B>"._QXZ("GROUP ID")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("GROUP NAME")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("QC STATUSES")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("QUALIFYING CALLS")."</B></font></td>";
-		echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></font></td></tr>\n";
-
-		$count_column="group_id";
-		}
-	else if ($qc_display_group_type=="LIST") 
-		{
-	    $stmt="SELECT list_id,list_name,qc_statuses_id from vicidial_lists where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by list_id";
-	    $rslt=mysql_to_mysqli($stmt, $link);
-		# echo $stmt;
-	    $vicidialconf_to_print = mysqli_num_rows($rslt);
-
-		echo "<BR><BR><B>"._QXZ("Lists").":</B><BR><center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-		echo "<tr bgcolor=black>";
-		echo "<td><font size=1 color=white align=left><B>"._QXZ("LIST ID")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("LIST NAME")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("QC STATUSES")."</B></font></td>";
-		echo "<td><font size=1 color=white><B>"._QXZ("QUALIFYING CALLS")."</B></font></td>";
-		echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></font></td></tr>\n";
-
-		$count_column="list_id";
-		}
-
-	if ($vicidialconf_to_print==0) 
-		{
-		echo "<tr><td align='center' colspan='5'><font size=1><B>*** "._QXZ("NO ".$qc_display_group_type."S CONFIGURED FOR QC")." ***</B></font></td></tr>";
-		}
-
-	# $DB=1;
-	if ($DB) {echo "$qc_display_group_type|$stmt<BR>";}
-
-    $o=0;
-    while ($vicidialconf_to_print > $o) 
-		{
-        $row=mysqli_fetch_row($rslt);
-		if (preg_match("/1$|3$|5$|7$|9$/i", $o))
-			{
-            $bgcolor='class="records_list_x"';
-			}
-        else 
-			{
-            $bgcolor='class="records_list_y"';
-			}
-
-		#$qc_statuses=explode(' ',$qc_status_list);
-		$qc_status_list=array();
-		$qc_status_container_stmt="select container_entry from vicidial_settings_containers where container_id='$row[2]'";
-		$qc_status_container_rslt=mysql_to_mysqli($qc_status_container_stmt, $link);
-		while ($qcsc_row=mysqli_fetch_row($qc_status_container_rslt))
-			{
-			$container_text=preg_split('/\r|\n/', $qcsc_row[0]);
-			for ($q=0; $q<count($container_text); $q++)
-				{
-				$line=trim($container_text[$q]);
-				if (!preg_match('/^[\#|\;]/', $line) && strlen($line)>0)
-					{
-					$qc_status_list=preg_split('/,/', $line); 
-					break;
-					}
-				}
-			}
-
-#		$qc_ct_stmt="select count(*) from vicidial_list inner join vicidial_lists on vicidial_list.list_id=vicidial_lists.list_id and status in ('".implode("','", $qc_statuses)."') where campaign_id='$row[0]'"; 
-
-		$total_qc_count=0;
-		# Campaign
-		if ($qc_display_group_type=="CAMPAIGN")
-			{
-			$qc_ct_stmt="select count(*) From vicidial_agent_log where campaign_id='$row[0]' and status in ('".implode("','", $qc_status_list)."') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY"; 
-			if ($DB) {echo "|$qc_ct_stmt|<BR>\n";}
-			$qc_ct_rslt=mysql_to_mysqli($qc_ct_stmt, $link);
-			$qc_ct_row=mysqli_fetch_row($qc_ct_rslt);
-			$total_qc_count=$qc_ct_row[0];
-			}
-
-		# List
-		if ($qc_display_group_type=="LIST")
-			{
-			$agent_log_stmt="select lead_id From vicidial_agent_log where status in ('".implode("','", $qc_status_list)."') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY"; 
-			if ($DB) {echo "|$agent_log_stmt|<BR>\n";}
-			$agent_log_rslt=mysql_to_mysqli($agent_log_stmt, $link);
-			while ($agent_log_row=mysqli_fetch_array($agent_log_rslt))
-				{
-				$lead_id=$agent_log_row["lead_id"];
-				$list_id_stmt="select count(*) from vicidial_list where list_id='$row[0]' and lead_id='$lead_id'";
-				# if ($DB) {echo "|$list_id_stmt|<BR>\n";}
-				$list_id_rslt=mysql_to_mysqli($list_id_stmt, $link);
-				$lid_row=mysqli_fetch_row($list_id_rslt);
-				$total_qc_count+=$lid_row[0];
-				}
-			}
-
-		# Ingroup
-		if ($qc_display_group_type=="INGROUP")
-			{
-			$qc_ct_stmt="select count(*) From vicidial_closer_log where campaign_id='$row[0]' and status in ('".implode("','", $qc_status_list)."') and call_date>=now()-INTERVAL $SSqc_expire_days DAY"; 
-			if ($DB) {echo "|$qc_ct_stmt|<BR>\n";}
-			$qc_ct_rslt=mysql_to_mysqli($qc_ct_stmt, $link);
-			$qc_ct_row=mysqli_fetch_row($qc_ct_rslt);
-			$total_qc_count=$qc_ct_row[0];
-			}
-
-		$qc_grabbed_stmt="select count(*) From quality_control_queue where $count_column='$row[0]' and status in ('".implode("','", $qc_status_list)."') and call_date>=now()-INTERVAL $SSqc_expire_days DAY";
-		if ($DB) {echo "|$qc_grabbed_stmt|<BR>\n";}
-		$qc_grabbed_rslt=mysql_to_mysqli($qc_grabbed_stmt, $link);
-		$qc_grabbed_row=mysqli_fetch_row($qc_grabbed_rslt);
-		$total_grabbed_count=$qc_grabbed_row[0];
-
-        echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=881&qc_display_group_type=$qc_display_group_type&$count_column=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=881&qc_display_group_type=$qc_display_group_type&$count_column=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-        echo "<td><font size=1> $row[1]</td>";
-        echo "<td><font size=1> ".implode(", ", $qc_status_list)."</td>";
-        echo "<td><font size=1> ".($total_qc_count-$total_grabbed_count+0)."</td>";
-        echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-        $o++;
-		}
-    echo "</TABLE></center>\n";
-	}
-
+if (($ADD == 100000000000000) && ($qc_auth == '1')) {
+    if (!$qc_display_group_type) {
+        $qc_display_group_type = "CAMPAIGN";
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Control Listings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box;">
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <div style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="background-color: #e74c3c; color: white; padding: 2rem; display: flex; align-items: center; gap: 1rem;">
+                <i class="fas fa-clipboard-check fa-2x"></i>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;"><?php echo _QXZ("Quality Control Listings"); ?></h2>
+            </div>
+            
+            <div style="padding: 2rem;">
+                <!-- Tab Navigation -->
+                <div style="display: flex; border-bottom: 1px solid #eee; margin-bottom: 1.5rem;">
+                    <a href="<?php echo "$PHP_SELF?ADD=100000000000000&qc_display_group_type=CAMPAIGN"; ?>" style="padding: 1rem 1.5rem; text-decoration: none; color: <?php echo ($qc_display_group_type == 'CAMPAIGN') ? '#e74c3c' : '#6c757d'; ?>; font-weight: 500; border-bottom: 2px solid <?php echo ($qc_display_group_type == 'CAMPAIGN') ? '#e74c3c' : 'transparent'; ?>;">
+                        <i class="fas fa-bullhorn"></i> <?php echo _QXZ("Campaigns"); ?>
+                    </a>
+                    <a href="<?php echo "$PHP_SELF?ADD=100000000000000&qc_display_group_type=INGROUP"; ?>" style="padding: 1rem 1.5rem; text-decoration: none; color: <?php echo ($qc_display_group_type == 'INGROUP') ? '#e74c3c' : '#6c757d'; ?>; font-weight: 500; border-bottom: 2px solid <?php echo ($qc_display_group_type == 'INGROUP') ? '#e74c3c' : 'transparent'; ?>;">
+                        <i class="fas fa-phone-alt"></i> <?php echo _QXZ("Ingroups"); ?>
+                    </a>
+                    <a href="<?php echo "$PHP_SELF?ADD=100000000000000&qc_display_group_type=LIST"; ?>" style="padding: 1rem 1.5rem; text-decoration: none; color: <?php echo ($qc_display_group_type == 'LIST') ? '#e74c3c' : '#6c757d'; ?>; font-weight: 500; border-bottom: 2px solid <?php echo ($qc_display_group_type == 'LIST') ? '#e74c3c' : 'transparent'; ?>;">
+                        <i class="fas fa-list"></i> <?php echo _QXZ("Lists"); ?>
+                    </a>
+                </div>
+                
+                <?php
+                if ($qc_display_group_type == "CAMPAIGN") {
+                    $stmt = "SELECT campaign_id,campaign_name,qc_statuses_id from vicidial_campaigns where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by campaign_name";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $vicidialconf_to_print = mysqli_num_rows($rslt);
+                    $count_column = "campaign_id";
+                    $title = _QXZ("Campaigns");
+                    $column1 = _QXZ("Campaign ID");
+                    $column2 = _QXZ("Campaign Name");
+                } else if ($qc_display_group_type == "INGROUP") {
+                    $stmt = "SELECT group_id,group_name,qc_statuses_id from vicidial_inbound_groups where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by group_id";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $vicidialconf_to_print = mysqli_num_rows($rslt);
+                    $count_column = "group_id";
+                    $title = _QXZ("Ingroups");
+                    $column1 = _QXZ("Group ID");
+                    $column2 = _QXZ("Group Name");
+                } else if ($qc_display_group_type == "LIST") {
+                    $stmt = "SELECT list_id,list_name,qc_statuses_id from vicidial_lists where active = 'Y' and qc_statuses_id!='' and qc_scorecard_id!='' $LOGqc_allowed_campaignsSQL order by list_id";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $vicidialconf_to_print = mysqli_num_rows($rslt);
+                    $count_column = "list_id";
+                    $title = _QXZ("Lists");
+                    $column1 = _QXZ("List ID");
+                    $column2 = _QXZ("List Name");
+                }
+                
+                if ($vicidialconf_to_print > 0):
+                ?>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background-color: #e74c3c; color: white;">
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo $column1; ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo $column2; ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("QC Statuses"); ?></th>
+                                <th style="padding: 12px 15px; text-align: left;"><?php echo _QXZ("Qualifying Calls"); ?></th>
+                                <th style="padding: 12px 15px; text-align: center;"><?php echo _QXZ("Actions"); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $o = 0;
+                            while ($vicidialconf_to_print > $o) {
+                                $row = mysqli_fetch_row($rslt);
+                                $rowColor = ($o % 2 == 0) ? '#f8f9fa' : '#ffffff';
+                                
+                                // Get QC status list
+                                $qc_status_list = array();
+                                $qc_status_container_stmt = "select container_entry from vicidial_settings_containers where container_id='$row[2]'";
+                                $qc_status_container_rslt = mysql_to_mysqli($qc_status_container_stmt, $link);
+                                while ($qcsc_row = mysqli_fetch_row($qc_status_container_rslt)) {
+                                    $container_text = preg_split('/\r|\n/', $qcsc_row[0]);
+                                    for ($q = 0; $q < count($container_text); $q++) {
+                                        $line = trim($container_text[$q]);
+                                        if (!preg_match('/^[\#|\;]/', $line) && strlen($line) > 0) {
+                                            $qc_status_list = preg_split('/,/', $line);
+                                            break;
+                                        }
+                                    }
+                                }
+                                
+                                // Calculate QC counts
+                                $total_qc_count = 0;
+                                if ($qc_display_group_type == "CAMPAIGN") {
+                                    $qc_ct_stmt = "select count(*) From vicidial_agent_log where campaign_id='$row[0]' and status in ('" . implode("','", $qc_status_list) . "') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY";
+                                    $qc_ct_rslt = mysql_to_mysqli($qc_ct_stmt, $link);
+                                    $qc_ct_row = mysqli_fetch_row($qc_ct_rslt);
+                                    $total_qc_count = $qc_ct_row[0];
+                                } else if ($qc_display_group_type == "LIST") {
+                                    $agent_log_stmt = "select lead_id From vicidial_agent_log where status in ('" . implode("','", $qc_status_list) . "') and event_time+INTERVAL (pause_sec+wait_sec) SECOND>=now()-INTERVAL $SSqc_expire_days DAY";
+                                    $agent_log_rslt = mysql_to_mysqli($agent_log_stmt, $link);
+                                    while ($agent_log_row = mysqli_fetch_array($agent_log_rslt)) {
+                                        $lead_id = $agent_log_row["lead_id"];
+                                        $list_id_stmt = "select count(*) from vicidial_list where list_id='$row[0]' and lead_id='$lead_id'";
+                                        $list_id_rslt = mysql_to_mysqli($list_id_stmt, $link);
+                                        $lid_row = mysqli_fetch_row($list_id_rslt);
+                                        $total_qc_count += $lid_row[0];
+                                    }
+                                } else if ($qc_display_group_type == "INGROUP") {
+                                    $qc_ct_stmt = "select count(*) From vicidial_closer_log where campaign_id='$row[0]' and status in ('" . implode("','", $qc_status_list) . "') and call_date>=now()-INTERVAL $SSqc_expire_days DAY";
+                                    $qc_ct_rslt = mysql_to_mysqli($qc_ct_stmt, $link);
+                                    $qc_ct_row = mysqli_fetch_row($qc_ct_rslt);
+                                    $total_qc_count = $qc_ct_row[0];
+                                }
+                                
+                                $qc_grabbed_stmt = "select count(*) From quality_control_queue where $count_column='$row[0]' and status in ('" . implode("','", $qc_status_list) . "') and call_date>=now()-INTERVAL $SSqc_expire_days DAY";
+                                $qc_grabbed_rslt = mysql_to_mysqli($qc_grabbed_stmt, $link);
+                                $qc_grabbed_row = mysqli_fetch_row($qc_grabbed_rslt);
+                                $total_grabbed_count = $qc_grabbed_row[0];
+                            ?>
+                            <tr style="background-color: <?php echo $rowColor; ?>; cursor: pointer;" onclick="window.location.href='<?php echo "$PHP_SELF?ADD=881&qc_display_group_type=$qc_display_group_type&$count_column=$row[0]"; ?>'">
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=881&qc_display_group_type=$qc_display_group_type&$count_column=$row[0]"; ?>" style="color: #e74c3c; text-decoration: none; font-weight: 500;"><?php echo $row[0]; ?></a>
+                                </td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo $row[1]; ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo implode(", ", $qc_status_list); ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><?php echo ($total_qc_count - $total_grabbed_count + 0); ?></td>
+                                <td style="padding: 12px 15px; border-bottom: 1px solid #eee; text-align: center;">
+                                    <a href="<?php echo "$PHP_SELF?ADD=31&campaign_id=$row[0]"; ?>" style="background-color: #e74c3c; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; display: inline-block;">
+                                        <i class="fas fa-edit"></i> <?php echo _QXZ("Modify"); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                            $o++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <div style="text-align: center; padding: 2rem; color: #6c757d;">
+                    <i class="fas fa-clipboard-check fa-3x" style="margin-bottom: 1rem; color: #ddd;"></i>
+                    <p><?php echo _QXZ("No " . strtolower($qc_display_group_type) . "s configured for QC"); ?></p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<?php
+}
 
 ######################
 # ADD=881 VIEW one qc campaign
