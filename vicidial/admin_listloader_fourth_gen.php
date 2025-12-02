@@ -2449,7 +2449,7 @@ if (($leadfile) && ($LF_path))
                                 if ( ($webroot_writable > 0) and ($DB>0) )
                                     {fwrite($stmt_file, $custom_ins_stmt."\r\n");}
                                 }
-					
+						}
 							//
 						else 
 							{
