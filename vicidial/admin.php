@@ -54484,47 +54484,122 @@ if ($ADD==1000000000)
 # ADD=1200000000 display all holidays
 ######################
 if ($ADD==1200000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_calltimes.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+    
+    $stmt="SELECT holiday_id,holiday_date,holiday_name,holiday_status,ct_default_start,ct_default_stop,user_group from vicidial_call_time_holidays $whereLOGadmin_viewable_groupsSQL order by holiday_date,holiday_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $holidays_to_print = mysqli_num_rows($rslt);
 
-	$stmt="SELECT holiday_id,holiday_date,holiday_name,holiday_status,ct_default_start,ct_default_stop,user_group from vicidial_call_time_holidays $whereLOGadmin_viewable_groupsSQL order by holiday_date,holiday_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$holidays_to_print = mysqli_num_rows($rslt);
-
-	echo "<br>"._QXZ("HOLIDAY LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("HOLIDAY ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("DATE")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("NAME")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("STATUS")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("START")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("STOP")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($holidays_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3211111111&holiday_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=3211111111&holiday_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> $row[2]</td>";
-		echo "<td><font size=1> $row[3] </td>";
-		echo "<td><font size=1> $row[4] </td>";
-		echo "<td><font size=1> $row[5] </td>";
-		echo "<td><font size=1> $row[6] </td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=3211111111&holiday_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section - WHITE BACKGROUND, BLACK TEXT
+    echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+    echo "<div style='font-size:2.5rem;'>🎄</div>";
+    echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("HOLIDAY LISTINGS")."</h2>";
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("HOLIDAY ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("DATE")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("NAME")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("STATUS")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("START")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("STOP")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($holidays_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        
+        // Alternating row colors
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        // Row with hover effect
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';this.style.transform='scale(1.01)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)';\" onmouseout=\"this.style.background='$bg_color';this.style.transform='scale(1)';this.style.boxShadow='none';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=3211111111&holiday_id=$row[0]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        // Holiday ID
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=3211111111&holiday_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        
+        // Date with calendar icon
+        echo "<td style='padding:1rem;'><div style='display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1rem;'>📅</span><span style='color:#000000;font-size:0.9rem;font-family:monospace;font-weight:600;'>$row[1]</span></div></td>";
+        
+        // Holiday Name
+        echo "<td style='padding:1rem;color:#000000;font-size:0.9rem;font-weight:600;'>$row[2]</td>";
+        
+        // Status Badge
+        $status = $row[3];
+        if ($status == 'ACTIVE' || $status == 'Y') {
+            $status_bg = '#dcfce7';
+            $status_color = '#166534';
+            $status_icon = '✓';
+        } elseif ($status == 'INACTIVE' || $status == 'N') {
+            $status_bg = '#fee2e2';
+            $status_color = '#991b1b';
+            $status_icon = '✗';
+        } else {
+            $status_bg = '#f3f4f6';
+            $status_color = '#374151';
+            $status_icon = '•';
+        }
+        echo "<td style='padding:1rem;'><span style='display:inline-flex;align-items:center;gap:0.25rem;padding:0.25rem 0.75rem;background:$status_bg;color:$status_color;border-radius:9999px;font-size:0.75rem;font-weight:700;'><span>$status_icon</span><span>$status</span></span></td>";
+        
+        // Start Time with icon
+        echo "<td style='padding:1rem;'><div style='display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1rem;'>🕐</span><span style='color:#000000;font-size:0.9rem;font-family:monospace;font-weight:600;'>$row[4]</span></div></td>";
+        
+        // Stop Time with icon
+        echo "<td style='padding:1rem;'><div style='display:flex;align-items:center;gap:0.5rem;'><span style='font-size:1rem;'>🕐</span><span style='color:#000000;font-size:0.9rem;font-family:monospace;font-weight:600;'>$row[5]</span></div></td>";
+        
+        // Admin Group
+        echo "<td style='padding:1rem;color:#000000;font-size:0.85rem;font-weight:500;'>$row[6]</td>";
+        
+        // Modify Button
+        echo "<td style='padding:1rem;text-align:center;'><a href=\"$PHP_SELF?ADD=3211111111&holiday_id=$row[0]\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(102,126,234,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(102,126,234,0.3)';\">"._QXZ("MODIFY")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>"; // End overflow-x container
+    
+    // Empty State (if no records)
+    if ($holidays_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>🎄</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No Holidays Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no holidays to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>"; // End card
+    echo "</div>\n"; // End container
+    }
 
 
 ######################
