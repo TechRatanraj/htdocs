@@ -830,170 +830,6 @@ function PopulateStatuses(list_id) {
                 flex-direction: column;
             }
         }
-
-		/* Field mapping specific styles */
-.card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    padding: 25px;
-    margin-bottom: 20px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.card-title {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    color: #333;
-    display: flex;
-    align-items: center;
-}
-
-.card-title .material-icons {
-    margin-right: 8px;
-    color: #6a11cb;
-}
-
-.status-box {
-    background-color: #e8f5e9;
-    border-radius: 4px;
-    padding: 15px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.status-box .material-icons {
-    margin-right: 8px;
-    color: #388e3c;
-}
-
-.processing-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 25px;
-}
-
-.processing-table .label-cell {
-    width: 35%;
-    padding: 8px 12px;
-    font-weight: 500;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-}
-
-.processing-table .value-cell {
-    width: 65%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-}
-
-.mapping-section {
-    margin-top: 20px;
-}
-
-.section-title {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.mapping-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 25px;
-}
-
-.header-row {
-    background-color: #6a11cb;
-    color: white;
-}
-
-.field-header {
-    width: 35%;
-    padding: 10px 12px;
-    text-align: left;
-    font-weight: 500;
-}
-
-.column-header {
-    width: 65%;
-    padding: 10px 12px;
-    text-align: left;
-    font-weight: 500;
-}
-
-.mapping-row {
-    border-bottom: 1px solid #eee;
-}
-
-.mapping-row:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.field-cell {
-    width: 35%;
-    padding: 10px 12px;
-    font-weight: 500;
-    border: 1px solid #ddd;
-}
-
-.select-cell {
-    width: 65%;
-    padding: 6px 12px;
-    border: 1px solid #ddd;
-}
-
-.field-select {
-    width: 100%;
-    padding: 6px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.button-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 4px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    color: white;
-}
-
-.btn-secondary {
-    background-color: #f1f1f1;
-    color: #333;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn .material-icons {
-    margin-right: 8px;
-    font-size: 18px;
-}
     </style>
 </head>
 <BODY BGCOLOR=WHITE marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>
@@ -3875,6 +3711,170 @@ if (($leadfile) && ($LF_path))
 
 ?>
 </form>
+<style>
+	/* Field mapping specific styles */
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.card-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.card-title .material-icons {
+    margin-right: 8px;
+    color: #6a11cb;
+}
+
+.status-box {
+    background-color: #e8f5e9;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.status-box .material-icons {
+    margin-right: 8px;
+    color: #388e3c;
+}
+
+.processing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+.processing-table .label-cell {
+    width: 35%;
+    padding: 8px 12px;
+    font-weight: 500;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
+
+.processing-table .value-cell {
+    width: 65%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+}
+
+.mapping-section {
+    margin-top: 20px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.mapping-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+.header-row {
+    background-color: #6a11cb;
+    color: white;
+}
+
+.field-header {
+    width: 35%;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.column-header {
+    width: 65%;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.mapping-row {
+    border-bottom: 1px solid #eee;
+}
+
+.mapping-row:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.field-cell {
+    width: 35%;
+    padding: 10px 12px;
+    font-weight: 500;
+    border: 1px solid #ddd;
+}
+
+.select-cell {
+    width: 65%;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+}
+
+.field-select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn .material-icons {
+    margin-right: 8px;
+    font-size: 18px;
+}
+</style>
 </body>
 </html>
