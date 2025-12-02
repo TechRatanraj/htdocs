@@ -3479,8 +3479,7 @@ if (($leadfile) && ($LF_path))
                         <i class='material-icons'>info</i>
                         <span>" . _QXZ("Map your file columns to VICIDIAL database fields") . "</span>
                     </div>
-                </div>
-                <div class='processing-info'>\r\n";
+                </div>";
 
         $fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner from vicidial_list limit 1";
 
@@ -3606,51 +3605,56 @@ if (($leadfile) && ($LF_path))
 
         flush();
         $file=fopen("$lead_file", "r");
+        
+        // Processing information section - matching the Lead File Processing snapshot
         print "<div class='status-box'><i class='material-icons'>autorenew</i> "._QXZ("Processing")." $delim_name "._QXZ("file")."...</div>\n";
-
+        
+        print "<table class='processing-table'>\n";
+        
         if (strlen($list_id_override)>0) 
             {
-            print "<div class='config-item'><i class='material-icons'>list</i> <strong>"._QXZ("LIST ID OVERRIDE FOR THIS FILE").":</strong> $list_id_override</div>";
+            print "<tr><td class='label-cell'>"._QXZ("List ID Override").":</td><td class='value-cell'>$list_id_override</td></tr>\n";
             }
         if (strlen($phone_code_override)>0) 
             {
-            print "<div class='config-item'><i class='material-icons'>phone</i> <strong>"._QXZ("PHONE CODE OVERRIDE FOR THIS FILE").":</strong> $phone_code_override</div>";
+            print "<tr><td class='label-cell'>"._QXZ("Phone Code Override").":</td><td class='value-cell'>$phone_code_override</td></tr>\n";
             }
         if (strlen($dupcheck)>0) 
             {
-            print "<div class='config-item'><i class='material-icons'>content_copy</i> <strong>"._QXZ("LEAD DUPLICATE CHECK").":</strong> $dupcheck</div>";
+            print "<tr><td class='label-cell'>"._QXZ("Lead Duplicate Check").":</td><td class='value-cell'>$dupcheck</td></tr>\n";
             }
         if (strlen($international_dnc_scrub)>0)
             {
-            print "<div class='config-item'><i class='material-icons'>block</i> <strong>"._QXZ("INTERNATIONAL DNC SCRUB").":</strong> $international_dnc_scrub</div>";
+            print "<tr><td class='label-cell'>"._QXZ("International DNC scrub").":</td><td class='value-cell'>$international_dnc_scrub</td></tr>\n";
             }
         if (strlen($status_dedupe_str)>0) 
             {
-            print "<div class='config-item'><i class='material-icons'>filter_list</i> <strong>"._QXZ("OMITTING DUPLICATES AGAINST FOLLOWING STATUSES ONLY").":</strong> $status_dedupe_str</div>";
+            print "<tr><td class='label-cell'>"._QXZ("Omitting Duplicates Against Statuses").":</td><td class='value-cell'>$status_dedupe_str</td></tr>\n";
             }
         if (strlen($status_mismatch_action)>0) 
             {
-            print "<div class='config-item'><i class='material-icons'>swap_vert</i> <strong>"._QXZ("ACTION FOR DUPLICATE NOT ON STATUS LIST").":</strong> $status_mismatch_action</div>";
+            print "<tr><td class='label-cell'>"._QXZ("Status Mismatch Action").":</td><td class='value-cell'>$status_mismatch_action</td></tr>\n";
             }
         if (strlen($state_conversion)>9)
             {
-            print "<div class='config-item'><i class='material-icons'>location_on</i> <strong>"._QXZ("CONVERSION OF STATE NAMES TO ABBREVIATIONS ENABLED").":</strong> $state_conversion</div>";
+            print "<tr><td class='label-cell'>"._QXZ("State Abbreviation Lookup").":</td><td class='value-cell'>$state_conversion</td></tr>\n";
             }
         if ( (strlen($web_loader_phone_length)>0) and (strlen($web_loader_phone_length)< 3) )
             {
-            print "<div class='config-item'><i class='material-icons'>dialpad</i> <strong>"._QXZ("REQUIRED PHONE NUMBER LENGTH").":</strong> $web_loader_phone_length</div>";
+            print "<tr><td class='label-cell'>"._QXZ("Required Phone Number Length").":</td><td class='value-cell'>$web_loader_phone_length</td></tr>\n";
             }
         if ( (strlen($SSweb_loader_phone_strip)>0) and ($SSweb_loader_phone_strip != 'DISABLED') )
             {
-            print "<div class='config-item'><i class='material-icons'>backspace</i> <strong>"._QXZ("PHONE NUMBER PREFIX STRIP SYSTEM SETTING ENABLED").":</strong> $SSweb_loader_phone_strip</div>";
+            print "<tr><td class='label-cell'>"._QXZ("Phone Number Prefix Strip").":</td><td class='value-cell'>$SSweb_loader_phone_strip</td></tr>\n";
             }
-
-        print "</div>
-                <div class='mapping-container'>
-                    <div class='mapping-header'>
-                        <div class='header-cell'>"._QXZ("VICIDIAL Field")."</div>
-                        <div class='header-cell'>"._QXZ("File Column")."</div>
-                    </div>\r\n";
+        
+        print "</table>\n";
+        
+        // Field mapping section
+        print "<div class='mapping-section'>\n";
+        print "<h3 class='section-title'>"._QXZ("Field Mapping")."</h3>\n";
+        print "<table class='mapping-table'>\n";
+        print "<tr class='header-row'><th class='field-header'>"._QXZ("VICIDIAL Field")."</th><th class='column-header'>"._QXZ("File Column")."</th></tr>\n";
 
         $buffer=rtrim(fgets($file, 4096));
         $buffer=stripslashes($buffer);
@@ -3665,40 +3669,45 @@ if (($leadfile) && ($LF_path))
                 }
             else 
                 {
-                print "<div class='mapping-row'>\r\n";
-                print "  <div class='field-cell'>".strtoupper(preg_replace('/_/i', ' ', $rslt_field_name))."</div>\r\n";
-                print "  <div class='value-cell'><select name='".$rslt_field_name."_field' class='field-select'>\r\n";
-                print "    <option value='-1'>(none)</option>\r\n";
+                print "<tr class='mapping-row'>\n";
+                print "<td class='field-cell'>".strtoupper(preg_replace('/_/i', ' ', $rslt_field_name))."</td>\n";
+                print "<td class='select-cell'><select name='".$rslt_field_name."_field' class='field-select'>\n";
+                print "<option value='-1'>(none)</option>\n";
 
                 for ($j=0; $j<count($row); $j++) 
                     {
                     preg_replace('/\"/i', '', $row[$j]);
-                    print "    <option value='$j'>\"$row[$j]\"</option>\r\n";
+                    print "<option value='$j'>\"$row[$j]\"</option>\n";
                     }
 
-                print "  </select></div>\r\n";
-                print "</div>\r\n";
+                print "</select></td>\n";
+                print "</tr>\n";
                 }
             }
         
-        print "  <input type=hidden name=international_dnc_scrub value=\"$international_dnc_scrub\">\r\n";
-        print "  <input type=hidden name=dedupe_statuses_override value=\"$status_dedupe_str\">\r\n";
-        print "  <input type=hidden name=status_mismatch_action value=\"$status_mismatch_action\">\r\n";
-        print "  <input type=hidden name=dupcheck value=\"$dupcheck\">\r\n";
-        print "  <input type=hidden name=usacan_check value=\"$usacan_check\">\r\n";
-        print "  <input type=hidden name=state_conversion value=\"$state_conversion\">\r\n";
-        print "  <input type=hidden name=web_loader_phone_length value=\"$web_loader_phone_length\">\r\n";
-        print "  <input type=hidden name=postalgmt value=\"$postalgmt\">\r\n";
-        print "  <input type=hidden name=lead_file value=\"$lead_file\">\r\n";
-        print "  <input type=hidden name=list_id_override value=\"$list_id_override\">\r\n";
-        print "  <input type=hidden name=phone_code_override value=\"$phone_code_override\">\r\n";
-        print "  <input type=hidden name=DB value=\"$DB\">\r\n";
-        print "</div>
-                <div class='button-group'>
-                    <input type='submit' name='OK_to_process' value='"._QXZ("OK TO PROCESS")."' class='btn btn-primary'>
-                    <input type='button' onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" value=\""._QXZ("START OVER")."\" name='reload_page' class='btn btn-secondary'>
-                </div>
-            </div>";
+        print "</table>\n";
+        print "</div>\n";
+        
+        // Hidden fields
+        print "<input type=hidden name=international_dnc_scrub value=\"$international_dnc_scrub\">\n";
+        print "<input type=hidden name=dedupe_statuses_override value=\"$status_dedupe_str\">\n";
+        print "<input type=hidden name=status_mismatch_action value=\"$status_mismatch_action\">\n";
+        print "<input type=hidden name=dupcheck value=\"$dupcheck\">\n";
+        print "<input type=hidden name=usacan_check value=\"$usacan_check\">\n";
+        print "<input type=hidden name=state_conversion value=\"$state_conversion\">\n";
+        print "<input type=hidden name=web_loader_phone_length value=\"$web_loader_phone_length\">\n";
+        print "<input type=hidden name=postalgmt value=\"$postalgmt\">\n";
+        print "<input type=hidden name=lead_file value=\"$lead_file\">\n";
+        print "<input type=hidden name=list_id_override value=\"$list_id_override\">\n";
+        print "<input type=hidden name=phone_code_override value=\"$phone_code_override\">\n";
+        print "<input type=hidden name=DB value=\"$DB\">\n";
+        
+        // Buttons
+        print "<div class='button-group'>\n";
+        print "<input type='submit' name='OK_to_process' value='"._QXZ("OK TO PROCESS")."' class='btn btn-primary'>\n";
+        print "<input type='button' onClick=\"javascript:document.location='admin_listloader_fourth_gen.php'\" value=\""._QXZ("START OVER")."\" name='reload_page' class='btn btn-secondary'>\n";
+        print "</div>\n";
+        print "</div>\n";
 
         print "<script language='JavaScript1.2'>\nif(document.forms[0].leadfile) {document.forms[0].leadfile.disabled=false;}\nif(document.forms[0].submit_file) {document.forms[0].submit_file.disabled=true;}\nif(document.forms[0].reload_page) {document.forms[0].reload_page.disabled=false;}\n</script>";
         }
