@@ -53593,44 +53593,105 @@ if ($ADD==100000)
 ######################
 # ADD=1000000 display all scripts
 ######################
+
 if ($ADD==1000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    echo "<div style='max-width:1200px;margin:2rem auto;padding:0 1rem;'>\n";
+    
+    $stmt="SELECT script_id,script_name,active,user_group,script_color from vicidial_scripts $whereLOGadmin_viewable_groupsSQL order by script_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $scripts_to_print = mysqli_num_rows($rslt);
 
-	$stmt="SELECT script_id,script_name,active,user_group,script_color from vicidial_scripts $whereLOGadmin_viewable_groupsSQL order by script_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$scripts_to_print = mysqli_num_rows($rslt);
-
-	echo "<img src=\"images/icon_black_scripts.png\" alt=\"Scripts\" width=42 height=42> "._QXZ("SCRIPTS LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("SCRIPT ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("SCRIPT NAME")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ACTIVE")." &nbsp; </B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")." &nbsp; </B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("COLOR")." &nbsp; </B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
-
-	$o=0;
-	while ($scripts_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=3111111&script_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=3111111&script_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1> $row[1]</td>";
-		echo "<td><font size=1> "._QXZ("$row[2]")."</td>";
-		echo "<td><font size=1> ".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>";
-		echo "<td bgcolor=\"$row[4]\"><font size=1> &nbsp;</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=3111111&script_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
+    echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+    
+    // Header Section
+    echo "<div style='background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);padding:2rem;display:flex;align-items:center;gap:1rem;'>";
+    echo "<img src=\"images/icon_black_scripts.png\" alt=\"Scripts\" width=42 height=42 style='filter:brightness(0) invert(1);'>";
+    echo "<h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:600;'>"._QXZ("SCRIPTS LISTINGS")."</h2>";
+    echo "</div>";
+    
+    // Table Container
+    echo "<div style='overflow-x:auto;'>";
+    echo "<table style='width:100%;border-collapse:collapse;'>\n";
+    
+    // Table Header
+    echo "<thead>";
+    echo "<tr style='background:#f8fafc;border-bottom:2px solid #e2e8f0;'>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SCRIPT ID")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("SCRIPT NAME")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ACTIVE")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("ADMIN GROUP")."</th>";
+    echo "<th style='padding:1rem;text-align:left;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("COLOR")."</th>";
+    echo "<th style='padding:1rem;text-align:center;font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;'>"._QXZ("MODIFY")."</th>";
+    echo "</tr>";
+    echo "</thead>\n";
+    
+    // Table Body
+    echo "<tbody>";
+    $o=0;
+    while ($scripts_to_print > $o) 
+        {
+        $row=mysqli_fetch_row($rslt);
+        
+        // Alternating row colors
+        if (preg_match('/1$|3$|5$|7$|9$/i', $o))
+            {$bg_color='#ffffff';} 
+        else
+            {$bg_color='#f8fafc';}
+        
+        // Row with hover effect
+        $row_style = "background:$bg_color;border-bottom:1px solid #e2e8f0;transition:all 0.2s;";
+        $row_hover = "onmouseover=\"this.style.background='#f1f5f9';this.style.transform='scale(1.01)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)';\" onmouseout=\"this.style.background='$bg_color';this.style.transform='scale(1)';this.style.boxShadow='none';\"";
+        
+        if ($SSadmin_row_click > 0) {
+            $row_style .= "cursor:pointer;";
+            $row_onclick = "onclick=\"window.document.location='$PHP_SELF?ADD=3111111&script_id=$row[0]'\"";
+        } else {
+            $row_onclick = "";
+        }
+        
+        echo "<tr style='$row_style' $row_hover $row_onclick>";
+        
+        // Script ID
+        echo "<td style='padding:1rem;'><a href=\"$PHP_SELF?ADD=3111111&script_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.color='#2563eb';this.style.textDecoration='underline';\" onmouseout=\"this.style.color='#3b82f6';this.style.textDecoration='none';\">$row[0]</a></td>";
+        
+        // Script Name
+        echo "<td style='padding:1rem;color:#334155;font-size:0.9rem;font-weight:500;'>$row[1]</td>";
+        
+        // Active Status
+        $active_badge_color = ($row[2] == 'Y') ? '#10b981' : '#ef4444';
+        $active_badge_bg = ($row[2] == 'Y') ? '#d1fae5' : '#fee2e2';
+        echo "<td style='padding:1rem;'><span style='display:inline-block;padding:0.25rem 0.75rem;background:$active_badge_bg;color:$active_badge_color;border-radius:9999px;font-size:0.75rem;font-weight:600;'>"._QXZ("$row[2]")."</span></td>";
+        
+        // Admin Group
+        $group_text = preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3];
+        echo "<td style='padding:1rem;color:#64748b;font-size:0.85rem;'>$group_text</td>";
+        
+        // Color Swatch
+        echo "<td style='padding:1rem;'><div style='width:40px;height:24px;background:$row[4];border:2px solid #e2e8f0;border-radius:6px;box-shadow:0 2px 4px rgba(0,0,0,0.1);'></div></td>";
+        
+        // Modify Button
+        echo "<td style='padding:1rem;text-align:center;'><a href=\"$PHP_SELF?ADD=3111111&script_id=$row[0]\" style='display:inline-block;padding:0.5rem 1rem;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;transition:all 0.3s;box-shadow:0 2px 8px rgba(102,126,234,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 2px 8px rgba(102,126,234,0.3)';\">"._QXZ("MODIFY")."</a></td>";
+        
+        echo "</tr>\n";
+        $o++;
+        }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>"; // End overflow-x container
+    
+    // Empty State (if no records)
+    if ($scripts_to_print == 0) {
+        echo "<div style='padding:4rem;text-align:center;'>";
+        echo "<div style='font-size:4rem;margin-bottom:1rem;opacity:0.3;'>📝</div>";
+        echo "<h3 style='color:#64748b;margin:0 0 0.5rem 0;font-size:1.25rem;'>"._QXZ("No Scripts Found")."</h3>";
+        echo "<p style='color:#94a3b8;margin:0;'>"._QXZ("There are no scripts to display")."</p>";
+        echo "</div>";
+    }
+    
+    echo "</div>"; // End card
+    echo "</div>\n"; // End container
+    }
 
 
 ######################
