@@ -11687,250 +11687,389 @@ if ($ADD==131111111)
 # ADD=11111111111 display the ADD NEW PHONE SCREEN
 ######################
 if ($ADD==11111111111)
-	{
-	if ( ($LOGast_admin_access==1) or ($LOGmodify_phones==1) )
-		{
-		##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
-		$stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='phones' and active='1';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$voi_ct = mysqli_num_rows($rslt);
-		if ($voi_ct > 0)
-			{
-			$row=mysqli_fetch_row($rslt);
-			$voi_count = "$row[0]";
-			}
-		##### END ID override optional section #####
+    {
+    if ( ($LOGast_admin_access==1) or ($LOGmodify_phones==1) )
+        {
+        ##### BEGIN ID override optional section, if enabled it increments user by 1 ignoring entered value #####
+        $stmt = "SELECT count(*) FROM vicidial_override_ids where id_table='phones' and active='1';";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $voi_ct = mysqli_num_rows($rslt);
+        if ($voi_ct > 0)
+            {
+            $row=mysqli_fetch_row($rslt);
+            $voi_count = "$row[0]";
+            }
+        ##### END ID override optional section #####
 
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_phones.png\" alt=\"Phones\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        echo "<div style='max-width:900px;margin:2rem auto;padding:0 1rem;'>\n";
 
-		echo "<br>"._QXZ("ADD A NEW PHONE")."<form action=$PHP_SELF method=POST>\n";
+        ##### Lookup settings container #####
+        $SScontainer_stmt="select phone_defaults_container from system_settings limit 1";
+        $SScontainer_rslt=mysql_to_mysqli($SScontainer_stmt, $link);
+        $SScontainer_row=mysqli_fetch_row($SScontainer_rslt);
+        $dps=array(); # Default phone setting array
+        if (!preg_match('/\-\-\-DISABLED\-\-\-/', $SScontainer_row[0]))
+            {
+            $container_stmt="select container_entry from vicidial_settings_containers where container_id='$SScontainer_row[0]'";
+            $container_rslt=mysql_to_mysqli($container_stmt, $link);
+            $container_entry="";
+            if (mysqli_num_rows($container_rslt)>0)
+                {
+                echo "<div style='margin-bottom:1rem;padding:1rem;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;'>";
+                echo "<div style='display:flex;align-items:center;gap:0.5rem;'>";
+                echo "<span style='font-size:1.5rem;'>⚠️</span>";
+                echo "<strong style='color:#92400e;'>"._QXZ("Using default phone setting container")." $SScontainer_row[0]...</strong>";
+                echo "</div></div>\n";
+                $container_row=mysqli_fetch_row($container_rslt);
+                $container_entry=$container_row[0];
+                $container_entry_array=explode("\n", $container_entry);
+                for ($c=0; $c<count($container_entry_array); $c++)
+                    {
+                    $container_line=trim($container_entry_array[$c]);
+                    if (!preg_match('/^\#/', $container_line))
+                        {
+                        $current_setting_array=explode("=>", $container_line);
+                        if (strlen(trim($current_setting_array[0]))>0 && strlen(trim($current_setting_array[1]))>0)
+                            {
+                            $dps[trim($current_setting_array[0])]=trim($current_setting_array[1]);
+                            }
+                        }
+                    }
+                }
+            }
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<img src=\"images/icon_phones.png\" alt=\"Phones\" width=42 height=42>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("ADD A NEW PHONE")."</h2>";
+        echo "</div>";
 
-		##### Lookup settings container #####
-		$SScontainer_stmt="select phone_defaults_container from system_settings limit 1";
-		$SScontainer_rslt=mysql_to_mysqli($SScontainer_stmt, $link);
-		$SScontainer_row=mysqli_fetch_row($SScontainer_rslt);
-		$dps=array(); # Default phone setting array
-		if (!preg_match('/\-\-\-DISABLED\-\-\-/', $SScontainer_row[0]))
-			{
-			$container_stmt="select container_entry from vicidial_settings_containers where container_id='$SScontainer_row[0]'";
-			$container_rslt=mysql_to_mysqli($container_stmt, $link);
-			$container_entry="";
-			if (mysqli_num_rows($container_rslt)>0)
-				{
-				echo "<B><font color='#F00'>"._QXZ("Using default phone setting container")." $SScontainer_row[0]...</font></B><BR>\n";
-				$container_row=mysqli_fetch_row($container_rslt);
-				$container_entry=$container_row[0];
-				$container_entry_array=explode("\n", $container_entry);
-				for ($c=0; $c<count($container_entry_array); $c++)
-					{
-					$container_line=trim($container_entry_array[$c]);
-					if (!preg_match('/^\#/', $container_line))
-						{
-						$current_setting_array=explode("=>", $container_line);
-						if (strlen(trim($current_setting_array[0]))>0 && strlen(trim($current_setting_array[1]))>0)
-							{
-							# $$current_setting_array[0]=$current_setting_array[1];
-							$dps[trim($current_setting_array[0])]=trim($current_setting_array[1]);
-							}
-						}
-					}
-				}
-			}
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=21111111111>\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Phone Extension
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Phone Extension").":</label>";
+        if ($voi_count > 0)
+            {
+            echo "<div style='color:#000000;font-weight:600;font-size:0.9rem;'>"._QXZ("Auto-Generated")." $NWB#phones-extension$NWE</div>";
+            }
+        else
+            {
+            echo "<div><input type=text name=extension size=20 maxlength=100 value=\"\" style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#phones-extension$NWE</div>";
+            }
+        echo "</div>";
+        
+        // Dial Plan Number
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Dial Plan Number").":</label>";
+        echo "<div><input type=text name=dialplan_number size=15 maxlength=20 style='width:250px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("digits only").")$NWB#phones-dialplan_number$NWE</div></div>";
+        echo "</div>";
+        
+        // Voicemail Box
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Voicemail Box").":</label>";
+        echo "<div><input type=text name=voicemail_id size=10 maxlength=10 value='".$dps["voicemail_id"]."' style='width:200px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("digits only").")$NWB#phones-voicemail_id$NWE</div></div>";
+        echo "</div>";
+        
+        // Outbound CallerID
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Outbound CallerID").":</label>";
+        echo "<div><input type=text name=outbound_cid size=10 maxlength=20 value='".$dps["outbound_cid"]."' style='width:250px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("digits only").")$NWB#phones-outbound_cid$NWE</div></div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:250px;'>\n";
+        $s="SELECTED";
+        if ($dps["user_group"])
+            {
+            echo "<option SELECTED value=\"".$dps["user_group"]."\">".$dps["user_group"]."</option>\n";
+            $s="";
+            }
+        echo "$UUgroups_list";
+        echo "<option $s value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
+        echo "</select>$NWB#phones-user_group$NWE</div>";
+        echo "</div>";
+        
+        // Server IP
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Server IP").":</label>";
+        echo "<div><select size=1 name=server_ip style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;font-family:monospace;min-width:200px;'>\n";
+        if ($dps["server_ip"])
+            {
+            echo "<option SELECTED value=\"".$dps["server_ip"]."\">".$dps["server_ip"]."</option>\n";
+            }
+        echo "$servers_list";
+        echo "</select>$NWB#phones-server_ip$NWE</div>";
+        echo "</div>";
+        
+        // Agent Screen Login
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Agent Screen Login").":</label>";
+        echo "<div><input type=text name=login size=15 maxlength=15 style='width:250px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;font-weight:600;'>$NWB#phones-login$NWE</div>";
+        echo "</div>";
+        
+        if ($dps["pass"])
+            {
+            $SSdefault_phone_login_password=$dps["pass"];
+            }
+        if ($dps["conf_secret"])
+            {
+            $SSdefault_phone_registration_password=$dps["conf_secret"];
+            }
+        
+        // Login Password
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Login Password").":</label>";
+        echo "<div><input type=text name=pass size=40 maxlength=100 value=\"$SSdefault_phone_login_password\" style='width:100%;max-width:400px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#phones-pass$NWE</div>";
+        echo "</div>";
+        
+        // Registration Password with Strength Indicator
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Registration Password").":</label>";
+        echo "<div><input type=text id=reg_pass name=conf_secret size=40 maxlength=100 value=\"$SSdefault_phone_registration_password\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\" style='width:100%;max-width:400px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;font-family:monospace;'>$NWB#phones-conf_secret$NWE<div style='display:flex;align-items:center;gap:1rem;margin-top:0.75rem;'><span style='color:#64748b;font-size:0.85rem;font-weight:600;'>"._QXZ("Strength").":</span><img id=reg_pass_img src='images/pixel.gif' style='vertical-align:middle;' onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"><span style='color:#64748b;font-size:0.85rem;margin-left:1rem;'>"._QXZ("Length").": <span id=pass_length name=pass_length style='font-weight:700;color:#000000;'>0</span></span></div></div>";
+        echo "</div>";
+        
+        // Status
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Status").":</label>";
+        echo "<div><select size=1 name=status style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>";
+        if ($dps["status"])
+            {
+            echo "<option value='".$dps["status"]."' SELECTED>".$dps["status"]."</option>";
+            echo "<option value='ACTIVE'>"._QXZ("ACTIVE")."</option>";
+            }
+        else
+            {
+            echo "<option value='ACTIVE' SELECTED>"._QXZ("ACTIVE")."</option>";
+            }
+        echo "<option value='SUSPENDED'>"._QXZ("SUSPENDED")."</option><option value='CLOSED'>"._QXZ("CLOSED")."</option><option value='PENDING'>"._QXZ("PENDING")."</option><option value='ADMIN'>"._QXZ("ADMIN")."</option></select>$NWB#phones-status$NWE</div>";
+        echo "</div>";
+        
+        // Active Account
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Active Account").":</label>";
+        echo "<div><select size=1 name=active style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:150px;'>";
+        echo "<option value='Y' ".($dps["active"]!="N" ? "selected" : "").">"._QXZ("Y")."</option><option value='N' ".($dps["active"]=="N" ? "selected" : "").">"._QXZ("N")."</option></select>$NWB#phones-active$NWE</div>";
+        echo "</div>";
+        
+        // Phone Type
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Phone Type").":</label>";
+        echo "<div><input type=text name=phone_type size=20 maxlength=50 value='".$dps["phone_type"]."' style='width:100%;max-width:300px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#phones-phone_type$NWE</div>";
+        echo "</div>";
+        
+        // Full Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Full Name").":</label>";
+        echo "<div><input type=text name=fullname size=20 maxlength=50 style='width:100%;max-width:400px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'>$NWB#phones-fullname$NWE</div>";
+        echo "</div>";
+        
+        // Client Protocol
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Client Protocol").":</label>";
+        echo "<div><select size=1 name=protocol style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>";
+        $SIP_selected=0;
+        if ($dps["protocol"])
+            {
+            echo "<option value='".$dps["protocol"]."' SELECTED>".$dps["protocol"]."</option>";
+            if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
+            $SIP_selected++;
+            }
+        else
+            {
+            if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option SELECTED>SIP</option>";   $SIP_selected++;}
+            }
+        $PJSIP_selected='';
+        if ($SIP_selected < 1) {$PJSIP_selected = ' SELECTED';}
+        if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option$PJSIP_selected>PJSIP</option>";}
+        echo "<option>Zap</option><option>IAX2</option><option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option><option>DAHDI</option></select>$NWB#phones-protocol$NWE</div>";
+        echo "</div>";
+        
+        if ($dps["local_gmt"])
+            {
+            $SSdefault_local_gmt=$dps["local_gmt"];
+            }
+        
+        // Local GMT
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Local GMT").":</label>";
+        echo "<div><select size=1 name=local_gmt style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;font-family:monospace;min-width:150px;'><option>12.75</option><option>12.00</option><option>11.00</option><option>10.00</option><option>9.50</option><option>9.00</option><option>8.00</option><option>7.00</option><option>6.50</option><option>6.00</option><option>5.75</option><option>5.50</option><option>5.00</option><option>4.50</option><option>4.00</option><option>3.50</option><option>3.00</option><option>2.00</option><option>1.00</option><option>0.00</option><option>-1.00</option><option>-2.00</option><option>-3.00</option><option>-3.50</option><option>-4.00</option><option>-5.00</option><option>-6.00</option><option>-7.00</option><option>-8.00</option><option>-9.00</option><option>-10.00</option><option>-11.00</option><option>-12.00</option><option SELECTED>$SSdefault_local_gmt</option></select><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("Do NOT Adjust for DST").")$NWB#phones-local_gmt$NWE</div></div>";
+        echo "</div>";
+        
+        echo "</div>"; // End form fields grid
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='submit' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End card
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to view this page")."</p>";
+        echo "</div>";
+        exit;
+        }
+    }
 
-		echo "<input type=hidden name=ADD value=21111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		if ($voi_count > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Extension").": </td><td align=left>"._QXZ("Auto-Generated")." $NWB#phones-extension$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Extension").": </td><td align=left><input type=text name=extension size=20 maxlength=100 value=\"\">$NWB#phones-extension$NWE</td></tr>\n";
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Dial Plan Number").": </td><td align=left><input type=text name=dialplan_number size=15 maxlength=20> ("._QXZ("digits only").")$NWB#phones-dialplan_number$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Voicemail Box").": </td><td align=left><input type=text name=voicemail_id size=10 maxlength=10 value='".$dps["voicemail_id"]."'> ("._QXZ("digits only").")$NWB#phones-voicemail_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Outbound CallerID").": </td><td align=left><input type=text name=outbound_cid size=10 maxlength=20 value='".$dps["outbound_cid"]."'> ("._QXZ("digits only").")$NWB#phones-outbound_cid$NWE</td></tr>\n";
-#		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>Phone IP address: </td><td align=left><input type=text name=phone_ip size=20 maxlength=15> (optional)$NWB#phones-phone_ip$NWE</td></tr>\n";
-#		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>Computer IP address: </td><td align=left><input type=text name=computer_ip size=20 maxlength=15> (optional)$NWB#phones-computer_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		$s="SELECTED";
-		if ($dps["user_group"])
-			{
-			echo "<option SELECTED value=\"".$dps["user_group"]."\">".$dps["user_group"]."</option>\n";
-			$s="";
-			}
-		echo "$UUgroups_list";
-		echo "<option $s value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#phones-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Server IP").": </td><td align=left><select size=1 name=server_ip>\n";
-		if ($dps["server_ip"])
-			{
-			echo "<option SELECTED value=\"".$dps["server_ip"]."\">".$dps["server_ip"]."</option>\n";
-			}
-		echo "$servers_list";
-		echo "</select>$NWB#phones-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Screen Login").": </td><td align=left><input type=text name=login size=15 maxlength=15>$NWB#phones-login$NWE</td></tr>\n";
-		if ($dps["pass"])
-			{
-			$SSdefault_phone_login_password=$dps["pass"];
-			}
-		if ($dps["conf_secret"])
-			{
-			$SSdefault_phone_registration_password=$dps["conf_secret"];
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Login Password").": </td><td align=left><input type=text name=pass size=40 maxlength=100 value=\"$SSdefault_phone_login_password\">$NWB#phones-pass$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Registration Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=conf_secret size=40 maxlength=100 value=\"$SSdefault_phone_registration_password\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#phones-conf_secret$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Status").": </td><td align=left><select size=1 name=status>";
-		
-		if ($dps["status"])
-			{
-			echo "<option value='".$dps["status"]."' SELECTED>".$dps["status"]."</option>";
-			echo "<option value='ACTIVE'>"._QXZ("ACTIVE")."</option>";
-			}
-		else
-			{
-			echo "<option value='ACTIVE' SELECTED>"._QXZ("ACTIVE")."</option>";
-			}
-		echo "<option value='SUSPENDED'>"._QXZ("SUSPENDED")."</option><option value='CLOSED'>"._QXZ("CLOSED")."</option><option value='PENDING'>"._QXZ("PENDING")."</option><option value='ADMIN'>"._QXZ("ADMIN")."</option></select>$NWB#phones-status$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Account").": </td><td align=left><select size=1 name=active>";
-		
-		echo "<option value='Y' ".($dps["active"]!="N" ? "selected" : "").">"._QXZ("Y")."</option><option value='N' ".($dps["active"]=="N" ? "selected" : "").">"._QXZ("N")."</option></select>$NWB#phones-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Type").": </td><td align=left><input type=text name=phone_type size=20 maxlength=50 value='".$dps["phone_type"]."'>$NWB#phones-phone_type$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=fullname size=20 maxlength=50>$NWB#phones-fullname$NWE</td></tr>\n";
-#		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>Company: </td><td align=left><input type=text name=company size=10 maxlength=10>$NWB#phones-company$NWE</td></tr>\n";
-#		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>Picture: </td><td align=left><input type=text name=picture size=20 maxlength=19>$NWB#phones-picture$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Client Protocol").": </td><td align=left><select size=1 name=protocol>";
-		$SIP_selected=0;
-		if ($dps["protocol"])
-			{
-			echo "<option value='".$dps["protocol"]."' SELECTED>".$dps["protocol"]."</option>";
-			if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
-			$SIP_selected++;
-			}
-		else
-			{
-			if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option SELECTED>SIP</option>";   $SIP_selected++;}
-			}
-		$PJSIP_selected='';
-		if ($SIP_selected < 1) {$PJSIP_selected = ' SELECTED';}
-		if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option$PJSIP_selected>PJSIP</option>";}
-		echo "<option>Zap</option><option>IAX2</option><option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option><option>DAHDI</option></select>$NWB#phones-protocol$NWE</td></tr>\n";
-		if ($dps["local_gmt"])
-			{
-			$SSdefault_local_gmt=$dps["local_gmt"];
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Local GMT").": </td><td align=left><select size=1 name=local_gmt><option>12.75</option><option>12.00</option><option>11.00</option><option>10.00</option><option>9.50</option><option>9.00</option><option>8.00</option><option>7.00</option><option>6.50</option><option>6.00</option><option>5.75</option><option>5.50</option><option>5.00</option><option>4.50</option><option>4.00</option><option>3.50</option><option>3.00</option><option>2.00</option><option>1.00</option><option>0.00</option><option>-1.00</option><option>-2.00</option><option>-3.00</option><option>-3.50</option><option>-4.00</option><option>-5.00</option><option>-6.00</option><option>-7.00</option><option>-8.00</option><option>-9.00</option><option>-10.00</option><option>-11.00</option><option>-12.00</option><option SELECTED>$SSdefault_local_gmt</option></select> ("._QXZ("Do NOT Adjust for DST").")$NWB#phones-local_gmt$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
 
 ######################
 # ADD=21222222222 adds copied new phone to the system
 ######################
 if ($ADD==21222222222)
-	{
-	$source_phone_array=explode("|", $source_phone);
-	$source_extension=$source_phone_array[0];
-	$source_server_ip=$source_phone_array[1];
-	if ($add_copy_disabled > 0)
-		{
-		echo "<br>"._QXZ("You do not have permission to add records on this system")." -system_settings-\n";
-		}
-	 else
-		{
-		$stmt="SELECT count(*) from phones where extension='$source_extension' and server_ip='$source_server_ip';";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		if ($row[0] < 1)
-			{
-			echo "<br>"._QXZ("PHONE NOT COPIED - Your selected Source Phone does not exist")."\n";
-			}
-		 else
-			{
-			echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-			$stmt="SELECT count(*) from phones where extension='$new_extension' and server_ip='$new_server_ip';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$row=mysqli_fetch_row($rslt);
-			if ($row[0] > 0)
-				{echo "<br>"._QXZ("PHONE NOT COPIED - there is already a phone in the system with this extension/server")."\n";}
-			else
-				{
-				$stmt="SELECT count(*) from phones where login='$new_login';";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$row=mysqli_fetch_row($rslt);
-				if ($row[0] > 0)
-					{echo "<br>"._QXZ("PHONE NOT COPIED - there is already a Phone in the system with this login")."\n";}
-				else
-					{
-					$stmt="SELECT count(*) from phones_alias where alias_id='$new_login';";
-					$rslt=mysql_to_mysqli($stmt, $link);
-					$row=mysqli_fetch_row($rslt);
-					if ($row[0] > 0)
-						{echo "<br>"._QXZ("PHONE NOT COPIED - there is already a Phone alias in the system with this login")."\n";}
-					else
-						{
-						$stmt="SELECT count(*) from vicidial_voicemail where voicemail_id='$new_voicemail_id';";
-						$rslt=mysql_to_mysqli($stmt, $link);
-						$row=mysqli_fetch_row($rslt);
-						if ($row[0] > 0)
-							{echo "<br>"._QXZ("PHONE NOT COPIED - there is already a Voicemail ID in the system with this ID")."\n";}
-						else
-							{
-							if ( (strlen($new_extension) < 1) or (strlen($new_server_ip) < 7) or (strlen($new_dialplan_number) < 1) or (strlen($new_voicemail_id) < 1) or (strlen($new_login) < 1)  or (strlen($new_pass) < 1) or ( ($SSrequire_password_length > 0) and ($SSrequire_password_length > strlen($new_conf_secret)) ))
-								{
-								echo "<br>"._QXZ("PHONE NOT COPIED - Please go back and look at the data you entered")."\n";
-								echo "<br>"._QXZ("The following fields must have data").": extension, server_ip, dialplan_number, voicemail_id, login, pass\n";
-								if ($SSrequire_password_length > 0)
-									{
-									echo "<br>"._QXZ("registration password must be at least $SSrequire_password_length characters long")."\n";
-									}
-								}
-							else
-								{
-								$ins_stmt="INSERT INTO phones(extension, dialplan_number, voicemail_id, phone_ip, computer_ip, server_ip, login, pass, status, active, phone_type, fullname, company, picture, messages, old_messages, protocol, local_gmt, ASTmgrUSERNAME, ASTmgrSECRET, login_user, login_pass, login_campaign, park_on_extension, conf_on_extension, VICIDIAL_park_on_extension, VICIDIAL_park_on_filename, monitor_prefix, recording_exten, voicemail_exten, voicemail_dump_exten, ext_context, dtmf_send_extension, call_out_number_group, client_browser, install_directory, local_web_callerID_URL, VICIDIAL_web_URL, AGI_call_logging_enabled, user_switching_enabled, conferencing_enabled, admin_hangup_enabled, admin_hijack_enabled, admin_monitor_enabled, call_parking_enabled, updater_check_enabled, AFLogging_enabled, QUEUE_ACTION_enabled, CallerID_popup_enabled, voicemail_button_enabled, enable_fast_refresh, fast_refresh_rate, enable_persistant_mysql, auto_dial_next_number, VDstop_rec_after_each_call, DBX_server, DBX_database, DBX_user, DBX_pass, DBX_port, DBY_server, DBY_database, DBY_user, DBY_pass, DBY_port, outbound_cid, enable_sipsak_messages, email, template_id, conf_override, phone_context, phone_ring_timeout, conf_secret, delete_vm_after_email, is_webphone, use_external_server_ip, codecs_list, codecs_with_template, webphone_dialpad, on_hook_agent, webphone_auto_answer, voicemail_timezone, voicemail_options, user_group, voicemail_greeting, voicemail_dump_exten_no_inst, voicemail_instructions, on_login_report, unavail_dialplan_fwd_exten, unavail_dialplan_fwd_context, nva_call_url, nva_search_method, nva_error_filename, nva_new_list_id, nva_new_phone_code, nva_new_status, webphone_dialbox, webphone_mute, webphone_volume, webphone_debug, outbound_alt_cid, conf_qualify, webphone_layout, mohsuggest, webphone_settings) SELECT '$new_extension', '$new_dialplan_number', '$new_voicemail_id', phone_ip, computer_ip, '$new_server_ip', '$new_login', '$new_pass', status, active, phone_type, '$new_fullname', company, picture, messages, old_messages, protocol, local_gmt, ASTmgrUSERNAME, ASTmgrSECRET, login_user, login_pass, login_campaign, park_on_extension, conf_on_extension, VICIDIAL_park_on_extension, VICIDIAL_park_on_filename, monitor_prefix, recording_exten, voicemail_exten, voicemail_dump_exten, ext_context, dtmf_send_extension, call_out_number_group, client_browser, install_directory, local_web_callerID_URL, VICIDIAL_web_URL, AGI_call_logging_enabled, user_switching_enabled, conferencing_enabled, admin_hangup_enabled, admin_hijack_enabled, admin_monitor_enabled, call_parking_enabled, updater_check_enabled, AFLogging_enabled, QUEUE_ACTION_enabled, CallerID_popup_enabled, voicemail_button_enabled, enable_fast_refresh, fast_refresh_rate, enable_persistant_mysql, auto_dial_next_number, VDstop_rec_after_each_call, DBX_server, DBX_database, DBX_user, DBX_pass, DBX_port, DBY_server, DBY_database, DBY_user, DBY_pass, DBY_port, '$new_outbound_cid', enable_sipsak_messages, email, template_id, conf_override, phone_context, phone_ring_timeout, '$new_conf_secret', delete_vm_after_email, is_webphone, use_external_server_ip, codecs_list, codecs_with_template, webphone_dialpad, on_hook_agent, webphone_auto_answer, voicemail_timezone, voicemail_options, user_group, voicemail_greeting, voicemail_dump_exten_no_inst, voicemail_instructions, on_login_report, unavail_dialplan_fwd_exten, unavail_dialplan_fwd_context, nva_call_url, nva_search_method, nva_error_filename, nva_new_list_id, nva_new_phone_code, nva_new_status, webphone_dialbox, webphone_mute, webphone_volume, webphone_debug, outbound_alt_cid, conf_qualify, webphone_layout, mohsuggest, webphone_settings from phones where extension='$source_extension' and server_ip='$source_server_ip'";
-								$ins_rslt=mysql_to_mysqli($ins_stmt, $link);
-								$affected_rows = mysqli_affected_rows($link);
-								if ($affected_rows>0)
-									{
-									echo "<br><B>"._QXZ("PHONE COPIED").": $new_extension, $new_server_ip - <a href='admin.php?ADD=31111111111&extension=$new_extension&server_ip=$new_server_ip'>VIEW HERE</a></B>.  <BR><BR>Please allow up to 1 minute for the server dialplan to update with the new phone.\n";
+    {
+    $source_phone_array=explode("|", $source_phone);
+    $source_extension=$source_phone_array[0];
+    $source_server_ip=$source_phone_array[1];
+    if ($add_copy_disabled > 0)
+        {
+        echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>⚠️</div>";
+        echo "<h2 style='color:#f59e0b;margin:0 0 1rem 0;'>"._QXZ("Permission Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You do not have permission to add records on this system")." -system_settings-</p>";
+        echo "</div>\n";
+        }
+     else
+        {
+        $stmt="SELECT count(*) from phones where extension='$source_extension' and server_ip='$source_server_ip';";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        if ($row[0] < 1)
+            {
+            echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+            echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+            echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Copy Failed")."</h2>";
+            echo "<p style='color:#64748b;'>"._QXZ("PHONE NOT COPIED - Your selected Source Phone does not exist")."</p>";
+            echo "</div>\n";
+            }
+         else
+            {
+            $stmt="SELECT count(*) from phones where extension='$new_extension' and server_ip='$new_server_ip';";
+            $rslt=mysql_to_mysqli($stmt, $link);
+            $row=mysqli_fetch_row($rslt);
+            if ($row[0] > 0)
+                {
+                echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+                echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Copy Failed")."</h2>";
+                echo "<p style='color:#64748b;'>"._QXZ("PHONE NOT COPIED - there is already a phone in the system with this extension/server")."</p>";
+                echo "</div>\n";
+                }
+            else
+                {
+                $stmt="SELECT count(*) from phones where login='$new_login';";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $row=mysqli_fetch_row($rslt);
+                if ($row[0] > 0)
+                    {
+                    echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                    echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+                    echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Copy Failed")."</h2>";
+                    echo "<p style='color:#64748b;'>"._QXZ("PHONE NOT COPIED - there is already a Phone in the system with this login")."</p>";
+                    echo "</div>\n";
+                    }
+                else
+                    {
+                    $stmt="SELECT count(*) from phones_alias where alias_id='$new_login';";
+                    $rslt=mysql_to_mysqli($stmt, $link);
+                    $row=mysqli_fetch_row($rslt);
+                    if ($row[0] > 0)
+                        {
+                        echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                        echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+                        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Copy Failed")."</h2>";
+                        echo "<p style='color:#64748b;'>"._QXZ("PHONE NOT COPIED - there is already a Phone alias in the system with this login")."</p>";
+                        echo "</div>\n";
+                        }
+                    else
+                        {
+                        $stmt="SELECT count(*) from vicidial_voicemail where voicemail_id='$new_voicemail_id';";
+                        $rslt=mysql_to_mysqli($stmt, $link);
+                        $row=mysqli_fetch_row($rslt);
+                        if ($row[0] > 0)
+                            {
+                            echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                            echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+                            echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Copy Failed")."</h2>";
+                            echo "<p style='color:#64748b;'>"._QXZ("PHONE NOT COPIED - there is already a Voicemail ID in the system with this ID")."</p>";
+                            echo "</div>\n";
+                            }
+                        else
+                            {
+                            if ( (strlen($new_extension) < 1) or (strlen($new_server_ip) < 7) or (strlen($new_dialplan_number) < 1) or (strlen($new_voicemail_id) < 1) or (strlen($new_login) < 1)  or (strlen($new_pass) < 1) or ( ($SSrequire_password_length > 0) and ($SSrequire_password_length > strlen($new_conf_secret)) ))
+                                {
+                                echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                                echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+                                echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Copy Failed")."</h2>";
+                                echo "<p style='color:#64748b;'>"._QXZ("PHONE NOT COPIED - Please go back and look at the data you entered")."<br>"._QXZ("The following fields must have data").": extension, server_ip, dialplan_number, voicemail_id, login, pass</p>";
+                                if ($SSrequire_password_length > 0)
+                                    {
+                                    echo "<p style='color:#64748b;margin-top:1rem;'>"._QXZ("registration password must be at least $SSrequire_password_length characters long")."</p>";
+                                    }
+                                echo "</div>\n";
+                                }
+                            else
+                                {
+                                $ins_stmt="INSERT INTO phones(extension, dialplan_number, voicemail_id, phone_ip, computer_ip, server_ip, login, pass, status, active, phone_type, fullname, company, picture, messages, old_messages, protocol, local_gmt, ASTmgrUSERNAME, ASTmgrSECRET, login_user, login_pass, login_campaign, park_on_extension, conf_on_extension, VICIDIAL_park_on_extension, VICIDIAL_park_on_filename, monitor_prefix, recording_exten, voicemail_exten, voicemail_dump_exten, ext_context, dtmf_send_extension, call_out_number_group, client_browser, install_directory, local_web_callerID_URL, VICIDIAL_web_URL, AGI_call_logging_enabled, user_switching_enabled, conferencing_enabled, admin_hangup_enabled, admin_hijack_enabled, admin_monitor_enabled, call_parking_enabled, updater_check_enabled, AFLogging_enabled, QUEUE_ACTION_enabled, CallerID_popup_enabled, voicemail_button_enabled, enable_fast_refresh, fast_refresh_rate, enable_persistant_mysql, auto_dial_next_number, VDstop_rec_after_each_call, DBX_server, DBX_database, DBX_user, DBX_pass, DBX_port, DBY_server, DBY_database, DBY_user, DBY_pass, DBY_port, outbound_cid, enable_sipsak_messages, email, template_id, conf_override, phone_context, phone_ring_timeout, conf_secret, delete_vm_after_email, is_webphone, use_external_server_ip, codecs_list, codecs_with_template, webphone_dialpad, on_hook_agent, webphone_auto_answer, voicemail_timezone, voicemail_options, user_group, voicemail_greeting, voicemail_dump_exten_no_inst, voicemail_instructions, on_login_report, unavail_dialplan_fwd_exten, unavail_dialplan_fwd_context, nva_call_url, nva_search_method, nva_error_filename, nva_new_list_id, nva_new_phone_code, nva_new_status, webphone_dialbox, webphone_mute, webphone_volume, webphone_debug, outbound_alt_cid, conf_qualify, webphone_layout, mohsuggest, webphone_settings) SELECT '$new_extension', '$new_dialplan_number', '$new_voicemail_id', phone_ip, computer_ip, '$new_server_ip', '$new_login', '$new_pass', status, active, phone_type, '$new_fullname', company, picture, messages, old_messages, protocol, local_gmt, ASTmgrUSERNAME, ASTmgrSECRET, login_user, login_pass, login_campaign, park_on_extension, conf_on_extension, VICIDIAL_park_on_extension, VICIDIAL_park_on_filename, monitor_prefix, recording_exten, voicemail_exten, voicemail_dump_exten, ext_context, dtmf_send_extension, call_out_number_group, client_browser, install_directory, local_web_callerID_URL, VICIDIAL_web_URL, AGI_call_logging_enabled, user_switching_enabled, conferencing_enabled, admin_hangup_enabled, admin_hijack_enabled, admin_monitor_enabled, call_parking_enabled, updater_check_enabled, AFLogging_enabled, QUEUE_ACTION_enabled, CallerID_popup_enabled, voicemail_button_enabled, enable_fast_refresh, fast_refresh_rate, enable_persistant_mysql, auto_dial_next_number, VDstop_rec_after_each_call, DBX_server, DBX_database, DBX_user, DBX_pass, DBX_port, DBY_server, DBY_database, DBY_user, DBY_pass, DBY_port, '$new_outbound_cid', enable_sipsak_messages, email, template_id, conf_override, phone_context, phone_ring_timeout, '$new_conf_secret', delete_vm_after_email, is_webphone, use_external_server_ip, codecs_list, codecs_with_template, webphone_dialpad, on_hook_agent, webphone_auto_answer, voicemail_timezone, voicemail_options, user_group, voicemail_greeting, voicemail_dump_exten_no_inst, voicemail_instructions, on_login_report, unavail_dialplan_fwd_exten, unavail_dialplan_fwd_context, nva_call_url, nva_search_method, nva_error_filename, nva_new_list_id, nva_new_phone_code, nva_new_status, webphone_dialbox, webphone_mute, webphone_volume, webphone_debug, outbound_alt_cid, conf_qualify, webphone_layout, mohsuggest, webphone_settings from phones where extension='$source_extension' and server_ip='$source_server_ip'";
+                                $ins_rslt=mysql_to_mysqli($ins_stmt, $link);
+                                $affected_rows = mysqli_affected_rows($link);
+                                if ($affected_rows>0)
+                                    {
+                                    echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                                    echo "<div style='font-size:3rem;margin-bottom:1rem;'>✅</div>";
+                                    echo "<h2 style='color:#10b981;margin:0 0 1rem 0;'>"._QXZ("PHONE COPIED")."</h2>";
+                                    echo "<p style='color:#000000;font-weight:600;margin-bottom:1rem;'>$new_extension, $new_server_ip</p>";
+                                    echo "<a href='admin.php?ADD=31111111111&extension=$new_extension&server_ip=$new_server_ip' style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(59,130,246,0.3);' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';\">"._QXZ("VIEW HERE")."</a>";
+                                    echo "<p style='color:#64748b;margin-top:1.5rem;font-size:0.85rem;'>"._QXZ("Please allow up to 1 minute for the server dialplan to update with the new phone")."</p>";
+                                    echo "</div>\n";
 
-									$upd_stmt="UPDATE servers set rebuild_conf_files='Y' where server_ip='$new_server_ip';";
-									$upd_rslt=mysql_to_mysqli($upd_stmt, $link);
-									$affected_rowsS = mysqli_affected_rows($link);
+                                    $upd_stmt="UPDATE servers set rebuild_conf_files='Y' where server_ip='$new_server_ip';";
+                                    $upd_rslt=mysql_to_mysqli($upd_stmt, $link);
+                                    $affected_rowsS = mysqli_affected_rows($link);
 
-									### LOG INSERTION Admin Log Table ###
-									$SQL_log = "$ins_stmt|$upd_stmt";
-									$SQL_log = preg_replace('/;/', '', $SQL_log);
-									$SQL_log = addslashes($SQL_log);
-									$stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='PHONES', event_type='COPY', record_id='$new_extension-$new_server_ip', event_code='ADMIN COPY PHONE', event_sql=\"$SQL_log\", event_notes='$affected_rows,$affected_rowsS';";
-									if ($DB) {echo "|$stmt|\n";}
-									$rslt=mysql_to_mysqli($stmt, $link);
-
-									}
-								else
-									{
-									echo "<br>"._QXZ("UNKNOWN SQL ERROR - $ins_stmt")."\n";
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	echo "</font>";
-	$ADD=12222222222;
-	}
+                                    ### LOG INSERTION Admin Log Table ###
+                                    $SQL_log = "$ins_stmt|$upd_stmt";
+                                    $SQL_log = preg_replace('/;/', '', $SQL_log);
+                                    $SQL_log = addslashes($SQL_log);
+                                    $stmt="INSERT INTO vicidial_admin_log set event_date='$SQLdate', user='$PHP_AUTH_USER', ip_address='$ip', event_section='PHONES', event_type='COPY', record_id='$new_extension-$new_server_ip', event_code='ADMIN COPY PHONE', event_sql=\"$SQL_log\", event_notes='$affected_rows,$affected_rowsS';";
+                                    if ($DB) {echo "|$stmt|\n";}
+                                    $rslt=mysql_to_mysqli($stmt, $link);
+                                    }
+                                else
+                                    {
+                                    echo "<div style='max-width:800px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);text-align:center;'>";
+                                    echo "<div style='font-size:3rem;margin-bottom:1rem;'>❌</div>";
+                                    echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("SQL Error")."</h2>";
+                                    echo "<p style='color:#64748b;'>"._QXZ("UNKNOWN SQL ERROR - $ins_stmt")."</p>";
+                                    echo "</div>\n";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    $ADD=12222222222;
+    }
 
 ######################
 # ADD=12222222222 display the COPY PHONE SCREEN
