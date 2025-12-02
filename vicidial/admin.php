@@ -46465,260 +46465,484 @@ if ($ADD==322111111)
 # ADD=311111111 modify call time definition info in the system
 ######################
 if ($ADD==311111111)
-	{
-	if ($LOGmodify_call_times==1)
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=311111111&call_time_id=$call_time_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+    {
+    if ($LOGmodify_call_times==1)
+        {
+        if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
+            {
+            $modify_url = "$PHP_SELF?ADD=311111111&call_time_id=$call_time_id";
+            $modify_footer_refresh=1;
+            }
 
-		$stmt="SELECT call_time_id,call_time_name,call_time_comments,ct_default_start,ct_default_stop,ct_sunday_start,ct_sunday_stop,ct_monday_start,ct_monday_stop,ct_tuesday_start,ct_tuesday_stop,ct_wednesday_start,ct_wednesday_stop,ct_thursday_start,ct_thursday_stop,ct_friday_start,ct_friday_stop,ct_saturday_start,ct_saturday_stop,ct_state_call_times,default_afterhours_filename_override,sunday_afterhours_filename_override,monday_afterhours_filename_override,tuesday_afterhours_filename_override,wednesday_afterhours_filename_override,thursday_afterhours_filename_override,friday_afterhours_filename_override,saturday_afterhours_filename_override,user_group,ct_holidays from vicidial_call_times where call_time_id='$call_time_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$call_time_name =		$row[1];
-		$call_time_comments =	$row[2];
-		$ct_default_start =		$row[3];
-		$ct_default_stop =		$row[4];
-		$ct_sunday_start =		$row[5];
-		$ct_sunday_stop =		$row[6];
-		$ct_monday_start =		$row[7];
-		$ct_monday_stop =		$row[8];
-		$ct_tuesday_start =		$row[9];
-		$ct_tuesday_stop =		$row[10];
-		$ct_wednesday_start =	$row[11];
-		$ct_wednesday_stop =	$row[12];
-		$ct_thursday_start =	$row[13];
-		$ct_thursday_stop =		$row[14];
-		$ct_friday_start =		$row[15];
-		$ct_friday_stop =		$row[16];
-		$ct_saturday_start =	$row[17];
-		$ct_saturday_stop =		$row[18];
-		$ct_state_call_times =	$row[19];
-		$default_afterhours_filename_override =		$row[20];
-		$sunday_afterhours_filename_override =		$row[21];
-		$monday_afterhours_filename_override =		$row[22];
-		$tuesday_afterhours_filename_override =		$row[23];
-		$wednesday_afterhours_filename_override =	$row[24];
-		$thursday_afterhours_filename_override =	$row[25];
-		$friday_afterhours_filename_override =		$row[26];
-		$saturday_afterhours_filename_override =	$row[27];
-		$user_group =			$row[28];
-		$ct_holidays =			$row[29];
+        $stmt="SELECT call_time_id,call_time_name,call_time_comments,ct_default_start,ct_default_stop,ct_sunday_start,ct_sunday_stop,ct_monday_start,ct_monday_stop,ct_tuesday_start,ct_tuesday_stop,ct_wednesday_start,ct_wednesday_stop,ct_thursday_start,ct_thursday_stop,ct_friday_start,ct_friday_stop,ct_saturday_start,ct_saturday_stop,ct_state_call_times,default_afterhours_filename_override,sunday_afterhours_filename_override,monday_afterhours_filename_override,tuesday_afterhours_filename_override,wednesday_afterhours_filename_override,thursday_afterhours_filename_override,friday_afterhours_filename_override,saturday_afterhours_filename_override,user_group,ct_holidays from vicidial_call_times where call_time_id='$call_time_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $call_time_name =       $row[1];
+        $call_time_comments =   $row[2];
+        $ct_default_start =     $row[3];
+        $ct_default_stop =      $row[4];
+        $ct_sunday_start =      $row[5];
+        $ct_sunday_stop =       $row[6];
+        $ct_monday_start =      $row[7];
+        $ct_monday_stop =       $row[8];
+        $ct_tuesday_start =     $row[9];
+        $ct_tuesday_stop =      $row[10];
+        $ct_wednesday_start =   $row[11];
+        $ct_wednesday_stop =    $row[12];
+        $ct_thursday_start =    $row[13];
+        $ct_thursday_stop =     $row[14];
+        $ct_friday_start =      $row[15];
+        $ct_friday_stop =       $row[16];
+        $ct_saturday_start =    $row[17];
+        $ct_saturday_stop =     $row[18];
+        $ct_state_call_times =  $row[19];
+        $default_afterhours_filename_override =     $row[20];
+        $sunday_afterhours_filename_override =      $row[21];
+        $monday_afterhours_filename_override =      $row[22];
+        $tuesday_afterhours_filename_override =     $row[23];
+        $wednesday_afterhours_filename_override =   $row[24];
+        $thursday_afterhours_filename_override =    $row[25];
+        $friday_afterhours_filename_override =      $row[26];
+        $saturday_afterhours_filename_override =    $row[27];
+        $user_group =           $row[28];
+        $ct_holidays =          $row[29];
 
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+        echo "<div style='max-width:1400px;margin:2rem auto;padding:0 1rem;'>\n";
+        
+        // Main Card
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        
+        // Header Section
+        echo "<div style='background:#ffffff;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<div style='font-size:2.5rem;'>⏰</div>";
+        echo "<h2 style='color:#000000;margin:0;font-size:1.5rem;font-weight:700;'>"._QXZ("MODIFY A CALL TIME")."</h2>";
+        echo "</div>";
 
-		echo "<br>"._QXZ("MODIFY A CALL TIME")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=411111111>\n";
-		echo "<input type=hidden name=DB value=\"$DB\">\n";
-		echo "<input type=hidden name=call_time_id value=\"$call_time_id\">\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Time ID").": </td><td align=left colspan=3><B>$call_time_id</B>$NWB#call_times-call_time_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Time Name").": </td><td align=left colspan=3><input type=text name=call_time_name size=40 maxlength=50 value=\"$call_time_name\"> ("._QXZ("short description of the call time").")$NWB#call_times-call_time_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Time Comments").": </td><td align=left colspan=3><input type=text name=call_time_comments size=50 maxlength=255 value=\"$call_time_comments\"> $NWB#call_times-call_time_comments$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left colspan=3><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">"._QXZ("$user_group")."</option>\n";
-		echo "</select>$NWB#call_times-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Default Start").":</td><td align=left><input type=text name=ct_default_start size=5 maxlength=4 value=\"$ct_default_start\"> </td><td align=right>"._QXZ("Default Stop").":</td><td align=left nowrap><input type=text name=ct_default_stop size=5 maxlength=4 value=\"$ct_default_stop\"> $NWB#call_times-ct_default_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=default_afterhours_filename_override id=default_afterhours_filename_override size=20 maxlength=255 value=\"$default_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('default_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Sunday Start").":</td><td align=left><input type=text name=ct_sunday_start size=5 maxlength=4 value=\"$ct_sunday_start\"> </td><td align=right>"._QXZ("Sunday Stop").":</td><td align=left><input type=text name=ct_sunday_stop size=5 maxlength=4 value=\"$ct_sunday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=sunday_afterhours_filename_override id=sunday_afterhours_filename_override size=20 maxlength=255 value=\"$sunday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('sunday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Monday Start").":</td><td align=left><input type=text name=ct_monday_start size=5 maxlength=4 value=\"$ct_monday_start\"> </td><td align=right>"._QXZ("Monday Stop").":</td><td align=left><input type=text name=ct_monday_stop size=5 maxlength=4 value=\"$ct_monday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=monday_afterhours_filename_override id=monday_afterhours_filename_override size=20 maxlength=255 value=\"$monday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('monday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Tuesday Start").":</td><td align=left><input type=text name=ct_tuesday_start size=5 maxlength=4 value=\"$ct_tuesday_start\"> </td><td align=right>"._QXZ("Tuesday Stop").":</td><td align=left><input type=text name=ct_tuesday_stop size=5 maxlength=4 value=\"$ct_tuesday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=tuesday_afterhours_filename_override id=tuesday_afterhours_filename_override size=20 maxlength=255 value=\"$tuesday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('tuesday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Wednesday Start").":</td><td align=left><input type=text name=ct_wednesday_start size=5 maxlength=4 value=\"$ct_wednesday_start\"> </td><td align=right>"._QXZ("Wednesday Stop").":</td><td align=left><input type=text name=ct_wednesday_stop size=5 maxlength=4 value=\"$ct_wednesday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=wednesday_afterhours_filename_override id=wednesday_afterhours_filename_override size=20 maxlength=255 value=\"$wednesday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('wednesday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Thursday Start").":</td><td align=left><input type=text name=ct_thursday_start size=5 maxlength=4 value=\"$ct_thursday_start\"> </td><td align=right>"._QXZ("Thursday Stop").":</td><td align=left><input type=text name=ct_thursday_stop size=5 maxlength=4 value=\"$ct_thursday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=thursday_afterhours_filename_override id=thursday_afterhours_filename_override size=20 maxlength=255 value=\"$thursday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('thursday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Friday Start").":</td><td align=left><input type=text name=ct_friday_start size=5 maxlength=4 value=\"$ct_friday_start\"> </td><td align=right>"._QXZ("Friday Stop").":</td><td align=left><input type=text name=ct_friday_stop size=5 maxlength=4 value=\"$ct_friday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=friday_afterhours_filename_override id=friday_afterhours_filename_override size=20 maxlength=255 value=\"$friday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('friday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Saturday Start").":</td><td align=left><input type=text name=ct_saturday_start size=5 maxlength=4 value=\"$ct_saturday_start\"> </td><td align=right>"._QXZ("Saturday Stop").":</td><td align=left><input type=text name=ct_saturday_stop size=5 maxlength=4 value=\"$ct_saturday_stop\"> $NWB#call_times-ct_sunday_start$NWE &nbsp; &nbsp; &nbsp; "._QXZ("AH Override").": <input type=text name=saturday_afterhours_filename_override id=saturday_afterhours_filename_override size=20 maxlength=255 value=\"$saturday_afterhours_filename_override\"> <a href=\"javascript:launch_chooser('saturday_afterhours_filename_override','date');\">"._QXZ("audio chooser")."</a> $NWB#call_times-default_afterhours_filename_override$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=4><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></FORM></td></tr>\n";
+        // Form Section
+        echo "<div style='padding:2rem;'>";
+        echo "<form action=$PHP_SELF method=POST>\n";
+        echo "<input type=hidden name=ADD value=411111111>\n";
+        echo "<input type=hidden name=DB value=\"$DB\">\n";
+        echo "<input type=hidden name=call_time_id value=\"$call_time_id\">\n";
+        
+        // Form Fields Container
+        echo "<div style='display:grid;gap:1.5rem;'>";
+        
+        // Call Time ID (Read-only)
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Call Time ID").":</label>";
+        echo "<div style='color:#000000;font-weight:700;font-size:1rem;'>$call_time_id $NWB#call_times-call_time_id$NWE</div>";
+        echo "</div>";
+        
+        // Call Time Name
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Call Time Name").":</label>";
+        echo "<div><input type=text name=call_time_name size=40 maxlength=50 value=\"$call_time_name\" style='width:100%;max-width:500px;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'><div style='color:#64748b;font-size:0.8rem;margin-top:0.5rem;'>("._QXZ("short description of the call time").")$NWB#call_times-call_time_name$NWE</div></div>";
+        echo "</div>";
+        
+        // Call Time Comments
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Call Time Comments").":</label>";
+        echo "<div><input type=text name=call_time_comments size=50 maxlength=255 value=\"$call_time_comments\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;'> $NWB#call_times-call_time_comments$NWE</div>";
+        echo "</div>";
+        
+        // Admin User Group
+        echo "<div style='display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:center;padding:1rem;background:#f8fafc;border-radius:8px;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;'>"._QXZ("Admin User Group").":</label>";
+        echo "<div><select size=1 name=user_group style='padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;min-width:200px;'>\n";
+        echo "$UUgroups_list";
+        echo "<option SELECTED value=\"$user_group\">"._QXZ("$user_group")."</option>\n";
+        echo "</select>$NWB#call_times-user_group$NWE</div>";
+        echo "</div>";
+        
+        echo "</div>"; // End basic info grid
+        
+        // Weekly Schedule Section
+        echo "<div style='margin-top:2rem;'>";
+        echo "<h3 style='color:#000000;margin:0 0 1.5rem 0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📅</span>"._QXZ("Weekly Schedule")."</h3>";
+        
+        // Helper function for time row
+        $time_rows = [
+            ['label' => _QXZ("Default"), 'start' => 'ct_default_start', 'stop' => 'ct_default_stop', 'ah' => 'default_afterhours_filename_override', 'icon' => '🌐'],
+            ['label' => _QXZ("Sunday"), 'start' => 'ct_sunday_start', 'stop' => 'ct_sunday_stop', 'ah' => 'sunday_afterhours_filename_override', 'icon' => '☀️'],
+            ['label' => _QXZ("Monday"), 'start' => 'ct_monday_start', 'stop' => 'ct_monday_stop', 'ah' => 'monday_afterhours_filename_override', 'icon' => '📌'],
+            ['label' => _QXZ("Tuesday"), 'start' => 'ct_tuesday_start', 'stop' => 'ct_tuesday_stop', 'ah' => 'tuesday_afterhours_filename_override', 'icon' => '📌'],
+            ['label' => _QXZ("Wednesday"), 'start' => 'ct_wednesday_start', 'stop' => 'ct_wednesday_stop', 'ah' => 'wednesday_afterhours_filename_override', 'icon' => '📌'],
+            ['label' => _QXZ("Thursday"), 'start' => 'ct_thursday_start', 'stop' => 'ct_thursday_stop', 'ah' => 'thursday_afterhours_filename_override', 'icon' => '📌'],
+            ['label' => _QXZ("Friday"), 'start' => 'ct_friday_start', 'stop' => 'ct_friday_stop', 'ah' => 'friday_afterhours_filename_override', 'icon' => '📌'],
+            ['label' => _QXZ("Saturday"), 'start' => 'ct_saturday_start', 'stop' => 'ct_saturday_stop', 'ah' => 'saturday_afterhours_filename_override', 'icon' => '🎉']
+        ];
+        
+        echo "<div style='display:grid;gap:1rem;'>";
+        foreach ($time_rows as $time_row) {
+            $start_val = ${$time_row['start']};
+            $stop_val = ${$time_row['stop']};
+            $ah_val = ${$time_row['ah']};
+            
+            echo "<div style='padding:1.5rem;background:#f8fafc;border-radius:8px;border-left:4px solid #3b82f6;'>";
+            echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:2rem;align-items:center;'>";
+            
+            // Day Label
+            echo "<div style='display:flex;align-items:center;gap:0.5rem;'>";
+            echo "<span style='font-size:1.5rem;'>{$time_row['icon']}</span>";
+            echo "<span style='color:#000000;font-weight:700;font-size:1rem;'>{$time_row['label']}</span>";
+            echo "</div>";
+            
+            // Time Inputs and AH Override
+            echo "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;'>";
+            
+            // Start Time
+            echo "<div>";
+            echo "<label style='display:block;color:#64748b;font-size:0.75rem;margin-bottom:0.5rem;text-transform:uppercase;font-weight:600;'>"._QXZ("Start Time")."</label>";
+            echo "<input type=text name={$time_row['start']} size=5 maxlength=4 value=\"$start_val\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;font-family:monospace;font-weight:600;color:#000000;'>";
+            echo "</div>";
+            
+            // Stop Time
+            echo "<div>";
+            echo "<label style='display:block;color:#64748b;font-size:0.75rem;margin-bottom:0.5rem;text-transform:uppercase;font-weight:600;'>"._QXZ("Stop Time")."</label>";
+            echo "<input type=text name={$time_row['stop']} size=5 maxlength=4 value=\"$stop_val\" style='width:100%;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;font-family:monospace;font-weight:600;color:#000000;'>";
+            echo "</div>";
+            
+            // AH Override
+            echo "<div style='grid-column:span 2;'>";
+            echo "<label style='display:block;color:#64748b;font-size:0.75rem;margin-bottom:0.5rem;text-transform:uppercase;font-weight:600;'>"._QXZ("AH Override")."</label>";
+            echo "<div style='display:flex;gap:0.5rem;'>";
+            echo "<input type=text name={$time_row['ah']} id={$time_row['ah']} size=20 maxlength=255 value=\"$ah_val\" style='flex:1;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.85rem;color:#000000;'>";
+            echo "<a href=\"javascript:launch_chooser('{$time_row['ah']}','date');\" style='display:inline-flex;align-items:center;padding:0.75rem 1rem;background:#3b82f6;color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;white-space:nowrap;transition:all 0.3s;' onmouseover=\"this.style.background='#2563eb';\" onmouseout=\"this.style.background='#3b82f6';\">"._QXZ("audio chooser")."</a>";
+            echo "</div>";
+            echo "</div>";
+            
+            echo "</div>"; // End time inputs grid
+            echo "</div>"; // End day container
+            echo "</div>";
+        }
+        echo "</div>"; // End schedule grid
+        echo "</div>"; // End weekly schedule section
+        
+        // Submit Button
+        echo "<div style='margin-top:2rem;text-align:center;padding-top:2rem;border-top:2px solid #e2e8f0;'>";
+        echo "<button type='submit' name='SUBMIT' style='padding:1rem 3rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);transition:all 0.3s;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        
+        echo "</form>";
+        echo "</div>"; // End padding
+        echo "</div>"; // End main card
 
-		$ct_srs=1;
-		$b=0;
-		$srs_SQL ='';
-		if (strlen($ct_state_call_times)>2)
-			{
-			$state_rules = explode('|',$ct_state_call_times);
-			$ct_srs = ((count($state_rules)) - 1);
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center rowspan=$ct_srs>"._QXZ("Active State Call Time Definitions for this Record").": </td>\n";
-		echo "<td align=center colspan=3>&nbsp;</td></tr>\n";
-		while($ct_srs >= $b)
-			{
-			if (strlen($state_rules[$b])>0)
-				{
-				$stmt="SELECT state_call_time_state,state_call_time_name from vicidial_state_call_times where state_call_time_id='$state_rules[$b]';";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$row=mysqli_fetch_row($rslt);
-				echo "<tr bgcolor=#$SSstd_row4_background><td align=right colspan=2><a href=\"$PHP_SELF?ADD=3111111111&call_time_id=$state_rules[$b]\">$state_rules[$b] </a> - <a href=\"$PHP_SELF?ADD=321111111&call_time_id=$call_time_id&state_rule=$state_rules[$b]&stage=REMOVE\">"._QXZ("REMOVE")." </a></td><td align=left>$row[0] - $row[1]</td></tr>\n";
-				$srs_SQL .= "'$state_rules[$b]',";
-				$srs_state_SQL .= "'$row[0]',";
-				}
-			$b++;
-			}
-		if (strlen($srs_SQL)>2)
-			{
-			$srs_SQL = "$srs_SQL''";
-			$srs_state_SQL = "$srs_state_SQL''";
-			$srs_SQL = "where state_call_time_id NOT IN($srs_SQL) and state_call_time_state NOT IN($srs_state_SQL) $LOGadmin_viewable_groupsSQL";
-			}
-		else
-			{$srs_SQL="$whereLOGadmin_viewable_groupsSQL";}
-		$stmt="SELECT state_call_time_id,state_call_time_name from vicidial_state_call_times $srs_SQL order by state_call_time_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$sct_to_print = mysqli_num_rows($rslt);
-		$sct_list='';
+        // State Call Time Rules Section
+        $ct_srs=1;
+        $b=0;
+        $srs_SQL ='';
+        if (strlen($ct_state_call_times)>2)
+            {
+            $state_rules = explode('|',$ct_state_call_times);
+            $ct_srs = ((count($state_rules)) - 1);
+            }
+        
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>🗺️</span>"._QXZ("Active State Call Time Definitions for this Record")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
+        
+        $has_state_rules = false;
+        echo "<div style='display:grid;gap:0.5rem;'>";
+        while($ct_srs >= $b)
+            {
+            if (strlen($state_rules[$b])>0)
+                {
+                $has_state_rules = true;
+                $stmt="SELECT state_call_time_state,state_call_time_name from vicidial_state_call_times where state_call_time_id='$state_rules[$b]';";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $row=mysqli_fetch_row($rslt);
+                
+                echo "<div style='display:grid;grid-template-columns:150px 1fr 100px;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=3111111111&call_time_id=$state_rules[$b]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$state_rules[$b]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[0] - $row[1]</span>";
+                echo "<a href=\"$PHP_SELF?ADD=321111111&call_time_id=$call_time_id&state_rule=$state_rules[$b]&stage=REMOVE\" style='display:inline-block;padding:0.5rem 1rem;background:#ef4444;color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;text-align:center;transition:all 0.3s;' onmouseover=\"this.style.background='#dc2626';\" onmouseout=\"this.style.background='#ef4444';\">"._QXZ("REMOVE")."</a>";
+                echo "</div>";
+                
+                $srs_SQL .= "'$state_rules[$b]',";
+                $srs_state_SQL .= "'$row[0]',";
+                }
+            $b++;
+            }
+        echo "</div>";
+        
+        if (!$has_state_rules) {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No state call time rules defined")."</div>";
+        }
+        
+        // Add State Rule Form
+        if (strlen($srs_SQL)>2)
+            {
+            $srs_SQL = "$srs_SQL''";
+            $srs_state_SQL = "$srs_state_SQL''";
+            $srs_SQL = "where state_call_time_id NOT IN($srs_SQL) and state_call_time_state NOT IN($srs_state_SQL) $LOGadmin_viewable_groupsSQL";
+            }
+        else
+            {$srs_SQL="$whereLOGadmin_viewable_groupsSQL";}
+        $stmt="SELECT state_call_time_id,state_call_time_name from vicidial_state_call_times $srs_SQL order by state_call_time_id;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $sct_to_print = mysqli_num_rows($rslt);
+        $sct_list='';
 
-		$o=0;
-		while ($sct_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$sct_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=321111111>\n";
-		echo "<input type=hidden name=stage value=\"ADD\">\n";
-		echo "<input type=hidden name=call_time_id value=\"$call_time_id\">\n";
-		echo _QXZ("Add state call time rule").": </td><td align=left colspan=2><select size=1 name=state_rule>\n";
-		echo "$sct_list";
-		echo "</select></td>\n";
-		echo "<td align=center colspan=4><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></FORM></td></tr>\n";
+        $o=0;
+        while ($sct_to_print > $o) 
+            {
+            $rowx=mysqli_fetch_row($rslt);
+            $sct_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+            }
+        
+        echo "<form action=$PHP_SELF method=POST style='margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e2e8f0;'>\n";
+        echo "<input type=hidden name=ADD value=321111111>\n";
+        echo "<input type=hidden name=stage value=\"ADD\">\n";
+        echo "<input type=hidden name=call_time_id value=\"$call_time_id\">\n";
+        echo "<div style='display:flex;gap:1rem;align-items:center;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;white-space:nowrap;'>"._QXZ("Add state call time rule").":</label>";
+        echo "<select size=1 name=state_rule style='flex:1;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;'>\n";
+        echo "$sct_list";
+        echo "</select>";
+        echo "<button type='submit' name='SUBMIT' style='padding:0.75rem 2rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;' onmouseover=\"this.style.background='linear-gradient(135deg, #059669 0%, #047857 100%)';\" onmouseout=\"this.style.background='linear-gradient(135deg, #10b981 0%, #059669 100%)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        echo "</form>";
+        
+        echo "</div>";
+        echo "</div>";
 
+        // Holiday Rules Section
+        $ct_hrs=1;
+        $b=0;
+        $hrs_SQL ='';
+        if (strlen($ct_holidays)>2)
+            {
+            $holiday_rules = explode('|',$ct_holidays);
+            $ct_hrs = ((count($holiday_rules)) - 1);
+            }
+        
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>🎄</span>"._QXZ("Active Holiday Definitions for this Record")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
+        
+        $has_holiday_rules = false;
+        echo "<div style='display:grid;gap:0.5rem;'>";
+        while($ct_hrs >= $b)
+            {
+            if (strlen($holiday_rules[$b])>0)
+                {
+                $has_holiday_rules = true;
+                $stmt="SELECT holiday_date,holiday_name from vicidial_call_time_holidays where holiday_id='$holiday_rules[$b]';";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $row=mysqli_fetch_row($rslt);
+                
+                echo "<div style='display:grid;grid-template-columns:150px 1fr 100px;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=3211111111&holiday_id=$holiday_rules[$b]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$holiday_rules[$b]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[0] - $row[1]</span>";
+                echo "<a href=\"$PHP_SELF?ADD=321111111&call_time_id=$call_time_id&holiday_rule=$holiday_rules[$b]&stage=REMOVE\" style='display:inline-block;padding:0.5rem 1rem;background:#ef4444;color:#fff;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:600;text-align:center;transition:all 0.3s;' onmouseover=\"this.style.background='#dc2626';\" onmouseout=\"this.style.background='#ef4444';\">"._QXZ("REMOVE")."</a>";
+                echo "</div>";
+                
+                $hrs_SQL .= "'$holiday_rules[$b]',";
+                $hrs_holiday_SQL .= "'$row[0]',";
+                }
+            $b++;
+            }
+        echo "</div>";
+        
+        if (!$has_holiday_rules) {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No holiday rules defined")."</div>";
+        }
+        
+        // Add Holiday Rule Form
+        if (strlen($hrs_SQL)>2)
+            {
+            $hrs_SQL = "$hrs_SQL''";
+            $hrs_holiday_SQL = "$hrs_holiday_SQL''";
+            $hrs_SQL = "where holiday_id NOT IN($hrs_SQL) $LOGadmin_viewable_groupsSQL";
+            }
+        else
+            {$hrs_SQL="$whereLOGadmin_viewable_groupsSQL";}
+        $stmt="SELECT holiday_id,holiday_date from vicidial_call_time_holidays $hrs_SQL order by holiday_date;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $hct_to_print = mysqli_num_rows($rslt);
+        if ($DB > 0) {echo "|$hct_to_print|$stmt|";}
+        $hct_list='';
 
-		$ct_hrs=1;
-		$b=0;
-		$hrs_SQL ='';
-		if (strlen($ct_holidays)>2)
-			{
-			$holiday_rules = explode('|',$ct_holidays);
-			$ct_hrs = ((count($holiday_rules)) - 1);
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center rowspan=$ct_hrs>"._QXZ("Active Holiday Definitions for this Record").": </td>\n";
-		echo "<td align=center colspan=3>&nbsp;</td></tr>\n";
-		while($ct_hrs >= $b)
-			{
-			if (strlen($holiday_rules[$b])>0)
-				{
-				$stmt="SELECT holiday_date,holiday_name from vicidial_call_time_holidays where holiday_id='$holiday_rules[$b]';";
-				$rslt=mysql_to_mysqli($stmt, $link);
-				$row=mysqli_fetch_row($rslt);
-				echo "<tr bgcolor=#$SSstd_row4_background><td align=right colspan=2><a href=\"$PHP_SELF?ADD=3211111111&holiday_id=$holiday_rules[$b]\">$holiday_rules[$b] </a> - <a href=\"$PHP_SELF?ADD=321111111&call_time_id=$call_time_id&holiday_rule=$holiday_rules[$b]&stage=REMOVE\">"._QXZ("REMOVE")."</a></td><td align=left>$row[0] - $row[1]</td></tr>\n";
-				$hrs_SQL .= "'$holiday_rules[$b]',";
-				$hrs_holiday_SQL .= "'$row[0]',";
-				}
-			$b++;
-			}
-		if (strlen($hrs_SQL)>2)
-			{
-			$hrs_SQL = "$hrs_SQL''";
-			$hrs_holiday_SQL = "$hrs_holiday_SQL''";
-		#	$hrs_SQL = "where holiday_id NOT IN($hrs_SQL) and holiday_date NOT IN($hrs_holiday_SQL) $LOGadmin_viewable_groupsSQL";
-			$hrs_SQL = "where holiday_id NOT IN($hrs_SQL) $LOGadmin_viewable_groupsSQL";
-			}
-		else
-			{$hrs_SQL="$whereLOGadmin_viewable_groupsSQL";}
-		$stmt="SELECT holiday_id,holiday_date from vicidial_call_time_holidays $hrs_SQL order by holiday_date;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$hct_to_print = mysqli_num_rows($rslt);
-		if ($DB > 0) {echo "|$hct_to_print|$stmt|";}
-		$hct_list='';
+        $o=0;
+        while ($hct_to_print > $o) 
+            {
+            $rowx=mysqli_fetch_row($rslt);
+            $hct_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+            }
+        
+        echo "<form action=$PHP_SELF method=POST style='margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e2e8f0;'>\n";
+        echo "<input type=hidden name=ADD value=321111111>\n";
+        echo "<input type=hidden name=stage value=\"ADD\">\n";
+        echo "<input type=hidden name=call_time_id value=\"$call_time_id\">\n";
+        echo "<div style='display:flex;gap:1rem;align-items:center;'>";
+        echo "<label style='color:#1e293b;font-weight:600;font-size:0.9rem;white-space:nowrap;'>"._QXZ("Add holiday rule").":</label>";
+        echo "<select size=1 name=holiday_rule style='flex:1;padding:0.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#000000;cursor:pointer;'>\n";
+        echo "$hct_list";
+        echo "</select>";
+        echo "<button type='submit' name='SUBMIT' style='padding:0.75rem 2rem;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;' onmouseover=\"this.style.background='linear-gradient(135deg, #059669 0%, #047857 100%)';\" onmouseout=\"this.style.background='linear-gradient(135deg, #10b981 0%, #059669 100%)';\">"._QXZ("SUBMIT")."</button>";
+        echo "</div>";
+        echo "</form>";
+        
+        echo "</div>";
+        echo "</div>";
 
-		$o=0;
-		while ($hct_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$hct_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=321111111>\n";
-		echo "<input type=hidden name=stage value=\"ADD\">\n";
-		echo "<input type=hidden name=call_time_id value=\"$call_time_id\">\n";
-		echo _QXZ("Add holiday rule").": </td><td align=left colspan=2><select size=1 name=holiday_rule>\n";
-		echo "$hct_list";
-		echo "</select></td>\n";
-		echo "<td align=center colspan=4><input style='background-color:#$SSbutton_color' type=submit name=SUBMIT value='"._QXZ("SUBMIT")."'></FORM></td></tr>\n";
+        // Usage Sections
+        // Campaigns Using This Call Time
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📋</span>"._QXZ("CAMPAIGNS USING THIS CALL TIME")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
+        $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where local_call_time='$call_time_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $camps_to_print = mysqli_num_rows($rslt);
+        
+        if ($camps_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($camps_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No campaigns using this call time")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR><BR>\n";
-		echo "<B>"._QXZ("CAMPAIGNS USING THIS CALL TIME").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // Inbound Groups Using This Call Time
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📞</span>"._QXZ("INBOUND GROUPS USING THIS CALL TIME")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where local_call_time='$call_time_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+        $stmt="SELECT group_id,group_name from vicidial_inbound_groups where call_time_id='$call_time_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $groups_to_print = mysqli_num_rows($rslt);
+        
+        if ($groups_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($groups_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No inbound groups using this call time")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR>\n";
-		echo "<B>"._QXZ("INBOUND GROUPS USING THIS CALL TIME").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // Call Menus Using This Call Time
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>☎️</span>"._QXZ("CALL MENUS USING THIS CALL TIME")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT group_id,group_name from vicidial_inbound_groups where call_time_id='$call_time_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><a href=\"$PHP_SELF?ADD=3111&group_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+        $stmt="SELECT menu_id,menu_name from vicidial_call_menu where call_time_id='$call_time_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $menus_to_print = mysqli_num_rows($rslt);
+        
+        if ($menus_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($menus_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=3511&menu_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No call menus using this call time")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR>\n";
-		echo "<B>"._QXZ("CALL MENUS USING THIS CALL TIME").":</B><BR>\n";
-		echo "<TABLE>\n";
+        // Lists Set To This Call Time
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:2rem;'>";
+        echo "<div style='background:#ffffff;padding:1.5rem;border-bottom:2px solid #e2e8f0;'>";
+        echo "<h3 style='color:#000000;margin:0;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;'><span>📝</span>"._QXZ("LISTS SET TO THIS CALL TIME")."</h3>";
+        echo "</div>";
+        echo "<div style='padding:1.5rem;'>";
 
-		$stmt="SELECT menu_id,menu_name from vicidial_call_menu where call_time_id='$call_time_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$menus_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($menus_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><a href=\"$PHP_SELF?ADD=3511&menu_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
+        $stmt="SELECT list_id,list_name from vicidial_lists where local_call_time='$call_time_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $lists_to_print = mysqli_num_rows($rslt);
+        
+        if ($lists_to_print > 0) {
+            echo "<div style='display:grid;gap:0.5rem;'>";
+            $o=0;
+            while ($lists_to_print > $o) 
+                {
+                $row=mysqli_fetch_row($rslt);
+                echo "<div style='display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:1rem;background:#f8fafc;border-radius:6px;align-items:center;'>";
+                echo "<a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\" style='color:#3b82f6;font-weight:600;text-decoration:none;font-size:0.9rem;' onmouseover=\"this.style.textDecoration='underline';\" onmouseout=\"this.style.textDecoration='none';\">$row[0]</a>";
+                echo "<span style='color:#000000;font-size:0.9rem;'>$row[1]</span>";
+                echo "</div>";
+                $o++;
+                }
+            echo "</div>";
+        } else {
+            echo "<div style='text-align:center;padding:2rem;color:#94a3b8;'>"._QXZ("No lists using this call time")."</div>";
+        }
+        
+        echo "</div>";
+        echo "</div>";
 
-		echo "</TABLE><BR>\n";
-		echo "<B>"._QXZ("LISTS SET TO THIS CALL TIME").":</B><BR>\n";
-		echo "<TABLE>\n";
-
-		$stmt="SELECT list_id,list_name from vicidial_lists where local_call_time='$call_time_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$lists_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($lists_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><a href=\"$PHP_SELF?ADD=311&list_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
-
-		echo "</TABLE>\n";
-		echo "</center><BR><BR>\n";
-
-		if ($LOGdelete_call_times > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=511111111&call_time_id=$call_time_id\">"._QXZ("DELETE THIS CALL TIME DEFINITION")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=CALLTIMES&stage=$call_time_id\">"._QXZ("Click here to see Admin changes to this call time")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You are not authorized to view this page. Please go back.");
-		}
-
-	}
+        // Action Links
+        echo "<div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);padding:2rem;text-align:center;'>";
+        
+        if ($LOGdelete_call_times > 0)
+            {
+            echo "<a href=\"$PHP_SELF?ADD=511111111&call_time_id=$call_time_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(239,68,68,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(239,68,68,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(239,68,68,0.3)';\">"._QXZ("DELETE THIS CALL TIME DEFINITION")."</a>\n";
+            }
+        if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
+            {
+            echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=CALLTIMES&stage=$call_time_id\" style='display:inline-block;padding:0.75rem 2rem;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;text-decoration:none;border-radius:8px;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(59,130,246,0.3);margin:0.5rem;' onmouseover=\"this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(59,130,246,0.4)';\" onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)';\">"._QXZ("Click here to see Admin changes to this call time")."</a>\n";
+            }
+        
+        echo "</div>";
+        
+        echo "</div>\n"; // End container
+        }
+    else
+        {
+        echo "<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>";
+        echo "<div style='font-size:3rem;margin-bottom:1rem;'>🚫</div>";
+        echo "<h2 style='color:#dc2626;margin:0 0 1rem 0;'>"._QXZ("Access Denied")."</h2>";
+        echo "<p style='color:#64748b;'>"._QXZ("You are not authorized to view this page. Please go back.")."</p>";
+        echo "</div>";
+        }
+    }
 
 
 ######################
