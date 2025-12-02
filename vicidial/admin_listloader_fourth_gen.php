@@ -1,484 +1,390 @@
 <?php
 # admin_listloader_fourth_gen.php - version 2.14
 
-
-$version = '2.14-81';
-$build = '240801-1131';
+ $version = '2.14-81';
+ $build = '240801-1131';
 
 require("dbconnect_mysqli.php");
 require("functions.php");
 
-$enable_status_mismatch_leadloader_option=0;
+ $enable_status_mismatch_leadloader_option = 0;
 
-if (file_exists('options.php'))
-	{
-	require('options.php');
-	}
+if (file_exists('options.php')) {
+    require('options.php');
+}
 
-$US='_';
-$MT[0]='';
+ $US = '_';
+ $MT[0] = '';
 
-$PHP_AUTH_USER=$_SERVER['PHP_AUTH_USER'];
-$PHP_AUTH_PW=$_SERVER['PHP_AUTH_PW'];
-$PHP_SELF=$_SERVER['PHP_SELF'];
-$PHP_SELF = preg_replace('/\.php.*/i','.php',$PHP_SELF);
-$leadfile=$_FILES["leadfile"];
-	$LF_orig = $_FILES['leadfile']['name'];
-	$LF_path = $_FILES['leadfile']['tmp_name'];
-if (isset($_GET["submit_file"]))			{$submit_file=$_GET["submit_file"];}
-	elseif (isset($_POST["submit_file"]))	{$submit_file=$_POST["submit_file"];}
-if (isset($_GET["submit"]))				{$submit=$_GET["submit"];}
-	elseif (isset($_POST["submit"]))	{$submit=$_POST["submit"];}
-if (isset($_GET["SUBMIT"]))				{$SUBMIT=$_GET["SUBMIT"];}
-	elseif (isset($_POST["SUBMIT"]))	{$SUBMIT=$_POST["SUBMIT"];}
-if (isset($_GET["leadfile_name"]))			{$leadfile_name=$_GET["leadfile_name"];}
-	elseif (isset($_POST["leadfile_name"]))	{$leadfile_name=$_POST["leadfile_name"];}
-if (isset($_FILES["leadfile"]))				{$leadfile_name=$_FILES["leadfile"]['name'];}
-if (isset($_GET["file_layout"]))				{$file_layout=$_GET["file_layout"];}
-	elseif (isset($_POST["file_layout"]))		{$file_layout=$_POST["file_layout"];}
-if (isset($_GET["OK_to_process"]))				{$OK_to_process=$_GET["OK_to_process"];}
-	elseif (isset($_POST["OK_to_process"]))		{$OK_to_process=$_POST["OK_to_process"];}
-if (isset($_GET["vendor_lead_code_field"]))				{$vendor_lead_code_field=$_GET["vendor_lead_code_field"];}
-	elseif (isset($_POST["vendor_lead_code_field"]))	{$vendor_lead_code_field=$_POST["vendor_lead_code_field"];}
-if (isset($_GET["source_id_field"]))			{$source_id_field=$_GET["source_id_field"];}
-	elseif (isset($_POST["source_id_field"]))	{$source_id_field=$_POST["source_id_field"];}
-if (isset($_GET["list_id_field"]))				{$list_id_field=$_GET["list_id_field"];}
-	elseif (isset($_POST["list_id_field"]))		{$list_id_field=$_POST["list_id_field"];}
-if (isset($_GET["phone_code_field"]))			{$phone_code_field=$_GET["phone_code_field"];}
-	elseif (isset($_POST["phone_code_field"]))	{$phone_code_field=$_POST["phone_code_field"];}
-if (isset($_GET["phone_number_field"]))				{$phone_number_field=$_GET["phone_number_field"];}
-	elseif (isset($_POST["phone_number_field"]))	{$phone_number_field=$_POST["phone_number_field"];}
-if (isset($_GET["title_field"]))				{$title_field=$_GET["title_field"];}
-	elseif (isset($_POST["title_field"]))		{$title_field=$_POST["title_field"];}
-if (isset($_GET["first_name_field"]))			{$first_name_field=$_GET["first_name_field"];}
-	elseif (isset($_POST["first_name_field"]))	{$first_name_field=$_POST["first_name_field"];}
-if (isset($_GET["middle_initial_field"]))			{$middle_initial_field=$_GET["middle_initial_field"];}
-	elseif (isset($_POST["middle_initial_field"]))	{$middle_initial_field=$_POST["middle_initial_field"];}
-if (isset($_GET["last_name_field"]))			{$last_name_field=$_GET["last_name_field"];}
-	elseif (isset($_POST["last_name_field"]))	{$last_name_field=$_POST["last_name_field"];}
-if (isset($_GET["address1_field"]))				{$address1_field=$_GET["address1_field"];}
-	elseif (isset($_POST["address1_field"]))	{$address1_field=$_POST["address1_field"];}
-if (isset($_GET["address2_field"]))				{$address2_field=$_GET["address2_field"];}
-	elseif (isset($_POST["address2_field"]))	{$address2_field=$_POST["address2_field"];}
-if (isset($_GET["address3_field"]))				{$address3_field=$_GET["address3_field"];}
-	elseif (isset($_POST["address3_field"]))	{$address3_field=$_POST["address3_field"];}
-if (isset($_GET["city_field"]))					{$city_field=$_GET["city_field"];}
-	elseif (isset($_POST["city_field"]))		{$city_field=$_POST["city_field"];}
-if (isset($_GET["state_field"]))				{$state_field=$_GET["state_field"];}
-	elseif (isset($_POST["state_field"]))		{$state_field=$_POST["state_field"];}
-if (isset($_GET["province_field"]))				{$province_field=$_GET["province_field"];}
-	elseif (isset($_POST["province_field"]))		{$province_field=$_POST["province_field"];}
-if (isset($_GET["postal_code_field"]))				{$postal_code_field=$_GET["postal_code_field"];}
-	elseif (isset($_POST["postal_code_field"]))		{$postal_code_field=$_POST["postal_code_field"];}
-if (isset($_GET["country_code_field"]))				{$country_code_field=$_GET["country_code_field"];}
-	elseif (isset($_POST["country_code_field"]))	{$country_code_field=$_POST["country_code_field"];}
-if (isset($_GET["gender_field"]))			{$gender_field=$_GET["gender_field"];}
-	elseif (isset($_POST["gender_field"]))	{$gender_field=$_POST["gender_field"];}
-if (isset($_GET["date_of_birth_field"]))			{$date_of_birth_field=$_GET["date_of_birth_field"];}
-	elseif (isset($_POST["date_of_birth_field"]))	{$date_of_birth_field=$_POST["date_of_birth_field"];}
-if (isset($_GET["alt_phone_field"]))			{$alt_phone_field=$_GET["alt_phone_field"];}
-	elseif (isset($_POST["alt_phone_field"]))	{$alt_phone_field=$_POST["alt_phone_field"];}
-if (isset($_GET["email_field"]))				{$email_field=$_GET["email_field"];}
-	elseif (isset($_POST["email_field"]))		{$email_field=$_POST["email_field"];}
-if (isset($_GET["security_phrase_field"]))			{$security_phrase_field=$_GET["security_phrase_field"];}
-	elseif (isset($_POST["security_phrase_field"]))	{$security_phrase_field=$_POST["security_phrase_field"];}
-if (isset($_GET["comments_field"]))				{$comments_field=$_GET["comments_field"];}
-	elseif (isset($_POST["comments_field"]))	{$comments_field=$_POST["comments_field"];}
-if (isset($_GET["rank_field"]))					{$rank_field=$_GET["rank_field"];}
-	elseif (isset($_POST["rank_field"]))		{$rank_field=$_POST["rank_field"];}
-if (isset($_GET["owner_field"]))				{$owner_field=$_GET["owner_field"];}
-	elseif (isset($_POST["owner_field"]))		{$owner_field=$_POST["owner_field"];}
-if (isset($_GET["list_id_override"]))			{$list_id_override=$_GET["list_id_override"];}
-	elseif (isset($_POST["list_id_override"]))	{$list_id_override=$_POST["list_id_override"];}
-	$list_id_override = (preg_replace("/\D/","",$list_id_override));
-if (isset($_GET["master_list_override"]))			{$master_list_override=$_GET["master_list_override"];}
-	elseif (isset($_POST["master_list_override"]))	{$master_list_override=$_POST["master_list_override"];}
-if (isset($_GET["lead_file"]))					{$lead_file=$_GET["lead_file"];}
-	elseif (isset($_POST["lead_file"]))			{$lead_file=$_POST["lead_file"];}
-if (isset($_GET["dupcheck"]))				{$dupcheck=$_GET["dupcheck"];}
-	elseif (isset($_POST["dupcheck"]))		{$dupcheck=$_POST["dupcheck"];}
-if (isset($_GET["dedupe_statuses"]))				{$dedupe_statuses=$_GET["dedupe_statuses"];}
-	elseif (isset($_POST["dedupe_statuses"]))		{$dedupe_statuses=$_POST["dedupe_statuses"];}
-if (isset($_GET["dedupe_statuses_override"]))			{$dedupe_statuses_override=$_GET["dedupe_statuses_override"];}
-	elseif (isset($_POST["dedupe_statuses_override"]))	{$dedupe_statuses_override=$_POST["dedupe_statuses_override"];}
-if (isset($_GET["status_mismatch_action"]))				{$status_mismatch_action=$_GET["status_mismatch_action"];}
-	elseif (isset($_POST["status_mismatch_action"]))	{$status_mismatch_action=$_POST["status_mismatch_action"];}
-if (isset($_GET["postalgmt"]))				{$postalgmt=$_GET["postalgmt"];}
-	elseif (isset($_POST["postalgmt"]))		{$postalgmt=$_POST["postalgmt"];}
-if (isset($_GET["phone_code_override"]))			{$phone_code_override=$_GET["phone_code_override"];}
-	elseif (isset($_POST["phone_code_override"]))	{$phone_code_override=$_POST["phone_code_override"];}
-	$phone_code_override = (preg_replace("/\D/","",$phone_code_override));
-if (isset($_GET["DB"]))					{$DB=$_GET["DB"];}
-	elseif (isset($_POST["DB"]))		{$DB=$_POST["DB"];}
-if (isset($_GET["template_id"]))			{$template_id=$_GET["template_id"];}
-	elseif (isset($_POST["template_id"]))	{$template_id=$_POST["template_id"];}
-if (isset($_GET["usacan_check"]))			{$usacan_check=$_GET["usacan_check"];}
-	elseif (isset($_POST["usacan_check"]))	{$usacan_check=$_POST["usacan_check"];}
-if (isset($_GET["state_conversion"]))			{$state_conversion=$_GET["state_conversion"];}
-	elseif (isset($_POST["state_conversion"]))	{$state_conversion=$_POST["state_conversion"];}
-if (isset($_GET["web_loader_phone_length"]))			{$web_loader_phone_length=$_GET["web_loader_phone_length"];}
-	elseif (isset($_POST["web_loader_phone_length"]))	{$web_loader_phone_length=$_POST["web_loader_phone_length"];}
-if (isset($_GET["international_dnc_scrub"]))			{$international_dnc_scrub=$_GET["international_dnc_scrub"];}
-	elseif (isset($_POST["international_dnc_scrub"]))	{$international_dnc_scrub=$_POST["international_dnc_scrub"];}
+ $PHP_AUTH_USER = $_SERVER['PHP_AUTH_USER'];
+ $PHP_AUTH_PW = $_SERVER['PHP_AUTH_PW'];
+ $PHP_SELF = $_SERVER['PHP_SELF'];
+ $PHP_SELF = preg_replace('/\.php.*/i', '.php', $PHP_SELF);
+ $leadfile = $_FILES["leadfile"];
+ $LF_orig = $_FILES['leadfile']['name'];
+ $LF_path = $_FILES['leadfile']['tmp_name'];
 
-$DB=preg_replace("/[^0-9a-zA-Z]/","",$DB);
+// Process form submissions
+ $formFields = [
+    'submit_file', 'submit', 'SUBMIT', 'leadfile_name', 'file_layout', 'OK_to_process',
+    'vendor_lead_code_field', 'source_id_field', 'list_id_field', 'phone_code_field',
+    'phone_number_field', 'title_field', 'first_name_field', 'middle_initial_field',
+    'last_name_field', 'address1_field', 'address2_field', 'address3_field', 'city_field',
+    'state_field', 'province_field', 'postal_code_field', 'country_code_field', 'gender_field',
+    'date_of_birth_field', 'alt_phone_field', 'email_field', 'security_phrase_field',
+    'comments_field', 'rank_field', 'owner_field', 'list_id_override', 'master_list_override',
+    'lead_file', 'dupcheck', 'dedupe_statuses', 'dedupe_statuses_override', 'status_mismatch_action',
+    'postalgmt', 'phone_code_override', 'DB', 'template_id', 'usacan_check', 'state_conversion',
+    'web_loader_phone_length', 'international_dnc_scrub'
+];
 
-# if the didnt select an over ride wipe out in_file
-if ( $list_id_override == "in_file" ) { $list_id_override = ""; }
-if ( $phone_code_override == "in_file" ) { $phone_code_override = ""; }
+foreach ($formFields as $field) {
+    if (isset($_GET[$field])) {
+        $$field = $_GET[$field];
+    } elseif (isset($_POST[$field])) {
+        $$field = $_POST[$field];
+    }
+}
 
-# $country_field=$_GET["country_field"];					if (!$country_field) {$country_field=$_POST["country_field"];}
+// Special handling for file upload
+if (isset($_FILES["leadfile"])) {
+    $leadfile_name = $_FILES['leadfile']['name'];
+}
 
-### REGEX to prevent weird characters from ending up in the fields
-$field_regx = "[\"`\\;]";
+// Sanitize numeric fields
+ $list_id_override = preg_replace('/\D/', '', $list_id_override);
+ $phone_code_override = preg_replace('/\D/', '', $phone_code_override);
 
-$vicidial_list_fields = '|lead_id|vendor_lead_code|source_id|list_id|gmt_offset_now|called_since_last_reset|phone_code|phone_number|title|first_name|middle_initial|last_name|address1|address2|address3|city|state|province|postal_code|country_code|gender|date_of_birth|alt_phone|email|security_phrase|comments|called_count|last_local_call_time|rank|owner|entry_list_id|';
+// Clear override values if set to "in_file"
+if ($list_id_override == "in_file") { 
+    $list_id_override = ""; 
+}
+if ($phone_code_override == "in_file") { 
+    $phone_code_override = ""; 
+}
 
-#############################################
-##### START SYSTEM_SETTINGS LOOKUP #####
-$stmt = "SELECT use_non_latin,admin_web_directory,custom_fields_enabled,webroot_writable,enable_languages,language_method,active_modules,admin_screen_colors,web_loader_phone_length,enable_international_dncs,web_loader_phone_strip,allow_web_debug FROM system_settings;";
-$rslt=mysql_to_mysqli($stmt, $link);
-if ($DB) {echo "$stmt\n";}
-$qm_conf_ct = mysqli_num_rows($rslt);
-#if ($qm_conf_ct > 0)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$non_latin =					$row[0];
-	$admin_web_directory =			$row[1];
-	$custom_fields_enabled =		$row[2];
-	$webroot_writable =				$row[3];
-	$SSenable_languages =			$row[4];
-	$SSlanguage_method =			$row[5];
-	$SSactive_modules =				$row[6];
-	$SSadmin_screen_colors =		$row[7];
-	$SSweb_loader_phone_length =	$row[8];
-	$SSenable_international_dncs =	$row[9];
-	$SSweb_loader_phone_strip =		$row[10];
-	$SSallow_web_debug =			$row[11];
-	}
-if ($SSallow_web_debug < 1) {$DB=0;}
-##### END SETTINGS LOOKUP #####
-###########################################
+// Field regex pattern
+ $field_regx = "[\"`\\;]";
 
-$list_id_override = preg_replace('/[^0-9]/','',$list_id_override);
-$phone_code_override = preg_replace('/[^0-9]/','',$phone_code_override);
-$web_loader_phone_length = preg_replace('/[^0-9]/','',$web_loader_phone_length);
-$international_dnc_scrub = preg_replace('/[^-_0-9a-zA-Z]/', '', $international_dnc_scrub);
-$master_list_override = preg_replace('/[^-_0-9a-zA-Z]/', '', $master_list_override);
-$usacan_check = preg_replace('/[^-_0-9a-zA-Z]/', '', $usacan_check);
-$state_conversion = preg_replace('/[^-_0-9a-zA-Z]/', '', $state_conversion);
-$status_mismatch_action = preg_replace('/[^- \_0-9a-zA-Z]/', '', $status_mismatch_action);
-$postalgmt = preg_replace('/[^- \_0-9a-zA-Z]/', '', $postalgmt);
-$dupcheck = preg_replace('/[^- \_0-9a-zA-Z]/', '', $dupcheck);
-$lead_file = preg_replace("/\<|\>|\'|\"|\\\\|;/","",$lead_file);
-$vendor_lead_code_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$vendor_lead_code_field);
-$source_id_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$source_id_field);
-$list_id_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$list_id_field);
-$phone_code_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$phone_code_field);
-$phone_number_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$phone_number_field);
-$title_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$title_field);
-$first_name_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$first_name_field);
-$middle_initial_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$middle_initial_field);
-$last_name_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$last_name_field);
-$address1_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$address1_field);
-$address2_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$address2_field);
-$address3_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$address3_field);
-$city_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$city_field);
-$state_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$state_field);
-$province_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$province_field);
-$postal_code_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$postal_code_field);
-$country_code_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$country_code_field);
-$gender_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$gender_field);
-$date_of_birth_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$date_of_birth_field);
-$alt_phone_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$alt_phone_field);
-$email_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$email_field);
-$security_phrase_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$security_phrase_field);
-$comments_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$comments_field);
-$rank_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$rank_field);
-$owner_field = preg_replace("/\<|\>|\'|\"|\\\\|;/",'',$owner_field);
-$submit_file = preg_replace('/[^-_0-9a-zA-Z]/', '', $submit_file);
-$submit = preg_replace('/[^-_0-9a-zA-Z]/', '', $submit);
-$SUBMIT = preg_replace('/[^-_0-9a-zA-Z]/', '', $SUBMIT);
-$file_layout = preg_replace('/[^-_0-9a-zA-Z]/', '', $file_layout);
-$OK_to_process = preg_replace('/[^- \_0-9a-zA-Z]/', '', $OK_to_process);
+ $vicidial_list_fields = '|lead_id|vendor_lead_code|source_id|list_id|gmt_offset_now|called_since_last_reset|phone_code|phone_number|title|first_name|middle_initial|last_name|address1|address2|address3|city|state|province|postal_code|country_code|gender|date_of_birth|alt_phone|email|security_phrase|comments|called_count|last_local_call_time|rank|owner|entry_list_id|';
 
-# Variables filter further down in the code
-# $dedupe_statuses
+// System settings lookup
+ $stmt = "SELECT use_non_latin,admin_web_directory,custom_fields_enabled,webroot_writable,enable_languages,language_method,active_modules,admin_screen_colors,web_loader_phone_length,enable_international_dncs,web_loader_phone_strip,allow_web_debug FROM system_settings;";
+ $rslt = mysql_to_mysqli($stmt, $link);
+if ($DB) {
+    echo "$stmt\n";
+}
+ $qm_conf_ct = mysqli_num_rows($rslt);
+if ($qm_conf_ct > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $non_latin = $row[0];
+    $admin_web_directory = $row[1];
+    $custom_fields_enabled = $row[2];
+    $webroot_writable = $row[3];
+    $SSenable_languages = $row[4];
+    $SSlanguage_method = $row[5];
+    $SSactive_modules = $row[6];
+    $SSadmin_screen_colors = $row[7];
+    $SSweb_loader_phone_length = $row[8];
+    $SSenable_international_dncs = $row[9];
+    $SSweb_loader_phone_strip = $row[10];
+    $SSallow_web_debug = $row[11];
+}
+if ($SSallow_web_debug < 1) {
+    $DB = 0;
+}
 
-if (is_array($dedupe_statuses)) 
-	{
-	if (count($dedupe_statuses)>0) 
-		{
-		for($ds=0; $ds<count($dedupe_statuses); $ds++) 
-			{
-			$dedupe_statuses[$ds] = preg_replace('/[^-_0-9\p{L}]/u', '', $dedupe_statuses[$ds]);
-			}
-		}
-	}
-else
-	{
-	$dedupe_statuses=array();
-	}
+// Sanitize variables
+ $sanitizeFields = [
+    'list_id_override', 'phone_code_override', 'web_loader_phone_length', 'international_dnc_scrub',
+    'master_list_override', 'usacan_check', 'state_conversion', 'status_mismatch_action',
+    'postalgmt', 'dupcheck', 'lead_file', 'vendor_lead_code_field', 'source_id_field',
+    'list_id_field', 'phone_code_field', 'phone_number_field', 'title_field', 'first_name_field',
+    'middle_initial_field', 'last_name_field', 'address1_field', 'address2_field', 'address3_field',
+    'city_field', 'state_field', 'province_field', 'postal_code_field', 'country_code_field',
+    'gender_field', 'date_of_birth_field', 'alt_phone_field', 'email_field', 'security_phrase_field',
+    'comments_field', 'rank_field', 'owner_field', 'submit_file', 'submit', 'SUBMIT',
+    'file_layout', 'OK_to_process'
+];
 
+foreach ($sanitizeFields as $field) {
+    if (isset($$field)) {
+        $$field = preg_replace('/[^-_0-9a-zA-Z]/', '', $$field);
+    }
+}
 
-if (strlen($dedupe_statuses_override)>0) 
-	{
-	$dedupe_statuses_override = preg_replace('/[^- \,\_0-9a-zA-Z]/', '', $dedupe_statuses_override);
-	$dedupe_statuses=explode(",", $dedupe_statuses_override);
-	}
+// Special sanitization for file name
+if (isset($lead_file)) {
+    $lead_file = preg_replace("/\<|\>|\'|\"|\\\\|;/", "", $lead_file);
+}
 
-if ($non_latin < 1)
-	{
-	$PHP_AUTH_USER = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_USER);
-	$PHP_AUTH_PW = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_PW);
-	$template_id = preg_replace('/[^-_0-9a-zA-Z]/', '', $template_id);
-	}
-else
-	{
-	$PHP_AUTH_USER = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_USER);
-	$PHP_AUTH_PW = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_PW);
-	$template_id = preg_replace('/[^-_0-9\p{L}]/u', '', $template_id);
-	}
+// Handle dedupe_statuses array
+if (is_array($dedupe_statuses)) {
+    if (count($dedupe_statuses) > 0) {
+        for ($ds = 0; $ds < count($dedupe_statuses); $ds++) {
+            $dedupe_statuses[$ds] = preg_replace('/[^-_0-9\p{L}]/u', '', $dedupe_statuses[$ds]);
+        }
+    }
+} else {
+    $dedupe_statuses = array();
+}
 
-$STARTtime = date("U");
-$TODAY = date("Y-m-d");
-$NOW_TIME = date("Y-m-d H:i:s");
-$FILE_datetime = $STARTtime;
-$date = date("r");
-$ip = getenv("REMOTE_ADDR");
-$browser = getenv("HTTP_USER_AGENT");
+if (strlen($dedupe_statuses_override) > 0) {
+    $dedupe_statuses_override = preg_replace('/[^- \,\_0-9a-zA-Z]/', '', $dedupe_statuses_override);
+    $dedupe_statuses = explode(",", $dedupe_statuses_override);
+}
 
-if ($non_latin > 0) {$rslt=mysql_to_mysqli("SET NAMES 'UTF8'", $link);}
-$stmt="SELECT selected_language from vicidial_users where user='$PHP_AUTH_USER';";
-if ($DB) {echo "|$stmt|\n";}
-$rslt=mysql_to_mysqli($stmt, $link);
-$sl_ct = mysqli_num_rows($rslt);
-if ($sl_ct > 0)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$VUselected_language =		$row[0];
-	}
+// Handle non-latin characters
+if ($non_latin < 1) {
+    $PHP_AUTH_USER = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_USER);
+    $PHP_AUTH_PW = preg_replace('/[^-_0-9a-zA-Z]/', '', $PHP_AUTH_PW);
+    $template_id = preg_replace('/[^-_0-9a-zA-Z]/', '', $template_id);
+} else {
+    $PHP_AUTH_USER = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_USER);
+    $PHP_AUTH_PW = preg_replace('/[^-_0-9\p{L}]/u', '', $PHP_AUTH_PW);
+    $template_id = preg_replace('/[^-_0-9\p{L}]/u', '', $template_id);
+}
 
-$auth=0;
-$auth_message = user_authorization($PHP_AUTH_USER,$PHP_AUTH_PW,'',1,0);
-if ( ($auth_message == 'GOOD') or ($auth_message == '2FA') )
-	{
-	$auth=1;
-	if ($auth_message == '2FA')
-		{
-		header ("Content-type: text/html; charset=utf-8");
-		echo _QXZ("Your session is expired").". <a href=\"admin.php\">"._QXZ("Click here to log in")."</a>.\n";
-		exit;
-		}
-	}
+// Time and date variables
+ $STARTtime = date("U");
+ $TODAY = date("Y-m-d");
+ $NOW_TIME = date("Y-m-d H:i:s");
+ $FILE_datetime = $STARTtime;
+ $date = date("r");
+ $ip = getenv("REMOTE_ADDR");
+ $browser = getenv("HTTP_USER_AGENT");
 
-if ($auth < 1)
-	{
-	$VDdisplayMESSAGE = _QXZ("Login incorrect, please try again");
-	if ($auth_message == 'LOCK')
-		{
-		$VDdisplayMESSAGE = _QXZ("Too many login attempts, try again in 15 minutes");
-		Header ("Content-type: text/html; charset=utf-8");
-		echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
-		exit;
-		}
-	if ($auth_message == 'IPBLOCK')
-		{
-		$VDdisplayMESSAGE = _QXZ("Your IP Address is not allowed") . ": $ip";
-		Header ("Content-type: text/html; charset=utf-8");
-		echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
-		exit;
-		}
-	Header("WWW-Authenticate: Basic realm=\"CONTACT-CENTER-ADMIN\"");
-	Header("HTTP/1.0 401 Unauthorized");
-	echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\n";
-	exit;
-	}
+// Set character set if non-latin
+if ($non_latin > 0) {
+    $rslt = mysql_to_mysqli("SET NAMES 'UTF8'", $link);
+}
 
-$stmt="SELECT load_leads,user_group from vicidial_users where user='$PHP_AUTH_USER';";
-$rslt=mysql_to_mysqli($stmt, $link);
-$row=mysqli_fetch_row($rslt);
-$LOGload_leads =	$row[0];
-$LOGuser_group =	$row[1];
+// Get user language preference
+ $stmt = "SELECT selected_language from vicidial_users where user='$PHP_AUTH_USER';";
+if ($DB) {
+    echo "|$stmt|\n";
+}
+ $rslt = mysql_to_mysqli($stmt, $link);
+ $sl_ct = mysqli_num_rows($rslt);
+if ($sl_ct > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $VUselected_language = $row[0];
+}
 
-if ($LOGload_leads < 1)
-	{
-	Header ("Content-type: text/html; charset=utf-8");
-	echo _QXZ("You do not have permissions to load leads")."\n";
-	exit;
-	}
+// User authentication
+ $auth = 0;
+ $auth_message = user_authorization($PHP_AUTH_USER, $PHP_AUTH_PW, '', 1, 0);
+if (($auth_message == 'GOOD') || ($auth_message == '2FA')) {
+    $auth = 1;
+    if ($auth_message == '2FA') {
+        header("Content-type: text/html; charset=utf-8");
+        echo _QXZ("Your session is expired") . ". <a href=\"admin.php\">" . _QXZ("Click here to log in") . "</a>.\n";
+        exit;
+    }
+}
 
-if (preg_match("/;|:|\/|\^|\[|\]|\"|\'|\*/",$LF_orig))
-	{
-	echo _QXZ("ERROR: Invalid File Name").":: $LF_orig\n";
-	exit;
-	}
+if ($auth < 1) {
+    $VDdisplayMESSAGE = _QXZ("Login incorrect, please try again");
+    if ($auth_message == 'LOCK') {
+        $VDdisplayMESSAGE = _QXZ("Too many login attempts, try again in 15 minutes");
+        Header("Content-type: text/html; charset=utf-8");
+        echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
+        exit;
+    }
+    if ($auth_message == 'IPBLOCK') {
+        $VDdisplayMESSAGE = _QXZ("Your IP Address is not allowed") . ": $ip";
+        Header("Content-type: text/html; charset=utf-8");
+        echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$auth_message|\n";
+        exit;
+    }
+    Header("WWW-Authenticate: Basic realm=\"CONTACT-CENTER-ADMIN\"");
+    Header("HTTP/1.0 401 Unauthorized");
+    echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\n";
+    exit;
+}
 
-$upload_error = $_FILES['leadfile']['error'];
-if ($upload_error != UPLOAD_ERR_OK)
-	{
-	if ($upload_error == UPLOAD_ERR_INI_SIZE)
-		{
-		$max_upload = ini_get("upload_max_filesize");
-		echo "ERROR: The uploaded file exceeds the maximum upload size of $max_upload set for your system.";
-		}
-	if ($upload_error == UPLOAD_ERR_FORM_SIZE)
-		{
-		echo "ERROR: The uploaded file exceeds the MAX_FILE_SIZE directive for this HTML form.";
-		}
-	if ($upload_error == UPLOAD_ERR_PARTIAL)
-		{
-		echo "ERROR: The uploaded file was only partially uploaded.";
-		}
-	if ($upload_error == UPLOAD_ERR_NO_FILE)
-		{
-		echo "ERROR: No file was uploaded.";
-		}
-	if ($upload_error == UPLOAD_ERR_NO_TMP_DIR)
-		{
-		echo "ERROR: A temporary directory is missing. Review your system configuration.";
-		}
-	if ($upload_error == UPLOAD_ERR_CANT_WRITE)
-		{
-		echo "ERROR: Failed to write the uploaded file to disk.";
-		}
-	if ($upload_error == UPLOAD_ERR_EXTENSION)
-		{
-		echo "ERROR: An unknow php extension has stopped the file upload. Review your system configuration.";
-		}
-	exit;
-	}
+// Check user permissions
+ $stmt = "SELECT load_leads,user_group from vicidial_users where user='$PHP_AUTH_USER';";
+ $rslt = mysql_to_mysqli($stmt, $link);
+ $row = mysqli_fetch_row($rslt);
+ $LOGload_leads = $row[0];
+ $LOGuser_group = $row[1];
 
-$stmt="SELECT allowed_campaigns,allowed_reports,admin_viewable_groups,admin_viewable_call_times from vicidial_user_groups where user_group='$LOGuser_group';";
-if ($DB) {echo "|$upload_error|<BR>\n|$stmt|\n";}
-$rslt=mysql_to_mysqli($stmt, $link);
-$row=mysqli_fetch_row($rslt);
-$LOGallowed_campaigns =			$row[0];
-$LOGallowed_reports =			$row[1];
-$LOGadmin_viewable_groups =		$row[2];
-$LOGadmin_viewable_call_times =	$row[3];
+if ($LOGload_leads < 1) {
+    Header("Content-type: text/html; charset=utf-8");
+    echo _QXZ("You do not have permissions to load leads") . "\n";
+    exit;
+}
 
-$camp_lists='';
-$LOGallowed_campaignsSQL='';
-$whereLOGallowed_campaignsSQL='';
-if (!preg_match('/\-ALL/i', $LOGallowed_campaigns))
-	{
-	$rawLOGallowed_campaignsSQL = preg_replace("/ -/",'',$LOGallowed_campaigns);
-	$rawLOGallowed_campaignsSQL = preg_replace("/ /","','",$rawLOGallowed_campaignsSQL);
-	$LOGallowed_campaignsSQL = "and campaign_id IN('$rawLOGallowed_campaignsSQL')";
-	$whereLOGallowed_campaignsSQL = "where campaign_id IN('$rawLOGallowed_campaignsSQL')";
-	}
-$regexLOGallowed_campaigns = " $LOGallowed_campaigns ";
+// Validate file name
+if (preg_match("/;|:|\/|\^|\[|\]|\"|\'|\*/", $LF_orig)) {
+    echo _QXZ("ERROR: Invalid File Name") . ":: $LF_orig\n";
+    exit;
+}
 
-$script_name = getenv("SCRIPT_NAME");
-$server_name = getenv("SERVER_NAME");
-$server_port = getenv("SERVER_PORT");
-if (preg_match("/443/i",$server_port)) {$HTTPprotocol = 'https://';}
-	else {$HTTPprotocol = 'http://';}
-$admDIR = "$HTTPprotocol$server_name$script_name";
-$admDIR = preg_replace('/admin_listloader_fourth_gen\.php/i', '',$admDIR);
-$admDIR = "/vicidial/";
-$admSCR = 'admin.php';
-# $NWB = " &nbsp; <a href=\"javascript:openNewWindow('help.php?ADD=99999";
-# $NWE = "')\"><IMG SRC=\"help.png\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP></A>";
+// Handle file upload errors
+ $upload_error = $_FILES['leadfile']['error'];
+if ($upload_error != UPLOAD_ERR_OK) {
+    $errorMessages = [
+        UPLOAD_ERR_INI_SIZE => "ERROR: The uploaded file exceeds the maximum upload size of " . ini_get("upload_max_filesize") . " set for your system.",
+        UPLOAD_ERR_FORM_SIZE => "ERROR: The uploaded file exceeds the MAX_FILE_SIZE directive for this HTML form.",
+        UPLOAD_ERR_PARTIAL => "ERROR: The uploaded file was only partially uploaded.",
+        UPLOAD_ERR_NO_FILE => "ERROR: No file was uploaded.",
+        UPLOAD_ERR_NO_TMP_DIR => "ERROR: A temporary directory is missing. Review your system configuration.",
+        UPLOAD_ERR_CANT_WRITE => "ERROR: Failed to write the uploaded file to disk.",
+        UPLOAD_ERR_EXTENSION => "ERROR: An unknown php extension has stopped the file upload. Review your system configuration."
+    ];
+    
+    if (isset($errorMessages[$upload_error])) {
+        echo $errorMessages[$upload_error];
+    } else {
+        echo "ERROR: Unknown file upload error occurred.";
+    }
+    exit;
+}
 
-$NWB = "<IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, '";
-$NWE = "')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
-$secX = date("U");
-$hour = date("H");
-$min = date("i");
-$sec = date("s");
-$mon = date("m");
-$mday = date("d");
-$year = date("Y");
-$isdst = date("I");
-$Shour = date("H");
-$Smin = date("i");
-$Ssec = date("s");
-$Smon = date("m");
-$Smday = date("d");
-$Syear = date("Y");
-$pulldate0 = "$year-$mon-$mday $hour:$min:$sec";
-$inSD = $pulldate0;
-$dsec = ( ( ($hour * 3600) + ($min * 60) ) + $sec );
+// Get user group permissions
+ $stmt = "SELECT allowed_campaigns,allowed_reports,admin_viewable_groups,admin_viewable_call_times from vicidial_user_groups where user_group='$LOGuser_group';";
+if ($DB) {
+    echo "|$upload_error|<BR>\n|$stmt|\n";
+}
+ $rslt = mysql_to_mysqli($stmt, $link);
+ $row = mysqli_fetch_row($rslt);
+ $LOGallowed_campaigns = $row[0];
+ $LOGallowed_reports = $row[1];
+ $LOGadmin_viewable_groups = $row[2];
+ $LOGadmin_viewable_call_times = $row[3];
 
-### Grab Server GMT value from the database
-$stmt="SELECT local_gmt FROM servers where server_ip = '$server_ip';";
-$rslt=mysql_to_mysqli($stmt, $link);
-$gmt_recs = mysqli_num_rows($rslt);
-if ($gmt_recs > 0)
-	{
-	$row=mysqli_fetch_row($rslt);
-	$DBSERVER_GMT		=		"$row[0]";
-	if (strlen($DBSERVER_GMT)>0)	{$SERVER_GMT = $DBSERVER_GMT;}
-	if ($isdst) {$SERVER_GMT++;} 
-	}
-else
-	{
-	$SERVER_GMT = date("O");
-	$SERVER_GMT = preg_replace('/\+/i', '',$SERVER_GMT);
-	$SERVER_GMT = ($SERVER_GMT + 0);
-	$SERVER_GMT = MathZDC($SERVER_GMT, 100);
-	}
+// Build campaign filters
+ $camp_lists = '';
+ $LOGallowed_campaignsSQL = '';
+ $whereLOGallowed_campaignsSQL = '';
+if (!preg_match('/\-ALL/i', $LOGallowed_campaigns)) {
+    $rawLOGallowed_campaignsSQL = preg_replace("/ -/", '', $LOGallowed_campaigns);
+    $rawLOGallowed_campaignsSQL = preg_replace("/ /", "','", $rawLOGallowed_campaignsSQL);
+    $LOGallowed_campaignsSQL = "and campaign_id IN('$rawLOGallowed_campaignsSQL')";
+    $whereLOGallowed_campaignsSQL = "where campaign_id IN('$rawLOGallowed_campaignsSQL')";
+}
+ $regexLOGallowed_campaigns = " $LOGallowed_campaigns ";
 
-$LOCAL_GMT_OFF = $SERVER_GMT;
-$LOCAL_GMT_OFF_STD = $SERVER_GMT;
+// Set up admin directory and help variables
+ $script_name = getenv("SCRIPT_NAME");
+ $server_name = getenv("SERVER_NAME");
+ $server_port = getenv("SERVER_PORT");
+if (preg_match("/443/i", $server_port)) {
+    $HTTPprotocol = 'https://';
+} else {
+    $HTTPprotocol = 'http://';
+}
+ $admDIR = "$HTTPprotocol$server_name$script_name";
+ $admDIR = preg_replace('/admin_listloader_fourth_gen\.php/i', '', $admDIR);
+ $admDIR = "/vicidial/";
+ $admSCR = 'admin.php';
+ $NWB = "<IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, '";
+ $NWE = "')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
 
-$dedupe_status_select='';
-$stmt="SELECT status, status_name from vicidial_statuses order by status;";
-$rslt=mysql_to_mysqli($stmt, $link);
-$stat_num_rows = mysqli_num_rows($rslt);
-$snr_count=0;
-while ($stat_num_rows > $snr_count) 
-	{
-	$row=mysqli_fetch_row($rslt);
-	$dedupe_status_select .= "\t\t\t<option value='$row[0]'>$row[0] - $row[1]</option>\n";
-	$snr_count++;
-	}
+// Time variables
+ $secX = date("U");
+ $hour = date("H");
+ $min = date("i");
+ $sec = date("s");
+ $mon = date("m");
+ $mday = date("d");
+ $year = date("Y");
+ $isdst = date("I");
+ $Shour = date("H");
+ $Smin = date("i");
+ $Ssec = date("s");
+ $Smon = date("m");
+ $Smday = date("d");
+ $Syear = date("Y");
+ $pulldate0 = "$year-$mon-$mday $hour:$min:$sec";
+ $inSD = $pulldate0;
+ $dsec = ((($hour * 3600) + ($min * 60)) + $sec);
 
+// Get server GMT value
+ $stmt = "SELECT local_gmt FROM servers where server_ip = '$server_ip';";
+ $rslt = mysql_to_mysqli($stmt, $link);
+ $gmt_recs = mysqli_num_rows($rslt);
+if ($gmt_recs > 0) {
+    $row = mysqli_fetch_row($rslt);
+    $DBSERVER_GMT = "$row[0]";
+    if (strlen($DBSERVER_GMT) > 0) {
+        $SERVER_GMT = $DBSERVER_GMT;
+    }
+    if ($isdst) {
+        $SERVER_GMT++;
+    }
+} else {
+    $SERVER_GMT = date("O");
+    $SERVER_GMT = preg_replace('/\+/i', '', $SERVER_GMT);
+    $SERVER_GMT = ($SERVER_GMT + 0);
+    $SERVER_GMT = MathZDC($SERVER_GMT, 100);
+}
 
-$SSmenu_background='015B91';
-$SSframe_background='D9E6FE';
-$SSstd_row1_background='9BB9FB';
-$SSstd_row2_background='B9CBFD';
-$SSstd_row3_background='8EBCFD';
-$SSstd_row4_background='B6D3FC';
-$SSstd_row5_background='A3C3D6';
-$SSalt_row1_background='BDFFBD';
-$SSalt_row2_background='99FF99';
-$SSalt_row3_background='CCFFCC';
+ $LOCAL_GMT_OFF = $SERVER_GMT;
+ $LOCAL_GMT_OFF_STD = $SERVER_GMT;
 
-if ($SSadmin_screen_colors != 'default')
-	{
-	$stmt = "SELECT menu_background,frame_background,std_row1_background,std_row2_background,std_row3_background,std_row4_background,std_row5_background,alt_row1_background,alt_row2_background,alt_row3_background FROM vicidial_screen_colors where colors_id='$SSadmin_screen_colors';";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	if ($DB) {echo "$stmt\n";}
-	$colors_ct = mysqli_num_rows($rslt);
-	if ($colors_ct > 0)
-		{
-		$row=mysqli_fetch_row($rslt);
-		$SSmenu_background =		$row[0];
-		$SSframe_background =		$row[1];
-		$SSstd_row1_background =	$row[2];
-		$SSstd_row2_background =	$row[3];
-		$SSstd_row3_background =	$row[4];
-		$SSstd_row4_background =	$row[5];
-		$SSstd_row5_background =	$row[6];
-		$SSalt_row1_background =	$row[7];
-		$SSalt_row2_background =	$row[8];
-		$SSalt_row3_background =	$row[9];
-		}
-	}
-$Mhead_color =	$SSstd_row5_background;
-$Mmain_bgcolor = $SSmenu_background;
-$Mhead_color =	$SSstd_row5_background;
+// Get dedupe status options
+ $dedupe_status_select = '';
+ $stmt = "SELECT status, status_name from vicidial_statuses order by status;";
+ $rslt = mysql_to_mysqli($stmt, $link);
+ $stat_num_rows = mysqli_num_rows($rslt);
+ $snr_count = 0;
+while ($stat_num_rows > $snr_count) {
+    $row = mysqli_fetch_row($rslt);
+    $dedupe_status_select .= "\t\t\t<option value='$row[0]'>$row[0] - $row[1]</option>\n";
+    $snr_count++;
+}
 
-#if ($DB) {print "SEED TIME  $secX      :   $year-$mon-$mday $hour:$min:$sec  LOCAL GMT OFFSET NOW: $LOCAL_GMT_OFF\n";}
+// Set default screen colors
+ $SSmenu_background = '015B91';
+ $SSframe_background = 'D9E6FE';
+ $SSstd_row1_background = '9BB9FB';
+ $SSstd_row2_background = 'B9CBFD';
+ $SSstd_row3_background = '8EBCFD';
+ $SSstd_row4_background = 'B6D3FC';
+ $SSstd_row5_background = 'A3C3D6';
+ $SSalt_row1_background = 'BDFFBD';
+ $SSalt_row2_background = '99FF99';
+ $SSalt_row3_background = 'CCFFCC';
 
-header ("Content-type: text/html; charset=utf-8");
+// Get custom screen colors if set
+if ($SSadmin_screen_colors != 'default') {
+    $stmt = "SELECT menu_background,frame_background,std_row1_background,std_row2_background,std_row3_background,std_row4_background,std_row5_background,alt_row1_background,alt_row2_background,alt_row3_background FROM vicidial_screen_colors where colors_id='$SSadmin_screen_colors';";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    if ($DB) {
+        echo "$stmt\n";
+    }
+    $colors_ct = mysqli_num_rows($rslt);
+    if ($colors_ct > 0) {
+        $row = mysqli_fetch_row($rslt);
+        $SSmenu_background = $row[0];
+        $SSframe_background = $row[1];
+        $SSstd_row1_background = $row[2];
+        $SSstd_row2_background = $row[3];
+        $SSstd_row3_background = $row[4];
+        $SSstd_row4_background = $row[5];
+        $SSstd_row5_background = $row[6];
+        $SSalt_row1_background = $row[7];
+        $SSalt_row2_background = $row[8];
+        $SSalt_row3_background = $row[9];
+    }
+}
+ $Mhead_color = $SSstd_row5_background;
+ $Mmain_bgcolor = $SSmenu_background;
+ $Mhead_color = $SSstd_row5_background;
 
-echo "<html>\n";
+header("Content-type: text/html; charset=utf-8");
+
+echo "<!DOCTYPE html>\n";
+echo "<html lang=\"en\">\n";
 echo "<head>\n";
+echo "<meta charset=\"UTF-8\">\n";
+echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
+echo "<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n";
+echo "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n";
+echo "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css\">\n";
 echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"vicidial_stylesheet.php\">\n";
 echo "<script language=\"JavaScript\" src=\"help.js\"></script>\n";
 echo "<div id='HelpDisplayDiv' class='help_info' style='display:none;'></div>";
@@ -486,436 +392,600 @@ echo "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\">\n"
 echo "<!-- VERSION: $version     BUILD: $build -->\n";
 echo "<!-- SEED TIME  $secX:   $year-$mon-$mday $hour:$min:$sec  LOCAL GMT OFFSET NOW: $LOCAL_GMT_OFF  DST: $isdst -->\n";
 
-function macfontfix($fontsize) 
-	{
-	$browser = getenv("HTTP_USER_AGENT");
-	$pctype = explode("(", $browser);
-	if (preg_match('/Mac/',$pctype[1])) 
-		{
-		/* Browser is a Mac.  If not Netscape 6, raise fonts */
-		$blownbrowser = explode('/', $browser);
-		$ver = explode(' ', $blownbrowser[1]);
-		$ver = $ver[0];
-		if ($ver >= 5.0) return $fontsize; else return ($fontsize+2);
-		} 
-	else return $fontsize;	/* Browser is not a Mac - don't touch fonts */
-	}
-
-echo "<style type=\"text/css\">\n
-<!--\n
-.title {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(18)."pt}\n
-.standard {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(10)."pt}\n
-.small_standard {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(8)."pt}\n
-.tiny_standard {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(6)."pt}\n
-.standard_bold {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(10)."pt; font-weight: bold}\n
-.standard_header {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(14)."pt; font-weight: bold}\n
-.standard_bold_highlight {  font-family: Arial, Helvetica, sans-serif; font-size: ".macfontfix(10)."pt; font-weight: bold; color: white; BACKGROUND-COLOR: black}\n
-.standard_bold_blue_highlight {  font-family: Arial, Helvetica, sans-serif; font-size: 10pt; font-weight: bold; BACKGROUND-COLOR: blue}\n
-A.employee_standard {  font-family: garamond, sans-serif; font-size: ".macfontfix(10)."pt; font-style: normal; font-variant: normal; font-weight: bold; text-decoration: none}\n
-.employee_standard {  font-family: garamond, sans-serif; font-size: ".macfontfix(10)."pt; font-weight: bold}\n
-.employee_title {  font-family: Garamond, sans-serif; font-size: ".macfontfix(14)."pt; font-weight: bold}\n
-\\\\-->\n
-</style>\n";
-
-?>
-
-
-<script language="JavaScript1.2">
-function openNewWindow(url) 
-	{
-	window.open (url,"",'width=700,height=300,scrollbars=yes,menubar=yes,address=yes');
-	}
-function ShowProgress(good, bad, total, dup, inv, post, moved) 
-	{
-	parent.lead_count.document.open();
-	parent.lead_count.document.write('<html><body><table border=0 width=200 cellpadding=10 cellspacing=0 align=center valign=top><tr bgcolor="#000000"><th colspan=2><font face="arial, helvetica" size=3 color=white><?php echo _QXZ("Current file status"); ?>:</font></th></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Good"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+good+'</B></font></td></tr><tr bgcolor="#990000"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Bad"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+bad+'</B></font></td></tr><tr bgcolor="#000099"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Total"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+total+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Duplicate"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+dup+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Moved"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+moved+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Invalid"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+inv+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><?php echo _QXZ("Postal Match"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+post+'</B></font></td></tr></table><body></html>');
-	parent.lead_count.document.close();
-	}
-function ParseFileName() 
-	{
-	if (!document.forms[0].OK_to_process) 
-		{	
-		var endstr=document.forms[0].leadfile.value.lastIndexOf('\\');
-		if (endstr>-1) 
-			{
-			endstr++;
-			var filename=document.forms[0].leadfile.value.substring(endstr);
-			document.forms[0].leadfile_name.value=filename;
-			}
-		}
-	}
-function TemplateSpecs() {
-	var template_field = document.getElementById("template_id");
-	var template_id_value = template_field.options[template_field.selectedIndex].value;
-	var xmlhttp=false;
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (E) {
-			xmlhttp = false;
-		}
-	}
-	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-		xmlhttp = new XMLHttpRequest();
-	}
-	if (xmlhttp && template_id_value!="") { 
-		var vs_query = "&template_id="+template_id_value;
-		xmlhttp.open('POST', 'leadloader_template_display.php'); 
-		xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
-		xmlhttp.send(vs_query); 
-		xmlhttp.onreadystatechange = function() { 
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var TemplateInfo = null;
-				TemplateInfo = xmlhttp.responseText;
-				if (TemplateInfo.length>0)
-				{
-				alert(TemplateInfo);
-				}
-			}
-		}
-		delete xmlhttp;
-	}
-}
-function PopulateStatuses(list_id) {
-	
-	var xmlhttp=false;
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (E) {
-			xmlhttp = false;
-		}
-	}
-	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-		xmlhttp = new XMLHttpRequest();
-	}
-	if (xmlhttp) { 
-		var vs_query = "&form_action=no_template&list_id="+list_id;
-		xmlhttp.open('POST', 'leadloader_template_display.php'); 
-		xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
-		xmlhttp.send(vs_query); 
-		xmlhttp.onreadystatechange = function() { 
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var StatSpanText = null;
-				StatSpanText = xmlhttp.responseText;
-				document.getElementById("statuses_display").innerHTML = StatSpanText;
-			}
-		}
-		delete xmlhttp;
-	}
-
+function macfontfix($fontsize) {
+    $browser = getenv("HTTP_USER_AGENT");
+    $pctype = explode("(", $browser);
+    if (preg_match('/Mac/', $pctype[1])) {
+        /* Browser is a Mac. If not Netscape 6, raise fonts */
+        $blownbrowser = explode('/', $browser);
+        $ver = explode(' ', $blownbrowser[1]);
+        $ver = $ver[0];
+        if ($ver >= 5.0) return $fontsize; else return ($fontsize + 2);
+    } else return $fontsize;    /* Browser is not a Mac - don't touch fonts */
 }
 
-</script>
+echo "<style type=\"text/css\">\n";
+echo "/* Modern UI Styles */\n";
+echo "body {\n";
+echo "    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n";
+echo "    background-color: #f8f9fa;\n";
+echo "    color: #333;\n";
+echo "    line-height: 1.6;\n";
+echo "}\n";
+echo ".admin-container {\n";
+echo "    max-width: 1200px;\n";
+echo "    margin: 0 auto;\n";
+echo "    padding: 20px;\n";
+echo "}\n";
+echo ".card {\n";
+echo "    border: none;\n";
+echo "    border-radius: 10px;\n";
+echo "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n";
+echo "    margin-bottom: 20px;\n";
+echo "}\n";
+echo ".card-header {\n";
+echo "    background-color: #015B91;\n";
+echo "    color: white;\n";
+echo "    border-radius: 10px 10px 0 0 !important;\n";
+echo "    padding: 15px 20px;\n";
+echo "    font-weight: 600;\n";
+echo "}\n";
+echo ".form-label {\n";
+echo "    font-weight: 500;\n";
+echo "    margin-bottom: 8px;\n";
+echo "    color: #495057;\n";
+echo "}\n";
+echo ".form-control, .form-select {\n";
+echo "    border-radius: 6px;\n";
+echo "    border: 1px solid #ced4da;\n";
+echo "    padding: 10px 12px;\n";
+echo "    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n";
+echo "}\n";
+echo ".form-control:focus, .form-select:focus {\n";
+echo "    border-color: #80bdff;\n";
+echo "    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);\n";
+echo "}\n";
+echo ".btn-primary {\n";
+echo "    background-color: #015B91;\n";
+echo "    border-color: #015B91;\n";
+echo "    border-radius: 6px;\n";
+echo "    padding: 10px 20px;\n";
+echo "    font-weight: 500;\n";
+echo "}\n";
+echo ".btn-primary:hover {\n";
+echo "    background-color: #014a75;\n";
+echo "    border-color: #014a75;\n";
+echo "}\n";
+echo ".btn-secondary {\n";
+echo "    background-color: #6c757d;\n";
+echo "    border-color: #6c757d;\n";
+echo "    border-radius: 6px;\n";
+echo "    padding: 10px 20px;\n";
+echo "    font-weight: 500;\n";
+echo "}\n";
+echo ".btn-secondary:hover {\n";
+echo "    background-color: #5a6268;\n";
+echo "    border-color: #545b62;\n";
+echo "}\n";
+echo ".section-title {\n";
+echo "    font-size: 1.2rem;\n";
+echo "    font-weight: 600;\n";
+echo "    color: #015B91;\n";
+echo "    margin-bottom: 15px;\n";
+echo "    padding-bottom: 8px;\n";
+echo "    border-bottom: 2px solid #e9ecef;\n";
+echo "}\n";
+echo ".help-icon {\n";
+echo "    cursor: pointer;\n";
+echo "    margin-left: 5px;\n";
+echo "    color: #6c757d;\n";
+echo "}\n";
+echo ".help-icon:hover {\n";
+echo "    color: #015B91;\n";
+echo "}\n";
+echo ".footer-info {\n";
+echo "    font-size: 0.85rem;\n";
+echo "    color: #6c757d;\n";
+echo "    margin-top: 20px;\n";
+echo "    text-align: center;\n";
+echo "}\n";
+echo ".alert-warning {\n";
+echo "    background-color: #fff3cd;\n";
+echo "    border-color: #ffeeba;\n";
+echo "    color: #856404;\n";
+echo "    border-radius: 6px;\n";
+echo "    padding: 12px 15px;\n";
+echo "    margin-bottom: 20px;\n";
+echo "}\n";
+echo ".form-check-input:checked {\n";
+echo "    background-color: #015B91;\n";
+echo "    border-color: #015B91;\n";
+echo "}\n";
+echo ".input-group-text {\n";
+echo "    background-color: #e9ecef;\n";
+echo "    border: 1px solid #ced4da;\n";
+echo "}\n";
+echo "</style>\n";
+echo "<title>" . _QXZ("ADMINISTRATION: Lead Loader") . "</title>\n";
+echo "</head>\n";
+echo "<body>\n";
+echo "<div class=\"admin-container\">\n";
 
-
-<title><?php echo _QXZ("ADMINISTRATION: Lead Loader"); ?></title>
-</head>
-<BODY BGCOLOR=WHITE marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>
-
-<?php
-$short_header=1;
-
+// Include header
+ $short_header = 1;
 require("admin_header.php");
 
-echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
+// Check NANPA options
+if ((preg_match("/NANPA/", $usacan_check)) or (preg_match("/NANPA/", $tz_method))) {
+    $stmt = "SELECT count(*) from vicidial_nanpa_prefix_codes;";
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $row = mysqli_fetch_row($rslt);
+    $vicidial_nanpa_prefix_codes_count = $row[0];
+    if ($vicidial_nanpa_prefix_codes_count < 10) {
+        $usacan_check = preg_replace("/NANPA/", '', $usacan_check);
+        $tz_method = preg_replace("/NANPA/", '', $tz_method);
+        echo "<div class=\"alert alert-warning\"><i class=\"fas fa-exclamation-triangle me-2\"></i>NOTICE: NANPA options disabled, NANPA prefix data not loaded: $vicidial_nanpa_prefix_codes_count</div>\n";
+    }
+}
 
+// Main form
+if ((!$OK_to_process) or (($leadfile) and ($file_layout != "standard" && $file_layout != "template"))) {
+    ?>
+    <form action="<?php echo $PHP_SELF ?>" method="post" onSubmit="ParseFileName()" enctype="multipart/form-data">
+        <input type="hidden" name='leadfile_name' value="<?php echo $leadfile_name ?>">
+        <input type="hidden" name='DB' value="<?php echo $DB ?>">
+        
+        <?php if ($file_layout != "custom") { ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="fas fa-upload me-2"></i><?php echo _QXZ("Lead Loader Configuration"); ?></h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="leadfile" class="form-label"><?php echo _QXZ("Load leads from this file"); ?>:</label>
+                            <div class="input-group">
+                                <input type="file" name="leadfile" id="leadfile" class="form-control" value="<?php echo $leadfile ?>">
+                                <span class="input-group-text"><?php echo "$NWB#list_loader$NWE"; ?></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="list_id_override" class="form-label"><?php echo _QXZ("List ID Override"); ?>:</label>
+                            <div class="input-group">
+                                <select name='list_id_override' id="list_id_override" class="form-select" onchange="PopulateStatuses(this.value)">
+                                    <option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
+                                    <?php
+                                    $stmt = "SELECT list_id, list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id;";
+                                    $rslt = mysql_to_mysqli($stmt, $link);
+                                    $num_rows = mysqli_num_rows($rslt);
 
-if ( (preg_match("/NANPA/",$usacan_check)) or (preg_match("/NANPA/",$tz_method)) )
-	{
-	$stmt="SELECT count(*) from vicidial_nanpa_prefix_codes;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$row=mysqli_fetch_row($rslt);
-	$vicidial_nanpa_prefix_codes_count = $row[0];
-	if ($vicidial_nanpa_prefix_codes_count < 10)
-		{
-		$usacan_check = preg_replace("/NANPA/",'',$usacan_check);
-		$tz_method = preg_replace("/NANPA/",'',$tz_method);
+                                    $count = 0;
+                                    while ($num_rows > $count) {
+                                        $row = mysqli_fetch_row($rslt);
+                                        echo "<option value='$row[0]'>$row[0] - $row[1]</option>\n";
+                                        $count++;
+                                    }
+                                    ?>
+                                </select>
+                                <div class="form-check ms-2 d-flex align-items-center">
+                                    <input class="form-check-input" type="checkbox" name="master_list_override" id="master_list_override" value="1">
+                                    <label class="form-check-label ms-1" for="master_list_override"><?php echo _QXZ("override template setting"); ?></label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone_code_override" class="form-label"><?php echo _QXZ("Phone Code Override"); ?>:</label>
+                            <select name='phone_code_override' id="phone_code_override" class="form-select">
+                                <option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
+                                <?php
+                                $stmt = "SELECT distinct country_code, country from vicidial_phone_codes;";
+                                $rslt = mysql_to_mysqli($stmt, $link);
+                                $num_rows = mysqli_num_rows($rslt);
 
-		echo "NOTICE: NANPA options disabled, NANPA prefix data not loaded: $vicidial_nanpa_prefix_codes_count<BR>\n";
-		}
-	}
-
-if ( (!$OK_to_process) or ( ($leadfile) and ($file_layout!="standard" && $file_layout!="template") ) )
-	{
-	?>
-	<form action=<?php echo $PHP_SELF ?> method=post onSubmit="ParseFileName()" enctype="multipart/form-data">
-	<input type=hidden name='leadfile_name' value="<?php echo $leadfile_name ?>">
-	<input type=hidden name='DB' value="<?php echo $DB ?>">
-	<?php 
-	if ($file_layout!="custom") 
-		{
-		?>
-		<table align=center width="880" border=0 cellpadding=5 cellspacing=0 bgcolor=#<?php echo $SSframe_background; ?>>
-		  <tr>
-			<td align=right width="20%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Load leads from this file"); ?>:</font></B></td>
-			<td align=left width="80%"><input type=file name="leadfile" value="<?php echo $leadfile ?>"> <?php echo "$NWB#list_loader$NWE"; ?></td>
-		  </tr>
-		  <tr>
-			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("List ID Override"); ?>: </font></td>
-			<td align=left width="80%"><font face="arial, helvetica" size=1>
-			<select name='list_id_override' onchange="PopulateStatuses(this.value)">
-			<option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
-			<?php
-			$stmt="SELECT list_id, list_name from vicidial_lists $whereLOGallowed_campaignsSQL order by list_id;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$num_rows = mysqli_num_rows($rslt);
-
-			$count=0;
-			while ( $num_rows > $count ) 
-				{
-				$row = mysqli_fetch_row($rslt);
-				echo "<option value=\'$row[0]\'>$row[0] - $row[1]</option>\n";
-				$count++;
-				}
-			?>
-			</select><input type='checkbox' name='master_list_override' value='1'>(<?php echo _QXZ("override template setting"); ?>)
-			</font></td>
-		  </tr>
-		  <tr>
-			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("Phone Code Override"); ?>: </font></td>
-			<td align=left width="80%"><font face="arial, helvetica" size=1>
-			<select name='phone_code_override'>
-                        <option value='in_file' selected='yes'><?php echo _QXZ("Load from Lead File"); ?></option>
-			<?php
-			$stmt="SELECT distinct country_code, country from vicidial_phone_codes;";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$num_rows = mysqli_num_rows($rslt);
-			
-			$count=0;
-	                while ( $num_rows > $count )
-				{
-				$row = mysqli_fetch_row($rslt);
-				echo "<option value=\'$row[0]\'>$row[0] - $row[1]</option>\n";
-				$count++;
-				}
-			?>
-			</select>
-			</font></td>
-		  </tr>
-		  <tr>
-			<td align=right><B><font face="arial, helvetica" size=2><?php echo _QXZ("File layout to use"); ?>:</font></B></td>
-			<td align=left><font face="arial, helvetica" size=2><input type=radio name="file_layout" value="standard" checked><?php echo _QXZ("Standard Format"); ?>&nbsp;&nbsp;&nbsp;&nbsp;<input type=radio name="file_layout" value="custom"><?php echo _QXZ("Custom layout"); ?>&nbsp;&nbsp;&nbsp;&nbsp;<input type=radio name="file_layout" value="template"><?php echo _QXZ("Custom Template"); ?> <?php echo "$NWB#list_loader-file_layout$NWE"; ?></td>
-		  </tr>
-		  <tr>
-			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("Custom Layout to Use"); ?>: </font></td>
-			<td align=left><select name="template_id" id="template_id">
-<?php
-				$template_stmt="SELECT template_id, template_name FROM vicidial_custom_leadloader_templates WHERE list_id IN (SELECT list_id FROM vicidial_lists $whereLOGallowed_campaignsSQL) ORDER BY template_id asc;";
-				$template_rslt=mysql_to_mysqli($template_stmt, $link);
-				if (mysqli_num_rows($template_rslt)>0) {
-					echo "<option value='' selected>--"._QXZ("Select custom template")."--</option>";
-					while ($row=mysqli_fetch_array($template_rslt)) {
-						echo "<option value='$row[template_id]'>$row[template_id] - $row[template_name]</option>";
-					}
-				} else {
-					echo "<option value='' selected>--"._QXZ("No custom templates defined")."--</option>";
-				}
+                                $count = 0;
+                                while ($num_rows > $count) {
+                                    $row = mysqli_fetch_row($rslt);
+                                    echo "<option value='$row[0]'>$row[0] - $row[1]</option>\n";
+                                    $count++;
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label"><?php echo _QXZ("File layout to use"); ?>:</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="file_layout" id="layout_standard" value="standard" checked>
+                                    <label class="form-check-label" for="layout_standard"><?php echo _QXZ("Standard Format"); ?></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="file_layout" id="layout_custom" value="custom">
+                                    <label class="form-check-label" for="layout_custom"><?php echo _QXZ("Custom layout"); ?></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="file_layout" id="layout_template" value="template">
+                                    <label class="form-check-label" for="layout_template"><?php echo _QXZ("Custom Template"); ?></label>
+                                </div>
+                                <span class="help-icon"><?php echo "$NWB#list_loader-file_layout$NWE"; ?></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="template_id" class="form-label"><?php echo _QXZ("Custom Layout to Use"); ?>:</label>
+                            <div class="input-group">
+                                <select name="template_id" id="template_id" class="form-select">
+                                    <?php
+                                    $template_stmt = "SELECT template_id, template_name FROM vicidial_custom_leadloader_templates WHERE list_id IN (SELECT list_id FROM vicidial_lists $whereLOGallowed_campaignsSQL) ORDER BY template_id asc;";
+                                    $template_rslt = mysql_to_mysqli($template_stmt, $link);
+                                    if (mysqli_num_rows($template_rslt) > 0) {
+                                        echo "<option value='' selected>--" . _QXZ("Select custom template") . "--</option>";
+                                        while ($row = mysqli_fetch_array($template_rslt)) {
+                                            echo "<option value='$row[template_id]'>$row[template_id] - $row[template_name]</option>";
+                                        }
+                                    } else {
+                                        echo "<option value='' selected>--" . _QXZ("No custom templates defined") . "--</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <span class="input-group-text"><?php echo "$NWB#list_loader-template_id$NWE"; ?></span>
+                            </div>
+                            <div class="mt-2">
+                                <a href='AST_admin_template_maker.php' class="btn btn-sm btn-outline-secondary"><i class="fas fa-tools me-1"></i><?php echo _QXZ("template builder"); ?></a>
+                                <a href='#' onClick="TemplateSpecs()" class="btn btn-sm btn-outline-secondary ms-2"><i class="fas fa-info-circle me-1"></i><?php echo _QXZ("View template info"); ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5 class="section-title"><i class="fas fa-shield-alt me-2"></i><?php echo _QXZ("Validation & Processing"); ?></h5>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="dupcheck" class="form-label"><?php echo _QXZ("Lead Duplicate Check"); ?>:</label>
+                            <div class="input-group">
+                                <select size=1 name=dupcheck id="dupcheck" class="form-select">
+                                    <option selected value="NONE"><?php echo _QXZ("NO DUPLICATE CHECK"); ?></option>
+                                    <option value="DUPLIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPCAMP"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+                                    <option value="DUPSYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ENTIRE SYSTEM"); ?></option>
+                                    <option value="DUPLIST30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPCAMP30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+                                    <option value="DUPSYS30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+                                    <option value="DUPLIST60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPCAMP60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+                                    <option value="DUPSYS60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+                                    <option value="DUPLIST90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPCAMP90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+                                    <option value="DUPSYS90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+                                    <option value="DUPLIST180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPCAMP180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+                                    <option value="DUPSYS180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+                                    <option value="DUPLIST360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPCAMP360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
+                                    <option value="DUPSYS360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
+                                    <option value="DUPTITLEALTPHONELIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN LIST ID"); ?></option>
+                                    <option value="DUPTITLEALTPHONESYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN ENTIRE SYSTEM"); ?></option>
+                                </select>
+                                <span class="input-group-text"><?php echo "$NWB#list_loader-duplicate_check$NWE"; ?></span>
+                            </div>
+                        </div>
+                        
+                        <?php
+                        if ($SSenable_international_dncs) {
+                            $dnc_stmt = "select iso3, country_name from vicidial_country_iso_tld where iso3 is not null and iso3!='' order by country_name asc";
+                            $dnc_rslt = mysql_to_mysqli($dnc_stmt, $link);
+                            $available_countries = 0;
+                            while ($dnc_row = mysqli_fetch_row($dnc_rslt)) {
+                                $iso = $dnc_row[0];
+                                $country_name = $dnc_row[1];
+                                $dnc_table_stmt = "show tables like 'vicidial_dnc_" . $iso . "'";
+                                $dnc_table_rslt = mysql_to_mysqli($dnc_table_stmt, $link);
+                                if (mysqli_num_rows($dnc_table_rslt) > 0) {
+                                    $available_countries++;
+                                    $drop_down_dnc_options .= "\t\t\t\t<option value='$iso'>$iso - $country_name</option>\n";
+                                }
+                            }
+                        ?>
+                        <div class="mb-3">
+                            <label for="international_dnc_scrub" class="form-label"><?php echo _QXZ("DNC Scrub by Country"); ?>:</label>
+                            <select size='1' name='international_dnc_scrub' id="international_dnc_scrub" class="form-select">
+                                <?php
+                                if ($available_countries > 0) {
+                                    echo "\t\t\t\t<option>-- SELECT COUNTRY DNC LIST--</option>\n";
+                                    echo $drop_down_dnc_options;
+                                } else {
+                                    echo "\t\t\t\t<option>-- NO COUNTRY DNC TABLES EXIST --</option>\n";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="dedupe_statuses" class="form-label"><?php echo _QXZ("Status Duplicate Check"); ?>:</label>
+                            <div id='statuses_display'>
+                                <select id='dedupe_statuses' name='dedupe_statuses[]' size=5 multiple class="form-select">
+                                    <option value='--ALL--' selected>--<?php echo _QXZ("ALL DISPOSITIONS"); ?>--</option>
+                                    <?php echo $dedupe_status_select ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <?php if ($enable_status_mismatch_leadloader_option > 0) { ?>
+                        <div class="mb-3">
+                            <label for="status_mismatch_action" class="form-label"><?php echo _QXZ("Status Mismatch Action"); ?>:</label>
+                            <div class="input-group">
+                                <div id='status_mismatch_display'>
+                                    <select id='status_mismatch_action' name='status_mismatch_action' class="form-select">
+                                        <option value='' selected><?php echo _QXZ("NONE"); ?></option>
+                                        <option value='MOVE RECENT FROM SYSTEM'><?php echo _QXZ("MOVE MOST RECENT PHONE DUPLICATE, CHECK ENTIRE SYSTEM"); ?></option>
+                                        <option value='MOVE ALL FROM SYSTEM'><?php echo _QXZ("MOVE ALL PHONE DUPLICATES, CHECK ENTIRE SYSTEM"); ?></option>
+                                        <option value='MOVE RECENT USING CHECK'><?php echo _QXZ("MOVE MOST RECENT PHONE FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
+                                        <option value='MOVE ALL USING CHECK'><?php echo _QXZ("MOVE ALL PHONES FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
+                                    </select>
+                                </div>
+                                <span class="input-group-text"><?php echo "$NWB#list_loader-status_mismatch_action$NWE"; ?></span>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5 class="section-title"><i class="fas fa-cogs me-2"></i><?php echo _QXZ("Advanced Settings"); ?></h5>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="usacan_check" class="form-label"><?php echo _QXZ("USA-Canada Check"); ?>:</label>
+                            <select size=1 name=usacan_check id="usacan_check" class="form-select">
+                                <option selected value="NONE"><?php echo _QXZ("NO USACAN VALID CHECK"); ?></option>
+                                <option value="PREFIX"><?php echo _QXZ("CHECK FOR VALID PREFIX"); ?></option>
+                                <option value="AREACODE"><?php echo _QXZ("CHECK FOR VALID AREACODE"); ?></option>
+                                <option value="PREFIX_AREACODE"><?php echo _QXZ("CHECK FOR VALID PREFIX and AREACODE"); ?></option>
+                                <option value="NANPA"><?php echo _QXZ("CHECK FOR VALID NANPA PREFIX and AREACODE"); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="postalgmt" class="form-label"><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</label>
+                            <select size=1 name=postalgmt id="postalgmt" class="form-select">
+                                <option selected value="AREA"><?php echo _QXZ("COUNTRY CODE AND AREA CODE ONLY"); ?></option>
+                                <option value="POSTAL"><?php echo _QXZ("POSTAL CODE FIRST"); ?></option>
+                                <option value="TZCODE"><?php echo _QXZ("OWNER TIME ZONE CODE FIRST"); ?></option>
+                                <option value="NANPA"><?php echo _QXZ("NANPA AREACODE PREFIX FIRST"); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="state_conversion" class="form-label"><?php echo _QXZ("State Abbreviation Lookup"); ?>:</label>
+                            <select size=1 name=state_conversion id="state_conversion" class="form-select">
+                                <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
+                                <option value="STATELOOKUP"><?php echo _QXZ("FULL STATE NAME TO ABBREVIATION"); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="web_loader_phone_length" class="form-label"><?php echo _QXZ("Required Phone Number Length"); ?>:</label>
+                            <select size=1 name=web_loader_phone_length id="web_loader_phone_length" class="form-select">
+                                <?php if ($SSweb_loader_phone_length == 'DISABLED') { ?>
+                                <option selected value=""><?php echo _QXZ("DISABLED"); ?>
+                                <?php }
+                                if ($SSweb_loader_phone_length == 'CHOOSE') { ?>
+                                <option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
+                                <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
+                                <?php }
+                                if ((strlen($SSweb_loader_phone_length) > 0) and (strlen($SSweb_loader_phone_length) < 3) and ($SSweb_loader_phone_length > 4) and ($SSweb_loader_phone_length < 19)) { ?>
+                                <option selected value="<?php echo $SSweb_loader_phone_length ?>"><?php echo $SSweb_loader_phone_length ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>
+                        <button type="submit" name="submit_file" class="btn btn-primary"><i class="fas fa-check-circle me-2"></i><?php echo _QXZ("SUBMIT"); ?></button>
+                        <button type="button" onClick="javascript:document.location='admin_listloader_fourth_gen.php'" class="btn btn-secondary"><i class="fas fa-redo me-2"></i><?php echo _QXZ("START OVER"); ?></button>
+                    </div>
+                    <div>
+                        <a href="admin.php?ADD=100" target="_parent" class="btn btn-sm btn-outline-primary"><i class="fas fa-arrow-left me-1"></i><?php echo _QXZ("BACK TO ADMIN"); ?></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <div>
+                    <span class="text-muted"><?php echo _QXZ("LIST LOADER 4th Gen"); ?> | <a href="admin_listloader_fifth_gen.php"><?php echo _QXZ("5th Gen"); ?></a></span>
+                </div>
+                <div>
+                    <span class="text-muted"><?php echo _QXZ("VERSION"); ?>: <?php echo $version ?></span>
+                    <span class="text-muted ms-3"><?php echo _QXZ("BUILD"); ?>: <?php echo $build ?></span>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+} else {
+    ?>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0"><i class="fas fa-check-circle me-2"></i><?php echo _QXZ("Lead File Processing"); ?></h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("Lead file"); ?>:</div>
+                <div class="col-md-7"><?php echo $leadfile_name ?></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("List ID Override"); ?>:</div>
+                <div class="col-md-7"><?php echo $list_id_override ?></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("Phone Code Override"); ?>:</div>
+                <div class="col-md-7"><?php echo $phone_code_override ?></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("USA-Canada Check"); ?>:</div>
+                <div class="col-md-7"><?php echo $usacan_check ?></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("Lead Duplicate Check"); ?>:</div>
+                <div class="col-md-7"><?php echo $dupcheck ?></div>
+            </div>
+            <?php
+            if ($SSenable_international_dncs) {
+            ?>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("International DNC scrub"); ?>:</div>
+                <div class="col-md-7"><?php echo $international_dnc_scrub ?></div>
+            </div>
+            <?php
+            }
+            ?>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</div>
+                <div class="col-md-7"><?php echo $postalgmt ?></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("State Abbreviation Lookup"); ?>:</div>
+                <div class="col-md-7"><?php echo $state_conversion ?></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-5 fw-bold text-end"><?php echo _QXZ("Required Phone Number Length"); ?>:</div>
+                <div class="col-md-7"><?php echo $web_loader_phone_length ?></div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <form action="<?php echo $PHP_SELF ?>" method="get" onSubmit="ParseFileName()" enctype="multipart/form-data">
+                <input type="hidden" name='leadfile_name' value="<?php echo $leadfile_name ?>">
+                <input type="hidden" name='DB' value="<?php echo $DB ?>">
+                <a href="admin_listloader_fourth_gen.php" class="btn btn-success"><i class="fas fa-plus-circle me-2"></i><?php echo _QXZ("Load Another Lead File"); ?></a>
+                <div class="mt-3 text-muted">
+                    <?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> | 
+                    <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php
+}
 ?>
-			</select> <a href='AST_admin_template_maker.php'><font face="arial, helvetica" size=1><?php echo _QXZ("template builder"); ?></font></a><?php echo "$NWB#list_loader-template_id$NWE"; ?><BR><a href='#' onClick="TemplateSpecs()"><font face="arial, helvetica" size=1><?php echo _QXZ("View template info"); ?></font></a></td>
-		  <tr>
-			<td align=right width="20%"><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Duplicate Check"); ?>: </font></td>
-			<td align=left width="80%" nowrap><font face="arial, helvetica" size=1><select size=1 name=dupcheck>
-			<option selected value="NONE"><?php echo _QXZ("NO DUPLICATE CHECK"); ?></option>
-			<option value="DUPLIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN LIST ID"); ?></option>
-			<option value="DUPCAMP"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-			<option value="DUPSYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY PHONE IN ENTIRE SYSTEM"); ?></option>
-			<option value="DUPLIST30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN LIST ID"); ?></option>
-			<option value="DUPCAMP30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-			<option value="DUPSYS30DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 30 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-			<option value="DUPLIST60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN LIST ID"); ?></option>
-			<option value="DUPCAMP60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-			<option value="DUPSYS60DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 60 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-			<option value="DUPLIST90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN LIST ID"); ?></option>
-			<option value="DUPCAMP90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-			<option value="DUPSYS90DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 90 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-			<option value="DUPLIST180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN LIST ID"); ?></option>
-			<option value="DUPCAMP180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-			<option value="DUPSYS180DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 180 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-			<option value="DUPLIST360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN LIST ID"); ?></option>
-			<option value="DUPCAMP360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ALL CAMPAIGN LISTS"); ?></option>
-			<option value="DUPSYS360DAY"><?php echo _QXZ("CHECK FOR DUPLICATES LOADED IN LAST 360 DAYS BY PHONE IN ENTIRE SYSTEM"); ?></option>
-			<option value="DUPTITLEALTPHONELIST"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN LIST ID"); ?></option>
-			<option value="DUPTITLEALTPHONESYS"><?php echo _QXZ("CHECK FOR DUPLICATES BY TITLE/ALT-PHONE IN ENTIRE SYSTEM"); ?></option>
-			</select> <?php echo "$NWB#list_loader-duplicate_check$NWE"; ?></td>
-		  </tr>
+
+<script language="JavaScript1.2">
+function openNewWindow(url) {
+    window.open(url, "", 'width=700,height=300,scrollbars=yes,menubar=yes,address=yes');
+}
+
+function ShowProgress(good, bad, total, dup, inv, post, moved) {
+    parent.lead_count.document.open();
+    parent.lead_count.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></head><body><div class="container mt-4"><div class="card"><div class="card-header bg-primary text-white"><h5 class="mb-0"><?php echo _QXZ("Current file status"); ?></h5></div><div class="card-body"><div class="row"><div class="col-md-6"><div class="alert alert-success mb-2"><strong><?php echo _QXZ("Good"); ?>:</strong> ' + good + '</div><div class="alert alert-success mb-2"><strong><?php echo _QXZ("Duplicate"); ?>:</strong> ' + dup + '</div><div class="alert alert-success mb-2"><strong><?php echo _QXZ("Moved"); ?>:</strong> ' + moved + '</div></div><div class="col-md-6"><div class="alert alert-danger mb-2"><strong><?php echo _QXZ("Bad"); ?>:</strong> ' + bad + '</div><div class="alert alert-info mb-2"><strong><?php echo _QXZ("Total"); ?>:</strong> ' + total + '</div><div class="alert alert-warning mb-2"><strong><?php echo _QXZ("Invalid"); ?>:</strong> ' + inv + '</div><div class="alert alert-info mb-2"><strong><?php echo _QXZ("Postal Match"); ?>:</strong> ' + post + '</div></div></div></div></div></div></body></html>');
+    parent.lead_count.document.close();
+}
+
+function ParseFileName() {
+    if (!document.forms[0].OK_to_process) {
+        var endstr = document.forms[0].leadfile.value.lastIndexOf('\\');
+        if (endstr > -1) {
+            endstr++;
+            var filename = document.forms[0].leadfile.value.substring(endstr);
+            document.forms[0].leadfile_name.value = filename;
+        }
+    }
+}
+
+function TemplateSpecs() {
+    var template_field = document.getElementById("template_id");
+    var template_id_value = template_field.options[template_field.selectedIndex].value;
+    var xmlhttp = false;
+    try {
+        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+        try {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (E) {
+            xmlhttp = false;
+        }
+    }
+    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+        xmlhttp = new XMLHttpRequest();
+    }
+    if (xmlhttp && template_id_value != "") {
+        var vs_query = "&template_id=" + template_id_value;
+        xmlhttp.open('POST', 'leadloader_template_display.php');
+        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xmlhttp.send(vs_query);
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var TemplateInfo = null;
+                TemplateInfo = xmlhttp.responseText;
+                if (TemplateInfo.length > 0) {
+                    // Use a modern modal instead of alert
+                    var modal = document.createElement('div');
+                    modal.className = 'modal fade';
+                    modal.id = 'templateInfoModal';
+                    modal.innerHTML = '<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title"><?php echo _QXZ("Template Information"); ?></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">' + TemplateInfo + '</div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo _QXZ("Close"); ?></button></div></div></div>';
+                    document.body.appendChild(modal);
+                    var myModal = new bootstrap.Modal(document.getElementById('templateInfoModal'));
+                    myModal.show();
+                }
+            }
+        }
+        delete xmlhttp;
+    }
+}
+
+function PopulateStatuses(list_id) {
+    var xmlhttp = false;
+    try {
+        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+        try {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (E) {
+            xmlhttp = false;
+        }
+    }
+    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+        xmlhttp = new XMLHttpRequest();
+    }
+    if (xmlhttp) {
+        var vs_query = "&form_action=no_template&list_id=" + list_id;
+        xmlhttp.open('POST', 'leadloader_template_display.php');
+        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xmlhttp.send(vs_query);
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var StatSpanText = null;
+                StatSpanText = xmlhttp.responseText;
+                document.getElementById("statuses_display").innerHTML = StatSpanText;
+            }
+        }
+        delete xmlhttp;
+    }
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+</body>
+</html>
 <?php
-if ($SSenable_international_dncs)
-	{
-	$dnc_stmt="select iso3, country_name from vicidial_country_iso_tld where iso3 is not null and iso3!='' order by country_name asc";
-	$dnc_rslt=mysql_to_mysqli($dnc_stmt, $link);
-	$available_countries=0;
-	while($dnc_row=mysqli_fetch_row($dnc_rslt)) 
-		{
-		$iso=$dnc_row[0];
-		$country_name=$dnc_row[1];
-		$dnc_table_stmt="show tables like 'vicidial_dnc_".$iso."'";
-		$dnc_table_rslt=mysql_to_mysqli($dnc_table_stmt, $link);
-		if (mysqli_num_rows($dnc_table_rslt)>0)
-			{
-			$available_countries++;
-			$drop_down_dnc_options.="\t\t\t\t<option value='$iso'>$iso - $country_name</option>\n";
-			}
-		}
-	echo "\t\t<tr>\n";
-	echo "\t\t\t<td align=right width='20%'><font face='arial, helvetica' size=2>"._QXZ("DNC Scrub by Country").": </font></td>\n";
-	echo "\t\t\t<td align=left width='80%' nowrap><font face='arial, helvetica' size=1><select size='1' name='international_dnc_scrub'>\n";
-	if ($available_countries>0)
-		{
-		echo "\t\t\t\t<option>-- SELECT COUNTRY DNC LIST--</option>\n";
-		echo $drop_down_dnc_options;
-		}
-	else
-		{
-		echo "\t\t\t\t<option>-- NO COUNTRY DNC TABLES EXIST --</option>\n";
-		}
-	echo "\t\t</tr>\n";
-	echo "\t\t<tr>\n";
-	}
-?>
-	<tr bgcolor="#<?php echo $SSframe_background; ?>">
-		<td width='20%' align="right"><font class="standard"><?php echo _QXZ("Status Duplicate Check"); ?>:</font></td>
-		<td width='80%'>
-		<span id='statuses_display'>
-			<select id='dedupe_statuses' name='dedupe_statuses[]' size=5 multiple>
-			<option value='--ALL--' selected>--<?php echo _QXZ("ALL DISPOSITIONS"); ?>--</option>
-			<?php echo $dedupe_status_select ?>
-			</select></font>		
-		</span>
-		</td>
-	</tr>
-<?php if ($enable_status_mismatch_leadloader_option>0) { ?>
-	<tr bgcolor="#<?php echo $SSframe_background; ?>">
-		<td width='20%' align="right"><font class="standard"><?php echo _QXZ("Status Mismatch Action"); ?>:</font></td>
-		<td width='80%'>
-		<span id='status_mismatch_display'>
-			<select id='status_mismatch_action' name='status_mismatch_action'>
-			<option value='' selected><?php echo _QXZ("NONE"); ?></option>
-			<option value='MOVE RECENT FROM SYSTEM'><?php echo _QXZ("MOVE MOST RECENT PHONE DUPLICATE, CHECK ENTIRE SYSTEM"); ?></option>
-			<option value='MOVE ALL FROM SYSTEM'><?php echo _QXZ("MOVE ALL PHONE DUPLICATES, CHECK ENTIRE SYSTEM"); ?></option>
-			<option value='MOVE RECENT USING CHECK'><?php echo _QXZ("MOVE MOST RECENT PHONE FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
-			<option value='MOVE ALL USING CHECK'><?php echo _QXZ("MOVE ALL PHONES FROM DUPLICATE CHECK TO CURRENT LIST"); ?></option>
-			</select></font>		
-		</span> <?php echo "$NWB#list_loader-status_mismatch_action$NWE"; ?>
-		</td>
-	</tr>
-<?php } ?>
-		  <tr>
-			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("USA-Canada Check"); ?>: </font></td>
-			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=usacan_check>
-			<option selected value="NONE"><?php echo _QXZ("NO USACAN VALID CHECK"); ?></option>
-			<option value="PREFIX"><?php echo _QXZ("CHECK FOR VALID PREFIX"); ?></option>
-			<option value="AREACODE"><?php echo _QXZ("CHECK FOR VALID AREACODE"); ?></option>
-			<option value="PREFIX_AREACODE"><?php echo _QXZ("CHECK FOR VALID PREFIX and AREACODE"); ?></option>
-			<option value="NANPA"><?php echo _QXZ("CHECK FOR VALID NANPA PREFIX and AREACODE"); ?></option>
-			</select></td>
-		  </tr>
-		  <tr>
-			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Time Zone Lookup"); ?>: </font></td>
-			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=postalgmt>
-			<option selected value="AREA"><?php echo _QXZ("COUNTRY CODE AND AREA CODE ONLY"); ?></option>
-			<option value="POSTAL"><?php echo _QXZ("POSTAL CODE FIRST"); ?></option>
-			<option value="TZCODE"><?php echo _QXZ("OWNER TIME ZONE CODE FIRST"); ?></option>
-			<option value="NANPA"><?php echo _QXZ("NANPA AREACODE PREFIX FIRST"); ?></option>
-			</select></td>
-		  </tr>
-		  <tr>
-			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("State Abbreviation Lookup"); ?>: </font></td>
-			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=state_conversion>
-			<option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
-			<option value="STATELOOKUP"><?php echo _QXZ("FULL STATE NAME TO ABBREVIATION"); ?></option>
-			</select></td>
-		  </tr>
-		  <tr>
-			<td align=right width="25%"><font face="arial, helvetica" size=2><?php echo _QXZ("Required Phone Number Length"); ?>: </font></td>
-			<td align=left width="75%"><font face="arial, helvetica" size=1><select size=1 name=web_loader_phone_length>
-			<?php if ($SSweb_loader_phone_length == 'DISABLED') { ?>
-			<option selected value=""><?php echo _QXZ("DISABLED"); ?>
-			<?php } 
-			 if ($SSweb_loader_phone_length == 'CHOOSE') { ?>
-			<option selected value=""><?php echo _QXZ("DISABLED"); ?></option>
-			<option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
-			<?php } 
-			 if ( (strlen($SSweb_loader_phone_length) > 0) and (strlen($SSweb_loader_phone_length) < 3) and ($SSweb_loader_phone_length > 4) and ($SSweb_loader_phone_length < 19) ) { ?>
-			<option selected value="<?php echo $SSweb_loader_phone_length ?>"><?php echo $SSweb_loader_phone_length ?></option>
-			<?php } ?>
-			</select></td>
-		  </tr>
-
-		<tr>
-			<td align=center colspan=2><input style='background-color:#<?php echo "$SSbutton_color"; ?>' type=submit value="<?php echo _QXZ("SUBMIT"); ?>" name='submit_file'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style='background-color:#<?php echo "$SSbutton_color"; ?>' type=button onClick="javascript:document.location='admin_listloader_fourth_gen.php'" value="<?php echo _QXZ("START OVER"); ?>" name='reload_page'></td>
-		  </tr>
-		  <tr><td align=left><font size=1> &nbsp; &nbsp; &nbsp; &nbsp; <a href="admin.php?ADD=100" target="_parent"><?php echo _QXZ("BACK TO ADMIN"); ?></a> &nbsp; &nbsp; </font></td><td align=right><font size=1><?php echo _QXZ("LIST LOADER 4th Gen"); ?> | <a href="admin_listloader_fifth_gen.php"><?php echo _QXZ("5th Gen"); ?></a> &nbsp; &nbsp; <?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?> &nbsp; &nbsp; </td></tr>
-		</table>
-		<?php 
-
-		}
-	}
-else
-	{
-	?>
-	<table align=center width="700" border=0 cellpadding=5 cellspacing=0 bgcolor=#<?php echo $SSframe_background; ?>>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Lead file"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $leadfile_name ?></font></td>
-	</tr>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("List ID Override"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $list_id_override ?></font></td>
-	</tr>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Phone Code Override"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $phone_code_override ?></font></td>
-	</tr>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("USA-Canada Check"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $usacan_check ?></font></td>
-	</tr>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Duplicate Check"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $dupcheck ?></font></td>
-	</tr>
-<?php
-if ($SSenable_international_dncs)
-		{
-?>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("International DNC scrub"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $international_dnc_scrub ?></font></td>
-	</tr>
-<?php
-		}
-?>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Lead Time Zone Lookup"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $postalgmt ?></font></td>
-	</tr>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("State Abbreviation Lookup"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $state_conversion ?></font></td>
-	</tr>
-	<tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Required Phone Number Length"); ?>:</font></B></td>
-	<td align=left width="75%"><font face="arial, helvetica" size=2><?php echo $web_loader_phone_length ?></font></td>
-	</tr>
-
-
-
-	<tr>
-	<td align=center colspan=2><B><font face="arial, helvetica" size=2>
-	<form action=<?php echo $PHP_SELF ?> method=get onSubmit="ParseFileName()" enctype="multipart/form-data">
-	<input type=hidden name='leadfile_name' value="<?php echo $leadfile_name ?>">
-	<input type=hidden name='DB' value="<?php echo $DB ?>">
-	<a href="admin_listloader_fourth_gen.php"><?php echo _QXZ("Load Another Lead File"); ?></a> &nbsp; &nbsp; &nbsp; &nbsp;</font></B> <font size=1><?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?>
-	</font></td>
-	</tr></table>
-	<BR><BR><BR><BR>
-	<?php
-	}
 
 
 
