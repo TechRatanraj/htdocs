@@ -761,7 +761,7 @@ function PopulateStatuses(list_id) {
 <?php
 $short_header=1;
 
-require("admin_header.php");
+//require("admin_header.php");
 
 echo "<TABLE CELLPADDING=4 CELLSPACING=0><TR><TD>";
 
