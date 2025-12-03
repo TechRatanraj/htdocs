@@ -573,22 +573,21 @@ if ($action == "COPYFILE")
 <script language="JavaScript" src="help.js"></script>
 <div id='HelpDisplayDiv' class='help_info' style='display:none;'></div>
 
-<title><?php echo _QXZ("ADMINISTRATION"); ?>: <?php echo _QXZ("Audio Store"); ?>
+<title><?php echo _QXZ("ADMINISTRATION"); ?>: <?php echo _QXZ("Audio Store"); ?></title>
 <?php
 
-
 if ($user_set < 1)
-	{
-	$PHP_AUTH_USER=$_SERVER['PHP_AUTH_USER'];
-	$PHP_AUTH_PW=$_SERVER['PHP_AUTH_PW'];
-	$PHP_AUTH_USER = preg_replace('/[^-_0-9a-zA-Z]/','',$PHP_AUTH_USER);
-	$PHP_AUTH_PW = preg_replace('/[^-_0-9a-zA-Z]/','',$PHP_AUTH_PW);
-	}
+    {
+    $PHP_AUTH_USER=$_SERVER['PHP_AUTH_USER'];
+    $PHP_AUTH_PW=$_SERVER['PHP_AUTH_PW'];
+    $PHP_AUTH_USER = preg_replace('/[^-_0-9a-zA-Z]/','',$PHP_AUTH_USER);
+    $PHP_AUTH_PW = preg_replace('/[^-_0-9a-zA-Z]/','',$PHP_AUTH_PW);
+    }
 ##### BEGIN Set variables to make header show properly #####
-$ADD =					'311111111111111';
-$hh =					'admin';
-$LOGast_admin_access =	'1';
-$ADMIN =				'admin.php';
+$ADD =                  '311111111111111';
+$hh =                   'admin';
+$LOGast_admin_access =  '1';
+$ADMIN =                'admin.php';
 $page_width='770';
 $section_width='750';
 $header_font_size='3';
@@ -596,217 +595,280 @@ $subheader_font_size='2';
 $subcamp_font_size='2';
 $header_selected_bold='<b>';
 $header_nonselected_bold='';
-$admin_color =		'#FFFF99';
-$admin_font =		'BLACK';
-$admin_color =		'#E6E6E6';
-$subcamp_color =	'#C6C6C6';
+$admin_color =      '#E6E6E6';
+$admin_font =       'BLACK';
+$subcamp_color =    '#C6C6C6';
 ##### END Set variables to make header show properly #####
 
 require("admin_header.php");
 
 ?>
-<TABLE WIDTH=<?php echo $page_width ?> BGCOLOR=#E6E6E6 cellpadding=2 cellspacing=0><TR BGCOLOR=#E6E6E6><TD ALIGN=LEFT><FONT FACE="ARIAL,HELVETICA" SIZE=2><B> &nbsp; <?php echo _QXZ("Audio Store"); ?></TD><TD ALIGN=RIGHT><FONT FACE="ARIAL,HELVETICA" SIZE=2><B> &nbsp; </TD></TR>
+</head>
+<body style="background:#f5f7fb;">
 
-<?php 
+<!-- OUTER MODERN CONTAINER -->
+<div style="max-width:1400px;margin:24px auto;padding:0 16px;">
 
-echo "<TR BGCOLOR=\"#$SSframe_background\"><TD ALIGN=LEFT COLSPAN=2><img src=\"images/icon_audiostore.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=3><B> &nbsp; \n";
+  <div style="background:#fff;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,0.08);overflow:hidden;">
 
-$STARTtime = date("U");
-$TODAY = date("Y-m-d");
-$NOW_TIME = date("Y-m-d H:i:s");
-$FILE_datetime = $STARTtime;
+    <!-- HEADER BAR -->
+    <div style="background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);padding:24px;color:#fff;display:flex;align-items:center;gap:16px;">
+      <img src="images/icon_audiostore.png" width="48" height="48" style="filter:brightness(0) invert(1);">
+      <div style="flex:1">
+        <div style="font-size:22px;font-weight:800;letter-spacing:.02em;"><?php echo _QXZ("Audio Store"); ?></div>
+        <div style="margin-top:4px;font-size:13px;opacity:.9;"><?php echo _QXZ("Upload, copy, and delete IVR/MOH audio files for campaigns and IVRs"); ?></div>
+      </div>
+      <div style="background:rgba(255,255,255,.18);padding:8px 14px;border-radius:10px;font-size:11px;">
+        <?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; · &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?>
+      </div>
+    </div>
 
-$date = date("r");
-$browser = getenv("HTTP_USER_AGENT");
-$script_name = getenv("SCRIPT_NAME");
-$server_name = getenv("SERVER_NAME");
-$server_port = getenv("SERVER_PORT");
-if (preg_match("/443/i",$server_port)) {$HTTPprotocol = 'https://';}
-  else {$HTTPprotocol = 'http://';}
-$admDIR = "$HTTPprotocol$server_name:$server_port$script_name";
-$admDIR = preg_replace('/audio_store\.php/i', '',$admDIR);
-$admSCR = 'admin.php';
-# $NWB = " &nbsp; <a href=\"javascript:openNewWindow('help.php?ADD=99999";
-# $NWE = "')\"><IMG SRC=\"help.png\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP></A>";
+    <?php
 
-$NWB = "<IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, '";
-$NWE = "')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
+    echo "<!-- LEGACY TABLE WRAPPER KEPT FOR LAYOUT COMPAT -->\n";
+    echo "<TABLE WIDTH=$page_width BGCOLOR=#E6E6E6 cellpadding=0 cellspacing=0 style='margin:0 auto;border-collapse:collapse;display:none;'><TR><TD></TD></TR></TABLE>\n";
 
-$secX = date("U");
-$pulldate0 = "$year-$mon-$mday $hour:$min:$sec";
+    echo "<div style='padding:18px 24px;background:linear-gradient(135deg,#ecfeff 0%,#cffafe 100%);border-left:4px solid #06b6d4;'>\n";
+    echo "<div style='display:flex;gap:12px;align-items:flex-start;'>\n";
+    echo "<div style='font-size:22px;'>🎧</div>\n";
+    echo "<div style='color:#075985;font-size:13px;line-height:1.6;'>\n";
+    echo "<strong>"._QXZ("Recommended format").":</strong> "._QXZ("Use 16‑bit mono 8 kHz PCM WAV files for best Asterisk/ViciDial compatibility; GSM is only allowed when enabled in System Settings").".\n";
+    echo "<br>"._QXZ("Spaces are removed from filenames automatically, so prefer simple names without spaces").".\n";
+    echo "</div></div></div>\n";
 
-echo "$delete_message";
-echo "$copy_message";
+    $STARTtime = date("U");
+    $TODAY = date("Y-m-d");
+    $NOW_TIME = date("Y-m-d H:i:s");
+    $FILE_datetime = $STARTtime;
 
-if ($action == "MANUALUPLOAD")
-	{
-	if ($audiofile) 
-		{
-		$AF_path = preg_replace("/ /",'\ ',$AF_path);
-		$AF_path = preg_replace("/@/",'\@',$AF_path);
-		$AF_path = preg_replace("/\(/",'\(',$AF_path);
-		$AF_path = preg_replace("/\)/",'\)',$AF_path);
-		$AF_path = preg_replace("/\#/",'\#',$AF_path);
-		$AF_path = preg_replace("/\&/",'\&',$AF_path);
-		$AF_path = preg_replace("/\*/",'\*',$AF_path);
-		$AF_path = preg_replace("/\!/",'\!',$AF_path);
-		$AF_path = preg_replace("/\%/",'\%',$AF_path);
-		$AF_path = preg_replace("/\^/",'\^',$AF_path);
-		$audiofile_name = preg_replace("/ /",'',$audiofile_name);
-		$audiofile_name = preg_replace("/@/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\(/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\)/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\#/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\&/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\*/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\!/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\%/",'',$audiofile_name);
-		$audiofile_name = preg_replace("/\^/",'',$audiofile_name);
-		if ( (preg_match("/\.wav$/", $audiofile_name)) or ( (preg_match("/\.gsm$/", $audiofile_name)) and ($audio_store_GSM_allowed > 0) ) )
-			{
-			copy($AF_path, "$WeBServeRRooT/$sounds_web_directory/$audiofile_name");
-			chmod("$WeBServeRRooT/$sounds_web_directory/$audiofile_name", 0766);
-			
-			$audio_epoch = date("U");
-			$audio_format='gsm';
-			$audio_filesize = filesize("$WeBServeRRooT/$sounds_web_directory/$audiofile_name");
-			$audio_length = ($audio_filesize / 1650);
-			$wav_format_details='';
-			$wav_asterisk_valid='NA';
-			echo "<BR>"._QXZ("SUCCESS").": $audiofile_name "._QXZ("uploaded")."     "._QXZ("size").": $audio_filesize<BR><BR>\n";
+    $date = date("r");
+    $browser = getenv("HTTP_USER_AGENT");
+    $script_name = getenv("SCRIPT_NAME");
+    $server_name = getenv("SERVER_NAME");
+    $server_port = getenv("SERVER_PORT");
+    if (preg_match("/443/i",$server_port)) {$HTTPprotocol = 'https://';}
+      else {$HTTPprotocol = 'http://';}
+    $admDIR = "$HTTPprotocol$server_name:$server_port$script_name";
+    $admDIR = preg_replace('/audio_store\.php/i', '',$admDIR);
+    $admSCR = 'admin.php';
 
-			if (preg_match("/\.wav$/", $audiofile_name))
-				{
-				$audio_format='wav';
-				$audio_length = ($audio_filesize / 16000);
+    $NWB = "<IMG SRC=\"help.png\" onClick=\"FillAndShowHelpDiv(event, '";
+    $NWE = "')\" WIDTH=20 HEIGHT=20 BORDER=0 ALT=\"HELP\" ALIGN=TOP>";
 
-				$AF = new AudioFile;
-				$AF->loadFile("$WeBServeRRooT/$sounds_web_directory/$audiofile_name");
+    $secX = date("U");
+    $pulldate0 = "$year-$mon-$mday $hour:$min:$sec";
 
-				$wav_type = $AF->wave_type;
-				$wav_compression = $AF->getCompression ($AF->wave_compression);
-				$wav_channels = $AF->wave_channels;
-				$wav_framerate = $AF->wave_framerate;
-				$wav_bits=$AF->wave_bits;
-				$audio_length=number_format ($AF->wave_length,"0");
-				$invalid_wav=0;
+    // STATUS MESSAGES
+    echo "<div style='padding:16px 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#111827;'>\n";
+    echo "$delete_message";
+    echo "$copy_message";
+    echo "</div>\n";
 
-				if (!preg_match('/^wav/i',$wav_type)) {$invalid_wav++;}
-				if (!preg_match('/^pcm/i',$wav_compression)) {$invalid_wav++;}
-				if ($wav_channels > 1) {$invalid_wav++;}
-				if ( ($wav_framerate > 8000) or ($wav_framerate < 8000) ) {$invalid_wav++;}
-				if ( ($wav_bits > 16) or ($wav_bits < 16) ) {$invalid_wav++;}
+    // === ORIGINAL MANUALUPLOAD HANDLER (UNCHANGED LOGIC) ===
+    if ($action == "MANUALUPLOAD")
+        {
+        if ($audiofile) 
+            {
+            $AF_path = preg_replace("/ /",'\ ',$AF_path);
+            $AF_path = preg_replace("/@/",'\@',$AF_path);
+            $AF_path = preg_replace("/\(/",'\(',$AF_path);
+            $AF_path = preg_replace("/\)/",'\)',$AF_path);
+            $AF_path = preg_replace("/\#/",'\#',$AF_path);
+            $AF_path = preg_replace("/\&/",'\&',$AF_path);
+            $AF_path = preg_replace("/\*/",'\*',$AF_path);
+            $AF_path = preg_replace("/\!/",'\!',$AF_path);
+            $AF_path = preg_replace("/\%/",'\%',$AF_path);
+            $AF_path = preg_replace("/\^/",'\^',$AF_path);
+            $audiofile_name = preg_replace("/ /",'',$audiofile_name);
+            $audiofile_name = preg_replace("/@/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\(/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\)/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\#/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\&/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\*/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\!/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\%/",'',$audiofile_name);
+            $audiofile_name = preg_replace("/\^/",'',$audiofile_name);
+            if ( (preg_match("/\.wav$/", $audiofile_name)) or ( (preg_match("/\.gsm$/", $audiofile_name)) and ($audio_store_GSM_allowed > 0) ) )
+                {
+                copy($AF_path, "$WeBServeRRooT/$sounds_web_directory/$audiofile_name");
+                chmod("$WeBServeRRooT/$sounds_web_directory/$audiofile_name", 0766);
+                
+                $audio_epoch = date("U");
+                $audio_format='gsm';
+                $audio_filesize = filesize("$WeBServeRRooT/$sounds_web_directory/$audiofile_name");
+                $audio_length = ($audio_filesize / 1650);
+                $wav_format_details='';
+                $wav_asterisk_valid='NA';
 
-				$wav_format_details = "$wav_type   channels: $wav_channels   framerate: $wav_framerate   bits: $wav_bits   length: $audio_length   compression: $wav_compression";
+                echo "<div style='max-width:1100px;margin:0 auto 16px auto;padding:10px 14px;background:#ecfdf5;border-left:4px solid #10b981;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#065f46;'>";
+                echo _QXZ("SUCCESS").": $audiofile_name "._QXZ("uploaded")." &nbsp; "._QXZ("size").": $audio_filesize";
+                echo "</div>\n";
 
-				if ($invalid_wav > 0)
-					{
-					$wav_asterisk_valid='BAD';
-					echo " &nbsp; <BR><BR><font color=red>"._QXZ("INVALID WAV FILE FORMAT").": ($audiofile_name)</font><BR> &nbsp; </FONT><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>$wav_type &nbsp; "._QXZ("channels").": $wav_channels &nbsp; "._QXZ("framerate").": $wav_framerate &nbsp; "._QXZ("bits").": $wav_bits &nbsp; "._QXZ("compression").": $wav_compression<BR><BR><BR>\n";
-					}
-				else
-					{
-					$wav_asterisk_valid='GOOD';
-					echo " &nbsp; </FONT><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=1>"._QXZ("WAV FILE FORMAT VALIDATED").": $wav_type &nbsp; "._QXZ("channels").": $wav_channels &nbsp; "._QXZ("framerate").": $wav_framerate &nbsp; "._QXZ("bits").": $wav_bits &nbsp; "._QXZ("compression").": $wav_compression<BR><BR>\n";
-					}
-				echo "</FONT><FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=3>";
-				}
+                if (preg_match("/\.wav$/", $audiofile_name))
+                    {
+                    $audio_format='wav';
+                    $audio_length = ($audio_filesize / 16000);
 
-			$stmt="INSERT IGNORE INTO audio_store_details SET audio_filename='$audiofile_name',audio_format='$audio_format',audio_filesize='$audio_filesize',audio_epoch='$audio_epoch',audio_length='$audio_length',wav_format_details='$wav_format_details',wav_asterisk_valid='$wav_asterisk_valid' ON DUPLICATE KEY UPDATE audio_filesize='$audio_filesize',audio_epoch='$audio_epoch',audio_length='$audio_length',wav_format_details='$wav_format_details',wav_asterisk_valid='$wav_asterisk_valid';";
-			if ($DB) {echo "|$stmt|\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$affected_rowsX = mysqli_affected_rows($link);
+                    $AF = new AudioFile;
+                    $AF->loadFile("$WeBServeRRooT/$sounds_web_directory/$audiofile_name");
 
-			$stmt="UPDATE servers SET sounds_update='Y';";
-			$rslt=mysql_to_mysqli($stmt, $link);
-			$affected_rowsY = mysqli_affected_rows($link);
+                    $wav_type = $AF->wave_type;
+                    $wav_compression = $AF->getCompression ($AF->wave_compression);
+                    $wav_channels = $AF->wave_channels;
+                    $wav_framerate = $AF->wave_framerate;
+                    $wav_bits=$AF->wave_bits;
+                    $audio_length=number_format ($AF->wave_length,"0");
+                    $invalid_wav=0;
 
-			### LOG INSERTION Admin Log Table ###
-			$SQL_log = "$stmt|";
-			$SQL_log = preg_replace('/;/', '', $SQL_log);
-			$SQL_log = addslashes($SQL_log);
-			$stmt="INSERT INTO vicidial_admin_log set event_date=NOW(), user='$PHP_AUTH_USER', ip_address='$ip', event_section='AUDIOSTORE', event_type='LOAD', record_id='manualupload', event_code='$audiofile_name $audio_filesize', event_sql=\"$SQL_log\", event_notes='$audiofile_name $AF_path $AF_orig   Invalid: $invalid_wav $wav_type &nbsp; "._QXZ("channels").": $wav_channels &nbsp; "._QXZ("framerate").": $wav_framerate &nbsp; "._QXZ("bits").": $wav_bits &nbsp; "._QXZ("compression").": $wav_compression   "._QXZ("length").": $audio_length   $affected_rowsX|$affected_rowsY';";
-			if ($DB) {echo "|$stmt|\n";}
-			$rslt=mysql_to_mysqli($stmt, $link);
-			}
-		else
-			{
-			if ( (preg_match("/\.gsm$/", $audiofile_name)) and ($audio_store_GSM_allowed < 1) )
-				{echo _QXZ("ERROR").": "._QXZ("only wav files are allowed in the audio store")."\n";}
-			else
-				{echo _QXZ("ERROR").": "._QXZ("only wav and gsm files are allowed in the audio store")."\n";}
-			}
-		}
-	else
-		{
-		echo _QXZ("ERROR").": "._QXZ("no file uploaded")."\n";
-		}
-	}
+                    if (!preg_match('/^wav/i',$wav_type)) {$invalid_wav++;}
+                    if (!preg_match('/^pcm/i',$wav_compression)) {$invalid_wav++;}
+                    if ($wav_channels > 1) {$invalid_wav++;}
+                    if ( ($wav_framerate > 8000) or ($wav_framerate < 8000) ) {$invalid_wav++;}
+                    if ( ($wav_bits > 16) or ($wav_bits < 16) ) {$invalid_wav++;}
 
-?>
+                    $wav_format_details = "$wav_type   channels: $wav_channels   framerate: $wav_framerate   bits: $wav_bits   length: $audio_length   compression: $wav_compression";
 
+                    if ($invalid_wav > 0)
+                        {
+                        $wav_asterisk_valid='BAD';
+                        echo "<div style='max-width:1100px;margin:0 auto 16px auto;padding:10px 14px;background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#991b1b;'>";
+                        echo _QXZ("INVALID WAV FILE FORMAT").": ($audiofile_name) &nbsp; $wav_type &nbsp; "._QXZ("channels").": $wav_channels &nbsp; "._QXZ("framerate").": $wav_framerate &nbsp; "._QXZ("bits").": $wav_bits &nbsp; "._QXZ("compression").": $wav_compression";
+                        echo "</div>\n";
+                        }
+                    else
+                        {
+                        $wav_asterisk_valid='GOOD';
+                        echo "<div style='max-width:1100px;margin:0 auto 16px auto;padding:8px 14px;background:#eef2ff;border-left:4px solid #6366f1;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#1e3a8a;'>";
+                        echo _QXZ("WAV FILE FORMAT VALIDATED").": $wav_type &nbsp; "._QXZ("channels").": $wav_channels &nbsp; "._QXZ("framerate").": $wav_framerate &nbsp; "._QXZ("bits").": $wav_bits &nbsp; "._QXZ("compression").": $wav_compression";
+                        echo "</div>\n";
+                        }
 
-<form action=<?php echo $PHP_SELF ?> method=post enctype="multipart/form-data">
-<input type=hidden name=action value="MANUALUPLOAD">
-<input type=hidden name=DB value="<?php echo $DB; ?>">
-<input type=hidden name=force_allow value="<?php echo $force_allow; ?>">
+                    }
 
-<table align=center width="700" border=0 cellpadding=5 cellspacing=0 bgcolor=#<?php echo $SSstd_row1_background; ?>>
-  <tr>
-	<td align=right width="35%"><B><font face="arial, helvetica" size=2><?php echo _QXZ("Audio File to Upload"); ?>:</font></B></td>
-	<td align=left width="65%"><input type=file name="audiofile" value=""> <?php echo "$NWB#audio_store$NWE"; ?></td>
-  </tr>
-  <tr>
-	<td align=center colspan=2><input type=submit name=submit value='<?php echo _QXZ("submit"); ?>'></td>
-  </tr>
-  <tr><td align=left><font size=1> &nbsp; </font></td><td align=right><font size=1><?php echo _QXZ("Audio Store"); ?>- &nbsp; &nbsp; <?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?> &nbsp; &nbsp; </td></tr>
-</table>
-</form>
-<BR><BR>
-<CENTER><B><?php echo _QXZ("We STRONGLY recommend uploading only 16bit Mono 8k PCM WAV audio files"); ?>(.wav)</B>
-<BR><BR><font size=1><?php echo _QXZ("All spaces will be stripped from uploaded audio file names"); ?></font><BR><BR>
-<B><a href="javascript:launch_chooser('master_audiofile','date');"><?php echo _QXZ("audio file list"); ?></a></CENTER>
+                $stmt="INSERT IGNORE INTO audio_store_details SET audio_filename='$audiofile_name',audio_format='$audio_format',audio_filesize='$audio_filesize',audio_epoch='$audio_epoch',audio_length='$audio_length',wav_format_details='$wav_format_details',wav_asterisk_valid='$wav_asterisk_valid' ON DUPLICATE KEY UPDATE audio_filesize='$audio_filesize',audio_epoch='$audio_epoch',audio_length='$audio_length',wav_format_details='$wav_format_details',wav_asterisk_valid='$wav_asterisk_valid';";
+                if ($DB) {echo "|$stmt|\n";}
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $affected_rowsX = mysqli_affected_rows($link);
 
-<?php
+                $stmt="UPDATE servers SET sounds_update='Y';";
+                $rslt=mysql_to_mysqli($stmt, $link);
+                $affected_rowsY = mysqli_affected_rows($link);
 
-echo "<center><BR><BR>"._QXZ("File to Copy").":<BR>\n";
-echo "<form action=$PHP_SELF method=post>\n";
-echo "<input type=hidden name=action value=\"COPYFILE\">\n";
-echo "<input type=hidden name=DB value=\"$DB\">\n";
-echo "<input type=hidden name=force_allow value=\"$force_allow\">\n";
-echo _QXZ("Original file").": <input type=text size=50 maxlength=100 name=master_audiofile id=master_audiofile value=\"\"><BR>\n";
-echo _QXZ("New file").": <input type=text size=50 maxlength=100 name=new_audiofile id=new_audiofile value=\"\"><BR>\n";
-echo "<input type=hidden name=DB value=\"$DB\">\n";
-echo "<input type=submit name=submit value='"._QXZ("submit")."'></form>\n";
+                ### LOG INSERTION Admin Log Table ###
+                $SQL_log = "$stmt|";
+                $SQL_log = preg_replace('/;/', '', $SQL_log);
+                $SQL_log = addslashes($SQL_log);
+                $stmt="INSERT INTO vicidial_admin_log set event_date=NOW(), user='$PHP_AUTH_USER', ip_address='$ip', event_section='AUDIOSTORE', event_type='LOAD', record_id='manualupload', event_code='$audiofile_name $audio_filesize', event_sql=\"$SQL_log\", event_notes='$audiofile_name $AF_path $AF_orig   Invalid: $invalid_wav $wav_type   "._QXZ("channels").": $wav_channels   "._QXZ("framerate").": $wav_framerate   "._QTZ("bits").": $wav_bits   "._QXZ("compression").": $wav_compression   "._QXZ("length").": $audio_length   $affected_rowsX|$affected_rowsY';";
+                if ($DB) {echo "|$stmt|\n";}
+                $rslt=mysql_to_mysqli($stmt, $link);
+                }
+            else
+                {
+                if ( (preg_match("/\.gsm$/", $audiofile_name)) and ($audio_store_GSM_allowed < 1) )
+                    {echo "<div style='max-width:1100px;margin:0 auto 16px auto;padding:10px 14px;background:#fff7ed;border-left:4px solid #f59e0b;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#92400e;'>"._QXZ("ERROR").": "._QXZ("only wav files are allowed in the audio store")."</div>\n";}
+                else
+                    {echo "<div style='max-width:1100px;margin:0 auto 16px auto;padding:10px 14px;background:#fff7ed;border-left:4px solid #f59e0b;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#92400e;'>"._QXZ("ERROR").": "._QXZ("only wav and gsm files are allowed in the audio store")."</div>\n";}
+                }
+            }
+        else
+            {
+            echo "<div style='max-width:1100px;margin:0 auto 16px auto;padding:10px 14px;background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#991b1b;'>"._QXZ("ERROR").": "._QXZ("no file uploaded")."</div>\n";
+            }
+        }
 
-?>
+    ?>
 
-<BR><BR><BR>
+    <!-- UPLOAD FORM (MODERN CARD, SAME FIELDS) -->
+    <div style="padding:0 24px 24px;">
+      <form action="<?php echo $PHP_SELF ?>" method="post" enctype="multipart/form-data">
+        <input type=hidden name=action value="MANUALUPLOAD">
+        <input type=hidden name=DB value="<?php echo $DB; ?>">
+        <input type=hidden name=force_allow value="<?php echo $force_allow; ?>">
 
-<?php
-if ($auth_delete > 0)
-	{
-	echo "<center>"._QXZ("File to Delete").": <a href=\"javascript:launch_chooser('delete_file','date');\">". _QXZ("select file")."</a><BR>\n";
-	echo "<form action=$PHP_SELF method=post>\n";
-	echo "<input type=hidden name=action value=\"DELETE\">\n";
-	echo "<input type=hidden name=DB value=\"$DB\">\n";
-	echo "<input type=hidden name=force_allow value=\"$force_allow\">\n";
-	echo "<input type=text size=50 maxlength=100 name=delete_file id=delete_file value=\"\">\n";
-	echo "<input type=hidden name=DB value=\"$DB\">\n";
-	echo "<input type=submit name=submit value='"._QXZ("submit")."'>\n";
-	}
-else
-	{
-	echo "\n";
-	echo "<form action=$PHP_SELF method=post>\n";
-	echo "<input type=hidden name=action value=\"DELETE\">\n";
-	echo "<input type=hidden name=delete_file id=delete_file value=\"\">\n";
-	}
-echo "</form><BR><BR>\n";
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;display:grid;grid-template-columns:240px 1fr;gap:16px;align-items:center;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#111827;"><?php echo _QXZ("Audio File to Upload"); ?>:</div>
+          <div>
+            <input type=file name="audiofile" value="" style="width:100%;max-width:520px;padding:10px;border:2px solid #cbd5e1;border-radius:8px;background:#fff;font-size:13px;">
+            <?php echo "$NWB#audio_store$NWE"; ?>
+            <div style="color:#64748b;font-size:12px;margin-top:6px;"><?php echo _QXZ("We STRONGLY recommend 16bit Mono 8k PCM WAV"); ?> (.wav)</div>
+          </div>
 
+          <div></div>
+          <div>
+            <input type=submit name=submit value='<?php echo _QXZ("submit"); ?>' style="padding:10px 22px;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;">
+          </div>
 
-echo "</B></B><br><br><a href=\"admin.php?ADD=720000000000000&category=AUDIOSTORE&stage=manualupload\">"._QXZ("Click here to see a log of the uploads to the audio store")."</FONT>\n";
+          <div></div>
+          <div style="text-align:right;font-size:11px;color:#6b7280;font-family:Arial,Helvetica,sans-serif;">
+            <?php echo _QXZ("Audio Store"); ?> &nbsp; · &nbsp; <?php echo _QXZ("VERSION"); ?>: <?php echo $version ?> &nbsp; &nbsp; <?php echo _QXZ("BUILD"); ?>: <?php echo $build ?>
+          </div>
+        </div>
+      </form>
 
-?>
+      <div style="text-align:center;margin:18px 0 4px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#111827;">
+        <strong><?php echo _QXZ("We STRONGLY recommend uploading only 16bit Mono 8k PCM WAV audio files"); ?>(.wav)</strong>
+      </div>
+      <div style="text-align:center;margin-bottom:18px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6b7280;">
+        <?php echo _QXZ("All spaces will be stripped from uploaded audio file names"); ?>
+      </div>
+      <div style="text-align:center;margin-bottom:10px;">
+        <a href="javascript:launch_chooser('master_audiofile','date');" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7c3aed;font-weight:700;text-decoration:none;"><?php echo _QXZ("audio file list"); ?></a>
+      </div>
+    </div>
 
-</TD></TR></TABLE>
+    <!-- COPY FILE -->
+    <div style="padding:0 24px 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;">
+    <?php
+    echo "<div style=\"max-width:900px;margin:0 auto 24px auto;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px;\">\n";
+    echo "<div style=\"font-weight:700;color:#111827;margin-bottom:10px;\">"._QXZ("File to Copy").":</div>\n";
+    echo "<form action=$PHP_SELF method=post style=\"display:grid;gap:10px;\">\n";
+    echo "<input type=hidden name=action value=\"COPYFILE\">\n";
+    echo "<input type=hidden name=DB value=\"$DB\">\n";
+    echo "<input type=hidden name=force_allow value=\"$force_allow\">\n";
+    echo "<label>"._QXZ("Original file").": <input type=text size=50 maxlength=100 name=master_audiofile id=master_audiofile value=\"\" style=\"width:100%;max-width:520px;margin-top:4px;padding:8px;border:2px solid #cbd5e1;border-radius:8px;\"></label>\n";
+    echo "<label>"._QXZ("New file").": <input type=text size=50 maxlength=100 name=new_audiofile id=new_audiofile value=\"\" style=\"width:100%;max-width:520px;margin-top:4px;padding:8px;border:2px solid #cbd5e1;border-radius:8px;\"></label>\n";
+    echo "<input type=hidden name=DB value=\"$DB\">\n";
+    echo "<div><input type=submit name=submit value='"._QXZ("submit")."' style=\"padding:8px 18px;background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;\"></div>\n";
+    echo "</form>\n";
+    echo "</div>\n";
+    ?>
+    </div>
+
+    <!-- DELETE FILE -->
+    <div style="padding:0 24px 30px;font-family:Arial,Helvetica,sans-serif;font-size:13px;">
+    <?php
+    if ($auth_delete > 0)
+        {
+        echo "<div style=\"max-width:900px;margin:0 auto 24px auto;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px;\">\n";
+        echo "<div style=\"font-weight:700;color:#111827;margin-bottom:8px;\">"._QXZ("File to Delete").": <a href=\"javascript:launch_chooser('delete_file','date');\" style=\"color:#ef4444;text-decoration:none;font-weight:700;\">". _QXZ("select file")."</a></div>\n";
+        echo "<form action=$PHP_SELF method=post style=\"display:flex;gap:10px;align-items:center;\">\n";
+        echo "<input type=hidden name=action value=\"DELETE\">\n";
+        echo "<input type=hidden name=DB value=\"$DB\">\n";
+        echo "<input type=hidden name=force_allow value=\"$force_allow\">\n";
+        echo "<input type=text size=50 maxlength=100 name=delete_file id=delete_file value=\"\" style=\"flex:1;max-width:520px;padding:8px;border:2px solid #cbd5e1;border-radius:8px;\">\n";
+        echo "<input type=hidden name=DB value=\"$DB\">\n";
+        echo "<input type=submit name=submit value='"._QXZ("submit")."' style=\"padding:8px 18px;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;\">\n";
+        echo "</form>\n";
+        echo "</div>\n";
+        }
+    else
+        {
+        echo "\n";
+        echo "<form action=$PHP_SELF method=post>\n";
+        echo "<input type=hidden name=action value=\"DELETE\">\n";
+        echo "<input type=hidden name=delete_file id=delete_file value=\"\">\n";
+        echo "</form>\n";
+        }
+
+    echo "<div style=\"text-align:center;margin-bottom:18px;\">";
+    echo "<a href=\"admin.php?ADD=720000000000000&category=AUDIOSTORE&stage=manualupload\" style=\"display:inline-block;padding:8px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;color:#374151;text-decoration:none;font-size:13px;font-weight:600;\">";
+    echo _QXZ("Click here to see a log of the uploads to the audio store")."</a></div>\n";
+    ?>
+    </div>
+
+  </div><!-- /inner white card -->
+</div><!-- /outer container -->
+
+</body>
+</html>
