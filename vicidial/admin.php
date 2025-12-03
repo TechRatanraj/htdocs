@@ -12975,34 +12975,87 @@ if ($ADD==171111111111)
 ######################
 # ADD=181111111111 display the ADD NEW SCREEN LABEL SCREEN
 ######################
-if ($ADD==181111111111)
-	{
-	if ( ($LOGmodify_servers==1) or ($LOGmodify_labels==1) )
-		{
-		echo "<TABLE><TR><TD>\n";
-		echo "<img src=\"images/icon_screenlabels.png\" alt=\"Screen Labels\" width=42 height=42> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
-
-		echo "<br>"._QXZ("ADD NEW SCREEN LABEL")."<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=281111111111>\n";
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Screen Label ID").": </td><td align=left><input type=text name=label_id size=21 maxlength=20>$NWB#screen_labels-label_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Screen Label Name").": </td><td align=left><input type=text name=label_name size=70 maxlength=100>$NWB#screen_labels-label_name$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>\n";
-		echo "</select>$NWB#screen_labels-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+if ($ADD==181111111111) {
+    if (($LOGmodify_servers==1) or ($LOGmodify_labels==1)) {
+        echo "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>"._QXZ("Add New Screen Label")."</title>
+            <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+            <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+        </head>
+        <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+            <div style='max-width: 800px; margin: 0 auto; padding: 24px;'>
+                <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                    <img src=\"images/icon_screenlabels.png\" alt=\"Screen Labels\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                    <div>
+                        <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Add New Screen Label")."</h1>
+                        <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Create a new screen label configuration")."</p>
+                    </div>
+                </div>
+                
+                <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                    <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                        <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                            <i class='fas fa-plus-circle' style='color: #4f46e5;'></i>
+                            "._QXZ("Label Details")."
+                        </h2>
+                    </div>
+                    
+                    <form action='$PHP_SELF' method='POST' style='padding: 24px;'>
+                        <input type='hidden' name='ADD' value='281111111111'>
+                        
+                        <div style='margin-bottom: 24px;'>
+                            <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Screen Label ID").":</label>
+                            <input type='text' name='label_id' size='21' maxlength='20' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                        </div>
+                        
+                        <div style='margin-bottom: 24px;'>
+                            <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Screen Label Name").":</label>
+                            <input type='text' name='label_name' size='70' maxlength='100' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                        </div>
+                        
+                        <div style='margin-bottom: 32px;'>
+                            <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Admin User Group").":</label>
+                            <select name='user_group' size='1' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; background-color: white; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                                $UUgroups_list
+                                <option SELECTED value=\"---ALL---\">"._QXZ("All Admin User Groups")."</option>
+                            </select>
+                        </div>
+                        
+                        <div style='display: flex; justify-content: center; margin-top: 32px;'>
+                            <button type='submit' name='submit' value='"._QXZ("SUBMIT")."' style='padding: 12px 24px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(79, 70, 229, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(79, 70, 229, 0.2)\"'>"._QXZ("SUBMIT")."</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </body>
+        </html>";
+    } else {
+        echo "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>"._QXZ("Access Denied")."</title>
+            <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+            <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+        </head>
+        <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6; display: flex; justify-content: center; align-items: center; height: 100vh;'>
+            <div style='max-width: 500px; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); text-align: center;'>
+                <div style='width: 80px; height: 80px; background-color: #fee2e2; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 24px;'>
+                    <i class='fas fa-exclamation-triangle' style='font-size: 36px; color: #ef4444;'></i>
+                </div>
+                <h1 style='margin: 0 0 16px; font-size: 24px; font-weight: 700; color: #1f2937;'>"._QXZ("Access Denied")."</h1>
+                <p style='margin: 0; font-size: 16px; color: #6b7280;'>"._QXZ("You do not have permission to view this page")."</p>
+            </div>
+        </body>
+        </html>";
+        exit;
+    }
+}
 
 ######################
 # ADD=182111111111 display the ADD NEW SCREEN LABEL SCREEN
