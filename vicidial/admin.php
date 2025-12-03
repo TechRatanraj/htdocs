@@ -51796,185 +51796,393 @@ if ($ADD==371111111111)
 ######################
 # ADD=381111111111 modify screen label in the system
 ######################
-if ($ADD==381111111111)
-	{
-	if ( ($LOGast_admin_access==1) or ($LOGmodify_labels==1) )
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=381111111111&label_id=$label_id";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==381111111111) {
+    if (($LOGast_admin_access==1) or ($LOGmodify_labels==1)) {
+        if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
+            $modify_url = "$PHP_SELF?ADD=381111111111&label_id=$label_id";
+            $modify_footer_refresh=1;
+        }
+        
+        $stmt="SELECT label_id,label_name,active,label_hide_field_logs,label_title,label_first_name,label_middle_initial,label_last_name,label_address1,label_address2,label_address3,label_city,label_state,label_province,label_postal_code,label_vendor_lead_code,label_gender,label_phone_number,label_phone_code,label_alt_phone,label_security_phrase,label_email,label_comments,user_group,label_lead_id,label_list_id,label_entry_date,label_gmt_offset_now,label_source_id,label_called_since_last_reset,label_status,label_user,label_date_of_birth,label_country_code,label_last_local_call_time,label_called_count,label_rank,label_owner,label_entry_list_id from vicidial_screen_labels where label_id='$label_id' $LOGadmin_viewable_groupsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        $label_id = $row[0];
+        $label_name = $row[1];
+        $active = $row[2];
+        $label_hide_field_logs = $row[3];
+        $label_title = $row[4];
+        $label_first_name = $row[5];
+        $label_middle_initial = $row[6];
+        $label_last_name = $row[7];
+        $label_address1 = $row[8];
+        $label_address2 = $row[9];
+        $label_address3 = $row[10];
+        $label_city = $row[11];
+        $label_state = $row[12];
+        $label_province = $row[13];
+        $label_postal_code = $row[14];
+        $label_vendor_lead_code = $row[15];
+        $label_gender = $row[16];
+        $label_phone_number = $row[17];
+        $label_phone_code = $row[18];
+        $label_alt_phone = $row[19];
+        $label_security_phrase = $row[20];
+        $label_email = $row[21];
+        $label_comments = $row[22];
+        $user_group = $row[23];
+        $label_lead_id = $row[24];
+        $label_list_id = $row[25];
+        $label_entry_date = $row[26];
+        $label_gmt_offset_now = $row[27];
+        $label_source_id = $row[28];
+        $label_called_since_last_reset = $row[29];
+        $label_status = $row[30];
+        $label_user = $row[31];
+        $label_date_of_birth = $row[32];
+        $label_country_code = $row[33];
+        $label_last_local_call_time = $row[34];
+        $label_called_count = $row[35];
+        $label_rank = $row[36];
+        $label_owner = $row[37];
+        $label_entry_list_id = $row[38];
 
-		$stmt="SELECT label_id,label_name,active,label_hide_field_logs,label_title,label_first_name,label_middle_initial,label_last_name,label_address1,label_address2,label_address3,label_city,label_state,label_province,label_postal_code,label_vendor_lead_code,label_gender,label_phone_number,label_phone_code,label_alt_phone,label_security_phrase,label_email,label_comments,user_group,label_lead_id,label_list_id,label_entry_date,label_gmt_offset_now,label_source_id,label_called_since_last_reset,label_status,label_user,label_date_of_birth,label_country_code,label_last_local_call_time,label_called_count,label_rank,label_owner,label_entry_list_id from vicidial_screen_labels where label_id='$label_id' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$label_id =					$row[0];
-		$label_name =				$row[1];
-		$active =					$row[2];
-		$label_hide_field_logs =	$row[3];
-		$label_title =				$row[4];
-		$label_first_name =			$row[5];
-		$label_middle_initial =		$row[6];
-		$label_last_name =			$row[7];
-		$label_address1 =			$row[8];
-		$label_address2 =			$row[9];
-		$label_address3 =			$row[10];
-		$label_city =				$row[11];
-		$label_state =				$row[12];
-		$label_province =			$row[13];
-		$label_postal_code =		$row[14];
-		$label_vendor_lead_code =	$row[15];
-		$label_gender =				$row[16];
-		$label_phone_number =		$row[17];
-		$label_phone_code =			$row[18];
-		$label_alt_phone =			$row[19];
-		$label_security_phrase =	$row[20];
-		$label_email =				$row[21];
-		$label_comments =			$row[22];
-		$user_group =				$row[23];
-		$label_lead_id =			$row[24];
-		$label_list_id =			$row[25];
-		$label_entry_date =			$row[26];
-		$label_gmt_offset_now =		$row[27];
-		$label_source_id =			$row[28];
-		$label_called_since_last_reset = $row[29];
-		$label_status =				$row[30];
-		$label_user =				$row[31];
-		$label_date_of_birth =		$row[32];
-		$label_country_code =		$row[33];
-		$label_last_local_call_time = $row[34];
-		$label_called_count =		$row[35];
-		$label_rank =				$row[36];
-		$label_owner =				$row[37];
-		$label_entry_list_id =		$row[38];
+        echo "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>"._QXZ("Modify Screen Label")." - $label_id</title>
+            <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+            <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+            <script>
+                function toggleSection(sectionId) {
+                    const section = document.getElementById(sectionId);
+                    const icon = document.getElementById('icon-' + sectionId);
+                    
+                    if (section.style.display === 'none') {
+                        section.style.display = 'block';
+                        icon.className = 'fas fa-chevron-down';
+                    } else {
+                        section.style.display = 'none';
+                        icon.className = 'fas fa-chevron-right';
+                    }
+                }
+            </script>
+        </head>
+        <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+            <div style='max-width: 1400px; margin: 0 auto; padding: 24px;'>
+                <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                    <img src=\"images/icon_screenlabels.png\" alt=\"Screen Labels\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                    <div>
+                        <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Modify Screen Label").": $label_id</h1>
+                        <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Update screen label configuration")."</p>
+                    </div>
+                </div>
+                
+                <form action='$PHP_SELF' method='POST' style='margin-bottom: 24px;'>
+                    <input type='hidden' name='ADD' value='481111111111'>
+                    <input type='hidden' name='label_id' value=\"$label_id\">
+                    
+                    <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden; margin-bottom: 24px;'>
+                        <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; cursor: pointer;' onclick='toggleSection(\"basic-settings\")'>
+                            <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                                <i class='fas fa-cog' style='color: #4f46e5;'></i>
+                                "._QXZ("Basic Settings")."
+                            </h2>
+                            <i id='icon-basic-settings' class='fas fa-chevron-down' style='color: #6b7280;'></i>
+                        </div>
+                        
+                        <div id='basic-settings' style='padding: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 24px;'>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label ID").":</label>
+                                <div style='padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; background-color: #f9fafb; font-weight: 500; color: #1f2937;'>$label_id</div>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Name").":</label>
+                                <input type='text' name='label_name' size='50' maxlength='100' value=\"$label_name\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Active").":</label>
+                                <select name='active' size='1' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; background-color: white; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                                    <option value='N'>"._QXZ("N")."</option>
+                                    <option value='Y'>"._QXZ("Y")."</option>
+                                    <option value='$active' SELECTED>"._QXZ("$active")."</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Admin User Group").":</label>
+                                <select name='user_group' size='1' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; background-color: white; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                                    $UUgroups_list
+                                    <option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Hide Label in Call Logs").":</label>
+                                <select name='label_hide_field_logs' size='1' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; background-color: white; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                                    <option value='N'>"._QXZ("N")."</option>
+                                    <option value='Y'>"._QXZ("Y")."</option>
+                                    <option value='$label_hide_field_logs' SELECTED>"._QXZ("$label_hide_field_logs")."</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden; margin-bottom: 24px;'>
+                        <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; cursor: pointer;' onclick='toggleSection(\"label-settings\")'>
+                            <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                                <i class='fas fa-tags' style='color: #4f46e5;'></i>
+                                "._QXZ("Label Settings")."
+                            </h2>
+                            <i id='icon-label-settings' class='fas fa-chevron-down' style='color: #6b7280;'></i>
+                        </div>
+                        
+                        <div id='label-settings' style='padding: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;'>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Title").":</label>
+                                <input type='text' name='label_title' size='20' maxlength='60' value=\"$label_title\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label First Name").":</label>
+                                <input type='text' name='label_first_name' size='20' maxlength='60' value=\"$label_first_name\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Middle Initial").":</label>
+                                <input type='text' name='label_middle_initial' size='20' maxlength='60' value=\"$label_middle_initial\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Last Name").":</label>
+                                <input type='text' name='label_last_name' size='20' maxlength='60' value=\"$label_last_name\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Address")."1:</label>
+                                <input type='text' name='label_address1' size='20' maxlength='60' value=\"$label_address1\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Address")."2:</label>
+                                <input type='text' name='label_address2' size='20' maxlength='60' value=\"$label_address2\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Address")."3:</label>
+                                <input type='text' name='label_address3' size='20' maxlength='60' value=\"$label_address3\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label City").":</label>
+                                <input type='text' name='label_city' size='20' maxlength='60' value=\"$label_city\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label State").":</label>
+                                <input type='text' name='label_state' size='20' maxlength='60' value=\"$label_state\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Province").":</label>
+                                <input type='text' name='label_province' size='20' maxlength='60' value=\"$label_province\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Postal Code").":</label>
+                                <input type='text' name='label_postal_code' size='20' maxlength='60' value=\"$label_postal_code\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Vendor Lead Code").":</label>
+                                <input type='text' name='label_vendor_lead_code' size='20' maxlength='60' value=\"$label_vendor_lead_code\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Gender").":</label>
+                                <input type='text' name='label_gender' size='20' maxlength='60' value=\"$label_gender\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Phone Number").":</label>
+                                <input type='text' name='label_phone_number' size='20' maxlength='60' value=\"$label_phone_number\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Phone Code").":</label>
+                                <input type='text' name='label_phone_code' size='20' maxlength='60' value=\"$label_phone_code\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Alt Phone").":</label>
+                                <input type='text' name='label_alt_phone' size='20' maxlength='60' value=\"$label_alt_phone\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Security Phrase").":</label>
+                                <input type='text' name='label_security_phrase' size='20' maxlength='60' value=\"$label_security_phrase\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Email").":</label>
+                                <input type='text' name='label_email' size='20' maxlength='60' value=\"$label_email\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Comments").":</label>
+                                <input type='text' name='label_comments' size='20' maxlength='60' value=\"$label_comments\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Lead ID").":</label>
+                                <input type='text' name='label_lead_id' size='20' maxlength='60' value=\"$label_lead_id\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label List ID").":</label>
+                                <input type='text' name='label_list_id' size='20' maxlength='60' value=\"$label_list_id\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Entry Date").":</label>
+                                <input type='text' name='label_entry_date' size='20' maxlength='60' value=\"$label_entry_date\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Timezone").":</label>
+                                <input type='text' name='label_gmt_offset_now' size='20' maxlength='60' value=\"$label_gmt_offset_now\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Source ID").":</label>
+                                <input type='text' name='label_source_id' size='20' maxlength='60' value=\"$label_source_id\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Reset Code").":</label>
+                                <input type='text' name='label_called_since_last_reset' size='20' maxlength='60' value=\"$label_called_since_last_reset\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Status").":</label>
+                                <input type='text' name='label_status' size='20' maxlength='60' value=\"$label_status\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label User").":</label>
+                                <input type='text' name='label_user' size='20' maxlength='60' value=\"$label_user\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Date of Birth").":</label>
+                                <input type='text' name='label_date_of_birth' size='20' maxlength='60' value=\"$label_date_of_birth\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Country Code").":</label>
+                                <input type='text' name='label_country_code' size='20' maxlength='60' value=\"$label_country_code\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Last Call").":</label>
+                                <input type='text' name='label_last_local_call_time' size='20' maxlength='60' value=\"$label_last_local_call_time\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Called Count").":</label>
+                                <input type='text' name='label_called_count' size='20' maxlength='60' value=\"$label_called_count\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Rank").":</label>
+                                <input type='text' name='label_rank' size='20' maxlength='60' value=\"$label_rank\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Owner").":</label>
+                                <input type='text' name='label_owner' size='20' maxlength='60' value=\"$label_owner\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Label Entry List ID").":</label>
+                                <input type='text' name='label_entry_list_id' size='20' maxlength='60' value=\"$label_entry_list_id\" style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style='display: flex; justify-content: center; gap: 16px; margin-top: 32px;'>
+                        <button type='submit' name='submit' value='"._QXZ("SUBMIT")."' style='padding: 12px 32px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(79, 70, 229, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(79, 70, 229, 0.2)\"'>"._QXZ("SUBMIT")."</button>
+                        <button type='button' onclick='history.back()' style='padding: 12px 32px; background: #6b7280; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(107, 114, 128, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(107, 114, 128, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(107, 114, 128, 0.2)\"'>"._QXZ("CANCEL")."</button>
+                    </div>
+                </form>
+                
+                <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden; margin-bottom: 24px;'>
+                    <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; cursor: pointer;' onclick='toggleSection(\"campaigns\")'>
+                        <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                            <i class='fas fa-bullhorn' style='color: #4f46e5;'></i>
+                            "._QXZ("Campaigns Using This Screen Label")."
+                        </h2>
+                        <i id='icon-campaigns' class='fas fa-chevron-down' style='color: #6b7280;'></i>
+                    </div>
+                    
+                    <div id='campaigns' style='padding: 24px;'>
+                        <div style='overflow-x: auto;'>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                                <thead>
+                                    <tr style='background-color: #1f2937;'>
+                                        <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Campaign ID")."</th>
+                                        <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Campaign Name")."</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
 
-		echo "<br>"._QXZ("MODIFY SCREEN LABEL").": $label_id<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=481111111111>\n";
-		echo "<input type=hidden name=label_id value=\"$label_id\">\n";
+        $stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where screen_labels='$label_id' $LOGallowed_campaignsSQL;";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $camps_to_print = mysqli_num_rows($rslt);
+        $o=0;
+        while ($camps_to_print > $o) {
+            $row=mysqli_fetch_row($rslt);
+            
+            $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+            
+            echo "<tr style='background-color: $rowBgColor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"'>
+                <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                    <a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$row[0]</a>
+                </td>
+                <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[1]</td>
+            </tr>";
+            $o++;
+        }
 
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label ID").": </td><td align=left><B>$label_id</B></td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Name").": </td><td align=left><input type=text name=label_name size=50 maxlength=100 value=\"$label_name\">$NWB#screen_labels-label_name$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active").": </td><td align=left><select size=1 name=active><option value='N'>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option><option value='$active' SELECTED>"._QXZ("$active")."</option></select>$NWB#screen_labels-active$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$user_group\">".(preg_match('/\-\-ALL\-\-/', $user_group) ? _QXZ("$user_group") : $user_group)."</option>\n";
-		echo "</select>$NWB#screen_labels-user_group$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Hide Label in Call Logs").": </td><td align=left><select size=1 name=label_hide_field_logs><option value='N'>"._QXZ("N")."</option><option value='Y'>"._QXZ("Y")."</option><option value='$label_hide_field_logs' SELECTED>"._QXZ("$label_hide_field_logs")."</option></select>$NWB#screen_labels-label_hide_field_logs$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Title").": </td><td align=left><input type=text name=label_title size=20 maxlength=60 value=\"$label_title\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label First Name").": </td><td align=left><input type=text name=label_first_name size=20 maxlength=60 value=\"$label_first_name\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Middle Initial").": </td><td align=left><input type=text name=label_middle_initial size=20 maxlength=60 value=\"$label_middle_initial\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Last Name").": </td><td align=left><input type=text name=label_last_name size=20 maxlength=60 value=\"$label_last_name\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Address1").": </td><td align=left><input type=text name=label_address1 size=20 maxlength=60 value=\"$label_address1\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Address2").": </td><td align=left><input type=text name=label_address2 size=20 maxlength=60 value=\"$label_address2\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Address3").": </td><td align=left><input type=text name=label_address3 size=20 maxlength=60 value=\"$label_address3\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label City").": </td><td align=left><input type=text name=label_city size=20 maxlength=60 value=\"$label_city\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label State").": </td><td align=left><input type=text name=label_state size=20 maxlength=60 value=\"$label_state\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Province").": </td><td align=left><input type=text name=label_province size=20 maxlength=60 value=\"$label_province\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Postal Code").": </td><td align=left><input type=text name=label_postal_code size=20 maxlength=60 value=\"$label_postal_code\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Vendor Lead Code").": </td><td align=left><input type=text name=label_vendor_lead_code size=20 maxlength=60 value=\"$label_vendor_lead_code\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Gender").": </td><td align=left><input type=text name=label_gender size=20 maxlength=60 value=\"$label_gender\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Phone Number").": </td><td align=left><input type=text name=label_phone_number size=20 maxlength=60 value=\"$label_phone_number\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Phone Code").": </td><td align=left><input type=text name=label_phone_code size=20 maxlength=60 value=\"$label_phone_code\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Alt Phone").": </td><td align=left><input type=text name=label_alt_phone size=20 maxlength=60 value=\"$label_alt_phone\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Security Phrase").": </td><td align=left><input type=text name=label_security_phrase size=20 maxlength=60 value=\"$label_security_phrase\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Email").": </td><td align=left><input type=text name=label_email size=20 maxlength=60 value=\"$label_email\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Comments").": </td><td align=left><input type=text name=label_comments size=20 maxlength=60 value=\"$label_comments\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Lead ID").": </td><td align=left><input type=text name=label_lead_id size=20 maxlength=60 value=\"$label_lead_id\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label List ID").": </td><td align=left><input type=text name=label_list_id size=20 maxlength=60 value=\"$label_list_id\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Entry Date").": </td><td align=left><input type=text name=label_entry_date size=20 maxlength=60 value=\"$label_entry_date\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Timezone").": </td><td align=left><input type=text name=label_gmt_offset_now size=20 maxlength=60 value=\"$label_gmt_offset_now\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Source ID").": </td><td align=left><input type=text name=label_source_id size=20 maxlength=60 value=\"$label_source_id\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Reset Code").": </td><td align=left><input type=text name=label_called_since_last_reset size=20 maxlength=60 value=\"$label_called_since_last_reset\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Status").": </td><td align=left><input type=text name=label_status size=20 maxlength=60 value=\"$label_status\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label User").": </td><td align=left><input type=text name=label_user size=20 maxlength=60 value=\"$label_user\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Date of Birth").": </td><td align=left><input type=text name=label_date_of_birth size=20 maxlength=60 value=\"$label_date_of_birth\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Country Code").": </td><td align=left><input type=text name=label_country_code size=20 maxlength=60 value=\"$label_country_code\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Last Call").": </td><td align=left><input type=text name=label_last_local_call_time size=20 maxlength=60 value=\"$label_last_local_call_time\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Called Count").": </td><td align=left><input type=text name=label_called_count size=20 maxlength=60 value=\"$label_called_count\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Rank").": </td><td align=left><input type=text name=label_rank size=20 maxlength=60 value=\"$label_rank\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Owner").": </td><td align=left><input type=text name=label_owner size=20 maxlength=60 value=\"$label_owner\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Label Entry List ID").": </td><td align=left><input type=text name=label_entry_list_id size=20 maxlength=60 value=\"$label_entry_list_id\">$NWB#screen_labels-default_field_labels$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-
-		echo "<center><b>\n";
-
-
-		echo "</TABLE><BR><BR>\n";
-		echo "<B> "._QXZ("CAMPAIGNS USING THIS SCREEN LABEL").":</B><BR>\n";
-		echo "<TABLE>\n";
-
-		$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where screen_labels='$label_id' $LOGallowed_campaignsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$camps_to_print = mysqli_num_rows($rslt);
-		$o=0;
-		while ($camps_to_print > $o) 
-			{
-			$row=mysqli_fetch_row($rslt);
-			echo "<TR><TD><a href=\"$PHP_SELF?ADD=31&campaign_id=$row[0]\">$row[0] </a></TD><TD> $row[1]<BR></TD></TR>\n";
-			$o++;
-			}
-
-		echo "</TABLE><BR><BR>\n";
-
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=581111111111&label_id=$label_id&label_name=$label_name\">"._QXZ("DELETE THIS SCREEN LABEL")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=LABEL&stage=$label_id\">"._QXZ("Click here to see Admin changes to this screen label")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
+        echo "                      </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style='display: flex; justify-content: center; gap: 16px; margin-top: 24px;'>";
+        
+        if ($LOGast_delete_phones > 0) {
+            echo "<a href=\"$PHP_SELF?ADD=581111111111&label_id=$label_id&label_name=$label_name\" style='padding: 12px 24px; background: #ef4444; color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2); transition: all 0.2s ease-in-out; display: inline-block;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(239, 68, 68, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(239, 68, 68, 0.2)\"'>"._QXZ("DELETE THIS SCREEN LABEL")."</a>";
+        }
+        
+        if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)))) {
+            echo "<a href=\"$PHP_SELF?ADD=720000000000000&category=LABEL&stage=$label_id\" style='padding: 12px 24px; background: #6b7280; color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(107, 114, 128, 0.2); transition: all 0.2s ease-in-out; display: inline-block;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(107, 114, 128, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(107, 114, 128, 0.2)\"'>"._QXZ("Click here to see Admin changes to this screen label")."</a>";
+        }
+        
+        echo "</div>
+            </div>
+            
+            <script>
+                // Initialize all sections to be expanded by default
+                document.addEventListener('DOMContentLoaded', function() {
+                    const sections = ['basic-settings', 'label-settings', 'campaigns'];
+                    
+                    sections.forEach(function(sectionId) {
+                        const section = document.getElementById(sectionId);
+                        const icon = document.getElementById('icon-' + sectionId);
+                        
+                        if (section) {
+                            section.style.display = 'block';
+                            if (icon) {
+                                icon.className = 'fas fa-chevron-down';
+                            }
+                        }
+                    });
+                });
+            </script>
+        </body>
+        </html>";
+    } else {
+        echo "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>"._QXZ("Access Denied")."</title>
+            <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+            <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+        </head>
+        <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6; display: flex; justify-content: center; align-items: center; height: 100vh;'>
+            <div style='max-width: 600px; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); text-align: center;'>
+                <div style='width: 100px; height: 100px; background-color: #fee2e2; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 24px;'>
+                    <i class='fas fa-exclamation-triangle' style='font-size: 48px; color: #ef4444;'></i>
+                </div>
+                <h1 style='margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;'>"._QXZ("Access Denied")."</h1>
+                <p style='margin: 0 0 24px; font-size: 18px; color: #6b7280;'>"._QXZ("You do not have permission to view this page")."</p>
+                <button onclick='history.back()' style='padding: 12px 24px; background: #6b7280; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(107, 114, 128, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(107, 114, 128, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(107, 114, 128, 0.2)\"'>"._QXZ("Go Back")."</button>
+            </div>
+        </body>
+        </html>";
+        exit;
+    }
+}
 
 
 ######################
