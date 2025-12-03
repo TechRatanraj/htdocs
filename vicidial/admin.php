@@ -12987,7 +12987,7 @@ if ($ADD==181111111111) {
             <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
         </head>
         <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
-            <div style='max-width: 800px; margin: 0 auto; padding: 24px;'>
+            <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
                 <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
                     <img src=\"images/icon_screenlabels.png\" alt=\"Screen Labels\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
                     <div>
@@ -13004,17 +13004,18 @@ if ($ADD==181111111111) {
                         </h2>
                     </div>
                     
-                    <form action='$PHP_SELF' method='POST' style='padding: 24px;'>
+                    <form action='$PHP_SELF' method='POST' style='padding: 32px;'>
                         <input type='hidden' name='ADD' value='281111111111'>
                         
-                        <div style='margin-bottom: 24px;'>
-                            <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Screen Label ID").":</label>
-                            <input type='text' name='label_id' size='21' maxlength='20' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
-                        </div>
-                        
-                        <div style='margin-bottom: 24px;'>
-                            <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Screen Label Name").":</label>
-                            <input type='text' name='label_name' size='70' maxlength='100' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                        <div style='display: grid; grid-template-columns: 1fr 2fr; gap: 24px; margin-bottom: 24px;'>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Screen Label ID").":</label>
+                                <input type='text' name='label_id' size='21' maxlength='20' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
+                            <div>
+                                <label style='display: block; margin-bottom: 8px; font-weight: 500; color: #374151;'>"._QXZ("Screen Label Name").":</label>
+                                <input type='text' name='label_name' size='70' maxlength='100' style='width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 16px; transition: border-color 0.2s ease-in-out;' onfocus='this.style.borderColor=\"#4f46e5\"' onblur='this.style.borderColor=\"#d1d5db\"'>
+                            </div>
                         </div>
                         
                         <div style='margin-bottom: 32px;'>
@@ -13025,8 +13026,9 @@ if ($ADD==181111111111) {
                             </select>
                         </div>
                         
-                        <div style='display: flex; justify-content: center; margin-top: 32px;'>
-                            <button type='submit' name='submit' value='"._QXZ("SUBMIT")."' style='padding: 12px 24px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(79, 70, 229, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(79, 70, 229, 0.2)\"'>"._QXZ("SUBMIT")."</button>
+                        <div style='display: flex; justify-content: center; gap: 16px; margin-top: 32px;'>
+                            <button type='submit' name='submit' value='"._QXZ("SUBMIT")."' style='padding: 12px 32px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(79, 70, 229, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(79, 70, 229, 0.2)\"'>"._QXZ("SUBMIT")."</button>
+                            <button type='button' onclick='history.back()' style='padding: 12px 32px; background: #6b7280; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(107, 114, 128, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(107, 114, 128, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(107, 114, 128, 0.2)\"'>"._QXZ("CANCEL")."</button>
                         </div>
                     </form>
                 </div>
@@ -13044,19 +13046,19 @@ if ($ADD==181111111111) {
             <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
         </head>
         <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6; display: flex; justify-content: center; align-items: center; height: 100vh;'>
-            <div style='max-width: 500px; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); text-align: center;'>
-                <div style='width: 80px; height: 80px; background-color: #fee2e2; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 24px;'>
-                    <i class='fas fa-exclamation-triangle' style='font-size: 36px; color: #ef4444;'></i>
+            <div style='max-width: 600px; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); text-align: center;'>
+                <div style='width: 100px; height: 100px; background-color: #fee2e2; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 24px;'>
+                    <i class='fas fa-exclamation-triangle' style='font-size: 48px; color: #ef4444;'></i>
                 </div>
-                <h1 style='margin: 0 0 16px; font-size: 24px; font-weight: 700; color: #1f2937;'>"._QXZ("Access Denied")."</h1>
-                <p style='margin: 0; font-size: 16px; color: #6b7280;'>"._QXZ("You do not have permission to view this page")."</p>
+                <h1 style='margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;'>"._QXZ("Access Denied")."</h1>
+                <p style='margin: 0 0 24px; font-size: 18px; color: #6b7280;'>"._QXZ("You do not have permission to view this page")."</p>
+                <button onclick='history.back()' style='padding: 12px 24px; background: #6b7280; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(107, 114, 128, 0.2); transition: all 0.2s ease-in-out;' onmouseover='this.style.transform=\"translateY(-2px)\"; this.style.boxShadow=\"0 6px 12px rgba(107, 114, 128, 0.3)\"' onmouseout='this.style.transform=\"translateY(0)\"; this.style.boxShadow=\"0 4px 6px rgba(107, 114, 128, 0.2)\"'>"._QXZ("Go Back")."</button>
             </div>
         </body>
         </html>";
         exit;
     }
 }
-
 ######################
 # ADD=182111111111 display the ADD NEW SCREEN LABEL SCREEN
 ######################
