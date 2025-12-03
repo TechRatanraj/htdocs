@@ -59816,460 +59816,778 @@ if ($ADD==170000000000)
 ######################
 # ADD=180000000000 display all screen label entries
 ######################
-if ($ADD==180000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_screenlabels.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+######################
+# ADD=180000000000 display all screen labels entries
+######################
+if ($ADD==180000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("Agent Screen Labels")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_screenlabels.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Agent Screen Labels")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage screen label configurations")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-tags' style='color: #4f46e5;'></i>
+                        "._QXZ("Labels List")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("LABEL ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Name")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Active")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("ADMIN GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT label_id,label_name,active,user_group from vicidial_screen_labels $whereLOGadmin_viewable_groupsSQL order by label_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$lb_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT label_id,label_name,active,user_group from vicidial_screen_labels $whereLOGadmin_viewable_groupsSQL order by label_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $lb_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("Agent Screen Labels").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("LABEL ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Active")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    $o=0;
+    while ($lb_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=381111111111&label_id=$row[0]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=381111111111&label_id=$row[0]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$row[0]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[1]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>"._QXZ("$row[2]")."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=381111111111&label_id=$row[0]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($lb_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=381111111111&label_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=381111111111&label_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>"._QXZ("$row[2]")."</td>";
-		echo "<td><font size=1>".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=381111111111&label_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=182000000000 display all screen colors entries
 ######################
-if ($ADD==182000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_screencolors.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==182000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("Screen Colors")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_screencolors.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Screen Colors")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage color schemes for user interfaces")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-palette' style='color: #4f46e5;'></i>
+                        "._QXZ("Color Schemes")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("COLORS ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Name")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Active")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;' colspan='3'>"._QXZ("Menu Colors")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Logo")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("ADMIN GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT colors_id,colors_name,active,user_group,menu_background,frame_background,std_row1_background,web_logo from vicidial_screen_colors $whereLOGadmin_viewable_groupsSQL order by colors_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$lb_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT colors_id,colors_name,active,user_group,menu_background,frame_background,std_row1_background,web_logo from vicidial_screen_colors $whereLOGadmin_viewable_groupsSQL order by colors_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $lb_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("Screen Colors").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("COLORS ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Active")."</B></td>";
-	echo "<td colspan=3><font size=1 color=white><B>"._QXZ("Menu Colors")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Logo")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    $o=0;
+    while ($lb_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        // Logo handling
+        $logo_new=0;
+        $logo_old=0;
+        $logo_small_old=0;
+        if (file_exists('./images/vicidial_admin_web_logo.png')) {$logo_new++;}
+        if (file_exists('vicidial_admin_web_logo_small.gif')) {$logo_small_old++;}
+        if (file_exists('vicidial_admin_web_logo.gif')) {$logo_old++;}
 
-	$o=0;
-	while ($lb_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
+        if ($row[7]=='default_new') {
+            $selected_logo = "./images/vicidial_admin_web_logo.png";
+        }
+        if (($row[7]=='default_old') and ($logo_old > 0)) {
+            $selected_logo = "./vicidial_admin_web_logo.gif";
+        }
+        if (($row[7]!='default_new') and ($row[7]!='default_old')) {
+            if (file_exists("./images/vicidial_admin_web_logo$row[7]")) {
+                $selected_logo = "./images/vicidial_admin_web_logo$row[7]";
+            }
+        }
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=382111111111&colors_id=$row[0]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=382111111111&colors_id=$row[0]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$row[0]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[1]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>"._QXZ("$row[2]")."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; background-color: #$row[4]; width: 30px;'></td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; background-color: #$row[5]; width: 30px;'></td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; background-color: #$row[6]; width: 30px;'></td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; background-color: #$row[4]; width: 91px;'>
+                <img src=\"$selected_logo\" height='22' width='85' style='border-radius: 4px;'>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=382111111111&colors_id=$row[0]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=382111111111&colors_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=382111111111&colors_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>"._QXZ("$row[2]")."</td>";
-		echo "<td bgcolor=#$row[4]><font size=1> &nbsp; </td>";
-		echo "<td bgcolor=#$row[5]><font size=1> &nbsp; </td>";
-		echo "<td bgcolor=#$row[6]><font size=1> &nbsp; </td>";
-
-		$logo_new=0;
-		$logo_old=0;
-		$logo_small_old=0;
-		if (file_exists('./images/vicidial_admin_web_logo.png')) {$logo_new++;}
-		if (file_exists('vicidial_admin_web_logo_small.gif')) {$logo_small_old++;}
-		if (file_exists('vicidial_admin_web_logo.gif')) {$logo_old++;}
-
-		if ($row[7]=='default_new')
-			{
-			$selected_logo = "./images/vicidial_admin_web_logo.png";
-			}
-		if ( ($row[7]=='default_old') and ($logo_old > 0) )
-			{
-			$selected_logo = "./vicidial_admin_web_logo.gif";
-			}
-		if ( ($row[7]!='default_new') and ($row[7]!='default_old') )
-			{
-			if (file_exists("./images/vicidial_admin_web_logo$row[7]")) 
-				{
-				$selected_logo = "./images/vicidial_admin_web_logo$row[7]";
-				}
-			}
-
-		echo "<td bgcolor=#$row[4] width=91><img src=\"$selected_logo\" height=22 width=85></td>";
-		echo "<td><font size=1>".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=382111111111&colors_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=190000000000 display all contacts entries
 ######################
-if ($ADD==190000000000)
-	{
-	echo "<CENTER><TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_contacts.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==190000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("Contacts")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1400px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_contacts.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Contacts")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage contact information directory")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-address-book' style='color: #4f46e5;'></i>
+                        "._QXZ("Contact Directory")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("NAME")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Office Number")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("BU Name")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Department")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Group")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Job Title")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Location")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	if ( (preg_match("/contact_information/",$SStables_use_alt_log_db)) and (strlen($SSalt_log_server_ip)>4) and (strlen($SSalt_log_dbname)>0) )
-		{
-		$linkALT=mysqli_connect("$SSalt_log_server_ip", "$SSalt_log_login", "$SSalt_log_pass", "$SSalt_log_dbname");
-			if (!$linkALT) 
-				{
-				die('MySQL '._QXZ("connect ERROR").': ' . mysqli_connect_error());
-				}
-		}
-	else
-		{$linkALT = $link;}
-	$stmt="SELECT contact_id,first_name,last_name,office_num,bu_name,department,group_name,job_title,location from contact_information order by first_name,last_name,office_num limit 20000;";
-	$rslt=mysql_to_mysqli($stmt, $linkALT);
-	$lb_to_print = mysqli_num_rows($rslt);
+    if ((preg_match("/contact_information/",$SStables_use_alt_log_db)) and (strlen($SSalt_log_server_ip)>4) and (strlen($SSalt_log_dbname)>0)) {
+        $linkALT=mysqli_connect("$SSalt_log_server_ip", "$SSalt_log_login", "$SSalt_log_pass", "$SSalt_log_dbname");
+        if (!$linkALT) {
+            die('MySQL '._QXZ("connect ERROR").': ' . mysqli_connect_error());
+        }
+    } else {
+        $linkALT = $link;
+    }
+    
+    $stmt="SELECT contact_id,first_name,last_name,office_num,bu_name,department,group_name,job_title,location from contact_information order by first_name,last_name,office_num limit 20000;";
+    $rslt=mysql_to_mysqli($stmt, $linkALT);
+    $lb_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("Contacts").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("NAME")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Office Number")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("BU Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Department")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Group")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Job Title")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Location")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    $o=0;
+    while ($lb_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        
+        // Truncate long fields
+        while (mb_strlen($row[4],'utf-8')>20) {$row[4] = mb_substr("$row[4]", 0, -1,'utf-8');}
+        while (mb_strlen($row[5],'utf-8')>20) {$row[5] = mb_substr("$row[5]", 0, -1,'utf-8');}
+        while (mb_strlen($row[6],'utf-8')>20) {$row[6] = mb_substr("$row[6]", 0, -1,'utf-8');}
+        while (mb_strlen($row[7],'utf-8')>20) {$row[7] = mb_substr("$row[7]", 0, -1,'utf-8');}
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=391111111111&contact_id=$row[0]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=391111111111&contact_id=$row[0]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$row[1] $row[2]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[3]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[4]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[5]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[6]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[7]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[8]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=391111111111&contact_id=$row[0]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($lb_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		while (mb_strlen($row[4],'utf-8')>20) {$row[4] = mb_substr("$row[4]", 0, -1,'utf-8');}
-		while (mb_strlen($row[5],'utf-8')>20) {$row[5] = mb_substr("$row[5]", 0, -1,'utf-8');}
-		while (mb_strlen($row[6],'utf-8')>20) {$row[6] = mb_substr("$row[6]", 0, -1,'utf-8');}
-		while (mb_strlen($row[7],'utf-8')>20) {$row[7] = mb_substr("$row[7]", 0, -1,'utf-8');}
-		while (mb_strlen($row[8],'utf-8')>20) {$row[8] = mb_substr("$row[8]", 0, -1,'utf-8');}
-
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=391111111111&contact_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=391111111111&contact_id=$row[0]\"><font size=1 color=black>$row[1] $row[2]</a></td>";
-		echo "<td><font size=1>$row[3]</td>";
-		echo "<td><font size=1>$row[4]</td>";
-		echo "<td><font size=1>$row[5]</td>";
-		echo "<td><font size=1>$row[6]</td>";
-		echo "<td><font size=1>$row[7]</td>";
-		echo "<td><font size=1>$row[8]</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=391111111111&contact_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=192000000000 display all settings containers entries
 ######################
-if ($ADD==192000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_settingscontainer.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==192000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("Settings Containers")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_settingscontainer.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Settings Containers")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage configuration containers")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-box' style='color: #4f46e5;'></i>
+                        "._QXZ("Container List")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Container ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Notes")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Type")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Length")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("ADMIN GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT container_id,container_notes,container_type,user_group,container_entry from vicidial_settings_containers $whereLOGadmin_viewable_groupsSQL order by container_type,container_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$sc_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT container_id,container_notes,container_type,user_group,container_entry from vicidial_settings_containers $whereLOGadmin_viewable_groupsSQL order by container_type,container_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $sc_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("Settings Containers").":\n";
-	echo "<center><TABLE width=900 cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("Container ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Notes")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Type")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Length")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    $o=0;
+    while ($sc_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=392111111111&container_id=$row[0]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=392111111111&container_id=$row[0]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$row[0]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[1]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>"._QXZ("$row[2]")."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>".strlen($row[4])."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=392111111111&container_id=$row[0]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($sc_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=392111111111&container_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=392111111111&container_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>"._QXZ("$row[2]")."</td>";
-		echo "<td><font size=1>".strlen($row[4])."</td>";
-		echo "<td><font size=1>".(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3])."</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=392111111111&container_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=193000000000 display all status group entries
 ######################
-if ($ADD==193000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_statusgroups.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==193000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("Status Groups")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_statusgroups.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Status Groups")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage status group configurations")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-list-alt' style='color: #4f46e5;'></i>
+                        "._QXZ("Status Group List")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("STATUS GROUP ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("NOTES")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("STATUSES")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT status_group_id,status_group_notes,user_group from vicidial_status_groups $whereLOGadmin_viewable_groupsSQL order by status_group_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$status_groups_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT status_group_id,status_group_notes,user_group from vicidial_status_groups $whereLOGadmin_viewable_groupsSQL order by status_group_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $status_groups_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("STATUS GROUP LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<TR BGCOLOR=BLACK>";
-	echo "<TD><font size=1 color=white>"._QXZ("STATUS GROUP ID")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("NOTES")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("GROUP")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("STATUSES")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("MODIFY")."</TD>\n";
-	echo "</TR>\n";
+    $status_group_id = array();
+    $status_group_notes = array();
+    $admin_group = array();
 
-	$o=0;
-	$status_group_id = $MT;
-	$status_group_notes = $MT;
-	$admin_group = $MT;
+    $o=0;
+    while ($status_groups_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        $status_group_id[$o] = $row[0];
+        $status_group_notes[$o] = $row[1];
+        $admin_group[$o] = (preg_match('/\-\-ALL\-\-/', $row[2]) ? _QXZ("$row[2]") : $row[2]);
+        $o++;
+    }
 
-	while ($status_groups_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		$status_group_id[$o] =		$row[0];
-		$status_group_notes[$o] =	$row[1];
-		$admin_group[$o] =			(preg_match('/\-\-ALL\-\-/', $row[2]) ? _QXZ("$row[2]") : $row[2]);
-		$o++;
-		}
+    $o=0;
+    while ($status_groups_to_print > $o) {
+        $stmt="SELECT count(*) from vicidial_campaign_statuses where campaign_id=\"$status_group_id[$o]\";";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id[$o]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id[$o]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$status_group_id[$o]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $status_group_notes[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $admin_group[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $row[0]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id[$o]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($status_groups_to_print > $o) 
-		{
-		$stmt="SELECT count(*) from vicidial_campaign_statuses where campaign_id=\"$status_group_id[$o]\";";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id[$o]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id[$o]\"><font size=1 color=black>$status_group_id[$o]</a></td>";
-		echo "<td><font size=1> $status_group_notes[$o]</td>";
-		echo "<td><font size=1> $admin_group[$o]</td>";
-		echo "<td><font size=1> $row[0]</td>";
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=393111111111&status_group_id=$status_group_id[$o]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=194000000000 display all automated report entries
 ######################
-if ($ADD==194000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_autoreports.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==194000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("Automated Reports")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1400px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_autoreports.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("Automated Reports")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage automated report configurations")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-chart-bar' style='color: #4f46e5;'></i>
+                        "._QXZ("Report List")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Auto Report ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Name")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Type")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Active")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("ADMIN GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Last Run")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Length")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("Server")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT report_id,report_name,report_destination,active,user_group,report_last_run,report_last_length,report_server from vicidial_automated_reports $whereLOGadmin_viewable_groupsSQL order by report_destination,report_id";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$sc_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT report_id,report_name,report_destination,active,user_group,report_last_run,report_last_length,report_server from vicidial_automated_reports $whereLOGadmin_viewable_groupsSQL order by report_destination,report_id";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $sc_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("Automated Reports").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<tr bgcolor=black>";
-	echo "<td><font size=1 color=white align=left><B>"._QXZ("Auto Report ID")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Name")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Type")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Active")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("ADMIN GROUP")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Last Run")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Length")."</B></td>";
-	echo "<td><font size=1 color=white><B>"._QXZ("Server")."</B></td>";
-	echo "<td align=center><font size=1 color=white><B>"._QXZ("MODIFY")."</B></td></tr>\n";
+    $o=0;
+    while ($sc_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=394111111111&report_id=$row[0]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=394111111111&report_id=$row[0]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$row[0]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[1]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>"._QXZ("$row[2]")."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>"._QXZ("$row[3]")."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>".(preg_match('/\-\-ALL\-\-/', $row[4]) ? _QXZ("$row[4]") : $row[4])."</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[5]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[6]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[7]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=394111111111&report_id=$row[0]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($sc_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=394111111111&report_id=$row[0]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=394111111111&report_id=$row[0]\"><font size=1 color=black>$row[0]</a></td>";
-		echo "<td><font size=1>$row[1]</td>";
-		echo "<td><font size=1>"._QXZ("$row[2]")."</td>";
-		echo "<td><font size=1>"._QXZ("$row[3]")."</td>";
-		echo "<td><font size=1>".(preg_match('/\-\-ALL\-\-/', $row[4]) ? _QXZ("$row[4]") : $row[4])."</td>";
-		echo "<td><font size=1>$row[5]</td>";
-		echo "<td><font size=1>$row[6]</td>";
-		echo "<td><font size=1>$row[7]</td>";
-		echo "<td align=center><font size=1><a href=\"$PHP_SELF?ADD=394111111111&report_id=$row[0]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=195000000000 display all IP List entries
 ######################
-if ($ADD==195000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_iplists.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==195000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("IP Lists")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_iplists.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("IP Lists")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage IP address access lists")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-network-wired' style='color: #4f46e5;'></i>
+                        "._QXZ("IP List Directory")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("IP LIST ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("NAME")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("ACTIVE")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("IPS")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT ip_list_id,ip_list_name,active,user_group from vicidial_ip_lists $whereLOGadmin_viewable_groupsSQL order by ip_list_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$ip_lists_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT ip_list_id,ip_list_name,active,user_group from vicidial_ip_lists $whereLOGadmin_viewable_groupsSQL order by ip_list_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $ip_lists_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("IP LIST LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<TR BGCOLOR=BLACK>";
-	echo "<TD><font size=1 color=white>"._QXZ("IP LIST ID")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("NAME")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("ACTIVE")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("GROUP")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("IPS")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("MODIFY")."</TD>\n";
-	echo "</TR>\n";
+    $Xip_list_id = array();
+    $ip_list_name = array();
+    $active = array();
+    $admin_group = array();
 
-	$Xip_list_id = $MT;
-	$ip_list_name = $MT;
-	$active = $MT;
-	$admin_group = $MT;
+    $o=0;
+    while ($ip_lists_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        $Xip_list_id[$o] = $row[0];
+        $ip_list_name[$o] = $row[1];
+        $active[$o] = _QXZ("$row[2]");
+        $admin_group[$o] = (preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3]);
+        $o++;
+    }
 
-	$o=0;
-	while ($ip_lists_to_print > $o)
-		{
-		$row=mysqli_fetch_row($rslt);
-		$Xip_list_id[$o] =		$row[0];
-		$ip_list_name[$o] =		$row[1];
-		$active[$o] =			_QXZ("$row[2]");
-		$admin_group[$o] =		(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3]);
-		$o++;
-		}
+    $o=0;
+    while ($ip_lists_to_print > $o) {
+        $stmt="SELECT count(*) from vicidial_ip_list_entries where ip_list_id=\"$Xip_list_id[$o]\";";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=395111111111&ip_list_id=$Xip_list_id[$o]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=395111111111&ip_list_id=$Xip_list_id[$o]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$Xip_list_id[$o]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $ip_list_name[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $active[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $admin_group[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $row[0]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=395111111111&ip_list_id=$Xip_list_id[$o]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($ip_lists_to_print > $o)
-		{
-		$stmt="SELECT count(*) from vicidial_ip_list_entries where ip_list_id=\"$Xip_list_id[$o]\";";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=395111111111&ip_list_id=$Xip_list_id[$o]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=395111111111&ip_list_id=$Xip_list_id[$o]\"><font size=1 color=black>$Xip_list_id[$o]</a></td>";
-		echo "<td><font size=1> $ip_list_name[$o]</td>";
-		echo "<td><font size=1> $active[$o]</td>";
-		echo "<td><font size=1> $admin_group[$o]</td>";
-		echo "<td><font size=1> $row[0]</td>";
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=395111111111&ip_list_id=$Xip_list_id[$o]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=196000000000 display all CID group entries
 ######################
-if ($ADD==196000000000)
-	{
-	echo "<TABLE><TR><TD>\n";
-	echo "<img src=\"images/icon_cidgroups.png\" width=42 height=42 align=left> <FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
+if ($ADD==196000000000) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>"._QXZ("CID Groups")."</title>
+        <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+    </head>
+    <body style='font-family: Inter, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #374151; line-height: 1.6;'>
+        <div style='max-width: 1200px; margin: 0 auto; padding: 24px;'>
+            <div style='background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: white; padding: 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;'>
+                <img src=\"images/icon_cidgroups.png\" width='64' height='64' style='border-radius: 12px; background: rgba(255, 255, 255, 0.2); padding: 8px;'>
+                <div>
+                    <h1 style='margin: 0; font-size: 28px; font-weight: 700;'>"._QXZ("CID Groups")."</h1>
+                    <p style='margin: 8px 0 0 0; opacity: 0.9; font-size: 16px;'>"._QXZ("Manage caller ID group configurations")."</p>
+                </div>
+            </div>
+            
+            <div style='background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;'>
+                <div style='padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;'>
+                    <h2 style='margin: 0; font-size: 20px; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 10px;'>
+                        <i class='fas fa-phone-alt' style='color: #4f46e5;'></i>
+                        "._QXZ("CID Group List")."
+                    </h2>
+                </div>
+                
+                <div style='overflow-x: auto;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <thead>
+                            <tr style='background-color: #1f2937;'>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("CID GROUP ID")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("NOTES")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("TYPE")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>&nbsp;</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("GROUP")."</th>
+                                <th style='padding: 12px 16px; text-align: left; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("CIDS")."</th>
+                                <th style='padding: 12px 16px; text-align: center; font-weight: 600; font-size: 14px; color: white;'>"._QXZ("MODIFY")."</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
 
-	$stmt="SELECT cid_group_id,cid_group_notes,cid_group_type,user_group,cid_auto_rotate_minutes from vicidial_cid_groups $whereLOGadmin_viewable_groupsSQL order by cid_group_id;";
-	$rslt=mysql_to_mysqli($stmt, $link);
-	$cid_groups_to_print = mysqli_num_rows($rslt);
+    $stmt="SELECT cid_group_id,cid_group_notes,cid_group_type,user_group,cid_auto_rotate_minutes from vicidial_cid_groups $whereLOGadmin_viewable_groupsSQL order by cid_group_id;";
+    $rslt=mysql_to_mysqli($stmt, $link);
+    $cid_groups_to_print = mysqli_num_rows($rslt);
 
-	echo "<br>"._QXZ("CID GROUP LISTINGS").":\n";
-	echo "<center><TABLE width=$section_width cellspacing=0 cellpadding=1>\n";
-	echo "<TR BGCOLOR=BLACK>";
-	echo "<TD><font size=1 color=white>"._QXZ("CID GROUP ID")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("NOTES")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("TYPE")."</TD>";
-	echo "<TD align=left><font size=1 color=white> &nbsp; </TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("GROUP")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("CIDS")."</TD>";
-	echo "<TD><font size=1 color=white>"._QXZ("MODIFY")."</TD>\n";
-	echo "</TR>\n";
+    $cid_group_id = array();
+    $cid_group_notes = array();
+    $cid_group_type = array();
+    $admin_group = array();
+    $cid_auto_rotate_minutes = array();
 
-	$o=0;
-	$cid_group_id = $MT;
-	$cid_group_notes = $MT;
-	$cid_group_type = $MT;
-	$admin_group = $MT;
-	$cid_auto_rotate_minutes = $MT;
+    $o=0;
+    while ($cid_groups_to_print > $o) {
+        $row=mysqli_fetch_row($rslt);
+        $cid_group_id[$o] = $row[0];
+        $cid_group_notes[$o] = $row[1];
+        $cid_group_type[$o] = _QXZ("$row[2]");
+        $admin_group[$o] = (preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3]);
+        $cid_auto_rotate_minutes[$o] = '';
+        if ($row[4] > 0) {$cid_auto_rotate_minutes[$o] = ' &nbsp; AR &nbsp; ';}
+        $o++;
+    }
 
-	while ($cid_groups_to_print > $o) 
-		{
-		$row=mysqli_fetch_row($rslt);
-		$cid_group_id[$o] =			$row[0];
-		$cid_group_notes[$o] =		$row[1];
-		$cid_group_type[$o] =		_QXZ("$row[2]");
-		$admin_group[$o] =		(preg_match('/\-\-ALL\-\-/', $row[3]) ? _QXZ("$row[3]") : $row[3]);
-		$cid_auto_rotate_minutes[$o] =	'';
-		if ($row[4] > 0) {$cid_auto_rotate_minutes[$o] =	' &nbsp; AR &nbsp; ';}
-		$o++;
-		}
+    $o=0;
+    while ($cid_groups_to_print > $o) {
+        $stmt="SELECT count(*) from vicidial_campaign_cid_areacodes where campaign_id=\"$cid_group_id[$o]\";";
+        $rslt=mysql_to_mysqli($stmt, $link);
+        $row=mysqli_fetch_row($rslt);
+        
+        $rowBgColor = ($o % 2 == 0) ? '#f9fafb' : 'white';
+        $rowCursor = ($SSadmin_row_click > 0) ? 'cursor: pointer;' : '';
+        
+        echo "<tr style='background-color: $rowBgColor; $rowCursor' onmouseover=\"this.style.backgroundColor='#f3f4f6'\" onmouseout=\"this.style.backgroundColor='$rowBgColor'\"";
+        if ($SSadmin_row_click > 0) {
+            echo " onclick=\"window.document.location='$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id[$o]'\"";
+        }
+        echo ">
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>
+                <a href=\"$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id[$o]\" style='color: #4f46e5; text-decoration: none; font-weight: 500;'>$cid_group_id[$o]</a>
+            </td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $cid_group_notes[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $cid_group_type[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'><b>$cid_auto_rotate_minutes[$o]</b></td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'> $admin_group[$o]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px;'>$row[0]</td>
+            <td style='padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; text-align: center;'>
+                <a href=\"$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id[$o]\" style='display: inline-block; padding: 6px 12px; background: #4f46e5; color: white; text-decoration: none; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all 0.2s ease-in-out;' onmouseover='this.style.backgroundColor=\"#4338ca\"' onmouseout='this.style.backgroundColor=\"#4f46e5\"'>"._QXZ("MODIFY")."</a>
+            </td>
+        </tr>";
+        $o++;
+    }
 
-	$o=0;
-	while ($cid_groups_to_print > $o) 
-		{
-		$stmt="SELECT count(*) from vicidial_campaign_cid_areacodes where campaign_id=\"$cid_group_id[$o]\";";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='class="records_list_x"';} 
-		else
-			{$bgcolor='class="records_list_y"';}
-		echo "<tr $bgcolor"; if ($SSadmin_row_click > 0) {echo " onclick=\"window.document.location='$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id[$o]'\"";} echo "><td><a href=\"$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id[$o]\"><font size=1 color=black>$cid_group_id[$o]</a></td>";
-		echo "<td><font size=1> $cid_group_notes[$o]</td>";
-		echo "<td><font size=1> $cid_group_type[$o]</td>";
-		echo "<td align=left><font size=1> <b>$cid_auto_rotate_minutes[$o]</b></td>";
-		echo "<td><font size=1> $admin_group[$o]</td>";
-		echo "<td><font size=1>$row[0]</td>";
-		echo "<td><font size=1><a href=\"$PHP_SELF?ADD=396111111111&cid_group_id=$cid_group_id[$o]\">"._QXZ("MODIFY")."</a></td></tr>\n";
-		$o++;
-		}
-
-	echo "</TABLE></center>\n";
-	}
-
+    echo "          </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>";
+}
 
 ######################
 # ADD=197000000000 display all VM Message group entries
