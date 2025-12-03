@@ -48615,7 +48615,7 @@ if ($ADD == 31111111111) {
         <!-- Header Section -->
         <div style='background:#2c3e50;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>
             <img src="images/icon_phones.png" alt="Phones" width=42 height=42>
-            <h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:700;'><?php echo _QXZ("MODIFY A PHONE RECORD") . ": " . $row[1]; ?></h2>
+            <h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:800;'><?php echo _QXZ("MODIFY A PHONE RECORD") . ": " . $row[1]; ?></h2>
         </div>
 
         <!-- Tab Navigation -->
