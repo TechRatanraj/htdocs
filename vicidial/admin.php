@@ -48546,240 +48546,975 @@ if ($ADD==331111111)
 ######################
 # ADD=31111111111 modify phone record in the system
 ######################
-if ($ADD==31111111111)
-	{
-	if ( ($LOGast_admin_access==1) or ($LOGmodify_phones==1) )
-		{
-		if ( ($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1) )
-			{
-			$modify_url = "$PHP_SELF?ADD=31111111111&extension=$extension&server_ip=$server_ip";
-			$modify_footer_refresh=1;
-			}
-		echo "<TABLE><TR><TD>\n";
-		echo "<FONT FACE=\"ARIAL,HELVETICA\" COLOR=BLACK SIZE=2>";
 
-		$stmt="SELECT extension,dialplan_number,voicemail_id,phone_ip,computer_ip,server_ip,login,pass,status,active,phone_type,fullname,company,picture,messages,old_messages,protocol,local_gmt,ASTmgrUSERNAME,ASTmgrSECRET,login_user,login_pass,login_campaign,park_on_extension,conf_on_extension,VICIDIAL_park_on_extension,VICIDIAL_park_on_filename,monitor_prefix,recording_exten,voicemail_exten,voicemail_dump_exten,ext_context,dtmf_send_extension,call_out_number_group,client_browser,install_directory,local_web_callerID_URL,VICIDIAL_web_URL,AGI_call_logging_enabled,user_switching_enabled,conferencing_enabled,admin_hangup_enabled,admin_hijack_enabled,admin_monitor_enabled,call_parking_enabled,updater_check_enabled,AFLogging_enabled,QUEUE_ACTION_enabled,CallerID_popup_enabled,voicemail_button_enabled,enable_fast_refresh,fast_refresh_rate,enable_persistant_mysql,auto_dial_next_number,VDstop_rec_after_each_call,DBX_server,DBX_database,DBX_user,DBX_pass,DBX_port,DBY_server,DBY_database,DBY_user,DBY_pass,DBY_port,outbound_cid,enable_sipsak_messages,email,template_id,conf_override,phone_context,phone_ring_timeout,conf_secret,delete_vm_after_email,is_webphone,use_external_server_ip,codecs_list,codecs_with_template,webphone_dialpad,on_hook_agent,webphone_auto_answer,voicemail_timezone,voicemail_options,user_group,voicemail_greeting,voicemail_dump_exten_no_inst,voicemail_instructions,on_login_report,unavail_dialplan_fwd_exten,unavail_dialplan_fwd_context,nva_call_url,nva_search_method,nva_error_filename,nva_new_list_id,nva_new_phone_code,nva_new_status,webphone_dialbox,webphone_mute,webphone_volume,webphone_debug,outbound_alt_cid,conf_qualify,webphone_layout,mohsuggest,webphone_settings from phones where extension='$extension' and server_ip='$server_ip' $LOGadmin_viewable_groupsSQL;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
 
-		echo "<br>"._QXZ("MODIFY A PHONE RECORD").": $row[1]<form action=$PHP_SELF method=POST>\n";
-		echo "<input type=hidden name=ADD value=41111111111>\n";
-		echo "<input type=hidden name=old_extension value=\"$row[0]\">\n";
-		echo "<input type=hidden name=old_server_ip value=\"$row[5]\">\n";
-		echo "<input type=hidden name=client_browser value=\"$row[34]\">\n";
-		echo "<input type=hidden name=install_directory value=\"$row[35]\">\n";
+if ($ADD == 31111111111) {
+    if (($LOGast_admin_access == 1) or ($LOGmodify_phones == 1)) {
+        if (($SSadmin_modify_refresh > 1) and ($modify_refresh_set < 1)) {
+            $modify_url = "$PHP_SELF?ADD=31111111111&extension=$extension&server_ip=$server_ip";
+            $modify_footer_refresh = 1;
+        }
+        
+        // Fetch phone data
+        $stmt = "SELECT extension,dialplan_number,voicemail_id,phone_ip,computer_ip,server_ip,login,pass,status,active,phone_type,fullname,company,picture,messages,old_messages,protocol,local_gmt,ASTmgrUSERNAME,ASTmgrSECRET,login_user,login_pass,login_campaign,park_on_extension,conf_on_extension,VICIDIAL_park_on_extension,VICIDIAL_park_on_filename,monitor_prefix,recording_exten,voicemail_exten,voicemail_dump_exten,ext_context,dtmf_send_extension,call_out_number_group,client_browser,install_directory,local_web_callerID_URL,VICIDIAL_web_URL,AGI_call_logging_enabled,user_switching_enabled,conferencing_enabled,admin_hangup_enabled,admin_hijack_enabled,admin_monitor_enabled,call_parking_enabled,updater_check_enabled,AFLogging_enabled,QUEUE_ACTION_enabled,CallerID_popup_enabled,voicemail_button_enabled,enable_fast_refresh,fast_refresh_rate,enable_persistant_mysql,auto_dial_next_number,VDstop_rec_after_each_call,DBX_server,DBX_database,DBX_user,DBX_pass,DBX_port,DBY_server,DBY_database,DBY_user,DBY_pass,DBY_port,outbound_cid,enable_sipsak_messages,email,template_id,conf_override,phone_context,phone_ring_timeout,conf_secret,delete_vm_after_email,is_webphone,use_external_server_ip,codecs_list,codecs_with_template,webphone_dialpad,on_hook_agent,webphone_auto_answer,voicemail_timezone,voicemail_options,user_group,voicemail_greeting,voicemail_dump_exten_no_inst,voicemail_instructions,on_login_report,unavail_dialplan_fwd_exten,unavail_dialplan_fwd_context,nva_call_url,nva_search_method,nva_error_filename,nva_new_list_id,nva_new_phone_code,nva_new_status,webphone_dialbox,webphone_mute,webphone_volume,webphone_debug,outbound_alt_cid,conf_qualify,webphone_layout,mohsuggest,webphone_settings from phones where extension='$extension' and server_ip='$server_ip' $LOGadmin_viewable_groupsSQL;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        
+        // Get webphone settings container options
+        $stmt = "SELECT container_id,container_notes from vicidial_settings_containers where container_type='WEBPHONE_SETTINGS' $LOGadmin_viewable_groupsSQL order by container_id;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $pws_to_print = mysqli_num_rows($rslt);
+        $webphone_settings_menu = '';
+        $pws_selected = 0;
+        $o = 0;
+        while ($pws_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            if (mb_strlen($rowx[1],'utf-8') > 40) {
+                $rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';
+            }
+            $webphone_settings_menu .= "<option ";
+            if ($row[104] == "$rowx[0]") {
+                $webphone_settings_menu .= "SELECTED ";
+                $pws_selected++;
+            }
+            $webphone_settings_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+        }
+        
+        // Get templates
+        $stmt = "SELECT template_id,template_name from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id;";
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $templates_to_print = mysqli_num_rows($rslt);
+        $templates_list = '<option value=\'--NONE--\' SELECTED>--'._QXZ("NONE").'--</option>';
+        $o = 0;
+        while ($templates_to_print > $o) {
+            $rowx = mysqli_fetch_row($rslt);
+            $templates_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
+            $o++;
+        }
+        
+        // Get voicemail zones
+        $vm_zones = explode("\n", $SSvoicemail_timezones);
+        $vm_zones_options = '';
+        $z = 0;
+        $vm_zones_ct = count($vm_zones);
+        while ($vm_zones_ct > $z) {
+            if (strlen($vm_zones[$z]) > 5) {
+                $vm_specs = explode("=", $vm_zones[$z]);
+                $vm_abb = $vm_specs[0];
+                $vm_details = explode("|", $vm_specs[1]);
+                $vm_location = $vm_details[0];
+                $vm_zones_options .= "<option value=\"$vm_abb\">$vm_abb - $vm_location</option>\n";
+            }
+            $z++;
+        }
+?>
+<div style='max-width:1000px;margin:2rem auto;padding:0 1rem;'>
+    <div style='background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.1);overflow:hidden;'>
+        
+        <!-- Header Section -->
+        <div style='background:#2c3e50;padding:2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid #e2e8f0;'>
+            <img src="images/icon_phones.png" alt="Phones" width=42 height=42>
+            <h2 style='color:#fff;margin:0;font-size:1.5rem;font-weight:700;'><?php echo _QXZ("MODIFY A PHONE RECORD") . ": " . $row[1]; ?></h2>
+        </div>
 
-		echo "<center><TABLE width=$section_width cellspacing=3>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Extension").": </td><td align=left><input type=text name=extension size=20 maxlength=100 value=\"$row[0]\">$NWB#phones-extension$NWE <i></i></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Dial Plan Number").": </td><td align=left><input type=text name=dialplan_number size=15 maxlength=20 value=\"$row[1]\"> ("._QXZ("digits only").")$NWB#phones-dialplan_number$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Voicemail Box").": </td><td align=left><input type=text name=voicemail_id size=10 maxlength=10 value=\"$row[2]\"> ("._QXZ("digits only").")$NWB#phones-voicemail_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Outbound CallerID").": </td><td align=left><input type=text name=outbound_cid size=10 maxlength=20 value=\"$row[65]\"> ("._QXZ("digits only").")$NWB#phones-outbound_cid$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Outbound Alt CallerID").": </td><td align=left><input type=text name=outbound_alt_cid size=10 maxlength=20 value=\"$row[100]\"> <i>"._QXZ("optional")."</i> ("._QXZ("digits only").")$NWB#phones-outbound_alt_cid$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin User Group").": </td><td align=left><select size=1 name=user_group>\n";
-		echo "$UUgroups_list";
-		echo "<option SELECTED value=\"$row[83]\">"._QXZ("$row[83]")."</option>\n";
-		echo "</select>$NWB#phones-user_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone IP address").": </td><td align=left><input type=text name=phone_ip size=20 maxlength=15 value=\"$row[3]\"> ("._QXZ("optional").")$NWB#phones-phone_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Computer IP address").": </td><td align=left><input type=text name=computer_ip size=20 maxlength=15 value=\"$row[4]\"> ("._QXZ("optional").")$NWB#phones-computer_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=311111111111&server_ip=$row[5]\">"._QXZ("Server IP")."</a>: </td><td align=left><select size=1 name=server_ip>\n";
+        <!-- Tab Navigation -->
+        <div style='display:flex;background:#f8f9fa;border-bottom:1px solid #e2e8f0;'>
+            <button type="button" onclick="showTab('basic')" id="basic-tab" style='padding:1rem 1.5rem;background:#2c3e50;color:#fff;border:none;font-weight:500;cursor:pointer;'>Basic Info</button>
+            <button type="button" onclick="showTab('server')" id="server-tab" style='padding:1rem 1.5rem;background:transparent;color:#6c757d;border:none;font-weight:500;cursor:pointer;'>Server & Network</button>
+            <button type="button" onclick="showTab('agent')" id="agent-tab" style='padding:1rem 1.5rem;background:transparent;color:#6c757d;border:none;font-weight:500;cursor:pointer;'>Agent Settings</button>
+            <button type="button" onclick="showTab('webphone')" id="webphone-tab" style='padding:1rem 1.5rem;background:transparent;color:#6c757d;border:none;font-weight:500;cursor:pointer;'>Webphone</button>
+            <button type="button" onclick="showTab('voicemail')" id="voicemail-tab" style='padding:1rem 1.5rem;background:transparent;color:#6c757d;border:none;font-weight:500;cursor:pointer;'>Voicemail</button>
+            <button type="button" onclick="showTab('advanced')" id="advanced-tab" style='padding:1rem 1.5rem;background:transparent;color:#6c757d;border:none;font-weight:500;cursor:pointer;'>Advanced</button>
+        </div>
 
-		echo "$servers_list";
-		echo "<option SELECTED>$row[5]</option>\n";
-		echo "</select>$NWB#phones-server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Screen Login").": </td><td align=left><input type=text name=login size=15 maxlength=15 value=\"$row[6]\">$NWB#phones-login$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Login Password").": </td><td align=left><input type=text name=pass size=40 maxlength=100 value=\"$row[7]\">$NWB#phones-pass$NWE</td></tr>\n";
-		echo "<tr bgcolor=#CCFFFF><td align=right>"._QXZ("Registration Password").": </td><td align=left style=\"display:table-cell; vertical-align:middle;\" NOWRAP><input type=text id=reg_pass name=conf_secret size=40 maxlength=100 value=\"$row[72]\" onkeyup=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\">$NWB#phones-conf_secret$NWE &nbsp; &nbsp; <font size=1>"._QXZ("Strength").":</font> <IMG id=reg_pass_img src='images/pixel.gif' style=\"vertical-align:middle;\" onLoad=\"return pwdChanged('reg_pass','reg_pass_img','pass_length','$SSrequire_password_length');\"> &nbsp; <font size=1> "._QXZ("Length").": <span id=pass_length name=pass_length>0</span></font></td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Set As Webphone").": </td><td align=left><select size=1 name=is_webphone><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option>Y_API_LAUNCH</option><option selected value='$row[74]'>"._QXZ("$row[74]")."</option></select>$NWB#phones-is_webphone$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Dialpad").": </td><td align=left><select size=1 name=webphone_dialpad><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='TOGGLE'>"._QXZ("TOGGLE")."</option><option value='TOGGLE_OFF'>"._QXZ("TOGGLE_OFF")."</option><option value=\"$row[78]\" SELECTED>"._QXZ("$row[78]")."</option></select>$NWB#phones-webphone_dialpad$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Auto-Answer").": </td><td align=left><select size=1 name=webphone_auto_answer><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option SELECTED value='$row[80]'>"._QXZ("$row[80]")."</option></select>$NWB#phones-webphone_auto_answer$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Dialbox").": </td><td align=left><select size=1 name=webphone_dialbox><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option SELECTED value='$row[96]'>"._QXZ("$row[96]")."</option></select>$NWB#phones-webphone_dialbox$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Mute").": </td><td align=left><select size=1 name=webphone_mute><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option SELECTED value='$row[97]'>"._QXZ("$row[97]")."</option></select>$NWB#phones-webphone_mute$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Volume").": </td><td align=left><select size=1 name=webphone_volume><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option SELECTED value='$row[98]'>"._QXZ("$row[98]")."</option></select>$NWB#phones-webphone_volume$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Debug").": </td><td align=left><select size=1 name=webphone_debug><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option SELECTED value='$row[99]'>"._QXZ("$row[99]")."</option></select>$NWB#phones-webphone_debug$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Webphone Layout").": </td><td align=left><input type=text name=webphone_layout size=60 maxlength=255 value=\"$row[102]\">$NWB#phones-webphone_layout$NWE</td></tr>\n";
+        <!-- Form Section -->
+        <div style='padding:2rem;'>
+            <form action="<?php echo $PHP_SELF; ?>" method="POST">
+                <input type="hidden" name="ADD" value="41111111111">
+                <input type="hidden" name="old_extension" value="<?php echo $row[0]; ?>">
+                <input type="hidden" name="old_server_ip" value="<?php echo $row[5]; ?>">
+                <input type="hidden" name="client_browser" value="<?php echo $row[34]; ?>">
+                <input type="hidden" name="install_directory" value="<?php echo $row[35]; ?>">
+                
+                <!-- Basic Information Tab -->
+                <div id="basic-content" style='display:block;'>
+                    <div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;'>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Phone Extension"); ?> <span style='color:#e74c3c;'>*</span></label>
+                            <input type="text" name="extension" size="20" maxlength="100" value="<?php echo $row[0]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' required>
+                            <small style='color:#6c757d;font-size:0.8rem;'>The phone extension number</small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Dial Plan Number"); ?></label>
+                            <input type="text" name="dialplan_number" size="15" maxlength="20" value="<?php echo $row[1]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("digits only"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Voicemail Box"); ?></label>
+                            <input type="text" name="voicemail_id" size="10" maxlength="10" value="<?php echo $row[2]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("digits only"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Outbound CallerID"); ?></label>
+                            <input type="text" name="outbound_cid" size="10" maxlength="20" value="<?php echo $row[65]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("digits only"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Outbound Alt CallerID"); ?></label>
+                            <input type="text" name="outbound_alt_cid" size="10" maxlength="20" value="<?php echo $row[100]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("optional"); ?> <?php echo _QXZ("digits only"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Admin User Group"); ?></label>
+                            <select name="user_group" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <?php echo $UUgroups_list; ?>
+                                <option selected value="<?php echo $row[83]; ?>"><?php echo _QXZ($row[83]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Status"); ?></label>
+                            <select name="status" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="ACTIVE"><?php echo _QXZ("ACTIVE"); ?></option>
+                                <option value="SUSPENDED"><?php echo _QXZ("SUSPENDED"); ?></option>
+                                <option value="CLOSED"><?php echo _QXZ("CLOSED"); ?></option>
+                                <option value="PENDING"><?php echo _QXZ("PENDING"); ?></option>
+                                <option value="ADMIN"><?php echo _QXZ("ADMIN"); ?></option>
+                                <option value="<?php echo $row[8]; ?>" selected><?php echo _QXZ($row[8]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Active Account"); ?></label>
+                            <select name="active" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[9]; ?>" selected><?php echo _QXZ($row[9]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Phone Type"); ?></label>
+                            <input type="text" name="phone_type" size="20" maxlength="50" value="<?php echo $row[10]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Full Name"); ?></label>
+                            <input type="text" name="fullname" size="20" maxlength="50" value="<?php echo $row[11]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Email"); ?></label>
+                            <input type="email" name="email" size="50" maxlength="100" value="<?php echo $row[67]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Company"); ?></label>
+                            <input type="text" name="company" size="10" maxlength="10" value="<?php echo $row[12]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Picture"); ?></label>
+                            <input type="text" name="picture" size="20" maxlength="19" value="<?php echo $row[13]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("New Messages"); ?></label>
+                            <div style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;background:#f8f9fa;'><b><?php echo $row[14]; ?></b></div>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Old Messages"); ?></label>
+                            <div style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;background:#f8f9fa;'><b><?php echo $row[15]; ?></b></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Server & Network Tab -->
+                <div id="server-content" style='display:none;'>
+                    <div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;'>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Phone IP address"); ?></label>
+                            <input type="text" name="phone_ip" size="20" maxlength="15" value="<?php echo $row[3]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$' title='Valid IP address'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("optional"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Computer IP address"); ?></label>
+                            <input type="text" name="computer_ip" size="20" maxlength="15" value="<?php echo $row[4]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$' title='Valid IP address'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("optional"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Server IP"); ?> <span style='color:#e74c3c;'>*</span></label>
+                            <select name="server_ip" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <?php echo $servers_list; ?>
+                                <option selected><?php echo $row[5]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Client Protocol"); ?></label>
+                            <select name="protocol" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <?php if (($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP')) {echo "<option>SIP</option>";} ?>
+                                <?php if (($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP')) {echo "<option>PJSIP</option>";} ?>
+                                <option>Zap</option>
+                                <option>IAX2</option>
+                                <option value="EXTERNAL"><?php echo _QXZ("EXTERNAL"); ?></option>
+                                <option>DAHDI</option>
+                                <option value="<?php echo $row[16]; ?>" selected><?php echo _QXZ($row[16]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Local GMT"); ?></label>
+                            <select name="local_gmt" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="12.75">12.75</option>
+                                <option value="12.00">12.00</option>
+                                <option value="11.00">11.00</option>
+                                <option value="10.00">10.00</option>
+                                <option value="9.50">9.50</option>
+                                <option value="9.00">9.00</option>
+                                <option value="8.00">8.00</option>
+                                <option value="7.00">7.00</option>
+                                <option value="6.50">6.50</option>
+                                <option value="6.00">6.00</option>
+                                <option value="5.75">5.75</option>
+                                <option value="5.50">5.50</option>
+                                <option value="5.00">5.00</option>
+                                <option value="4.50">4.50</option>
+                                <option value="4.00">4.00</option>
+                                <option value="3.50">3.50</option>
+                                <option value="3.00">3.00</option>
+                                <option value="2.00">2.00</option>
+                                <option value="1.00">1.00</option>
+                                <option value="0.00">0.00</option>
+                                <option value="-1.00">-1.00</option>
+                                <option value="-2.00">-2.00</option>
+                                <option value="-3.00">-3.00</option>
+                                <option value="-3.50">-3.50</option>
+                                <option value="-4.00">-4.00</option>
+                                <option value="-5.00">-5.00</option>
+                                <option value="-6.00">-6.00</option>
+                                <option value="-7.00">-7.00</option>
+                                <option value="-8.00">-8.00</option>
+                                <option value="-9.00">-9.00</option>
+                                <option value="-10.00">-10.00</option>
+                                <option value="-11.00">-11.00</option>
+                                <option value="-12.00">-12.00</option>
+                                <option value="<?php echo $row[17]; ?>" selected><?php echo _QXZ($row[17]); ?></option>
+                            </select>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("Do NOT Adjust for DST"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Phone Ring Timeout"); ?></label>
+                            <input type="text" name="phone_ring_timeout" size="4" maxlength="5" value="<?php echo $row[71]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Manager Login"); ?></label>
+                            <input type="text" name="ASTmgrUSERNAME" size="20" maxlength="20" value="<?php echo $row[18]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Manager Secret"); ?></label>
+                            <input type="password" name="ASTmgrSECRET" size="20" maxlength="20" value="<?php echo $row[19]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Registration Password"); ?></label>
+                            <input type="password" id="reg_pass" name="conf_secret" size="40" maxlength="100" value="<?php echo $row[72]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                            <div style='display:flex;align-items:center;gap:0.5rem;margin-top:0.25rem;'>
+                                <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("Strength"); ?>:</small>
+                                <div style='height:5px;width:100px;background:#eee;border-radius:3px;overflow:hidden;'>
+                                    <div id='password-strength-meter' style='height:100%;width:0%;transition:width 0.3s ease;'></div>
+                                </div>
+                                <small style='color:#6c757d;font-size:0.8rem;' id='password-strength-text'>Weak</small>
+                            </div>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Use External Server IP"); ?></label>
+                            <select name="use_external_server_ip" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[75]; ?>" selected><?php echo _QXZ($row[75]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Allowed Codecs"); ?></label>
+                            <input type="text" name="codecs_list" size="40" maxlength="100" value="<?php echo $row[76]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Allowed Codecs With Template"); ?></label>
+                            <select name="codecs_with_template" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[77]; ?>" selected><?php echo $row[77]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Conf Qualify"); ?></label>
+                            <select name="conf_qualify" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[101]; ?>" selected><?php echo _QXZ($row[101]); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agent Settings Tab -->
+                <div id="agent-content" style='display:none;'>
+                    <div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;'>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Screen Login"); ?></label>
+                            <input type="text" name="login" size="15" maxlength="15" value="<?php echo $row[6]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Login Password"); ?></label>
+                            <input type="password" name="pass" size="40" maxlength="100" value="<?php echo $row[7]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Default User"); ?></label>
+                            <input type="text" name="login_user" size="20" maxlength="20" value="<?php echo $row[20]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Default Pass"); ?></label>
+                            <input type="password" name="login_pass" size="20" maxlength="20" value="<?php echo $row[21]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Default Campaign"); ?></label>
+                            <input type="text" name="login_campaign" size="10" maxlength="10" value="<?php echo $row[22]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("On-Hook Agent"); ?></label>
+                            <select name="on_hook_agent" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[79]; ?>" selected><?php echo _QXZ($row[79]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Park Exten"); ?></label>
+                            <input type="text" name="park_on_extension" size="10" maxlength="10" value="<?php echo $row[23]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Conf Exten"); ?></label>
+                            <input type="text" name="conf_on_extension" size="10" maxlength="10" value="<?php echo $row[24]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Park Exten"); ?></label>
+                            <input type="text" name="VICIDIAL_park_on_extension" size="10" maxlength="10" value="<?php echo $row[25]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Park File"); ?></label>
+                            <input type="text" name="VICIDIAL_park_on_filename" size="10" maxlength="10" value="<?php echo $row[26]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Monitor Prefix"); ?></label>
+                            <input type="text" name="monitor_prefix" size="10" maxlength="10" value="<?php echo $row[27]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Recording Exten"); ?></label>
+                            <input type="text" name="recording_exten" size="10" maxlength="10" value="<?php echo $row[28]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("VMailMain Exten"); ?></label>
+                            <input type="text" name="voicemail_exten" size="10" maxlength="10" value="<?php echo $row[29]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("VMailDump Exten"); ?></label>
+                            <input type="text" name="voicemail_dump_exten" size="20" maxlength="20" value="<?php echo $row[30]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("VMailDump Exten NI"); ?></label>
+                            <input type="text" name="voicemail_dump_exten_no_inst" size="20" maxlength="20" value="<?php echo $row[85]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Exten Context"); ?></label>
+                            <input type="text" name="ext_context" size="20" maxlength="20" value="<?php echo $row[31]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Phone Context"); ?></label>
+                            <input type="text" name="phone_context" size="20" maxlength="20" value="<?php echo $row[70]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("DTMFSend Channel"); ?></label>
+                            <input type="text" name="dtmf_send_extension" size="40" maxlength="100" value="<?php echo $row[32]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Outbound Call Group"); ?></label>
+                            <input type="text" name="call_out_number_group" size="40" maxlength="100" value="<?php echo $row[33]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Webphone Tab -->
+                <div id="webphone-content" style='display:none;'>
+                    <div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;'>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Set As Webphone"); ?></label>
+                            <select name="is_webphone" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="Y_API_LAUNCH">Y_API_LAUNCH</option>
+                                <option value="<?php echo $row[74]; ?>" selected><?php echo _QXZ($row[74]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Dialpad"); ?></label>
+                            <select name="webphone_dialpad" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="TOGGLE"><?php echo _QXZ("TOGGLE"); ?></option>
+                                <option value="TOGGLE_OFF"><?php echo _QXZ("TOGGLE_OFF"); ?></option>
+                                <option value="<?php echo $row[78]; ?>" selected><?php echo _QXZ($row[78]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Auto-Answer"); ?></label>
+                            <select name="webphone_auto_answer" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[80]; ?>" selected><?php echo _QXZ($row[80]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Dialbox"); ?></label>
+                            <select name="webphone_dialbox" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[96]; ?>" selected><?php echo _QXZ($row[96]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Mute"); ?></label>
+                            <select name="webphone_mute" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[97]; ?>" selected><?php echo _QXZ($row[97]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Volume"); ?></label>
+                            <select name="webphone_volume" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[98]; ?>" selected><?php echo _QXZ($row[98]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Debug"); ?></label>
+                            <select name="webphone_debug" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[99]; ?>" selected><?php echo _QXZ($row[99]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Layout"); ?></label>
+                            <input type="text" name="webphone_layout" size="60" maxlength="255" value="<?php echo $row[102]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Webphone Extra Settings"); ?></label>
+                            <select name="webphone_settings" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value=""><?php echo _QXZ("DISABLED"); ?></option>
+                                <?php echo $webphone_settings_menu; ?>
+                            </select>
+                            <?php if ($pws_selected > 0): ?>
+                            <small style='color:#6c757d;font-size:0.8rem;'><a href="<?php echo "$PHP_SELF?ADD=392111111111&container_id=$row[104]"; ?>" style='color:#3498db;'><?php echo _QXZ("Edit settings"); ?></a></small>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Voicemail Tab -->
+                <div id="voicemail-content" style='display:none;'>
+                    <div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;'>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Delete Voicemail After Email"); ?></label>
+                            <select name="delete_vm_after_email" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[73]; ?>" selected><?php echo _QXZ($row[73]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Voicemail Zone"); ?></label>
+                            <select name="voicemail_timezone" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <?php echo $vm_zones_options; ?>
+                                <option value="<?php echo $row[81]; ?>" selected><?php echo _QXZ($row[81]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Voicemail Options"); ?></label>
+                            <input type="hidden" name="old_voicemail_greeting" value="<?php echo $row[84]; ?>">
+                            <input type="text" name="voicemail_options" size="50" maxlength="100" value="<?php echo $row[82]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <?php if ($SSallow_voicemail_greeting > 0): ?>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Voicemail Greeting"); ?></label>
+                            <div style='display:flex;gap:0.5rem;'>
+                                <input type="text" name="voicemail_greeting" id="voicemail_greeting" size="50" maxlength="100" value="<?php echo $row[84]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;flex:1;'>
+                                <button type="button" onclick="launch_chooser('voicemail_greeting','date');" style='padding:0.75rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:0.8rem;cursor:pointer;'><?php echo _QXZ("audio chooser"); ?></button>
+                            </div>
+                        </div>
+                        <?php else: ?>
+                        <input type="hidden" name="voicemail_greeting" value="<?php echo $row[84]; ?>">
+                        <input type="hidden" name="old_voicemail_greeting" value="<?php echo $row[84]; ?>">
+                        <?php endif; ?>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Voicemail Instructions"); ?></label>
+                            <select name="voicemail_instructions" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[86]; ?>" selected><?php echo _QXZ($row[86]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Show VM on Summary Screen"); ?></label>
+                            <select name="show_vm_on_summary" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="Y"><?php echo _QXZ("Y"); ?></option>
+                                <option value="N"><?php echo _QXZ("N"); ?></option>
+                                <option value="<?php echo $row[87]; ?>" selected><?php echo _QXZ($row[87]); ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Unavailable Dialplan Forward"); ?></label>
+                            <div style='display:flex;gap:0.5rem;'>
+                                <input type="text" name="unavail_dialplan_fwd_exten" size="20" maxlength="40" value="<?php echo $row[88]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;flex:1;' placeholder="<?php echo _QXZ("extension"); ?>">
+                                <input type="text" name="unavail_dialplan_fwd_context" size="20" maxlength="100" value="<?php echo $row[89]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;flex:1;' placeholder="<?php echo _QXZ("context"); ?>">
+                            </div>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Music on Hold Suggest"); ?></label>
+                            <div style='display:flex;gap:0.5rem;'>
+                                <input type="text" name="mohsuggest" id="mohsuggest" size="50" maxlength="100" value="<?php echo $row[103]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;flex:1;'>
+                                <button type="button" onclick="launch_moh_chooser('mohsuggest','moh');" style='padding:0.75rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:0.8rem;cursor:pointer;'><?php echo _QXZ("moh chooser"); ?></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                                <!-- Advanced Tab -->
+                <div id="advanced-content" style='display:none;'>
+                    <div style='display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;'>
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Call Logging"); ?></label>
+                            <select name="AGI_call_logging_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[38]; ?>" selected><?php echo $row[38]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("User Switching"); ?></label>
+                            <select name="user_switching_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[39]; ?>" selected><?php echo $row[39]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Conferencing"); ?></label>
+                            <select name="conferencing_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[40]; ?>" selected><?php echo $row[40]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Admin Hang Up"); ?></label>
+                            <select name="admin_hangup_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[41]; ?>" selected><?php echo $row[41]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Admin Hijack"); ?></label>
+                            <select name="admin_hijack_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[42]; ?>" selected><?php echo $row[42]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Admin Monitor"); ?></label>
+                            <select name="admin_monitor_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[43]; ?>" selected><?php echo $row[43]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Call Park"); ?></label>
+                            <select name="call_parking_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[44]; ?>" selected><?php echo $row[44]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Updater Check"); ?></label>
+                            <select name="updater_check_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[45]; ?>" selected><?php echo $row[45]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("AF Logging"); ?></label>
+                            <select name="AFLogging_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[46]; ?>" selected><?php echo $row[46]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Queue Enabled"); ?></label>
+                            <select name="QUEUE_ACTION_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[47]; ?>" selected><?php echo $row[47]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("CallerID Popup"); ?></label>
+                            <select name="CallerID_popup_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[48]; ?>" selected><?php echo $row[48]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("VMail Button"); ?></label>
+                            <select name="voicemail_button_enabled" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[49]; ?>" selected><?php echo $row[49]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Fast Refresh"); ?></label>
+                            <select name="enable_fast_refresh" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[50]; ?>" selected><?php echo $row[50]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Fast Refresh Rate"); ?></label>
+                            <input type="text" name="fast_refresh_rate" size="5" value="<?php echo $row[51]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                            <small style='color:#6c757d;font-size:0.8rem;'><?php echo _QXZ("in ms"); ?></small>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Persistant MySQL"); ?></label>
+                            <select name="enable_persistant_mysql" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[52]; ?>" selected><?php echo $row[52]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Auto Dial Next Number"); ?></label>
+                            <select name="auto_dial_next_number" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[53]; ?>" selected><?php echo $row[53]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Stop Rec after each call"); ?></label>
+                            <select name="VDstop_rec_after_each_call" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[54]; ?>" selected><?php echo $row[54]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Enable SIPSAK Messages"); ?></label>
+                            <select name="enable_sipsak_messages" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                                <option value="<?php echo $row[66]; ?>" selected><?php echo $row[66]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <!-- Hidden DB connection fields -->
+                        <input type="hidden" name="DBX_server" value="<?php echo $row[55]; ?>">
+                        <input type="hidden" name="DBX_database" value="<?php echo $row[56]; ?>">
+                        <input type="hidden" name="DBX_user" value="<?php echo $row[57]; ?>">
+                        <input type="hidden" name="DBX_pass" value="<?php echo $row[58]; ?>">
+                        <input type="hidden" name="DBX_port" value="<?php echo $row[59]; ?>">
+                        <input type="hidden" name="DBY_server" value="<?php echo $row[60]; ?>">
+                        <input type="hidden" name="DBY_database" value="<?php echo $row[61]; ?>">
+                        <input type="hidden" name="DBY_user" value="<?php echo $row[62]; ?>">
+                        <input type="hidden" name="DBY_pass" value="<?php echo $row[63]; ?>">
+                        <input type="hidden" name="DBY_port" value="<?php echo $row[64]; ?>">
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Template ID"); ?></label>
+                            <select name="template_id" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;cursor:pointer;'>
+                                <?php echo $templates_list; ?>
+                                <option value="<?php echo $row[68]; ?>" selected><?php echo $row[68]; ?></option>
+                            </select>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Conf Override"); ?></label>
+                            <textarea name="conf_override" rows="10" cols="70" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;'><?php echo $row[69]; ?></textarea>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("CallerID URL"); ?></label>
+                            <input type="text" name="local_web_callerID_URL" size="40" maxlength="255" value="<?php echo $row[36]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("Agent Default URL"); ?></label>
+                            <input type="text" name="agent_web_URL" size="40" maxlength="255" value="<?php echo $row[37]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("NVA Call URL"); ?></label>
+                            <input type="text" name="nva_call_url" size="40" maxlength="2000" value="<?php echo $row[90]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("NVA Search Method"); ?></label>
+                            <input type="text" name="nva_search_method" size="20" maxlength="40" value="<?php echo $row[91]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("NVA Error Filename"); ?></label>
+                            <div style='display:flex;gap:0.5rem;'>
+                                <input type="text" name="nva_error_filename" id="nva_error_filename" size="40" maxlength="255" value="<?php echo $row[92]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;flex:1;'>
+                                <button type="button" onclick="launch_chooser('nva_error_filename','date');" style='padding:0.75rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:0.8rem;cursor:pointer;'><?php echo _QXZ("audio chooser"); ?></button>
+                            </div>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("NVA New List ID"); ?></label>
+                            <input type="text" name="nva_new_list_id" size="15" maxlength="14" value="<?php echo $row[93]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("NVA New Phone Code"); ?></label>
+                            <input type="text" name="nva_new_phone_code" size="11" maxlength="10" value="<?php echo $row[94]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;font-family:monospace;' pattern='[0-9]+' title='Digits only'>
+                        </div>
+                        
+                        <div style='display:flex;flex-direction:column;gap:0.5rem;'>
+                            <label style='color:#2c3e50;font-weight:600;font-size:0.9rem;'><?php echo _QXZ("NVA New Status"); ?></label>
+                            <input type="text" name="nva_new_status" size="7" maxlength="6" value="<?php echo $row[95]; ?>" style='padding:0.75rem;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#000;'>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div style='margin-top:2rem;text-align:center;'>
+                    <button type="submit" name="submit" style='padding:0.75rem 2rem;background:#2c3e50;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 4px 6px rgba(44,62,80,0.3);transition:all 0.3s;'><?php echo _QXZ("SUBMIT"); ?></button>
+                </div>
+            </form>
+            
+            <!-- Additional Links -->
+            <div style='margin-top:2rem;padding-top:2rem;border-top:1px solid #eee;'>
+                <div style='display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;'>
+                    <a href="./phone_stats.php?extension=<?php echo $row[0]; ?>&server_ip=<?php echo $row[5]; ?>" style='display:inline-block;padding:0.75rem 1.5rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>
+                        <i class="fas fa-chart-bar"></i> <?php echo _QXZ("Phone Stats"); ?>
+                    </a>
+                    
+                    <a href="./user_stats.php?user=<?php echo $row[0]; ?>" style='display:inline-block;padding:0.75rem 1.5rem;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>
+                        <i class="fas fa-phone-alt"></i> <?php echo _QXZ("Call Recordings"); ?>
+                    </a>
+                    
+                    <?php if ($LOGast_delete_phones > 0): ?>
+                    <a href="<?php echo "$PHP_SELF?ADD=51111111111&extension=$extension&server_ip=$server_ip"; ?>" style='display:inline-block;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>
+                        <i class="fas fa-trash"></i> <?php echo _QXZ("DELETE THIS PHONE"); ?>
+                    </a>
+                    <?php endif; ?>
+                    
+                    <?php if (($LOGuser_level >= 9) and ((preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)))): ?>
+                    <a href="<?php echo "$PHP_SELF?ADD=720000000000000&category=PHONES&stage=$extension"; ?>" style='display:inline-block;padding:0.75rem 1.5rem;background:#f39c12;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>
+                        <i class="fas fa-history"></i> <?php echo _QXZ("Admin Changes"); ?>
+                    </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-		##### get container listings for dynamic WEBPHONE_SETTINGS container pulldown menu
-		$stmt="SELECT container_id,container_notes from vicidial_settings_containers where container_type='WEBPHONE_SETTINGS' $LOGadmin_viewable_groupsSQL order by container_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$pws_to_print = mysqli_num_rows($rslt);
-		$webphone_settings_menu='';
-		$pws_selected=0;
-		$o=0;
-		while ($pws_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			if (mb_strlen($rowx[1],'utf-8')>40)
-				{$rowx[1] = mb_substr($rowx[1],0,40,'utf-8') . '...';}
-			$webphone_settings_menu .= "<option ";
-			if ($row[104] == "$rowx[0]") 
-				{
-				$webphone_settings_menu .= "SELECTED ";
-				$pws_selected++;
-				}
-			$webphone_settings_menu .= "value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
+<script>
+// Tab functionality
+function showTab(tabName) {
+    // Hide all tab contents
+    document.getElementById('basic-content').style.display = 'none';
+    document.getElementById('server-content').style.display = 'none';
+    document.getElementById('agent-content').style.display = 'none';
+    document.getElementById('webphone-content').style.display = 'none';
+    document.getElementById('voicemail-content').style.display = 'none';
+    document.getElementById('advanced-content').style.display = 'none';
+    
+    // Reset all tab buttons
+    document.getElementById('basic-tab').style.background = 'transparent';
+    document.getElementById('basic-tab').style.color = '#6c757d';
+    document.getElementById('server-tab').style.background = 'transparent';
+    document.getElementById('server-tab').style.color = '#6c757d';
+    document.getElementById('agent-tab').style.background = 'transparent';
+    document.getElementById('agent-tab').style.color = '#6c757d';
+    document.getElementById('webphone-tab').style.background = 'transparent';
+    document.getElementById('webphone-tab').style.color = '#6c757d';
+    document.getElementById('voicemail-tab').style.background = 'transparent';
+    document.getElementById('voicemail-tab').style.color = '#6c757d';
+    document.getElementById('advanced-tab').style.background = 'transparent';
+    document.getElementById('advanced-tab').style.color = '#6c757d';
+    
+    // Show selected tab content
+    document.getElementById(tabName + '-content').style.display = 'block';
+    
+    // Highlight selected tab button
+    document.getElementById(tabName + '-tab').style.background = '#2c3e50';
+    document.getElementById(tabName + '-tab').style.color = '#fff';
+}
 
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>";
-		if ($pws_selected > 0)
-			{echo "<a href=\"$PHP_SELF?ADD=392111111111&container_id=$row[104]\">"._QXZ("Webphone Extra Settings")."</a>";}
-		else
-			{echo _QXZ("Webphone Extra Settings");}
-		echo ": </td><td align=left nowrap><select size=1 name=webphone_settings><option value=''>"._QXZ("DISABLED")."</option>$webphone_settings_menu</select>$NWB#phones-webphone_settings$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Use External Server IP").": </td><td align=left><select size=1 name=use_external_server_ip><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$row[75]'>"._QXZ("$row[75]")."</option></select>$NWB#phones-use_external_server_ip$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Status").": </td><td align=left><select size=1 name=status><option value='ACTIVE'>"._QXZ("ACTIVE")."</option><option value='SUSPENDED'>"._QXZ("SUSPENDED")."</option><option value='CLOSED'>"._QXZ("CLOSED")."</option><option value='PENDING'>"._QXZ("PENDING")."</option><option value='ADMIN'>"._QXZ("ADMIN")."</option><option value='$row[8]' selected>"._QXZ("$row[8]")."</option></select>$NWB#phones-status$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Active Account").": </td><td align=left><select size=1 name=active><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[9]' selected>"._QXZ("$row[9]")."</option></select>$NWB#phones-active$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Type").": </td><td align=left><input type=text name=phone_type size=20 maxlength=50 value=\"$row[10]\">$NWB#phones-phone_type$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Full Name").": </td><td align=left><input type=text name=fullname size=20 maxlength=50 value=\"$row[11]\">$NWB#phones-fullname$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Email").": </td><td align=left><input type=text name=email size=50 maxlength=100 value=\"$row[67]\"> $NWB#phones-email$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Delete Voicemail After Email").": </td><td align=left><select size=1 name=delete_vm_after_email><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[73]' selected>"._QXZ("$row[73]")."</option></select>$NWB#phones-delete_vm_after_email$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Voicemail Zone").": </td><td align=left><select size=1 name=voicemail_timezone>";
-		$vm_zones = explode("\n",$SSvoicemail_timezones);
-		$z=0;
-		$vm_zones_ct = count($vm_zones);
-		while($vm_zones_ct > $z)
-			{
-			if (strlen($vm_zones[$z]) > 5)
-				{
-				$vm_specs = explode("=",$vm_zones[$z]);
-				$vm_abb = $vm_specs[0];
-				$vm_details = explode('|',$vm_specs[1]);
-				$vm_location = 	$vm_details[0];
-				echo "<option value=\"$vm_abb\">$vm_abb - $vm_location</option>\n";
-				}
-			$z++;
-			}
-		echo "<option selected value='$row[81]'>"._QXZ("$row[81]")."</option></select> $NWB#phones-voicemail_timezone$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Voicemail Options").": </td><td align=left><input type=hidden name=old_voicemail_greeting value=\"$row[84]\"><input type=text name=voicemail_options size=50 maxlength=100 value=\"$row[82]\">$NWB#phones-voicemail_options$NWE</td></tr>\n";
-		if ($SSallow_voicemail_greeting > 0)
-			{
-			echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Voicemail Greeting").": </td><td><input type=text size=50 maxlength=100 name=voicemail_greeting id=voicemail_greeting value=\"$row[84]\"> <a href=\"javascript:launch_chooser('voicemail_greeting','date');\">"._QXZ("audio chooser")."</a>  $NWB#phones-voicemail_greeting$NWE</td></tr>\n";
-			}
-		else
-			{
-			echo "<input type=hidden name=voicemail_greeting value=\"$row[84]\">";
-			echo "<input type=hidden name=old_voicemail_greeting value=\"$row[84]\">";
-			}
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Voicemail Instructions").": </td><td align=left><select size=1 name=voicemail_instructions><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[86]' selected>"._QXZ("$row[86]")."</option></select>$NWB#phones-voicemail_instructions$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Show VM on Summary Screen").": </td><td align=left><select size=1 name=show_vm_on_summary><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value='$row[87]' selected>"._QXZ("$row[87]")."</option></select>$NWB#phones-show_vm_on_summary$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Unavailable Dialplan Forward").": </td><td align=left><input type=text name=unavail_dialplan_fwd_exten size=20 maxlength=40 value=\"$row[88]\"> "._QXZ("context").": <input type=text name=unavail_dialplan_fwd_context size=20 maxlength=100 value=\"$row[89]\">$NWB#phones-unavail_dialplan_fwd_exten$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("Music on Hold Suggest").": </td><td><input type=text size=50 maxlength=100 name=mohsuggest id=mohsuggest value=\"$row[103]\"> <a href=\"javascript:launch_moh_chooser('mohsuggest','moh');\">"._QXZ("moh chooser")."</a>  $NWB#phones-mohsuggest$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Company").": </td><td align=left><input type=text name=company size=10 maxlength=10 value=\"$row[12]\">$NWB#phones-company$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Picture").": </td><td align=left><input type=text name=picture size=20 maxlength=19 value=\"$row[13]\">$NWB#phones-picture$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("New Messages").": </td><td align=left><b>$row[14]</b>$NWB#phones-messages$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Old Messages").": </td><td align=left><b>$row[15]</b>$NWB#phones-old_messages$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Client Protocol").": </td><td align=left><select size=1 name=protocol>";
-		if ( ($SSallowed_sip_stacks == 'SIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>SIP</option>";}
-		if ( ($SSallowed_sip_stacks == 'PJSIP') or ($SSallowed_sip_stacks == 'SIP_and_PJSIP') ) {echo "<option>PJSIP</option>";}
-		echo "<option>Zap</option>";
-		echo "<option>IAX2</option>";
-		echo "<option value='EXTERNAL'>"._QXZ("EXTERNAL")."</option>";
-		echo "<option>DAHDI</option>";
-		echo "<option selected value='$row[16]'>"._QXZ("$row[16]")."</option></select>$NWB#phones-protocol$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Local GMT").": </td><td align=left><select size=1 name=local_gmt><option>12.75</option><option>12.00</option><option>11.00</option><option>10.00</option><option>9.50</option><option>9.00</option><option>8.00</option><option>7.00</option><option>6.50</option><option>6.00</option><option>5.75</option><option>5.50</option><option>5.00</option><option>4.50</option><option>4.00</option><option>3.50</option><option>3.00</option><option>2.00</option><option>1.00</option><option>0.00</option><option>-1.00</option><option>-2.00</option><option>-3.00</option><option>-3.50</option><option>-4.00</option><option>-5.00</option><option>-6.00</option><option>-7.00</option><option>-8.00</option><option>-9.00</option><option>-10.00</option><option>-11.00</option><option>-12.00</option><option selected value='$row[17]'>"._QXZ("$row[17]")."</option></select> ("._QXZ("Do NOT Adjust for DST").")$NWB#phones-local_gmt$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Ring Timeout").": </td><td align=left><input type=text name=phone_ring_timeout size=4 maxlength=5 value=\"$row[71]\">$NWB#phones-phone_ring_timeout$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("On-Hook Agent").": </td><td align=left><select size=1 name=on_hook_agent><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option selected value='$row[79]'>"._QXZ("$row[79]")."</option></select>$NWB#phones-on_hook_agent$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Login").": </td><td align=left><input type=text name=ASTmgrUSERNAME size=20 maxlength=20 value=\"$row[18]\">$NWB#phones-ASTmgrUSERNAME$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Manager Secret").": </td><td align=left><input type=text name=ASTmgrSECRET size=20 maxlength=20 value=\"$row[19]\">$NWB#phones-ASTmgrSECRET$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent  Default User").": </td><td align=left><input type=text name=login_user size=20 maxlength=20 value=\"$row[20]\">$NWB#phones-login_user$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Default Pass").": </td><td align=left><input type=text name=login_pass size=20 maxlength=20 value=\"$row[21]\">$NWB#phones-login_pass$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Default Campaign").": </td><td align=left><input type=text name=login_campaign size=10 maxlength=10 value=\"$row[22]\">$NWB#phones-login_campaign$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Park Exten").": </td><td align=left><input type=text name=park_on_extension size=10 maxlength=10 value=\"$row[23]\">$NWB#phones-park_on_extension$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf Exten").": </td><td align=left><input type=text name=conf_on_extension size=10 maxlength=10 value=\"$row[24]\">$NWB#phones-conf_on_extension$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Park Exten").": </td><td align=left><input type=text name=VICIDIAL_park_on_extension size=10 maxlength=10 value=\"$row[25]\">$NWB#phones-agent_park_on_extension$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Park File").": </td><td align=left><input type=text name=VICIDIAL_park_on_filename size=10 maxlength=10 value=\"$row[26]\">$NWB#phones-park_on_filename$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Monitor Prefix").": </td><td align=left><input type=text name=monitor_prefix size=10 maxlength=10 value=\"$row[27]\">$NWB#phones-monitor_prefix$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Recording Exten").": </td><td align=left><input type=text name=recording_exten size=10 maxlength=10 value=\"$row[28]\">$NWB#phones-recording_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMailMain Exten").": </td><td align=left><input type=text name=voicemail_exten size=10 maxlength=10 value=\"$row[29]\">$NWB#phones-voicemail_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMailDump Exten").": </td><td align=left><input type=text name=voicemail_dump_exten size=20 maxlength=20 value=\"$row[30]\">$NWB#phones-voicemail_dump_exten$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMailDump Exten NI").": </td><td align=left><input type=text name=voicemail_dump_exten_no_inst size=20 maxlength=20 value=\"$row[85]\">$NWB#phones-voicemail_dump_exten_no_inst$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Exten Context").": </td><td align=left><input type=text name=ext_context size=20 maxlength=20 value=\"$row[31]\">$NWB#phones-ext_context$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Phone Context").": </td><td align=left><input type=text name=phone_context size=20 maxlength=20 value=\"$row[70]\">$NWB#phones-phone_context$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#CCFFFF><td align=right>"._QXZ("Allowed Codecs").": </td><td align=left><input type=text name=codecs_list size=40 maxlength=100 value=\"$row[76]\">$NWB#phones-codecs_list$NWE</td></tr>\n";
-		echo "<tr bgcolor=#CCFFFF><td align=right>"._QXZ("Allowed Codecs With Template").": </td><td align=left><select size=1 name=codecs_with_template><option>1</option><option>0</option><option selected>$row[77]</option></select>$NWB#phones-codecs_with_template$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf Qualify").": </td><td align=left><select size=1 name=conf_qualify><option value='Y'>"._QXZ("Y")."</option><option value='N'>"._QXZ("N")."</option><option value=\"$row[101]\" SELECTED>"._QXZ("$row[101]")."</option></select>$NWB#phones-conf_qualify$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("DTMFSend Channel").": </td><td align=left><input type=text name=dtmf_send_extension size=40 maxlength=100 value=\"$row[32]\">$NWB#phones-dtmf_send_extension$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Outbound Call Group").": </td><td align=left><input type=text name=call_out_number_group size=40 maxlength=100 value=\"$row[33]\">$NWB#phones-call_out_number_group$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("CallerID URL").": </td><td align=left><input type=text name=local_web_callerID_URL size=40 maxlength=255 value=\"$row[36]\">$NWB#phones-local_web_callerID_URL$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Agent Default URL").": </td><td align=left><input type=text name=agent_web_URL size=40 maxlength=255 value=\"$row[37]\">$NWB#phones-agent_web_URL$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("NVA Call URL").": </td><td align=left><input type=text name=nva_call_url size=40 maxlength=2000 value=\"$row[90]\">$NWB#phones-nva_call_url$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("NVA Search Method").": </td><td align=left><input type=text name=nva_search_method size=20 maxlength=40 value=\"$row[91]\">$NWB#phones-nva_search_method$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("NVA Error Filename").": </td><td align=left colspan=3><input type=text name=nva_error_filename id=nva_error_filename size=40 maxlength=255 value=\"$row[92]\"> <a href=\"javascript:launch_chooser('nva_error_filename','date');\">"._QXZ("audio chooser")."</a> $NWB#phones-nva_error_filename$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("NVA New List ID").": </td><td align=left><input type=text name=nva_new_list_id size=15 maxlength=14 value=\"$row[93]\">$NWB#phones-nva_new_list_id$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("NVA New Phone Code").": </td><td align=left><input type=text name=nva_new_phone_code size=11 maxlength=10 value=\"$row[94]\">$NWB#phones-nva_new_phone_code$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row3_background><td align=right>"._QXZ("NVA New Status").": </td><td align=left><input type=text name=nva_new_status size=7 maxlength=6 value=\"$row[95]\">$NWB#phones-nva_new_status$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Logging").": </td><td align=left><select size=1 name=AGI_call_logging_enabled><option>1</option><option>0</option><option selected>$row[38]</option></select>$NWB#phones-AGI_call_logging_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("User Switching").": </td><td align=left><select size=1 name=user_switching_enabled><option>1</option><option>0</option><option selected>$row[39]</option></select>$NWB#phones-user_switching_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conferencing").": </td><td align=left><select size=1 name=conferencing_enabled><option>1</option><option>0</option><option selected>$row[40]</option></select>$NWB#phones-conferencing_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin Hang Up").": </td><td align=left><select size=1 name=admin_hangup_enabled><option>1</option><option>0</option><option selected>$row[41]</option></select>$NWB#phones-admin_hangup_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin Hijack").": </td><td align=left><select size=1 name=admin_hijack_enabled><option>1</option><option>0</option><option selected>$row[42]</option></select>$NWB#phones-admin_hijack_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Admin Monitor").": </td><td align=left><select size=1 name=admin_monitor_enabled><option>1</option><option>0</option><option selected>$row[43]</option></select>$NWB#phones-admin_monitor_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Call Park").": </td><td align=left><select size=1 name=call_parking_enabled><option>1</option><option>0</option><option selected>$row[44]</option></select>$NWB#phones-call_parking_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Updater Check").": </td><td align=left><select size=1 name=updater_check_enabled><option>1</option><option>0</option><option selected>$row[45]</option></select>$NWB#phones-updater_check_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("AF Logging").": </td><td align=left><select size=1 name=AFLogging_enabled><option>1</option><option>0</option><option selected>$row[46]</option></select>$NWB#phones-AFLogging_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Queue Enabled").": </td><td align=left><select size=1 name=QUEUE_ACTION_enabled><option>1</option><option>0</option><option selected>$row[47]</option></select>$NWB#phones-QUEUE_ACTION_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("CallerID Popup").": </td><td align=left><select size=1 name=CallerID_popup_enabled><option>1</option><option>0</option><option selected>$row[48]</option></select>$NWB#phones-CallerID_popup_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("VMail Button").": </td><td align=left><select size=1 name=voicemail_button_enabled><option>1</option><option>0</option><option selected>$row[49]</option></select>$NWB#phones-voicemail_button_enabled$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Fast Refresh").": </td><td align=left><select size=1 name=enable_fast_refresh><option>1</option><option>0</option><option selected>$row[50]</option></select>$NWB#phones-enable_fast_refresh$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Fast Refresh Rate").": </td><td align=left><input type=text size=5 name=fast_refresh_rate value=\"$row[51]\">("._QXZ("in ms").")$NWB#phones-fast_refresh_rate$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Persistant MySQL").": </td><td align=left><select size=1 name=enable_persistant_mysql><option>1</option><option>0</option><option selected>$row[52]</option></select>$NWB#phones-enable_persistant_mysql$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Auto Dial Next Number").": </td><td align=left><select size=1 name=auto_dial_next_number><option>1</option><option>0</option><option selected>$row[53]</option></select>$NWB#phones-auto_dial_next_number$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Stop Rec after each call").": </td><td align=left><select size=1 name=VDstop_rec_after_each_call><option>1</option><option>0</option><option selected>$row[54]</option></select>$NWB#phones-VDstop_rec_after_each_call$NWE</td></tr>\n";
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Enable SIPSAK Messages").": </td><td align=left><select size=1 name=enable_sipsak_messages><option>1</option><option>0</option><option selected>$row[66]</option></select>$NWB#phones-enable_sipsak_messages$NWE</td></tr>\n";
-
-		# unused old DB connection fields
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right colspan=2><input type=hidden name=DBX_server value=\"$row[55]\"><input type=hidden name=DBX_database value=\"$row[56]\"><input type=hidden name=DBX_user value=\"$row[57]\"><input type=hidden name=DBX_pass value=\"$row[58]\"><input type=hidden name=DBX_port value=\"$row[59]\"><input type=hidden name=DBY_server value=\"$row[60]\"><input type=hidden name=DBY_database value=\"$row[61]\"><input type=hidden name=DBY_user value=\"$row[62]\"><input type=hidden name=DBY_pass value=\"$row[63]\"><input type=hidden name=DBY_port value=\"$row[64]\"></td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right><a href=\"$PHP_SELF?ADD=331111111111&template_id=$row[68]\">"._QXZ("Template ID")."</a>: </td><td align=left><select size=1 name=template_id>\n";
-		$stmt="SELECT template_id,template_name from vicidial_conf_templates $whereLOGadmin_viewable_groupsSQL order by template_id;";
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$templates_to_print = mysqli_num_rows($rslt);
-		$templates_list='<option value=\'--NONE--\' SELECTED>--'._QXZ("NONE").'--</option>';
-		$o=0;
-		while ($templates_to_print > $o) 
-			{
-			$rowx=mysqli_fetch_row($rslt);
-			$templates_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";
-			$o++;
-			}
-		echo "$templates_list";
-		echo "<option SELECTED value='$row[68]'>"._QXZ("$row[68]")."</option>\n";
-		echo "</select>$NWB#phones-template_id$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=right>"._QXZ("Conf Override").": </td><td align=left><TEXTAREA NAME=conf_override ROWS=10 COLS=70>$row[69]</TEXTAREA> $NWB#phones-conf_override$NWE</td></tr>\n";
-
-		echo "<tr bgcolor=#$SSstd_row4_background><td align=center colspan=2><input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'</td></tr>\n";
-		echo "</TABLE></center>\n";
-
-		echo "<br><br><a href=\"./phone_stats.php?extension=$row[0]&server_ip=$row[5]\">"._QXZ("Click here for phone stats")."</a>\n";
-
-		echo "<br><br><a href=\"./user_stats.php?user=$row[0]\">"._QXZ("Click here for phone call recordings")."</a>\n";
-
-		if ($LOGast_delete_phones > 0)
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=51111111111&extension=$extension&server_ip=$server_ip\">"._QXZ("DELETE THIS PHONE")."</a>\n";
-			}
-		if ( ($LOGuser_level >= 9) and ( (preg_match("/Administration Change Log/",$LOGallowed_reports)) or (preg_match("/ALL REPORTS/",$LOGallowed_reports)) ) )
-			{
-			echo "<br><br><a href=\"$PHP_SELF?ADD=720000000000000&category=PHONES&stage=$extension\">"._QXZ("Click here to see Admin changes to this phone")."</FONT>\n";
-			}
-		}
-	else
-		{
-		echo _QXZ("You do not have permission to view this page")."\n";
-		exit;
-		}
-	}
-
+// Password strength meter
+document.getElementById('reg_pass').addEventListener('input', function() {
+    var password = this.value;
+    var meter = document.getElementById('password-strength-meter');
+    var text = document.getElementById('password-strength-text');
+    
+    // Remove all classes
+    meter.className = '';
+    
+    if (password.length === 0) {
+        meter.style.width = '0%';
+        text.textContent = 'Weak';
+        return;
+    }
+    
+    // Check password strength
+    var strength = 0;
+    
+    // Length check
+    if (password.length >= 8) {
+        strength += 1;
+    }
+    
+    // Complexity checks
+    if (password.match(/[a-z]+/)) {
+        strength += 1;
+    }
+    
+    if (password.match(/[A-Z]+/)) {
+        strength += 1;
+    }
+    
+    if (password.match(/[0-9]+/)) {
+        strength += 1;
+    }
+    
+    if (password.match(/[$@#&!]+/)) {
+        strength += 1;
+    }
+    
+    // Update UI based on strength
+    switch (strength) {
+        case 0:
+        case 1:
+        case 2:
+            meter.style.width = '33%';
+            meter.style.backgroundColor = '#e74c3c';
+            text.textContent = 'Weak';
+            break;
+        case 3:
+        case 4:
+            meter.style.width = '66%';
+            meter.style.backgroundColor = '#f39c12';
+            text.textContent = 'Medium';
+            break;
+        case 5:
+            meter.style.width = '100%';
+            meter.style.backgroundColor = '#2ecc71';
+            text.textContent = 'Strong';
+            break;
+    }
+});
+</script>
+<?php
+    } else {
+?>
+<div style='max-width:600px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);text-align:center;'>
+    <div style='font-size:3rem;margin-bottom:1rem;color:#e74c3c;'>🚫</div>
+    <h2 style='color:#e74c3c;margin:0 0 1rem 0;'><?php echo _QXZ("Access Denied"); ?></h2>
+    <p style='color:#64748b;'><?php echo _QXZ("You do not have permission to view this page"); ?></p>
+    <a href='javascript:history.back()' style='display:inline-block;margin-top:1rem;padding:0.75rem 1.5rem;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s;'>Go Back</a>
+</div>
+<?php
+        exit;
+    }
+}
 
 ######################
 # ADD=32111111111 modify phone alias record in the system
