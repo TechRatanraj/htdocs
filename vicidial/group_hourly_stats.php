@@ -1,29 +1,7 @@
 <?php
 # group_hourly_stats.php
 # 
-# Copyright (C) 2024  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
-#
-# CHANGES
-#
-# 60620-1014 - Added variable filtering to eliminate SQL injection attack threat
-#            - Added required user/pass to gain access to this page
-# 90310-2138 - Added admin header
-# 90508-0644 - Changed to PHP long tags
-# 120221-0159 - Added User Group restrictions
-# 120223-2135 - Removed logging of good login passwords if webroot writable is enabled
-# 130414-0224 - Added report logging
-# 130610-0946 - Finalized changing of all ereg instances to preg
-# 130619-2329 - Added filtering of input to prevent SQL injection attacks and new user auth
-# 130901-1929 - Changed to mysqli PHP functions
-# 140108-0724 - Added webserver and hostname to report logging
-# 141114-0043 - Finalized adding QXZ translation to all admin files
-# 141230-1343 - Added code for on-the-fly language translations display
-# 160325-1426 - Changes for sidebar update
-# 170409-1539 - Added IP List validation code
-# 220303-1547 - Added allow_web_debug system setting
-# 220812-0958 - Added User Group report permissions checking
-# 240801-1130 - Code updates for PHP8 compatibility
-#
+
 
 $startMS = microtime();
 
@@ -275,188 +253,243 @@ if ( (!preg_match('/\-\-ALL\-\-/i',$LOGadmin_viewable_groups)) and (strlen($LOGa
 <html>
 <head>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<title><?php echo _QXZ("ADMINISTRATION: Group Hourly Stats"); ?>
-<?php
+<title><?php echo _QXZ("ADMINISTRATION: Group Hourly Stats"); ?></title>
+<style>
+body {
+    background: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+</style>
+</head>
+<body>
 
+<?php
 ##### BEGIN Set variables to make header show properly #####
-$ADD =					'311111';
-$hh =					'usergroups';
-$sh =					'hour';
-$LOGast_admin_access =	'1';
-$ADMIN =				'admin.php';
-$page_width='770';
-$section_width='750';
-$header_font_size='3';
-$subheader_font_size='2';
-$subcamp_font_size='2';
-$header_selected_bold='<b>';
-$header_nonselected_bold='';
-$usergroups_color =		'#FFFF99';
-$usergroups_font =		'BLACK';
-$usergroups_color =		'#E6E6E6';
-$subcamp_color =	'#C6C6C6';
+$ADD = '311111';
+$hh = 'usergroups';
+$sh = 'hour';
+$LOGast_admin_access = '1';
+$ADMIN = 'admin.php';
+$page_width = '770';
+$section_width = '750';
+$header_font_size = '3';
+$subheader_font_size = '2';
+$subcamp_font_size = '2';
+$header_selected_bold = '<b>';
+$header_nonselected_bold = '';
+$usergroups_color = '#FFFF99';
+$usergroups_font = 'BLACK';
+$usergroups_color = '#E6E6E6';
+$subcamp_color = '#C6C6C6';
 ##### END Set variables to make header show properly #####
 
 require("admin_header.php");
-
 ?>
 
+<div style="max-width:1200px;margin:0 auto;padding:20px;">
 
-<CENTER>
-<TABLE WIDTH=620 BGCOLOR=#D9E6FE cellpadding=2 cellspacing=0><TR BGCOLOR=#015B91><TD ALIGN=LEFT><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B> &nbsp; <?php echo _QXZ("Group Hourly Stats"); ?> <?php echo $group ?></TD><TD ALIGN=RIGHT><FONT FACE="ARIAL,HELVETICA" COLOR=WHITE SIZE=2><B> &nbsp; </TD></TR>
-
-
-
+<!-- Header Card -->
+<div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);overflow:hidden;margin-bottom:20px;">
+    <div style="background:linear-gradient(135deg,#015B91,#0284c7);color:#fff;padding:20px 30px;">
+        <h2 style="margin:0;font-size:20px;font-weight:600;">📊 <?php echo _QXZ("Group Hourly Stats"); ?> <?php echo $group ?></h2>
+    </div>
 
 <?php 
+if (($group) and ($status) and ($date_with_hour)) {
+    $stmt = "SELECT user,full_name from vicidial_users where user_group = '" . mysqli_real_escape_string($link, $group) . "' $LOGadmin_viewable_groupsSQL order by full_name desc;";
+    if ($DB) {echo "$stmt\n";}
+    $rslt = mysql_to_mysqli($stmt, $link);
+    $tsrs_to_print = mysqli_num_rows($rslt);
+    $o = 0;
+    while($o < $tsrs_to_print) {
+        $row = mysqli_fetch_row($rslt);
+        $VDuser[$o] = "$row[0]";
+        $VDname[$o] = "$row[1]";
+        $o++;
+    }
 
-if ( ($group) and ($status) and ($date_with_hour) )
-{
-$stmt="SELECT user,full_name from vicidial_users where user_group = '" . mysqli_real_escape_string($link, $group) . "' $LOGadmin_viewable_groupsSQL order by full_name desc;";
-	if ($DB) {echo "$stmt\n";}
-$rslt=mysql_to_mysqli($stmt, $link);
-$tsrs_to_print = mysqli_num_rows($rslt);
-	$o=0;
-	while($o < $tsrs_to_print)
-		{
-		$row=mysqli_fetch_row($rslt);
-		$VDuser[$o] = "$row[0]";
-		$VDname[$o] = "$row[1]";
-		$o++;
-		}
+    $o = 0;
+    while($o < $tsrs_to_print) {
+        $stmt = "select count(*) from vicidial_log where call_date >= '" . mysqli_real_escape_string($link, $date_with_hour) . ":00:00' and  call_date <= '" . mysqli_real_escape_string($link, $date_with_hour) . ":59:59' and user='$VDuser[$o]' $LOGadmin_viewable_groupsSQL;";
+        if ($DB) {echo "$stmt\n";}
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        $VDtotal[$o] = "$row[0]";
 
-	$o=0;
-	while($o < $tsrs_to_print)
-		{
-		$stmt="select count(*) from vicidial_log where call_date >= '" . mysqli_real_escape_string($link, $date_with_hour) . ":00:00' and  call_date <= '" . mysqli_real_escape_string($link, $date_with_hour) . ":59:59' and user='$VDuser[$o]' $LOGadmin_viewable_groupsSQL;";
-			if ($DB) {echo "$stmt\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$VDtotal[$o] = "$row[0]";
+        $stmt = "select count(*) from vicidial_log where call_date >= '" . mysqli_real_escape_string($link, $date_no_hour) . " 00:00:00' and  call_date <= '" . mysqli_real_escape_string($link, $date_no_hour) . " 23:59:59' and user='$VDuser[$o]' and status='" . mysqli_real_escape_string($link, $status) . "' $LOGadmin_viewable_groupsSQL;";
+        if ($DB) {echo "$stmt\n";}
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        $VDday[$o] = "$row[0]";
 
-		$stmt="select count(*) from vicidial_log where call_date >= '" . mysqli_real_escape_string($link, $date_no_hour) . " 00:00:00' and  call_date <= '" . mysqli_real_escape_string($link, $date_no_hour) . " 23:59:59' and user='$VDuser[$o]' and status='" . mysqli_real_escape_string($link, $status) . "' $LOGadmin_viewable_groupsSQL;";
-			if ($DB) {echo "$stmt\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$VDday[$o] = "$row[0]";
+        $stmt = "select count(*) from vicidial_log where call_date >= '" . mysqli_real_escape_string($link, $date_with_hour) . ":00:00' and  call_date <= '" . mysqli_real_escape_string($link, $date_with_hour) . ":59:59' and user='$VDuser[$o]' and status='" . mysqli_real_escape_string($link, $status) . "' $LOGadmin_viewable_groupsSQL;";
+        if ($DB) {echo "$stmt\n";}
+        $rslt = mysql_to_mysqli($stmt, $link);
+        $row = mysqli_fetch_row($rslt);
+        $VDcount[$o] = "$row[0]";
+        $o++;
+    }
 
-		$stmt="select count(*) from vicidial_log where call_date >= '" . mysqli_real_escape_string($link, $date_with_hour) . ":00:00' and  call_date <= '" . mysqli_real_escape_string($link, $date_with_hour) . ":59:59' and user='$VDuser[$o]' and status='" . mysqli_real_escape_string($link, $status) . "' $LOGadmin_viewable_groupsSQL;";
-			if ($DB) {echo "$stmt\n";}
-		$rslt=mysql_to_mysqli($stmt, $link);
-		$row=mysqli_fetch_row($rslt);
-		$VDcount[$o] = "$row[0]";
-		$o++;
-		}
+    echo "<div style='padding:30px;'>\n";
+    echo "<div style='text-align:center;margin-bottom:25px;'>\n";
+    echo "<span style='font-size:18px;font-weight:600;color:#1f2937;'>"._QXZ("TSR HOUR COUNTS").": <a href='./admin.php?ADD=3111&group_id=$group' style='color:#2563eb;text-decoration:none;'>$group</a> | <span style='color:#059669;'>$status</span> | <span style='color:#6b7280;'>$date_with_hour | $date_no_hour</span></span>\n";
+    echo "</div>\n";
 
-echo "<TR><TD ALIGN=LEFT COLSPAN=2>\n";
+    echo "<div style='overflow-x:auto;'>\n";
+    echo "<table style='width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);'>\n";
+    echo "<thead>\n";
+    echo "<tr style='background:linear-gradient(135deg,#3b82f6,#2563eb);'>\n";
+    echo "<th style='padding:15px 20px;text-align:left;color:#fff;font-size:14px;font-weight:600;'>"._QXZ("TSR")."</th>\n";
+    echo "<th style='padding:15px 20px;text-align:left;color:#fff;font-size:14px;font-weight:600;'>"._QXZ("ID")."</th>\n";
+    echo "<th style='padding:15px 20px;text-align:right;color:#fff;font-size:14px;font-weight:600;'>$status</th>\n";
+    echo "<th style='padding:15px 20px;text-align:right;color:#fff;font-size:14px;font-weight:600;'>"._QXZ("TOTAL CALLS")."</th>\n";
+    echo "<th style='padding:15px 20px;text-align:right;color:#fff;font-size:14px;font-weight:600;'>$status "._QXZ("DAY")."</th>\n";
+    echo "<th style='padding:15px 20px;text-align:center;color:#fff;font-size:14px;font-weight:600;'>"._QXZ("Actions")."</th>\n";
+    echo "</tr>\n";
+    echo "</thead>\n";
+    echo "<tbody>\n";
 
-echo "<br><center>\n";
+    $day_calls = 0;
+    $hour_calls = 0;
+    $total_calls = 0;
+    $o = 0;
+    while($o < $tsrs_to_print) {
+        $row_bg = ($o % 2 == 0) ? '#fff' : '#f9fafb';
+        echo "<tr style='background:$row_bg;border-bottom:1px solid #e5e7eb;'>\n";
+        echo "<td style='padding:12px 20px;font-size:14px;color:#374151;font-weight:500;'>$VDuser[$o]</td>\n";
+        echo "<td style='padding:12px 20px;font-size:14px;color:#6b7280;'>$VDname[$o]</td>\n";
+        echo "<td style='padding:12px 20px;text-align:right;font-size:15px;color:#059669;font-weight:600;'>$VDcount[$o]</td>\n";
+        echo "<td style='padding:12px 20px;text-align:right;font-size:14px;color:#374151;font-weight:500;'>$VDtotal[$o]</td>\n";
+        echo "<td style='padding:12px 20px;text-align:right;font-size:14px;color:#6b7280;'>$VDday[$o]</td>\n";
+        echo "<td style='padding:12px 20px;text-align:center;font-size:13px;'>\n";
+        echo "<a href='./admin.php?ADD=3&user=$VDuser[$o]' style='color:#2563eb;text-decoration:none;font-weight:600;margin-right:10px;'>"._QXZ("MODIFY")."</a>\n";
+        echo "<a href='./user_stats.php?user=$VDuser[$o]' style='color:#059669;text-decoration:none;font-weight:600;'>"._QXZ("STATS")."</a>\n";
+        echo "</td>\n";
+        echo "</tr>\n";
+        $total_calls = ($total_calls + $VDtotal[$o]);
+        $hour_calls = ($hour_calls + $VDcount[$o]);
+        $day_calls = ($day_calls + $VDday[$o]);
+        $o++;
+    }
 
-echo "<B><font FACE='ARIAL,HELVETICA' SIZE=2>"._QXZ("TSR HOUR COUNTS").": <a href=\"./admin.php?ADD=3111&group_id=$group\">$group</a> | $status | $date_with_hour | $date_no_hour</font></B>\n";
-
-echo "<center><TABLE width=600 cellspacing=0 cellpadding=1>\n";
-echo "<tr><td><font size=2>"._QXZ("TSR")." </td><td align=left><font size=2>"._QXZ("ID")." </td><td align=right><font size=2> &nbsp; $status</td><td align=right><font size=2> &nbsp; "._QXZ("TOTAL CALLS")."</td><td align=right><font size=2> &nbsp; $status "._QXZ("DAY")."</td><td align=right><font size=2> &nbsp; &nbsp; </td></tr>\n";
-
-	$day_calls=0;
-	$hour_calls=0;
-	$total_calls=0;
-	$o=0;
-	while($o < $tsrs_to_print)
-		{
-		if (preg_match('/1$|3$|5$|7$|9$/i', $o))
-			{$bgcolor='bgcolor="#B9CBFD"';} 
-		else
-			{$bgcolor='bgcolor="#9BB9FB"';}
-		echo "<tr $bgcolor><td><font size=2>$VDuser[$o]</td>";
-		echo "<td align=left><font size=2> $VDname[$o]</td>\n";
-		echo "<td align=right><font size=2> $VDcount[$o]</td>\n";
-		echo "<td align=right><font size=2> $VDtotal[$o]</td>\n";
-		echo "<td align=right><font size=2> $VDday[$o]</td>\n";
-		echo "<td align=right><font size=1><a href=\"./admin.php?ADD=3&user=$VDuser[$o]\">"._QXZ("MODIFY")."</a> | <a href=\"./user_stats.php?user=$VDuser[$o]\">"._QXZ("STATS")."</a></td></tr>\n";
-		$total_calls = ($total_calls + $VDtotal[$o]);
-		$hour_calls = ($hour_calls + $VDcount[$o]);
-		$day_calls = ($day_calls + $VDday[$o]);
-
-		$o++;
-		}
-
-	echo "<tr><td><font size=2>"._QXZ("TOTAL")." </td><td align=right><font size=2> $status </td><td align=right><font size=2> $hour_calls</td><td align=right><font size=2> $total_calls</td><td align=right><font size=2> $day_calls</td></tr>\n";
-
-
-	}
-
-echo "</TABLE>\n";
-echo "<br><br>\n";
-
-
-echo "<br><form action=$PHP_SELF method=GET><TABLE width=600 cellspacing=0 cellpadding=1 align='center'><tr><td align='left'>";
-echo "<font FACE='ARIAL,HELVETICA' SIZE=2>"._QXZ("Please enter the group you want to get hourly stats for").":<BR><BR>\n";
-echo "<input type=hidden name=DB value=$DB>\n";
-echo _QXZ("Group").": <select size=1 name=group>\n";
-
-$stmt="SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group";
-$rslt=mysql_to_mysqli($stmt, $link);
-$groups_to_print = mysqli_num_rows($rslt);
-$o=0;
-$groups_list='';
-while ($groups_to_print > $o) 
-	{
-	$rowx=mysqli_fetch_row($rslt);
-	if ($group == $group)
-		{$groups_list .= "<option selected value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-	else
-		{$groups_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
-	$o++;
-	}
-echo "$groups_list</select><br>\n";
-echo _QXZ("Status").": <input type=text name=status size=10 maxlength=10 value=\"$status\"> &nbsp; ("._QXZ("example").": "._QXZ("XFER").")<br>\n";
-echo _QXZ("Date with hour").": <input type=text name=date_with_hour size=14 maxlength=13 value=\"$date_with_hour\"> &nbsp; ("._QXZ("example").": 2004-06-25 14)</font><br>\n";
-echo "</td></tr>";
-echo "<tr><td align='center'>";
-echo "<input style='background-color:#$SSbutton_color' type=submit name=submit value='"._QXZ("SUBMIT")."'>\n";
-echo "</td></tr></table></form>";
-
-echo "<BR><BR><BR>\n";
-
-
-$ENDtime = date("U");
-
-$RUNtime = ($ENDtime - $STARTtime);
-
-echo "\n\n\n<br><br><br>\n\n";
-
-
-echo "<font size=0>\n\n\n<br><br><br>\n"._QXZ("script runtime").": $RUNtime "._QXZ("seconds")."</font>";
-
-
+    echo "<tr style='background:#f0f9ff;border-top:2px solid #3b82f6;'>\n";
+    echo "<td style='padding:15px 20px;font-size:15px;color:#1f2937;font-weight:700;'>"._QXZ("TOTAL")."</td>\n";
+    echo "<td style='padding:15px 20px;font-size:14px;color:#6b7280;font-weight:600;'>$status</td>\n";
+    echo "<td style='padding:15px 20px;text-align:right;font-size:16px;color:#059669;font-weight:700;'>$hour_calls</td>\n";
+    echo "<td style='padding:15px 20px;text-align:right;font-size:15px;color:#374151;font-weight:700;'>$total_calls</td>\n";
+    echo "<td style='padding:15px 20px;text-align:right;font-size:15px;color:#6b7280;font-weight:600;'>$day_calls</td>\n";
+    echo "<td></td>\n";
+    echo "</tr>\n";
+    echo "</tbody>\n";
+    echo "</table>\n";
+    echo "</div>\n";
+    echo "</div>\n";
+}
 ?>
 
+<!-- Search Form Card -->
+<div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);overflow:hidden;padding:30px;margin-top:20px;">
+    <form action="<?php echo $PHP_SELF ?>" method="GET">
+        <input type="hidden" name="DB" value="<?php echo $DB ?>">
+        
+        <div style="margin-bottom:20px;">
+            <h3 style="margin:0 0 20px 0;font-size:18px;font-weight:600;color:#1f2937;">
+                <?php echo _QXZ("Please enter the group you want to get hourly stats for"); ?>
+            </h3>
+        </div>
 
-</TD></TR></TABLE>
+        <div style="display:grid;grid-template-columns:1fr;gap:20px;max-width:600px;">
+            <!-- Group Selection -->
+            <div>
+                <label style="display:block;font-weight:600;color:#374151;font-size:15px;margin-bottom:8px;">
+                    <?php echo _QXZ("Group"); ?>:
+                </label>
+                <select name="group" style="width:100%;padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;background:#fff;">
+                    <?php
+                    $stmt = "SELECT user_group,group_name from vicidial_user_groups $whereLOGadmin_viewable_groupsSQL order by user_group";
+                    $rslt = mysql_to_mysqli($stmt, $link);
+                    $groups_to_print = mysqli_num_rows($rslt);
+                    $o = 0;
+                    while ($groups_to_print > $o) {
+                        $rowx = mysqli_fetch_row($rslt);
+                        $selected = ($group == $rowx[0]) ? 'selected' : '';
+                        echo "<option value='$rowx[0]' $selected>$rowx[0] - $rowx[1]</option>\n";
+                        $o++;
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <!-- Status Input -->
+            <div>
+                <label style="display:block;font-weight:600;color:#374151;font-size:15px;margin-bottom:8px;">
+                    <?php echo _QXZ("Status"); ?>:
+                </label>
+                <input type="text" name="status" size="10" maxlength="10" value="<?php echo $status ?>" 
+                       style="width:100%;padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;background:#fff;"
+                       placeholder="<?php echo _QXZ("example").": "._QXZ("XFER"); ?>">
+                <span style="font-size:13px;color:#6b7280;margin-top:5px;display:block;">
+                    (<?php echo _QXZ("example"); ?>: <?php echo _QXZ("XFER"); ?>)
+                </span>
+            </div>
+
+            <!-- Date with Hour Input -->
+            <div>
+                <label style="display:block;font-weight:600;color:#374151;font-size:15px;margin-bottom:8px;">
+                    <?php echo _QXZ("Date with hour"); ?>:
+                </label>
+                <input type="text" name="date_with_hour" size="14" maxlength="13" value="<?php echo $date_with_hour ?>" 
+                       style="width:100%;padding:11px 16px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;background:#fff;"
+                       placeholder="2004-06-25 14">
+                <span style="font-size:13px;color:#6b7280;margin-top:5px;display:block;">
+                    (<?php echo _QXZ("example"); ?>: 2004-06-25 14)
+                </span>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="margin-top:10px;">
+                <input type="submit" name="submit" value="<?php echo _QXZ("SUBMIT"); ?>" 
+                       style="width:100%;padding:12px 24px;background:#2563eb;color:#fff;font-size:15px;font-weight:600;border:none;border-radius:6px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </form>
+</div>
+
+<?php
+$ENDtime = date("U");
+$RUNtime = ($ENDtime - $STARTtime);
+
+echo "<div style='text-align:center;margin-top:30px;padding:20px;'>\n";
+echo "<span style='font-size:12px;color:#9ca3af;'>"._QXZ("script runtime").": $RUNtime "._QXZ("seconds")."</span>\n";
+echo "</div>\n";
+?>
+
+</div>
+</div>
+
 </body>
 </html>
 
 <?php
-
-if ($db_source == 'S')
-	{
-	mysqli_close($link);
-	$use_slave_server=0;
-	$db_source = 'M';
-	require("dbconnect_mysqli.php");
-	}
+if ($db_source == 'S') {
+    mysqli_close($link);
+    $use_slave_server = 0;
+    $db_source = 'M';
+    require("dbconnect_mysqli.php");
+}
 
 $endMS = microtime();
-$startMSary = explode(" ",$startMS);
-$endMSary = explode(" ",$endMS);
+$startMSary = explode(" ", $startMS);
+$endMSary = explode(" ", $endMS);
 $runS = ($endMSary[0] - $startMSary[0]);
 $runM = ($endMSary[1] - $startMSary[1]);
 $TOTALrun = ($runS + $runM);
 
-$stmt="UPDATE vicidial_report_log set run_time='$TOTALrun' where report_log_id='$report_log_id';";
+$stmt = "UPDATE vicidial_report_log set run_time='$TOTALrun' where report_log_id='$report_log_id';";
 if ($DB) {echo "|$stmt|\n";}
-$rslt=mysql_to_mysqli($stmt, $link);
+$rslt = mysql_to_mysqli($stmt, $link);
 
-exit; 
-
+exit;
 ?>
